@@ -41,9 +41,12 @@ namespace ThScoreFileConverterTests.ViewModels
         [ExpectedException(typeof(NullReferenceException))]
         public void FontTest()
         {
-            using var window = new SettingWindowViewModel();
-            _ = window.Font;
-            Assert.Fail(TestUtils.Unreachable);
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
+                _ = window.Font;
+                Assert.Fail(TestUtils.Unreachable);
+            }
         }
 
         [TestMethod]
@@ -193,46 +196,52 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void FontDialogOkCommandTest()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.FontDialogOkCommand;
-            Assert.IsNotNull(command);
+                var command = window.FontDialogOkCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            var font = SysDraw.SystemFonts.DefaultFont;
-            var color = default(SysDraw.Color);
-            var result = new FontDialogActionResult(font, color);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute(result);
-            Assert.AreEqual(0, numChanged);
+                command.Execute(result);
+                Assert.AreEqual(0, numChanged);
+            }
         }
 
         [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void FontDialogOkCommandTestDisposed()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.FontDialogOkCommand;
-            Assert.IsNotNull(command);
+                var command = window.FontDialogOkCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            window.Dispose();
+                window.Dispose();
 
-            var font = SysDraw.SystemFonts.DefaultFont;
-            var color = default(SysDraw.Color);
-            var result = new FontDialogActionResult(font, color);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute(result);
-            Assert.Fail(TestUtils.Unreachable);
+                command.Execute(result);
+                Assert.Fail(TestUtils.Unreachable);
+            }
         }
 
         [TestMethod]
@@ -296,46 +305,52 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void FontDialogApplyCommandTest()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.FontDialogApplyCommand;
-            Assert.IsNotNull(command);
+                var command = window.FontDialogApplyCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            var font = SysDraw.SystemFonts.DefaultFont;
-            var color = default(SysDraw.Color);
-            var result = new FontDialogActionResult(font, color);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute(result);
-            Assert.AreEqual(0, numChanged);
+                command.Execute(result);
+                Assert.AreEqual(0, numChanged);
+            }
         }
 
         [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void FontDialogApplyCommandTestDisposed()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.FontDialogApplyCommand;
-            Assert.IsNotNull(command);
+                var command = window.FontDialogApplyCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            window.Dispose();
+                window.Dispose();
 
-            var font = SysDraw.SystemFonts.DefaultFont;
-            var color = default(SysDraw.Color);
-            var result = new FontDialogActionResult(font, color);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute(result);
-            Assert.Fail(TestUtils.Unreachable);
+                command.Execute(result);
+                Assert.Fail(TestUtils.Unreachable);
+            }
         }
 
         [TestMethod]
@@ -399,46 +414,52 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void FontDialogCancelCommandTest()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.FontDialogCancelCommand;
-            Assert.IsNotNull(command);
+                var command = window.FontDialogCancelCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            var font = SysDraw.SystemFonts.DefaultFont;
-            var color = default(SysDraw.Color);
-            var result = new FontDialogActionResult(font, color);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute(result);
-            Assert.AreEqual(0, numChanged);
+                command.Execute(result);
+                Assert.AreEqual(0, numChanged);
+            }
         }
 
         [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void FontDialogCancelCommandTestDisposed()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.FontDialogCancelCommand;
-            Assert.IsNotNull(command);
+                var command = window.FontDialogCancelCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            window.Dispose();
+                window.Dispose();
 
-            var font = SysDraw.SystemFonts.DefaultFont;
-            var color = default(SysDraw.Color);
-            var result = new FontDialogActionResult(font, color);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute(result);
-            Assert.Fail(TestUtils.Unreachable);
+                command.Execute(result);
+                Assert.Fail(TestUtils.Unreachable);
+            }
         }
 
         [TestMethod]
@@ -502,40 +523,46 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void ResetFontCommandTest()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.ResetFontCommand;
-            Assert.IsNotNull(command);
+                var command = window.ResetFontCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            Assert.IsTrue(command.CanExecute());
-            Assert.AreEqual(0, numChanged);
+                Assert.IsTrue(command.CanExecute());
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute();
-            Assert.AreEqual(0, numChanged);
+                command.Execute();
+                Assert.AreEqual(0, numChanged);
+            }
         }
 
         [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void ResetFontCommandTestDisposed()
         {
-            using var window = new SettingWindowViewModel();
+            if (Application.Current is null)
+            {
+                using var window = new SettingWindowViewModel();
 
-            var command = window.ResetFontCommand;
-            Assert.IsNotNull(command);
+                var command = window.ResetFontCommand;
+                Assert.IsNotNull(command);
 
-            var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                var numChanged = 0;
+                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            window.Dispose();
+                window.Dispose();
 
-            Assert.IsTrue(command.CanExecute());
-            Assert.AreEqual(0, numChanged);
+                Assert.IsTrue(command.CanExecute());
+                Assert.AreEqual(0, numChanged);
 
-            command.Execute();
-            Assert.Fail(TestUtils.Unreachable);
+                command.Execute();
+                Assert.Fail(TestUtils.Unreachable);
+            }
         }
 
         [TestMethod]
