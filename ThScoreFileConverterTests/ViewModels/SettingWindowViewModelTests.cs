@@ -38,14 +38,12 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void FontTest()
         {
             if (Application.Current is null)
             {
                 using var window = new SettingWindowViewModel();
-                _ = window.Font;
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<NullReferenceException>(() => _ = window.Font);
             }
         }
 
@@ -274,7 +272,36 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        public void WithAppFontDialogOkCommandTestDisposed()
+        {
+            var app = SetupApp();
+            try
+            {
+                using var window = new SettingWindowViewModel();
+
+                var command = window.FontDialogOkCommand;
+                Assert.IsNotNull(command);
+
+                var numChanged = 0;
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+
+                window.Dispose();
+
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
+
+                _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(result));
+            }
+            finally
+            {
+                app.Shutdown();
+            }
+        }
+
+        [TestMethod]
         public void WithAppFontDialogOkCommandTestNull()
         {
             var app = SetupApp();
@@ -286,13 +313,12 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 Assert.IsTrue(command.CanExecute(null!));
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute(null!);
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null!));
             }
             finally
             {
@@ -381,7 +407,36 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        public void WithAppFontDialogApplyCommandTestDisposed()
+        {
+            var app = SetupApp();
+            try
+            {
+                using var window = new SettingWindowViewModel();
+
+                var command = window.FontDialogApplyCommand;
+                Assert.IsNotNull(command);
+
+                var numChanged = 0;
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+
+                window.Dispose();
+
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
+
+                Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(result));
+            }
+            finally
+            {
+                app.Shutdown();
+            }
+        }
+
+        [TestMethod]
         public void WithAppFontDialogApplyCommandTestNull()
         {
             var app = SetupApp();
@@ -393,13 +448,12 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 Assert.IsTrue(command.CanExecute(null!));
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute(null!);
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null!));
             }
             finally
             {
@@ -488,7 +542,36 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        public void WithAppFontDialogCancelCommandTestDisposed()
+        {
+            var app = SetupApp();
+            try
+            {
+                using var window = new SettingWindowViewModel();
+
+                var command = window.FontDialogCancelCommand;
+                Assert.IsNotNull(command);
+
+                var numChanged = 0;
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+
+                window.Dispose();
+
+                var font = SysDraw.SystemFonts.DefaultFont;
+                var color = default(SysDraw.Color);
+                var result = new FontDialogActionResult(font, color);
+                Assert.IsTrue(command.CanExecute(result));
+                Assert.AreEqual(0, numChanged);
+
+                Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(result));
+            }
+            finally
+            {
+                app.Shutdown();
+            }
+        }
+
+        [TestMethod]
         public void WithAppFontDialogCancelCommandTestNull()
         {
             var app = SetupApp();
@@ -500,13 +583,12 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 Assert.IsTrue(command.CanExecute(null!));
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute(null!);
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null!));
             }
             finally
             {
@@ -553,7 +635,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsTrue(command.CanExecute());
                 Assert.AreEqual(0, numChanged);
 
-                Assert.ThrowsException<ObjectDisposedException>(() => command.Execute());
+                _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute());
             }
         }
 
@@ -578,6 +660,33 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.AreEqual(1, numChanged);
                 Assert.AreEqual(app.FontFamily, SystemFonts.MessageFontFamily);
                 Assert.AreEqual(app.FontSize, SystemFonts.MessageFontSize);
+            }
+            finally
+            {
+                app.Shutdown();
+            }
+        }
+
+        [TestMethod]
+        public void WithAppResetFontCommandTestDisposed()
+        {
+            var app = SetupApp();
+            try
+            {
+                using var window = new SettingWindowViewModel();
+
+                var command = window.ResetFontCommand;
+                Assert.IsNotNull(command);
+
+                var numChanged = 0;
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+
+                window.Dispose();
+
+                Assert.IsTrue(command.CanExecute());
+                Assert.AreEqual(0, numChanged);
+
+                Assert.ThrowsException<ObjectDisposedException>(() => command.Execute());
             }
             finally
             {
@@ -632,6 +741,17 @@ namespace ThScoreFileConverterTests.ViewModels
             window.Dispose();
             window.Dispose();
             Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void DestructorTest()
+        {
+            {
+                _ = new SettingWindowViewModel();
+            }
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }
