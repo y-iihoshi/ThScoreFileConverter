@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models
         private readonly Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots =
             new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
 
-        private AllScoreData? allScoreData = null;
+        private AllScoreData? allScoreData;
 
         public override string SupportedVersions => "1.00a";
 

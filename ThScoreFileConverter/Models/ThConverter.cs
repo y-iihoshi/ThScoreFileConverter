@@ -54,7 +54,7 @@ namespace ThScoreFileConverter.Models
         /// It is required to override this property by the subclass that implements the conversion process
         /// of best-shot files.
         /// </remarks>
-        public virtual bool HasBestShotConverter { get; } = false;
+        public virtual bool HasBestShotConverter { get; }
 
         /// <summary>
         /// Gets a value indicating whether the current instance has the replace method for spell card

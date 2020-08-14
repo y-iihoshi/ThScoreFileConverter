@@ -38,7 +38,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets or sets a value indicating whether the work is supported by this tool.
         /// </summary>
-        public bool IsSupported { get; set; } = false;
+        public bool IsSupported { get; set; }
 
         private void LocalizeDictionaryPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models
             new Dictionary<(Chara, Th125.Level, int), (string, IBestShotHeader)>(
                 Enum.GetValues(typeof(Chara)).Length * Definitions.SpellCards.Count);
 
-        private AllScoreData? allScoreData = null;
+        private AllScoreData? allScoreData;
 
         public override string SupportedVersions { get; } = "1.00a";
 

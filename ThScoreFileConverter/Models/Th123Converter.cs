@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th123Converter : ThConverter
     {
-        private AllScoreData? allScoreData = null;
+        private AllScoreData? allScoreData;
 
         public override string SupportedVersions { get; } = "1.10a";
 
