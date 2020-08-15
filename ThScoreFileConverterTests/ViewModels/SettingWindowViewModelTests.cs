@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter;
@@ -10,7 +11,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models;
 using WPFLocalizeExtension.Engine;
 using SysDraw = System.Drawing;
 
@@ -19,6 +19,11 @@ namespace ThScoreFileConverterTests.ViewModels
     [TestClass]
     public class SettingWindowViewModelTests
     {
+        private static Mock<ISettings> DefaultSettingsMock { get; } = new Mock<ISettings>()
+            .SetupProperty(m => m.OutputNumberGroupSeparator, default(bool))
+            .SetupProperty(m => m.InputCodePageId, default(int))
+            .SetupProperty(m => m.OutputCodePageId, default(int));
+
         private static App SetupApp()
         {
             if (!(Application.Current is App app))
@@ -31,9 +36,46 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
+        public void SettingWindowViewModelTest()
+        {
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
+        }
+
+        [TestMethod]
+        public void SettingWindowViewModelTestNull()
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingWindowViewModel(null!));
+
+        [TestMethod]
+        public void SettingWindowViewModelTestNullOutputNumberGroupSeparator()
+        {
+            var mock = new Mock<ISettings>()
+                .SetupProperty(m => m.InputCodePageId, default(int))
+                .SetupProperty(m => m.OutputCodePageId, default(int));
+            Assert.ThrowsException<ArgumentException>(() => new SettingWindowViewModel(mock.Object));
+        }
+
+        [TestMethod]
+        public void SettingWindowViewModelTestNullInputCodePageId()
+        {
+            var mock = new Mock<ISettings>()
+                .SetupProperty(m => m.OutputNumberGroupSeparator, default(bool))
+                .SetupProperty(m => m.OutputCodePageId, default(int));
+            Assert.ThrowsException<ArgumentException>(() => new SettingWindowViewModel(mock.Object));
+        }
+
+        [TestMethod]
+        public void SettingWindowViewModelTestNullOutputCodePageId()
+        {
+            var mock = new Mock<ISettings>()
+                .SetupProperty(m => m.OutputNumberGroupSeparator, default(bool))
+                .SetupProperty(m => m.InputCodePageId, default(int));
+            _ = Assert.ThrowsException<ArgumentException>(() => new SettingWindowViewModel(mock.Object));
+        }
+
+        [TestMethod]
         public void TitleTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle)), window.Title);
         }
 
@@ -42,7 +84,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
                 _ = Assert.ThrowsException<NullReferenceException>(() => _ = window.Font);
             }
         }
@@ -53,7 +95,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
                 Assert.AreEqual(app.FontFamily.ToString(), window.Font.OriginalFontName);
                 Assert.AreEqual(app.FontSize, window.Font.Size);
             }
@@ -66,102 +108,71 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void MaxFontSizeTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             Assert.AreEqual((int)Settings.MaxFontSize, window.MaxFontSize);
         }
 
         [TestMethod]
         public void OutputNumberGroupSeparatorTest()
         {
-            var separator = Settings.Instance.OutputNumberGroupSeparator;
-            try
-            {
-                using var window = new SettingWindowViewModel();
-                Assert.AreEqual(separator, window.OutputNumberGroupSeparator);
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
+            Assert.AreEqual(DefaultSettingsMock.Object.OutputNumberGroupSeparator, window.OutputNumberGroupSeparator);
 
-                var numChanged = 0;
-                using var _ =
-                    window.ObserveProperty(w => w.OutputNumberGroupSeparator, false).Subscribe(_ => ++numChanged);
+            var numChanged = 0;
+            using var _ =
+                window.ObserveProperty(w => w.OutputNumberGroupSeparator, false).Subscribe(_ => ++numChanged);
 
-                var expected = false;
-                window.OutputNumberGroupSeparator = expected;
-                Assert.AreEqual((expected != separator) ? 1 : 0, numChanged);
-                Assert.AreEqual(expected, window.OutputNumberGroupSeparator);
-                Assert.AreEqual(expected, Settings.Instance.OutputNumberGroupSeparator);
-
-                numChanged = 0;
-                expected = !expected;
-                window.OutputNumberGroupSeparator = expected;
-                Assert.AreEqual(1, numChanged);
-                Assert.AreEqual(expected, window.OutputNumberGroupSeparator);
-                Assert.AreEqual(expected, Settings.Instance.OutputNumberGroupSeparator);
-            }
-            finally
-            {
-                Settings.Instance.OutputNumberGroupSeparator = separator;
-            }
+            var expected = true;
+            window.OutputNumberGroupSeparator = expected;
+            Assert.AreEqual(1, numChanged);
+            Assert.AreEqual(expected, window.OutputNumberGroupSeparator);
+            Assert.AreEqual(expected, DefaultSettingsMock.Object.OutputNumberGroupSeparator);
         }
 
         [TestMethod]
         public void InputEncodingsTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             CollectionAssert.That.AreEqual(Settings.ValidCodePageIds, window.InputEncodings.Keys);
         }
 
         [TestMethod]
         public void InputCodePageIdTest()
         {
-            var id = Settings.Instance.InputCodePageId;
-            try
-            {
-                using var window = new SettingWindowViewModel();
-                Assert.AreEqual(id, window.InputCodePageId);
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
+            Assert.AreEqual(DefaultSettingsMock.Object.InputCodePageId, window.InputCodePageId);
 
-                var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.InputCodePageId, false).Subscribe(_ => ++numChanged);
+            var numChanged = 0;
+            using var _ = window.ObserveProperty(w => w.InputCodePageId, false).Subscribe(_ => ++numChanged);
 
-                var expected = 12345;
-                window.InputCodePageId = expected;
-                Assert.AreEqual((expected != id) ? 1 : 0, numChanged);
-                Assert.AreEqual(expected, window.InputCodePageId);
-                Assert.AreEqual(expected, Settings.Instance.InputCodePageId);
-            }
-            finally
-            {
-                Settings.Instance.InputCodePageId = id;
-            }
+            var expected = 12345;
+            window.InputCodePageId = expected;
+            Assert.AreEqual(1, numChanged);
+            Assert.AreEqual(expected, window.InputCodePageId);
+            Assert.AreEqual(expected, DefaultSettingsMock.Object.InputCodePageId);
         }
 
         [TestMethod]
         public void OutputEncodingsTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             CollectionAssert.That.AreEqual(Settings.ValidCodePageIds, window.OutputEncodings.Keys);
         }
 
         [TestMethod]
         public void OutputCodePageIdTest()
         {
-            var id = Settings.Instance.OutputCodePageId;
-            try
-            {
-                using var window = new SettingWindowViewModel();
-                Assert.AreEqual(id, window.OutputCodePageId);
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
+            Assert.AreEqual(DefaultSettingsMock.Object.OutputCodePageId, window.OutputCodePageId);
 
-                var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.OutputCodePageId, false).Subscribe(_ => ++numChanged);
+            var numChanged = 0;
+            using var _ = window.ObserveProperty(w => w.OutputCodePageId, false).Subscribe(_ => ++numChanged);
 
-                var expected = 12345;
-                window.OutputCodePageId = expected;
-                Assert.AreEqual((expected != id) ? 1 : 0, numChanged);
-                Assert.AreEqual(expected, window.OutputCodePageId);
-                Assert.AreEqual(expected, Settings.Instance.OutputCodePageId);
-            }
-            finally
-            {
-                Settings.Instance.OutputCodePageId = id;
-            }
+            var expected = 12345;
+            window.OutputCodePageId = expected;
+            Assert.AreEqual(1, numChanged);
+            Assert.AreEqual(expected, window.OutputCodePageId);
+            Assert.AreEqual(expected, DefaultSettingsMock.Object.OutputCodePageId);
         }
 
         [TestMethod]
@@ -170,7 +181,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var culture = LocalizeDictionary.Instance.Culture;
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
                 Assert.AreEqual(culture, window.Culture);
 
                 var numCultureChanged = 0;
@@ -196,7 +207,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogOkCommand;
                 Assert.IsNotNull(command);
@@ -220,7 +231,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogOkCommand;
                 Assert.IsNotNull(command);
@@ -246,7 +257,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogOkCommand;
                 Assert.IsNotNull(command);
@@ -277,7 +288,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogOkCommand;
                 Assert.IsNotNull(command);
@@ -307,7 +318,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogOkCommand;
                 Assert.IsNotNull(command);
@@ -331,7 +342,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogApplyCommand;
                 Assert.IsNotNull(command);
@@ -355,7 +366,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogApplyCommand;
                 Assert.IsNotNull(command);
@@ -381,7 +392,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogApplyCommand;
                 Assert.IsNotNull(command);
@@ -412,7 +423,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogApplyCommand;
                 Assert.IsNotNull(command);
@@ -442,7 +453,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogApplyCommand;
                 Assert.IsNotNull(command);
@@ -466,7 +477,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogCancelCommand;
                 Assert.IsNotNull(command);
@@ -490,7 +501,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogCancelCommand;
                 Assert.IsNotNull(command);
@@ -516,7 +527,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogCancelCommand;
                 Assert.IsNotNull(command);
@@ -547,7 +558,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogCancelCommand;
                 Assert.IsNotNull(command);
@@ -577,7 +588,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.FontDialogCancelCommand;
                 Assert.IsNotNull(command);
@@ -601,7 +612,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.ResetFontCommand;
                 Assert.IsNotNull(command);
@@ -622,7 +633,7 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             if (Application.Current is null)
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.ResetFontCommand;
                 Assert.IsNotNull(command);
@@ -645,7 +656,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.ResetFontCommand;
                 Assert.IsNotNull(command);
@@ -673,7 +684,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var app = SetupApp();
             try
             {
-                using var window = new SettingWindowViewModel();
+                using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
 
                 var command = window.ResetFontCommand;
                 Assert.IsNotNull(command);
@@ -697,14 +708,14 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void CanCloseDialogTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             Assert.IsTrue(window.CanCloseDialog());
         }
 
         [TestMethod]
         public void OnDialogClosedTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             window.OnDialogClosed();
             Assert.IsTrue(true);
         }
@@ -712,7 +723,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void OnDialogOpenedTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             var parameters = new DialogParameters();
             window.OnDialogOpened(parameters);
             Assert.IsTrue(true);
@@ -721,7 +732,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void OnDialogOpenedTestNull()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             window.OnDialogOpened(null!);
             Assert.IsTrue(true);
         }
@@ -729,7 +740,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DisposeTest()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             window.Dispose();
             Assert.IsTrue(true);
         }
@@ -737,17 +748,17 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DisposeTestTwice()
         {
-            using var window = new SettingWindowViewModel();
+            using var window = new SettingWindowViewModel(DefaultSettingsMock.Object);
             window.Dispose();
             window.Dispose();
             Assert.IsTrue(true);
         }
 
         [TestMethod]
-        public void DestructorTest()
+        public void FinalizerTest()
         {
             {
-                _ = new SettingWindowViewModel();
+                _ = new SettingWindowViewModel(DefaultSettingsMock.Object);
             }
 
             GC.Collect();

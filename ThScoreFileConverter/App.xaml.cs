@@ -69,6 +69,7 @@ namespace ThScoreFileConverter
         /// <inheritdoc/>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            _ = containerRegistry.RegisterInstance<ISettings>(Settings.Instance);
             containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
             containerRegistry.RegisterDialog<SettingWindow>(nameof(SettingWindowViewModel));
         }

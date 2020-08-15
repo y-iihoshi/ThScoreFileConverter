@@ -22,7 +22,7 @@ namespace ThScoreFileConverter
     /// Represents the settings of this application.
     /// </summary>
     [DataContract]
-    public sealed class Settings
+    public sealed class Settings : ISettings
     {
         private string fontFamilyName;
         private double? fontSize;
@@ -61,21 +61,15 @@ namespace ThScoreFileConverter
         /// </summary>
         public static double MaxFontSize { get; } = 72;
 
-        /// <summary>
-        /// Gets or sets the last selected work.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 0)]
         public string LastTitle { get; set; }
 
-        /// <summary>
-        /// Gets the dictionary of <see cref="SettingsPerTitle"/> instances.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 1)]
         public Dictionary<string, SettingsPerTitle> Dictionary { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the font family name used for the UI of this application.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 2)]
         public string FontFamilyName
         {
@@ -87,9 +81,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Gets or sets the font size used for the UI of this application.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 3)]
         public double? FontSize
         {
@@ -101,10 +93,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether numeric values is output with thousand separator
-        /// characters.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 4)]
         public bool? OutputNumberGroupSeparator
         {
@@ -116,9 +105,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Gets or sets the code page identifier for input files.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 5)]
         public int? InputCodePageId
         {
@@ -130,9 +117,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Gets or sets the code page identifier for output files.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 6)]
         public int? OutputCodePageId
         {
@@ -144,9 +129,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Gets or sets the culture name.
-        /// </summary>
+        /// <inheritdoc/>
         [DataMember(Order = 7)]
         public string? Language
         {
@@ -166,10 +149,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Loads the settings from the specified XML file.
-        /// </summary>
-        /// <param name="path">The path of the XML file to load.</param>
+        /// <inheritdoc/>
         public void Load(string path)
         {
             try
@@ -224,10 +204,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        /// <summary>
-        /// Saves the settings to the specified XML file.
-        /// </summary>
-        /// <param name="path">The path of the XML file to save.</param>
+        /// <inheritdoc/>
         public void Save(string path)
         {
             using var stream = new FileStream(path, FileMode.Create, FileAccess.Write);

@@ -67,6 +67,11 @@ namespace ThScoreFileConverter.ViewModels
         };
 
         /// <summary>
+        /// The settings of this application.
+        /// </summary>
+        private readonly ISettings settings;
+
+        /// <summary>
         /// The instance that executes a conversion process.
         /// </summary>
         private ThConverter? converter;
@@ -85,10 +90,18 @@ namespace ThScoreFileConverter.ViewModels
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
-        public MainWindowViewModel(IDialogService dialogService)
+        /// <param name="settings">The settings of this application.</param>
+        public MainWindowViewModel(IDialogService dialogService, ISettings settings)
         {
+            if (dialogService is null)
+                throw new ArgumentNullException(nameof(dialogService));
+
+            if (settings is null)
+                throw new ArgumentNullException(nameof(settings));
+
             this.DialogService = dialogService;
 
+            this.settings = settings;
             this.converter = null;
             this.isIdle = false;
             this.log = string.Empty;
@@ -167,18 +180,18 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string LastWorkNumber
         {
-            get => Settings.Instance.LastTitle;
+            get => this.settings.LastTitle;
 
             set
             {
 #if false
                 // Note: The following occurs CS0206.
-                this.SetProperty(ref Settings.Instance.LastTitle, value);
+                this.SetProperty(ref this.settings.LastTitle, value);
 #else
-                if (Settings.Instance.LastTitle != value)
+                if (this.settings.LastTitle != value)
                 {
-                    Settings.Instance.LastTitle = value;
-                    _ = Settings.Instance.Dictionary.TryAdd(value, new SettingsPerTitle());
+                    this.settings.LastTitle = value;
+                    _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle());
                     this.RaisePropertyChanged(nameof(this.LastWorkNumber));
                 }
 #endif
@@ -197,13 +210,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string ScoreFile
         {
-            get => CurrentSetting.ScoreFile;
+            get => this.CurrentSetting.ScoreFile;
 
             private set
             {
-                if ((CurrentSetting.ScoreFile != value) && File.Exists(value))
+                if ((this.CurrentSetting.ScoreFile != value) && File.Exists(value))
                 {
-                    CurrentSetting.ScoreFile = value;
+                    this.CurrentSetting.ScoreFile = value;
                     this.RaisePropertyChanged(nameof(this.ScoreFile));
                 }
             }
@@ -236,13 +249,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string BestShotDirectory
         {
-            get => CurrentSetting.BestShotDirectory;
+            get => this.CurrentSetting.BestShotDirectory;
 
             private set
             {
-                if ((CurrentSetting.BestShotDirectory != value) && Directory.Exists(value))
+                if ((this.CurrentSetting.BestShotDirectory != value) && Directory.Exists(value))
                 {
-                    CurrentSetting.BestShotDirectory = value;
+                    this.CurrentSetting.BestShotDirectory = value;
                     this.RaisePropertyChanged(nameof(this.BestShotDirectory));
                 }
             }
@@ -253,11 +266,11 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public IEnumerable<string> TemplateFiles
         {
-            get => CurrentSetting.TemplateFiles;
+            get => this.CurrentSetting.TemplateFiles;
 
             private set
             {
-                CurrentSetting.TemplateFiles = value.Where(elem => File.Exists(elem)).ToArray();
+                this.CurrentSetting.TemplateFiles = value.Where(elem => File.Exists(elem)).ToArray();
                 this.RaisePropertyChanged(nameof(this.TemplateFiles));
             }
         }
@@ -289,13 +302,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string OutputDirectory
         {
-            get => CurrentSetting.OutputDirectory;
+            get => this.CurrentSetting.OutputDirectory;
 
             private set
             {
-                if ((CurrentSetting.OutputDirectory != value) && Directory.Exists(value))
+                if ((this.CurrentSetting.OutputDirectory != value) && Directory.Exists(value))
                 {
-                    CurrentSetting.OutputDirectory = value;
+                    this.CurrentSetting.OutputDirectory = value;
                     this.RaisePropertyChanged(nameof(this.OutputDirectory));
                 }
             }
@@ -306,13 +319,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string ImageOutputDirectory
         {
-            get => CurrentSetting.ImageOutputDirectory;
+            get => this.CurrentSetting.ImageOutputDirectory;
 
             set
             {
-                if (CurrentSetting.ImageOutputDirectory != value)
+                if (this.CurrentSetting.ImageOutputDirectory != value)
                 {
-                    CurrentSetting.ImageOutputDirectory = value;
+                    this.CurrentSetting.ImageOutputDirectory = value;
                     this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
                 }
             }
@@ -328,13 +341,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public bool HidesUntriedCards
         {
-            get => CurrentSetting.HideUntriedCards;
+            get => this.CurrentSetting.HideUntriedCards;
 
             set
             {
-                if (CurrentSetting.HideUntriedCards != value)
+                if (this.CurrentSetting.HideUntriedCards != value)
                 {
-                    CurrentSetting.HideUntriedCards = value;
+                    this.CurrentSetting.HideUntriedCards = value;
                     this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
                 }
             }
@@ -439,7 +452,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the setting for the currently selected Touhou work.
         /// </summary>
-        private static SettingsPerTitle CurrentSetting => Settings.Instance.Dictionary[Settings.Instance.LastTitle];
+        private SettingsPerTitle CurrentSetting => this.settings.Dictionary[this.settings.LastTitle];
 
         /// <summary>
         /// Gets the <see cref="IDialogService"/>.
@@ -578,7 +591,7 @@ namespace ThScoreFileConverter.ViewModels
                 this.IsIdle = false;
                 this.Log = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
                     + Environment.NewLine;
-                new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
+                new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(this.CurrentSetting);
             }
         }
 
@@ -740,11 +753,11 @@ namespace ThScoreFileConverter.ViewModels
                     break;
 
                 case nameof(this.LastWorkNumber):
-                    this.converter = ThConverterFactory.Create(Settings.Instance.LastTitle);
+                    this.converter = ThConverterFactory.Create(this.settings.LastTitle);
                     if (this.converter is null)
                     {
                         this.Log = "Failed to create a converter: "
-                            + $"{nameof(Settings.Instance.LastTitle)} = {Settings.Instance.LastTitle}"
+                            + $"{nameof(this.settings.LastTitle)} = {this.settings.LastTitle}"
                             + Environment.NewLine;
                     }
                     else

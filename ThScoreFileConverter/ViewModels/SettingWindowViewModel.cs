@@ -29,14 +29,32 @@ namespace ThScoreFileConverter.ViewModels
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via ViewModelLocator.")]
     internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
+        private readonly ISettings settings;
         private bool disposed;
         private SysDraw.Font? font;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
         /// </summary>
-        public SettingWindowViewModel()
+        /// <param name="settings">The settings of this application.</param>
+        public SettingWindowViewModel(ISettings settings)
         {
+            if (settings is null)
+                throw new ArgumentNullException(nameof(settings));
+
+            if (!settings.OutputNumberGroupSeparator.HasValue)
+            {
+                throw new ArgumentException(
+                    $"{nameof(settings.OutputNumberGroupSeparator)} has no value", nameof(settings));
+            }
+
+            if (!settings.InputCodePageId.HasValue)
+                throw new ArgumentException($"{nameof(settings.InputCodePageId)} has no value", nameof(settings));
+
+            if (!settings.OutputCodePageId.HasValue)
+                throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
+
+            this.settings = settings;
             this.disposed = false;
             this.font = null;
 
@@ -99,13 +117,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public bool OutputNumberGroupSeparator
         {
-            get => Settings.Instance.OutputNumberGroupSeparator!.Value;
+            get => this.settings.OutputNumberGroupSeparator!.Value;
 
             set
             {
-                if (Settings.Instance.OutputNumberGroupSeparator != value)
+                if (this.settings.OutputNumberGroupSeparator != value)
                 {
-                    Settings.Instance.OutputNumberGroupSeparator = value;
+                    this.settings.OutputNumberGroupSeparator = value;
                     this.RaisePropertyChanged(nameof(this.OutputNumberGroupSeparator));
                 }
             }
@@ -122,13 +140,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public int InputCodePageId
         {
-            get => Settings.Instance.InputCodePageId!.Value;
+            get => this.settings.InputCodePageId!.Value;
 
             set
             {
-                if (Settings.Instance.InputCodePageId != value)
+                if (this.settings.InputCodePageId != value)
                 {
-                    Settings.Instance.InputCodePageId = value;
+                    this.settings.InputCodePageId = value;
                     this.RaisePropertyChanged(nameof(this.InputCodePageId));
                 }
             }
@@ -145,13 +163,13 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public int OutputCodePageId
         {
-            get => Settings.Instance.OutputCodePageId!.Value;
+            get => this.settings.OutputCodePageId!.Value;
 
             set
             {
-                if (Settings.Instance.OutputCodePageId != value)
+                if (this.settings.OutputCodePageId != value)
                 {
-                    Settings.Instance.OutputCodePageId = value;
+                    this.settings.OutputCodePageId = value;
                     this.RaisePropertyChanged(nameof(this.OutputCodePageId));
                 }
             }
