@@ -15,6 +15,8 @@ using Prism.Unity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
+using ThScoreFileConverter.Wrappers;
+using Unity;
 using WPFLocalizeExtension.Engine;
 using Prop = ThScoreFileConverter.Properties;
 
@@ -69,7 +71,13 @@ namespace ThScoreFileConverter
         /// <inheritdoc/>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+#if DEBUG
+            if (containerRegistry.GetContainer() is UnityContainer container)
+                container.EnableDebugDiagnostic();
+#endif
+
             _ = containerRegistry.RegisterInstance<ISettings>(Settings.Instance);
+            _ = containerRegistry.Register<IDispatcherWrapper, DispatcherWrapper>();
             containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
             containerRegistry.RegisterDialog<SettingWindow>(nameof(SettingWindowViewModel));
         }

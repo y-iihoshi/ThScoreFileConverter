@@ -24,6 +24,7 @@ using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Wrappers;
 using WPFLocalizeExtension.Engine;
 
 namespace ThScoreFileConverter.ViewModels
@@ -72,6 +73,11 @@ namespace ThScoreFileConverter.ViewModels
         private readonly ISettings settings;
 
         /// <summary>
+        /// An <see cref="IDispatcherWrapper"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
+        /// </summary>
+        private readonly IDispatcherWrapper dispatcher;
+
+        /// <summary>
         /// The instance that executes a conversion process.
         /// </summary>
         private ThConverter? converter;
@@ -91,7 +97,10 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
         /// <param name="settings">The settings of this application.</param>
-        public MainWindowViewModel(IDialogService dialogService, ISettings settings)
+        /// <param name="dispatcher">
+        /// An <see cref="IDispatcherWrapper"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
+        /// </param>
+        public MainWindowViewModel(IDialogService dialogService, ISettings settings, IDispatcherWrapper dispatcher)
         {
             if (dialogService is null)
                 throw new ArgumentNullException(nameof(dialogService));
@@ -99,9 +108,13 @@ namespace ThScoreFileConverter.ViewModels
             if (settings is null)
                 throw new ArgumentNullException(nameof(settings));
 
+            if (dispatcher is null)
+                throw new ArgumentNullException(nameof(dispatcher));
+
             this.DialogService = dialogService;
 
             this.settings = settings;
+            this.dispatcher = dispatcher;
             this.converter = null;
             this.isIdle = false;
             this.log = string.Empty;
@@ -463,9 +476,9 @@ namespace ThScoreFileConverter.ViewModels
         /// Overrides the mouse cursor for the entire application.
         /// </summary>
         /// <param name="cursor">The new cursor or <c>null</c>.</param>
-        private static void OverrideCursor(Cursor? cursor)
+        private void OverrideCursor(Cursor? cursor)
         {
-            _ = Application.Current.Dispatcher.Invoke(() => Mouse.OverrideCursor = cursor);
+            this.dispatcher.Invoke(() => Mouse.OverrideCursor = cursor);
         }
 
         #region Methods for command implementation
@@ -745,7 +758,7 @@ namespace ThScoreFileConverter.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(this.IsIdle):
-                    OverrideCursor(this.IsIdle ? null : Cursors.Wait);
+                    this.OverrideCursor(this.IsIdle ? null : Cursors.Wait);
                     break;
 
                 case nameof(this.LastWorkNumber):
