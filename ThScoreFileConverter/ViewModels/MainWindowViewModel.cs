@@ -463,13 +463,9 @@ namespace ThScoreFileConverter.ViewModels
         /// Overrides the mouse cursor for the entire application.
         /// </summary>
         /// <param name="cursor">The new cursor or <c>null</c>.</param>
-        private void OverrideCursor(Cursor? cursor)
+        private static void OverrideCursor(Cursor? cursor)
         {
-            var dispatcher = Application.Current.Dispatcher;
-            if (dispatcher.CheckAccess())
-                Mouse.OverrideCursor = cursor;
-            else
-                dispatcher.Invoke(() => this.OverrideCursor(cursor));
+            _ = Application.Current.Dispatcher.Invoke(() => Mouse.OverrideCursor = cursor);
         }
 
         #region Methods for command implementation
@@ -749,7 +745,7 @@ namespace ThScoreFileConverter.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(this.IsIdle):
-                    this.OverrideCursor(this.IsIdle ? null : Cursors.Wait);
+                    OverrideCursor(this.IsIdle ? null : Cursors.Wait);
                     break;
 
                 case nameof(this.LastWorkNumber):
