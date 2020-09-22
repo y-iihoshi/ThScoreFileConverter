@@ -583,18 +583,12 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void Convert()
         {
-            if (this.converter is null)
-            {
-#if DEBUG
-                this.Log = "converter is null" + Environment.NewLine;
-#endif
-            }
-            else
+            if (this.CanConvert())
             {
                 this.IsIdle = false;
                 this.Log = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
                     + Environment.NewLine;
-                new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(this.CurrentSetting);
+                new Thread(this.converter!.Convert).Start(this.CurrentSetting);
             }
         }
 

@@ -746,8 +746,8 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsFalse(command.CanExecute());
 
             command.Execute();
-            Assert.IsFalse(window.IsIdle);
-            Assert.AreNotEqual(string.Empty, window.Log);
+            Assert.IsTrue(window.IsIdle);
+            Assert.AreEqual(string.Empty, window.Log);
         }
 
         [TestMethod]
