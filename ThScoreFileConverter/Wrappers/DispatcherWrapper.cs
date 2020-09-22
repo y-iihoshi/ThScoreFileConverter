@@ -14,7 +14,9 @@ namespace ThScoreFileConverter.Wrappers
     /// <summary>
     /// Wrapper of <see cref="Dispatcher"/>.
     /// </summary>
+#pragma warning disable CA1812 // Avoid uninstantiated internal classes
     internal class DispatcherWrapper : IDispatcherWrapper
+#pragma warning restore CA1812 // Avoid uninstantiated internal classes
     {
         private readonly Dispatcher dispatcher;
 
