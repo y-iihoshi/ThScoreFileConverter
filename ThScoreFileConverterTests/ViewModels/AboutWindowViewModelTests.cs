@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;

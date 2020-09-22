@@ -385,10 +385,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to select a best shot directory.
         /// </summary>
-        public DelegateCommand<FolderBrowserDialogActionResult> SelectBestShotDirectoryCommand
-        {
-            get; private set;
-        }
+        public DelegateCommand<FolderBrowserDialogActionResult> SelectBestShotDirectoryCommand { get; private set; }
 
         /// <summary>
         /// Gets the command invoked when the selection of template files is changed.
@@ -413,10 +410,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to select an output directory.
         /// </summary>
-        public DelegateCommand<FolderBrowserDialogActionResult> SelectOutputDirectoryCommand
-        {
-            get; private set;
-        }
+        public DelegateCommand<FolderBrowserDialogActionResult> SelectOutputDirectoryCommand { get; private set; }
 
         /// <summary>
         /// Gets the command to convert the score file.
