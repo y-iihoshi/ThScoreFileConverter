@@ -285,17 +285,17 @@ namespace ThScoreFileConverter.Actions
         /// <param name="parameter">The parameter to the action; but not used.</param>
         protected override void Invoke(object parameter)
         {
+            static void ExecuteCommand(ICommand command, SysDraw.Font font, SysDraw.Color color)
+            {
+                var result = new FontDialogActionResult(font, color);
+                if (command.CanExecute(result))
+                    command.Execute(result);
+            }
+
             using var dialog = this.CreateDialog();
 
             if (this.ShowApply && (this.ApplyCommand is { }))
-            {
-                dialog.Apply += (sender, e) =>
-                {
-                    var result = new FontDialogActionResult(dialog.Font, dialog.Color);
-                    if (this.ApplyCommand.CanExecute(result))
-                        this.ApplyCommand.Execute(result);
-                };
-            }
+                dialog.Apply += (sender, e) => ExecuteCommand(this.ApplyCommand, dialog.Font, dialog.Color);
 
             var oldFont = dialog.Font;
             var oldColor = dialog.Color;
@@ -305,22 +305,12 @@ namespace ThScoreFileConverter.Actions
             {
                 case WinForms.DialogResult.OK:
                     if (this.OkCommand is { })
-                    {
-                        var result = new FontDialogActionResult(dialog.Font, dialog.Color);
-                        if (this.OkCommand.CanExecute(result))
-                            this.OkCommand.Execute(result);
-                    }
-
+                        ExecuteCommand(this.OkCommand, dialog.Font, dialog.Color);
                     break;
 
                 case WinForms.DialogResult.Cancel:
                     if (this.CancelCommand is { })
-                    {
-                        var result = new FontDialogActionResult(oldFont, oldColor);
-                        if (this.CancelCommand.CanExecute(result))
-                            this.CancelCommand.Execute(result);
-                    }
-
+                        ExecuteCommand(this.CancelCommand, oldFont, oldColor);
                     break;
 
                 default:
