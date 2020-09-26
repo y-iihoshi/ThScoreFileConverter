@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="ThScoreFileConverter.Views.AboutWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        	 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
@@ -33,9 +34,12 @@
             <LineBreak/>
             <Run Text="{Binding Copyright, Mode=OneWay}"/>
             <LineBreak/>
-            <Hyperlink x:Name="SupportPageHyperlink"
-                       Command="{Binding OpenUriCommand}"
-                       CommandParameter="{Binding Uri}">
+            <Hyperlink x:Name="SupportPageHyperlink">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:LaunchUriOrFileAction Path="{Binding Uri, Mode=OneWay}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <Run Text="{Binding Uri, Mode=OneWay}"/>
             </Hyperlink>
         </TextBlock>

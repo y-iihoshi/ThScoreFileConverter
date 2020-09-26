@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Reflection;
@@ -14,7 +13,6 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Models;
@@ -86,11 +84,6 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string Uri { get; private set; }
 
-        /// <summary>
-        /// Gets a command which opens the specified URI.
-        /// </summary>
-        public DelegateCommand<object> OpenUriCommand { get; } = new DelegateCommand<object>(OpenUri);
-
         /// <inheritdoc/>
         public bool CanCloseDialog()
         {
@@ -105,21 +98,6 @@ namespace ThScoreFileConverter.ViewModels
         /// <inheritdoc/>
         public void OnDialogOpened(IDialogParameters parameters)
         {
-        }
-
-        /// <summary>
-        /// Opens the specified URI.
-        /// </summary>
-        /// <param name="uri">A URI to open.</param>
-        private static void OpenUri(object uri)
-        {
-            var info = new ProcessStartInfo
-            {
-                FileName = uri as string,
-                UseShellExecute = true,
-            };
-
-            using var process = Process.Start(info);
         }
     }
 }

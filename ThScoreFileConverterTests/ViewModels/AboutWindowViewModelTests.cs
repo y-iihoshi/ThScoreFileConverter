@@ -52,16 +52,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        public void OpenUriCommandTest()
-        {
-            var window = new AboutWindowViewModel();
-            var command = window.OpenUriCommand;
-            Assert.IsNotNull(command);
-            Assert.IsTrue(command.CanExecute(Resources.ProjectUrl));
-            command.Execute(Resources.ProjectUrl);
-        }
-
-        [TestMethod]
         public void CanCloseDialogTest()
         {
             var window = new AboutWindowViewModel();
