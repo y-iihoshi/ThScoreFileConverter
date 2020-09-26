@@ -26,7 +26,6 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Grid.Column="0"
-                      DisplayMemberPath="Title"
                       ItemsSource="{Binding Works}"
                       SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
                       SelectedValuePath="Number"
@@ -39,7 +38,7 @@
                                     Value="{Binding IsSupported}"/>
                         </Style.Setters>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Title}"
+                            <DataTrigger Binding="{Binding Number}"
                                          Value="">
                                 <Setter Property="Template">
                                     <Setter.Value>
@@ -52,6 +51,11 @@
                         </Style.Triggers>
                     </Style>
                 </ComboBox.ItemContainerStyle>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{lex:Loc {Binding Number}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
             <Label Grid.Column="1"
                    Content="{Binding SupportedVersions}"/>

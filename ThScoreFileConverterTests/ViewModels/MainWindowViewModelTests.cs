@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void WorksTest()
         {
             var window = CreateViewModel();
-            Assert.IsTrue(window.Works.Count > 0);
+            Assert.IsTrue(window.Works.Any());
         }
 
         [TestMethod]

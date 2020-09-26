@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -38,7 +37,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// A list of the Touhou works.
         /// </summary>
-        private static readonly ObservableCollection<Work> WorksImpl = new ObservableCollection<Work>
+        private static readonly IEnumerable<Work> WorksImpl = new[]
         {
             new Work { Number = nameof(Resources.TH06),  IsSupported = true },
             new Work { Number = nameof(Resources.TH07),  IsSupported = true },
@@ -172,7 +171,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a list of the Touhou works.
         /// </summary>
-        public ObservableCollection<Work> Works { get; private set; }
+        public IEnumerable<Work> Works { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the conversion process is idle.
