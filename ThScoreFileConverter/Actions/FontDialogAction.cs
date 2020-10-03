@@ -6,6 +6,8 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Input;
 using ThScoreFileConverter.Properties;
@@ -293,9 +295,15 @@ namespace ThScoreFileConverter.Actions
             }
 
             using var dialog = this.CreateDialog();
+            using var disposable = new SingleAssignmentDisposable();
 
             if (this.ShowApply && (this.ApplyCommand is { }))
-                dialog.Apply += (sender, e) => ExecuteCommand(this.ApplyCommand, dialog.Font, dialog.Color);
+            {
+                disposable.Disposable = Observable
+                    .FromEvent<EventHandler, EventArgs>(
+                        h => (sender, e) => h(e), h => dialog.Apply += h, h => dialog.Apply -= h)
+                    .Subscribe(_ => ExecuteCommand(this.ApplyCommand, dialog.Font, dialog.Color));
+            }
 
             var oldFont = dialog.Font;
             var oldColor = dialog.Color;
