@@ -7,14 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -30,6 +31,7 @@ namespace ThScoreFileConverter.ViewModels
     internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
         private readonly ISettings settings;
+        private readonly CompositeDisposable disposables;
         private bool disposed;
         private SysDraw.Font? font;
 
@@ -55,6 +57,7 @@ namespace ThScoreFileConverter.ViewModels
                 throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
 
             this.settings = settings;
+            this.disposables = new CompositeDisposable();
             this.disposed = false;
             this.font = null;
 
@@ -68,7 +71,9 @@ namespace ThScoreFileConverter.ViewModels
             this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
             this.ResetFontCommand = new DelegateCommand(this.ResetFont);
 
-            LocalizeDictionary.Instance.PropertyChanged += this.OnLocalizeDictionaryPropertyChanged;
+            this.disposables.Add(
+                LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
+                    .Subscribe(_ => this.RaisePropertyChanged(nameof(this.Title))));
         }
 
         /// <summary>
@@ -258,6 +263,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.font?.Dispose();
+                this.disposables.Dispose();
             }
 
             this.disposed = true;
@@ -304,18 +310,5 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         #endregion
-
-        /// <summary>
-        /// Handles the event indicating a property value of <see cref="LocalizeDictionary.Instance"/> is changed.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void OnLocalizeDictionaryPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(LocalizeDictionary.Instance.Culture))
-            {
-                this.RaisePropertyChanged(nameof(this.Title));
-            }
-        }
     }
 }
