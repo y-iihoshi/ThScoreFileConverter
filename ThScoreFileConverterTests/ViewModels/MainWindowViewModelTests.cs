@@ -77,28 +77,28 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void TitleTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.IsFalse(string.IsNullOrEmpty(window.Title));
         }
 
         [TestMethod]
         public void WorksTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.IsTrue(window.Works.Any());
         }
 
         [TestMethod]
         public void IsIdleTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.IsTrue(window.IsIdle);
         }
 
         [TestMethod]
         public void CanHandleBestShotTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.IsFalse(window.CanHandleBestShot);
         }
 
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var settingsMock = MockSettings();
             var initialLastTitle = settingsMock.Object.LastTitle;
             var dispatcherWrapperMock = MockDispatcherWrapper();
-            var window = new MainWindowViewModel(
+            using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
             Assert.AreEqual(settingsMock.Object.LastTitle, window.LastWorkNumber);
             Assert.AreNotEqual(initialLastTitle, settingsMock.Object.LastTitle);
@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SupportedVersionsTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             StringAssert.StartsWith(
                 window.SupportedVersions, Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)));
         }
@@ -135,42 +135,42 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void ScoreFileTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(string.Empty, window.ScoreFile);
         }
 
         [TestMethod]
         public void OpenScoreFileDialogInitialDirectoryTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(string.Empty, window.OpenScoreFileDialogInitialDirectory);
         }
 
         [TestMethod]
         public void BestShotDirectoryTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(string.Empty, window.BestShotDirectory);
         }
 
         [TestMethod]
         public void TemplateFilesTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(0, window.TemplateFiles.Count());
         }
 
         [TestMethod]
         public void OpenTemplateFilesDialogInitialDirectoryTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(string.Empty, window.OpenTemplateFilesDialogInitialDirectory);
         }
 
         [TestMethod]
         public void OutputDirectoryTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(string.Empty, window.OutputDirectory);
         }
 
@@ -180,7 +180,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
             var dispatcherWrapperMock = MockDispatcherWrapper();
-            var window = new MainWindowViewModel(
+            using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
             Assert.AreEqual(string.Empty, window.ImageOutputDirectory);
 
@@ -198,7 +198,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void CanReplaceCardNamesTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.IsTrue(window.CanReplaceCardNames);
         }
 
@@ -208,7 +208,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
             var dispatcherWrapperMock = MockDispatcherWrapper();
-            var window = new MainWindowViewModel(
+            using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
             Assert.IsTrue(window.HidesUntriedCards);
 
@@ -225,14 +225,14 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void LogTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
             Assert.AreEqual(string.Empty, window.Log);
         }
 
         [TestMethod]
         public void SelectScoreFileCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectScoreFileCommand;
             Assert.IsNotNull(command);
@@ -260,7 +260,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectScoreFileCommandTestNoChange()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectScoreFileCommand;
             Assert.IsNotNull(command);
@@ -280,7 +280,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectScoreFileCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectScoreFileCommand;
             Assert.IsNotNull(command);
@@ -300,7 +300,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectBestShotDirectoryCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -321,7 +321,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectBestShotDirectoryCommandTestNoChange()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -341,7 +341,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectBestShotDirectoryCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -361,7 +361,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void TemplateFilesSelectionChangedCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.TemplateFilesSelectionChangedCommand;
             Assert.IsNotNull(command);
@@ -380,7 +380,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void AddTemplateFilesCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.AddTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -409,7 +409,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void AddTemplateFilesCommandTestAppended()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.AddTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -449,7 +449,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void AddTemplateFilesCommandTestNoChange()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.AddTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -470,7 +470,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void AddTemplateFilesCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.AddTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -491,7 +491,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DeleteTemplateFilesCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DeleteTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -524,7 +524,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DeleteTemplateFilesCommandTestAll()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DeleteTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -557,7 +557,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DeleteTemplateFilesCommandTestNull()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DeleteTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -590,7 +590,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DeleteTemplateFilesCommandTestEmpty()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DeleteTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -625,7 +625,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DeleteAllTemplateFilesCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DeleteAllTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -658,7 +658,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DeleteAllTemplateFilesCommandTestEmpty()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DeleteAllTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -677,7 +677,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectOutputDirectoryCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -698,7 +698,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectOutputDirectoryCommandTestNoChange()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -718,7 +718,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void SelectOutputDirectoryCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.SelectOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -738,7 +738,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void ConvertCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.ConvertCommand;
             Assert.IsNotNull(command);
@@ -753,7 +753,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DraggingCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DraggingCommand;
             Assert.IsNotNull(command);
@@ -771,7 +771,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DraggingCommandTestNone()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DraggingCommand;
             Assert.IsNotNull(command);
@@ -789,7 +789,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropScoreFileCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropScoreFileCommand;
             Assert.IsNotNull(command);
@@ -818,7 +818,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropScoreFileCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropScoreFileCommand;
             Assert.IsNotNull(command);
@@ -840,7 +840,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropScoreFileCommandTestInvalidData()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropScoreFileCommand;
             Assert.IsNotNull(command);
@@ -860,7 +860,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropScoreFileCommandTestInvalidDataFormat()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropScoreFileCommand;
             Assert.IsNotNull(command);
@@ -880,7 +880,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropBestShotDirectoryCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -915,7 +915,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropBestShotDirectoryCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -937,7 +937,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropBestShotDirectoryCommandTestInvalidData()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -957,7 +957,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropBestShotDirectoryCommandTestInvalidDataFormat()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropBestShotDirectoryCommand;
             Assert.IsNotNull(command);
@@ -977,7 +977,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropTemplateFilesCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -1008,7 +1008,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropTemplateFilesCommandTestInvalidData()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -1028,7 +1028,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropTemplateFilesCommandTestInvalidDataFormat()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropTemplateFilesCommand;
             Assert.IsNotNull(command);
@@ -1048,7 +1048,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropOutputDirectoryCommandTest()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -1083,7 +1083,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropOutputDirectoryCommandTestNonexistent()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -1105,7 +1105,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropOutputDirectoryCommandTestInvalidData()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -1125,7 +1125,7 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void DropOutputDirectoryCommandTestInvalidDataFormat()
         {
-            var window = CreateViewModel();
+            using var window = CreateViewModel();
 
             var command = window.DropOutputDirectoryCommand;
             Assert.IsNotNull(command);
@@ -1149,7 +1149,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var settingsMock = MockSettings();
             var dispatcherWrapperMock = MockDispatcherWrapper();
 
-            var window = new MainWindowViewModel(
+            using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
 
             var command = window.OpenAboutWindowCommand;
@@ -1169,7 +1169,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var settingsMock = MockSettings();
             var dispatcherWrapperMock = MockDispatcherWrapper();
 
-            var window = new MainWindowViewModel(
+            using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
 
             var command = window.OpenSettingWindowCommand;
@@ -1183,12 +1183,40 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
+        public void DisposeTest()
+        {
+            using var window = CreateViewModel();
+            window.Dispose();
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void DisposeTestTwice()
+        {
+            using var window = CreateViewModel();
+            window.Dispose();
+            window.Dispose();
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void FinalizerTest()
+        {
+            {
+                _ = CreateViewModel();
+            }
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        [TestMethod]
         public void CultureTest()
         {
             var culture = LocalizeDictionary.Instance.Culture;
             try
             {
-                var window = CreateViewModel();
+                using var window = CreateViewModel();
 
                 var numChanged = 0;
                 using var _ = window.ObserveProperty(w => w.SupportedVersions, false).Subscribe(_ => ++numChanged);

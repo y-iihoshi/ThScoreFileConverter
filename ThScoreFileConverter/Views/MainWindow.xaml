@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
@@ -16,6 +17,12 @@
         Style="{StaticResource WindowStyleKey}"
         Title="{Binding Title}"
         UseLayoutRounding="True">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <livet:DataContextDisposeAction/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <StackPanel Margin="10"
                 Style="{StaticResource VerticalStackPanelStyle}">

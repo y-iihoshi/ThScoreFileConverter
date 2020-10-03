@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.ViewModels
     /// The view model class for <see cref="Views.MainWindow"/>.
     /// </summary>
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "For binding.")]
-    internal class MainWindowViewModel : BindableBase
+    internal class MainWindowViewModel : BindableBase, IDisposable
     {
         /// <summary>
         /// A list of the Touhou works.
@@ -77,6 +77,11 @@ namespace ThScoreFileConverter.ViewModels
         private readonly IDispatcherWrapper dispatcher;
 
         /// <summary>
+        /// <c>true</c> if the current instance has been disposed.
+        /// </summary>
+        private bool disposed;
+
+        /// <summary>
         /// The instance that executes a conversion process.
         /// </summary>
         private ThConverter? converter;
@@ -114,6 +119,7 @@ namespace ThScoreFileConverter.ViewModels
 
             this.settings = settings;
             this.dispatcher = dispatcher;
+            this.disposed = false;
             this.converter = null;
             this.isIdle = false;
             this.log = string.Empty;
@@ -159,6 +165,14 @@ namespace ThScoreFileConverter.ViewModels
                 this.LastWorkNumber = WorksImpl.First().Number;
             else
                 this.RaisePropertyChanged(nameof(this.LastWorkNumber));
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="MainWindowViewModel"/> class.
+        /// </summary>
+        ~MainWindowViewModel()
+        {
+            this.Dispose(false);
         }
 
         #region Properties to bind a view
@@ -464,6 +478,34 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets the <see cref="IDialogService"/>.
         /// </summary>
         private IDialogService DialogService { get; }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Disposes the resources of the current instance.
+        /// </summary>
+        /// <param name="disposing">
+        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // TODO
+            }
+
+            this.disposed = true;
+        }
 
         /// <summary>
         /// Overrides the mouse cursor for the entire application.
