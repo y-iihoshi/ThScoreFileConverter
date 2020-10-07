@@ -23,7 +23,7 @@ jobs:
       run: git fetch --prune --unshallow
 
     - name: Cache Python packages
-      uses: actions/cache@v1.1.2
+      uses: actions/cache@v2.1.1
       if: startsWith(runner.os, 'Windows')
       with:
         path: ~\AppData\Local\pip\Cache
@@ -40,7 +40,7 @@ jobs:
         python -m pip install -r ManualGenerator\requirements.txt
 
     - name: Cache NuGet packages
-      uses: actions/cache@v1.1.2
+      uses: actions/cache@v2.1.1
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ matrix.target-framework }}-${{ hashFiles('**/*.csproj') }}
