@@ -6,12 +6,7 @@ updates:
       interval: "weekly"
       day: "friday"
   - package-ecosystem: "nuget"
-    directory: "/ThScoreFileConverter"
-    schedule:
-      interval: "weekly"
-      day: "friday"
-  - package-ecosystem: "nuget"
-    directory: "/ThScoreFileConverterTests"
+    directory: "/"
     schedule:
       interval: "weekly"
       day: "friday"
