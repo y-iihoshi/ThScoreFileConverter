@@ -50,8 +50,8 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore ThScoreFileConverter.sln
 
-    - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Build
       run: >
