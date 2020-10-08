@@ -44,9 +44,6 @@ jobs:
           ${{ runner.os }}-nuget-${{ matrix.target-framework }}-
           ${{ runner.os }}-nuget-
 
-    - name: Setup NuGet.exe for use with actions
-      uses: NuGet/setup-nuget@v1.0.2
-
     - name: Restore NuGet packages
       run: nuget restore ThScoreFileConverter.sln
 
