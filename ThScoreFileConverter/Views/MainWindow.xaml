@@ -11,7 +11,7 @@
         lex:LocalizeDictionary.DesignCulture="ja-JP"
         lex:LocalizeDictionary.Provider="{x:Static m:LocalizationProvider.Instance}"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        IsEnabled="{Binding IsIdle}"
+        IsEnabled="{Binding IsIdle.Value}"
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
         Style="{StaticResource WindowStyleKey}"
@@ -286,7 +286,7 @@
                  Height="70"
                  IsReadOnly="True"
                  IsUndoEnabled="False"
-                 Text="{Binding Log, Mode=OneWay, NotifyOnTargetUpdated=True}"
+                 Text="{Binding Log.Value, Mode=OneWay, NotifyOnTargetUpdated=True}"
                  TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Visible">
             <i:Interaction.Behaviors>

@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void IsIdleTest()
         {
             using var window = CreateViewModel();
-            Assert.IsTrue(window.IsIdle);
+            Assert.IsTrue(window.IsIdle.Value);
         }
 
         [TestMethod]
@@ -226,7 +226,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void LogTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(string.Empty, window.Log);
+            Assert.AreEqual(string.Empty, window.Log.Value);
         }
 
         [TestMethod]
@@ -746,8 +746,8 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsFalse(command.CanExecute());
 
             command.Execute();
-            Assert.IsTrue(window.IsIdle);
-            Assert.AreEqual(string.Empty, window.Log);
+            Assert.IsTrue(window.IsIdle.Value);
+            Assert.AreEqual(string.Empty, window.Log.Value);
         }
 
         [TestMethod]

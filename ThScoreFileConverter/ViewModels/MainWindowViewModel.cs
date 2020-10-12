@@ -20,6 +20,7 @@ using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Extensions;
@@ -94,16 +95,6 @@ namespace ThScoreFileConverter.ViewModels
         private ThConverter? converter;
 
         /// <summary>
-        /// Indicates whether a conversion process is idle.
-        /// </summary>
-        private bool isIdle;
-
-        /// <summary>
-        /// A log text.
-        /// </summary>
-        private string log;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
@@ -129,11 +120,11 @@ namespace ThScoreFileConverter.ViewModels
             this.disposables = new CompositeDisposable();
             this.disposed = false;
             this.converter = null;
-            this.isIdle = false;
-            this.log = string.Empty;
 
             this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
             this.Works = WorksImpl;
+            this.IsIdle = new ReactivePropertySlim<bool>(true);
+            this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
                 new DelegateCommand<OpenFileDialogActionResult>(this.SelectScoreFile);
@@ -171,6 +162,8 @@ namespace ThScoreFileConverter.ViewModels
                 LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
                     .Subscribe(_ => this.RaisePropertyChanged(nameof(this.SupportedVersions))));
 
+            this.disposables.Add(this.IsIdle.Subscribe(idle => this.OverrideCursor(idle ? null : Cursors.Wait)));
+
             if (string.IsNullOrEmpty(this.LastWorkNumber))
                 this.LastWorkNumber = WorksImpl.First().Number;
             else
@@ -200,11 +193,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a value indicating whether the conversion process is idle.
         /// </summary>
-        public bool IsIdle
-        {
-            get => this.isIdle;
-            private set => _ = this.SetProperty(ref this.isIdle, value);
-        }
+        public ReactivePropertySlim<bool> IsIdle { get; }
 
         /// <summary>
         /// Gets a value indicating whether the conversion process can handle best shot files.
@@ -392,11 +381,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a log text.
         /// </summary>
-        public string Log
-        {
-            get => this.log;
-            private set => _ = this.SetProperty(ref this.log, value);
-        }
+        public ReactivePropertySlim<string> Log { get; }
 
         #region Commands
 
@@ -511,6 +496,8 @@ namespace ThScoreFileConverter.ViewModels
 
             if (disposing)
             {
+                this.Log.Dispose();
+                this.IsIdle.Dispose();
                 this.disposables.Dispose();
             }
 
@@ -636,8 +623,8 @@ namespace ThScoreFileConverter.ViewModels
         {
             if (this.CanConvert())
             {
-                this.IsIdle = false;
-                this.Log = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
+                this.IsIdle.Value = false;
+                this.Log.Value = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
                     + Environment.NewLine;
                 new Thread(this.converter!.Convert).Start(this.CurrentSetting);
             }
@@ -663,7 +650,7 @@ namespace ThScoreFileConverter.ViewModels
             }
             catch (Exception ex)
             {
-                this.Log += ex.Message + Environment.NewLine;
+                this.Log.Value += ex.Message + Environment.NewLine;
                 throw;
             }
         }
@@ -688,7 +675,7 @@ namespace ThScoreFileConverter.ViewModels
             }
             catch (Exception ex)
             {
-                this.Log += ex.Message + Environment.NewLine;
+                this.Log.Value += ex.Message + Environment.NewLine;
                 throw;
             }
         }
@@ -713,7 +700,7 @@ namespace ThScoreFileConverter.ViewModels
             }
             catch (Exception ex)
             {
-                this.Log += ex.Message + Environment.NewLine;
+                this.Log.Value += ex.Message + Environment.NewLine;
                 throw;
             }
         }
@@ -737,7 +724,7 @@ namespace ThScoreFileConverter.ViewModels
             }
             catch (Exception ex)
             {
-                this.Log += ex.Message + Environment.NewLine;
+                this.Log.Value += ex.Message + Environment.NewLine;
                 throw;
             }
         }
@@ -762,7 +749,7 @@ namespace ThScoreFileConverter.ViewModels
             }
             catch (Exception ex)
             {
-                this.Log += ex.Message + Environment.NewLine;
+                this.Log.Value += ex.Message + Environment.NewLine;
                 throw;
             }
         }
@@ -796,15 +783,11 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.IsIdle):
-                    this.OverrideCursor(this.IsIdle ? null : Cursors.Wait);
-                    break;
-
                 case nameof(this.LastWorkNumber):
                     this.converter = ThConverterFactory.Create(this.settings.LastTitle);
                     if (this.converter is null)
                     {
-                        this.Log = "Failed to create a converter: "
+                        this.Log.Value = "Failed to create a converter: "
                             + $"{nameof(this.settings.LastTitle)} = {this.settings.LastTitle}"
                             + Environment.NewLine;
                     }
@@ -813,10 +796,10 @@ namespace ThScoreFileConverter.ViewModels
                         this.converter.ConvertFinished += this.OnConvertFinished;
                         this.converter.ConvertAllFinished += this.OnConvertAllFinished;
                         this.converter.ExceptionOccurred += this.OnExceptionOccurred;
-                        this.Log = string.Empty;
+                        this.Log.Value = string.Empty;
                     }
 
-                    this.IsIdle = true;
+                    this.IsIdle.Value = true;
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.ScoreFile));
@@ -864,7 +847,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="e">The event data.</param>
         private void OnConvertFinished(object? sender, ThConverterEventArgs e)
         {
-            this.Log += e.Message + Environment.NewLine;
+            this.Log.Value += e.Message + Environment.NewLine;
         }
 
         /// <summary>
@@ -874,9 +857,9 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="e">The event data.</param>
         private void OnConvertAllFinished(object? sender, ThConverterEventArgs e)
         {
-            this.Log += Utils.GetLocalizedValues<string>(nameof(Resources.MessageConversionFinished))
+            this.Log.Value += Utils.GetLocalizedValues<string>(nameof(Resources.MessageConversionFinished))
                 + Environment.NewLine;
-            this.IsIdle = true;
+            this.IsIdle.Value = true;
         }
 
         /// <summary>
@@ -887,11 +870,11 @@ namespace ThScoreFileConverter.ViewModels
         private void OnExceptionOccurred(object? sender, ExceptionOccurredEventArgs e)
         {
 #if DEBUG
-            this.Log += e.Exception.Message + Environment.NewLine;
+            this.Log.Value += e.Exception.Message + Environment.NewLine;
 #endif
-            this.Log += Utils.GetLocalizedValues<string>(nameof(Resources.MessageUnhandledExceptionOccurred))
+            this.Log.Value += Utils.GetLocalizedValues<string>(nameof(Resources.MessageUnhandledExceptionOccurred))
                 + Environment.NewLine;
-            this.IsIdle = true;
+            this.IsIdle.Value = true;
         }
 
         #endregion
