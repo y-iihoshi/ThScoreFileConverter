@@ -138,7 +138,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
         /// input files.
         /// </summary>
-        public IDictionary<int, string> InputEncodings { get; private set; }
+        public IDictionary<int, string> InputEncodings { get; }
 
         /// <summary>
         /// Gets or sets the code page identifier for input files.
@@ -161,7 +161,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
         /// output files.
         /// </summary>
-        public IDictionary<int, string> OutputEncodings { get; private set; }
+        public IDictionary<int, string> OutputEncodings { get; }
 
         /// <summary>
         /// Gets or sets the code page identifier for output files.
@@ -202,22 +202,22 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command invoked when the user clicks an <c>OK</c> button of the font dialog box.
         /// </summary>
-        public DelegateCommand<FontDialogActionResult> FontDialogOkCommand { get; private set; }
+        public DelegateCommand<FontDialogActionResult> FontDialogOkCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when the user clicks an <c>Apply</c> button of the font dialog box.
         /// </summary>
-        public DelegateCommand<FontDialogActionResult> FontDialogApplyCommand { get; private set; }
+        public DelegateCommand<FontDialogActionResult> FontDialogApplyCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when the user cancels the font choice.
         /// </summary>
-        public DelegateCommand<FontDialogActionResult> FontDialogCancelCommand { get; private set; }
+        public DelegateCommand<FontDialogActionResult> FontDialogCancelCommand { get; }
 
         /// <summary>
         /// Gets the command to reset the UI font.
         /// </summary>
-        public DelegateCommand ResetFontCommand { get; private set; }
+        public DelegateCommand ResetFontCommand { get; }
 
         #endregion
 

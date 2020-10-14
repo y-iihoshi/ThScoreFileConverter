@@ -57,32 +57,32 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a title of the About window.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; }
 
         /// <summary>
         /// Gets the icon displaying on the About window.
         /// </summary>
-        public ImageSource Icon { get; private set; }
+        public ImageSource Icon { get; }
 
         /// <summary>
         /// Gets a name of this assembly.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets a version string of this assembly.
         /// </summary>
-        public string Version { get; private set; }
+        public string Version { get; }
 
         /// <summary>
         /// Gets a copyright string of this assembly.
         /// </summary>
-        public string Copyright { get; private set; }
+        public string Copyright { get; }
 
         /// <summary>
         /// Gets a URI string.
         /// </summary>
-        public string Uri { get; private set; }
+        public string Uri { get; }
 
         /// <inheritdoc/>
         public bool CanCloseDialog()

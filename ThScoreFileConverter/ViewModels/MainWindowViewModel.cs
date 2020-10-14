@@ -183,12 +183,12 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a title string.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; }
 
         /// <summary>
         /// Gets a list of the Touhou works.
         /// </summary>
-        public IEnumerable<Work> Works { get; private set; }
+        public IEnumerable<Work> Works { get; }
 
         /// <summary>
         /// Gets a value indicating whether the conversion process is idle.
@@ -388,77 +388,77 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to select a score file.
         /// </summary>
-        public DelegateCommand<OpenFileDialogActionResult> SelectScoreFileCommand { get; private set; }
+        public DelegateCommand<OpenFileDialogActionResult> SelectScoreFileCommand { get; }
 
         /// <summary>
         /// Gets the command to select a best shot directory.
         /// </summary>
-        public DelegateCommand<FolderBrowserDialogActionResult> SelectBestShotDirectoryCommand { get; private set; }
+        public DelegateCommand<FolderBrowserDialogActionResult> SelectBestShotDirectoryCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when the selection of template files is changed.
         /// </summary>
-        public DelegateCommand TemplateFilesSelectionChangedCommand { get; private set; }
+        public DelegateCommand TemplateFilesSelectionChangedCommand { get; }
 
         /// <summary>
         /// Gets the command to add some files to the list of template files.
         /// </summary>
-        public DelegateCommand<OpenFileDialogActionResult> AddTemplateFilesCommand { get; private set; }
+        public DelegateCommand<OpenFileDialogActionResult> AddTemplateFilesCommand { get; }
 
         /// <summary>
         /// Gets the command to delete some files from the list of template files.
         /// </summary>
-        public DelegateCommand<IList?> DeleteTemplateFilesCommand { get; private set; }
+        public DelegateCommand<IList?> DeleteTemplateFilesCommand { get; }
 
         /// <summary>
         /// Gets the command to delete all files from the list of template files.
         /// </summary>
-        public DelegateCommand DeleteAllTemplateFilesCommand { get; private set; }
+        public DelegateCommand DeleteAllTemplateFilesCommand { get; }
 
         /// <summary>
         /// Gets the command to select an output directory.
         /// </summary>
-        public DelegateCommand<FolderBrowserDialogActionResult> SelectOutputDirectoryCommand { get; private set; }
+        public DelegateCommand<FolderBrowserDialogActionResult> SelectOutputDirectoryCommand { get; }
 
         /// <summary>
         /// Gets the command to convert the score file.
         /// </summary>
-        public DelegateCommand ConvertCommand { get; private set; }
+        public DelegateCommand ConvertCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when a dragging event is occurred on a UI element.
         /// </summary>
-        public DelegateCommand<DragEventArgs> DraggingCommand { get; private set; }
+        public DelegateCommand<DragEventArgs> DraggingCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when a score file is dropped on a UI element.
         /// </summary>
-        public DelegateCommand<DragEventArgs> DropScoreFileCommand { get; private set; }
+        public DelegateCommand<DragEventArgs> DropScoreFileCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when a best shot directory is dropped on a UI element.
         /// </summary>
-        public DelegateCommand<DragEventArgs> DropBestShotDirectoryCommand { get; private set; }
+        public DelegateCommand<DragEventArgs> DropBestShotDirectoryCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when some template files are dropped on a UI element.
         /// </summary>
-        public DelegateCommand<DragEventArgs> DropTemplateFilesCommand { get; private set; }
+        public DelegateCommand<DragEventArgs> DropTemplateFilesCommand { get; }
 
         /// <summary>
         /// Gets the command invoked when an output directory is dropped on a UI element.
         /// </summary>
-        public DelegateCommand<DragEventArgs> DropOutputDirectoryCommand { get; private set; }
+        public DelegateCommand<DragEventArgs> DropOutputDirectoryCommand { get; }
 
         /// <summary>
         /// Gets the command to open an about window.
         /// </summary>
-        public DelegateCommand OpenAboutWindowCommand { get; private set; }
+        public DelegateCommand OpenAboutWindowCommand { get; }
 
         /// <summary>
         /// Gets the command to open a setting window.
         /// </summary>
-        public DelegateCommand OpenSettingWindowCommand { get; private set; }
+        public DelegateCommand OpenSettingWindowCommand { get; }
 
         #endregion
 
