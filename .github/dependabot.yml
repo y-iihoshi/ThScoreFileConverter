@@ -5,13 +5,19 @@ updates:
     schedule:
       interval: "weekly"
       day: "friday"
+    reviewers:
+      - "y-iihoshi"
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "friday"
+    reviewers:
+      - "y-iihoshi"
   - package-ecosystem: "pip"
     directory: "/ManualGenerator"
     schedule:
       interval: "weekly"
       day: "friday"
+    reviewers:
+      - "y-iihoshi"
