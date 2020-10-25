@@ -9,7 +9,6 @@
         	 xmlns:m="clr-namespace:ThScoreFileConverter.Models"
              lex:LocalizeDictionary.DesignCulture="ja-JP"
              lex:LocalizeDictionary.Provider="{x:Static m:LocalizationProvider.Instance}"
-             prism:ViewModelLocator.AutoWireViewModel="True"
              FocusManager.FocusedElement="{x:Reference Name=OkButton}"
              UseLayoutRounding="True">
 
