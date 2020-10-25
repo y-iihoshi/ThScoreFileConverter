@@ -34,14 +34,14 @@ namespace ThScoreFileConverterTests.ViewModels
             return mock;
         }
 
-        private static Mock<IDispatcherWrapper> MockDispatcherWrapper() => new Mock<IDispatcherWrapper>();
+        private static Mock<IDispatcherAdapter> MockDispatcherAdapter() => new Mock<IDispatcherAdapter>();
 
         private static MainWindowViewModel CreateViewModel()
         {
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
-            var dispatcherWrapperMock = MockDispatcherWrapper();
-            return new MainWindowViewModel(dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
+            var dispatcherAdapterMock = MockDispatcherAdapter();
+            return new MainWindowViewModel(dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
         }
 
         private static DragEventArgs? CreateDragEventArgs(IDataObject data, RoutedEvent routedEvent)
@@ -108,9 +108,9 @@ namespace ThScoreFileConverterTests.ViewModels
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
             var initialLastTitle = settingsMock.Object.LastTitle;
-            var dispatcherWrapperMock = MockDispatcherWrapper();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
+                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
             Assert.AreEqual(settingsMock.Object.LastTitle, window.LastWorkNumber);
             Assert.AreNotEqual(initialLastTitle, settingsMock.Object.LastTitle);
 
@@ -179,9 +179,9 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
-            var dispatcherWrapperMock = MockDispatcherWrapper();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
+                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
             Assert.AreEqual(string.Empty, window.ImageOutputDirectory);
 
             var numChanged = 0;
@@ -207,9 +207,9 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
-            var dispatcherWrapperMock = MockDispatcherWrapper();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
+                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
             Assert.IsTrue(window.HidesUntriedCards);
 
             var numChanged = 0;
@@ -1147,10 +1147,10 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
-            var dispatcherWrapperMock = MockDispatcherWrapper();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
 
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
+                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
 
             var command = window.OpenAboutWindowCommand;
             Assert.IsNotNull(command);
@@ -1167,10 +1167,10 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
-            var dispatcherWrapperMock = MockDispatcherWrapper();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
 
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherWrapperMock.Object);
+                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
 
             var command = window.OpenSettingWindowCommand;
             Assert.IsNotNull(command);

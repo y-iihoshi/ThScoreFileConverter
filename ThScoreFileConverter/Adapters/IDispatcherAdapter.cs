@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IDispatcherWrapper.cs" company="None">
+// <copyright file="IDispatcherAdapter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Wrappers
     /// <summary>
     /// Defines the interface of a wrapper of <see cref="Dispatcher"/>.
     /// </summary>
-    internal interface IDispatcherWrapper
+    internal interface IDispatcherAdapter
     {
         /// <summary>
         /// Executes the specified <see cref="Action"/> synchronously on the thread the underlying

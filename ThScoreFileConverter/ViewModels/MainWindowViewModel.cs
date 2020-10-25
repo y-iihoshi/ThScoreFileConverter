@@ -75,9 +75,9 @@ namespace ThScoreFileConverter.ViewModels
         private readonly ISettings settings;
 
         /// <summary>
-        /// An <see cref="IDispatcherWrapper"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
+        /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
         /// </summary>
-        private readonly IDispatcherWrapper dispatcher;
+        private readonly IDispatcherAdapter dispatcher;
 
         /// <summary>
         /// A group of disposable resources.
@@ -100,9 +100,9 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
         /// <param name="settings">The settings of this application.</param>
         /// <param name="dispatcher">
-        /// An <see cref="IDispatcherWrapper"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
+        /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
         /// </param>
-        public MainWindowViewModel(IDialogService dialogService, ISettings settings, IDispatcherWrapper dispatcher)
+        public MainWindowViewModel(IDialogService dialogService, ISettings settings, IDispatcherAdapter dispatcher)
         {
             if (dialogService is null)
                 throw new ArgumentNullException(nameof(dialogService));
