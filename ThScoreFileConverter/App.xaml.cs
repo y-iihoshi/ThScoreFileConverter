@@ -9,9 +9,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 using Prism.Ioc;
 using Prism.Unity;
+using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
@@ -27,45 +27,14 @@ namespace ThScoreFileConverter
     /// </summary>
     public partial class App : PrismApplication
     {
-        /// <summary>
-        /// Gets the font family used for the UI of this application.
-        /// </summary>
-        public FontFamily FontFamily
-        {
-            get => (FontFamily)this.Resources["FontFamilyKey"];
-            private set => this.Resources["FontFamilyKey"] = value;
-        }
+        private readonly IResourceDictionaryAdapter adapter;
 
         /// <summary>
-        /// Gets the font size used for the UI of this application.
+        /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
-        public double FontSize
+        public App()
         {
-            get => (double)this.Resources["FontSizeKey"];
-            private set => this.Resources["FontSizeKey"] = value;
-        }
-
-        /// <summary>
-        /// Updates the resources of this application.
-        /// </summary>
-        /// <param name="fontFamily">The font family used for the UI of this application.</param>
-        /// <param name="fontSize">The font size used for the UI of this application.</param>
-        public void UpdateResources(FontFamily fontFamily, double? fontSize)
-        {
-            if (fontFamily is { })
-                this.FontFamily = fontFamily;
-            if (fontSize.HasValue)
-                this.FontSize = fontSize.Value;
-        }
-
-        /// <summary>
-        /// Updates the resources of this application.
-        /// </summary>
-        /// <param name="fontFamilyName">The font family name used for the UI of this application.</param>
-        /// <param name="fontSize">The font size used for the UI of this application.</param>
-        public void UpdateResources(string fontFamilyName, double? fontSize)
-        {
-            this.UpdateResources(new FontFamily(fontFamilyName), fontSize);
+            this.adapter = new ResourceDictionaryAdapter(this.Resources);
         }
 
         /// <inheritdoc/>
@@ -76,6 +45,7 @@ namespace ThScoreFileConverter
                 container.EnableDebugDiagnostic();
 #endif
 
+            _ = containerRegistry.RegisterInstance(this.adapter);
             _ = containerRegistry.RegisterInstance<ISettings>(Settings.Instance);
             _ = containerRegistry.Register<IDispatcherAdapter, DispatcherAdapter>();
             containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
@@ -111,7 +81,7 @@ namespace ThScoreFileConverter
                     MessageBoxImage.Warning);
             }
 
-            this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+            this.adapter.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
 
             var provider = LocalizationProvider.Instance;
             LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.DefaultProviderProperty, provider);
@@ -133,8 +103,8 @@ namespace ThScoreFileConverter
             base.OnExit(e);
 
             Settings.Instance.Language = LocalizeDictionary.Instance.Culture.Name;
-            Settings.Instance.FontFamilyName = this.FontFamily.ToString();
-            Settings.Instance.FontSize = this.FontSize;
+            Settings.Instance.FontFamilyName = this.adapter.FontFamily.ToString();
+            Settings.Instance.FontSize = this.adapter.FontSize;
 
             Settings.Instance.Save(Prop.Resources.SettingFileName);
         }

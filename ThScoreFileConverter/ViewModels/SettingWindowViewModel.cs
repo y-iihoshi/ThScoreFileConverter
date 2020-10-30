@@ -17,6 +17,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Actions;
+using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using WPFLocalizeExtension.Engine;
@@ -31,6 +32,7 @@ namespace ThScoreFileConverter.ViewModels
     internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
         private readonly ISettings settings;
+        private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
         private readonly CompositeDisposable disposables;
         private bool disposed;
         private SysDraw.Font? font;
@@ -39,10 +41,14 @@ namespace ThScoreFileConverter.ViewModels
         /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
         /// </summary>
         /// <param name="settings">The settings of this application.</param>
-        public SettingWindowViewModel(ISettings settings)
+        /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
+        public SettingWindowViewModel(ISettings settings, IResourceDictionaryAdapter adapter)
         {
             if (settings is null)
                 throw new ArgumentNullException(nameof(settings));
+
+            if (adapter is null)
+                throw new ArgumentNullException(nameof(adapter));
 
             if (!settings.OutputNumberGroupSeparator.HasValue)
             {
@@ -57,6 +63,7 @@ namespace ThScoreFileConverter.ViewModels
                 throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
 
             this.settings = settings;
+            this.resourceDictionaryAdapter = adapter;
             this.disposables = new CompositeDisposable();
             this.disposed = false;
             this.font = null;
@@ -103,9 +110,10 @@ namespace ThScoreFileConverter.ViewModels
         {
             get
             {
-                var app = (App)Application.Current;
                 this.font?.Dispose();
-                this.font = new SysDraw.Font(app.FontFamily.ToString(), (float)app.FontSize);
+                this.font = new SysDraw.Font(
+                    this.resourceDictionaryAdapter.FontFamily.ToString(),
+                    (float)this.resourceDictionaryAdapter.FontSize);
                 return this.font;
             }
         }
@@ -289,11 +297,8 @@ namespace ThScoreFileConverter.ViewModels
         private void ApplyFont(FontDialogActionResult result)
         {
             this.ThrowIfDisposed();
-            if (Application.Current is App app)
-            {
-                app.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
-                this.RaisePropertyChanged(nameof(this.Font));
-            }
+            this.resourceDictionaryAdapter.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
+            this.RaisePropertyChanged(nameof(this.Font));
         }
 
         /// <summary>
@@ -302,11 +307,8 @@ namespace ThScoreFileConverter.ViewModels
         private void ResetFont()
         {
             this.ThrowIfDisposed();
-            if (Application.Current is App app)
-            {
-                app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-                this.RaisePropertyChanged(nameof(this.Font));
-            }
+            this.resourceDictionaryAdapter.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
+            this.RaisePropertyChanged(nameof(this.Font));
         }
 
         #endregion
