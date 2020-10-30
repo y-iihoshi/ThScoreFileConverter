@@ -43,14 +43,14 @@ namespace ThScoreFileConverter.Adapters
         /// <inheritdoc/>
         public FontFamily FontFamily
         {
-            get => (FontFamily)this.dictionary[FontFamilyKey];
+            get => this.dictionary[FontFamilyKey] is FontFamily family ? family : new FontFamily();
             private set => this.dictionary[FontFamilyKey] = value;
         }
 
         /// <inheritdoc/>
         public double FontSize
         {
-            get => (double)this.dictionary[FontSizeKey];
+            get => this.dictionary[FontSizeKey] is double size ? size : default;
             private set => this.dictionary[FontSizeKey] = value;
         }
 
