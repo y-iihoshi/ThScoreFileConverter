@@ -63,7 +63,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 .SetupProperty(m => m.InputCodePageId, default(int))
                 .SetupProperty(m => m.OutputCodePageId, default(int));
             var adapterMock = MockResourceDictionaryAdapter();
-            Assert.ThrowsException<ArgumentException>(
+            _ = Assert.ThrowsException<ArgumentException>(
                 () => new SettingWindowViewModel(settingsMock.Object, adapterMock.Object));
         }
 
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 .SetupProperty(m => m.OutputNumberGroupSeparator, default(bool))
                 .SetupProperty(m => m.OutputCodePageId, default(int));
             var adapterMock = MockResourceDictionaryAdapter();
-            Assert.ThrowsException<ArgumentException>(
+            _ = Assert.ThrowsException<ArgumentException>(
                 () => new SettingWindowViewModel(settingsMock.Object, adapterMock.Object));
         }
 
