@@ -189,9 +189,12 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void CultureTest()
         {
-            var culture = LocalizeDictionary.Instance.Culture;
+            var backupCulture = LocalizeDictionary.Instance.Culture;
             try
             {
+                var culture = new CultureInfo("en-US");
+                LocalizeDictionary.Instance.Culture = culture;
+
                 var adapterMock = MockResourceDictionaryAdapter();
                 using var window = new SettingWindowViewModel(DefaultSettingsMock.Object, adapterMock.Object);
                 Assert.AreEqual(culture, window.Culture);
@@ -201,16 +204,16 @@ namespace ThScoreFileConverterTests.ViewModels
                 using var _1 = window.ObserveProperty(w => w.Culture, false).Subscribe(_ => ++numCultureChanged);
                 using var _2 = window.ObserveProperty(w => w.Title, false).Subscribe(_ => ++numTitleChanged);
 
-                var expected = CultureInfo.CurrentCulture;
+                var expected = new CultureInfo("ja-JP");
                 window.Culture = expected;
-                Assert.AreEqual((expected != culture) ? 1 : 0, numCultureChanged);
-                Assert.AreEqual((expected != culture) ? 1 : 0, numTitleChanged);
+                Assert.AreEqual(1, numCultureChanged);
+                Assert.AreEqual(1, numTitleChanged);
                 Assert.AreEqual(expected, window.Culture);
                 Assert.AreEqual(expected, LocalizeDictionary.Instance.Culture);
             }
             finally
             {
-                LocalizeDictionary.Instance.Culture = culture;
+                LocalizeDictionary.Instance.Culture = backupCulture;
             }
         }
 

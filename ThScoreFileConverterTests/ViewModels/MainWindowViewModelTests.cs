@@ -75,6 +75,33 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
+        public void MainWindowViewModelTestNullDialogService()
+        {
+            var settingsMock = MockSettings();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => new MainWindowViewModel(null!, settingsMock.Object, dispatcherAdapterMock.Object));
+        }
+
+        [TestMethod]
+        public void MainWindowViewModelTestNullSettings()
+        {
+            var dialogServiceMock = MockDialogService();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => new MainWindowViewModel(dialogServiceMock.Object, null!, dispatcherAdapterMock.Object));
+        }
+
+        [TestMethod]
+        public void MainWindowViewModelTestNullDispatcherAdapter()
+        {
+            var dialogServiceMock = MockDialogService();
+            var settingsMock = MockSettings();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => new MainWindowViewModel(dialogServiceMock.Object, settingsMock.Object, null!));
+        }
+
+        [TestMethod]
         public void TitleTest()
         {
             using var window = CreateViewModel();
@@ -1213,21 +1240,24 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void CultureTest()
         {
-            var culture = LocalizeDictionary.Instance.Culture;
+            var backupCulture = LocalizeDictionary.Instance.Culture;
             try
             {
+                var culture = new CultureInfo("en-US");
+                LocalizeDictionary.Instance.Culture = culture;
+
                 using var window = CreateViewModel();
 
                 var numChanged = 0;
                 using var _ = window.ObserveProperty(w => w.SupportedVersions, false).Subscribe(_ => ++numChanged);
 
-                var expected = CultureInfo.CurrentCulture;
+                var expected = new CultureInfo("ja-JP");
                 LocalizeDictionary.Instance.Culture = expected;
-                Assert.AreEqual((expected != culture) ? 1 : 0, numChanged);
+                Assert.AreEqual(1, numChanged);
             }
             finally
             {
-                LocalizeDictionary.Instance.Culture = culture;
+                LocalizeDictionary.Instance.Culture = backupCulture;
             }
         }
     }
