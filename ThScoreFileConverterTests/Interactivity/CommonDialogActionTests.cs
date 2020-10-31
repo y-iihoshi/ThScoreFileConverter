@@ -10,20 +10,20 @@ namespace ThScoreFileConverterTests.Interactivity
 {
     internal class DerivedAction : CommonDialogAction
     {
-        protected override void Invoke(object parameter) => throw new NotImplementedException();
+        protected override void Invoke(object parameter) { }
     }
 
     internal class Site : ISite
     {
-        public IComponent Component => throw new NotImplementedException();
+        public IComponent Component => null!;
 
-        public IContainer Container => throw new NotImplementedException();
+        public IContainer Container => null!;
 
-        public bool DesignMode => throw new NotImplementedException();
+        public bool DesignMode => default;
 
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get; set; } = string.Empty;
 
-        public object GetService(Type serviceType) => throw new NotImplementedException();
+        public object GetService(Type serviceType) => null!;
     }
 
     [TestClass]

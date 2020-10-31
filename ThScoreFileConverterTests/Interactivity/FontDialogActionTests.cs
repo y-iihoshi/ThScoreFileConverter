@@ -170,5 +170,50 @@ namespace ThScoreFileConverterTests.Interactivity
             action.ShowHelp = true;
             Assert.IsTrue(action.ShowHelp);
         }
+
+        [TestMethod]
+        public void CreateDialogTest()
+        {
+            var action = new FontDialogAction
+            {
+                ApplyCommand = ApplicationCommands.NotACommand,
+                AllowScriptChange = false,
+                AllowSimulations = false,
+                AllowVectorFonts = false,
+                AllowVerticalFonts = false,
+                Color = SysDraw.Color.White,
+                FixedPitchOnly = true,
+                Font = SysDraw.SystemFonts.CaptionFont,
+                FontMustExist = true,
+                MaxSize = 72,
+                MinSize = 8,
+                ScriptsOnly = true,
+                ShowApply = true,
+                ShowColor = true,
+                ShowEffects = false,
+                ShowHelp = true,
+                Site = new Site(),
+                Tag = new object(),
+            };
+
+            using var dialog = action.CreateDialog();
+            Assert.AreEqual(action.AllowScriptChange, dialog.AllowScriptChange);
+            Assert.AreEqual(action.AllowSimulations, dialog.AllowSimulations);
+            Assert.AreEqual(action.AllowVectorFonts, dialog.AllowVectorFonts);
+            Assert.AreEqual(action.AllowVerticalFonts, dialog.AllowVerticalFonts);
+            Assert.AreEqual(action.Color, dialog.Color);
+            Assert.AreEqual(action.FixedPitchOnly, dialog.FixedPitchOnly);
+            Assert.AreEqual(action.Font, dialog.Font);
+            Assert.AreEqual(action.FontMustExist, dialog.FontMustExist);
+            Assert.AreEqual(action.MaxSize, dialog.MaxSize);
+            Assert.AreEqual(action.MinSize, dialog.MinSize);
+            Assert.AreEqual(action.ScriptsOnly, dialog.ScriptsOnly);
+            Assert.AreEqual(action.ShowApply, dialog.ShowApply);
+            Assert.AreEqual(action.ShowColor, dialog.ShowColor);
+            Assert.AreEqual(action.ShowEffects, dialog.ShowEffects);
+            Assert.AreEqual(action.ShowHelp, dialog.ShowHelp);
+            Assert.AreEqual(action.Site, dialog.Site);
+            Assert.AreEqual(action.Tag, dialog.Tag);
+        }
     }
 }

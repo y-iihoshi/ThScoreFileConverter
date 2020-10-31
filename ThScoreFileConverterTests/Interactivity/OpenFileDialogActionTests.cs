@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Interactivity
             var action = new OpenFileDialogAction();
             Assert.AreEqual(string.Empty, action.Filter);
 
-            var filter = "*.dat";
+            var filter = "All files (*.*)|*.*";
             action.Filter = filter;
             Assert.AreEqual(filter, action.Filter);
         }
@@ -190,6 +190,56 @@ namespace ThScoreFileConverterTests.Interactivity
 
             action.ValidateNames = false;
             Assert.IsFalse(action.ValidateNames);
+        }
+
+        [TestMethod]
+        public void CreateDialogTest()
+        {
+            var action = new OpenFileDialogAction
+            {
+                AddExtension = false,
+                AutoUpgradeEnabled = false,
+                CheckFileExists = false,
+                CheckPathExists = false,
+                DefaultExt = "dat",
+                DereferenceLinks = false,
+                FileName = "score.dat",
+                Filter = "All files (*.*)|*.*",
+                FilterIndex = 2,
+                InitialDirectory = Environment.CurrentDirectory,
+                Multiselect = true,
+                ReadOnlyChecked = true,
+                RestoreDirectory = true,
+                ShowHelp = true,
+                ShowReadOnly = true,
+                Site = new Site(),
+                SupportMultiDottedExtensions = true,
+                Tag = new object(),
+                Title = nameof(CreateDialogTest),
+                ValidateNames = false,
+            };
+
+            using var dialog = action.CreateDialog();
+            Assert.AreEqual(action.AddExtension, dialog.AddExtension);
+            Assert.AreEqual(action.AutoUpgradeEnabled, dialog.AutoUpgradeEnabled);
+            Assert.AreEqual(action.CheckFileExists, dialog.CheckFileExists);
+            Assert.AreEqual(action.CheckPathExists, dialog.CheckPathExists);
+            Assert.AreEqual(action.DefaultExt, dialog.DefaultExt);
+            Assert.AreEqual(action.DereferenceLinks, dialog.DereferenceLinks);
+            Assert.AreEqual(action.FileName, dialog.FileName);
+            Assert.AreEqual(action.Filter, dialog.Filter);
+            Assert.AreEqual(action.FilterIndex, dialog.FilterIndex);
+            Assert.AreEqual(action.InitialDirectory, dialog.InitialDirectory);
+            Assert.AreEqual(action.Multiselect, dialog.Multiselect);
+            Assert.AreEqual(action.ReadOnlyChecked, dialog.ReadOnlyChecked);
+            Assert.AreEqual(action.RestoreDirectory, dialog.RestoreDirectory);
+            Assert.AreEqual(action.ShowHelp, dialog.ShowHelp);
+            Assert.AreEqual(action.ShowReadOnly, dialog.ShowReadOnly);
+            Assert.AreEqual(action.Site, dialog.Site);
+            Assert.AreEqual(action.SupportMultiDottedExtensions, dialog.SupportMultiDottedExtensions);
+            Assert.AreEqual(action.Tag, dialog.Tag);
+            Assert.AreEqual(action.Title, dialog.Title);
+            Assert.AreEqual(action.ValidateNames, dialog.ValidateNames);
         }
     }
 }

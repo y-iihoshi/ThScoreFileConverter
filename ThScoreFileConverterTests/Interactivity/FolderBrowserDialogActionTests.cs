@@ -49,5 +49,27 @@ namespace ThScoreFileConverterTests.Interactivity
             action.ShowNewFolderButton = false;
             Assert.IsFalse(action.ShowNewFolderButton);
         }
+
+        [TestMethod]
+        public void CreateDialogTest()
+        {
+            var action = new FolderBrowserDialogAction
+            {
+                Description = "description",
+                RootFolder = Environment.SpecialFolder.MyDocuments,
+                SelectedPath = Environment.CurrentDirectory,
+                ShowNewFolderButton = false,
+                Site = new Site(),
+                Tag = new object(),
+            };
+
+            using var dialog = action.CreateDialog();
+            Assert.AreEqual(action.Description, dialog.Description);
+            Assert.AreEqual(action.RootFolder, dialog.RootFolder);
+            Assert.AreEqual(action.SelectedPath, dialog.SelectedPath);
+            Assert.AreEqual(action.ShowNewFolderButton, dialog.ShowNewFolderButton);
+            Assert.AreEqual(action.Site, dialog.Site);
+            Assert.AreEqual(action.Tag, dialog.Tag);
+        }
     }
 }
