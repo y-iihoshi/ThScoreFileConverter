@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ThScoreFileConverter.Actions
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Represents a result of <see cref="OpenFileDialogAction"/>.

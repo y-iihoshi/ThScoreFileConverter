@@ -11,7 +11,7 @@ using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Properties;
 
-namespace ThScoreFileConverter.Behaviors
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into a

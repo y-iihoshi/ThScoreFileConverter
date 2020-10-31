@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Interop;
 using WinForms = System.Windows.Forms;
 
-namespace ThScoreFileConverter.Actions
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Converter from <see cref="Window"/> to <see cref="WinForms.IWin32Window"/>.

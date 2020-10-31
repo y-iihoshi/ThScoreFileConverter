@@ -14,7 +14,7 @@ using ThScoreFileConverter.Properties;
 using SysDraw = System.Drawing;
 using WinForms = System.Windows.Forms;
 
-namespace ThScoreFileConverter.Actions
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Encapsulates the handling of <see cref="WinForms.FontDialog"/>.

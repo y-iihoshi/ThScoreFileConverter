@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Actions;
+using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models;
 

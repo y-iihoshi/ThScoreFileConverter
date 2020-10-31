@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xaml.Behaviors;
-using ThScoreFileConverter.Behaviors;
+using ThScoreFileConverter.Interactivity;
 
 namespace ThScoreFileConverterTests.Interactivity
 {

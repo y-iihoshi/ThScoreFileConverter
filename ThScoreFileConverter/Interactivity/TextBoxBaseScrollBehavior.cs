@@ -10,7 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using Microsoft.Xaml.Behaviors;
 
-namespace ThScoreFileConverter.Behaviors
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Encapsulates state information into a <see cref="TextBoxBase"/> object.

@@ -8,7 +8,7 @@
 using System;
 using System.Drawing;
 
-namespace ThScoreFileConverter.Actions
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Represents a result of <see cref="FontDialogAction"/>.

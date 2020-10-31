@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ThScoreFileConverter.Actions
+namespace ThScoreFileConverter.Interactivity
 {
     /// <summary>
     /// Represents a result of <see cref="FolderBrowserDialogAction"/>.
