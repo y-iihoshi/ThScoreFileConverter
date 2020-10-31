@@ -1243,7 +1243,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var backupCulture = LocalizeDictionary.Instance.Culture;
             try
             {
-                var culture = new CultureInfo("en-US");
+                var culture = CultureInfo.GetCultureInfo("en-US");
                 LocalizeDictionary.Instance.Culture = culture;
 
                 using var window = CreateViewModel();
@@ -1251,7 +1251,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 var numChanged = 0;
                 using var _ = window.ObserveProperty(w => w.SupportedVersions, false).Subscribe(_ => ++numChanged);
 
-                var expected = new CultureInfo("ja-JP");
+                var expected = CultureInfo.GetCultureInfo("ja-JP");
                 LocalizeDictionary.Instance.Culture = expected;
                 Assert.AreEqual(1, numChanged);
             }
