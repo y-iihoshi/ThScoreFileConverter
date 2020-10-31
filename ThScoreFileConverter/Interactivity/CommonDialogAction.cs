@@ -20,24 +20,44 @@ namespace ThScoreFileConverter.Interactivity
         #region Dependency properties
 
         /// <summary>Identifies the <see cref="OkCommand"/> dependency property.</summary>
-        public static readonly DependencyProperty OkCommandProperty = DependencyProperty.Register(
-            nameof(OkCommand), typeof(ICommand), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty OkCommandProperty =
+            DependencyProperty.Register(
+                nameof(OkCommand),
+                typeof(ICommand),
+                typeof(CommonDialogAction),
+                new UIPropertyMetadata(defaultValue: null));
 
         /// <summary>Identifies the <see cref="CancelCommand"/> dependency property.</summary>
-        public static readonly DependencyProperty CancelCommandProperty = DependencyProperty.Register(
-            nameof(CancelCommand), typeof(ICommand), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty CancelCommandProperty =
+            DependencyProperty.Register(
+                nameof(CancelCommand),
+                typeof(ICommand),
+                typeof(CommonDialogAction),
+                new UIPropertyMetadata(defaultValue: null));
 
         /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
-        public static readonly DependencyProperty OwnerProperty = DependencyProperty.Register(
-            nameof(Owner), typeof(Window), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty OwnerProperty =
+            DependencyProperty.Register(
+                nameof(Owner),
+                typeof(Window),
+                typeof(CommonDialogAction),
+                new UIPropertyMetadata(defaultValue: null));
 
         /// <summary>Identifies the <see cref="Site"/> dependency property.</summary>
-        public static readonly DependencyProperty SiteProperty = DependencyProperty.Register(
-            nameof(Site), typeof(ISite), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty SiteProperty =
+            DependencyProperty.Register(
+                nameof(Site),
+                typeof(ISite),
+                typeof(CommonDialogAction),
+                new UIPropertyMetadata(defaultValue: null));
 
         /// <summary>Identifies the <see cref="Tag"/> dependency property.</summary>
-        public static readonly DependencyProperty TagProperty = DependencyProperty.Register(
-            nameof(Tag), typeof(object), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty TagProperty =
+            DependencyProperty.Register(
+                nameof(Tag),
+                typeof(object),
+                typeof(CommonDialogAction),
+                new UIPropertyMetadata(defaultValue: null));
 
         #endregion
 

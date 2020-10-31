@@ -24,8 +24,12 @@ namespace ThScoreFileConverter.Interactivity
         #region Dependency properties
 
         /// <summary>Identifies the <see cref="ApplyCommand"/> dependency property.</summary>
-        public static readonly DependencyProperty ApplyCommandProperty = DependencyProperty.Register(
-            nameof(ApplyCommand), typeof(ICommand), typeof(FontDialogAction), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty ApplyCommandProperty =
+            DependencyProperty.Register(
+                nameof(ApplyCommand),
+                typeof(ICommand),
+                typeof(FontDialogAction),
+                new UIPropertyMetadata(defaultValue: null));
 
         /// <summary>Identifies the <see cref="AllowScriptChange"/> dependency property.</summary>
         public static readonly DependencyProperty AllowScriptChangeProperty = DependencyProperty.Register(
