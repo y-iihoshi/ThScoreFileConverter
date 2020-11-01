@@ -56,116 +56,101 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetHighScoreTest()
         {
-            var score = new Mock<IHighScore>();
-            _ = score.SetupGet(m => m.Score).Returns(876543u);
+            var score = Mock.Of<IHighScore>(m => m.Score == 876543u);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score.Object);
+            allScoreData.Set(score);
 
-            Assert.AreSame(score.Object, allScoreData.Rankings[(score.Object.Chara, score.Object.Level)][2]);
+            Assert.AreSame(score, allScoreData.Rankings[(score.Chara, score.Level)][2]);
         }
 
         [TestMethod]
         public void SetHighScoreTestTwice()
         {
-            var score1 = new Mock<IHighScore>();
-            _ = score1.SetupGet(m => m.Score).Returns(876543u);
-            var score2 = new Mock<IHighScore>();
-            _ = score2.SetupGet(m => m.Score).Returns(876543u);
+            var score1 = Mock.Of<IHighScore>(m => m.Score == 876543u);
+            var score2 = Mock.Of<IHighScore>(m => m.Score == 876543u);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score1.Object);
-            allScoreData.Set(score2.Object);
+            allScoreData.Set(score1);
+            allScoreData.Set(score2);
 
-            Assert.AreSame(score1.Object, allScoreData.Rankings[(score1.Object.Chara, score1.Object.Level)][2]);
-            Assert.AreSame(score2.Object, allScoreData.Rankings[(score2.Object.Chara, score2.Object.Level)][3]);
+            Assert.AreSame(score1, allScoreData.Rankings[(score1.Chara, score1.Level)][2]);
+            Assert.AreSame(score2, allScoreData.Rankings[(score2.Chara, score2.Level)][3]);
         }
 
         [TestMethod]
         public void SetClearDataTest()
         {
-            var clearData = new Mock<IClearData>();
+            var clearData = Mock.Of<IClearData>();
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(clearData.Object);
+            allScoreData.Set(clearData);
 
-            Assert.AreSame(clearData.Object, allScoreData.ClearData[clearData.Object.Chara]);
+            Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
         }
 
         [TestMethod]
         public void SetClearDataTestTwice()
         {
-            var clearData1 = new Mock<IClearData>();
-            var clearData2 = new Mock<IClearData>();
-            _ = clearData2.SetupGet(m => m.Chara).Returns(clearData1.Object.Chara);
+            var clearData1 = Mock.Of<IClearData>();
+            var clearData2 = Mock.Of<IClearData>(m => m.Chara == clearData1.Chara);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(clearData1.Object);
-            allScoreData.Set(clearData2.Object);
+            allScoreData.Set(clearData1);
+            allScoreData.Set(clearData2);
 
-            Assert.AreSame(clearData1.Object, allScoreData.ClearData[clearData1.Object.Chara]);
-            Assert.AreNotSame(clearData2.Object, allScoreData.ClearData[clearData2.Object.Chara]);
+            Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
+            Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
         }
 
         [TestMethod]
         public void SetCardAttackTest()
         {
-            var attack = new Mock<ICardAttack>();
-            _ = attack.SetupGet(m => m.CardId).Returns(1);
+            var attack = Mock.Of<ICardAttack>(m => m.CardId == 1);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(attack.Object);
+            allScoreData.Set(attack);
 
-            Assert.AreSame(attack.Object, allScoreData.CardAttacks[attack.Object.CardId]);
+            Assert.AreSame(attack, allScoreData.CardAttacks[attack.CardId]);
         }
 
         [TestMethod]
         public void SetCardAttackTestTwice()
         {
-            var attack1 = new Mock<ICardAttack>();
-            _ = attack1.SetupGet(m => m.CardId).Returns(1);
-            var attack2 = new Mock<ICardAttack>();
-            _ = attack2.SetupGet(m => m.CardId).Returns(attack1.Object.CardId);
+            var attack1 = Mock.Of<ICardAttack>(m => m.CardId == 1);
+            var attack2 = Mock.Of<ICardAttack>(m => m.CardId == attack1.CardId);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(attack1.Object);
-            allScoreData.Set(attack2.Object);
+            allScoreData.Set(attack1);
+            allScoreData.Set(attack2);
 
-            Assert.AreSame(attack1.Object, allScoreData.CardAttacks[attack1.Object.CardId]);
-            Assert.AreNotSame(attack2.Object, allScoreData.CardAttacks[attack2.Object.CardId]);
+            Assert.AreSame(attack1, allScoreData.CardAttacks[attack1.CardId]);
+            Assert.AreNotSame(attack2, allScoreData.CardAttacks[attack2.CardId]);
         }
 
         [TestMethod]
         public void SetPracticeScoreTest()
         {
-            var score = new Mock<IPracticeScore>();
+            var score = Mock.Of<IPracticeScore>();
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score.Object);
+            allScoreData.Set(score);
 
-            Assert.AreSame(
-                score.Object,
-                allScoreData.PracticeScores[(score.Object.Chara, score.Object.Level, score.Object.Stage)]);
+            Assert.AreSame(score, allScoreData.PracticeScores[(score.Chara, score.Level, score.Stage)]);
         }
 
         [TestMethod]
         public void SetPracticeScoreTestTwice()
         {
-            var score1 = new Mock<IPracticeScore>();
-            var score2 = new Mock<IPracticeScore>();
-            _ = score2.SetupGet(m => m.Level).Returns(score1.Object.Level);
-            _ = score2.SetupGet(m => m.Stage).Returns(score1.Object.Stage);
+            var score1 = Mock.Of<IPracticeScore>();
+            var score2 = Mock.Of<IPracticeScore>(m => (m.Level == score1.Level) && (m.Stage == score1.Stage));
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score1.Object);
-            allScoreData.Set(score2.Object);
+            allScoreData.Set(score1);
+            allScoreData.Set(score2);
 
-            Assert.AreSame(
-                score1.Object,
-                allScoreData.PracticeScores[(score1.Object.Chara, score1.Object.Level, score1.Object.Stage)]);
-            Assert.AreNotSame(
-                score2.Object,
-                allScoreData.PracticeScores[(score2.Object.Chara, score2.Object.Level, score2.Object.Stage)]);
+            Assert.AreSame(score1, allScoreData.PracticeScores[(score1.Chara, score1.Level, score1.Stage)]);
+            Assert.AreNotSame(score2, allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)]);
         }
 
         [DataTestMethod]
@@ -175,12 +160,11 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataRow(Level.Normal, Stage.Extra)]
         public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
         {
-            var score = new Mock<IPracticeScore>();
-            _ = score.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
-            _ = score.SetupGet(m => m.Stage).Returns(TestUtils.Cast<Stage>(stage));
+            var score = Mock.Of<IPracticeScore>(
+                m => (m.Level == TestUtils.Cast<Level>(level)) && (m.Stage == TestUtils.Cast<Stage>(stage)));
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score.Object);
+            allScoreData.Set(score);
 
             Assert.AreEqual(0, allScoreData.PracticeScores.Count);
         }

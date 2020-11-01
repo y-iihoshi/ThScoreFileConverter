@@ -87,27 +87,26 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetClearDataTest()
         {
-            var clearData = new Mock<IClearData>();
+            var clearData = Mock.Of<IClearData>();
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(clearData.Object);
+            allScoreData.Set(clearData);
 
-            Assert.AreSame(clearData.Object, allScoreData.ClearData[clearData.Object.Chara]);
+            Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
         }
 
         [TestMethod]
         public void SetClearDataTestTwice()
         {
-            var clearData1 = new Mock<IClearData>();
-            var clearData2 = new Mock<IClearData>();
-            _ = clearData2.SetupGet(m => m.Chara).Returns(clearData1.Object.Chara);
+            var clearData1 = Mock.Of<IClearData>();
+            var clearData2 = Mock.Of<IClearData>(m => m.Chara == clearData1.Chara);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(clearData1.Object);
-            allScoreData.Set(clearData2.Object);
+            allScoreData.Set(clearData1);
+            allScoreData.Set(clearData2);
 
-            Assert.AreSame(clearData1.Object, allScoreData.ClearData[clearData1.Object.Chara]);
-            Assert.AreNotSame(clearData2.Object, allScoreData.ClearData[clearData2.Object.Chara]);
+            Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
+            Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
         }
 
         [TestMethod]
