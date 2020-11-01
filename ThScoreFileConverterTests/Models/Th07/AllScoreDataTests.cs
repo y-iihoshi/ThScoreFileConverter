@@ -5,6 +5,10 @@ using ThScoreFileConverterTests.Models.Th07.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
+using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
+    ThScoreFileConverter.Models.Th07.Chara,
+    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -56,10 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetHighScoreTest()
         {
-            var score = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-            };
+            var score = Mock.Of<IHighScore>(m => m.Score == 87654u);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -70,11 +71,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetHighScoreTestTwice()
         {
-            var score1 = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-            };
-            var score2 = new HighScoreStub(score1);
+            var score1 = Mock.Of<IHighScore>(m => m.Score == 87654u);
+            var score2 = Mock.Of<IHighScore>(m => m.Score == score1.Score);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
