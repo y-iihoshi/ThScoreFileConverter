@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Stubs;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
     ThScoreFileConverter.Models.Th06.Chara,
     ThScoreFileConverter.Models.Level,
@@ -16,17 +15,14 @@ namespace ThScoreFileConverterTests.Models.Th06
     [TestClass]
     public class ScoreReplacerTests
     {
+        private static IEnumerable<IReadOnlyList<IHighScore>> CreateRankings()
+        {
+            var mock1 = HighScoreTests.MockHighScore();
+            return new[] { new[] { mock1.Object } };
+        }
+
         internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
-            new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub),
-                    }
-                },
-            };
+            CreateRankings().ToDictionary(ranking => (ranking[0].Chara, ranking[0].Level));
 
         [TestMethod]
         public void ScoreReplacerTest()

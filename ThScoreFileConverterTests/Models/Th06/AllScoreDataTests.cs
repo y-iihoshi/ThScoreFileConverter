@@ -5,6 +5,10 @@ using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Models.Level>;
+using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
+    ThScoreFileConverter.Models.Th06.Chara,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th06.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
@@ -53,32 +57,29 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetHighScoreTest()
         {
-            var score = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 876543u,
-            };
+            var score = new Mock<IHighScore>();
+            _ = score.SetupGet(m => m.Score).Returns(876543u);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score);
+            allScoreData.Set(score.Object);
 
-            Assert.AreSame(score, allScoreData.Rankings[(score.Chara, score.Level)][2]);
+            Assert.AreSame(score.Object, allScoreData.Rankings[(score.Object.Chara, score.Object.Level)][2]);
         }
 
         [TestMethod]
         public void SetHighScoreTestTwice()
         {
-            var score1 = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 876543u,
-            };
-            var score2 = new HighScoreStub(score1);
+            var score1 = new Mock<IHighScore>();
+            _ = score1.SetupGet(m => m.Score).Returns(876543u);
+            var score2 = new Mock<IHighScore>();
+            _ = score2.SetupGet(m => m.Score).Returns(876543u);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score1);
-            allScoreData.Set(score2);
+            allScoreData.Set(score1.Object);
+            allScoreData.Set(score2.Object);
 
-            Assert.AreSame(score1, allScoreData.Rankings[(score1.Chara, score1.Level)][2]);
-            Assert.AreSame(score2, allScoreData.Rankings[(score2.Chara, score2.Level)][3]);
+            Assert.AreSame(score1.Object, allScoreData.Rankings[(score1.Object.Chara, score1.Object.Level)][2]);
+            Assert.AreSame(score2.Object, allScoreData.Rankings[(score2.Object.Chara, score2.Object.Level)][3]);
         }
 
         [TestMethod]
