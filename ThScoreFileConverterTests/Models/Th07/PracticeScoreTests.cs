@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th07.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
@@ -12,17 +12,19 @@ namespace ThScoreFileConverterTests.Models.Th07
     [TestClass]
     public class PracticeScoreTests
     {
-        internal static PracticeScoreStub ValidStub { get; } = new PracticeScoreStub()
+        internal static Mock<IPracticeScore> MockPracticeScore()
         {
-            Signature = "PSCR",
-            Size1 = 0x18,
-            Size2 = 0x18,
-            TrialCount = 987,
-            HighScore = 123456,
-            Chara = Chara.ReimuB,
-            Level = Level.Hard,
-            Stage = Stage.Six,
-        };
+            var mock = new Mock<IPracticeScore>();
+            _ = mock.SetupGet(m => m.Signature).Returns("PSCR");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x18);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x18);
+            _ = mock.SetupGet(m => m.TrialCount).Returns(987);
+            _ = mock.SetupGet(m => m.HighScore).Returns(123456);
+            _ = mock.SetupGet(m => m.Chara).Returns(Chara.ReimuB);
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Hard);
+            _ = mock.SetupGet(m => m.Stage).Returns(Stage.Six);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IPracticeScore score)
             => TestUtils.MakeByteArray(
@@ -53,10 +55,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void PracticeScoreTestChapter()
         {
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
+            var mock = MockPracticeScore();
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var score = new PracticeScore(chapter);
 
-            Validate(ValidStub, score);
+            Validate(mock.Object, score);
         }
 
         [TestMethod]
@@ -73,10 +76,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void PracticeScoreTestInvalidSignature()
         {
-            var stub = new PracticeScoreStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockPracticeScore();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -86,10 +90,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void PracticeScoreTestInvalidSize1()
         {
-            var stub = new PracticeScoreStub(ValidStub);
-            --stub.Size1;
+            var mock = MockPracticeScore();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -103,12 +108,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidChara(int chara)
         {
-            var stub = new PracticeScoreStub(ValidStub)
-            {
-                Chara = TestUtils.Cast<Chara>(chara),
-            };
+            var mock = MockPracticeScore();
+            _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -122,12 +125,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidLevel(int level)
         {
-            var stub = new PracticeScoreStub(ValidStub)
-            {
-                Level = TestUtils.Cast<Level>(level),
-            };
+            var mock = MockPracticeScore();
+            _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -141,12 +142,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidStage(int stage)
         {
-            var stub = new PracticeScoreStub(ValidStub)
-            {
-                Stage = TestUtils.Cast<Stage>(stage),
-            };
+            var mock = MockPracticeScore();
+            _ = mock.SetupGet(m => m.Stage).Returns(TestUtils.Cast<Stage>(stage));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

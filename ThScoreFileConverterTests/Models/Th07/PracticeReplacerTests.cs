@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -12,10 +11,8 @@ namespace ThScoreFileConverterTests.Models.Th07
     public class PracticeReplacerTests
     {
         internal static IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores { get; } =
-            new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub),
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            new[] { PracticeScoreTests.MockPracticeScore().Object }
+            .ToDictionary(element => (element.Chara, element.Level, element.Stage));
 
         [TestMethod]
         public void PracticeReplacerTest()
@@ -75,13 +72,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestLevelExtra()
         {
-            var practiceScores = new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Level = Level.Extra,
-                },
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            var mock = PracticeScoreTests.MockPracticeScore();
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Extra);
+            var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACXRB61", replacer.Replace("%T07PRACXRB61"));
         }
@@ -89,13 +82,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var practiceScores = new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Stage = Stage.Extra,
-                },
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            var mock = PracticeScoreTests.MockPracticeScore();
+            _ = mock.SetupGet(m => m.Stage).Returns(Stage.Extra);
+            var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACHRBX1", replacer.Replace("%T07PRACHRBX1"));
         }
@@ -103,13 +92,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestLevelPhantasm()
         {
-            var practiceScores = new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Level = Level.Phantasm,
-                },
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            var mock = PracticeScoreTests.MockPracticeScore();
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Phantasm);
+            var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACPRB61", replacer.Replace("%T07PRACPRB61"));
         }
@@ -117,13 +102,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestStagePhantasm()
         {
-            var practiceScores = new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Stage = Stage.Phantasm,
-                },
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            var mock = PracticeScoreTests.MockPracticeScore();
+            _ = mock.SetupGet(m => m.Stage).Returns(Stage.Phantasm);
+            var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACHRBP1", replacer.Replace("%T07PRACHRBP1"));
         }

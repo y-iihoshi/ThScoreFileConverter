@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th07.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
@@ -135,11 +134,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetPracticeScoreTest()
         {
-            var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-            {
-                Level = Level.Normal,
-                Stage = Stage.Six,
-            };
+            var score = Mock.Of<IPracticeScore>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -150,12 +145,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetPracticeScoreTestTwice()
         {
-            var score1 = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-            {
-                Level = Level.Normal,
-                Stage = Stage.Six,
-            };
-            var score2 = new PracticeScoreStub(score1);
+            var score1 = Mock.Of<IPracticeScore>();
+            var score2 = Mock.Of<IPracticeScore>(m => (m.Level == score1.Level) && (m.Stage == score1.Stage));
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
@@ -174,11 +165,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [DataRow(Level.Normal, Stage.Phantasm)]
         public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
         {
-            var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-            {
-                Level = TestUtils.Cast<Level>(level),
-                Stage = TestUtils.Cast<Stage>(stage),
-            };
+            var score = Mock.Of<IPracticeScore>(
+                m => (m.Level == TestUtils.Cast<Level>(level)) && (m.Stage == TestUtils.Cast<Stage>(stage)));
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
