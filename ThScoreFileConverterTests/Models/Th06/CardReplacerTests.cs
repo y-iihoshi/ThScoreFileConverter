@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
     public class CardReplacerTests
     {
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
+        {
+            var mock1 = CardAttackTests.MockCardAttack();
+
+            var mock2 = CardAttackTests.MockCardAttack();
+            _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
+            _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+            _ = mock2.SetupGet(m => m.ClearCount).Returns(0);
+            _ = mock2.SetupGet(m => m.TrialCount).Returns(0);
+            _ = mock2.Setup(m => m.HasTried()).Returns(false);
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
-            new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                    CardName = TestUtils.MakeRandomArray<byte>(0x24),
-                    ClearCount = 0,
-                    TrialCount = 0,
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            CreateCardAttacks().ToDictionary(attack => (int)attack.CardId);
 
         [TestMethod]
         public void CardReplacerTest()

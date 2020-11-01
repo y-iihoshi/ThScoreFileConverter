@@ -4,25 +4,27 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
     public class CareerReplacerTests
     {
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
+        {
+            var mock1 = CardAttackTests.MockCardAttack();
+
+            var mock2 = CardAttackTests.MockCardAttack();
+            mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
+            mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+            mock2.SetupGet(m => m.ClearCount).Returns((ushort)(mock1.Object.ClearCount + 2));
+            mock2.SetupGet(m => m.TrialCount).Returns((ushort)(mock1.Object.TrialCount + 3));
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
-            new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                    CardName = TestUtils.MakeRandomArray<byte>(0x24),
-                    ClearCount = (ushort)(CardAttackTests.ValidStub.ClearCount + 2),
-                    TrialCount = (ushort)(CardAttackTests.ValidStub.TrialCount + 3),
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            CreateCardAttacks().ToDictionary(attack => (int)attack.CardId);
 
         [TestMethod]
         public void CareerReplacerTest()

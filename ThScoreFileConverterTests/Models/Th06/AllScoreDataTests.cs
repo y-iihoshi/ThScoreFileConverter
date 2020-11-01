@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
@@ -108,26 +109,29 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetCardAttackTest()
         {
-            var attack = new CardAttackStub(CardAttackTests.ValidStub);
+            var attack = new Mock<ICardAttack>();
+            _ = attack.SetupGet(m => m.CardId).Returns(1);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(attack);
+            allScoreData.Set(attack.Object);
 
-            Assert.AreSame(attack, allScoreData.CardAttacks[attack.CardId]);
+            Assert.AreSame(attack.Object, allScoreData.CardAttacks[attack.Object.CardId]);
         }
 
         [TestMethod]
         public void SetCardAttackTestTwice()
         {
-            var attack1 = new CardAttackStub(CardAttackTests.ValidStub);
-            var attack2 = new CardAttackStub(attack1);
+            var attack1 = new Mock<ICardAttack>();
+            _ = attack1.SetupGet(m => m.CardId).Returns(1);
+            var attack2 = new Mock<ICardAttack>();
+            _ = attack2.SetupGet(m => m.CardId).Returns(attack1.Object.CardId);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(attack1);
-            allScoreData.Set(attack2);
+            allScoreData.Set(attack1.Object);
+            allScoreData.Set(attack2.Object);
 
-            Assert.AreSame(attack1, allScoreData.CardAttacks[attack1.CardId]);
-            Assert.AreNotSame(attack2, allScoreData.CardAttacks[attack2.CardId]);
+            Assert.AreSame(attack1.Object, allScoreData.CardAttacks[attack1.Object.CardId]);
+            Assert.AreNotSame(attack2.Object, allScoreData.CardAttacks[attack2.Object.CardId]);
         }
 
         [TestMethod]
