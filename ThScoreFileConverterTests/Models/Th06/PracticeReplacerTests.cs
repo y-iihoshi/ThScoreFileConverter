@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
@@ -13,10 +12,8 @@ namespace ThScoreFileConverterTests.Models.Th06
     public class PracticeReplacerTests
     {
         internal static IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores { get; } =
-            new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub),
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            new[] { PracticeScoreTests.MockPracticeScore().Object }
+            .ToDictionary(score => (score.Chara, score.Level, score.Stage));
 
         [TestMethod]
         public void PracticeReplacerTest()
@@ -68,13 +65,9 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestLevelExtra()
         {
-            var practiceScores = new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Level = Level.Extra,
-                },
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            var mock = PracticeScoreTests.MockPracticeScore();
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Extra);
+            var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T06PRACXRB6", replacer.Replace("%T06PRACXRB6"));
         }
@@ -82,13 +75,9 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var practiceScores = new List<IPracticeScore>
-            {
-                new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Stage = Stage.Extra,
-                },
-            }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
+            var mock = PracticeScoreTests.MockPracticeScore();
+            _ = mock.SetupGet(m => m.Stage).Returns(Stage.Extra);
+            var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T06PRACHRBX", replacer.Replace("%T06PRACHRBX"));
         }

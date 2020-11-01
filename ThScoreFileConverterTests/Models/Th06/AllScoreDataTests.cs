@@ -2,7 +2,6 @@
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Models.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
@@ -139,34 +138,34 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetPracticeScoreTest()
         {
-            var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-            {
-                Level = Level.Normal,
-                Stage = Stage.Six,
-            };
+            var score = new Mock<IPracticeScore>();
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score);
+            allScoreData.Set(score.Object);
 
-            Assert.AreSame(score, allScoreData.PracticeScores[(score.Chara, score.Level, score.Stage)]);
+            Assert.AreSame(
+                score.Object,
+                allScoreData.PracticeScores[(score.Object.Chara, score.Object.Level, score.Object.Stage)]);
         }
 
         [TestMethod]
         public void SetPracticeScoreTestTwice()
         {
-            var score1 = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-            {
-                Level = Level.Normal,
-                Stage = Stage.Six,
-            };
-            var score2 = new PracticeScoreStub(score1);
+            var score1 = new Mock<IPracticeScore>();
+            var score2 = new Mock<IPracticeScore>();
+            _ = score2.SetupGet(m => m.Level).Returns(score1.Object.Level);
+            _ = score2.SetupGet(m => m.Stage).Returns(score1.Object.Stage);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score1);
-            allScoreData.Set(score2);
+            allScoreData.Set(score1.Object);
+            allScoreData.Set(score2.Object);
 
-            Assert.AreSame(score1, allScoreData.PracticeScores[(score1.Chara, score1.Level, score1.Stage)]);
-            Assert.AreNotSame(score2, allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)]);
+            Assert.AreSame(
+                score1.Object,
+                allScoreData.PracticeScores[(score1.Object.Chara, score1.Object.Level, score1.Object.Stage)]);
+            Assert.AreNotSame(
+                score2.Object,
+                allScoreData.PracticeScores[(score2.Object.Chara, score2.Object.Level, score2.Object.Stage)]);
         }
 
         [DataTestMethod]
@@ -176,14 +175,12 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataRow(Level.Normal, Stage.Extra)]
         public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
         {
-            var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-            {
-                Level = TestUtils.Cast<Level>(level),
-                Stage = TestUtils.Cast<Stage>(stage),
-            };
+            var score = new Mock<IPracticeScore>();
+            _ = score.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+            _ = score.SetupGet(m => m.Stage).Returns(TestUtils.Cast<Stage>(stage));
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(score);
+            allScoreData.Set(score.Object);
 
             Assert.AreEqual(0, allScoreData.PracticeScores.Count);
         }
