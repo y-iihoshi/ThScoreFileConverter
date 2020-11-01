@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
     public class CardReplacerTests
     {
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
+        {
+            var mock1 = CardAttackTests.MockCardAttack();
+
+            var mock2 = CardAttackTests.MockCardAttack();
+            _ = mock2.SetupGet(m => m.MaxBonuses).Returns(
+                mock1.Object.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
+            _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
+            _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock2.SetupGet(m => m.TrialCounts).Returns(
+                mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+            _ = mock2.SetupGet(m => m.ClearCounts).Returns(
+                mock1.Object.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+            _ = mock2.Setup(m => m.HasTried()).Returns(false);
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
-            new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    MaxBonuses = CardAttackTests.ValidStub.MaxBonuses
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 1000),
-                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                    CardName = TestUtils.MakeRandomArray<byte>(0x30),
-                    TrialCounts = CardAttackTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)0),
-                    ClearCounts = CardAttackTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)0),
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            CreateCardAttacks().ToDictionary(attack => (int)attack.CardId);
 
         [TestMethod]
         public void CardReplacerTest()

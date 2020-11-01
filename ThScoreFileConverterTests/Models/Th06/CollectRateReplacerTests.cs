@@ -124,7 +124,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         {
             var mock = CardAttackTests.MockCardAttack();
             _ = mock.SetupGet(m => m.CardId).Returns(65);
-            var cardAttacks = new[] { mock.Object }.ToDictionary(element => (int)element.CardId);
+            var cardAttacks = new[] { mock.Object }.ToDictionary(attack => (int)attack.CardId);
             var replacer = new CollectRateReplacer(cardAttacks);
             Assert.AreEqual("0", replacer.Replace("%T06CRG41"));
         }

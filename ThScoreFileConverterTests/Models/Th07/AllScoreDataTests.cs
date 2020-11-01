@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetCardAttackTest()
         {
-            var attack = new CardAttackStub(CardAttackTests.ValidStub);
+            var attack = Mock.Of<ICardAttack>(m => m.CardId == 1);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack);
@@ -123,8 +123,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetCardAttackTestTwice()
         {
-            var attack1 = new CardAttackStub(CardAttackTests.ValidStub);
-            var attack2 = new CardAttackStub(attack1);
+            var attack1 = Mock.Of<ICardAttack>(m => m.CardId == 1);
+            var attack2 = Mock.Of<ICardAttack>(m => m.CardId == attack1.CardId);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack1);

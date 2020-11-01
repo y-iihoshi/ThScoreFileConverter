@@ -3,10 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th07.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
@@ -14,23 +14,33 @@ namespace ThScoreFileConverterTests.Models.Th07
     [TestClass]
     public class CardAttackTests
     {
-        internal static CardAttackStub ValidStub { get; } = new CardAttackStub()
+        internal static Mock<ICardAttack> MockCardAttack()
         {
-            Signature = "CATK",
-            Size1 = 0x78,
-            Size2 = 0x78,
-            MaxBonuses = Utils.GetEnumerable<CharaWithTotal>()
-                .Select((chara, index) => new { chara, index })
-                .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
-            CardId = 123,
-            CardName = TestUtils.MakeRandomArray<byte>(0x30),
-            TrialCounts = Utils.GetEnumerable<CharaWithTotal>()
-                .Select((chara, index) => new { chara, index })
-                .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)),
-            ClearCounts = Utils.GetEnumerable<CharaWithTotal>()
-                .Select((chara, index) => new { chara, index })
-                .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)),
-        };
+            var mock = new Mock<ICardAttack>();
+
+            _ = mock.SetupGet(m => m.Signature).Returns("CATK");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x78);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x78);
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(
+                Utils.GetEnumerable<CharaWithTotal>()
+                    .Select((chara, index) => (chara, index))
+                    .ToDictionary(pair => pair.chara, pair => (uint)pair.index));
+            _ = mock.SetupGet(m => m.CardId).Returns(123);
+            _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock.SetupGet(m => m.TrialCounts).Returns(
+                Utils.GetEnumerable<CharaWithTotal>()
+                    .Select((chara, index) => (chara, index))
+                    .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)));
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(
+                Utils.GetEnumerable<CharaWithTotal>()
+                    .Select((chara, index) => (chara, index))
+                    .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)));
+
+            var hasTried = mock.Object.TrialCounts.TryGetValue(CharaWithTotal.Total, out var count) && (count > 0);
+            _ = mock.Setup(m => m.HasTried()).Returns(hasTried);
+
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(ICardAttack cardAttack)
             => TestUtils.MakeByteArray(
@@ -62,10 +72,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void CardAttackTestChapter()
         {
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
+            var mock = MockCardAttack();
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var cardAttack = new CardAttack(chapter);
 
-            Validate(ValidStub, cardAttack);
+            Validate(mock.Object, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
         }
 
@@ -83,10 +94,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSignature()
         {
-            var stub = new CardAttackStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockCardAttack();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -96,10 +108,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSize1()
         {
-            var stub = new CardAttackStub(ValidStub);
-            --stub.Size1;
+            var mock = MockCardAttack();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -108,17 +121,17 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void CardAttackTestNotTried()
         {
-            var stub = new CardAttackStub(ValidStub)
-            {
-                TrialCounts = ValidStub.TrialCounts.ToDictionary(
+            var mock = MockCardAttack();
+            var trialCounts = mock.Object.TrialCounts;
+            _ = mock.SetupGet(m => m.TrialCounts).Returns(
+                trialCounts.ToDictionary(
                     pair => pair.Key,
-                    pair => (pair.Key == CharaWithTotal.Total) ? (ushort)0 : pair.Value),
-            };
+                    pair => (pair.Key == CharaWithTotal.Total) ? (ushort)0 : pair.Value));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var cardAttack = new CardAttack(chapter);
 
-            Validate(stub, cardAttack);
+            Validate(mock.Object, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());
         }
     }

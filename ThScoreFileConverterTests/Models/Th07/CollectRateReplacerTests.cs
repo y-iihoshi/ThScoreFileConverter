@@ -3,45 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
     public class CollectRateReplacerTests
     {
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
+        {
+            var mock1 = CardAttackTests.MockCardAttack();
+
+            var mock2 = CardAttackTests.MockCardAttack();
+            _ = mock2.SetupGet(m => m.CardId).Returns(2);
+            _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock2.SetupGet(m => m.TrialCounts).Returns(
+                mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 4)));
+            _ = mock2.SetupGet(m => m.ClearCounts).Returns(
+                mock1.Object.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 3)));
+
+            var mock3 = CardAttackTests.MockCardAttack();
+            _ = mock3.SetupGet(m => m.CardId).Returns(6);
+            _ = mock3.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock3.SetupGet(m => m.TrialCounts).Returns(
+                mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 5)));
+            _ = mock3.SetupGet(m => m.ClearCounts).Returns(
+                mock1.Object.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+
+            var mock4 = CardAttackTests.MockCardAttack();
+            _ = mock4.SetupGet(m => m.CardId).Returns(129);
+            _ = mock4.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock4.SetupGet(m => m.TrialCounts).Returns(
+                mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+            _ = mock4.SetupGet(m => m.ClearCounts).Returns(
+                mock1.Object.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+            _ = mock4.Setup(m => m.HasTried()).Returns(false);
+
+            return new[] { mock1.Object, mock2.Object, mock3.Object, mock4.Object };
+        }
+
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
-            new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 2,
-                    CardName = TestUtils.MakeRandomArray<byte>(0x30),
-                    TrialCounts = CardAttackTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 4)),
-                    ClearCounts = CardAttackTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 3)),
-                },
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 6,
-                    CardName = TestUtils.MakeRandomArray<byte>(0x30),
-                    TrialCounts = CardAttackTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 5)),
-                    ClearCounts = CardAttackTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)0),
-                },
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 129,
-                    CardName = TestUtils.MakeRandomArray<byte>(0x30),
-                    TrialCounts = CardAttackTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)0),
-                    ClearCounts = CardAttackTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => (ushort)0),
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            CreateCardAttacks().ToDictionary(attack => (int)attack.CardId);
 
         [TestMethod]
         public void CollectRateReplacerTest()
@@ -220,14 +221,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestInvalidCardId()
         {
-            var cardAttacks = new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 142,
-                    CardName = TestUtils.MakeRandomArray<byte>(0x30),
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            var mock = CardAttackTests.MockCardAttack();
+            _ = mock.SetupGet(m => m.CardId).Returns(142);
+            _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            var cardAttacks = new[] { mock.Object }.ToDictionary(attack => (int)attack.CardId);
             var replacer = new CollectRateReplacer(cardAttacks);
             Assert.AreEqual("0", replacer.Replace("%T07CRGLRB11"));
             Assert.AreEqual("0", replacer.Replace("%T07CRGXRB11"));
