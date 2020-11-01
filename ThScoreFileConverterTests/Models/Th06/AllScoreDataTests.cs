@@ -3,7 +3,7 @@ using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
-using ClearDataStub = ThScoreFileConverterTests.Models.Th06.Stubs.ClearDataStub<
+using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th06
@@ -84,26 +84,27 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetClearDataTest()
         {
-            var clearData = new ClearDataStub(ClearDataTests.ValidStub);
+            var clearData = new Mock<IClearData>();
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(clearData);
+            allScoreData.Set(clearData.Object);
 
-            Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
+            Assert.AreSame(clearData.Object, allScoreData.ClearData[clearData.Object.Chara]);
         }
 
         [TestMethod]
         public void SetClearDataTestTwice()
         {
-            var clearData1 = new ClearDataStub(ClearDataTests.ValidStub);
-            var clearData2 = new ClearDataStub(clearData1);
+            var clearData1 = new Mock<IClearData>();
+            var clearData2 = new Mock<IClearData>();
+            _ = clearData2.SetupGet(m => m.Chara).Returns(clearData1.Object.Chara);
 
             var allScoreData = new AllScoreData();
-            allScoreData.Set(clearData1);
-            allScoreData.Set(clearData2);
+            allScoreData.Set(clearData1.Object);
+            allScoreData.Set(clearData2.Object);
 
-            Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
-            Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
+            Assert.AreSame(clearData1.Object, allScoreData.ClearData[clearData1.Object.Chara]);
+            Assert.AreNotSame(clearData2.Object, allScoreData.ClearData[clearData2.Object.Chara]);
         }
 
         [TestMethod]

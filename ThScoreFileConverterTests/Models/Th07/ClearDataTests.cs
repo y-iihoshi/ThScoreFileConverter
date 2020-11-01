@@ -4,12 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
-using ClearDataStub = ThScoreFileConverterTests.Models.Th06.Stubs.ClearDataStub<
-    ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
 using Level = ThScoreFileConverter.Models.Th07.Level;
@@ -19,19 +18,23 @@ namespace ThScoreFileConverterTests.Models.Th07
     [TestClass]
     public class ClearDataTests
     {
-        internal static ClearDataStub ValidStub { get; } = new ClearDataStub()
+        internal static Mock<IClearData> MockClearData()
         {
-            Signature = "CLRD",
-            Size1 = 0x1C,
-            Size2 = 0x1C,
-            StoryFlags = Utils.GetEnumerable<Level>()
-                .Select((level, index) => new { level, index })
-                .ToDictionary(pair => pair.level, pair => (byte)pair.index),
-            PracticeFlags = Utils.GetEnumerable<Level>()
-                .Select((level, index) => new { level, index })
-                .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
-            Chara = Chara.ReimuB,
-        };
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(m => m.Signature).Returns("CLRD");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x1C);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x1C);
+            _ = mock.SetupGet(m => m.StoryFlags).Returns(
+                Utils.GetEnumerable<Level>()
+                    .Select((level, index) => (level, index))
+                    .ToDictionary(pair => pair.level, pair => (byte)pair.index));
+            _ = mock.SetupGet(m => m.PracticeFlags).Returns(
+                Utils.GetEnumerable<Level>()
+                    .Select((level, index) => (level, index))
+                    .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)));
+            _ = mock.SetupGet(m => m.Chara).Returns(Chara.ReimuB);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IClearData clearData)
             => TestUtils.MakeByteArray(
@@ -57,10 +60,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ClearDataTestChapter()
         {
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
+            var mock = MockClearData();
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var clearData = new ClearData(chapter);
 
-            Validate(ValidStub, clearData);
+            Validate(mock.Object, clearData);
         }
 
         [TestMethod]
@@ -77,10 +81,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSignature()
         {
-            var stub = new ClearDataStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockClearData();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -90,10 +95,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSize1()
         {
-            var stub = new ClearDataStub(ValidStub);
-            --stub.Size1;
+            var mock = MockClearData();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -107,12 +113,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void ClearDataTestInvalidChara(int chara)
         {
-            var stub = new ClearDataStub(ValidStub)
-            {
-                Chara = TestUtils.Cast<Chara>(chara),
-            };
+            var mock = MockClearData();
+            _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
