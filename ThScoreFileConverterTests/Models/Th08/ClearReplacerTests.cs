@@ -32,10 +32,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 },
             };
 
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData { get; } = new List<IClearData>
-        {
-            new ClearDataStub(ClearDataTests.ValidStub),
-        }.ToDictionary(entry => entry.Chara);
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData { get; } =
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(entry => entry.Chara);
 
         [TestMethod]
         public void ClearReplacerTest()
@@ -165,13 +163,12 @@ namespace ThScoreFileConverterTests.Models.Th08
                     }
                 },
             };
-            var clearData = new List<IClearData>
-            {
-                new ClearDataStub(ClearDataTests.ValidStub)
-                {
-                    StoryFlags = Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B),
-                },
-            }.ToDictionary(entry => entry.Chara);
+
+            var clearDataMock = ClearDataTests.MockClearData();
+            _ = clearDataMock.SetupGet(m => m.StoryFlags).Returns(
+                Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B));
+            var clearData = new[] { clearDataMock.Object }.ToDictionary(entry => entry.Chara);
+
             var replacer = new ClearReplacer(rankings, clearData);
             Assert.AreEqual(StageProgress.Clear.ToShortName(), replacer.Replace("%T08CLEARHMA"));
         }

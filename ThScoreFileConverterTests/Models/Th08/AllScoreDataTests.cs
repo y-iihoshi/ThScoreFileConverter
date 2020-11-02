@@ -90,7 +90,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetClearDataTest()
         {
-            var clearData = ClearDataTests.ValidStub;
+            var clearData = Mock.Of<IClearData>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
@@ -101,8 +101,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetClearDataTestTwice()
         {
-            var clearData1 = ClearDataTests.ValidStub;
-            var clearData2 = new ClearDataStub(clearData1);
+            var clearData1 = Mock.Of<IClearData>();
+            var clearData2 = Mock.Of<IClearData>(m => m.Chara == clearData1.Chara);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);
