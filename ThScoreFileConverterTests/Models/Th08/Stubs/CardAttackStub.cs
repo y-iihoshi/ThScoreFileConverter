@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Moq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
@@ -12,19 +14,28 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             this.Comment = Enumerable.Empty<byte>();
             this.EnemyName = Enumerable.Empty<byte>();
             this.Signature = string.Empty;
-            this.PracticeCareer = new CardAttackCareerStub();
-            this.StoryCareer = new CardAttackCareerStub();
+            this.PracticeCareer = CardAttackCareerTests.MockInitialCardAttackCareer().Object;
+            this.StoryCareer = CardAttackCareerTests.MockInitialCardAttackCareer().Object;
         }
 
         public CardAttackStub(ICardAttack attack)
         {
+            static Mock<ICardAttackCareer> Copy(ICardAttackCareer career)
+            {
+                var mock = new Mock<ICardAttackCareer>();
+                _ = mock.SetupGet(m => m.ClearCounts).Returns(career.ClearCounts.ToDictionary());
+                _ = mock.SetupGet(m => m.MaxBonuses).Returns(career.MaxBonuses.ToDictionary());
+                _ = mock.SetupGet(m => m.TrialCounts).Returns(career.TrialCounts.ToDictionary());
+                return mock;
+            }
+
             this.CardId = attack.CardId;
             this.CardName = attack.CardName.ToArray();
             this.Comment = attack.Comment.ToArray();
             this.EnemyName = attack.EnemyName.ToArray();
             this.Level = attack.Level;
-            this.PracticeCareer = new CardAttackCareerStub(attack.PracticeCareer);
-            this.StoryCareer = new CardAttackCareerStub(attack.StoryCareer);
+            this.PracticeCareer = Copy(attack.PracticeCareer).Object;
+            this.StoryCareer = Copy(attack.StoryCareer).Object;
             this.FirstByteOfData = attack.FirstByteOfData;
             this.Signature = attack.Signature;
             this.Size1 = attack.Size1;

@@ -10,82 +10,82 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class CollectRateReplacerTests
     {
-        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } = new List<ICardAttack>
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
         {
-            new CardAttackStub(CardAttackTests.ValidStub),
-            new CardAttackStub(CardAttackTests.ValidStub)
+            var id2StoryCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var trialCounts = id2StoryCareerMock.Object.TrialCounts;
+            var clearCounts = id2StoryCareerMock.Object.ClearCounts;
+            var id2TrialCounts = trialCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 4);
+            var id2ClearCounts = clearCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 3);
+            _ = id2StoryCareerMock.SetupGet(m => m.TrialCounts).Returns(id2TrialCounts);
+            _ = id2StoryCareerMock.SetupGet(m => m.ClearCounts).Returns(id2ClearCounts);
+
+            var id2PracticeCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = id2PracticeCareerMock.SetupGet(m => m.TrialCounts).Returns(id2TrialCounts);
+            _ = id2PracticeCareerMock.SetupGet(m => m.ClearCounts).Returns(id2ClearCounts);
+
+            var id6StoryCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var id6TrialCounts = trialCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 5);
+            var id6ClearCounts = clearCounts.ToDictionary(pair => pair.Key, pair => 0);
+            _ = id6StoryCareerMock.SetupGet(m => m.TrialCounts).Returns(id6TrialCounts);
+            _ = id6StoryCareerMock.SetupGet(m => m.ClearCounts).Returns(id6ClearCounts);
+
+            var id6PracticeCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = id6PracticeCareerMock.SetupGet(m => m.TrialCounts).Returns(id6TrialCounts);
+            _ = id6PracticeCareerMock.SetupGet(m => m.ClearCounts).Returns(id6ClearCounts);
+
+            var id192StoryCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var id192TrialCounts = trialCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 2);
+            var id192ClearCounts = clearCounts.ToDictionary(pair => pair.Key, pair => 0);
+            _ = id192StoryCareerMock.SetupGet(m => m.TrialCounts).Returns(id192TrialCounts);
+            _ = id192StoryCareerMock.SetupGet(m => m.ClearCounts).Returns(id192ClearCounts);
+
+            var id192PracticeCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = id192PracticeCareerMock.SetupGet(m => m.TrialCounts).Returns(id192TrialCounts);
+            _ = id192PracticeCareerMock.SetupGet(m => m.ClearCounts).Returns(id192ClearCounts);
+
+            var id222StoryCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var id222TrialCounts = trialCounts.ToDictionary(pair => pair.Key, pair => 0);
+            var id222ClearCounts = clearCounts.ToDictionary(pair => pair.Key, pair => 0);
+            _ = id222StoryCareerMock.SetupGet(m => m.TrialCounts).Returns(id222TrialCounts);
+            _ = id222StoryCareerMock.SetupGet(m => m.ClearCounts).Returns(id222ClearCounts);
+
+            var id222PracticeCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = id222PracticeCareerMock.SetupGet(m => m.TrialCounts).Returns(id222TrialCounts);
+            _ = id222PracticeCareerMock.SetupGet(m => m.ClearCounts).Returns(id222ClearCounts);
+
+            return new[]
             {
-                CardId = 2,
-                StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub),
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 4),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 3),
+                    CardId = 2,
+                    StoryCareer = id2StoryCareerMock.Object,
+                    PracticeCareer = id2PracticeCareerMock.Object,
                 },
-                PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 4),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 3),
+                    CardId = 6,
+                    StoryCareer = id6StoryCareerMock.Object,
+                    PracticeCareer = id6PracticeCareerMock.Object,
                 },
-            },
-            new CardAttackStub(CardAttackTests.ValidStub)
-            {
-                CardId = 6,
-                StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 5),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
+                    CardId = 192,
+                    StoryCareer = id192StoryCareerMock.Object,
+                    PracticeCareer = id192PracticeCareerMock.Object,
                 },
-                PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 5),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
+                    CardId = 222,
+                    StoryCareer = id222StoryCareerMock.Object,
+                    PracticeCareer = id222PracticeCareerMock.Object,
                 },
-            },
-            new CardAttackStub(CardAttackTests.ValidStub)
-            {
-                CardId = 192,
-                StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
-                {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 2),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                },
-                PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
-                {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 2),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                },
-            },
-            new CardAttackStub(CardAttackTests.ValidStub)
-            {
-                CardId = 222,
-                StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
-                {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                },
-                PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
-                {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                },
-            },
-        }.ToDictionary(element => (int)element.CardId);
+            };
+        }
+
+        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
+            CreateCardAttacks().ToDictionary(element => (int)element.CardId);
 
         [TestMethod]
         public void CollectRateReplacerTest()

@@ -25,8 +25,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             CardName = TestUtils.MakeRandomArray<byte>(0x30),
             EnemyName = TestUtils.MakeRandomArray<byte>(0x30),
             Comment = TestUtils.MakeRandomArray<byte>(0x80),
-            StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub),
-            PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub),
+            StoryCareer = CardAttackCareerTests.MockCardAttackCareer().Object,
+            PracticeCareer = CardAttackCareerTests.MockCardAttackCareer().Object,
         };
 
         internal static byte[] MakeByteArray(ICardAttack attack)
@@ -130,20 +130,18 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void CardAttackTestNotTried()
         {
+            var storyCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var trialCounts = storyCareerMock.Object.TrialCounts
+                .Select(pair => (pair.Key, pair.Key == CharaWithTotal.Total ? 0 : pair.Value)).ToDictionary();
+            _ = storyCareerMock.SetupGet(m => m.TrialCounts).Returns(trialCounts);
+
+            var practiceCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = practiceCareerMock.SetupGet(m => m.TrialCounts).Returns(trialCounts);
+
             var stub = new CardAttackStub(ValidStub)
             {
-                StoryCareer = new CardAttackCareerStub(ValidStub.StoryCareer)
-                {
-                    TrialCounts = ValidStub.StoryCareer.TrialCounts
-                        .Select(pair => (pair.Key, Value: pair.Key == CharaWithTotal.Total ? 0 : pair.Value))
-                        .ToDictionary(),
-                },
-                PracticeCareer = new CardAttackCareerStub(ValidStub.PracticeCareer)
-                {
-                    TrialCounts = ValidStub.PracticeCareer.TrialCounts
-                        .Select(pair => (pair.Key, Value: pair.Key == CharaWithTotal.Total ? 0 : pair.Value))
-                        .ToDictionary(),
-                },
+                StoryCareer = storyCareerMock.Object,
+                PracticeCareer = practiceCareerMock.Object,
             };
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));

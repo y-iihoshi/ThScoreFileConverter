@@ -1,31 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
     public class CardAttackCareerTests
     {
-        internal static CardAttackCareerStub ValidStub { get; } = new CardAttackCareerStub()
+        internal static Mock<ICardAttackCareer> MockInitialCardAttackCareer()
         {
-            MaxBonuses = Utils.GetEnumerable<CharaWithTotal>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
-            TrialCounts = Utils.GetEnumerable<CharaWithTotal>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => 20 + pair.index),
-            ClearCounts = Utils.GetEnumerable<CharaWithTotal>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => 20 - pair.index),
-        };
+            var mock = new Mock<ICardAttackCareer>();
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(ImmutableDictionary<CharaWithTotal, uint>.Empty);
+            _ = mock.SetupGet(m => m.TrialCounts).Returns(ImmutableDictionary<CharaWithTotal, int>.Empty);
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(ImmutableDictionary<CharaWithTotal, int>.Empty);
+            return mock;
+        }
+
+        internal static Mock<ICardAttackCareer> MockCardAttackCareer()
+        {
+            var mock = new Mock<ICardAttackCareer>();
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(
+                Utils.GetEnumerable<CharaWithTotal>()
+                    .Select((chara, index) => (chara, index))
+                    .ToDictionary(pair => pair.chara, pair => (uint)pair.index));
+            _ = mock.SetupGet(m => m.TrialCounts).Returns(
+                Utils.GetEnumerable<CharaWithTotal>()
+                    .Select((chara, index) => (chara, index))
+                    .ToDictionary(pair => pair.chara, pair => 20 + pair.index));
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(
+                Utils.GetEnumerable<CharaWithTotal>()
+                    .Select((chara, index) => (chara, index))
+                    .ToDictionary(pair => pair.chara, pair => 20 - pair.index));
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(ICardAttackCareer career)
             => TestUtils.MakeByteArray(
@@ -43,21 +57,21 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void CardAttackCareerTest()
         {
-            var stub = new CardAttackCareerStub();
+            var mock = MockInitialCardAttackCareer();
 
             var career = new CardAttackCareer();
 
-            Validate(stub, career);
+            Validate(mock.Object, career);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockCardAttackCareer();
 
-            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
-            Validate(stub, career);
+            Validate(mock.Object, career);
         }
 
         [TestMethod]
@@ -74,10 +88,12 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedMaxBonuses()
         {
-            var stub = new CardAttackCareerStub(ValidStub);
-            stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary();
+            var mock = MockCardAttackCareer();
+            var maxBonuses = mock.Object.MaxBonuses;
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(
+                maxBonuses.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -85,28 +101,29 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReadFromTestExceededMaxBonuses()
         {
-            var stub = new CardAttackCareerStub(ValidStub);
-            stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<CharaWithTotal, uint>
-            {
-                { TestUtils.Cast<CharaWithTotal>(999), 999u },
-            }).ToDictionary();
+            var mock = MockCardAttackCareer();
+            var maxBonuses = mock.Object.MaxBonuses;
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(
+                maxBonuses.Concat(new[] { (TestUtils.Cast<CharaWithTotal>(999), 999u) }.ToDictionary()).ToDictionary());
 
-            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
-            CollectionAssert.That.AreNotEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreEqual(stub.MaxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
-            CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.MaxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(mock.Object.MaxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.TrialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.ClearCounts.Values, career.ClearCounts.Values);
         }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedTrialCounts()
         {
-            var stub = new CardAttackCareerStub(ValidStub);
-            stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary();
+            var mock = MockCardAttackCareer();
+            var trialCounts = mock.Object.TrialCounts;
+            _ = mock.SetupGet(m => m.TrialCounts).Returns(
+                trialCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -114,28 +131,29 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReadFromTestExceededTrialCounts()
         {
-            var stub = new CardAttackCareerStub(ValidStub);
-            stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<CharaWithTotal, int>
-            {
-                { TestUtils.Cast<CharaWithTotal>(999), 999 },
-            }).ToDictionary();
+            var mock = MockCardAttackCareer();
+            var trialCounts = mock.Object.TrialCounts;
+            _ = mock.SetupGet(m => m.TrialCounts).Returns(
+                trialCounts.Concat(new[] { (TestUtils.Cast<CharaWithTotal>(999), 999) }.ToDictionary()).ToDictionary());
 
-            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
-            CollectionAssert.That.AreEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreEqual(stub.TrialCounts.Values.SkipLast(1), career.TrialCounts.Values);
-            CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(mock.Object.MaxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.TrialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreEqual(mock.Object.TrialCounts.Values.SkipLast(1), career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.ClearCounts.Values, career.ClearCounts.Values);
         }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedClearCounts()
         {
-            var stub = new CardAttackCareerStub(ValidStub);
-            stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary();
+            var mock = MockCardAttackCareer();
+            var clearCounts = mock.Object.ClearCounts;
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(
+                clearCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -143,18 +161,17 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReadFromTestExceededClearCounts()
         {
-            var stub = new CardAttackCareerStub(ValidStub);
-            stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<CharaWithTotal, int>
-            {
-                { TestUtils.Cast<CharaWithTotal>(999), 999 },
-            }).ToDictionary();
+            var mock = MockCardAttackCareer();
+            var clearCounts = mock.Object.ClearCounts;
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(
+                clearCounts.Concat(new[] { (TestUtils.Cast<CharaWithTotal>(999), 999) }.ToDictionary()).ToDictionary());
 
-            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
-            CollectionAssert.That.AreEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
-            CollectionAssert.That.AreEqual(stub.ClearCounts.Values.SkipLast(1), career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(mock.Object.MaxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(mock.Object.TrialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.ClearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(mock.Object.ClearCounts.Values.SkipLast(1), career.ClearCounts.Values);
         }
     }
 }

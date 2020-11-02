@@ -10,28 +10,34 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } = new List<ICardAttack>
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
         {
-            new CardAttackStub(CardAttackTests.ValidStub),
-            new CardAttackStub(CardAttackTests.ValidStub)
+            var storyCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var trialCounts = storyCareerMock.Object.TrialCounts;
+            var clearCounts = storyCareerMock.Object.ClearCounts;
+            var noTrialCounts = trialCounts.ToDictionary(pair => pair.Key, pair => 0);
+            var noClearCounts = clearCounts.ToDictionary(pair => pair.Key, pair => 0);
+            _ = storyCareerMock.SetupGet(m => m.TrialCounts).Returns(noTrialCounts);
+            _ = storyCareerMock.SetupGet(m => m.ClearCounts).Returns(noClearCounts);
+
+            var practiceCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = practiceCareerMock.SetupGet(m => m.TrialCounts).Returns(noTrialCounts);
+            _ = practiceCareerMock.SetupGet(m => m.ClearCounts).Returns(noClearCounts);
+
+            return new[]
             {
-                CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub),
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
+                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
+                    StoryCareer = storyCareerMock.Object,
+                    PracticeCareer = practiceCareerMock.Object,
                 },
-                PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
-                {
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => 0),
-                },
-            },
-        }.ToDictionary(element => (int)element.CardId);
+            };
+        }
+
+        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
+            CreateCardAttacks().ToDictionary(element => (int)element.CardId);
 
         [TestMethod]
         public void CardReplacerTest()

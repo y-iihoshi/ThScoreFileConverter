@@ -11,37 +11,46 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class CareerReplacerTests
     {
-        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } = new List<ICardAttack>
+        private static IEnumerable<ICardAttack> CreateCardAttacks()
         {
-            new CardAttackStub(CardAttackTests.ValidStub),
-            new CardAttackStub(CardAttackTests.ValidStub)
+            var storyCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            var maxBonuses = storyCareerMock.Object.MaxBonuses;
+            var trialCounts = storyCareerMock.Object.TrialCounts;
+            var clearCounts = storyCareerMock.Object.ClearCounts;
+            _ = storyCareerMock.SetupGet(m => m.MaxBonuses).Returns(
+                maxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
+            _ = storyCareerMock.SetupGet(m => m.TrialCounts).Returns(
+                trialCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 3));
+            _ = storyCareerMock.SetupGet(m => m.ClearCounts).Returns(
+                clearCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 2));
+
+            var practiceCareerMock = CardAttackCareerTests.MockCardAttackCareer();
+            _ = practiceCareerMock.SetupGet(m => m.MaxBonuses).Returns(
+                maxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 2000));
+            _ = practiceCareerMock.SetupGet(m => m.TrialCounts).Returns(
+                trialCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 4));
+            _ = practiceCareerMock.SetupGet(m => m.ClearCounts).Returns(
+                clearCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 3));
+
+            return new[]
             {
-                CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub),
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    MaxBonuses = CardAttackCareerTests.ValidStub.MaxBonuses
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 1000),
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 3),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 2),
+                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
+                    StoryCareer = storyCareerMock.Object,
                 },
-            },
-            new CardAttackStub(CardAttackTests.ValidStub)
-            {
-                Level = LevelPracticeWithTotal.LastWord,
-                CardId = 222,
-                PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub)
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    MaxBonuses = CardAttackCareerTests.ValidStub.MaxBonuses
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 2000),
-                    TrialCounts = CardAttackCareerTests.ValidStub.TrialCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 4),
-                    ClearCounts = CardAttackCareerTests.ValidStub.ClearCounts
-                        .ToDictionary(pair => pair.Key, pair => pair.Value * 3),
+                    Level = LevelPracticeWithTotal.LastWord,
+                    CardId = 222,
+                    PracticeCareer = practiceCareerMock.Object,
                 },
-            },
-        }.ToDictionary(element => (int)element.CardId);
+            };
+        }
+
+        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
+            CreateCardAttacks().ToDictionary(element => (int)element.CardId);
 
         [TestMethod]
         public void CareerReplacerTest()
