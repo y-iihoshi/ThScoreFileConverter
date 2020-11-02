@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -24,16 +23,15 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = practiceCareerMock.SetupGet(m => m.TrialCounts).Returns(noTrialCounts);
             _ = practiceCareerMock.SetupGet(m => m.ClearCounts).Returns(noClearCounts);
 
-            return new[]
-            {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                    StoryCareer = storyCareerMock.Object,
-                    PracticeCareer = practiceCareerMock.Object,
-                },
-            };
+            var attack1Mock = CardAttackTests.MockCardAttack();
+
+            var attack2Mock = CardAttackTests.MockCardAttack();
+            _ = attack2Mock.SetupGet(m => m.CardId).Returns((short)(attack1Mock.Object.CardId + 1));
+            _ = attack2Mock.SetupGet(m => m.StoryCareer).Returns(storyCareerMock.Object);
+            _ = attack2Mock.SetupGet(m => m.PracticeCareer).Returns(practiceCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack2Mock);
+
+            return new[] { attack1Mock.Object, attack2Mock.Object };
         }
 
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =

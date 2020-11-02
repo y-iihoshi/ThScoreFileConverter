@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -32,21 +31,20 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = practiceCareerMock.SetupGet(m => m.ClearCounts).Returns(
                 clearCounts.ToDictionary(pair => pair.Key, pair => pair.Value * 3));
 
-            return new[]
-            {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
-                    StoryCareer = storyCareerMock.Object,
-                },
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    Level = LevelPracticeWithTotal.LastWord,
-                    CardId = 222,
-                    PracticeCareer = practiceCareerMock.Object,
-                },
-            };
+            var attack1Mock = CardAttackTests.MockCardAttack();
+
+            var attack2Mock = CardAttackTests.MockCardAttack();
+            _ = attack2Mock.SetupGet(m => m.CardId).Returns((short)(attack1Mock.Object.CardId + 1));
+            _ = attack2Mock.SetupGet(m => m.StoryCareer).Returns(storyCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack2Mock);
+
+            var attack3Mock = CardAttackTests.MockCardAttack();
+            _ = attack3Mock.SetupGet(m => m.Level).Returns(LevelPracticeWithTotal.LastWord);
+            _ = attack3Mock.SetupGet(m => m.CardId).Returns(222);
+            _ = attack3Mock.SetupGet(m => m.PracticeCareer).Returns(practiceCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack3Mock);
+
+            return new[] { attack1Mock.Object, attack2Mock.Object, attack3Mock.Object };
         }
 
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
@@ -129,13 +127,9 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestStoryLastWord()
         {
-            var cardAttacks = new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 206,
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            var mock = CardAttackTests.MockCardAttack();
+            _ = mock.SetupGet(m => m.CardId).Returns(206);
+            var cardAttacks = new[] { mock.Object, }.ToDictionary(attack => (int)attack.CardId);
 
             var replacer = new CareerReplacer(cardAttacks);
             Assert.AreEqual("%T08CS206MA1", replacer.Replace("%T08CS206MA1"));

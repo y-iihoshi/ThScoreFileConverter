@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -54,33 +53,35 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = id222PracticeCareerMock.SetupGet(m => m.TrialCounts).Returns(id222TrialCounts);
             _ = id222PracticeCareerMock.SetupGet(m => m.ClearCounts).Returns(id222ClearCounts);
 
+            var attack1Mock = CardAttackTests.MockCardAttack();
+
+            var attack2Mock = CardAttackTests.MockCardAttack();
+            _ = attack2Mock.SetupGet(m => m.CardId).Returns(2);
+            _ = attack2Mock.SetupGet(m => m.StoryCareer).Returns(id2StoryCareerMock.Object);
+            _ = attack2Mock.SetupGet(m => m.PracticeCareer).Returns(id2PracticeCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack2Mock);
+
+            var attack3Mock = CardAttackTests.MockCardAttack();
+            _ = attack3Mock.SetupGet(m => m.CardId).Returns(6);
+            _ = attack3Mock.SetupGet(m => m.StoryCareer).Returns(id6StoryCareerMock.Object);
+            _ = attack3Mock.SetupGet(m => m.PracticeCareer).Returns(id6PracticeCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack3Mock);
+
+            var attack4Mock = CardAttackTests.MockCardAttack();
+            _ = attack4Mock.SetupGet(m => m.CardId).Returns(192);
+            _ = attack4Mock.SetupGet(m => m.StoryCareer).Returns(id192StoryCareerMock.Object);
+            _ = attack4Mock.SetupGet(m => m.PracticeCareer).Returns(id192PracticeCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack4Mock);
+
+            var attack5Mock = CardAttackTests.MockCardAttack();
+            _ = attack5Mock.SetupGet(m => m.CardId).Returns(222);
+            _ = attack5Mock.SetupGet(m => m.StoryCareer).Returns(id222StoryCareerMock.Object);
+            _ = attack5Mock.SetupGet(m => m.PracticeCareer).Returns(id222PracticeCareerMock.Object);
+            CardAttackTests.SetupHasTried(attack5Mock);
+
             return new[]
             {
-                new CardAttackStub(CardAttackTests.ValidStub),
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 2,
-                    StoryCareer = id2StoryCareerMock.Object,
-                    PracticeCareer = id2PracticeCareerMock.Object,
-                },
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 6,
-                    StoryCareer = id6StoryCareerMock.Object,
-                    PracticeCareer = id6PracticeCareerMock.Object,
-                },
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 192,
-                    StoryCareer = id192StoryCareerMock.Object,
-                    PracticeCareer = id192PracticeCareerMock.Object,
-                },
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 222,
-                    StoryCareer = id222StoryCareerMock.Object,
-                    PracticeCareer = id222PracticeCareerMock.Object,
-                },
+                attack1Mock.Object, attack2Mock.Object, attack3Mock.Object, attack4Mock.Object, attack5Mock.Object,
             };
         }
 
@@ -368,13 +369,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestInvalidCardId()
         {
-            var cardAttacks = new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 223,
-                },
-            }.ToDictionary(element => (int)element.CardId);
+            var mock = CardAttackTests.MockCardAttack();
+            _ = mock.SetupGet(m => m.CardId).Returns(223);
+            var cardAttacks = new[] { mock.Object }.ToDictionary(attack => (int)attack.CardId);
+
             var replacer = new CollectRateReplacer(cardAttacks);
             Assert.AreEqual("0", replacer.Replace("%T08CRGSLMA1A1"));
             Assert.AreEqual("0", replacer.Replace("%T08CRGSXMA1A1"));

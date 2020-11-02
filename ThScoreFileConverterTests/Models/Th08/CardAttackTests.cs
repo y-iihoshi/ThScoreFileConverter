@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th08
@@ -15,19 +15,34 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class CardAttackTests
     {
-        internal static CardAttackStub ValidStub { get; } = new CardAttackStub()
+        internal static Mock<ICardAttack> MockCardAttack()
         {
-            Signature = "CATK",
-            Size1 = 0x22C,
-            Size2 = 0x22C,
-            CardId = 123,
-            Level = LevelPracticeWithTotal.Lunatic,
-            CardName = TestUtils.MakeRandomArray<byte>(0x30),
-            EnemyName = TestUtils.MakeRandomArray<byte>(0x30),
-            Comment = TestUtils.MakeRandomArray<byte>(0x80),
-            StoryCareer = CardAttackCareerTests.MockCardAttackCareer().Object,
-            PracticeCareer = CardAttackCareerTests.MockCardAttackCareer().Object,
-        };
+            var mock = new Mock<ICardAttack>();
+            _ = mock.SetupGet(m => m.Signature).Returns("CATK");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x22C);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x22C);
+            _ = mock.SetupGet(m => m.CardId).Returns(123);
+            _ = mock.SetupGet(m => m.Level).Returns(LevelPracticeWithTotal.Lunatic);
+            _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock.SetupGet(m => m.EnemyName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+            _ = mock.SetupGet(m => m.Comment).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(m => m.StoryCareer).Returns(CardAttackCareerTests.MockCardAttackCareer().Object);
+            _ = mock.SetupGet(m => m.PracticeCareer).Returns(CardAttackCareerTests.MockCardAttackCareer().Object);
+            SetupHasTried(mock);
+
+            return mock;
+        }
+
+        internal static void SetupHasTried(Mock<ICardAttack> mock)
+        {
+            var hasStoryTried =
+                mock.Object.StoryCareer.TrialCounts.TryGetValue(CharaWithTotal.Total, out var storyTrialCount)
+                && (storyTrialCount > 0);
+            var hasPracticeTried =
+                mock.Object.PracticeCareer.TrialCounts.TryGetValue(CharaWithTotal.Total, out var practiceTrialCount)
+                && (practiceTrialCount > 0);
+            _ = mock.Setup(m => m.HasTried()).Returns(hasStoryTried || hasPracticeTried);
+        }
 
         internal static byte[] MakeByteArray(ICardAttack attack)
             => TestUtils.MakeByteArray(
@@ -63,12 +78,12 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void CardAttackTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockCardAttack();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var cardAttack = new CardAttack(chapter);
 
-            Validate(stub, cardAttack);
+            Validate(mock.Object, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
         }
 
@@ -86,10 +101,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSignature()
         {
-            var stub = new CardAttackStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockCardAttack();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -99,10 +115,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSize1()
         {
-            var stub = new CardAttackStub(ValidStub);
-            --stub.Size1;
+            var mock = MockCardAttack();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -116,12 +133,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidCastException))]
         public void CardAttackTestInvalidLevel(int level)
         {
-            var stub = new CardAttackStub(ValidStub)
-            {
-                Level = TestUtils.Cast<LevelPracticeWithTotal>(level),
-            };
+            var mock = MockCardAttack();
+            _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<LevelPracticeWithTotal>(level));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -138,16 +153,14 @@ namespace ThScoreFileConverterTests.Models.Th08
             var practiceCareerMock = CardAttackCareerTests.MockCardAttackCareer();
             _ = practiceCareerMock.SetupGet(m => m.TrialCounts).Returns(trialCounts);
 
-            var stub = new CardAttackStub(ValidStub)
-            {
-                StoryCareer = storyCareerMock.Object,
-                PracticeCareer = practiceCareerMock.Object,
-            };
+            var mock = MockCardAttack();
+            _ = mock.SetupGet(m => m.StoryCareer).Returns(storyCareerMock.Object);
+            _ = mock.SetupGet(m => m.PracticeCareer).Returns(practiceCareerMock.Object);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var cardAttack = new CardAttack(chapter);
 
-            Validate(stub, cardAttack);
+            Validate(mock.Object, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -114,7 +115,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetCardAttackTest()
         {
-            var attack = CardAttackTests.ValidStub;
+            var attack = Mock.Of<ICardAttack>(m => m.CardId == 1);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack);
@@ -125,8 +126,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetCardAttackTestTwice()
         {
-            var attack1 = CardAttackTests.ValidStub;
-            var attack2 = new CardAttackStub(attack1);
+            var attack1 = Mock.Of<ICardAttack>(m => m.CardId == 1);
+            var attack2 = Mock.Of<ICardAttack>(m => m.CardId == attack1.CardId);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack1);
