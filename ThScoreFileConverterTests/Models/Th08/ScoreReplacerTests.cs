@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
     ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
@@ -17,16 +16,8 @@ namespace ThScoreFileConverterTests.Models.Th08
     public class ScoreReplacerTests
     {
         internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
-            new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub),
-                    }
-                },
-            };
+            new[] { new[] { HighScoreTests.MockHighScore().Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -217,19 +208,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestGotNoSpellCards()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            CardFlags = Enumerable.Range(1, 222).ToDictionary(id => id, _ => (byte)0),
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.CardFlags).Returns(Enumerable.Range(1, 222).ToDictionary(id => id, _ => (byte)0));
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ScoreReplacer(rankings);
             Assert.AreEqual(string.Empty, replacer.Replace("%T08SCRHMA1F"));
         }
@@ -237,19 +219,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestGotNonexistentSpellCards()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            CardFlags = new Dictionary<int, byte> { { 223, 1 } },
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.CardFlags).Returns(new Dictionary<int, byte> { { 223, 1 } });
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ScoreReplacer(rankings);
             Assert.AreEqual(string.Empty, replacer.Replace("%T08SCRHMA1F"));
         }

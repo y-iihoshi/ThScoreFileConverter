@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
     ThScoreFileConverter.Models.Th08.Chara,
@@ -19,30 +19,33 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class HighScoreTests
     {
-        internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
+        internal static Mock<IHighScore> MockHighScore()
         {
-            Signature = "HSCR",
-            Size1 = 0x0168,
-            Size2 = 0x0168,
-            Score = 1234567u,
-            SlowRate = 9.87f,
-            Chara = Chara.MarisaAlice,
-            Level = Level.Hard,
-            StageProgress = StageProgress.Three,
-            Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
-            Date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
-            ContinueCount = 2,
-            PlayerNum = 5,
-            PlayTime = 987654u,
-            PointItem = 1234,
-            MissCount = 9,
-            BombCount = 6,
-            LastSpellCount = 12,
-            PauseCount = 3,
-            TimePoint = 65432,
-            HumanRate = 7890,
-            CardFlags = Enumerable.Range(1, 222).ToDictionary(id => id, id => (byte)((id == 3) || (id == 7) ? id : 0)),
-        };
+            var mock = new Mock<IHighScore>();
+            _ = mock.SetupGet(m => m.Signature).Returns("HSCR");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x0168);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x0168);
+            _ = mock.SetupGet(m => m.Score).Returns(1234567u);
+            _ = mock.SetupGet(m => m.SlowRate).Returns(9.87f);
+            _ = mock.SetupGet(m => m.Chara).Returns(Chara.MarisaAlice);
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Hard);
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Three);
+            _ = mock.SetupGet(m => m.Name).Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0"));
+            _ = mock.SetupGet(m => m.Date).Returns(TestUtils.CP932Encoding.GetBytes("01/23\0"));
+            _ = mock.SetupGet(m => m.ContinueCount).Returns(2);
+            _ = mock.SetupGet(m => m.PlayerNum).Returns(5);
+            _ = mock.SetupGet(m => m.PlayTime).Returns(987654u);
+            _ = mock.SetupGet(m => m.PointItem).Returns(1234);
+            _ = mock.SetupGet(m => m.MissCount).Returns(9);
+            _ = mock.SetupGet(m => m.BombCount).Returns(6);
+            _ = mock.SetupGet(m => m.LastSpellCount).Returns(12);
+            _ = mock.SetupGet(m => m.PauseCount).Returns(3);
+            _ = mock.SetupGet(m => m.TimePoint).Returns(65432);
+            _ = mock.SetupGet(m => m.HumanRate).Returns(7890);
+            _ = mock.SetupGet(m => m.CardFlags).Returns(
+                Enumerable.Range(1, 222).ToDictionary(id => id, id => (byte)((id == 3) || (id == 7) ? id : 0)));
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IHighScore highScore)
             => TestUtils.MakeByteArray(
@@ -102,12 +105,12 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void HighScoreTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockHighScore();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var highScore = new HighScore(chapter);
 
-            Validate(stub, highScore);
+            Validate(mock.Object, highScore);
         }
 
         [TestMethod]
@@ -156,10 +159,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSignature()
         {
-            var stub = new HighScoreStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockHighScore();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -169,10 +173,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSize1()
         {
-            var stub = new HighScoreStub(ValidStub);
-            --stub.Size1;
+            var mock = MockHighScore();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -186,12 +191,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidChara(int chara)
         {
-            var stub = new HighScoreStub(ValidStub)
-            {
-                Chara = TestUtils.Cast<Chara>(chara),
-            };
+            var mock = MockHighScore();
+            _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -205,12 +208,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidLevel(int level)
         {
-            var stub = new HighScoreStub(ValidStub)
-            {
-                Level = TestUtils.Cast<Level>(level),
-            };
+            var mock = MockHighScore();
+            _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -224,12 +225,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidStageProgress(int stageProgress)
         {
-            var stub = new HighScoreStub(ValidStub)
-            {
-                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
-            };
+            var mock = MockHighScore();
+            _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

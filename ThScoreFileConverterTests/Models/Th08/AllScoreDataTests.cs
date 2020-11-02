@@ -7,6 +7,10 @@ using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
 using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
+using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
+    ThScoreFileConverter.Models.Th08.Chara,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -59,10 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetHighScoreTest()
         {
-            var score = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-            };
+            var score = Mock.Of<IHighScore>(m => m.Score == 87654u);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -73,11 +74,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetHighScoreTestTwice()
         {
-            var score1 = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-            };
-            var score2 = new HighScoreStub(score1);
+            var score1 = Mock.Of<IHighScore>(m => m.Score == 87654u);
+            var score2 = Mock.Of<IHighScore>(m => m.Score == score1.Score);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);

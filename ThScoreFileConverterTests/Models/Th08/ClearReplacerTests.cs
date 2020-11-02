@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
     ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
@@ -16,21 +15,16 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class ClearReplacerTests
     {
+        private static IEnumerable<IReadOnlyList<IHighScore>> CreateRankings()
+        {
+            var mock1 = HighScoreTests.MockHighScore();
+            var mock2 = HighScoreTests.MockHighScore();
+            _ = mock2.SetupGet(m => m.StageProgress).Returns(mock1.Object.StageProgress - 1);
+            return new[] { new[] { mock1.Object, mock2.Object } };
+        }
+
         internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
-            new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub),
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            StageProgress = HighScoreTests.ValidStub.StageProgress - 1,
-                        },
-                    }
-                },
-            };
+            CreateRankings().ToDictionary(ranking => (ranking[0].Chara, ranking[0].Level));
 
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData { get; } =
             new[] { ClearDataTests.MockClearData().Object }.ToDictionary(entry => entry.Chara);
@@ -69,12 +63,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ClearReplacerTestEmptyScores()
         {
+            var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>()
-                },
+                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
             };
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.IsNotNull(replacer);
@@ -90,19 +82,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestUncanny()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            StageProgress = StageProgress.FourUncanny,
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.FourUncanny);
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual("Stage 4", replacer.Replace("%T08CLEARHMA"));
         }
@@ -110,19 +93,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestPowerful()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            StageProgress = StageProgress.FourPowerful,
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.FourPowerful);
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual("Stage 4", replacer.Replace("%T08CLEARHMA"));
         }
@@ -130,19 +104,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestFinalAClear()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            StageProgress = StageProgress.Clear,
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Clear);
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual("FinalA Clear", replacer.Replace("%T08CLEARHMA"));
         }
@@ -150,19 +115,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestAllClear()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            StageProgress = StageProgress.Clear,
-                        },
-                    }
-                },
-            };
+            var highScoreMock = HighScoreTests.MockHighScore();
+            _ = highScoreMock.SetupGet(m => m.StageProgress).Returns(StageProgress.Clear);
+            var rankings = new[] { new[] { highScoreMock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
 
             var clearDataMock = ClearDataTests.MockClearData();
             _ = clearDataMock.SetupGet(m => m.StoryFlags).Returns(
@@ -176,20 +132,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestExtra()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, Level.Extra),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            Level = Level.Extra,
-                            StageProgress = StageProgress.Extra,
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Extra);
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Extra);
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual("Not Clear", replacer.Replace("%T08CLEARXMA"));
         }
@@ -197,20 +144,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestExtraClear()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, Level.Extra),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            Level = Level.Extra,
-                            StageProgress = StageProgress.Clear,
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Extra);
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Clear);
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual(StageProgress.Clear.ToShortName(), replacer.Replace("%T08CLEARXMA"));
         }
@@ -226,12 +164,10 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
+            var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>()
-                },
+                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
             };
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual("-------", replacer.Replace("%T08CLEARHMA"));
