@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Squirrel
@@ -32,7 +33,7 @@ namespace ThScoreFileConverter.Squirrel
         public new IReadOnlyDictionary<SQObject, SQObject> Value
         {
             get => (IReadOnlyDictionary<SQObject, SQObject>)base.Value;
-            private set => base.Value = value.ToDictionary(pair => pair.Key, pair => pair.Value);
+            private set => base.Value = value.ToDictionary();
         }
 
         public static SQTable Create(BinaryReader reader, bool skipType = false)

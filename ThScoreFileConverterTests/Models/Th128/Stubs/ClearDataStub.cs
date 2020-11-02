@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
@@ -19,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th128.Stubs
 
         public ClearDataStub(IClearData clearData)
         {
-            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = clearData.ClearCounts.ToDictionary();
             this.PlayTime = clearData.PlayTime;
             this.Rankings = clearData.Rankings.ToDictionary(
                 pair => pair.Key,

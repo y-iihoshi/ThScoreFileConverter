@@ -75,8 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReadFromTestShortenedMaxBonuses()
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != CharaWithTotal.Total)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary();
 
             _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
@@ -90,7 +89,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<CharaWithTotal, uint>
             {
                 { TestUtils.Cast<CharaWithTotal>(999), 999u },
-            }).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }).ToDictionary();
 
             var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
@@ -105,8 +104,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReadFromTestShortenedTrialCounts()
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != CharaWithTotal.Total)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary();
 
             _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
@@ -120,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<CharaWithTotal, int>
             {
                 { TestUtils.Cast<CharaWithTotal>(999), 999 },
-            }).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }).ToDictionary();
 
             var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
@@ -135,8 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReadFromTestShortenedClearCounts()
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != CharaWithTotal.Total)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary();
 
             _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
@@ -150,7 +147,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<CharaWithTotal, int>
             {
                 { TestUtils.Cast<CharaWithTotal>(999), 999 },
-            }).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }).ToDictionary();
 
             var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 

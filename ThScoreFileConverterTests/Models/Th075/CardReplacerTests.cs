@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Models.Th075.Stubs;
@@ -22,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 {
                     CardTrialCount = Enumerable.Repeat(0, 100).Select(count => (short)count).ToList(),
                 } as IClearData))
-            .ToDictionary(pair => pair.Key, pair => pair.Value);
+            .ToDictionary();
 
         [TestMethod]
         public void CardReplacerTest()

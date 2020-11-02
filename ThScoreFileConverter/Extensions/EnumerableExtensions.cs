@@ -5,8 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#if NETFRAMEWORK
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +16,7 @@ namespace ThScoreFileConverter.Extensions
     /// </summary>
     public static class EnumerableExtensions
     {
+#if NETFRAMEWORK
         /// <summary>
         /// Bypasses a specified number of elements from the end of a sequence and then returns the remaining elements.
         /// </summary>
@@ -53,7 +52,51 @@ namespace ThScoreFileConverter.Extensions
 
             return source.Skip(source.Count() - count);
         }
+#endif
+
+        /// <summary>
+        /// Creates a <see cref="Dictionary{TKey, TValue}"/> from an <see cref="IEnumerable{T}"/> of
+        /// <see cref="KeyValuePair{TKey, TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key of <paramref name="source"/>.</typeparam>
+        /// <typeparam name="TValue">The type of the value of <paramref name="source"/>.</typeparam>
+        /// <param name="source">
+        /// An <see cref="IEnumerable{T}"/> of <see cref="KeyValuePair{TKey, TValue}"/> to create a
+        /// <see cref="Dictionary{TKey, TValue}"/> from.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Dictionary{TKey, TValue}"/> that contains values of type <typeparamref name="TValue"/>.
+        /// </returns>
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> source)
+            where TKey : notnull
+        {
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
+
+            return source.ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Dictionary{TKey, TValue}"/> from an <see cref="IEnumerable{T}"/> of
+        /// <typeparamref name="TKey"/> and <typeparamref name="TValue"/> pairs.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key of <paramref name="source"/>.</typeparam>
+        /// <typeparam name="TValue">The type of the value of <paramref name="source"/>.</typeparam>
+        /// <param name="source">
+        /// An <see cref="IEnumerable{T}"/> of <typeparamref name="TKey"/> and <typeparamref name="TValue"/> pairs to
+        /// create a <see cref="Dictionary{TKey, TValue}"/> from.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Dictionary{TKey, TValue}"/> that contains values of type <typeparamref name="TValue"/>.
+        /// </returns>
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey, TValue)> source)
+            where TKey : notnull
+        {
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
+
+            return source.ToDictionary(pair => pair.Item1, pair => pair.Item2);
+        }
     }
 }
-
-#endif

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
@@ -16,9 +17,9 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 
         public CardAttackCareerStub(ICardAttackCareer career)
         {
-            this.ClearCounts = career.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.MaxBonuses = career.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.TrialCounts = career.TrialCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = career.ClearCounts.ToDictionary();
+            this.MaxBonuses = career.MaxBonuses.ToDictionary();
+            this.TrialCounts = career.TrialCounts.ToDictionary();
         }
 
         public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; set; }

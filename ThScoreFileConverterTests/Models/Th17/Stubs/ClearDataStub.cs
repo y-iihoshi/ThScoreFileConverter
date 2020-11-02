@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
@@ -26,8 +27,8 @@ namespace ThScoreFileConverterTests.Models.Th17.Stubs
             this.Cards = clearData.Cards.ToDictionary(
                 pair => pair.Key, pair => new SpellCardStub<Level>(pair.Value) as ISpellCard);
             this.Chara = clearData.Chara;
-            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearFlags = clearData.ClearFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = clearData.ClearCounts.ToDictionary();
+            this.ClearFlags = clearData.ClearFlags.ToDictionary();
             this.PlayTime = clearData.PlayTime;
             this.Practices = clearData.Practices.ToDictionary(
                 pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
@@ -115,8 +116,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 new PracticeScoreStub(PracticeScoreTests.ValidStub)
                 {
                     HighScores = PracticeScoreTests.ValidStub.HighScores
-                        .Where(pair => pair.Key.Item2 != Level.Normal)
-                        .ToDictionary(pair => pair.Key, pair => pair.Value),
+                        .Where(pair => pair.Key.Item2 != Level.Normal).ToDictionary(),
                 },
             }.ToDictionary(element => element.Chara);
 
@@ -139,8 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 new PracticeScoreStub(PracticeScoreTests.ValidStub)
                 {
                     HighScores = PracticeScoreTests.ValidStub.HighScores
-                        .Where(pair => pair.Key.Item1 != Stage.Five)
-                        .ToDictionary(pair => pair.Key, pair => pair.Value),
+                        .Where(pair => pair.Key.Item1 != Stage.Five).ToDictionary(),
                 },
             }.ToDictionary(element => element.Chara);
 

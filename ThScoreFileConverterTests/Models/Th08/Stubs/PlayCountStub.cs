@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
@@ -18,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             this.TotalContinue = playCount.TotalContinue;
             this.TotalPractice = playCount.TotalPractice;
             this.TotalTrial = playCount.TotalTrial;
-            this.Trials = playCount.Trials.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.Trials = playCount.Trials.ToDictionary();
         }
 
         public int TotalClear { get; set; }

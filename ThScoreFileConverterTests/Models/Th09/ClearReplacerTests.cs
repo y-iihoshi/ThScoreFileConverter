@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
@@ -159,7 +160,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                     new ClearCountStub()
                     {
                         Counts = ClearCountTests.ValidStub.Counts.Where(pair => pair.Key != Level.Normal)
-                            .ToDictionary(pair => pair.Key, pair => pair.Value),
+                            .ToDictionary(),
                     }
                 },
             };

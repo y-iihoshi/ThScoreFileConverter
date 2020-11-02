@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th09.Stubs
 
         public ClearCountStub(IClearCount clearCount)
         {
-            this.Counts = clearCount.Counts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.Counts = clearCount.Counts.ToDictionary();
         }
 
         public IReadOnlyDictionary<Level, int> Counts { get; set; }

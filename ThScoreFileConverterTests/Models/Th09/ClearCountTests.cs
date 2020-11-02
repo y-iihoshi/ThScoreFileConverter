@@ -16,9 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th09
     {
         internal static ClearCountStub ValidStub { get; } = new ClearCountStub()
         {
-            Counts = Utils.GetEnumerable<Level>()
-                .Select((level, index) => new { level, index })
-                .ToDictionary(pair => pair.level, pair => pair.index),
+            Counts = Utils.GetEnumerable<Level>().Select((level, index) => (level, index)).ToDictionary(),
         };
 
         internal static byte[] MakeByteArray(IClearCount clearCount)
@@ -62,8 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         public void ReadFromTestShortenedTrials()
         {
             var stub = new ClearCountStub(ValidStub);
-            stub.Counts = stub.Counts.Where(pair => pair.Key == Level.Extra)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            stub.Counts = stub.Counts.Where(pair => pair.Key == Level.Extra).ToDictionary();
 
             _ = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 
@@ -77,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             stub.Counts = stub.Counts.Concat(new Dictionary<Level, int>
             {
                 { TestUtils.Cast<Level>(99), 99 },
-            }).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }).ToDictionary();
 
             var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 

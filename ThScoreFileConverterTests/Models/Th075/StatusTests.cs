@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Extensions;
@@ -22,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             {
                 this.encodedLastName = properties.encodedLastName.ToArray();
                 this.decodedLastName = properties.decodedLastName;
-                this.arcadeScores = properties.arcadeScores.ToDictionary(pair => pair.Key, pair => pair.Value);
+                this.arcadeScores = properties.arcadeScores.ToDictionary();
             }
         }
 
@@ -107,8 +108,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             var properties = new Properties(ValidProperties);
             var scores = properties.arcadeScores
-                .Where(pair => pair.Key != (CharaWithReserved.Meiling, CharaWithReserved.Meiling))
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+                .Where(pair => pair.Key != (CharaWithReserved.Meiling, CharaWithReserved.Meiling)).ToDictionary();
             properties.arcadeScores = scores;
 
             _ = TestUtils.Create<Status>(MakeByteArray(properties));
@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestExceededArcadeScores()
         {
             var properties = new Properties(ValidProperties);
-            var scores = properties.arcadeScores.ToDictionary(pair => pair.Key, pair => pair.Value);
+            var scores = properties.arcadeScores.ToDictionary();
             scores.Add((CharaWithReserved.Reserved15, TestUtils.Cast<CharaWithReserved>(99)), 99);
             properties.arcadeScores = scores;
 

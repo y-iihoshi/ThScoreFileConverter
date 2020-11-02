@@ -1,6 +1,5 @@
-﻿#if NETFRAMEWORK
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -11,6 +10,7 @@ namespace ThScoreFileConverterTests.Extensions
     [TestClass]
     public class EnumerableExtensionsTests
     {
+#if NETFRAMEWORK
         [TestMethod]
         public void SkipLastTest()
         {
@@ -97,7 +97,60 @@ namespace ThScoreFileConverterTests.Extensions
             var actual = array.TakeLast(array.Length + 1);
             CollectionAssert.That.AreEqual(array, actual);
         }
+#endif
+
+        [TestMethod]
+        public void ToDictionaryKeyValuePairTest()
+        {
+            var pairs = new[]
+            {
+                new KeyValuePair<int, string>(123, "abc"),
+                new KeyValuePair<int, string>(456, "def"),
+            };
+
+            var dictionary = pairs.ToDictionary();
+
+            Assert.AreEqual(pairs.Length, dictionary.Count);
+            foreach (var pair in pairs)
+            {
+                Assert.IsTrue(dictionary.ContainsKey(pair.Key));
+                Assert.AreEqual(pair.Value, dictionary[pair.Key]);
+            }
+        }
+
+        [TestMethod]
+        public void ToDictionaryKeyValuePairTestNull()
+        {
+            IEnumerable<KeyValuePair<int, string>> pairs = null!;
+
+            Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
+        }
+
+        [TestMethod]
+        public void ToDictionaryPairTest()
+        {
+            var pairs = new[]
+            {
+                (123, "abc"),
+                (456, "def"),
+            };
+
+            var dictionary = pairs.ToDictionary();
+
+            Assert.AreEqual(pairs.Length, dictionary.Count);
+            foreach (var pair in pairs)
+            {
+                Assert.IsTrue(dictionary.ContainsKey(pair.Item1));
+                Assert.AreEqual(pair.Item2, dictionary[pair.Item1]);
+            }
+        }
+
+        [TestMethod]
+        public void ToDictionaryPairTestNull()
+        {
+            IEnumerable<(int, string)> pairs = null!;
+
+            Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
+        }
     }
 }
-
-#endif

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
@@ -135,13 +136,13 @@ namespace ThScoreFileConverterTests.Models.Th08
                 {
                     TrialCounts = ValidStub.StoryCareer.TrialCounts
                         .Select(pair => (pair.Key, Value: pair.Key == CharaWithTotal.Total ? 0 : pair.Value))
-                        .ToDictionary(pair => pair.Key, pair => pair.Value),
+                        .ToDictionary(),
                 },
                 PracticeCareer = new CardAttackCareerStub(ValidStub.PracticeCareer)
                 {
                     TrialCounts = ValidStub.PracticeCareer.TrialCounts
                         .Select(pair => (pair.Key, Value: pair.Key == CharaWithTotal.Total ? 0 : pair.Value))
-                        .ToDictionary(pair => pair.Key, pair => pair.Value),
+                        .ToDictionary(),
                 },
             };
 

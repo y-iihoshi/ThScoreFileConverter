@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
@@ -23,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
         public HighScoreStub(IHighScore highScore)
         {
             this.BombCount = highScore.BombCount;
-            this.CardFlags = highScore.CardFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.CardFlags = highScore.CardFlags.ToDictionary();
             this.HumanRate = highScore.HumanRate;
             this.LastSpellCount = highScore.LastSpellCount;
             this.MissCount = highScore.MissCount;

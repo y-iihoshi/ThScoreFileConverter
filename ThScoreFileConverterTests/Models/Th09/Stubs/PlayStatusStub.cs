@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 
@@ -23,10 +24,10 @@ namespace ThScoreFileConverterTests.Models.Th09.Stubs
         public PlayStatusStub(IPlayStatus playStatus)
         {
             this.BgmFlags = playStatus.BgmFlags.ToArray();
-            this.ClearCounts = playStatus.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ExtraFlags = playStatus.ExtraFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.MatchFlags = playStatus.MatchFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.StoryFlags = playStatus.StoryFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = playStatus.ClearCounts.ToDictionary();
+            this.ExtraFlags = playStatus.ExtraFlags.ToDictionary();
+            this.MatchFlags = playStatus.MatchFlags.ToDictionary();
+            this.StoryFlags = playStatus.StoryFlags.ToDictionary();
             this.TotalPlayTime = playStatus.TotalPlayTime;
             this.TotalRunningTime = playStatus.TotalRunningTime;
             this.FirstByteOfData = playStatus.FirstByteOfData;

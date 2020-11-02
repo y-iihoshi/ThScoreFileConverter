@@ -17,9 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         internal static PlayCountStub ValidStub { get; } = new PlayCountStub()
         {
             TotalTrial = 1,
-            Trials = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => pair.index),
+            Trials = Utils.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary(),
             TotalClear = 3,
             TotalContinue = 4,
             TotalPractice = 5,
@@ -78,8 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReadFromTestShortenedTrials()
         {
             var stub = new PlayCountStub(ValidStub);
-            stub.Trials = stub.Trials.Where(pair => pair.Key != Chara.Yuyuko)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            stub.Trials = stub.Trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary();
 
             _ = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 
@@ -93,7 +90,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             stub.Trials = stub.Trials.Concat(new Dictionary<Chara, int>
             {
                 { TestUtils.Cast<Chara>(99), 99 },
-            }).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }).ToDictionary();
 
             var playCount = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 

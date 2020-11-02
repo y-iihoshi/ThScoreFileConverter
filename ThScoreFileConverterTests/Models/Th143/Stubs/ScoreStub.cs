@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Th143.Stubs
@@ -16,8 +17,8 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
 
         public ScoreStub(IScore score)
         {
-            this.ChallengeCounts = score.ChallengeCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearCounts = score.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ChallengeCounts = score.ChallengeCounts.ToDictionary();
+            this.ClearCounts = score.ClearCounts.ToDictionary();
             this.HighScore = score.HighScore;
             this.Number = score.Number;
             this.Checksum = score.Checksum;
