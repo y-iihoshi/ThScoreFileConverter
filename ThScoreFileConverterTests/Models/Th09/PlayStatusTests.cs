@@ -23,13 +23,13 @@ namespace ThScoreFileConverterTests.Models.Th09
             TotalPlayTime = new Time(23, 45, 19, 876, false),
             BgmFlags = TestUtils.MakeRandomArray<byte>(19),
             MatchFlags = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => new { chara, index })
+                .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => (byte)pair.index),
             StoryFlags = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => new { chara, index })
+                .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)),
             ExtraFlags = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => new { chara, index })
+                .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)),
             ClearCounts = Utils.GetEnumerable<Chara>()
                 .ToDictionary(
