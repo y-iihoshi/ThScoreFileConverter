@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th095
 {
@@ -73,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void SetStatusTest()
         {
-            var status = new StatusStub(StatusTests.ValidStub);
+            var status = Mock.Of<IStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status);
@@ -84,8 +83,8 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void SetStatusTestTwice()
         {
-            var status1 = new StatusStub(StatusTests.ValidStub);
-            var status2 = new StatusStub(status1);
+            var status1 = Mock.Of<IStatus>();
+            var status2 = Mock.Of<IStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
