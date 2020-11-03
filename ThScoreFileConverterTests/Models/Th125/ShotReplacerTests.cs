@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         internal static IReadOnlyDictionary<(Chara, Level, int), (string, IBestShotHeader)> BestShots { get; } =
             new List<(string, IBestShotHeader header)>
             {
-                (@"C:\path\to\output\bestshots\bs2_02_3.png", BestShotHeaderTests.ValidStub),
+                (@"C:\path\to\output\bestshots\bs2_02_3.png", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         {
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                ("abcde", BestShotHeaderTests.ValidStub),
+                ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
             var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         {
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                ("abcde", BestShotHeaderTests.ValidStub),
+                ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
             var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH23"));
