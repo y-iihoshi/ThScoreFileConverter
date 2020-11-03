@@ -3,27 +3,38 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th095.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
     public class BestShotHeaderTests
     {
-        internal static BestShotHeaderStub ValidStub { get; } = new BestShotHeaderStub()
+        internal static Mock<IBestShotHeader> MockInitialBestShotHeader()
         {
-            Signature = "BSTS",
-            Level = Level.Two,
-            Scene = 3,
-            Width = 4,
-            Height = 5,
-            ResultScore = 6,
-            SlowRate = 7f,
-            CardName = TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray(),
-        };
+            var mock = new Mock<IBestShotHeader>();
+            _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
+            _ = mock.SetupGet(m => m.CardName).Returns(Enumerable.Empty<byte>());
+            return mock;
+        }
+
+        internal static Mock<IBestShotHeader> MockBestShotHeader()
+        {
+            var mock = new Mock<IBestShotHeader>();
+            _ = mock.SetupGet(m => m.Signature).Returns("BSTS");
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Two);
+            _ = mock.SetupGet(m => m.Scene).Returns(3);
+            _ = mock.SetupGet(m => m.Width).Returns(4);
+            _ = mock.SetupGet(m => m.Height).Returns(5);
+            _ = mock.SetupGet(m => m.ResultScore).Returns(6);
+            _ = mock.SetupGet(m => m.SlowRate).Returns(7f);
+            _ = mock.SetupGet(m => m.CardName).Returns(
+                TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray());
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IBestShotHeader header)
             => TestUtils.MakeByteArray(
@@ -56,18 +67,19 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void BestShotHeaderTest()
         {
-            var stub = new BestShotHeaderStub();
+            var mock = MockInitialBestShotHeader();
             var header = new BestShotHeader();
 
-            Validate(stub, header);
+            Validate(mock.Object, header);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(ValidStub));
+            var mock = MockBestShotHeader();
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
-            Validate(ValidStub, header);
+            Validate(mock.Object, header);
         }
 
         [TestMethod]
@@ -85,12 +97,10 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature()
         {
-            var stub = new BestShotHeaderStub(ValidStub)
-            {
-                Signature = string.Empty,
-            };
+            var mock = MockBestShotHeader();
+            _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -99,14 +109,15 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature()
         {
-            var stub = new BestShotHeaderStub(ValidStub);
+            var mock = MockBestShotHeader();
+            var signature = mock.Object.Signature;
 #if NETFRAMEWORK
-            stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.Substring(0, signature.Length - 1));
 #else
-            stub.Signature = stub.Signature[0..^1];
+            _ = mock.SetupGet(m => m.Signature).Returns(signature[0..^1]);
 #endif
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -115,10 +126,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature()
         {
-            var stub = new BestShotHeaderStub(ValidStub);
-            stub.Signature += "E";
+            var mock = MockBestShotHeader();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -131,12 +143,10 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level)
         {
-            var stub = new BestShotHeaderStub(ValidStub)
-            {
-                Level = TestUtils.Cast<Level>(level),
-            };
+            var mock = MockBestShotHeader();
+            _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -145,10 +155,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedCardName()
         {
-            var stub = new BestShotHeaderStub(ValidStub);
-            stub.CardName = stub.CardName.SkipLast(1).ToArray();
+            var mock = MockBestShotHeader();
+            var cardName = mock.Object.CardName;
+            _ = mock.SetupGet(m => m.CardName).Returns(cardName.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -156,12 +167,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ReadFromTestExceededCardName()
         {
-            var stub = new BestShotHeaderStub(ValidStub);
-            stub.CardName = stub.CardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+            var mock = MockBestShotHeader();
+            var cardName = mock.Object.CardName;
+            _ = mock.SetupGet(m => m.CardName).Returns(cardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
-            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
-            Validate(ValidStub, header);
+            Validate(MockBestShotHeader().Object, header);
         }
     }
 }

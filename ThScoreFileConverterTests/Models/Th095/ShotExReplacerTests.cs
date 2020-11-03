@@ -13,16 +13,22 @@ namespace ThScoreFileConverterTests.Models.Th095
         internal static IReadOnlyDictionary<(Level, int), (string, IBestShotHeader)> BestShots { get; } =
             new List<(string, IBestShotHeader header)>
             {
-                (@"C:\path\to\output\bestshots\bs_02_3.png", BestShotHeaderTests.ValidStub),
+                (@"C:\path\to\output\bestshots\bs_02_3.png", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
 
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
+        internal static IReadOnlyList<IScore> Scores { get; }
+
+        static ShotExReplacerTests()
         {
-            new ScoreStub(ScoreTests.ValidStub)
+            var headerMock = BestShotHeaderTests.MockBestShotHeader();
+            Scores = new List<IScore>
             {
-                LevelScene = (BestShotHeaderTests.ValidStub.Level, BestShotHeaderTests.ValidStub.Scene),
-            },
-        };
+                new ScoreStub(ScoreTests.ValidStub)
+                {
+                    LevelScene = (headerMock.Object.Level, headerMock.Object.Scene),
+                },
+            };
+        }
 
         [TestMethod]
         public void ShotExReplacerTest()
@@ -52,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         {
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                ("abcde", BestShotHeaderTests.ValidStub),
+                ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
             var replacer = new ShotExReplacer(bestshots, Scores, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -156,7 +162,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         {
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                ("abcde", BestShotHeaderTests.ValidStub),
+                ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
             var replacer = new ShotExReplacer(bestshots, Scores, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T95SHOTEX231"));
