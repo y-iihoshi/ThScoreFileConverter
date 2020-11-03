@@ -190,7 +190,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetPlayStatusTest()
         {
-            var status = PlayStatusTests.ValidStub;
+            var status = Mock.Of<IPlayStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status);
@@ -201,8 +201,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetPlayStatusTestTwice()
         {
-            var status1 = PlayStatusTests.ValidStub;
-            var status2 = new PlayStatusStub(status1);
+            var status1 = Mock.Of<IPlayStatus>();
+            var status2 = Mock.Of<IPlayStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status1);

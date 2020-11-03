@@ -1,14 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
     public class PlayReplacerTests
     {
-        internal static IPlayStatus PlayStatus { get; } = new PlayStatusStub(PlayStatusTests.ValidStub);
+        internal static IPlayStatus PlayStatus { get; } = PlayStatusTests.MockPlayStatus().Object;
 
         [TestMethod]
         public void PlayReplacerTest()

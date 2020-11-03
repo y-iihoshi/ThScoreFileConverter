@@ -3,10 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th08
@@ -14,20 +14,21 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class PlayStatusTests
     {
-        internal static PlayStatusStub ValidStub { get; } = new PlayStatusStub()
+        internal static Mock<IPlayStatus> MockPlayStatus()
         {
-            Signature = "PLST",
-            Size1 = 0x228,
-            Size2 = 0x228,
-            TotalRunningTime = new Time(12, 34, 56, 789, false),
-            TotalPlayTime = new Time(23, 45, 19, 876, false),
-            PlayCounts = Utils.GetEnumerable<Level>()
-                .ToDictionary(
-                    level => level,
-                    level => PlayCountTests.MockPlayCount().Object),
-            TotalPlayCount = PlayCountTests.MockPlayCount().Object,
-            BgmFlags = TestUtils.MakeRandomArray<byte>(21),
-        };
+            var mock = new Mock<IPlayStatus>();
+            _ = mock.SetupGet(m => m.Signature).Returns("PLST");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x228);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x228);
+            _ = mock.SetupGet(m => m.TotalRunningTime).Returns(new Time(12, 34, 56, 789, false));
+            _ = mock.SetupGet(m => m.TotalPlayTime).Returns(new Time(23, 45, 19, 876, false));
+            _ = mock.SetupGet(m => m.PlayCounts).Returns(
+                Utils.GetEnumerable<Level>().ToDictionary(
+                    level => level, level => PlayCountTests.MockPlayCount().Object));
+            _ = mock.SetupGet(m => m.TotalPlayCount).Returns(PlayCountTests.MockPlayCount().Object);
+            _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(21));
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IPlayStatus status)
             => TestUtils.MakeByteArray(
@@ -78,12 +79,12 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void PlayStatusTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockPlayStatus();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var playStatus = new PlayStatus(chapter);
 
-            Validate(stub, playStatus);
+            Validate(mock.Object, playStatus);
         }
 
         [TestMethod]
@@ -100,10 +101,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSignature()
         {
-            var stub = new PlayStatusStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockPlayStatus();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -113,10 +115,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSize1()
         {
-            var stub = new PlayStatusStub(ValidStub);
-            --stub.Size1;
+            var mock = MockPlayStatus();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
