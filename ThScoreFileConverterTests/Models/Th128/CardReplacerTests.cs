@@ -2,31 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } =
-            new List<ISpellCard>
-            {
-                new SpellCardStub
-                {
-                    Id = 3,
-                    TrialCount = 1,
-                    Level = Level.Hard,
-                },
-                new SpellCardStub
-                {
-                    Id = 4,
-                    TrialCount = 0,
-                    Level = Level.Lunatic,
-                },
-            }.ToDictionary(element => element.Id);
+        internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } = new[]
+        {
+            Mock.Of<ISpellCard>(
+                m => (m.Id == 3) && (m.TrialCount == 1) && (m.Level == Level.Hard) && (m.HasTried() == true)),
+            Mock.Of<ISpellCard>(
+                m => (m.Id == 4) && (m.TrialCount == 0) && (m.Level == Level.Lunatic) && (m.HasTried() == false)),
+        }.ToDictionary(card => card.Id);
 
         [TestMethod]
         public void CardReplacerTest()

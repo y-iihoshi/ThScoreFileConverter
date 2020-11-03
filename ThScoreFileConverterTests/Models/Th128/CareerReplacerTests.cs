@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
     public class CareerReplacerTests
     {
+        private static IEnumerable<ISpellCard> CreateSpellCards()
+        {
+            var mock1 = SpellCardTests.MockSpellCard();
+
+            var mock2 = SpellCardTests.MockSpellCard();
+            _ = mock2.SetupGet(m => m.Id).Returns(mock1.Object.Id + 1);
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
         internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } =
-            new List<ISpellCard>
-            {
-                SpellCardTests.ValidStub,
-                new SpellCardStub(SpellCardTests.ValidStub)
-                {
-                    Id = SpellCardTests.ValidStub.Id + 1,
-                },
-            }.ToDictionary(element => element.Id);
+            CreateSpellCards().ToDictionary(card => card.Id);
 
         [TestMethod]
         public void CareerReplacerTest()

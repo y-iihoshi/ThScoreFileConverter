@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th128
 {
@@ -13,14 +13,12 @@ namespace ThScoreFileConverterTests.Models.Th128
         internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } =
             Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
-                pair => new SpellCardStub
-                {
-                    NoIceCount = pair.Key % 3,
-                    NoMissCount = pair.Key % 5,
-                    TrialCount = pair.Key % 7,
-                    Id = pair.Value.Id,
-                    Level = pair.Value.Level,
-                } as ISpellCard);
+                pair => Mock.Of<ISpellCard>(
+                    m => (m.NoIceCount == pair.Key % 3)
+                         && (m.NoMissCount == pair.Key % 5)
+                         && (m.TrialCount == pair.Key % 7)
+                         && (m.Id == pair.Value.Id)
+                         && (m.Level == pair.Value.Level)));
 
         [TestMethod]
         public void CollectRateReplacerTest()

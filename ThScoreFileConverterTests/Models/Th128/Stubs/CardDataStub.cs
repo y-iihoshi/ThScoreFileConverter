@@ -15,8 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th128.Stubs
 
         public CardDataStub(ICardData cardData)
         {
-            this.Cards = cardData.Cards.ToDictionary(
-                pair => pair.Key, pair => new SpellCardStub(pair.Value) as ISpellCard);
+            this.Cards = cardData.Cards.ToDictionary(pair => pair.Key, pair => SpellCardTests.MockSpellCard().Object);
             this.Checksum = cardData.Checksum;
             this.IsValid = cardData.IsValid;
             this.Signature = cardData.Signature;

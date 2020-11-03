@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
@@ -21,15 +22,14 @@ namespace ThScoreFileConverterTests.Models.Th128
             Size = 0x947C,
             Cards = Enumerable.Range(1, 250).ToDictionary(
                 index => index,
-                index => new SpellCardStub()
-                {
-                    Name = TestUtils.MakeRandomArray<byte>(0x80),
-                    NoMissCount = 123 + index,
-                    NoIceCount = 456 + index,
-                    TrialCount = 789 + index,
-                    Id = index,
-                    Level = Level.Hard,
-                } as ISpellCard),
+                index => Mock.Of<ISpellCard>(
+                    m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
+                         && (m.NoMissCount == 123 + index)
+                         && (m.NoIceCount == 456 + index)
+                         && (m.TrialCount == 789 + index)
+                         && (m.Id == index)
+                         && (m.Level == Level.Hard)
+                         && (m.HasTried() == true))),
         };
 
         internal static byte[] MakeData(ICardData cardData)
