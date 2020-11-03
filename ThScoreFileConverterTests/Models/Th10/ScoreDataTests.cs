@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
@@ -27,29 +26,6 @@ namespace ThScoreFileConverterTests.Models.Th10
                 DateTime = 567u,
                 SlowRate = 8.9f,
             };
-
-        internal static byte[] MakeByteArray<TParent, TStageProgress>(IScoreData<TStageProgress> scoreData)
-            where TParent : ThConverter
-            where TStageProgress : struct, Enum
-        {
-            var unknownSize = 0;
-
-            var type = typeof(TParent);
-            if (type == typeof(Th10Converter))
-            {
-                // Do nothing
-            }
-            else if (type == typeof(Th128Converter))
-            {
-                unknownSize = 8;
-            }
-            else
-            {
-                unknownSize = 4;
-            }
-
-            return MakeByteArray(scoreData, unknownSize);
-        }
 
         internal static byte[] MakeByteArray<TStageProgress>(IScoreData<TStageProgress> scoreData, int unknownSize)
             where TStageProgress : struct, Enum
