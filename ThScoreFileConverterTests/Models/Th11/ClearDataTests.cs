@@ -57,14 +57,12 @@ namespace ThScoreFileConverterTests.Models.Th11
                                  && (m.StageFlag == (uint)pair.stage % 2u))),
                 Cards = Enumerable.Range(1, 175).ToDictionary(
                     index => index,
-                    index => new SpellCardStub()
-                    {
-                        Name = TestUtils.MakeRandomArray<byte>(0x80),
-                        ClearCount = 123 + index,
-                        TrialCount = 456 + index,
-                        Id = index,
-                        Level = Level.Hard,
-                    } as ISpellCard),
+                    index => Mock.Of<ISpellCard>(
+                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
+                             && (m.ClearCount == 123 + index)
+                             && (m.TrialCount == 456 + index)
+                             && (m.Id == index)
+                             && (m.Level == Level.Hard))),
             };
         }
 

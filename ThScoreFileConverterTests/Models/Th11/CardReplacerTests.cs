@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
@@ -22,8 +23,8 @@ namespace ThScoreFileConverterTests.Models.Th11
                     Chara = CharaWithTotal.Total,
                     Cards = new Dictionary<int, ISpellCard>()
                     {
-                        { 3, new SpellCardStub() { HasTried = true } },
-                        { 4, new SpellCardStub() { HasTried = false } },
+                        { 3, Mock.Of<ISpellCard>(m => m.HasTried == true) },
+                        { 4, Mock.Of<ISpellCard>(m => m.HasTried == false) },
                     },
                 },
             }.ToDictionary(element => element.Chara);

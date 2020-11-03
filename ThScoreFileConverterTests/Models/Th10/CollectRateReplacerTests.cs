@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
@@ -21,26 +22,22 @@ namespace ThScoreFileConverterTests.Models.Th10
                     Chara = CharaWithTotal.ReimuB,
                     Cards = Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
-                        pair => new SpellCardStub
-                        {
-                            ClearCount = pair.Key % 3,
-                            TrialCount = pair.Key % 5,
-                            Id = pair.Value.Id,
-                            Level = pair.Value.Level,
-                        } as ISpellCard<Level>),
+                        pair => Mock.Of<ISpellCard<Level>>(
+                            m => (m.ClearCount == pair.Key % 3)
+                                 && (m.TrialCount == pair.Key % 5)
+                                 && (m.Id == pair.Value.Id)
+                                 && (m.Level == pair.Value.Level))),
                 },
                 new ClearDataStub<CharaWithTotal, StageProgress>
                 {
                     Chara = CharaWithTotal.Total,
                     Cards = Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
-                        pair => new SpellCardStub
-                        {
-                            ClearCount = pair.Key % 7,
-                            TrialCount = pair.Key % 11,
-                            Id = pair.Value.Id,
-                            Level = pair.Value.Level,
-                        } as ISpellCard<Level>),
+                        pair => Mock.Of<ISpellCard<Level>>(
+                            m => (m.ClearCount == pair.Key % 7)
+                                 && (m.TrialCount == pair.Key % 11)
+                                 && (m.Id == pair.Value.Id)
+                                 && (m.Level == pair.Value.Level))),
                 },
             }.ToDictionary(element => element.Chara);
 

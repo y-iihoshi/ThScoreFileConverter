@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
     [TestClass]
     public class SpellCardTests
     {
-        internal static SpellCardStub ValidStub { get; } = new SpellCardStub()
+        internal static Mock<ISpellCard<Level>> MockSpellCard()
         {
-            Name = TestUtils.MakeRandomArray<byte>(0x80),
-            ClearCount = 123,
-            TrialCount = 456,
-            Id = 789,
-            Level = Level.Normal,
-        };
+            var mock = new Mock<ISpellCard<Level>>();
+            _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(m => m.ClearCount).Returns(123);
+            _ = mock.SetupGet(m => m.TrialCount).Returns(456);
+            _ = mock.SetupGet(m => m.Id).Returns(789);
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(ISpellCard<Level> spellCard)
             => TestUtils.MakeByteArray(
@@ -43,21 +45,21 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void SpellCardTest()
         {
-            var stub = new SpellCardStub();
+            var mock = new Mock<ISpellCard<Level>>();
             var spellCard = new SpellCard();
 
-            Validate(stub, spellCard);
+            Validate(mock.Object, spellCard);
             Assert.IsFalse(spellCard.HasTried);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockSpellCard();
 
-            var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(stub));
+            var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
 
-            Validate(stub, spellCard);
+            Validate(mock.Object, spellCard);
             Assert.IsTrue(spellCard.HasTried);
         }
 
@@ -75,10 +77,11 @@ namespace ThScoreFileConverterTests.Models.Th10
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName()
         {
-            var stub = new SpellCardStub(ValidStub);
-            stub.Name = stub.Name.SkipLast(1).ToArray();
+            var mock = MockSpellCard();
+            var name = mock.Object.Name;
+            _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -87,10 +90,11 @@ namespace ThScoreFileConverterTests.Models.Th10
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededName()
         {
-            var stub = new SpellCardStub(ValidStub);
-            stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+            var mock = MockSpellCard();
+            var name = mock.Object.Name;
+            _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
-            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -103,12 +107,10 @@ namespace ThScoreFileConverterTests.Models.Th10
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level)
         {
-            var stub = new SpellCardStub(ValidStub)
-            {
-                Level = TestUtils.Cast<Level>(level),
-            };
+            var mock = MockSpellCard();
+            _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
-            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
