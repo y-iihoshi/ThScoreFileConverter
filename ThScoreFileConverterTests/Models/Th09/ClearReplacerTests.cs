@@ -27,20 +27,21 @@ namespace ThScoreFileConverterTests.Models.Th09
         internal static IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; } =
             new Dictionary<Chara, IClearCount>
             {
-                { HighScoreTests.ValidStub.Chara, new ClearCountStub(ClearCountTests.ValidStub) },
+                { HighScoreTests.ValidStub.Chara, ClearCountTests.MockClearCount().Object },
             };
 
-        internal static IReadOnlyDictionary<Chara, IClearCount> ZeroClearCounts { get; } =
-            new Dictionary<Chara, IClearCount>
+        internal static IReadOnlyDictionary<Chara, IClearCount> ZeroClearCounts { get; }
+
+        static ClearReplacerTests()
+        {
+            var clearCountMock = ClearCountTests.MockClearCount();
+            _ = clearCountMock.SetupGet(m => m.Counts).Returns(
+                Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => 0));
+            ZeroClearCounts = new Dictionary<Chara, IClearCount>
             {
-                {
-                    HighScoreTests.ValidStub.Chara,
-                    new ClearCountStub()
-                    {
-                        Counts = Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => 0),
-                    }
-                },
+                { HighScoreTests.ValidStub.Chara, clearCountMock.Object },
             };
+        }
 
         [TestMethod]
         public void ClearReplacerTest()
@@ -153,16 +154,13 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
+            var clearCountMock = ClearCountTests.MockClearCount();
+            var counts = clearCountMock.Object.Counts;
+            _ = clearCountMock.SetupGet(m => m.Counts).Returns(
+                counts.Where(pair => pair.Key != Level.Normal).ToDictionary());
             var clearCounts = new Dictionary<Chara, IClearCount>
             {
-                {
-                    HighScoreTests.ValidStub.Chara,
-                    new ClearCountStub()
-                    {
-                        Counts = ClearCountTests.ValidStub.Counts.Where(pair => pair.Key != Level.Normal)
-                            .ToDictionary(),
-                    }
-                },
+                { HighScoreTests.ValidStub.Chara, clearCountMock.Object },
             };
             var replacer = new ClearReplacer(Rankings, clearCounts);
             Assert.AreEqual("0", replacer.Replace("%T09CLEARNMR1"));

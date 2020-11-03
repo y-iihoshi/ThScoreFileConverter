@@ -1,23 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th09.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th09
 {
     [TestClass]
     public class ClearCountTests
     {
-        internal static ClearCountStub ValidStub { get; } = new ClearCountStub()
+        internal static Mock<IClearCount> MockInitialClearCount()
         {
-            Counts = Utils.GetEnumerable<Level>().Select((level, index) => (level, index)).ToDictionary(),
-        };
+            var mock = new Mock<IClearCount>();
+            _ = mock.SetupGet(m => m.Counts).Returns(ImmutableDictionary<Level, int>.Empty);
+            return mock;
+        }
+
+        internal static Mock<IClearCount> MockClearCount()
+        {
+            var mock = new Mock<IClearCount>();
+            _ = mock.SetupGet(m => m.Counts).Returns(
+                Utils.GetEnumerable<Level>().Select((level, index) => (level, index)).ToDictionary());
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IClearCount clearCount)
             => TestUtils.MakeByteArray(clearCount.Counts.Values.ToArray(), 0u);
@@ -28,21 +38,21 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ClearCountTest()
         {
-            var stub = new ClearCountStub();
+            var mock = MockInitialClearCount();
 
             var clearCount = new ClearCount();
 
-            Validate(stub, clearCount);
+            Validate(mock.Object, clearCount);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockClearCount();
 
-            var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(stub));
+            var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
 
-            Validate(stub, clearCount);
+            Validate(mock.Object, clearCount);
         }
 
         [TestMethod]
@@ -59,10 +69,11 @@ namespace ThScoreFileConverterTests.Models.Th09
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedTrials()
         {
-            var stub = new ClearCountStub(ValidStub);
-            stub.Counts = stub.Counts.Where(pair => pair.Key == Level.Extra).ToDictionary();
+            var mock = MockClearCount();
+            var counts = mock.Object.Counts;
+            _ = mock.SetupGet(m => m.Counts).Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
 
-            _ = TestUtils.Create<ClearCount>(MakeByteArray(stub));
+            _ = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -70,16 +81,15 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ReadFromTestExceededTrials()
         {
-            var stub = new ClearCountStub(ValidStub);
-            stub.Counts = stub.Counts.Concat(new Dictionary<Level, int>
-            {
-                { TestUtils.Cast<Level>(99), 99 },
-            }).ToDictionary();
+            var mock = MockClearCount();
+            var counts = mock.Object.Counts;
+            _ = mock.SetupGet(m => m.Counts).Returns(
+                counts.Concat(new[] { (TestUtils.Cast<Level>(99), 99) }.ToDictionary()).ToDictionary());
 
-            var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(stub));
+            var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
 
-            CollectionAssert.That.AreNotEqual(stub.Counts.Values, clearCount.Counts.Values);
-            CollectionAssert.That.AreEqual(stub.Counts.Values.SkipLast(1), clearCount.Counts.Values);
+            CollectionAssert.That.AreNotEqual(mock.Object.Counts.Values, clearCount.Counts.Values);
+            CollectionAssert.That.AreEqual(mock.Object.Counts.Values.SkipLast(1), clearCount.Counts.Values);
         }
     }
 }
