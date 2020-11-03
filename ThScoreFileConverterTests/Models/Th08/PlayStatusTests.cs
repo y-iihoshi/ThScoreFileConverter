@@ -24,8 +24,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             PlayCounts = Utils.GetEnumerable<Level>()
                 .ToDictionary(
                     level => level,
-                    level => new PlayCountStub(PlayCountTests.ValidStub) as IPlayCount),
-            TotalPlayCount = new PlayCountStub(PlayCountTests.ValidStub),
+                    level => PlayCountTests.MockPlayCount().Object),
+            TotalPlayCount = PlayCountTests.MockPlayCount().Object,
             BgmFlags = TestUtils.MakeRandomArray<byte>(21),
         };
 
@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 status.TotalPlayTime.Seconds,
                 status.TotalPlayTime.Milliseconds,
                 status.PlayCounts.SelectMany(pair => PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
-                PlayCountTests.MakeByteArray(PlayCountTests.ValidStub),
+                PlayCountTests.MakeByteArray(PlayCountTests.MockPlayCount().Object),
                 PlayCountTests.MakeByteArray(status.TotalPlayCount),
                 status.BgmFlags,
                 new byte[11]);

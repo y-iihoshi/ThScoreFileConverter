@@ -1,27 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
     public class PlayCountTests
     {
-        internal static PlayCountStub ValidStub { get; } = new PlayCountStub()
+        internal static Mock<IPlayCount> MockInitialPlayCount()
         {
-            TotalTrial = 1,
-            Trials = Utils.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary(),
-            TotalClear = 3,
-            TotalContinue = 4,
-            TotalPractice = 5,
-        };
+            var mock = new Mock<IPlayCount>();
+            _ = mock.SetupGet(m => m.Trials).Returns(ImmutableDictionary<Chara, int>.Empty);
+            return mock;
+        }
+
+        internal static Mock<IPlayCount> MockPlayCount()
+        {
+            var mock = new Mock<IPlayCount>();
+            _ = mock.SetupGet(m => m.TotalTrial).Returns(1);
+            _ = mock.SetupGet(m => m.Trials).Returns(
+                Utils.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary());
+            _ = mock.SetupGet(m => m.TotalClear).Returns(3);
+            _ = mock.SetupGet(m => m.TotalContinue).Returns(4);
+            _ = mock.SetupGet(m => m.TotalPractice).Returns(5);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IPlayCount playCount)
             => TestUtils.MakeByteArray(
@@ -44,21 +54,21 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void PlayCountTest()
         {
-            var stub = new PlayCountStub();
+            var mock = MockInitialPlayCount();
 
             var playCount = new PlayCount();
 
-            Validate(stub, playCount);
+            Validate(mock.Object, playCount);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockPlayCount();
 
-            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(stub));
+            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
 
-            Validate(stub, playCount);
+            Validate(mock.Object, playCount);
         }
 
         [TestMethod]
@@ -75,10 +85,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedTrials()
         {
-            var stub = new PlayCountStub(ValidStub);
-            stub.Trials = stub.Trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary();
+            var mock = MockPlayCount();
+            var trials = mock.Object.Trials;
+            _ = mock.SetupGet(m => m.Trials).Returns(trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary());
 
-            _ = TestUtils.Create<PlayCount>(MakeByteArray(stub));
+            _ = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -86,20 +97,19 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReadFromTestExceededTrials()
         {
-            var stub = new PlayCountStub(ValidStub);
-            stub.Trials = stub.Trials.Concat(new Dictionary<Chara, int>
-            {
-                { TestUtils.Cast<Chara>(99), 99 },
-            }).ToDictionary();
+            var mock = MockPlayCount();
+            var trials = mock.Object.Trials;
+            _ = mock.SetupGet(m => m.Trials).Returns(
+                trials.Concat(new[] { (TestUtils.Cast<Chara>(99), 99) }.ToDictionary()).ToDictionary());
 
-            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(stub));
+            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
 
-            Assert.AreEqual(stub.TotalTrial, playCount.TotalTrial);
-            CollectionAssert.That.AreNotEqual(stub.Trials.Values, playCount.Trials.Values);
-            CollectionAssert.That.AreEqual(stub.Trials.Values.SkipLast(1), playCount.Trials.Values);
-            Assert.AreNotEqual(stub.TotalClear, playCount.TotalClear);
-            Assert.AreNotEqual(stub.TotalContinue, playCount.TotalContinue);
-            Assert.AreNotEqual(stub.TotalPractice, playCount.TotalPractice);
+            Assert.AreEqual(mock.Object.TotalTrial, playCount.TotalTrial);
+            CollectionAssert.That.AreNotEqual(mock.Object.Trials.Values, playCount.Trials.Values);
+            CollectionAssert.That.AreEqual(mock.Object.Trials.Values.SkipLast(1), playCount.Trials.Values);
+            Assert.AreNotEqual(mock.Object.TotalClear, playCount.TotalClear);
+            Assert.AreNotEqual(mock.Object.TotalContinue, playCount.TotalContinue);
+            Assert.AreNotEqual(mock.Object.TotalPractice, playCount.TotalPractice);
         }
     }
 }

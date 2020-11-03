@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
         {
             this.BgmFlags = Enumerable.Empty<byte>();
             this.PlayCounts = ImmutableDictionary<Level, IPlayCount>.Empty;
-            this.TotalPlayCount = new PlayCountStub();
+            this.TotalPlayCount = PlayCountTests.MockInitialPlayCount().Object;
             this.TotalPlayTime = new Time(0);
             this.TotalRunningTime = new Time(0);
             this.Signature = string.Empty;
@@ -22,8 +22,8 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
         {
             this.BgmFlags = playStatus.BgmFlags.ToArray();
             this.PlayCounts = playStatus.PlayCounts.ToDictionary(
-                pair => pair.Key, pair => new PlayCountStub(pair.Value) as IPlayCount);
-            this.TotalPlayCount = new PlayCountStub(playStatus.TotalPlayCount);
+                pair => pair.Key, pair => PlayCountTests.MockPlayCount().Object);
+            this.TotalPlayCount = PlayCountTests.MockPlayCount().Object;
             this.TotalPlayTime = playStatus.TotalPlayTime;
             this.TotalRunningTime = playStatus.TotalRunningTime;
             this.FirstByteOfData = playStatus.FirstByteOfData;
