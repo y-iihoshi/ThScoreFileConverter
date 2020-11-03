@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
@@ -80,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
         {
-            var status = new StatusStub();
+            var status = Mock.Of<IStatus>();
 
             var allScoreData = new AllScoreData<TCharaWithTotal, TStageProgress>();
             allScoreData.Set(status);
@@ -92,8 +93,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
         {
-            var status1 = new StatusStub();
-            var status2 = new StatusStub();
+            var status1 = Mock.Of<IStatus>();
+            var status2 = Mock.Of<IStatus>();
 
             var allScoreData = new AllScoreData<CharaWithTotal, StageProgress>();
             allScoreData.Set(status1);

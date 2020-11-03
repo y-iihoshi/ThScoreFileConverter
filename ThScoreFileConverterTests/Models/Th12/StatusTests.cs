@@ -2,26 +2,27 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th12;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
+using IStatus = ThScoreFileConverter.Models.Th10.IStatus;
 
 namespace ThScoreFileConverterTests.Models.Th12
 {
     [TestClass]
     public class StatusTests
     {
-        internal static StatusStub ValidStub { get; } = Th10.StatusTests.MakeValidStub(0x0002, 17);
+        internal static Mock<IStatus> MockStatus() => Th10.StatusTests.MockStatus(0x0002, 17);
 
         [TestMethod]
         public void StatusTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockStatus();
 
-            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
             var status = new Status(chapter);
 
-            Th10.StatusTests.Validate(stub, status);
+            Th10.StatusTests.Validate(mock.Object, status);
             Assert.IsFalse(status.IsValid);
         }
 
@@ -39,10 +40,11 @@ namespace ThScoreFileConverterTests.Models.Th12
         [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSignature()
         {
-            var stub = new StatusStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockStatus();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -52,10 +54,11 @@ namespace ThScoreFileConverterTests.Models.Th12
         [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidVersion()
         {
-            var stub = new StatusStub(ValidStub);
-            ++stub.Version;
+            var mock = MockStatus();
+            var version = mock.Object.Version;
+            _ = mock.SetupGet(m => m.Version).Returns(++version);
 
-            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -65,10 +68,11 @@ namespace ThScoreFileConverterTests.Models.Th12
         [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSize()
         {
-            var stub = new StatusStub(ValidStub);
-            ++stub.Size;
+            var mock = MockStatus();
+            var size = mock.Object.Size;
+            _ = mock.SetupGet(m => m.Size).Returns(++size);
 
-            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
