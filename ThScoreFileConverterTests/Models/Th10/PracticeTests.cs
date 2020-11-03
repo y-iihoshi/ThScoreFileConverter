@@ -1,18 +1,20 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
     [TestClass]
     public class PracticeTests
     {
-        internal static PracticeStub ValidStub { get; } = new PracticeStub()
+        internal static Mock<IPractice> MockPractice()
         {
-            Score = 123456u,
-            StageFlag = 789u,
-        };
+            var mock = new Mock<IPractice>();
+            _ = mock.SetupGet(m => m.Score).Returns(123456u);
+            _ = mock.SetupGet(m => m.StageFlag).Returns(789u);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IPractice practice)
             => TestUtils.MakeByteArray(practice.Score, practice.StageFlag);
@@ -26,20 +28,21 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void PracticeTest()
         {
-            var stub = new PracticeStub();
+            var mock = new Mock<IPractice>();
+
             var practice = new Practice();
 
-            Validate(stub, practice);
+            Validate(mock.Object, practice);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockPractice();
 
-            var practice = TestUtils.Create<Practice>(MakeByteArray(stub));
+            var practice = TestUtils.Create<Practice>(MakeByteArray(mock.Object));
 
-            Validate(stub, practice);
+            Validate(mock.Object, practice);
         }
 
         [TestMethod]

@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th10.Stubs
             this.ClearCounts = clearData.ClearCounts.ToDictionary();
             this.PlayTime = clearData.PlayTime;
             this.Practices = clearData.Practices.ToDictionary(
-                pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
+                pair => pair.Key, pair => PracticeTests.MockPractice().Object);
             this.Rankings = clearData.Rankings.ToDictionary(
                 pair => pair.Key,
                 pair => pair.Value.Select(score => new ScoreDataStub<TStageProgress>(score)).ToList()
