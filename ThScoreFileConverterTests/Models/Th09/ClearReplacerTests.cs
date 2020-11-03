@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverterTests.Models.Th09.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th09
 {
@@ -13,34 +12,23 @@ namespace ThScoreFileConverterTests.Models.Th09
     public class ClearReplacerTests
     {
         internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
-            new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub),
-                    }
-                },
-            };
+            new[] { new[] { HighScoreTests.MockHighScore().Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
 
-        internal static IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; } =
-            new Dictionary<Chara, IClearCount>
-            {
-                { HighScoreTests.ValidStub.Chara, ClearCountTests.MockClearCount().Object },
-            };
+        internal static IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; }
 
         internal static IReadOnlyDictionary<Chara, IClearCount> ZeroClearCounts { get; }
 
         static ClearReplacerTests()
         {
+            var highScoreMock = HighScoreTests.MockHighScore();
             var clearCountMock = ClearCountTests.MockClearCount();
             _ = clearCountMock.SetupGet(m => m.Counts).Returns(
                 Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => 0));
-            ZeroClearCounts = new Dictionary<Chara, IClearCount>
-            {
-                { HighScoreTests.ValidStub.Chara, clearCountMock.Object },
-            };
+
+            ClearCounts =
+                new[] { (highScoreMock.Object.Chara, ClearCountTests.MockClearCount().Object) }.ToDictionary();
+            ZeroClearCounts = new[] { (highScoreMock.Object.Chara, clearCountMock.Object) }.ToDictionary();
         }
 
         [TestMethod]
@@ -77,12 +65,10 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ClearReplacerTestEmptyScores()
         {
+            var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>()
-                },
+                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
             };
             var replacer = new ClearReplacer(rankings, ClearCounts);
             Assert.IsNotNull(replacer);
@@ -112,19 +98,10 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ReplaceTestNotTried()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
-            {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>
-                    {
-                        new HighScoreStub(HighScoreTests.ValidStub)
-                        {
-                            Date = TestUtils.CP932Encoding.GetBytes("--/--\0"),
-                        },
-                    }
-                },
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.Date).Returns(TestUtils.CP932Encoding.GetBytes("--/--\0"));
+            var rankings = new[] { new[] { mock.Object } }.ToDictionary(
+                ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
             var replacer = new ClearReplacer(rankings, ZeroClearCounts);
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
         }
@@ -140,12 +117,10 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
+            var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                {
-                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
-                    new List<IHighScore>()
-                },
+                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
             };
             var replacer = new ClearReplacer(rankings, ZeroClearCounts);
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
@@ -154,14 +129,12 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
+            var highScoreMock = HighScoreTests.MockHighScore();
             var clearCountMock = ClearCountTests.MockClearCount();
             var counts = clearCountMock.Object.Counts;
             _ = clearCountMock.SetupGet(m => m.Counts).Returns(
                 counts.Where(pair => pair.Key != Level.Normal).ToDictionary());
-            var clearCounts = new Dictionary<Chara, IClearCount>
-            {
-                { HighScoreTests.ValidStub.Chara, clearCountMock.Object },
-            };
+            var clearCounts = new[] { (highScoreMock.Object.Chara, clearCountMock.Object) }.ToDictionary();
             var replacer = new ClearReplacer(Rankings, clearCounts);
             Assert.AreEqual("0", replacer.Replace("%T09CLEARNMR1"));
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARNMR2"));

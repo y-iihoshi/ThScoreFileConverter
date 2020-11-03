@@ -54,31 +54,27 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void SetHighScoreTest()
         {
-            var stub = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-                Rank = 2,
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.Score).Returns(87654u);
+            _ = mock.SetupGet(m => m.Rank).Returns(2);
 
-            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock.Object));
             var score = new HighScore(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
-            Assert.AreSame(score, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
+            Assert.AreSame(score, allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][mock.Object.Rank]);
         }
 
         [TestMethod]
         public void SetHighScoreTestTwice()
         {
-            var stub = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-                Rank = 2,
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.Score).Returns(87654u);
+            _ = mock.SetupGet(m => m.Rank).Returns(2);
 
-            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock.Object));
             var score1 = new HighScore(chapter);
             var score2 = new HighScore(chapter);
 
@@ -86,8 +82,8 @@ namespace ThScoreFileConverterTests.Models.Th09
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreNotSame(score1, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
-            Assert.AreSame(score2, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
+            Assert.AreNotSame(score1, allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][mock.Object.Rank]);
+            Assert.AreSame(score2, allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][mock.Object.Rank]);
         }
 
         [DataTestMethod]
@@ -95,21 +91,19 @@ namespace ThScoreFileConverterTests.Models.Th09
         [DataRow((short)5)]
         public void SetHighScoreTestInvalidRank(short rank)
         {
-            var stub = new HighScoreStub(HighScoreTests.ValidStub)
-            {
-                Score = 87654u,
-                Rank = rank,
-            };
+            var mock = HighScoreTests.MockHighScore();
+            _ = mock.SetupGet(m => m.Score).Returns(87654u);
+            _ = mock.SetupGet(m => m.Rank).Returns(rank);
 
-            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock.Object));
             var score = new HighScore(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
-            for (var index = 0; index < allScoreData.Rankings[(stub.Chara, stub.Level)].Count; ++index)
+            for (var index = 0; index < allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)].Count; ++index)
             {
-                Assert.IsNull(allScoreData.Rankings[(stub.Chara, stub.Level)][index]);
+                Assert.IsNull(allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][index]);
             }
         }
 
