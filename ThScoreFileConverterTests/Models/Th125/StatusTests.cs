@@ -2,9 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th125.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th095.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th125
@@ -12,16 +12,18 @@ namespace ThScoreFileConverterTests.Models.Th125
     [TestClass]
     public class StatusTests
     {
-        internal static StatusStub ValidStub { get; } = new StatusStub()
+        internal static Mock<IStatus> MockStatus()
         {
-            Signature = "ST",
-            Version = 1,
-            Size = 0x474,
-            Checksum = 0u,
-            LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
-            BgmFlags = TestUtils.MakeRandomArray<byte>(6),
-            TotalPlayTime = 12345678,
-        };
+            var mock = new Mock<IStatus>();
+            _ = mock.SetupGet(m => m.Signature).Returns("ST");
+            _ = mock.SetupGet(m => m.Version).Returns(1);
+            _ = mock.SetupGet(m => m.Size).Returns(0x474);
+            _ = mock.SetupGet(m => m.Checksum).Returns(0u);
+            _ = mock.SetupGet(m => m.LastName).Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"));
+            _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(6));
+            _ = mock.SetupGet(m => m.TotalPlayTime).Returns(12345678);
+            return mock;
+        }
 
         internal static byte[] MakeData(IStatus status)
             => TestUtils.MakeByteArray(
@@ -54,12 +56,12 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void StatusTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockStatus();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var status = new Status(chapter);
 
-            Validate(stub, status);
+            Validate(mock.Object, status);
             Assert.IsFalse(status.IsValid);
         }
 
@@ -77,10 +79,11 @@ namespace ThScoreFileConverterTests.Models.Th125
         [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSignature()
         {
-            var stub = new StatusStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockStatus();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -90,10 +93,11 @@ namespace ThScoreFileConverterTests.Models.Th125
         [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidVersion()
         {
-            var stub = new StatusStub(ValidStub);
-            ++stub.Version;
+            var mock = MockStatus();
+            var version = mock.Object.Version;
+            _ = mock.SetupGet(m => m.Version).Returns(++version);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -103,10 +107,11 @@ namespace ThScoreFileConverterTests.Models.Th125
         [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSize()
         {
-            var stub = new StatusStub(ValidStub);
-            --stub.Size;
+            var mock = MockStatus();
+            var size = mock.Object.Size;
+            _ = mock.SetupGet(m => m.Size).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

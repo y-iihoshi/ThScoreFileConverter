@@ -10,7 +10,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void TimeReplacerTest()
         {
-            var replacer = new TimeReplacer(StatusTests.ValidStub);
+            var replacer = new TimeReplacer(StatusTests.MockStatus().Object);
             Assert.IsNotNull(replacer);
         }
 
@@ -25,14 +25,14 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTest()
         {
-            var replacer = new TimeReplacer(StatusTests.ValidStub);
+            var replacer = new TimeReplacer(StatusTests.MockStatus().Object);
             Assert.AreEqual("34:17:36.780", replacer.Replace("%T128TIMEPLY"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new TimeReplacer(StatusTests.ValidStub);
+            var replacer = new TimeReplacer(StatusTests.MockStatus().Object);
             Assert.AreEqual("%T128XXXXXXX", replacer.Replace("%T128XXXXXXX"));
         }
     }
