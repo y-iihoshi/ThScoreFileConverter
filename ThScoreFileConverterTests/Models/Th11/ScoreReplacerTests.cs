@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th11;
@@ -155,11 +156,9 @@ namespace ThScoreFileConverterTests.Models.Th11
                     Rankings = Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
-                            index => new ScoreDataStub<StageProgress>()
-                            {
-                                DateTime = 34567890u,
-                                StageProgress = StageProgress.Extra,
-                            }).ToList() as IReadOnlyList<IScoreData>),
+                            index => Mock.Of<IScoreData>(
+                                m => (m.DateTime == 34567890u) && (m.StageProgress == StageProgress.Extra)))
+                        .ToList() as IReadOnlyList<IScoreData>),
                 },
             }.ToDictionary(element => element.Chara);
 

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th14;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
@@ -165,11 +165,9 @@ namespace ThScoreFileConverterTests.Models.Th14
                     Rankings = Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
-                            index => new ScoreDataStub<StageProgress>()
-                            {
-                                DateTime = 34567890u,
-                                StageProgress = StageProgress.Extra,
-                            }).ToList() as IReadOnlyList<IScoreData>),
+                            index => Mock.Of<IScoreData>(
+                                m => (m.DateTime == 34567890u) &&(m.StageProgress == StageProgress.Extra)))
+                        .ToList() as IReadOnlyList<IScoreData>),
                 },
             }.ToDictionary(element => element.Chara);
 
@@ -188,11 +186,9 @@ namespace ThScoreFileConverterTests.Models.Th14
                     Rankings = Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
-                            index => new ScoreDataStub<StageProgress>()
-                            {
-                                DateTime = 34567890u,
-                                StageProgress = StageProgress.ExtraClear,
-                            }).ToList() as IReadOnlyList<IScoreData>),
+                            index => Mock.Of<IScoreData>(
+                                m => (m.DateTime == 34567890u) && (m.StageProgress == StageProgress.ExtraClear)))
+                        .ToList() as IReadOnlyList<IScoreData>),
                 },
             }.ToDictionary(element => element.Chara);
 

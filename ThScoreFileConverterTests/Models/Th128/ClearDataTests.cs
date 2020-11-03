@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
@@ -31,15 +31,13 @@ namespace ThScoreFileConverterTests.Models.Th128
                 Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub<StageProgress>()
-                        {
-                            Score = 12345670u - ((uint)index * 1000u),
-                            StageProgress = StageProgress.A2Clear,
-                            ContinueCount = (byte)index,
-                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
-                            DateTime = 34567890u,
-                            SlowRate = 1.2f,
-                        }).ToList() as IReadOnlyList<IScoreData>),
+                        index => Mock.Of<IScoreData>(
+                            m => (m.Score == 12345670u - ((uint)index * 1000u))
+                                 && (m.StageProgress == StageProgress.A2Clear)
+                                 && (m.ContinueCount == (byte)index)
+                                 && (m.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
+                                 && (m.DateTime == 34567890u)
+                                 && (m.SlowRate == 1.2f))).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),

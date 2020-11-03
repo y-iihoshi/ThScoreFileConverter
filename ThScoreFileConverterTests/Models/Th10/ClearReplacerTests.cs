@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -22,12 +24,10 @@ namespace ThScoreFileConverterTests.Models.Th10
                     Rankings = Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
-                            index => new ScoreDataStub<StageProgress>()
-                            {
-                                StageProgress = (level == Level.Extra)
-                                    ? StageProgress.Extra : (StageProgress)(5 - (index % 5)),
-                                DateTime = (uint)index % 2,
-                            }).ToList() as IReadOnlyList<IScoreData<StageProgress>>),
+                            index => Mock.Of<IScoreData>(
+                                m => (m.StageProgress ==
+                                        (level == Level.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5))))
+                                     && (m.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>),
                 },
             }.ToDictionary(element => element.Chara);
 
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 new ClearDataStub<CharaWithTotal, StageProgress>
                 {
                     Chara = CharaWithTotal.ReimuB,
-                    Rankings = new Dictionary<Level, IReadOnlyList<IScoreData<StageProgress>>>(),
+                    Rankings = new Dictionary<Level, IReadOnlyList<IScoreData>>(),
                 },
             }.ToDictionary(element => element.Chara);
 
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                     Chara = CharaWithTotal.ReimuB,
                     Rankings = Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
-                        level => new List<IScoreData<StageProgress>>() as IReadOnlyList<IScoreData<StageProgress>>),
+                        level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
                 },
             }.ToDictionary(element => element.Chara);
 

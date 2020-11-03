@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th14;
 using ThScoreFileConverterTests.Extensions;
@@ -24,8 +25,6 @@ using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
-using ScoreDataStub = ThScoreFileConverterTests.Models.Th10.Stubs.ScoreDataStub<
-    ThScoreFileConverter.Models.Th13.StageProgress>;
 using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
@@ -50,15 +49,13 @@ namespace ThScoreFileConverterTests.Models.Th14
                 Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub
-                        {
-                            Score = 12345670u - ((uint)index * 1000u),
-                            StageProgress = StageProgress.Five,
-                            ContinueCount = (byte)index,
-                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
-                            DateTime = 34567890u,
-                            SlowRate = 1.2f,
-                        }).ToList() as IReadOnlyList<IScoreData>),
+                        index => Mock.Of<IScoreData>(
+                            m => (m.Score == 12345670u - ((uint)index * 1000u))
+                                 && (m.StageProgress == StageProgress.Five)
+                                 && (m.ContinueCount == (byte)index)
+                                 && (m.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
+                                 && (m.DateTime == 34567890u)
+                                 && (m.SlowRate == 1.2f))).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
