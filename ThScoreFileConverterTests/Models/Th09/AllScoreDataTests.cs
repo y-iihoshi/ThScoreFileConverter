@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverterTests.Models.Th09.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void SetPlayStatusTest()
         {
-            var status = PlayStatusTests.ValidStub;
+            var status = Mock.Of<IPlayStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status);
@@ -121,8 +121,8 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void SetPlayStatusTestTwice()
         {
-            var status1 = PlayStatusTests.ValidStub;
-            var status2 = new PlayStatusStub(status1);
+            var status1 = Mock.Of<IPlayStatus>();
+            var status2 = Mock.Of<IPlayStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status1);

@@ -3,10 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th09.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th09
@@ -14,28 +14,27 @@ namespace ThScoreFileConverterTests.Models.Th09
     [TestClass]
     public class PlayStatusTests
     {
-        internal static PlayStatusStub ValidStub { get; } = new PlayStatusStub()
+        internal static Mock<IPlayStatus> MockPlayStatus()
         {
-            Signature = "PLST",
-            Size1 = 0x1FC,
-            Size2 = 0x1FC,
-            TotalRunningTime = new Time(12, 34, 56, 789, false),
-            TotalPlayTime = new Time(23, 45, 19, 876, false),
-            BgmFlags = TestUtils.MakeRandomArray<byte>(19),
-            MatchFlags = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => (byte)pair.index),
-            StoryFlags = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)),
-            ExtraFlags = Utils.GetEnumerable<Chara>()
-                .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)),
-            ClearCounts = Utils.GetEnumerable<Chara>()
-                .ToDictionary(
-                    level => level,
-                    level => ClearCountTests.MockClearCount().Object),
-        };
+            var characters = Utils.GetEnumerable<Chara>();
+            var pairs = characters.Select((chara, index) => (chara, index));
+            var mock = new Mock<IPlayStatus>();
+            _ = mock.SetupGet(m => m.Signature).Returns("PLST");
+            _ = mock.SetupGet(m => m.Size1).Returns(0x1FC);
+            _ = mock.SetupGet(m => m.Size2).Returns(0x1FC);
+            _ = mock.SetupGet(m => m.TotalRunningTime).Returns(new Time(12, 34, 56, 789, false));
+            _ = mock.SetupGet(m => m.TotalPlayTime).Returns(new Time(23, 45, 19, 876, false));
+            _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(19));
+            _ = mock.SetupGet(m => m.MatchFlags).Returns(
+                pairs.ToDictionary(pair => pair.chara, pair => (byte)pair.index));
+            _ = mock.SetupGet(m => m.StoryFlags).Returns(
+                pairs.ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)));
+            _ = mock.SetupGet(m => m.ExtraFlags).Returns(
+                pairs.ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)));
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(
+                characters.ToDictionary(chara => chara, _ => ClearCountTests.MockClearCount().Object));
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IPlayStatus playStatus)
             => TestUtils.MakeByteArray(
@@ -88,12 +87,12 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void PlayStatusTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockPlayStatus();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var playStatus = new PlayStatus(chapter);
 
-            Validate(stub, playStatus);
+            Validate(mock.Object, playStatus);
         }
 
         [TestMethod]
@@ -110,10 +109,11 @@ namespace ThScoreFileConverterTests.Models.Th09
         [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSignature()
         {
-            var stub = new PlayStatusStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockPlayStatus();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -123,10 +123,11 @@ namespace ThScoreFileConverterTests.Models.Th09
         [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSize1()
         {
-            var stub = new PlayStatusStub(ValidStub);
-            --stub.Size1;
+            var mock = MockPlayStatus();
+            var size = mock.Object.Size1;
+            _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
