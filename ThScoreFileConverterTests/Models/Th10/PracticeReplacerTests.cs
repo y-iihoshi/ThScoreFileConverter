@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
@@ -15,10 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th10
     public class PracticeReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void PracticeReplacerTest()
@@ -84,14 +81,12 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void ReplaceTestEmptyPractices()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuB,
-                    Practices = new Dictionary<(Level, Stage), IPractice>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.ReimuB)
+                         &&(m.Practices == new Dictionary<(Level, Stage), IPractice>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new PracticeReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T10PRACHRB3"));

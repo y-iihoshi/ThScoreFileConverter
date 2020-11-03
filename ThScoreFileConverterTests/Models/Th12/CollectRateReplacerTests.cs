@@ -4,43 +4,36 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th12;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th12.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th10.ISpellCard<ThScoreFileConverter.Models.Level>;
-using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th12
 {
     [TestClass]
     public class CollectRateReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuB,
-                    Cards = Definitions.CardTable.ToDictionary(
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                c => (c.Chara == CharaWithTotal.ReimuB)
+                     && (c.Cards == Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
                         pair => Mock.Of<ISpellCard>(
-                            m => (m.ClearCount == pair.Key % 3)
-                                 && (m.TrialCount == pair.Key % 5)
-                                 && (m.Id == pair.Value.Id)
-                                 && (m.Level == pair.Value.Level))),
-                },
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.Total,
-                    Cards = Definitions.CardTable.ToDictionary(
+                            s => (s.ClearCount == pair.Key % 3)
+                                 && (s.TrialCount == pair.Key % 5)
+                                 && (s.Id == pair.Value.Id)
+                                 && (s.Level == pair.Value.Level))))),
+            Mock.Of<IClearData>(
+                c => (c.Chara == CharaWithTotal.Total)
+                     && (c.Cards == Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
                         pair => Mock.Of<ISpellCard>(
-                            m => (m.ClearCount == pair.Key % 7)
-                                 && (m.TrialCount == pair.Key % 11)
-                                 && (m.Id == pair.Value.Id)
-                                 && (m.Level == pair.Value.Level))),
-                },
-            }.ToDictionary(element => element.Chara);
+                            s => (s.ClearCount == pair.Key % 7)
+                                 && (s.TrialCount == pair.Key % 11)
+                                 && (s.Id == pair.Value.Id)
+                                 && (s.Level == pair.Value.Level))))),
+        }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CollectRateReplacerTest()
@@ -160,14 +153,11 @@ namespace ThScoreFileConverterTests.Models.Th12
         [TestMethod]
         public void ReplaceTestEmptyCards()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuB,
-                    Cards = new Dictionary<int, ISpellCard>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.ReimuB) && (m.Cards == new Dictionary<int, ISpellCard>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CollectRateReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T12CRGHRB31"));

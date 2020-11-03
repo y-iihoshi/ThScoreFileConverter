@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models.Th10
@@ -53,7 +52,13 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
         {
             var chara = TestUtils.Cast<TCharaWithTotal>(1);
-            var clearData = new ClearDataStub<TCharaWithTotal, TStageProgress> { Chara = chara };
+#if false
+            var clearData = Mock.Of<IClearData<TCharaWithTotal, TStageProgress>>(m => m.Chara == chara);
+#else
+            var mock = new Mock<IClearData<TCharaWithTotal, TStageProgress>>();
+            _ = mock.SetupGet(m => m.Chara).Returns(chara);
+            var clearData = mock.Object;
+#endif
 
             var allScoreData = new AllScoreData<TCharaWithTotal, TStageProgress>();
             allScoreData.Set(clearData);
@@ -66,8 +71,17 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
         {
             var chara = TestUtils.Cast<TCharaWithTotal>(1);
-            var clearData1 = new ClearDataStub<TCharaWithTotal, TStageProgress> { Chara = chara };
-            var clearData2 = new ClearDataStub<TCharaWithTotal, TStageProgress> { Chara = chara };
+#if false
+            var clearData1 = Mock.Of<IClearData<TCharaWithTotal, TStageProgress>>(m => m.Chara == chara);
+            var clearData2 = Mock.Of<IClearData<TCharaWithTotal, TStageProgress>>(m => m.Chara == chara);
+#else
+            var mock1 = new Mock<IClearData<TCharaWithTotal, TStageProgress>>();
+            _ = mock1.SetupGet(m => m.Chara).Returns(chara);
+            var clearData1 = mock1.Object;
+            var mock2 = new Mock<IClearData<TCharaWithTotal, TStageProgress>>();
+            _ = mock2.SetupGet(m => m.Chara).Returns(chara);
+            var clearData2 = mock2.Object;
+#endif
 
             var allScoreData = new AllScoreData<TCharaWithTotal, TStageProgress>();
             allScoreData.Set(clearData1);

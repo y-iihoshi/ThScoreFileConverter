@@ -2,36 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th11;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
-using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th11
 {
     [TestClass]
     public class CharaReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
+        private static IEnumerable<IClearData> CreateClearDataList()
+        {
+            var levels = Utils.GetEnumerable<Level>();
+            return new[]
             {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuSuika,
-                    TotalPlayCount = 23,
-                    PlayTime = 4567890,
-                    ClearCounts = Utils.GetEnumerable<Level>().ToDictionary(level => level, level => 100 - (int)level),
-                },
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.MarisaAlice,
-                    TotalPlayCount = 12,
-                    PlayTime = 3456789,
-                    ClearCounts = Utils.GetEnumerable<Level>().ToDictionary(level => level, level => 50 - (int)level),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.ReimuSuika)
+                         && (m.TotalPlayCount == 23)
+                         && (m.PlayTime == 4567890)
+                         && (m.ClearCounts == levels.ToDictionary(level => level, level => 100 - (int)level))),
+                Mock.Of<IClearData>(
+                    m =>
+                         (m.Chara == CharaWithTotal.MarisaAlice)
+                         && (m.TotalPlayCount == 12)
+                         && (m.PlayTime == 3456789)
+                         && (m.ClearCounts == levels.ToDictionary(level => level, level => 50 - (int)level))),
+            };
+        }
+
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(element => element.Chara);
 
         [TestMethod]
         public void CharaReplacerTest()
@@ -111,14 +113,11 @@ namespace ThScoreFileConverterTests.Models.Th11
         [TestMethod]
         public void ReplaceTestEmptyClearCounts()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuSuika,
-                    ClearCounts = new Dictionary<Level, int>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.ReimuSuika) && (m.ClearCounts == new Dictionary<Level, int>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CharaReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T11CHARARS3"));

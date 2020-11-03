@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th10.StageProgress>;
@@ -15,21 +14,18 @@ namespace ThScoreFileConverterTests.Models.Th10
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuB,
-                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                c => (c.Chara == CharaWithTotal.ReimuB)
+                     && (c.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
                             index => Mock.Of<IScoreData>(
-                                m => (m.StageProgress ==
+                                s => (s.StageProgress ==
                                         (level == Level.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5))))
-                                     && (m.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                                     && (s.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>)))
+        }.ToDictionary(element => element.Chara);
 
         [TestMethod]
         public void ClearReplacerTest()
@@ -79,14 +75,12 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuB,
-                    Rankings = new Dictionary<Level, IReadOnlyList<IScoreData>>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.ReimuB)
+                         && (m.Rankings == new Dictionary<Level, IReadOnlyList<IScoreData>>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T10CLEARHRB"));
@@ -95,16 +89,14 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub<CharaWithTotal, StageProgress>
-                {
-                    Chara = CharaWithTotal.ReimuB,
-                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
-                        level => level,
-                        level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.ReimuB)
+                         && (m.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
+                            level => level,
+                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T10CLEARHRB"));
