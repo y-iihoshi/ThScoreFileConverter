@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th08.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
@@ -138,7 +137,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetPracticeScoreTest()
         {
-            var score = PracticeScoreTests.ValidStub;
+            var score = Mock.Of<IPracticeScore>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -149,8 +148,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetPracticeScoreTestTwice()
         {
-            var score1 = PracticeScoreTests.ValidStub;
-            var score2 = new PracticeScoreStub(score1);
+            var score1 = Mock.Of<IPracticeScore>();
+            var score2 = Mock.Of<IPracticeScore>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
