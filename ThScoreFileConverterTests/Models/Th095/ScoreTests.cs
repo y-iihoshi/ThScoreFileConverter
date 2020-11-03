@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
     public class ScoreTests
     {
-        internal static ScoreStub ValidStub { get; } = new ScoreStub()
+        internal static Mock<IScore> MockScore()
         {
-            Signature = "SC",
-            Version = 1,
-            Size = 0x60,
-            Checksum = 0u,
-            LevelScene = (Level.Nine, 6),
-            HighScore = 1234567,
-            BestshotScore = 23456,
-            DateTime = 34567890,
-            TrialCount = 9876,
-            SlowRate1 = 1.23f,
-            SlowRate2 = 2.34f,
-        };
+            var mock = new Mock<IScore>();
+            _ = mock.SetupGet(m => m.Signature).Returns("SC");
+            _ = mock.SetupGet(m => m.Version).Returns(1);
+            _ = mock.SetupGet(m => m.Size).Returns(0x60);
+            _ = mock.SetupGet(m => m.Checksum).Returns(0u);
+            _ = mock.SetupGet(m => m.LevelScene).Returns((Level.Nine, 6));
+            _ = mock.SetupGet(m => m.HighScore).Returns(1234567);
+            _ = mock.SetupGet(m => m.BestshotScore).Returns(23456);
+            _ = mock.SetupGet(m => m.DateTime).Returns(34567890);
+            _ = mock.SetupGet(m => m.TrialCount).Returns(9876);
+            _ = mock.SetupGet(m => m.SlowRate1).Returns(1.23f);
+            _ = mock.SetupGet(m => m.SlowRate2).Returns(2.34f);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IScore score)
             => TestUtils.MakeByteArray(
@@ -62,12 +64,12 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ScoreTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockScore();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var score = new Score(chapter);
 
-            Validate(stub, score);
+            Validate(mock.Object, score);
             Assert.IsFalse(score.IsValid);
         }
 
@@ -85,10 +87,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidDataException))]
         public void ScoreTestInvalidSignature()
         {
-            var stub = new ScoreStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockScore();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -98,10 +101,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidDataException))]
         public void ScoreTestInvalidVersion()
         {
-            var stub = new ScoreStub(ValidStub);
-            ++stub.Version;
+            var mock = MockScore();
+            var version = mock.Object.Version;
+            _ = mock.SetupGet(m => m.Version).Returns(++version);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -111,10 +115,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidDataException))]
         public void ScoreTestInvalidSize()
         {
-            var stub = new ScoreStub(ValidStub);
-            --stub.Size;
+            var mock = MockScore();
+            var size = mock.Object.Size;
+            _ = mock.SetupGet(m => m.Size).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -128,10 +133,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(InvalidCastException))]
         public void ScoreTestInvalidLevel(int level)
         {
-            var stub = new ScoreStub(ValidStub);
-            stub.LevelScene = (TestUtils.Cast<Level>(level), stub.LevelScene.Scene);
+            var mock = MockScore();
+            var levelScene = mock.Object.LevelScene;
+            _ = mock.SetupGet(m => m.LevelScene).Returns((TestUtils.Cast<Level>(level), levelScene.Scene));
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

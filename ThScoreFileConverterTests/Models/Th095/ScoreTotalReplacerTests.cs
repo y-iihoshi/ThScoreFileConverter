@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
     public class ScoreTotalReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
+        internal static IReadOnlyList<IScore> Scores { get; }
+
+        static ScoreTotalReplacerTests()
         {
-            new ScoreStub(ScoreTests.ValidStub),
-            new ScoreStub(ScoreTests.ValidStub)
-            {
-                LevelScene = (Level.Nine, 7),
-                HighScore = 0,
-            },
-        };
+            var mock1 = ScoreTests.MockScore();
+
+            var mock2 = ScoreTests.MockScore();
+            _ = mock2.SetupGet(m => m.LevelScene).Returns((Level.Nine, 7));
+            _ = mock2.SetupGet(m => m.HighScore).Returns(0);
+
+            Scores = new[] { mock1.Object, mock2.Object };
+        }
 
         [TestMethod]
         public void ScoreTotalReplacerTest()

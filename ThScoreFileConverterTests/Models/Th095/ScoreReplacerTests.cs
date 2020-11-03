@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
     public class ScoreReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
-        {
-            new ScoreStub(ScoreTests.ValidStub),
-        };
+        internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore().Object };
 
         [TestMethod]
         public void ScoreReplacerTest()

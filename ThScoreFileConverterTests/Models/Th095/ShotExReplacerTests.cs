@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th095
 {
@@ -21,13 +20,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         static ShotExReplacerTests()
         {
             var headerMock = BestShotHeaderTests.MockBestShotHeader();
-            Scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    LevelScene = (headerMock.Object.Level, headerMock.Object.Scene),
-                },
-            };
+
+            var scoreMock = ScoreTests.MockScore();
+            _ = scoreMock.SetupGet(m => m.LevelScene).Returns((headerMock.Object.Level, headerMock.Object.Scene));
+
+            Scores = new[] { scoreMock.Object };
         }
 
         [TestMethod]
