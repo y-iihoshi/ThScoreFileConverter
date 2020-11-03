@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th128
@@ -13,21 +12,18 @@ namespace ThScoreFileConverterTests.Models.Th128
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub
-                {
-                    Route = RouteWithTotal.A2,
-                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
+        internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                c => (c.Route == RouteWithTotal.A2)
+                     && (c.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
                             index => Mock.Of<IScoreData>(
-                                m => (m.StageProgress ==
+                                s => (s.StageProgress ==
                                         (level == Level.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5))))
-                                     && (m.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Route);
+                                     && (s.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>)))
+        }.ToDictionary(clearData => clearData.Route);
 
         [TestMethod]
         public void ClearReplacerTest()
@@ -84,14 +80,12 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub
-                {
-                    Route = RouteWithTotal.A2,
-                    Rankings = new Dictionary<Level, IReadOnlyList<IScoreData>>(),
-                },
-            }.ToDictionary(element => element.Route);
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.A2)
+                         && (m.Rankings == new Dictionary<Level, IReadOnlyList<IScoreData>>()))
+            }.ToDictionary(clearData => clearData.Route);
 
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T128CLEARHA2"));
@@ -100,16 +94,14 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub
-                {
-                    Route = RouteWithTotal.A2,
-                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
-                        level => level,
-                        level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Route);
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.A2)
+                         && (m.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
+                            level => level,
+                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Route);
 
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T128CLEARHA2"));

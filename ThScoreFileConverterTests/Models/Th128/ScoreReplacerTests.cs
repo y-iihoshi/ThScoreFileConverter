@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th128
@@ -14,10 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th128
     public class ScoreReplacerTests
     {
         internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Route);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Route);
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -102,14 +99,12 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Route = RouteWithTotal.A2,
-                    Rankings = new Dictionary<Level, IReadOnlyList<IScoreData>>(),
-                },
-            }.ToDictionary(element => element.Route);
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.A2)
+                         && (m.Rankings == new Dictionary<Level, IReadOnlyList<IScoreData>>()))
+            }.ToDictionary(clearData => clearData.Route);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T128SCRHA221"));
@@ -122,16 +117,14 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Route = RouteWithTotal.A2,
-                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
-                        level => level,
-                        level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Route);
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.A2)
+                         && (m.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
+                            level => level,
+                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Route);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T128SCRHA221"));

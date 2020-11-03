@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         public void SetClearDataTest()
         {
             var route = RouteWithTotal.A2;
-            var clearData = new ClearDataStub { Route = route };
+            var clearData = Mock.Of<IClearData>(m => m.Route == route);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
@@ -64,8 +64,8 @@ namespace ThScoreFileConverterTests.Models.Th128
         public void SetClearDataTestTwice()
         {
             var route = RouteWithTotal.A2;
-            var clearData1 = new ClearDataStub { Route = route };
-            var clearData2 = new ClearDataStub { Route = route };
+            var clearData1 = Mock.Of<IClearData>(m => m.Route == route);
+            var clearData2 = Mock.Of<IClearData>(m => m.Route == route);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);

@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
     public class RouteExReplacerTests
     {
-        internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
+        private static IEnumerable<IClearData> CreateClearDataList()
+        {
+            var levels = Utils.GetEnumerable<Level>();
+            return new[]
             {
-                new ClearDataStub
-                {
-                    Route = RouteWithTotal.A2,
-                    TotalPlayCount = 23,
-                    PlayTime = 4567890,
-                    ClearCounts = Utils.GetEnumerable<Level>().ToDictionary(level => level, level => 100 - (int)level),
-                },
-                new ClearDataStub
-                {
-                    Route = RouteWithTotal.B1,
-                    TotalPlayCount = 12,
-                    PlayTime = 3456789,
-                    ClearCounts = Utils.GetEnumerable<Level>().ToDictionary(level => level, level => 50 - (int)level),
-                },
-            }.ToDictionary(element => element.Route);
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.A2)
+                         && (m.TotalPlayCount == 23)
+                         && (m.PlayTime == 4567890)
+                         && (m.ClearCounts == levels.ToDictionary(level => level, level => 100 - (int)level))),
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.B1)
+                         && (m.TotalPlayCount == 12)
+                         && (m.PlayTime == 3456789)
+                         && (m.ClearCounts == levels.ToDictionary(level => level, level => 50 - (int)level))),
+            };
+        }
+
+        internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(clearData => clearData.Route);
 
         [TestMethod]
         public void RouteExReplacerTest()
@@ -150,14 +152,11 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmptyClearCounts()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub
-                {
-                    Route = RouteWithTotal.A2,
-                    ClearCounts = new Dictionary<Level, int>(),
-                },
-            }.ToDictionary(element => element.Route);
+                Mock.Of<IClearData>(
+                    m => (m.Route == RouteWithTotal.A2) && (m.ClearCounts == new Dictionary<Level, int>()))
+            }.ToDictionary(clearData => clearData.Route);
 
             var replacer = new RouteExReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T128ROUTEEXHA23"));
