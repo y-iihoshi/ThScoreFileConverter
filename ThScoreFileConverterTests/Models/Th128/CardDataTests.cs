@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th128
@@ -14,23 +13,26 @@ namespace ThScoreFileConverterTests.Models.Th128
     [TestClass]
     public class CardDataTests
     {
-        internal static CardDataStub ValidStub { get; } = new CardDataStub()
+        internal static Mock<ICardData> MockCardData()
         {
-            Signature = "CD",
-            Version = 1,
-            Checksum = 0u,
-            Size = 0x947C,
-            Cards = Enumerable.Range(1, 250).ToDictionary(
-                index => index,
-                index => Mock.Of<ISpellCard>(
-                    m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
-                         && (m.NoMissCount == 123 + index)
-                         && (m.NoIceCount == 456 + index)
-                         && (m.TrialCount == 789 + index)
-                         && (m.Id == index)
-                         && (m.Level == Level.Hard)
-                         && (m.HasTried() == true))),
-        };
+            var mock = new Mock<ICardData>();
+            _ = mock.SetupGet(m => m.Signature).Returns("CD");
+            _ = mock.SetupGet(m => m.Version).Returns(1);
+            _ = mock.SetupGet(m => m.Checksum).Returns(0u);
+            _ = mock.SetupGet(m => m.Size).Returns(0x947C);
+            _ = mock.SetupGet(m => m.Cards).Returns(
+                Enumerable.Range(1, 250).ToDictionary(
+                    index => index,
+                    index => Mock.Of<ISpellCard>(
+                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
+                             && (m.NoMissCount == 123 + index)
+                             && (m.NoIceCount == 456 + index)
+                             && (m.TrialCount == 789 + index)
+                             && (m.Id == index)
+                             && (m.Level == Level.Hard)
+                             && (m.HasTried() == true))));
+            return mock;
+        }
 
         internal static byte[] MakeData(ICardData cardData)
             => TestUtils.MakeByteArray(
@@ -60,12 +62,12 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void CardDataTestChapter()
         {
-            var stub = ValidStub;
+            var mock = MockCardData();
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             var clearData = new CardData(chapter);
 
-            Validate(stub, clearData);
+            Validate(mock.Object, clearData);
             Assert.IsFalse(clearData.IsValid);
         }
 
@@ -83,10 +85,11 @@ namespace ThScoreFileConverterTests.Models.Th128
         [ExpectedException(typeof(InvalidDataException))]
         public void CardDataTestInvalidSignature()
         {
-            var stub = new CardDataStub(ValidStub);
-            stub.Signature = stub.Signature.ToLowerInvariant();
+            var mock = MockCardData();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -96,10 +99,11 @@ namespace ThScoreFileConverterTests.Models.Th128
         [ExpectedException(typeof(InvalidDataException))]
         public void CardDataTestInvalidVersion()
         {
-            var stub = new CardDataStub(ValidStub);
-            ++stub.Version;
+            var mock = MockCardData();
+            var version = mock.Object.Version;
+            _ = mock.SetupGet(m => m.Version).Returns(++version);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -109,10 +113,11 @@ namespace ThScoreFileConverterTests.Models.Th128
         [ExpectedException(typeof(InvalidDataException))]
         public void CardDataTestInvalidSize()
         {
-            var stub = new CardDataStub(ValidStub);
-            --stub.Size;
+            var mock = MockCardData();
+            var size = mock.Object.Size;
+            _ = mock.SetupGet(m => m.Size).Returns(--size);
 
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
             _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

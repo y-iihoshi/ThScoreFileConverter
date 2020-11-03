@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Models.Th128.Stubs;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
@@ -78,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void SetCardDataTest()
         {
-            var cardData = new CardDataStub();
+            var cardData = Mock.Of<ICardData>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(cardData);
@@ -89,8 +88,8 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void SetCardDataTestTwice()
         {
-            var cardData1 = new CardDataStub();
-            var cardData2 = new CardDataStub();
+            var cardData1 = Mock.Of<ICardData>();
+            var cardData2 = Mock.Of<ICardData>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(cardData1);
