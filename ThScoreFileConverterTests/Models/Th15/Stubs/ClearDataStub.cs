@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th13.Stubs;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Th15.Stubs
@@ -15,20 +13,6 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
             this.GameModeData = ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty;
             this.Practices = ImmutableDictionary<(Level, StagePractice), IPractice>.Empty;
             this.Signature = string.Empty;
-        }
-
-        public ClearDataStub(IClearData clearData)
-        {
-            this.Chara = clearData.Chara;
-            this.GameModeData = clearData.GameModeData.ToDictionary(
-                pair => pair.Key, pair => new ClearDataPerGameModeStub(pair.Value) as IClearDataPerGameMode);
-            this.Practices = clearData.Practices.ToDictionary(
-                pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
-            this.Checksum = clearData.Checksum;
-            this.IsValid = clearData.IsValid;
-            this.Signature = clearData.Signature;
-            this.Size = clearData.Size;
-            this.Version = clearData.Version;
         }
 
         public CharaWithTotal Chara { get; set; }

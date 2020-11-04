@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
@@ -19,27 +17,6 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
             this.Practices = ImmutableDictionary<(Level, StagePractice), IPractice>.Empty;
             this.Rankings = ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty;
             this.Signature = string.Empty;
-        }
-
-        public ClearDataStub(IClearData clearData)
-        {
-            this.Cards = clearData.Cards.ToDictionary(
-                pair => pair.Key, pair => new Th13.Stubs.SpellCardStub<Level>(pair.Value) as ISpellCard);
-            this.Chara = clearData.Chara;
-            this.ClearCounts = clearData.ClearCounts.ToDictionary();
-            this.ClearFlags = clearData.ClearFlags.ToDictionary();
-            this.PlayTime = clearData.PlayTime;
-            this.Practices = clearData.Practices.ToDictionary(
-                pair => pair.Key, pair => new Th13.Stubs.PracticeStub(pair.Value) as IPractice);
-            this.Rankings = clearData.Rankings.ToDictionary(
-                pair => pair.Key,
-                pair => pair.Value.Select(score => new ScoreDataStub(score)).ToList() as IReadOnlyList<IScoreData>);
-            this.TotalPlayCount = clearData.TotalPlayCount;
-            this.Checksum = clearData.Checksum;
-            this.IsValid = clearData.IsValid;
-            this.Signature = clearData.Signature;
-            this.Size = clearData.Size;
-            this.Version = clearData.Version;
         }
 
         public IReadOnlyDictionary<int, ISpellCard> Cards { get; set; }
