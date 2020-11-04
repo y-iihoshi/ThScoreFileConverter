@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th17.Stubs
             this.ClearFlags = clearData.ClearFlags.ToDictionary();
             this.PlayTime = clearData.PlayTime;
             this.Practices = clearData.Practices.ToDictionary(
-                pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
+                pair => pair.Key, pair => Th13.PracticeTests.MockPractice().Object);
             this.Rankings = clearData.Rankings.ToDictionary(
                 pair => pair.Key,
                 pair => pair.Value.Select(score => new ScoreDataStub(score)).ToList() as IReadOnlyList<IScoreData>);

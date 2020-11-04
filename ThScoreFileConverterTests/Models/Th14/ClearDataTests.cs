@@ -24,7 +24,6 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
-using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
 using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
@@ -64,12 +63,10 @@ namespace ThScoreFileConverterTests.Models.Th14
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new PracticeStub
-                        {
-                            Score = 123456u - (TestUtils.Cast<uint>(pair.level) * 10u),
-                            ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2),
-                        } as IPractice),
+                        pair => Mock.Of<IPractice>(
+                            m => (m.Score == 123456u - (TestUtils.Cast<uint>(pair.level) * 10u))
+                                 && (m.ClearFlag == (byte)(TestUtils.Cast<int>(pair.stage) % 2))
+                                 && (m.EnableFlag == (byte)(TestUtils.Cast<int>(pair.level) % 2)))),
                 Cards = Enumerable.Range(1, 120).ToDictionary(
                     index => index,
                     index => new SpellCardStub

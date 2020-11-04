@@ -60,12 +60,10 @@ namespace ThScoreFileConverterTests.Models.Th13
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new PracticeStub()
-                        {
-                            Score = 123456u - (TestUtils.Cast<uint>(pair.level) * 10u),
-                            ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2),
-                        } as IPractice),
+                        pair => Mock.Of<IPractice>(
+                            m => (m.Score == 123456u - (TestUtils.Cast<uint>(pair.level) * 10u))
+                                 && (m.ClearFlag == (byte)(TestUtils.Cast<int>(pair.stage) % 2))
+                                 && (m.EnableFlag == (byte)(TestUtils.Cast<int>(pair.level) % 2)))),
                 Cards = Enumerable.Range(1, 127).ToDictionary(
                     index => index,
                     index => new SpellCardStub<LevelPractice>()

@@ -1,19 +1,21 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th13;
-using ThScoreFileConverterTests.Models.Th13.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th13
 {
     [TestClass]
     public class PracticeTests
     {
-        internal static PracticeStub ValidStub { get; } = new PracticeStub()
+        internal static Mock<IPractice> MockPractice()
         {
-            Score = 123456u,
-            ClearFlag = 7,
-            EnableFlag = 8,
-        };
+            var mock = new Mock<IPractice>();
+            _ = mock.SetupGet(m => m.Score).Returns(123456u);
+            _ = mock.SetupGet(m => m.ClearFlag).Returns(7);
+            _ = mock.SetupGet(m => m.EnableFlag).Returns(8);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IPractice practice)
             => TestUtils.MakeByteArray(practice.Score, practice.ClearFlag, practice.EnableFlag, (ushort)0);
@@ -28,18 +30,19 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void PracticeTest()
         {
-            var stub = new PracticeStub();
+            var mock = new Mock<IPractice>();
             var practice = new Practice();
 
-            Validate(stub, practice);
+            Validate(mock.Object, practice);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var practice = TestUtils.Create<Practice>(MakeByteArray(ValidStub));
+            var mock = MockPractice();
+            var practice = TestUtils.Create<Practice>(MakeByteArray(mock.Object));
 
-            Validate(ValidStub, practice);
+            Validate(mock.Object, practice);
         }
 
         [TestMethod]

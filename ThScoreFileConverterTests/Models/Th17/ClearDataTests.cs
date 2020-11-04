@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.Extensions;
@@ -52,12 +53,10 @@ namespace ThScoreFileConverterTests.Models.Th17
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new PracticeStub()
-                        {
-                            Score = 123456u - (TestUtils.Cast<uint>(pair.level) * 10u),
-                            ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2),
-                        } as IPractice),
+                        pair => Mock.Of<IPractice>(
+                            m => (m.Score == 123456u - (TestUtils.Cast<uint>(pair.level) * 10u))
+                                 && (m.ClearFlag == (byte)(TestUtils.Cast<int>(pair.stage) % 2))
+                                 && (m.EnableFlag == (byte)(TestUtils.Cast<int>(pair.level) % 2)))),
                 Cards = Definitions.CardTable.ToDictionary(
                     pair => pair.Key,
                     pair => new SpellCardStub<Level>()
