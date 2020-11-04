@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th13;
-using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -179,7 +179,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                     Chara = CharaWithTotal.Marisa,
                     Cards = new Dictionary<int, ISpellCard>
                     {
-                        { 120, new SpellCardStub<LevelPractice>() { Level = LevelPractice.OverDrive } },
+                        { 120, Mock.Of<ISpellCard<LevelPractice>>(m => m.Level == LevelPractice.OverDrive) },
                     },
                 },
             }.ToDictionary(element => element.Chara);

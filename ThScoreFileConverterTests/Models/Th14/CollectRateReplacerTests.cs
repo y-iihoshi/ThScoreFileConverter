@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th14;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
@@ -16,7 +17,6 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice>;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
-using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th14
 {
@@ -31,30 +31,26 @@ namespace ThScoreFileConverterTests.Models.Th14
                     Chara = CharaWithTotal.ReimuB,
                     Cards = Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
-                        pair => new SpellCardStub
-                        {
-                            ClearCount = pair.Key % 3,
-                            PracticeClearCount = pair.Key % 7,
-                            TrialCount = pair.Key % 5,
-                            PracticeTrialCount = pair.Key % 11,
-                            Id = pair.Value.Id,
-                            Level = pair.Value.Level,
-                        } as ISpellCard),
+                        pair => Mock.Of<ISpellCard>(
+                            m => (m.ClearCount == pair.Key % 3)
+                                 && (m.PracticeClearCount == pair.Key % 7)
+                                 && (m.TrialCount == pair.Key % 5)
+                                 && (m.PracticeTrialCount == pair.Key % 11)
+                                 && (m.Id == pair.Value.Id)
+                                 && (m.Level == pair.Value.Level))),
                 },
                 new ClearDataStub
                 {
                     Chara = CharaWithTotal.Total,
                     Cards = Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
-                        pair => new SpellCardStub
-                        {
-                            ClearCount = pair.Key % 7,
-                            PracticeClearCount = pair.Key % 3,
-                            TrialCount = pair.Key % 11,
-                            PracticeTrialCount = pair.Key % 5,
-                            Id = pair.Value.Id,
-                            Level = pair.Value.Level,
-                        } as ISpellCard),
+                        pair => Mock.Of<ISpellCard>(
+                            m => (m.ClearCount == pair.Key % 7)
+                                 && (m.PracticeClearCount == pair.Key % 3)
+                                 && (m.TrialCount == pair.Key % 11)
+                                 && (m.PracticeTrialCount == pair.Key % 5)
+                                 && (m.Id == pair.Value.Id)
+                                 && (m.Level == pair.Value.Level))),
                 },
             }.ToDictionary(element => element.Chara);
 

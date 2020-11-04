@@ -8,7 +8,6 @@ using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th17.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
@@ -59,17 +58,15 @@ namespace ThScoreFileConverterTests.Models.Th17
                                  && (m.EnableFlag == (byte)(TestUtils.Cast<int>(pair.level) % 2)))),
                 Cards = Definitions.CardTable.ToDictionary(
                     pair => pair.Key,
-                    pair => new SpellCardStub<Level>()
-                    {
-                        Name = TestUtils.MakeRandomArray<byte>(0x80),
-                        ClearCount = (pair.Key % 2 == 0) ? 0 : 12 + pair.Key,
-                        PracticeClearCount = (pair.Key % 3 == 0) ? 0 : 34 + pair.Key,
-                        TrialCount = (pair.Key % 4 == 0) ? 0 : 56 + pair.Key,
-                        PracticeTrialCount = (pair.Key % 5 == 0) ? 0 : 78 + pair.Key,
-                        Id = pair.Value.Id,
-                        Level = pair.Value.Level,
-                        PracticeScore = 90123,
-                    } as ISpellCard),
+                    pair => Mock.Of<ISpellCard>(
+                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
+                             && (m.ClearCount == ((pair.Key % 2 == 0) ? 0 : 12 + pair.Key))
+                             && (m.PracticeClearCount == ((pair.Key % 3 == 0) ? 0 : 34 + pair.Key))
+                             && (m.TrialCount == ((pair.Key % 4 == 0) ? 0 : 56 + pair.Key))
+                             && (m.PracticeTrialCount == ((pair.Key % 5 == 0) ? 0 : 78 + pair.Key))
+                             && (m.Id == pair.Value.Id)
+                             && (m.Level == pair.Value.Level)
+                             && (m.PracticeScore == 90123))),
             };
         }
 

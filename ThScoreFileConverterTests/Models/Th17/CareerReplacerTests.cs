@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverterTests.Models.Th17.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th17
 {
@@ -14,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
             new List<IClearData>
             {
-                new ClearDataStub(ClearDataTests.MakeValidStub()),
+                ClearDataTests.MakeValidStub(),
             }.ToDictionary(data => data.Chara);
 
         [TestMethod]

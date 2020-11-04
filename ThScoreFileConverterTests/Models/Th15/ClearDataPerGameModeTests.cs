@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
-using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th15
@@ -42,17 +42,15 @@ namespace ThScoreFileConverterTests.Models.Th15
                 ClearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
                 Cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
-                    index => new SpellCardStub
-                    {
-                        Name = TestUtils.MakeRandomArray<byte>(0x80),
-                        ClearCount = 12 + index,
-                        PracticeClearCount = 34 + index,
-                        TrialCount = 56 + index,
-                        PracticeTrialCount = 78 + index,
-                        Id = index,
-                        Level = Level.Hard,
-                        PracticeScore = 90123,
-                    } as ISpellCard),
+                    index => Mock.Of<ISpellCard>(
+                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
+                             && (m.ClearCount == 12 + index)
+                             && (m.PracticeClearCount == 34 + index)
+                             && (m.TrialCount == 56 + index)
+                             && (m.PracticeTrialCount == 78 + index)
+                             && (m.Id == index)
+                             && (m.Level == Level.Hard)
+                             && (m.PracticeScore == 90123))),
             };
         }
 

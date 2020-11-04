@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Models.Th16.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
-using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th16
 {
@@ -20,8 +20,8 @@ namespace ThScoreFileConverterTests.Models.Th16
                     Chara = CharaWithTotal.Total,
                     Cards = new Dictionary<int, ISpellCard>()
                     {
-                        { 1, new SpellCardStub { HasTried = true } },
-                        { 2, new SpellCardStub { HasTried = false } },
+                        { 1, Mock.Of<ISpellCard>(m => m.HasTried == true) },
+                        { 2, Mock.Of<ISpellCard>(m => m.HasTried == false) },
                     },
                 },
             }.ToDictionary(element => element.Chara);
