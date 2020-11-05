@@ -11,6 +11,16 @@ namespace ThScoreFileConverterTests.Models.Th143
     [TestClass]
     public class ScoreTotalReplacerTests
     {
+        private static IEnumerable<IItemStatus> CreateItemStatuses()
+        {
+            var mock = ItemStatusTests.MockItemStatus();
+            _ = mock.SetupGet(m => m.Item).Returns(ItemWithTotal.Fablic);
+            _ = mock.SetupGet(m => m.UseCount).Returns(87);
+            _ = mock.SetupGet(m => m.ClearedCount).Returns(65);
+            _ = mock.SetupGet(m => m.ClearedScenes).Returns(43);
+            return new[] { mock.Object };
+        }
+
         internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
         {
             new ScoreStub(ScoreTests.ValidStub),
@@ -20,16 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th143
             },
         };
 
-        internal static IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses { get; } = new List<IItemStatus>
-        {
-            new ItemStatusStub(ItemStatusTests.ValidStub)
-            {
-                Item = ItemWithTotal.Fablic,
-                UseCount = 87,
-                ClearedCount = 65,
-                ClearedScenes = 43,
-            },
-        }.ToDictionary(status => status.Item);
+        internal static IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses { get; } =
+            CreateItemStatuses().ToDictionary(status => status.Item);
 
         [TestMethod]
         public void ScoreTotalReplacerTest()
