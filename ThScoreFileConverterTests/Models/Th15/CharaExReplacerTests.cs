@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
@@ -21,23 +22,19 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                TotalPlayCount = 23,
-                                PlayTime = 4567890,
-                                ClearCounts = Utils.GetEnumerable<LevelWithTotal>()
-                                    .ToDictionary(level => level, level => 100 - (int)level),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                m => (m.TotalPlayCount == 23)
+                                     && (m.PlayTime == 4567890)
+                                     && (m.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
+                                        .ToDictionary(level => level, level => 100 - (int)level)))
                         },
                         {
                             GameMode.Legacy,
-                            new ClearDataPerGameModeStub
-                            {
-                                TotalPlayCount = 34,
-                                PlayTime = 5678901,
-                                ClearCounts = Utils.GetEnumerable<LevelWithTotal>()
-                                    .ToDictionary(level => level, level => 150 - (int)level),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                m => (m.TotalPlayCount == 34)
+                                     && (m.PlayTime == 5678901)
+                                     && (m.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
+                                        .ToDictionary(level => level, level => 150 - (int)level)))
                         },
                     },
                 },
@@ -48,13 +45,11 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                TotalPlayCount = 12,
-                                PlayTime = 3456789,
-                                ClearCounts = Utils.GetEnumerable<LevelWithTotal>()
-                                    .ToDictionary(level => level, level => 50 - (int)level),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                m => (m.TotalPlayCount == 12)
+                                     && (m.PlayTime == 3456789)
+                                     && (m.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
+                                        .ToDictionary(level => level, level => 50 - (int)level)))
                         },
                     },
                 },
@@ -273,10 +268,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                ClearCounts = new Dictionary<LevelWithTotal, int>(),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(m => m.ClearCounts == new Dictionary<LevelWithTotal, int>())
                         },
                     },
                 },

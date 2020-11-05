@@ -22,29 +22,25 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = Definitions.CardTable.ToDictionary(
-                                    pair => pair.Key,
-                                    pair => Mock.Of<ISpellCard>(
-                                        m => (m.ClearCount == pair.Key % 3)
-                                             && (m.TrialCount == pair.Key % 5)
-                                             && (m.Id == pair.Value.Id)
-                                             && (m.Level == pair.Value.Level))),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                c => c.Cards == Definitions.CardTable.ToDictionary(
+                                        pair => pair.Key,
+                                        pair => Mock.Of<ISpellCard>(
+                                            m => (m.ClearCount == pair.Key % 3)
+                                                 && (m.TrialCount == pair.Key % 5)
+                                                 && (m.Id == pair.Value.Id)
+                                                 && (m.Level == pair.Value.Level))))
                         },
                         {
                             GameMode.Legacy,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = Definitions.CardTable.ToDictionary(
-                                    pair => pair.Key,
-                                    pair => Mock.Of<ISpellCard>(
-                                        m => (m.ClearCount == pair.Key % 7)
-                                             && (m.TrialCount == pair.Key % 11)
-                                             && (m.Id == pair.Value.Id)
-                                             && (m.Level == pair.Value.Level))),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                c => c.Cards == Definitions.CardTable.ToDictionary(
+                                        pair => pair.Key,
+                                        pair => Mock.Of<ISpellCard>(
+                                            m => (m.ClearCount == pair.Key % 7)
+                                                 && (m.TrialCount == pair.Key % 11)
+                                                 && (m.Id == pair.Value.Id)
+                                                 && (m.Level == pair.Value.Level))))
                         },
                     },
                 },
@@ -55,29 +51,25 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = Definitions.CardTable.ToDictionary(
-                                    pair => pair.Key,
-                                    pair => Mock.Of<ISpellCard>(
-                                        m => (m.ClearCount == pair.Key % 7)
-                                             && (m.TrialCount == pair.Key % 11)
-                                             && (m.Id == pair.Value.Id)
-                                             && (m.Level == pair.Value.Level))),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                c => c.Cards == Definitions.CardTable.ToDictionary(
+                                        pair => pair.Key,
+                                        pair => Mock.Of<ISpellCard>(
+                                            m => (m.ClearCount == pair.Key % 7)
+                                                 && (m.TrialCount == pair.Key % 11)
+                                                 && (m.Id == pair.Value.Id)
+                                                 && (m.Level == pair.Value.Level))))
                         },
                         {
                             GameMode.Legacy,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = Definitions.CardTable.ToDictionary(
-                                    pair => pair.Key,
-                                    pair => Mock.Of<ISpellCard>(
-                                        m => (m.ClearCount == pair.Key % 3)
-                                             && (m.TrialCount == pair.Key % 5)
-                                             && (m.Id == pair.Value.Id)
-                                             && (m.Level == pair.Value.Level))),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                c => c.Cards == Definitions.CardTable.ToDictionary(
+                                        pair => pair.Key,
+                                        pair => Mock.Of<ISpellCard>(
+                                            m => (m.ClearCount == pair.Key % 3)
+                                                 && (m.TrialCount == pair.Key % 5)
+                                                 && (m.Id == pair.Value.Id)
+                                                 && (m.Level == pair.Value.Level))))
                         },
                     },
                 },
@@ -310,10 +302,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = new Dictionary<int, ISpellCard>(),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(m => m.Cards == new Dictionary<int, ISpellCard>())
                         },
                     },
                 },

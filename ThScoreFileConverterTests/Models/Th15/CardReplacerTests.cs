@@ -22,14 +22,12 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = new Dictionary<int, ISpellCard>()
+                            Mock.Of<ClearDataPerGameMode>(
+                                c => c.Cards == new Dictionary<int, ISpellCard>()
                                 {
-                                    { 3, Mock.Of<ISpellCard>(m => m.HasTried == true) },
-                                    { 4, Mock.Of<ISpellCard>(m => m.HasTried == false) },
-                                },
-                            }
+                                    { 3, Mock.Of<ISpellCard>(s => s.HasTried == true) },
+                                    { 4, Mock.Of<ISpellCard>(s => s.HasTried == false) },
+                                })
                         },
                     },
                 },
@@ -127,10 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = new Dictionary<int, ISpellCard>(),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(m => m.Cards == new Dictionary<int, ISpellCard>())
                         },
                     },
                 },

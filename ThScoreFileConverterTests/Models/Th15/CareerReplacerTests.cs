@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
@@ -169,10 +170,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Cards = new Dictionary<int, ISpellCard>(),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(m => m.Cards == new Dictionary<int, ISpellCard>())
                         },
                     },
                 },

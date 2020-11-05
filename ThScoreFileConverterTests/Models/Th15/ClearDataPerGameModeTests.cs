@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
@@ -17,13 +18,24 @@ namespace ThScoreFileConverterTests.Models.Th15
     [TestClass]
     public class ClearDataPerGameModeTests
     {
-        internal static ClearDataPerGameModeStub MakeValidStub()
+        internal static Mock<IClearDataPerGameMode> MockInitialClearDataPerGameMode()
+        {
+            var mock = new Mock<IClearDataPerGameMode>();
+            _ = mock.SetupGet(m => m.Cards).Returns(ImmutableDictionary<int, ISpellCard<Level>>.Empty);
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(ImmutableDictionary<LevelWithTotal, int>.Empty);
+            _ = mock.SetupGet(m => m.ClearFlags).Returns(ImmutableDictionary<LevelWithTotal, int>.Empty);
+            _ = mock.SetupGet(m => m.Rankings).Returns(
+                ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty);
+            return mock;
+        }
+
+        internal static Mock<IClearDataPerGameMode> MockClearDataPerGameMode()
         {
             var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();
 
-            return new ClearDataPerGameModeStub
-            {
-                Rankings = levelsWithTotal.ToDictionary(
+            var mock = new Mock<IClearDataPerGameMode>();
+            _ = mock.SetupGet(m => m.Rankings).Returns(
+                levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
                         index => Mock.Of<IScoreData>(
@@ -33,12 +45,15 @@ namespace ThScoreFileConverterTests.Models.Th15
                                  && (m.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
                                  && (m.DateTime == 34567890u)
                                  && (m.SlowRate == 1.2f)
-                                 && (m.RetryCount == (uint)index % 4u))).ToList() as IReadOnlyList<IScoreData>),
-                TotalPlayCount = 23,
-                PlayTime = 4567890,
-                ClearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
-                ClearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
-                Cards = Enumerable.Range(1, 119).ToDictionary(
+                                 && (m.RetryCount == (uint)index % 4u))).ToList() as IReadOnlyList<IScoreData>));
+            _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
+            _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(
+                levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)));
+            _ = mock.SetupGet(m => m.ClearFlags).Returns(
+                levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
+            _ = mock.SetupGet(m => m.Cards).Returns(
+                Enumerable.Range(1, 119).ToDictionary(
                     index => index,
                     index => Mock.Of<ISpellCard>(
                         m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
@@ -48,8 +63,8 @@ namespace ThScoreFileConverterTests.Models.Th15
                              && (m.PracticeTrialCount == 78 + index)
                              && (m.Id == index)
                              && (m.Level == Level.Hard)
-                             && (m.PracticeScore == 90123))),
-            };
+                             && (m.PracticeScore == 90123))));
+            return mock;
         }
 
         internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
@@ -90,21 +105,21 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ClearDataPerGameModeTest()
         {
-            var stub = new ClearDataPerGameModeStub();
+            var mock = MockInitialClearDataPerGameMode();
 
             var clearData = new ClearDataPerGameMode();
 
-            Validate(stub, clearData);
+            Validate(mock.Object, clearData);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = MakeValidStub();
+            var mock = MockClearDataPerGameMode();
 
-            var clearData = TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(stub));
+            var clearData = TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(mock.Object));
 
-            Validate(stub, clearData);
+            Validate(mock.Object, clearData);
         }
 
         [TestMethod]
@@ -121,8 +136,8 @@ namespace ThScoreFileConverterTests.Models.Th15
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened()
         {
-            var stub = MakeValidStub();
-            var array = MakeByteArray(stub).SkipLast(1).ToArray();
+            var mock = MockClearDataPerGameMode();
+            var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
             _ = TestUtils.Create<ClearDataPerGameMode>(array);
 
@@ -132,12 +147,12 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReadFromTestExceeded()
         {
-            var stub = MakeValidStub();
-            var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
+            var mock = MockClearDataPerGameMode();
+            var array = MakeByteArray(mock.Object).Concat(new byte[1] { 1 }).ToArray();
 
             var clearData = TestUtils.Create<ClearDataPerGameMode>(array);
 
-            Validate(stub, clearData);
+            Validate(mock.Object, clearData);
         }
     }
 }

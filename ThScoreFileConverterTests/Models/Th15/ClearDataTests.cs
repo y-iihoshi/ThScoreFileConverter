@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 Chara = CharaWithTotal.Marisa,
                 GameModeData = modes.ToDictionary(
                     mode => mode,
-                    _ => ClearDataPerGameModeTests.MakeValidStub() as IClearDataPerGameMode),
+                    _ => ClearDataPerGameModeTests.MockClearDataPerGameMode().Object),
                 Practices = levels
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(

@@ -141,10 +141,8 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Rankings = new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>(),
-                            }
+                            Mock.Of<IClearDataPerGameMode>(
+                                m => m.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>())
                         },
                     },
                 },
@@ -171,12 +169,10 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Rankings = Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                            Mock.Of<IClearDataPerGameMode>(
+                                m => m.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
                                     level => level,
-                                    level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
-                            }
+                                    level => new List<IScoreData>() as IReadOnlyList<IScoreData>))
                         },
                     },
                 },
@@ -203,15 +199,13 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Rankings = Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                            Mock.Of<IClearDataPerGameMode>(
+                                c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
                                     level => level,
                                     level => Enumerable.Range(0, 10).Select(
                                         index => Mock.Of<IScoreData>(
-                                            m => (m.DateTime == 34567890u) && (m.StageProgress == StageProgress.Extra)))
-                                    .ToList() as IReadOnlyList<IScoreData>),
-                            }
+                                            s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.Extra)))
+                                    .ToList() as IReadOnlyList<IScoreData>))
                         },
                     },
                 },
@@ -233,16 +227,14 @@ namespace ThScoreFileConverterTests.Models.Th15
                     {
                         {
                             GameMode.Pointdevice,
-                            new ClearDataPerGameModeStub
-                            {
-                                Rankings = Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                            Mock.Of<IClearDataPerGameMode>(
+                                c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
                                     level => level,
                                     level => Enumerable.Range(0, 10).Select(
                                         index => Mock.Of<IScoreData>(
                                             m => (m.DateTime == 34567890u)
                                                  && (m.StageProgress == StageProgress.ExtraClear)))
-                                    .ToList() as IReadOnlyList<IScoreData>),
-                            }
+                                    .ToList() as IReadOnlyList<IScoreData>))
                         },
                     },
                 },
