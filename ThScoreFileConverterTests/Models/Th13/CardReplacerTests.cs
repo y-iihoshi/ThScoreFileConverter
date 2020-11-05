@@ -4,12 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th13;
-using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13.StagePractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -23,19 +17,16 @@ namespace ThScoreFileConverterTests.Models.Th13
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Total,
-                    Cards = new Dictionary<int, ISpellCard>()
-                    {
-                        { 1, Mock.Of<ISpellCard<LevelPractice>>(m => m.HasTried == true) },
-                        { 2, Mock.Of<ISpellCard<LevelPractice>>(m => m.HasTried == false) },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                c => (c.Chara == CharaWithTotal.Total)
+                     && (c.Cards == new Dictionary<int, ISpellCard>()
+                        {
+                            { 1, Mock.Of<ISpellCard<LevelPractice>>(s => s.HasTried == true) },
+                            { 2, Mock.Of<ISpellCard<LevelPractice>>(s => s.HasTried == false) },
+                        }))
+        }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CardReplacerTest()
@@ -111,14 +102,11 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestEmptyCards()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Total,
-                    Cards = new Dictionary<int, ISpellCard>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Total) && (m.Cards == new Dictionary<int, ISpellCard>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CardReplacer(dictionary, true);
             Assert.AreEqual("??????????", replacer.Replace("%T13CARD001N"));

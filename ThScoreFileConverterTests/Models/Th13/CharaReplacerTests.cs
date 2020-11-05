@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
-using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13.StagePractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -23,26 +18,26 @@ namespace ThScoreFileConverterTests.Models.Th13
     [TestClass]
     public class CharaReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
+        private static IEnumerable<IClearData> CreateClearDataList()
+        {
+            var levels = Utils.GetEnumerable<LevelPracticeWithTotal>();
+            return new[]
             {
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    TotalPlayCount = 23,
-                    PlayTime = 4567890,
-                    ClearCounts = Utils.GetEnumerable<LevelPracticeWithTotal>()
-                        .ToDictionary(level => level, level => 100 - (int)level),
-                },
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Sanae,
-                    TotalPlayCount = 12,
-                    PlayTime = 3456789,
-                    ClearCounts = Utils.GetEnumerable<LevelPracticeWithTotal>()
-                        .ToDictionary(level => level, level => 50 - (int)level),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.TotalPlayCount == 23)
+                         && (m.PlayTime == 4567890)
+                         && (m.ClearCounts == levels.ToDictionary(level => level, level => 100 - (int)level))),
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Sanae)
+                         && (m.TotalPlayCount == 12)
+                         && (m.PlayTime == 3456789)
+                         && (m.ClearCounts == levels.ToDictionary(level => level, level => 50 - (int)level))),
+            };
+        }
+
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(element => element.Chara);
 
         [TestMethod]
         public void CharaReplacerTest()
@@ -131,14 +126,12 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestEmptyClearCounts()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.ClearCounts == new Dictionary<LevelPracticeWithTotal, int>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CharaReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T13CHARAMR3"));

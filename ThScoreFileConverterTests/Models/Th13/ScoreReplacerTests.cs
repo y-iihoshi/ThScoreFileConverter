@@ -6,12 +6,6 @@ using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
-using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13.StagePractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -26,10 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th13
     public class ScoreReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -114,14 +105,12 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    Rankings = new Dictionary<LevelPracticeWithTotal, IReadOnlyList<IScoreData>>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.Rankings == new Dictionary<LevelPracticeWithTotal, IReadOnlyList<IScoreData>>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T13SCRHMR21"));
@@ -134,16 +123,14 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    Rankings = Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
-                        level => level,
-                        level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                            level => level,
+                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T13SCRHMR21"));
@@ -156,19 +143,17 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    Rankings = Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
-                        level => level,
-                        level => Enumerable.Range(0, 10).Select(
-                            index => Mock.Of<IScoreData>(
-                                m => (m.DateTime == 34567890u) && (m.StageProgress == StageProgress.Extra)))
-                        .ToList() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    c => (c.Chara == CharaWithTotal.Marisa)
+                         && (c.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                            level => level,
+                            level => Enumerable.Range(0, 10).Select(
+                                index => Mock.Of<IScoreData>(
+                                    s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.Extra)))
+                            .ToList() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T13SCRHMR23"));
@@ -177,19 +162,17 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestStageExtraClear()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    Rankings = Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
-                        level => level,
-                        level => Enumerable.Range(0, 10).Select(
-                            index => Mock.Of<IScoreData>(
-                                m => (m.DateTime == 34567890u) && (m.StageProgress == StageProgress.ExtraClear)))
-                        .ToList() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    c => (c.Chara == CharaWithTotal.Marisa)
+                         && (c.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                            level => level,
+                            level => Enumerable.Range(0, 10).Select(
+                                index => Mock.Of<IScoreData>(
+                                    s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.ExtraClear)))
+                            .ToList() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("All Clear", replacer.Replace("%T13SCRHMR23"));
