@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th15.Stubs;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th15
@@ -14,16 +14,18 @@ namespace ThScoreFileConverterTests.Models.Th15
     [TestClass]
     public class ScoreDataTests
     {
-        internal static ScoreDataStub ValidStub { get; } = new ScoreDataStub()
+        internal static Mock<IScoreData> MockScoreData()
         {
-            Score = 12u,
-            StageProgress = StageProgress.Three,
-            ContinueCount = 4,
-            Name = TestUtils.MakeRandomArray<byte>(10),
-            DateTime = 56u,
-            SlowRate = 7.8f,
-            RetryCount = 9u,
-        };
+            var mock = new Mock<IScoreData>();
+            _ = mock.SetupGet(m => m.Score).Returns(12u);
+            _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Three);
+            _ = mock.SetupGet(m => m.ContinueCount).Returns(4);
+            _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(10));
+            _ = mock.SetupGet(m => m.DateTime).Returns(56u);
+            _ = mock.SetupGet(m => m.SlowRate).Returns(7.8f);
+            _ = mock.SetupGet(m => m.RetryCount).Returns(9u);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IScoreData scoreData)
             => TestUtils.MakeByteArray(
@@ -50,20 +52,19 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ScoreDataTest()
         {
-            var stub = new ScoreDataStub();
+            var mock = new Mock<IScoreData>();
             var scoreData = new ScoreData();
 
-            Validate(stub, scoreData);
+            Validate(mock.Object, scoreData);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockScoreData();
+            var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 
-            var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(stub));
-
-            Validate(stub, scoreData);
+            Validate(mock.Object, scoreData);
         }
 
         [TestMethod]
@@ -84,12 +85,10 @@ namespace ThScoreFileConverterTests.Models.Th15
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidStageProgress(int stageProgress)
         {
-            var stub = new ScoreDataStub(ValidStub)
-            {
-                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
-            };
+            var mock = MockScoreData();
+            _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
 
-            _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
+            _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -98,10 +97,11 @@ namespace ThScoreFileConverterTests.Models.Th15
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName()
         {
-            var stub = new ScoreDataStub(ValidStub);
-            stub.Name = stub.Name.SkipLast(1).ToArray();
+            var mock = MockScoreData();
+            var name = mock.Object.Name;
+            _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
+            _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -109,20 +109,21 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReadFromTestExceededName()
         {
-            var stub = new ScoreDataStub(ValidStub);
-            var validNameLength = stub.Name.Count();
-            stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+            var mock = MockScoreData();
+            var name = mock.Object.Name;
+            var validNameLength = name.Count();
+            _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
-            var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(stub));
+            var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 
-            Assert.AreEqual(stub.Score, scoreData.Score);
-            Assert.AreEqual(stub.StageProgress, scoreData.StageProgress);
-            Assert.AreEqual(stub.ContinueCount, scoreData.ContinueCount);
-            CollectionAssert.That.AreNotEqual(stub.Name, scoreData.Name);
-            CollectionAssert.That.AreEqual(stub.Name.Take(validNameLength), scoreData.Name);
-            Assert.AreNotEqual(stub.DateTime, scoreData.DateTime);
-            Assert.AreNotEqual(stub.SlowRate, scoreData.SlowRate);
-            Assert.AreNotEqual(stub.RetryCount, scoreData.RetryCount);
+            Assert.AreEqual(mock.Object.Score, scoreData.Score);
+            Assert.AreEqual(mock.Object.StageProgress, scoreData.StageProgress);
+            Assert.AreEqual(mock.Object.ContinueCount, scoreData.ContinueCount);
+            CollectionAssert.That.AreNotEqual(mock.Object.Name, scoreData.Name);
+            CollectionAssert.That.AreEqual(mock.Object.Name.Take(validNameLength), scoreData.Name);
+            Assert.AreNotEqual(mock.Object.DateTime, scoreData.DateTime);
+            Assert.AreNotEqual(mock.Object.SlowRate, scoreData.SlowRate);
+            Assert.AreNotEqual(mock.Object.RetryCount, scoreData.RetryCount);
         }
     }
 }
