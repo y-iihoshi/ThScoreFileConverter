@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th15
@@ -14,10 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th15
     public class CareerReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CareerReplacerTest()
@@ -145,14 +141,12 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyGameModes()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CareerReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T15CP003MR1"));
@@ -161,20 +155,18 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyCards()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(m => m.Cards == new Dictionary<int, ISpellCard>())
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(c => c.Cards == new Dictionary<int, ISpellCard>())
+                                },
+                            }))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CareerReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T15CP003MR1"));

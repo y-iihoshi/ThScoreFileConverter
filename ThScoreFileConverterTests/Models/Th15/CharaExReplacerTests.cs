@@ -5,55 +5,49 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th15.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th15
 {
     [TestClass]
     public class CharaExReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                m => (m.Chara == CharaWithTotal.Marisa)
+                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
                         {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(
-                                m => (m.TotalPlayCount == 23)
-                                     && (m.PlayTime == 4567890)
-                                     && (m.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
-                                        .ToDictionary(level => level, level => 100 - (int)level)))
-                        },
+                            {
+                                GameMode.Pointdevice,
+                                Mock.Of<IClearDataPerGameMode>(
+                                    c => (c.TotalPlayCount == 23)
+                                         && (c.PlayTime == 4567890)
+                                         && (c.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
+                                            .ToDictionary(level => level, level => 100 - (int)level)))
+                            },
+                            {
+                                GameMode.Legacy,
+                                Mock.Of<IClearDataPerGameMode>(
+                                    c => (c.TotalPlayCount == 34)
+                                         && (c.PlayTime == 5678901)
+                                         && (c.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
+                                            .ToDictionary(level => level, level => 150 - (int)level)))
+                            },
+                        })),
+            Mock.Of<IClearData>(
+                m => (m.Chara == CharaWithTotal.Sanae)
+                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
                         {
-                            GameMode.Legacy,
-                            Mock.Of<IClearDataPerGameMode>(
-                                m => (m.TotalPlayCount == 34)
-                                     && (m.PlayTime == 5678901)
-                                     && (m.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
-                                        .ToDictionary(level => level, level => 150 - (int)level)))
-                        },
-                    },
-                },
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Sanae,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(
-                                m => (m.TotalPlayCount == 12)
-                                     && (m.PlayTime == 3456789)
-                                     && (m.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
-                                        .ToDictionary(level => level, level => 50 - (int)level)))
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                            {
+                                GameMode.Pointdevice,
+                                Mock.Of<IClearDataPerGameMode>(
+                                    c => (c.TotalPlayCount == 12)
+                                         && (c.PlayTime == 3456789)
+                                         && (c.ClearCounts == Utils.GetEnumerable<LevelWithTotal>()
+                                            .ToDictionary(level => level, level => 50 - (int)level)))
+                            },
+                        })),
+        }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CharaExReplacerTest()
@@ -259,20 +253,19 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyClearCounts()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(m => m.ClearCounts == new Dictionary<LevelWithTotal, int>())
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(
+                                        c => c.ClearCounts == new Dictionary<LevelWithTotal, int>())
+                                },
+                            }))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CharaExReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T15CHARAEXPHMR3"));

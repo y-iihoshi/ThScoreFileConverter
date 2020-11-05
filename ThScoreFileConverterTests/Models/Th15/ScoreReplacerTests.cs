@@ -6,7 +6,6 @@ using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th15.Stubs;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th15
@@ -15,10 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th15
     public class ScoreReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -111,14 +107,12 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyGameModes()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
@@ -132,20 +126,19 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(
-                                m => m.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>())
-                        },
-                    },
-                },
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(
+                                        c => c.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>())
+                                },
+                            })
+                    )
             }.ToDictionary(element => element.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
@@ -160,23 +153,21 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(
-                                m => m.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                                    level => level,
-                                    level => new List<IScoreData>() as IReadOnlyList<IScoreData>))
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(
+                                        c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                                            level => level,
+                                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>))
+                                },
+                            }))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
@@ -190,26 +181,25 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(
-                                c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                                    level => level,
-                                    level => Enumerable.Range(0, 10).Select(
-                                        index => Mock.Of<IScoreData>(
-                                            s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.Extra)))
-                                    .ToList() as IReadOnlyList<IScoreData>))
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(
+                                        c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                                            level => level,
+                                            level => Enumerable.Range(0, 10).Select(
+                                                index => Mock.Of<IScoreData>(
+                                                    s => (s.DateTime == 34567890u)
+                                                         && (s.StageProgress == StageProgress.Extra)))
+                                            .ToList() as IReadOnlyList<IScoreData>))
+                                },
+                            }))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T15SCRPHMR23"));
@@ -218,27 +208,25 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestStageExtraClear()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Marisa,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(
-                                c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                                    level => level,
-                                    level => Enumerable.Range(0, 10).Select(
-                                        index => Mock.Of<IScoreData>(
-                                            m => (m.DateTime == 34567890u)
-                                                 && (m.StageProgress == StageProgress.ExtraClear)))
-                                    .ToList() as IReadOnlyList<IScoreData>))
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Marisa)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(
+                                        c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                                            level => level,
+                                            level => Enumerable.Range(0, 10).Select(
+                                                index => Mock.Of<IScoreData>(
+                                                    s => (s.DateTime == 34567890u)
+                                                         && (s.StageProgress == StageProgress.ExtraClear)))
+                                            .ToList() as IReadOnlyList<IScoreData>))
+                                },
+                            }))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("All Clear", replacer.Replace("%T15SCRPHMR23"));

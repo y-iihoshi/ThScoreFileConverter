@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th15
@@ -12,26 +11,23 @@ namespace ThScoreFileConverterTests.Models.Th15
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub
-                {
-                    Chara = CharaWithTotal.Total,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                m => (m.Chara == CharaWithTotal.Total)
+                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
                         {
-                            GameMode.Pointdevice,
-                            Mock.Of<ClearDataPerGameMode>(
-                                c => c.Cards == new Dictionary<int, ISpellCard>()
-                                {
-                                    { 3, Mock.Of<ISpellCard>(s => s.HasTried == true) },
-                                    { 4, Mock.Of<ISpellCard>(s => s.HasTried == false) },
-                                })
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                            {
+                                GameMode.Pointdevice,
+                                Mock.Of<ClearDataPerGameMode>(
+                                    c => c.Cards == new Dictionary<int, ISpellCard>()
+                                    {
+                                        { 3, Mock.Of<ISpellCard>(s => s.HasTried == true) },
+                                        { 4, Mock.Of<ISpellCard>(s => s.HasTried == false) },
+                                    })
+                            },
+                        }))
+        }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CardReplacerTest()
@@ -100,14 +96,12 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyGameModes()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Total,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Total)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CardReplacer(dictionary, true);
             Assert.AreEqual("??????????", replacer.Replace("%T15CARD003N"));
@@ -116,20 +110,18 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmptyCards()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Total,
-                    GameModeData = new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<IClearDataPerGameMode>(m => m.Cards == new Dictionary<int, ISpellCard>())
-                        },
-                    },
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Total)
+                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
+                            {
+                                {
+                                    GameMode.Pointdevice,
+                                    Mock.Of<IClearDataPerGameMode>(c => c.Cards == new Dictionary<int, ISpellCard>())
+                                },
+                            }))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CardReplacer(dictionary, true);
             Assert.AreEqual("??????????", replacer.Replace("%T15CARD003N"));
