@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverterTests.Models.Th143.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th143
 {
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
-        {
-            new ScoreStub(ScoreTests.ValidStub),
-        };
+        internal static IReadOnlyList<IScore> Scores { get; } = new [] { ScoreTests.MockScore().Object };
 
         [TestMethod]
         public void CardReplacerTest()
@@ -88,10 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestZeroNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub { Number = 0 },
-            };
+            var scores = new[] { Mock.Of<IScore>(m => m.Number == 0) };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
@@ -100,10 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestExceededNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub { Number = 76 },
-            };
+            var scores = new[] { Mock.Of<IScore>(m => m.Number == 76) };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
@@ -112,10 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestMismatchNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub { Number = 70 },
-            };
+            var scores = new[] { Mock.Of<IScore>(m => m.Number == 70) };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
@@ -124,13 +112,9 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestEmptyChallengeCounts()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    ChallengeCounts = new Dictionary<ItemWithTotal, int>(),
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.ChallengeCounts).Returns(new Dictionary<ItemWithTotal, int>());
+            var scores = new[] { mock.Object };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));

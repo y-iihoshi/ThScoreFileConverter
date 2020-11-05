@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void SetScoreTest()
         {
-            var score = new ScoreStub();
+            var score = Mock.Of<IScore>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -62,8 +62,8 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void SetScoreTestTwice()
         {
-            var score1 = new ScoreStub();
-            var score2 = new ScoreStub();
+            var score1 = Mock.Of<IScore>();
+            var score2 = Mock.Of<IScore>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);

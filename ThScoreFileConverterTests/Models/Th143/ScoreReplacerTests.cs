@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverterTests.Models.Th143.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th143
 {
     [TestClass]
     public class ScoreReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
-        {
-            new ScoreStub(ScoreTests.ValidStub),
-        };
+        internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore().Object };
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -107,13 +103,9 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestZeroNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    Number = 0,
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(0);
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T143SCRL441"));
@@ -124,13 +116,9 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestExceededNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    Number = 76,
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(76);
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T143SCRL441"));
@@ -141,13 +129,9 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestMismatchNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    Number = 70,
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(70);
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T143SCRL441"));
@@ -158,13 +142,9 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestEmptyChallengeCounts()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    ChallengeCounts = new Dictionary<ItemWithTotal, int>(),
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.ChallengeCounts).Returns(new Dictionary<ItemWithTotal, int>());
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T143SCRL442"));
@@ -173,13 +153,9 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestEmptyClearCounts()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    ClearCounts = new Dictionary<ItemWithTotal, int>(),
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.ClearCounts).Returns(new Dictionary<ItemWithTotal, int>());
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T143SCRL443"));

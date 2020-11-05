@@ -4,13 +4,22 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverterTests.Models.Th143.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th143
 {
     [TestClass]
     public class ScoreTotalReplacerTests
     {
+        private static IReadOnlyList<IScore> CreateScores()
+        {
+            var mock1 = ScoreTests.MockScore();
+
+            var mock2 = ScoreTests.MockScore();
+            _ = mock2.SetupGet(m => m.Number).Returns(mock1.Object.Number + 1);
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
         private static IEnumerable<IItemStatus> CreateItemStatuses()
         {
             var mock = ItemStatusTests.MockItemStatus();
@@ -21,14 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             return new[] { mock.Object };
         }
 
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
-        {
-            new ScoreStub(ScoreTests.ValidStub),
-            new ScoreStub(ScoreTests.ValidStub)
-            {
-                Number = ScoreTests.ValidStub.Number + 1,
-            },
-        };
+        internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
 
         internal static IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses { get; } =
             CreateItemStatuses().ToDictionary(status => status.Item);
