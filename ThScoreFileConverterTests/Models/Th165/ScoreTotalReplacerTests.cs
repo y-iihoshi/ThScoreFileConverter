@@ -10,14 +10,15 @@ namespace ThScoreFileConverterTests.Models.Th165
     [TestClass]
     public class ScoreTotalReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
+        private static IReadOnlyList<IScore> CreateScores()
         {
-            new ScoreStub(ScoreTests.ValidStub),
-            new ScoreStub(ScoreTests.ValidStub)
-            {
-                Number = ScoreTests.ValidStub.Number + 1,
-            },
-        };
+            var mock1 = ScoreTests.MockScore();
+            var mock2 = ScoreTests.MockScore();
+            _ = mock2.SetupGet(m => m.Number).Returns(mock1.Object.Number + 1);
+            return new[] { mock1.Object, mock2.Object };
+        }
+
+        internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
 
         internal static IStatus Status { get; } = new StatusStub(StatusTests.ValidStub);
 

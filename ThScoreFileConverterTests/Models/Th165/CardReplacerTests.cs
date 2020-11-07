@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
+        private static IReadOnlyList<IScore> CreateScores()
         {
-            new ScoreStub(ScoreTests.ValidStub) { Number = 57 },
-        };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(57);
+            return new[] { mock.Object };
+        }
+
+        internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
 
         [TestMethod]
         public void CardReplacerTest()
@@ -88,10 +92,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestZeroNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub { Number = 0 },
-            };
+            var scores = new[] { Mock.Of<IScore>(m => m.Number == 0) };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));
@@ -100,10 +101,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestExceededNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub { Number = 104 },
-            };
+            var scores = new[] { Mock.Of<IScore>(m => m.Number == 104) };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));
@@ -112,10 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestMismatchNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub { Number = 58 },
-            };
+            var scores = new[] { Mock.Of<IScore>(m => m.Number == 58) };
 
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));

@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
     public class ScoreReplacerTests
     {
-        internal static IReadOnlyList<IScore> Scores { get; } = new List<IScore>
-        {
-            new ScoreStub(ScoreTests.ValidStub),
-        };
+        internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore().Object };
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -100,13 +96,9 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestZeroNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    Number = 0,
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(0);
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T165SCR0441"));
@@ -118,13 +110,9 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestExceededNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    Number = 104,
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(104);
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T165SCR0441"));
@@ -136,13 +124,9 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestMismatchNumber()
         {
-            var scores = new List<IScore>
-            {
-                new ScoreStub(ScoreTests.ValidStub)
-                {
-                    Number = 70,
-                },
-            };
+            var mock = ScoreTests.MockScore();
+            _ = mock.SetupGet(m => m.Number).Returns(70);
+            var scores = new[] { mock.Object };
 
             var replacer = new ScoreReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T165SCR0441"));
