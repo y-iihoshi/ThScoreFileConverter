@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     id => Mock.Of<ICardForDeck>(m => (m.Id == id) && (m.MaxNumber == (id % 4) + 1))),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => ClearDataTests.MakeValidStub<Chara>() as IClearData<Chara>),
+                    chara => ClearDataTests.MockClearData<Chara>().Object),
             };
         }
 

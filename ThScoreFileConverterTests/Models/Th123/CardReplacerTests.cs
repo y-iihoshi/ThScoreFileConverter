@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th123;
-using ThScoreFileConverterTests.Models.Th105.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Models.Th123.Chara>;
 using ISpellCardResult = ThScoreFileConverter.Models.Th105.ISpellCardResult<ThScoreFileConverter.Models.Th123.Chara>;
 
@@ -13,23 +13,31 @@ namespace ThScoreFileConverterTests.Models.Th123
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyDictionary<Chara, IClearData> ClearDataDictionary { get; } =
-            new Dictionary<Chara, IClearData>
-            {
+        private static IClearData CreateClearData()
+        {
+#if false
+            return Mock.Of<IClearData>(
+                c => c.SpellCardResults == new[]
                 {
-                    Chara.Cirno,
-                    new ClearDataStub<Chara>
-                    {
-                        SpellCardResults = new[]
-                        {
-                            Mock.Of<ISpellCardResult>(
-                                s => (s.Enemy == Chara.Meiling) && (s.Id == 0) && (s.TrialCount == 1)),
-                            Mock.Of<ISpellCardResult>(
-                                s => (s.Enemy == Chara.Meiling) && (s.Id == 1) && (s.TrialCount == 0)),
-                        }.ToDictionary(result => (result.Enemy, result.Id)),
-                    }
-                },
-            };
+                    Mock.Of<ISpellCardResult>(
+                        s => (s.Enemy == Chara.Meiling) && (s.Id == 0) && (s.TrialCount == 1)),
+                    Mock.Of<ISpellCardResult>(
+                        s => (s.Enemy == Chara.Meiling) && (s.Id == 1) && (s.TrialCount == 0)),
+                }.ToDictionary(result => (result.Enemy, result.Id)));   // causes CS8143
+#else
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(m => m.SpellCardResults).Returns(
+                new[]
+                {
+                    Mock.Of<ISpellCardResult>(m => (m.Enemy == Chara.Meiling) && (m.Id == 0) && (m.TrialCount == 1)),
+                    Mock.Of<ISpellCardResult>(m => (m.Enemy == Chara.Meiling) && (m.Id == 1) && (m.TrialCount == 0)),
+                }.ToDictionary(result => (result.Enemy, result.Id)));
+            return mock.Object;
+#endif
+        }
+
+        internal static IReadOnlyDictionary<Chara, IClearData> ClearDataDictionary { get; } =
+            new[] { (Chara.Cirno, CreateClearData()) }.ToDictionary();
 
         [TestMethod]
         public void CardReplacerTest()
@@ -101,10 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th123
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara>
-                    {
-                        SpellCardResults = new Dictionary<(Chara, int), ISpellCardResult>(),
-                    }
+                    Mock.Of<IClearData>(m => m.SpellCardResults == new Dictionary<(Chara, int), ISpellCardResult>())
                 },
             };
             var replacer = new CardReplacer(dictionary, true);

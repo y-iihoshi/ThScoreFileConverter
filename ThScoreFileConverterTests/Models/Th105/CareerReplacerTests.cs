@@ -3,39 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th105;
-using ThScoreFileConverterTests.Models.Th105.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
     public class CareerReplacerTests
     {
-        internal static IReadOnlyDictionary<Chara, IClearData<Chara>> ClearDataDictionary { get; } =
-            new Dictionary<Chara, IClearData<Chara>>
-            {
+        private static IClearData<Chara> CreateClearData()
+        {
+#if false
+            return Mock.Of<IClearData<Chara>>(
+                c => c.SpellCardResults == new[]
                 {
-                    Chara.Marisa,
-                    new ClearDataStub<Chara>
-                    {
-                        SpellCardResults = new[]
-                        {
-                            Mock.Of<ISpellCardResult<Chara>>(
-                                m => (m.Enemy == Chara.Reimu)
-                                     && (m.Id == 6)
-                                     && (m.GotCount == 12)
-                                     && (m.TrialCount == 34)
-                                     && (m.Frames == 5678)),
-                            Mock.Of<ISpellCardResult<Chara>>(
-                                m => (m.Enemy == Chara.Tenshi)
-                                     && (m.Id == 18)
-                                     && (m.GotCount == 1)
-                                     && (m.TrialCount == 90)
-                                     && (m.Frames == 23456)),
-                        }.ToDictionary(result => (result.Enemy, result.Id)),
-                    }
-                },
-            };
+                    Mock.Of<ISpellCardResult<Chara>>(
+                        s => (s.Enemy == Chara.Reimu)
+                             && (s.Id == 6)
+                             && (s.GotCount == 12)
+                             && (s.TrialCount == 34)
+                             && (s.Frames == 5678)),
+                    Mock.Of<ISpellCardResult<Chara>>(
+                        s => (s.Enemy == Chara.Tenshi)
+                             && (s.Id == 18)
+                             && (s.GotCount == 1)
+                             && (s.TrialCount == 90)
+                             && (s.Frames == 23456)),
+                }.ToDictionary(result => (result.Enemy, result.Id)));   // causes CS8143
+#else
+            var mock = new Mock<IClearData<Chara>>();
+            _ = mock.SetupGet(m => m.SpellCardResults).Returns(
+                new[]
+                {
+                    Mock.Of<ISpellCardResult<Chara>>(
+                        m => (m.Enemy == Chara.Reimu)
+                             && (m.Id == 6)
+                             && (m.GotCount == 12)
+                             && (m.TrialCount == 34)
+                             && (m.Frames == 5678)),
+                    Mock.Of<ISpellCardResult<Chara>>(
+                        m => (m.Enemy == Chara.Tenshi)
+                             && (m.Id == 18)
+                             && (m.GotCount == 1)
+                             && (m.TrialCount == 90)
+                             && (m.Frames == 23456)),
+                }.ToDictionary(result => (result.Enemy, result.Id)));
+            return mock.Object;
+#endif
+        }
+
+        internal static IReadOnlyDictionary<Chara, IClearData<Chara>> ClearDataDictionary { get; } =
+            new[] { (Chara.Marisa, CreateClearData()) }.ToDictionary();
 
         [TestMethod]
         public void CareerReplacerTest()
@@ -119,10 +137,8 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara>
-                    {
-                        SpellCardResults = new Dictionary<(Chara, int), ISpellCardResult<Chara>>(),
-                    }
+                    Mock.Of<IClearData<Chara>>(
+                        m => m.SpellCardResults == new Dictionary<(Chara, int), ISpellCardResult<Chara>>())
                 },
             };
             var replacer = new CareerReplacer(dictionary);

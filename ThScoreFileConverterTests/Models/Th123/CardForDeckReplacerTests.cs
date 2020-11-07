@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th123;
-using ThScoreFileConverterTests.Models.Th105.Stubs;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Models.Th123.Chara>;
 
@@ -24,16 +23,14 @@ namespace ThScoreFileConverterTests.Models.Th123
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara>
-                    {
-                        CardsForDeck = new[]
+                    Mock.Of<IClearData>(
+                        m => m.CardsForDeck == new[]
                         {
-                            Mock.Of<ICardForDeck>(m => (m.Id == 103) && (m.MaxNumber == 34)),
-                            Mock.Of<ICardForDeck>(m => (m.Id == 107) && (m.MaxNumber == 0)),
-                            Mock.Of<ICardForDeck>(m => (m.Id == 208) && (m.MaxNumber == 56)),
-                            Mock.Of<ICardForDeck>(m => (m.Id == 205) && (m.MaxNumber == 0)),
-                        }.ToDictionary(card => card.Id),
-                    }
+                            Mock.Of<ICardForDeck>(c => (c.Id == 103) && (c.MaxNumber == 34)),
+                            Mock.Of<ICardForDeck>(c => (c.Id == 107) && (c.MaxNumber == 0)),
+                            Mock.Of<ICardForDeck>(c => (c.Id == 208) && (c.MaxNumber == 56)),
+                            Mock.Of<ICardForDeck>(c => (c.Id == 205) && (c.MaxNumber == 0)),
+                        }.ToDictionary(card => card.Id))
                 },
             };
 

@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th105;
-using ThScoreFileConverterTests.Models.Th105.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -22,16 +21,14 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara>
-                    {
-                        CardsForDeck = new[]
+                    Mock.Of<IClearData<Chara>>(
+                        m => m.CardsForDeck == new[]
                         {
                             Mock.Of<ICardForDeck>(c => (c.Id == 100) && (c.MaxNumber == 34)),
                             Mock.Of<ICardForDeck>(c => (c.Id == 101) && (c.MaxNumber == 0)),
                             Mock.Of<ICardForDeck>(c => (c.Id == 200) && (c.MaxNumber == 56)),
                             Mock.Of<ICardForDeck>(c => (c.Id == 202) && (c.MaxNumber == 0)),
-                        }.ToDictionary(card => card.Id),
-                    }
+                        }.ToDictionary(card => card.Id))
                 },
             };
 
