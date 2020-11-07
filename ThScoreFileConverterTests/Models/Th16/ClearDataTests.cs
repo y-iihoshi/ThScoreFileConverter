@@ -35,16 +35,14 @@ namespace ThScoreFileConverterTests.Models.Th16
                 Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub()
-                        {
-                            Score = 12345670u - ((uint)index * 1000u),
-                            StageProgress = StageProgress.Five,
-                            ContinueCount = (byte)index,
-                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
-                            DateTime = 34567890u,
-                            SlowRate = 1.2f,
-                            Season = Season.Autumn,
-                        }).ToList() as IReadOnlyList<IScoreData>),
+                        index => Mock.Of<IScoreData>(
+                            s => (s.Score == 12345670u - ((uint)index * 1000u))
+                                 && (s.StageProgress == StageProgress.Five)
+                                 && (s.ContinueCount == (byte)index)
+                                 && (s.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
+                                 && (s.DateTime == 34567890u)
+                                 && (s.SlowRate == 1.2f)
+                                 && (s.Season == Season.Autumn))).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
