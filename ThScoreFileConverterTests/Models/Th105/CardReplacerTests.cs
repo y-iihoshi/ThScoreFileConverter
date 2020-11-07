@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
 
@@ -17,22 +18,13 @@ namespace ThScoreFileConverterTests.Models.Th105
                     Chara.Marisa,
                     new ClearDataStub<Chara>
                     {
-                        SpellCardResults = new List<ISpellCardResult<Chara>>
+                        SpellCardResults = new[]
                         {
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Reimu,
-                                Id = 0,
-                                TrialCount = 1,
-                            },
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Reimu,
-                                Id = 1,
-                                TrialCount = 0,
-                            },
-                        }
-                        .ToDictionary(result => (result.Enemy, result.Id)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                m => (m.Enemy == Chara.Reimu) && (m.Id == 0) && (m.TrialCount == 1)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                m => (m.Enemy == Chara.Reimu) && (m.Id == 1) && (m.TrialCount == 0)),
+                        }.ToDictionary(result => (result.Enemy, result.Id)),
                     }
                 },
             };

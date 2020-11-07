@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
 
@@ -17,26 +18,21 @@ namespace ThScoreFileConverterTests.Models.Th105
                     Chara.Marisa,
                     new ClearDataStub<Chara>
                     {
-                        SpellCardResults = new List<ISpellCardResult<Chara>>
+                        SpellCardResults = new[]
                         {
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Reimu,
-                                Id = 6,
-                                GotCount = 12,
-                                TrialCount = 34,
-                                Frames = 5678,
-                            },
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Tenshi,
-                                Id = 18,
-                                GotCount = 1,
-                                TrialCount = 90,
-                                Frames = 23456,
-                            },
-                        }
-                        .ToDictionary(result => (result.Enemy, result.Id)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                m => (m.Enemy == Chara.Reimu)
+                                     && (m.Id == 6)
+                                     && (m.GotCount == 12)
+                                     && (m.TrialCount == 34)
+                                     && (m.Frames == 5678)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                m => (m.Enemy == Chara.Tenshi)
+                                     && (m.Id == 18)
+                                     && (m.GotCount == 1)
+                                     && (m.TrialCount == 90)
+                                     && (m.Frames == 23456)),
+                        }.ToDictionary(result => (result.Enemy, result.Id)),
                     }
                 },
             };

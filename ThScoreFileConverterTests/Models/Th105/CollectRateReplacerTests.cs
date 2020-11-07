@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
 
@@ -17,42 +18,33 @@ namespace ThScoreFileConverterTests.Models.Th105
                     Chara.Marisa,
                     new ClearDataStub<Chara>
                     {
-                        SpellCardResults = new List<ISpellCardResult<Chara>>
+                        SpellCardResults = new[]
                         {
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Reimu,
-                                Id = 5,
-                                Level = Level.Normal,
-                                GotCount = 12,
-                                TrialCount = 34,
-                            },
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Reimu,
-                                Id = 6,
-                                Level = Level.Hard,
-                                GotCount = 56,
-                                TrialCount = 78,
-                            },
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Iku,
-                                Id = 10,
-                                Level = Level.Hard,
-                                GotCount = 0,
-                                TrialCount = 90,
-                            },
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Tenshi,
-                                Id = 18,
-                                Level = Level.Hard,
-                                GotCount = 0,
-                                TrialCount = 0,
-                            },
-                        }
-                        .ToDictionary(result => (result.Enemy, result.Id)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                s => (s.Enemy == Chara.Reimu)
+                                     && (s.Id == 5)
+                                     && (s.Level == Level.Normal)
+                                     && (s.GotCount == 12)
+                                     && (s.TrialCount == 34)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                s => (s.Enemy == Chara.Reimu)
+                                     && (s.Id == 6)
+                                     && (s.Level == Level.Hard)
+                                     && (s.GotCount == 56)
+                                     && (s.TrialCount == 78)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                s => (s.Enemy == Chara.Iku)
+                                     && (s.Id == 10)
+                                     && (s.Level == Level.Hard)
+                                     && (s.GotCount == 0)
+                                     && (s.TrialCount == 90)),
+                            Mock.Of<ISpellCardResult<Chara>>(
+                                s => (s.Enemy == Chara.Tenshi)
+                                     && (s.Id == 18)
+                                     && (s.Level == Level.Hard)
+                                     && (s.GotCount == 0)
+                                     && (s.TrialCount == 0)),
+                        }.ToDictionary(result => (result.Enemy, result.Id)),
                     }
                 },
             };

@@ -16,23 +16,39 @@ namespace ThScoreFileConverterTests.Models.Th105
     {
         internal static ClearDataStub<TChara> MakeValidStub<TChara>()
             where TChara : struct, Enum
-            => new ClearDataStub<TChara>()
+        {
+            static ISpellCardResult<TChara> CreateSpellCardResult(TChara chara, int index)
+            {
+#if false
+                return Mock.Of<ISpellCardResult<TChara>>(
+                    m => (m.Enemy == chara)
+                         && (m.Level == Level.Normal)
+                         && (m.Id == index + 1)
+                         && (m.TrialCount == index * 100)
+                         && (m.GotCount == index * 50)
+                         && (m.Frames == 8901u - (uint)index));
+#else
+                var mock = new Mock<ISpellCardResult<TChara>>();
+                _ = mock.SetupGet(m => m.Enemy).Returns(chara);
+                _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
+                _ = mock.SetupGet(m => m.Id).Returns(index + 1);
+                _ = mock.SetupGet(m => m.TrialCount).Returns(index * 100);
+                _ = mock.SetupGet(m => m.GotCount).Returns(index * 50);
+                _ = mock.SetupGet(m => m.Frames).Returns(8901u - (uint)index);
+                return mock.Object;
+#endif
+            }
+
+            return new ClearDataStub<TChara>()
             {
                 CardsForDeck = Enumerable.Range(1, 10)
                     .Select(value => Mock.Of<ICardForDeck>(m => (m.Id == value) && (m.MaxNumber == (value % 4) + 1)))
                     .ToDictionary(card => card.Id),
                 SpellCardResults = Utils.GetEnumerable<TChara>()
-                    .Select((chara, index) => new SpellCardResultStub<TChara>()
-                    {
-                        Enemy = chara,
-                        Level = Level.Normal,
-                        Id = index + 1,
-                        TrialCount = index * 100,
-                        GotCount = index * 50,
-                        Frames = 8901u - (uint)index,
-                    } as ISpellCardResult<TChara>)
+                    .Select((chara, index) => CreateSpellCardResult(chara, index))
                     .ToDictionary(result => (result.Enemy, result.Id)),
             };
+        }
 
         internal static byte[] MakeByteArray<TChara>(IClearData<TChara> properties)
             where TChara : struct, Enum

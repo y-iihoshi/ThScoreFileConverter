@@ -2,26 +2,27 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th105;
-using ThScoreFileConverterTests.Models.Th105.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
     public class SpellCardResultTests
     {
-        internal static SpellCardResultStub<TChara> MakeValidStub<TChara>()
+        internal static Mock<ISpellCardResult<TChara>> MockSpellCardResult<TChara>()
             where TChara : struct, Enum
-            => new SpellCardResultStub<TChara>()
-            {
-                Enemy = TestUtils.Cast<TChara>(1),
-                Level = Level.Hard,
-                Id = 3,
-                TrialCount = 67,
-                GotCount = 45,
-                Frames = 8901,
-            };
+        {
+            var mock = new Mock<ISpellCardResult<TChara>>();
+            _ = mock.SetupGet(m => m.Enemy).Returns(TestUtils.Cast<TChara>(1));
+            _ = mock.SetupGet(m => m.Level).Returns(Level.Hard);
+            _ = mock.SetupGet(m => m.Id).Returns(3);
+            _ = mock.SetupGet(m => m.TrialCount).Returns(67);
+            _ = mock.SetupGet(m => m.GotCount).Returns(45);
+            _ = mock.SetupGet(m => m.Frames).Returns(8901);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray<TChara>(ISpellCardResult<TChara> properties)
             where TChara : struct, Enum
@@ -47,21 +48,19 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static void SpellCardResultTestHelper<TChara>()
             where TChara : struct, Enum
         {
-            var stub = new SpellCardResultStub<TChara>();
-
+            var mock = new Mock<ISpellCardResult<TChara>>();
             var spellCardResult = new SpellCardResult<TChara>();
 
-            Validate(stub, spellCardResult);
+            Validate(mock.Object, spellCardResult);
         }
 
         internal static void ReadFromTestHelper<TChara>()
             where TChara : struct, Enum
         {
-            var stub = MakeValidStub<TChara>();
+            var mock = MockSpellCardResult<TChara>();
+            var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(mock.Object));
 
-            var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(stub));
-
-            Validate(stub, spellCardResult);
+            Validate(mock.Object, spellCardResult);
         }
 
         internal static void ReadFromTestNullHelper<TChara>()
@@ -76,8 +75,8 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static void ReadFromTestShortenedHelper<TChara>()
             where TChara : struct, Enum
         {
-            var stub = MakeValidStub<TChara>();
-            var array = MakeByteArray(stub).SkipLast(1).ToArray();
+            var mock = MockSpellCardResult<TChara>();
+            var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
             _ = TestUtils.Create<SpellCardResult<TChara>>(array);
 
@@ -87,12 +86,12 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static void ReadFromTestExceededHelper<TChara>()
             where TChara : struct, Enum
         {
-            var stub = MakeValidStub<TChara>();
-            var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
+            var mock = MockSpellCardResult<TChara>();
+            var array = MakeByteArray(mock.Object).Concat(new byte[1] { 1 }).ToArray();
 
             var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(array);
 
-            Validate(stub, spellCardResult);
+            Validate(mock.Object, spellCardResult);
         }
 
         [TestMethod]

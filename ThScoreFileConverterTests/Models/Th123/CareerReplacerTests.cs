@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Models.Th123.Chara>;
@@ -19,26 +20,21 @@ namespace ThScoreFileConverterTests.Models.Th123
                     Chara.Cirno,
                     new ClearDataStub<Chara>
                     {
-                        SpellCardResults = new List<ISpellCardResult>
+                        SpellCardResults = new[]
                         {
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Meiling,
-                                Id = 6,
-                                GotCount = 12,
-                                TrialCount = 34,
-                                Frames = 5678,
-                            },
-                            new SpellCardResultStub<Chara>
-                            {
-                                Enemy = Chara.Marisa,
-                                Id = 18,
-                                GotCount = 1,
-                                TrialCount = 90,
-                                Frames = 23456,
-                            },
-                        }
-                        .ToDictionary(result => (result.Enemy, result.Id)),
+                            Mock.Of<ISpellCardResult>(
+                                s => (s.Enemy == Chara.Meiling)
+                                     && (s.Id == 6)
+                                     && (s.GotCount == 12)
+                                     && (s.TrialCount == 34)
+                                     && (s.Frames == 5678)),
+                            Mock.Of<ISpellCardResult>(
+                                s => (s.Enemy == Chara.Marisa)
+                                     && (s.Id == 18)
+                                     && (s.GotCount == 1)
+                                     && (s.TrialCount == 90)
+                                     && (s.Frames == 23456)),
+                        }.ToDictionary(result => (result.Enemy, result.Id)),
                     }
                 },
             };
