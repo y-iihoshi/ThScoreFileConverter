@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
@@ -12,12 +13,11 @@ namespace ThScoreFileConverterTests.Models.Th123
     [TestClass]
     public class CardForDeckReplacerTests
     {
-        internal static IReadOnlyDictionary<int, ICardForDeck> SystemCards { get; } =
-            new List<ICardForDeck>
-            {
-                new CardForDeckStub { Id = 0, MaxNumber = 12 },
-                new CardForDeckStub { Id = 1, MaxNumber = 0 },
-            }.ToDictionary(card => card.Id);
+        internal static IReadOnlyDictionary<int, ICardForDeck> SystemCards { get; } = new[]
+        {
+            Mock.Of<ICardForDeck>(m => (m.Id == 0) && (m.MaxNumber == 12)),
+            Mock.Of<ICardForDeck>(m => (m.Id == 1) && (m.MaxNumber == 0)),
+        }.ToDictionary(card => card.Id);
 
         internal static IReadOnlyDictionary<Chara, IClearData> ClearDataDictionary { get; } =
             new Dictionary<Chara, IClearData>
@@ -26,14 +26,13 @@ namespace ThScoreFileConverterTests.Models.Th123
                     Chara.Marisa,
                     new ClearDataStub<Chara>
                     {
-                        CardsForDeck = new List<ICardForDeck>
+                        CardsForDeck = new[]
                         {
-                            new CardForDeckStub { Id = 103, MaxNumber = 34, },
-                            new CardForDeckStub { Id = 107, MaxNumber = 0, },
-                            new CardForDeckStub { Id = 208, MaxNumber = 56, },
-                            new CardForDeckStub { Id = 205, MaxNumber = 0, },
-                        }
-                        .ToDictionary(card => card.Id),
+                            Mock.Of<ICardForDeck>(m => (m.Id == 103) && (m.MaxNumber == 34)),
+                            Mock.Of<ICardForDeck>(m => (m.Id == 107) && (m.MaxNumber == 0)),
+                            Mock.Of<ICardForDeck>(m => (m.Id == 208) && (m.MaxNumber == 56)),
+                            Mock.Of<ICardForDeck>(m => (m.Id == 205) && (m.MaxNumber == 0)),
+                        }.ToDictionary(card => card.Id),
                     }
                 },
             };

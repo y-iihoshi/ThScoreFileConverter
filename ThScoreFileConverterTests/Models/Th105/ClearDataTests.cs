@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
@@ -18,11 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             => new ClearDataStub<TChara>()
             {
                 CardsForDeck = Enumerable.Range(1, 10)
-                    .Select(value => new CardForDeckStub
-                    {
-                        Id = value,
-                        MaxNumber = (value % 4) + 1,
-                    } as ICardForDeck)
+                    .Select(value => Mock.Of<ICardForDeck>(m => (m.Id == value) && (m.MaxNumber == (value % 4) + 1)))
                     .ToDictionary(card => card.Id),
                 SpellCardResults = Utils.GetEnumerable<TChara>()
                     .Select((chara, index) => new SpellCardResultStub<TChara>()

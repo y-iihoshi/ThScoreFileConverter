@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th105.Stubs;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Models.Th123.Chara>;
 
@@ -31,11 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th123
                     chara => TestUtils.Cast<byte>(chara)),
                 systemCards = Enumerable.Range(1, 5).ToDictionary(
                     id => id,
-                    id => new CardForDeckStub
-                    {
-                        Id = id,
-                        MaxNumber = (id % 4) + 1,
-                    } as ICardForDeck),
+                    id => Mock.Of<ICardForDeck>(m => (m.Id == id) && (m.MaxNumber == (id % 4) + 1))),
                 clearData = charas.ToDictionary(
                     chara => chara,
                     chara => Th105.ClearDataTests.MakeValidStub<Chara>() as IClearData),
