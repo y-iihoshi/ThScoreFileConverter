@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverterTests.Models.Th075.Stubs;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
@@ -13,16 +12,21 @@ namespace ThScoreFileConverterTests.Models.Th075
     [TestClass]
     public class CardReplacerTests
     {
+        private static IClearData CreateClearData()
+        {
+            var mock = ClearDataTests.MockClearData();
+            _ = mock.SetupGet(m => m.CardTrialCount).Returns(
+                Enumerable.Repeat(0, 100).Select(count => (short)count).ToList());
+            return mock.Object;
+        }
+
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
             Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
-                level => new ClearDataStub(ClearDataTests.ValidStub) as IClearData)
+                level => ClearDataTests.MockClearData().Object)
             .Concat(Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Marisa, level),
-                level => new ClearDataStub(ClearDataTests.ValidStub)
-                {
-                    CardTrialCount = Enumerable.Repeat(0, 100).Select(count => (short)count).ToList(),
-                } as IClearData))
+                level => CreateClearData()))
             .ToDictionary();
 
         [TestMethod]

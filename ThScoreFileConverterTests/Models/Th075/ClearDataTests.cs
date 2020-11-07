@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Extensions;
@@ -12,39 +13,43 @@ namespace ThScoreFileConverterTests.Models.Th075
     [TestClass]
     public class ClearDataTests
     {
-        internal static ClearDataStub DefaultStub { get; } = new ClearDataStub()
+        internal static Mock<IClearData> MockInitialClearData()
         {
-            UseCount = default,
-            ClearCount = default,
-            MaxCombo = default,
-            MaxDamage = default,
-            MaxBonuses = new List<int>(),
-            CardGotCount = new List<short>(),
-            CardTrialCount = new List<short>(),
-            CardTrulyGot = new List<byte>(),
-            Ranking = new List<IHighScore>(),
-        };
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(new List<int>());
+            _ = mock.SetupGet(m => m.CardGotCount).Returns(new List<short>());
+            _ = mock.SetupGet(m => m.CardTrialCount).Returns(new List<short>());
+            _ = mock.SetupGet(m => m.CardTrulyGot).Returns(new List<byte>());
+            _ = mock.SetupGet(m => m.Ranking).Returns(new List<IHighScore>());
+            return mock;
+        }
 
-        internal static ClearDataStub ValidStub { get; } = new ClearDataStub()
+        internal static Mock<IClearData> MockClearData()
         {
-            UseCount = 1234,
-            ClearCount = 2345,
-            MaxCombo = 3456,
-            MaxDamage = 4567,
-            MaxBonuses = Enumerable.Range(9, 100).ToList(),
-            CardGotCount = Enumerable.Range(8, 100).Select(count => (short)count).ToList(),
-            CardTrialCount = Enumerable.Range(7, 100).Select(count => (short)count).ToList(),
-            CardTrulyGot = Enumerable.Range(6, 100).Select(got => (byte)got).ToList(),
-            Ranking = Enumerable.Range(0, 10)
-                .Select(index => new HighScoreStub()
-                {
-                    EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
-                    Name = Utils.Format("Player{0} ", index),
-                    Month = (byte)(1 + index),
-                    Day = (byte)(10 + index),
-                    Score = 1234567 + index,
-                } as IHighScore).ToList(),
-        };
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(m => m.UseCount).Returns(1234);
+            _ = mock.SetupGet(m => m.ClearCount).Returns(2345);
+            _ = mock.SetupGet(m => m.MaxCombo).Returns(3456);
+            _ = mock.SetupGet(m => m.MaxDamage).Returns(4567);
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(Enumerable.Range(9, 100).ToList());
+            _ = mock.SetupGet(m => m.CardGotCount).Returns(
+                Enumerable.Range(8, 100).Select(count => (short)count).ToList());
+            _ = mock.SetupGet(m => m.CardTrialCount).Returns(
+                Enumerable.Range(7, 100).Select(count => (short)count).ToList());
+            _ = mock.SetupGet(m => m.CardTrulyGot).Returns(
+                Enumerable.Range(6, 100).Select(got => (byte)got).ToList());
+            _ = mock.SetupGet(m => m.Ranking).Returns(
+                Enumerable.Range(0, 10)
+                    .Select(index => new HighScoreStub()
+                    {
+                        EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
+                        Name = Utils.Format("Player{0} ", index),
+                        Month = (byte)(1 + index),
+                        Day = (byte)(10 + index),
+                        Score = 1234567 + index,
+                    } as IHighScore).ToList());
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IClearData clearData)
             => TestUtils.MakeByteArray(
@@ -88,17 +93,19 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ClearDataTest()
         {
+            var mock = MockInitialClearData();
             var clearData = new ClearData();
 
-            Validate(DefaultStub, clearData);
+            Validate(mock.Object, clearData);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var clearData = TestUtils.Create<ClearData>(MakeByteArray(ValidStub));
+            var mock = MockClearData();
+            var clearData = TestUtils.Create<ClearData>(MakeByteArray(mock.Object));
 
-            Validate(ValidStub, clearData);
+            Validate(mock.Object, clearData);
         }
 
         [TestMethod]

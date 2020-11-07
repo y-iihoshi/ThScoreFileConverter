@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             clearData = Utils.GetEnumerable<CharaWithReserved>()
                 .SelectMany(chara => Utils.GetEnumerable<Level>().Select(level => (chara, level)))
-                .ToDictionary(pair => pair, _ => ClearDataTests.ValidStub as IClearData),
+                .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
             status = StatusTests.ValidProperties,
         };
 

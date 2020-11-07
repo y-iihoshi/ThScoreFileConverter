@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverterTests.Models.Th075.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {
@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             {
                 {
                     (CharaWithReserved.Reimu, Level.Hard),
-                    new ClearDataStub(ClearDataTests.ValidStub)
+                    ClearDataTests.MockClearData().Object
                 },
             };
 
@@ -46,16 +46,9 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ScoreReplacerTestEmptyRanking()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>
-            {
-                {
-                    (CharaWithReserved.Reimu, Level.Hard),
-                    new ClearDataStub(ClearDataTests.ValidStub)
-                    {
-                        Ranking = new List<IHighScore>(),
-                    }
-                },
-            };
+            var mock = ClearDataTests.MockClearData();
+            _ = mock.SetupGet(m => m.Ranking).Returns(new List<IHighScore>());
+            var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock.Object) }.ToDictionary();
 
             var replacer = new ScoreReplacer(clearData);
             Assert.IsNotNull(replacer);
@@ -104,16 +97,9 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>
-            {
-                {
-                    (CharaWithReserved.Reimu, Level.Hard),
-                    new ClearDataStub(ClearDataTests.ValidStub)
-                    {
-                        Ranking = new List<IHighScore>(),
-                    }
-                },
-            };
+            var mock = ClearDataTests.MockClearData();
+            _ = mock.SetupGet(m => m.Ranking).Returns(new List<IHighScore>());
+            var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock.Object) }.ToDictionary();
 
             var replacer = new ScoreReplacer(clearData);
             Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHRM11"));
@@ -149,16 +135,10 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestNonexistentRank()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>
-            {
-                {
-                    (CharaWithReserved.Reimu, Level.Hard),
-                    new ClearDataStub(ClearDataTests.ValidStub)
-                    {
-                        Ranking = ClearDataTests.ValidStub.Ranking.Take(1).ToList(),
-                    }
-                },
-            };
+            var mock = ClearDataTests.MockClearData();
+            var ranking = mock.Object.Ranking;
+            _ = mock.SetupGet(m => m.Ranking).Returns(ranking.Take(1).ToList());
+            var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock.Object) }.ToDictionary();
 
             var replacer = new ScoreReplacer(clearData);
             Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHRM21"));

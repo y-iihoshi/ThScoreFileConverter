@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverterTests.Models.Th075.Stubs;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
@@ -12,15 +11,22 @@ namespace ThScoreFileConverterTests.Models.Th075
     [TestClass]
     public class CollectRateReplacerTests
     {
+        private static IClearData CreateClearData()
+        {
+            var mock = ClearDataTests.MockClearData();
+            _ = mock.SetupGet(m => m.CardGotCount).Returns(
+                Enumerable.Range(1, 100).Select(count => (short)(count % 5)).ToList());
+            _ = mock.SetupGet(m => m.CardTrialCount).Returns(
+                Enumerable.Range(1, 100).Select(count => (short)(count % 7)).ToList());
+            _ = mock.SetupGet(m => m.CardTrulyGot).Returns(
+                Enumerable.Range(1, 100).Select(count => (byte)(count % 3)).ToList());
+            return mock.Object;
+        }
+
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
             Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
-                level => new ClearDataStub(ClearDataTests.ValidStub)
-                {
-                    CardGotCount = Enumerable.Range(1, 100).Select(count => (short)(count % 5)).ToList(),
-                    CardTrialCount = Enumerable.Range(1, 100).Select(count => (short)(count % 7)).ToList(),
-                    CardTrulyGot = Enumerable.Range(1, 100).Select(count => (byte)(count % 3)).ToList(),
-                } as IClearData);
+                level => CreateClearData());
 
         [TestMethod]
         public void CollectRateReplacerTest()

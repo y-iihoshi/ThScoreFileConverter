@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverterTests.Models.Th075.Stubs;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
@@ -16,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
             Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
-                level => new ClearDataStub(ClearDataTests.ValidStub) as IClearData);
+                level => ClearDataTests.MockClearData().Object);
 
         [TestMethod]
         public void CareerReplacerTest()
@@ -72,13 +71,18 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestNotStar()
         {
+            static IClearData CreateClearData()
+            {
+                var mock = ClearDataTests.MockClearData();
+                var cardTrulyGot = mock.Object.CardTrulyGot;
+                _ = mock.SetupGet(m => m.CardTrulyGot).Returns(
+                    cardTrulyGot.Select((got, index) => index == 0 ? (byte)0 : got).ToList());
+                return mock.Object;
+            }
+
             var clearData = Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
-                level => new ClearDataStub(ClearDataTests.ValidStub)
-                {
-                    CardTrulyGot = ClearDataTests.ValidStub.CardTrulyGot
-                        .Select((got, index) => index == 0 ? (byte)0 : got).ToList(),
-                } as IClearData);
+                level => CreateClearData());
 
             var replacer = new CareerReplacer(clearData);
             Assert.AreEqual(string.Empty, replacer.Replace("%T75C001RM4"));
