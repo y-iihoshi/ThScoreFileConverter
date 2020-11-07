@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {
@@ -20,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th165
 
         internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
 
-        internal static IStatus Status { get; } = new StatusStub(StatusTests.ValidStub);
+        internal static IStatus Status { get; } = StatusTests.MockStatus().Object;
 
         [TestMethod]
         public void ScoreTotalReplacerTest()

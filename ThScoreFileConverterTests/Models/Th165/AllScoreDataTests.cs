@@ -2,7 +2,6 @@
 using Moq;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Models.Th095;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models.Th165
@@ -75,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void SetStatusTest()
         {
-            var status = new StatusStub();
+            var status = Mock.Of<IStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status);
@@ -86,8 +85,8 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void SetStatusTestTwice()
         {
-            var status1 = new StatusStub();
-            var status2 = new StatusStub();
+            var status1 = Mock.Of<IStatus>();
+            var status2 = Mock.Of<IStatus>();
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status1);

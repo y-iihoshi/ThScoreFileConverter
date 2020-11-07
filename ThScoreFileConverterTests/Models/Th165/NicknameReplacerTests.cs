@@ -1,14 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
     public class NicknameReplacerTests
     {
-        internal static IStatus Status { get; } = new StatusStub(StatusTests.ValidStub);
+        internal static IStatus Status { get; } = StatusTests.MockStatus().Object;
 
         [TestMethod]
         public void NicknameReplacerTest()
