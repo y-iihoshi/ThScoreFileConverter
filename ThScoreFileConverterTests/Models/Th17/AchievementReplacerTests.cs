@@ -1,14 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverterTests.Models.Th17.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th17
 {
     [TestClass]
     public class AchievementReplacerTests
     {
-        internal static IStatus Status { get; } = new StatusStub(StatusTests.ValidStub);
+        internal static IStatus Status { get; } = StatusTests.MockStatus().Object;
 
         [TestMethod]
         public void AchievementReplacerTest()
