@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {
@@ -13,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         internal static IReadOnlyDictionary<(Day, int), (string, IBestShotHeader)> BestShots { get; } =
             new List<(string, IBestShotHeader header)>
             {
-                (@"C:\path\to\output\bestshots\bs02_03.png", BestShotHeaderTests.ValidStub),
+                (@"C:\path\to\output\bestshots\bs02_03.png", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
 
         [TestMethod]
@@ -44,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         {
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                ("abcde", BestShotHeaderTests.ValidStub),
+                ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
             var replacer = new ShotExReplacer(bestshots, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -161,15 +160,11 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestEmptyHashtags()
         {
+            var mock = BestShotHeaderTests.MockBestShotHeader();
+            _ = mock.SetupGet(m => m.Fields).Returns(new HashtagFields(0, 0, 0));
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                (
-                    @"C:\path\to\output\bestshots\bs02_03.png",
-                    new BestShotHeaderStub(BestShotHeaderTests.ValidStub)
-                    {
-                        Fields = new HashtagFields(0, 0, 0),
-                    }
-                ),
+                (@"C:\path\to\output\bestshots\bs02_03.png", mock.Object),
             }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
             var replacer = new ShotExReplacer(bestshots, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0235"));
@@ -180,7 +175,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         {
             var bestshots = new List<(string, IBestShotHeader header)>
             {
-                ("abcde", BestShotHeaderTests.ValidStub),
+                ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
             var replacer = new ShotExReplacer(bestshots, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));

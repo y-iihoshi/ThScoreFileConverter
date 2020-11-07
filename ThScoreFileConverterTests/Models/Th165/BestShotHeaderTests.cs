@@ -3,54 +3,63 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
     public class BestShotHeaderTests
     {
-        internal static BestShotHeaderStub ValidStub { get; } = new BestShotHeaderStub
+        internal static Mock<IBestShotHeader> MockInitialBestShotHeader()
         {
-            Signature = "BST4",
-            Weekday = Day.Monday,
-            Dream = 3,
-            Width = 4,
-            Height = 5,
-            Width2 = 6,
-            Height2 = 7,
-            HalfWidth = 8,
-            HalfHeight = 9,
-            SlowRate = 10f,
-            DateTime = 11u,
-            Angle = 12f,
-            Score = 13,
-            Fields = new HashtagFields(14, 15, 16),
-            Score2 = 17,
-            BasePoint = 18,
-            NumViewed = 19,
-            NumLikes = 20,
-            NumFavs = 21,
-            NumBullets = 22,
-            NumBulletsNearby = 23,
-            RiskBonus = 24,
-            BossShot = 25f,
-            AngleBonus = 26f,
-            MacroBonus = 27,
-            LikesPerView = 28f,
-            FavsPerView = 29f,
-            NumHashtags = 30,
-            NumRedBullets = 31,
-            NumPurpleBullets = 32,
-            NumBlueBullets = 33,
-            NumCyanBullets = 34,
-            NumGreenBullets = 35,
-            NumYellowBullets = 36,
-            NumOrangeBullets = 37,
-            NumLightBullets = 38,
-        };
+            var mock = new Mock<IBestShotHeader>();
+            _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
+            return mock;
+        }
+
+        internal static Mock<IBestShotHeader> MockBestShotHeader()
+        {
+            var mock = new Mock<IBestShotHeader>();
+            _ = mock.SetupGet(m => m.Signature).Returns("BST4");
+            _ = mock.SetupGet(m => m.Weekday).Returns(Day.Monday);
+            _ = mock.SetupGet(m => m.Dream).Returns(3);
+            _ = mock.SetupGet(m => m.Width).Returns(4);
+            _ = mock.SetupGet(m => m.Height).Returns(5);
+            _ = mock.SetupGet(m => m.Width2).Returns(6);
+            _ = mock.SetupGet(m => m.Height2).Returns(7);
+            _ = mock.SetupGet(m => m.HalfWidth).Returns(8);
+            _ = mock.SetupGet(m => m.HalfHeight).Returns(9);
+            _ = mock.SetupGet(m => m.SlowRate).Returns(10f);
+            _ = mock.SetupGet(m => m.DateTime).Returns(11u);
+            _ = mock.SetupGet(m => m.Angle).Returns(12f);
+            _ = mock.SetupGet(m => m.Score).Returns(13);
+            _ = mock.SetupGet(m => m.Fields).Returns(new HashtagFields(14, 15, 16));
+            _ = mock.SetupGet(m => m.Score2).Returns(17);
+            _ = mock.SetupGet(m => m.BasePoint).Returns(18);
+            _ = mock.SetupGet(m => m.NumViewed).Returns(19);
+            _ = mock.SetupGet(m => m.NumLikes).Returns(20);
+            _ = mock.SetupGet(m => m.NumFavs).Returns(21);
+            _ = mock.SetupGet(m => m.NumBullets).Returns(22);
+            _ = mock.SetupGet(m => m.NumBulletsNearby).Returns(23);
+            _ = mock.SetupGet(m => m.RiskBonus).Returns(24);
+            _ = mock.SetupGet(m => m.BossShot).Returns(25);
+            _ = mock.SetupGet(m => m.AngleBonus).Returns(26);
+            _ = mock.SetupGet(m => m.MacroBonus).Returns(27);
+            _ = mock.SetupGet(m => m.LikesPerView).Returns(28);
+            _ = mock.SetupGet(m => m.FavsPerView).Returns(29);
+            _ = mock.SetupGet(m => m.NumHashtags).Returns(30);
+            _ = mock.SetupGet(m => m.NumRedBullets).Returns(31);
+            _ = mock.SetupGet(m => m.NumPurpleBullets).Returns(32);
+            _ = mock.SetupGet(m => m.NumBlueBullets).Returns(33);
+            _ = mock.SetupGet(m => m.NumCyanBullets).Returns(34);
+            _ = mock.SetupGet(m => m.NumGreenBullets).Returns(35);
+            _ = mock.SetupGet(m => m.NumYellowBullets).Returns(36);
+            _ = mock.SetupGet(m => m.NumOrangeBullets).Returns(37);
+            _ = mock.SetupGet(m => m.NumLightBullets).Returns(38);
+            return mock;
+        }
 
         internal static byte[] MakeByteArray(IBestShotHeader header)
             => TestUtils.MakeByteArray(
@@ -148,20 +157,19 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void BestShotHeaderTest()
         {
-            var stub = new BestShotHeaderStub();
+            var mock = MockInitialBestShotHeader();
             var header = new BestShotHeader();
 
-            Validate(stub, header);
+            Validate(mock.Object, header);
         }
 
         [TestMethod]
         public void ReadFromTest()
         {
-            var stub = ValidStub;
+            var mock = MockBestShotHeader();
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
-            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
-
-            Validate(stub, header);
+            Validate(mock.Object, header);
         }
 
         [TestMethod]
@@ -179,12 +187,10 @@ namespace ThScoreFileConverterTests.Models.Th165
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature()
         {
-            var stub = new BestShotHeaderStub(ValidStub)
-            {
-                Signature = string.Empty,
-            };
+            var mock = MockBestShotHeader();
+            _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -193,14 +199,15 @@ namespace ThScoreFileConverterTests.Models.Th165
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature()
         {
-            var stub = new BestShotHeaderStub(ValidStub);
+            var mock = MockBestShotHeader();
+            var signature = mock.Object.Signature;
 #if NETFRAMEWORK
-            stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
+            _ = mock.SetupGet(m => m.Signature).Returns(signature.Substring(signature.Length - 1));
 #else
-            stub.Signature = stub.Signature[0..^1];
+            _ = mock.SetupGet(m => m.Signature).Returns(signature[0..^1]);
 #endif
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -209,10 +216,11 @@ namespace ThScoreFileConverterTests.Models.Th165
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature()
         {
-            var stub = new BestShotHeaderStub(ValidStub);
-            stub.Signature += "E";
+            var mock = MockBestShotHeader();
+            var signature = mock.Object.Signature;
+            _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -225,12 +233,10 @@ namespace ThScoreFileConverterTests.Models.Th165
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidDay(int day)
         {
-            var stub = new BestShotHeaderStub(ValidStub)
-            {
-                Weekday = TestUtils.Cast<Day>(day),
-            };
+            var mock = MockBestShotHeader();
+            _ = mock.SetupGet(m => m.Weekday).Returns(TestUtils.Cast<Day>(day));
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 
             Assert.Fail(TestUtils.Unreachable);
         }
