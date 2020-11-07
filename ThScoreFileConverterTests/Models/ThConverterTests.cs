@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestInvalidType()
         {
-            var converter = new Mock<ThConverter>{ CallBase = true }.Object;
+            var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestNoSettings()
         {
-            var converter = new Mock<ThConverter>{ CallBase = true }.Object;
+            var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
