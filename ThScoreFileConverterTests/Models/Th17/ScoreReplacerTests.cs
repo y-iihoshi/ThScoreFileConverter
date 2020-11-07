@@ -11,10 +11,7 @@ namespace ThScoreFileConverterTests.Models.Th17
     public class ScoreReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(data => data.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void ScoreReplacerTest()

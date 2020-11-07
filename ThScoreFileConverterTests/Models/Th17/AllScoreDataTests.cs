@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverterTests.Models.Th17.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th17
 {
@@ -49,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         public void SetClearDataTest()
         {
             var chara = CharaWithTotal.ReimuB;
-            var clearData = new ClearDataStub { Chara = chara };
+            var clearData = Mock.Of<IClearData>(m => m.Chara == chara);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
@@ -61,8 +60,8 @@ namespace ThScoreFileConverterTests.Models.Th17
         public void SetClearDataTestTwice()
         {
             var chara = CharaWithTotal.ReimuB;
-            var clearData1 = new ClearDataStub { Chara = chara };
-            var clearData2 = new ClearDataStub { Chara = chara };
+            var clearData1 = Mock.Of<IClearData>(m => m.Chara == chara);
+            var clearData2 = Mock.Of<IClearData>(m => m.Chara == chara);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);

@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverterTests.Models.Th17.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th17
@@ -12,36 +11,31 @@ namespace ThScoreFileConverterTests.Models.Th17
     [TestClass]
     public class CollectRateReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.MarisaB,
-                    Cards = Definitions.CardTable.ToDictionary(
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        {
+            Mock.Of<IClearData>(
+                c => (c.Chara == CharaWithTotal.MarisaB)
+                     && (c.Cards == Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
                         pair => Mock.Of<ISpellCard>(
-                            m => (m.Id == pair.Value.Id)
-                                 && (m.Level == pair.Value.Level)
-                                 && (m.ClearCount == pair.Key % 2)
-                                 && (m.TrialCount == pair.Key % 3)
-                                 && (m.PracticeClearCount == pair.Key % 4)
-                                 && (m.PracticeTrialCount == pair.Key % 5))),
-                },
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Total,
-                    Cards = Definitions.CardTable.ToDictionary(
+                            s => (s.Id == pair.Value.Id)
+                                 && (s.Level == pair.Value.Level)
+                                 && (s.ClearCount == pair.Key % 2)
+                                 && (s.TrialCount == pair.Key % 3)
+                                 && (s.PracticeClearCount == pair.Key % 4)
+                                 && (s.PracticeTrialCount == pair.Key % 5))))),
+            Mock.Of<IClearData>(
+                c => (c.Chara == CharaWithTotal.Total)
+                     && (c.Cards == Definitions.CardTable.ToDictionary(
                         pair => pair.Key,
                         pair => Mock.Of<ISpellCard>(
-                            m => (m.Id == pair.Value.Id)
-                                 && (m.Level == pair.Value.Level)
-                                 && (m.ClearCount == pair.Key % 6)
-                                 && (m.TrialCount == pair.Key % 7)
-                                 && (m.PracticeClearCount == pair.Key % 8)
-                                 && (m.PracticeTrialCount == pair.Key))),
-                },
-            }.ToDictionary(clearData => clearData.Chara);
+                            s => (s.Id == pair.Value.Id)
+                                 && (s.Level == pair.Value.Level)
+                                 && (s.ClearCount == pair.Key % 6)
+                                 && (s.TrialCount == pair.Key % 7)
+                                 && (s.PracticeClearCount == pair.Key % 8)
+                                 && (s.PracticeTrialCount == pair.Key))))),
+        }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CollectRateReplacerTest()
