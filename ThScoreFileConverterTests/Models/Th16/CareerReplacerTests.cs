@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th16;
-using ThScoreFileConverterTests.Models.Th16.Stubs;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th16
@@ -13,10 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th16
     public class CareerReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CareerReplacerTest()
@@ -144,14 +141,11 @@ namespace ThScoreFileConverterTests.Models.Th16
         [TestMethod]
         public void ReplaceTestEmptyCards()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Aya,
-                    Cards = new Dictionary<int, ISpellCard>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Aya) && (m.Cards == new Dictionary<int, ISpellCard>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CareerReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T16CS003AY1"));

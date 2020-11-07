@@ -2,7 +2,6 @@
 using Moq;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Models.Th095;
-using ThScoreFileConverterTests.Models.Th16.Stubs;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
@@ -52,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         public void SetClearDataTest()
         {
             var chara = CharaWithTotal.Aya;
-            var clearData = new ClearDataStub { Chara = chara };
+            var clearData = Mock.Of<IClearData>(m => m.Chara == chara);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
@@ -64,8 +63,8 @@ namespace ThScoreFileConverterTests.Models.Th16
         public void SetClearDataTestTwice()
         {
             var chara = CharaWithTotal.Aya;
-            var clearData1 = new ClearDataStub { Chara = chara };
-            var clearData2 = new ClearDataStub { Chara = chara };
+            var clearData1 = Mock.Of<IClearData>(m => m.Chara == chara);
+            var clearData2 = Mock.Of<IClearData>(m => m.Chara == chara);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);

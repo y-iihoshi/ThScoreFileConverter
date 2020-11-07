@@ -6,7 +6,6 @@ using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
-using ThScoreFileConverterTests.Models.Th16.Stubs;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th16
@@ -15,10 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th16
     public class ScoreReplacerTests
     {
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-            new List<IClearData>
-            {
-                ClearDataTests.MakeValidStub(),
-            }.ToDictionary(element => element.Chara);
+            new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void ScoreReplacerTest()
@@ -111,14 +107,12 @@ namespace ThScoreFileConverterTests.Models.Th16
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Aya,
-                    Rankings = new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>(),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Aya)
+                         && (m.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>()))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T16SCRHAY21"));
@@ -131,16 +125,14 @@ namespace ThScoreFileConverterTests.Models.Th16
         [TestMethod]
         public void ReplaceTestEmptyRanking()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Aya,
-                    Rankings = Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                        level => level,
-                        level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    m => (m.Chara == CharaWithTotal.Aya)
+                         && (m.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                            level => level,
+                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("--------", replacer.Replace("%T16SCRHAY21"));
@@ -153,19 +145,17 @@ namespace ThScoreFileConverterTests.Models.Th16
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Aya,
-                    Rankings = Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                        level => level,
-                        level => Enumerable.Range(0, 10).Select(
-                            index => Mock.Of<IScoreData>(
-                                s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.Extra)))
-                        .ToList() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    c => (c.Chara == CharaWithTotal.Aya)
+                         && (c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                            level => level,
+                            level => Enumerable.Range(0, 10).Select(
+                                index => Mock.Of<IScoreData>(
+                                    s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.Extra)))
+                            .ToList() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T16SCRHAY23"));
@@ -174,19 +164,17 @@ namespace ThScoreFileConverterTests.Models.Th16
         [TestMethod]
         public void ReplaceTestStageExtraClear()
         {
-            var dictionary = new List<IClearData>
+            var dictionary = new[]
             {
-                new ClearDataStub()
-                {
-                    Chara = CharaWithTotal.Aya,
-                    Rankings = Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                        level => level,
-                        level => Enumerable.Range(0, 10).Select(
-                            index => Mock.Of<IScoreData>(
-                                s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.ExtraClear)))
-                        .ToList() as IReadOnlyList<IScoreData>),
-                },
-            }.ToDictionary(element => element.Chara);
+                Mock.Of<IClearData>(
+                    c => (c.Chara == CharaWithTotal.Aya)
+                         && (c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                            level => level,
+                            level => Enumerable.Range(0, 10).Select(
+                                index => Mock.Of<IScoreData>(
+                                    s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.ExtraClear)))
+                            .ToList() as IReadOnlyList<IScoreData>)))
+            }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("All Clear", replacer.Replace("%T16SCRHAY23"));
