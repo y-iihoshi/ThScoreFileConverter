@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ThConverterTest()
         {
-            var converter = new ThConverterWrapper() as ThConverter;
+            var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
             Assert.AreEqual(string.Empty, converter.SupportedVersions);
             Assert.IsFalse(converter.HasBestShotConverter);
@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConvertTestNull()
         {
-            var converter = new ThConverterWrapper() as ThConverter;
+            var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestInvalidType()
         {
-            var converter = new ThConverterWrapper() as ThConverter;
+            var converter = new Mock<ThConverter>{ CallBase = true }.Object;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestNoSettings()
         {
-            var converter = new ThConverterWrapper() as ThConverter;
+            var converter = new Mock<ThConverter>{ CallBase = true }.Object;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
