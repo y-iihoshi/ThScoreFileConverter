@@ -4,21 +4,28 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th128;
+using Level = ThScoreFileConverter.Models.Level;
 
 namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
     public class CollectRateReplacerTests
     {
+        private static ISpellCard CreateSpellCard(int noIce, int noMiss, int trial, int id, Level level)
+        {
+            var mock = new Mock<ISpellCard>();
+            _ = mock.SetupGet(s => s.NoIceCount).Returns(noIce);
+            _ = mock.SetupGet(s => s.NoMissCount).Returns(noMiss);
+            _ = mock.SetupGet(s => s.TrialCount).Returns(trial);
+            _ = mock.SetupGet(s => s.Id).Returns(id);
+            _ = mock.SetupGet(s => s.Level).Returns(level);
+            return mock.Object;
+        }
+
         internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } =
             Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
-                pair => Mock.Of<ISpellCard>(
-                    m => (m.NoIceCount == pair.Key % 3)
-                         && (m.NoMissCount == pair.Key % 5)
-                         && (m.TrialCount == pair.Key % 7)
-                         && (m.Id == pair.Value.Id)
-                         && (m.Level == pair.Value.Level)));
+                pair => CreateSpellCard(pair.Key % 3, pair.Key % 5, pair.Key % 7, pair.Value.Id, pair.Value.Level));
 
         [TestMethod]
         public void CollectRateReplacerTest()

@@ -5,70 +5,79 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th15;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using Level = ThScoreFileConverter.Models.Level;
 
 namespace ThScoreFileConverterTests.Models.Th15
 {
     [TestClass]
     public class CollectRateReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        private static IEnumerable<IClearData> CreateClearDataList()
         {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Cards == Definitions.CardTable.ToDictionary(
-                                            pair => pair.Key,
-                                            pair => Mock.Of<ISpellCard>(
-                                                s => (s.ClearCount == pair.Key % 3)
-                                                     && (s.TrialCount == pair.Key % 5)
-                                                     && (s.Id == pair.Value.Id)
-                                                     && (s.Level == pair.Value.Level))))
-                            },
-                            {
-                                GameMode.Legacy,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Cards == Definitions.CardTable.ToDictionary(
-                                            pair => pair.Key,
-                                            pair => Mock.Of<ISpellCard>(
-                                                s => (s.ClearCount == pair.Key % 7)
-                                                     && (s.TrialCount == pair.Key % 11)
-                                                     && (s.Id == pair.Value.Id)
-                                                     && (s.Level == pair.Value.Level))))
-                            },
-                        })
-                ),
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Total)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Cards == Definitions.CardTable.ToDictionary(
-                                            pair => pair.Key,
-                                            pair => Mock.Of<ISpellCard>(
-                                                s => (s.ClearCount == pair.Key % 7)
-                                                     && (s.TrialCount == pair.Key % 11)
-                                                     && (s.Id == pair.Value.Id)
-                                                     && (s.Level == pair.Value.Level))))
-                            },
-                            {
-                                GameMode.Legacy,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Cards == Definitions.CardTable.ToDictionary(
-                                            pair => pair.Key,
-                                            pair => Mock.Of<ISpellCard>(
-                                                s => (s.ClearCount == pair.Key % 3)
-                                                     && (s.TrialCount == pair.Key % 5)
-                                                     && (s.Id == pair.Value.Id)
-                                                     && (s.Level == pair.Value.Level))))
-                            },
-                        })),
-        }.ToDictionary(element => element.Chara);
+            static ISpellCard CreateSpellCard(int clearCount, int trialCount, int id, Level level)
+            {
+                var mock = new Mock<ISpellCard>();
+                _ = mock.SetupGet(s => s.ClearCount).Returns(clearCount);
+                _ = mock.SetupGet(s => s.TrialCount).Returns(trialCount);
+                _ = mock.SetupGet(s => s.Id).Returns(id);
+                _ = mock.SetupGet(s => s.Level).Returns(level);
+                return mock.Object;
+            }
+
+            static IClearDataPerGameMode CreateClearDataPerGameMode(IReadOnlyDictionary<int, ISpellCard> cards)
+            {
+                var mock = new Mock<IClearDataPerGameMode>();
+                _ = mock.SetupGet(c => c.Cards).Returns(cards);
+                return mock.Object;
+            }
+
+            var mock1 = new Mock<IClearData>();
+            _ = mock1.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
+            _ = mock1.SetupGet(c => c.GameModeData).Returns(
+                new Dictionary<GameMode, IClearDataPerGameMode>
+                {
+                    {
+                        GameMode.Pointdevice,
+                        CreateClearDataPerGameMode(
+                            Definitions.CardTable.ToDictionary(
+                                pair => pair.Key,
+                                pair => CreateSpellCard(pair.Key % 3, pair.Key % 5, pair.Value.Id, pair.Value.Level)))
+                    },
+                    {
+                        GameMode.Legacy,
+                        CreateClearDataPerGameMode(
+                            Definitions.CardTable.ToDictionary(
+                                pair => pair.Key,
+                                pair => CreateSpellCard(pair.Key % 7, pair.Key % 11, pair.Value.Id, pair.Value.Level)))
+                    },
+                });
+
+            var mock2 = new Mock<IClearData>();
+            _ = mock2.SetupGet(c => c.Chara).Returns(CharaWithTotal.Total);
+            _ = mock2.SetupGet(c => c.GameModeData).Returns(
+                new Dictionary<GameMode, IClearDataPerGameMode>
+                {
+                    {
+                        GameMode.Pointdevice,
+                        CreateClearDataPerGameMode(
+                            Definitions.CardTable.ToDictionary(
+                                pair => pair.Key,
+                                pair => CreateSpellCard(pair.Key % 7, pair.Key % 11, pair.Value.Id, pair.Value.Level)))
+                    },
+                    {
+                        GameMode.Legacy,
+                        CreateClearDataPerGameMode(
+                            Definitions.CardTable.ToDictionary(
+                                pair => pair.Key,
+                                pair => CreateSpellCard(pair.Key % 3, pair.Key % 5, pair.Value.Id, pair.Value.Level)))
+                    },
+                });
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CollectRateReplacerTest()

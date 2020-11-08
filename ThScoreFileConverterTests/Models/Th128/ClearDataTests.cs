@@ -18,6 +18,18 @@ namespace ThScoreFileConverterTests.Models.Th128
     {
         internal static Mock<IClearData> MockClearData()
         {
+            static IScoreData CreateScoreData(int index)
+            {
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.Score).Returns(12345670u - ((uint)index * 1000u));
+                _ = mock.SetupGet(s => s.StageProgress).Returns(StageProgress.A2Clear);
+                _ = mock.SetupGet(s => s.ContinueCount).Returns((byte)index);
+                _ = mock.SetupGet(s => s.Name).Returns(TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"));
+                _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
+                _ = mock.SetupGet(s => s.SlowRate).Returns(1.2f);
+                return mock.Object;
+            }
+
             var levels = Utils.GetEnumerable<Level>();
 
             var mock = new Mock<IClearData>();
@@ -29,14 +41,8 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Rankings).Returns(
                 levels.ToDictionary(
                     level => level,
-                    level => Enumerable.Range(0, 10).Select(
-                        index => Mock.Of<IScoreData>(
-                            m => (m.Score == 12345670u - ((uint)index * 1000u))
-                                 && (m.StageProgress == StageProgress.A2Clear)
-                                 && (m.ContinueCount == (byte)index)
-                                 && (m.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
-                                 && (m.DateTime == 34567890u)
-                                 && (m.SlowRate == 1.2f))).ToList() as IReadOnlyList<IScoreData>));
+                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
+                        as IReadOnlyList<IScoreData>));
             _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
             _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
             _ = mock.SetupGet(m => m.ClearCounts).Returns(

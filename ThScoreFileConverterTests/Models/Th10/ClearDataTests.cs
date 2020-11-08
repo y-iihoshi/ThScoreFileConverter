@@ -16,6 +16,37 @@ namespace ThScoreFileConverterTests.Models.Th10
     {
         internal static Mock<IClearData<CharaWithTotal, StageProgress>> MockClearData()
         {
+            static IScoreData<StageProgress> CreateScoreData(int index)
+            {
+                var mock = new Mock<IScoreData<StageProgress>>();
+                _ = mock.SetupGet(s => s.Score).Returns(12345670u - ((uint)index * 1000u));
+                _ = mock.SetupGet(s => s.StageProgress).Returns(StageProgress.Five);
+                _ = mock.SetupGet(s => s.ContinueCount).Returns((byte)index);
+                _ = mock.SetupGet(s => s.Name).Returns(TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"));
+                _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
+                _ = mock.SetupGet(s => s.SlowRate).Returns(1.2f);
+                return mock.Object;
+            }
+
+            static IPractice CreatePractice((Level, Stage) pair)
+            {
+                var mock = new Mock<IPractice>();
+                _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
+                _ = mock.SetupGet(p => p.StageFlag).Returns((uint)pair.Item2 % 2u);
+                return mock.Object;
+            }
+
+            static ISpellCard<Level> CreateSpellCard(int index)
+            {
+                var mock = new Mock<ISpellCard<Level>>();
+                _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+                _ = mock.SetupGet(s => s.ClearCount).Returns(123 + index);
+                _ = mock.SetupGet(s => s.TrialCount).Returns(456 + index);
+                _ = mock.SetupGet(s => s.Id).Returns(index);
+                _ = mock.SetupGet(s => s.Level).Returns(Level.Hard);
+                return mock.Object;
+            }
+
             var levels = Utils.GetEnumerable<Level>();
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
             var stages = Utils.GetEnumerable<Stage>();
@@ -30,14 +61,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             _ = mock.SetupGet(m => m.Rankings).Returns(
                 levels.ToDictionary(
                     level => level,
-                    level => Enumerable.Range(0, 10).Select(
-                        index => Mock.Of<IScoreData<StageProgress>>(
-                            m => (m.Score == 12345670u - ((uint)index * 1000u))
-                                 && (m.StageProgress == StageProgress.Five)
-                                 && (m.ContinueCount == (byte)index)
-                                 && (m.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
-                                 && (m.DateTime == 34567890u)
-                                 && (m.SlowRate == 1.2f))).ToList() as IReadOnlyList<IScoreData<StageProgress>>));
+                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
+                        as IReadOnlyList<IScoreData<StageProgress>>));
             _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
             _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
@@ -45,20 +70,9 @@ namespace ThScoreFileConverterTests.Models.Th10
             _ = mock.SetupGet(m => m.Practices).Returns(
                 levelsExceptExtra
                     .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                    .ToDictionary(
-                        pair => pair,
-                        pair => Mock.Of<IPractice>(
-                            m => (m.Score == 123456u - ((uint)pair.level * 10u))
-                                 && (m.StageFlag == (uint)pair.stage % 2u))));
+                    .ToDictionary(pair => pair, pair => CreatePractice(pair)));
             _ = mock.SetupGet(m => m.Cards).Returns(
-                Enumerable.Range(1, 110).ToDictionary(
-                    index => index,
-                    index => Mock.Of<ISpellCard<Level>>(
-                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
-                             && (m.ClearCount == 123 + index)
-                             && (m.TrialCount == 456 + index)
-                             && (m.Id == index)
-                             && (m.Level == Level.Hard))));
+                Enumerable.Range(1, 110).ToDictionary(index => index, index => CreateSpellCard(index)));
             return mock;
         }
 

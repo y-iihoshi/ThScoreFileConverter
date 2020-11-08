@@ -31,21 +31,41 @@ namespace ThScoreFileConverterTests.Models.Th15
 
         internal static Mock<IClearDataPerGameMode> MockClearDataPerGameMode()
         {
+            static IScoreData CreateScoreData(int index)
+            {
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.Score).Returns(12345670u - ((uint)index * 1000u));
+                _ = mock.SetupGet(s => s.StageProgress).Returns(StageProgress.Five);
+                _ = mock.SetupGet(s => s.ContinueCount).Returns((byte)index);
+                _ = mock.SetupGet(s => s.Name).Returns(TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"));
+                _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
+                _ = mock.SetupGet(s => s.SlowRate).Returns(1.2f);
+                _ = mock.SetupGet(s => s.RetryCount).Returns((uint)index % 4u);
+                return mock.Object;
+            }
+
+            static ISpellCard CreateSpellCard(int index)
+            {
+                var mock = new Mock<ISpellCard>();
+                _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+                _ = mock.SetupGet(s => s.ClearCount).Returns(12 + index);
+                _ = mock.SetupGet(s => s.PracticeClearCount).Returns(34 + index);
+                _ = mock.SetupGet(s => s.TrialCount).Returns(56 + index);
+                _ = mock.SetupGet(s => s.PracticeTrialCount).Returns(78 + index);
+                _ = mock.SetupGet(s => s.Id).Returns(index);
+                _ = mock.SetupGet(s => s.Level).Returns(Level.Hard);
+                _ = mock.SetupGet(s => s.PracticeScore).Returns(90123);
+                return mock.Object;
+            }
+
             var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();
 
             var mock = new Mock<IClearDataPerGameMode>();
             _ = mock.SetupGet(m => m.Rankings).Returns(
                 levelsWithTotal.ToDictionary(
                     level => level,
-                    level => Enumerable.Range(0, 10).Select(
-                        index => Mock.Of<IScoreData>(
-                            m => (m.Score == 12345670u - ((uint)index * 1000u))
-                                 && (m.StageProgress == StageProgress.Five)
-                                 && (m.ContinueCount == (byte)index)
-                                 && (m.Name == TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"))
-                                 && (m.DateTime == 34567890u)
-                                 && (m.SlowRate == 1.2f)
-                                 && (m.RetryCount == (uint)index % 4u))).ToList() as IReadOnlyList<IScoreData>));
+                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
+                        as IReadOnlyList<IScoreData>));
             _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
             _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
@@ -53,17 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             _ = mock.SetupGet(m => m.ClearFlags).Returns(
                 levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
             _ = mock.SetupGet(m => m.Cards).Returns(
-                Enumerable.Range(1, 119).ToDictionary(
-                    index => index,
-                    index => Mock.Of<ISpellCard>(
-                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
-                             && (m.ClearCount == 12 + index)
-                             && (m.PracticeClearCount == 34 + index)
-                             && (m.TrialCount == 56 + index)
-                             && (m.PracticeTrialCount == 78 + index)
-                             && (m.Id == index)
-                             && (m.Level == Level.Hard)
-                             && (m.PracticeScore == 90123))));
+                Enumerable.Range(1, 119).ToDictionary(index => index, index => CreateSpellCard(index)));
             return mock;
         }
 

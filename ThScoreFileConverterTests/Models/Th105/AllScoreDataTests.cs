@@ -21,6 +21,14 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static Properties MakeValidProperties()
         {
+            static ICardForDeck CreateCardForDeck(int id)
+            {
+                var mock = new Mock<ICardForDeck>();
+                _ = mock.SetupGet(c => c.Id).Returns(id);
+                _ = mock.SetupGet(c => c.MaxNumber).Returns((id % 4) + 1);
+                return mock.Object;
+            }
+
             var charas = Utils.GetEnumerable<Chara>();
             return new Properties()
             {
@@ -29,7 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     chara => TestUtils.Cast<byte>(chara)),
                 systemCards = Enumerable.Range(1, 5).ToDictionary(
                     id => id,
-                    id => Mock.Of<ICardForDeck>(m => (m.Id == id) && (m.MaxNumber == (id % 4) + 1))),
+                    id => CreateCardForDeck(id)),
                 clearData = charas.ToDictionary(
                     chara => chara,
                     chara => ClearDataTests.MockClearData<Chara>().Object),

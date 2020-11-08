@@ -7,33 +7,44 @@ using ThScoreFileConverter.Models.Th11;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th10.ISpellCard<ThScoreFileConverter.Models.Level>;
+using Level = ThScoreFileConverter.Models.Level;
 
 namespace ThScoreFileConverterTests.Models.Th11
 {
     [TestClass]
     public class CollectRateReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        private static IEnumerable<IClearData> CreateClearDataList()
         {
-            Mock.Of<IClearData>(
-                c => (c.Chara == CharaWithTotal.ReimuSuika)
-                     && (c.Cards == Definitions.CardTable.ToDictionary(
-                        pair => pair.Key,
-                        pair => Mock.Of<ISpellCard>(
-                            s => (s.ClearCount == pair.Key % 3)
-                                 && (s.TrialCount == pair.Key % 5)
-                                 && (s.Id == pair.Value.Id)
-                                 && (s.Level == pair.Value.Level))))),
-            Mock.Of<IClearData>(
-                c => (c.Chara == CharaWithTotal.Total)
-                     && (c.Cards == Definitions.CardTable.ToDictionary(
-                        pair => pair.Key,
-                        pair => Mock.Of<ISpellCard>(
-                            s => (s.ClearCount == pair.Key % 7)
-                                 && (s.TrialCount == pair.Key % 11)
-                                 && (s.Id == pair.Value.Id)
-                                 && (s.Level == pair.Value.Level))))),
-        }.ToDictionary(clearData => clearData.Chara);
+            static ISpellCard CreateSpellCard(int clearCount, int trialCount, int id, Level level)
+            {
+                var mock = new Mock<ISpellCard>();
+                _ = mock.SetupGet(s => s.ClearCount).Returns(clearCount);
+                _ = mock.SetupGet(s => s.TrialCount).Returns(trialCount);
+                _ = mock.SetupGet(s => s.Id).Returns(id);
+                _ = mock.SetupGet(s => s.Level).Returns(level);
+                return mock.Object;
+            }
+
+            var mock1 = new Mock<IClearData>();
+            _ = mock1.SetupGet(c => c.Chara).Returns(CharaWithTotal.ReimuSuika);
+            _ = mock1.SetupGet(c => c.Cards).Returns(
+                Definitions.CardTable.ToDictionary(
+                    pair => pair.Key,
+                    pair => CreateSpellCard(pair.Key % 3, pair.Key % 5, pair.Value.Id, pair.Value.Level)));
+
+            var mock2 = new Mock<IClearData>();
+            _ = mock2.SetupGet(c => c.Chara).Returns(CharaWithTotal.Total);
+            _ = mock2.SetupGet(c => c.Cards).Returns(
+                Definitions.CardTable.ToDictionary(
+                    pair => pair.Key,
+                    pair => CreateSpellCard(pair.Key % 7, pair.Key % 11, pair.Value.Id, pair.Value.Level)));
+
+            return new[] { mock1.Object, mock2.Object };
+        }
+
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void CollectRateReplacerTest()

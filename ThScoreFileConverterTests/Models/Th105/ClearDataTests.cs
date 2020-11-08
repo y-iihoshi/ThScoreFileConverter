@@ -16,17 +16,16 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static Mock<IClearData<TChara>> MockClearData<TChara>()
             where TChara : struct, Enum
         {
+            static ICardForDeck CreateCardForDeck(int id)
+            {
+                var mock = new Mock<ICardForDeck>();
+                _ = mock.SetupGet(c => c.Id).Returns(id);
+                _ = mock.SetupGet(c => c.MaxNumber).Returns((id % 4) + 1);
+                return mock.Object;
+            }
+
             static ISpellCardResult<TChara> CreateSpellCardResult(TChara chara, int index)
             {
-#if false
-                return Mock.Of<ISpellCardResult<TChara>>(
-                    m => (m.Enemy == chara)     // causes CS0019
-                         && (m.Level == Level.Normal)
-                         && (m.Id == index + 1)
-                         && (m.TrialCount == index * 100)
-                         && (m.GotCount == index * 50)
-                         && (m.Frames == 8901u - (uint)index));
-#else
                 var mock = new Mock<ISpellCardResult<TChara>>();
                 _ = mock.SetupGet(m => m.Enemy).Returns(chara);
                 _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
@@ -35,13 +34,12 @@ namespace ThScoreFileConverterTests.Models.Th105
                 _ = mock.SetupGet(m => m.GotCount).Returns(index * 50);
                 _ = mock.SetupGet(m => m.Frames).Returns(8901u - (uint)index);
                 return mock.Object;
-#endif
             }
 
             var mock = new Mock<IClearData<TChara>>();
             _ = mock.SetupGet(m => m.CardsForDeck).Returns(
                 Enumerable.Range(1, 10)
-                    .Select(value => Mock.Of<ICardForDeck>(m => (m.Id == value) && (m.MaxNumber == (value % 4) + 1)))
+                    .Select(value => CreateCardForDeck(value))
                     .ToDictionary(card => card.Id));
             _ = mock.SetupGet(m => m.SpellCardResults).Returns(
                 Utils.GetEnumerable<TChara>()

@@ -17,6 +17,15 @@ namespace ThScoreFileConverterTests.Models.Th15
     {
         internal static Mock<IClearData> MockClearData()
         {
+            static IPractice CreatePractice((Level, StagePractice) pair)
+            {
+                var mock = new Mock<IPractice>();
+                _ = mock.SetupGet(p => p.Score).Returns(123456u - (TestUtils.Cast<uint>(pair.Item1) * 10u));
+                _ = mock.SetupGet(p => p.ClearFlag).Returns((byte)(TestUtils.Cast<int>(pair.Item2) % 2));
+                _ = mock.SetupGet(p => p.EnableFlag).Returns((byte)(TestUtils.Cast<int>(pair.Item1) % 2));
+                return mock.Object;
+            }
+
             var modes = Utils.GetEnumerable<GameMode>();
             var levels = Utils.GetEnumerable<Level>();
             var stages = Utils.GetEnumerable<StagePractice>();
@@ -34,12 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             _ = mock.SetupGet(m => m.Practices).Returns(
                 levels
                     .SelectMany(level => stages.Select(stage => (level, stage)))
-                    .ToDictionary(
-                        pair => pair,
-                        pair => Mock.Of<IPractice>(
-                            m => (m.Score == 123456u - (TestUtils.Cast<uint>(pair.level) * 10u))
-                                 && (m.ClearFlag == (byte)(TestUtils.Cast<int>(pair.stage) % 2))
-                                 && (m.EnableFlag == (byte)(TestUtils.Cast<int>(pair.level) % 2)))));
+                    .ToDictionary(pair => pair, pair => CreatePractice(pair)));
             return mock;
         }
 

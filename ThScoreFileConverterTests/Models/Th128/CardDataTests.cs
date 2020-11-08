@@ -15,22 +15,26 @@ namespace ThScoreFileConverterTests.Models.Th128
     {
         internal static Mock<ICardData> MockCardData()
         {
+            static ISpellCard CreateSpellCard(int index)
+            {
+                var mock = new Mock<ISpellCard>();
+                _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+                _ = mock.SetupGet(s => s.NoMissCount).Returns(123 + index);
+                _ = mock.SetupGet(s => s.NoIceCount).Returns(456 + index);
+                _ = mock.SetupGet(s => s.TrialCount).Returns(789 + index);
+                _ = mock.SetupGet(s => s.Id).Returns(index);
+                _ = mock.SetupGet(s => s.Level).Returns(Level.Hard);
+                _ = mock.Setup(s => s.HasTried()).Returns(true);
+                return mock.Object;
+            }
+
             var mock = new Mock<ICardData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CD");
             _ = mock.SetupGet(m => m.Version).Returns(1);
             _ = mock.SetupGet(m => m.Checksum).Returns(0u);
             _ = mock.SetupGet(m => m.Size).Returns(0x947C);
             _ = mock.SetupGet(m => m.Cards).Returns(
-                Enumerable.Range(1, 250).ToDictionary(
-                    index => index,
-                    index => Mock.Of<ISpellCard>(
-                        m => (m.Name == TestUtils.MakeRandomArray<byte>(0x80))
-                             && (m.NoMissCount == 123 + index)
-                             && (m.NoIceCount == 456 + index)
-                             && (m.TrialCount == 789 + index)
-                             && (m.Id == index)
-                             && (m.Level == Level.Hard)
-                             && (m.HasTried() == true))));
+                Enumerable.Range(1, 250).ToDictionary(index => index, index => CreateSpellCard(index)));
             return mock;
         }
 
