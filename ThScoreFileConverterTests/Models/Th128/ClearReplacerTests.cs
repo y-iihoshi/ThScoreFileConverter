@@ -12,18 +12,29 @@ namespace ThScoreFileConverterTests.Models.Th128
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        private static IEnumerable<IClearData> CreateClearDataList()
         {
-            Mock.Of<IClearData>(
-                c => (c.Route == RouteWithTotal.A2)
-                     && (c.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
-                        level => level,
-                        level => Enumerable.Range(0, 10).Select(
-                            index => Mock.Of<IScoreData>(
-                                s => (s.StageProgress ==
-                                        (level == Level.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5))))
-                                     && (s.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>)))
-        }.ToDictionary(clearData => clearData.Route);
+            static IScoreData CreateScoreData(Level level, int index)
+            {
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.StageProgress).Returns(
+                    level == Level.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
+                _ = mock.SetupGet(s => s.DateTime).Returns((uint)index % 2);
+                return mock.Object;
+            }
+
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(c => c.Route).Returns(RouteWithTotal.A2);
+            _ = mock.SetupGet(c => c.Rankings).Returns(
+                Utils.GetEnumerable<Level>().ToDictionary(
+                    level => level,
+                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
+                        as IReadOnlyList<IScoreData>));
+            return new[] { mock.Object };
+        }
+
+        internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(clearData => clearData.Route);
 
         [TestMethod]
         public void ClearReplacerTest()

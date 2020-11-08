@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.ReimuB)
-                         &&(m.Practices == new Dictionary<(Level, Stage), IPractice>()))
+                         && (m.Practices == new Dictionary<(Level, Stage), IPractice>()))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new PracticeReplacer(dictionary);

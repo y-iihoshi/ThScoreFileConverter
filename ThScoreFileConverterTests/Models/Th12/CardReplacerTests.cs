@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th12
             var dictionary = new[]
             {
                 Mock.Of<IClearData>(
-                    m => (m.Chara == CharaWithTotal.Total) &&(m.Cards == new Dictionary<int, ISpellCard>()))
+                    m => (m.Chara == CharaWithTotal.Total) && (m.Cards == new Dictionary<int, ISpellCard>()))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CardReplacer(dictionary, true);

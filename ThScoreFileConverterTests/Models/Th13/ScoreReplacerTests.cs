@@ -143,17 +143,27 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var dictionary = new[]
+            static IScoreData CreateScoreData()
             {
-                Mock.Of<IClearData>(
-                    c => (c.Chara == CharaWithTotal.Marisa)
-                         && (c.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
-                            level => level,
-                            level => Enumerable.Range(0, 10).Select(
-                                index => Mock.Of<IScoreData>(
-                                    s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.Extra)))
-                            .ToList() as IReadOnlyList<IScoreData>)))
-            }.ToDictionary(clearData => clearData.Chara);
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
+                _ = mock.SetupGet(s => s.StageProgress).Returns(StageProgress.Extra);
+                return mock.Object;
+            }
+
+            static IClearData CreateClearData()
+            {
+                var mock = new Mock<IClearData>();
+                _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
+                _ = mock.SetupGet(c => c.Rankings).Returns(
+                    Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                        level => level,
+                        level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
+                            as IReadOnlyList<IScoreData>));
+                return mock.Object;
+            }
+
+            var dictionary = new[] { CreateClearData() }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T13SCRHMR23"));
@@ -162,17 +172,27 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ReplaceTestStageExtraClear()
         {
-            var dictionary = new[]
+            static IScoreData CreateScoreData()
             {
-                Mock.Of<IClearData>(
-                    c => (c.Chara == CharaWithTotal.Marisa)
-                         && (c.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
-                            level => level,
-                            level => Enumerable.Range(0, 10).Select(
-                                index => Mock.Of<IScoreData>(
-                                    s => (s.DateTime == 34567890u) && (s.StageProgress == StageProgress.ExtraClear)))
-                            .ToList() as IReadOnlyList<IScoreData>)))
-            }.ToDictionary(clearData => clearData.Chara);
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
+                _ = mock.SetupGet(s => s.StageProgress).Returns(StageProgress.ExtraClear);
+                return mock.Object;
+            }
+
+            static IClearData CreateClearData()
+            {
+                var mock = new Mock<IClearData>();
+                _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
+                _ = mock.SetupGet(c => c.Rankings).Returns(
+                    Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                        level => level,
+                        level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
+                            as IReadOnlyList<IScoreData>));
+                return mock.Object;
+            }
+
+            var dictionary = new[] { CreateClearData() }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ScoreReplacer(dictionary);
             Assert.AreEqual("All Clear", replacer.Replace("%T13SCRHMR23"));

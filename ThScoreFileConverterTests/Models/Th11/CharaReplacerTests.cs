@@ -24,8 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th11
                          && (m.PlayTime == 4567890)
                          && (m.ClearCounts == levels.ToDictionary(level => level, level => 100 - (int)level))),
                 Mock.Of<IClearData>(
-                    m =>
-                         (m.Chara == CharaWithTotal.MarisaAlice)
+                    m => (m.Chara == CharaWithTotal.MarisaAlice)
                          && (m.TotalPlayCount == 12)
                          && (m.PlayTime == 3456789)
                          && (m.ClearCounts == levels.ToDictionary(level => level, level => 50 - (int)level))),

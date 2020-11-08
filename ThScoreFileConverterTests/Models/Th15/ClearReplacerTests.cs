@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
@@ -12,26 +13,37 @@ namespace ThScoreFileConverterTests.Models.Th15
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        private static IEnumerable<IClearData> CreateClearDataList()
         {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
-                                        level => level,
-                                        level => Enumerable.Range(0, 10).Select(
-                                            index => Mock.Of<IScoreData>(
-                                                s => (s.StageProgress == (level == LevelWithTotal.Extra
-                                                        ? StageProgress.Extra : (StageProgress)(5 - (index % 5))))
-                                                     && (s.DateTime == (uint)index % 2)))
-                                        .ToList() as IReadOnlyList<IScoreData>))
-                            },
-                        }))
-        }.ToDictionary(clearData => clearData.Chara);
+            static IScoreData CreateScoreData(LevelWithTotal level, int index)
+            {
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.StageProgress).Returns(
+                    level == LevelWithTotal.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
+                _ = mock.SetupGet(s => s.DateTime).Returns((uint)index % 2);
+                return mock.Object;
+            }
+
+            static IClearDataPerGameMode CreateClearDataPerGameMode()
+            {
+                var mock = new Mock<IClearDataPerGameMode>();
+                _ = mock.SetupGet(c => c.Rankings).Returns(
+                    Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                        level => level,
+                        level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
+                            as IReadOnlyList<IScoreData>));
+                return mock.Object;
+            }
+
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
+            _ = mock.SetupGet(c => c.GameModeData).Returns(
+                new[] { (GameMode.Pointdevice, CreateClearDataPerGameMode()) }.ToDictionary());
+            return new[] { mock.Object };
+        }
+
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void ClearReplacerTest()

@@ -18,18 +18,29 @@ namespace ThScoreFileConverterTests.Models.Th13
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+        private static IEnumerable<IClearData> CreateClearDataList()
         {
-            Mock.Of<IClearData>(
-                c => (c.Chara == CharaWithTotal.Marisa)
-                     && (c.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
-                        level => level,
-                        level => Enumerable.Range(0, 10).Select(
-                            index => Mock.Of<IScoreData>(
-                                s => (s.StageProgress == (level == LevelPracticeWithTotal.Extra
-                                        ? StageProgress.Extra : (StageProgress)(5 - (index % 5))))
-                                     && (s.DateTime == (uint)index % 2))).ToList() as IReadOnlyList<IScoreData>)))
-        }.ToDictionary(clearData => clearData.Chara);
+            static IScoreData CreateScoreData(LevelPracticeWithTotal level, int index)
+            {
+                var mock = new Mock<IScoreData>();
+                _ = mock.SetupGet(s => s.StageProgress).Returns(
+                    level == LevelPracticeWithTotal.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
+                _ = mock.SetupGet(s => s.DateTime).Returns((uint)index % 2);
+                return mock.Object;
+            }
+
+            var mock = new Mock<IClearData>();
+            _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
+            _ = mock.SetupGet(c => c.Rankings).Returns(
+                Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                    level => level,
+                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
+                        as IReadOnlyList<IScoreData>));
+            return new[] { mock.Object };
+        }
+
+        internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+            CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
         [TestMethod]
         public void ClearReplacerTest()
