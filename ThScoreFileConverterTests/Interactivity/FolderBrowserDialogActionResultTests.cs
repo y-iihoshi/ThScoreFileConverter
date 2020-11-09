@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Interactivity;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -19,12 +18,7 @@ namespace ThScoreFileConverterTests.Interactivity
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void FolderBrowserDialogActionResultTestNull()
-        {
-            _ = new FolderBrowserDialogActionResult(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new FolderBrowserDialogActionResult(null!));
     }
 }

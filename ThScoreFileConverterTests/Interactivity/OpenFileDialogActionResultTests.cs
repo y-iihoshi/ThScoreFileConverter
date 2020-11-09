@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -24,23 +23,19 @@ namespace ThScoreFileConverterTests.Interactivity
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void OpenFileDialogActionResultTestNullFilename()
         {
             var filenames = new string[] { "bs01_1.dat", "bs01_2.dat" };
-            _ = new OpenFileDialogActionResult(null!, filenames);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new OpenFileDialogActionResult(null!, filenames));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void OpenFileDialogActionResultTestNullFilenames()
         {
             var filename = "score.dat";
-            _ = new OpenFileDialogActionResult(filename, null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new OpenFileDialogActionResult(filename, null!));
         }
     }
 }
