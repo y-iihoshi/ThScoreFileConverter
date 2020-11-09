@@ -9,23 +9,23 @@ namespace ThScoreFileConverterTests.Models.Th095
     [TestClass]
     public class ShotExReplacerTests
     {
-        internal static IReadOnlyDictionary<(Level, int), (string, IBestShotHeader)> BestShots { get; } =
-            new List<(string, IBestShotHeader header)>
-            {
-                (@"C:\path\to\output\bestshots\bs_02_3.png", BestShotHeaderTests.MockBestShotHeader().Object),
-            }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
-
-        internal static IReadOnlyList<IScore> Scores { get; }
-
-        static ShotExReplacerTests()
+        private static IReadOnlyList<IScore> CreateScores()
         {
             var headerMock = BestShotHeaderTests.MockBestShotHeader();
 
             var scoreMock = ScoreTests.MockScore();
             _ = scoreMock.SetupGet(m => m.LevelScene).Returns((headerMock.Object.Level, headerMock.Object.Scene));
 
-            Scores = new[] { scoreMock.Object };
+            return new[] { scoreMock.Object };
         }
+
+        internal static IReadOnlyDictionary<(Level, int), (string, IBestShotHeader)> BestShots { get; } =
+            new List<(string, IBestShotHeader header)>
+            {
+                (@"C:\path\to\output\bestshots\bs_02_3.png", BestShotHeaderTests.MockBestShotHeader().Object),
+            }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
+
+        internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
 
         [TestMethod]
         public void ShotExReplacerTest()
