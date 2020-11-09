@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Extensions
 {
@@ -21,12 +20,10 @@ namespace ThScoreFileConverterTests.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SkipLastTestNull()
         {
             int[] array = null!;
-            _ = array.SkipLast(2);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = array.SkipLast(2));
         }
 
         [TestMethod]
@@ -64,12 +61,10 @@ namespace ThScoreFileConverterTests.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TakeLastTestNull()
         {
             int[] array = null!;
-            _ = array.TakeLast(2);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = array.TakeLast(2));
         }
 
         [TestMethod]
@@ -123,7 +118,7 @@ namespace ThScoreFileConverterTests.Extensions
         {
             IEnumerable<KeyValuePair<int, string>> pairs = null!;
 
-            Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
         }
 
         [TestMethod]
@@ -150,7 +145,7 @@ namespace ThScoreFileConverterTests.Extensions
         {
             IEnumerable<(int, string)> pairs = null!;
 
-            Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
         }
     }
 }

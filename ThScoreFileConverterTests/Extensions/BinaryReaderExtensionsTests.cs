@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Extensions
 {
@@ -23,39 +22,30 @@ namespace ThScoreFileConverterTests.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadExactBytesTestNull()
         {
             BinaryReader reader = null!;
 
-            _ = reader.ReadExactBytes(1);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = reader.ReadExactBytes(1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadExactBytesTestEmptyStream()
         {
             using var stream = new MemoryStream();
             using var reader = new BinaryReader(stream);
 
-            _ = reader.ReadExactBytes(1);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = reader.ReadExactBytes(1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadExactBytesTestNegative()
         {
             var bytes = new byte[] { 1, 2, 3, 4, 5 };
             using var stream = new MemoryStream(bytes);
             using var reader = new BinaryReader(stream);
 
-            _ = reader.ReadExactBytes(-1);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = reader.ReadExactBytes(-1));
         }
 
         [TestMethod]
@@ -71,16 +61,13 @@ namespace ThScoreFileConverterTests.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadExactBytesTestShortened()
         {
             var bytes = new byte[] { 1, 2, 3, 4, 5 };
             using var stream = new MemoryStream(bytes);
             using var reader = new BinaryReader(stream);
 
-            _ = reader.ReadExactBytes(bytes.Length + 1);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = reader.ReadExactBytes(bytes.Length + 1));
         }
 
         [TestMethod]

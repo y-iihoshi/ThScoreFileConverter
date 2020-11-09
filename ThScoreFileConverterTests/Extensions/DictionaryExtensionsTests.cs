@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Extensions
 {
@@ -21,12 +20,10 @@ namespace ThScoreFileConverterTests.Extensions
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TryAddTestNull()
         {
             Dictionary<int, int> dictionary = null!;
-            _ = dictionary.TryAdd(1, 2);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = dictionary.TryAdd(1, 2));
         }
 
         [TestMethod]
