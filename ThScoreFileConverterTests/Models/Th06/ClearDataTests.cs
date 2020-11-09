@@ -66,17 +66,11 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearDataTestNullChapter()
-        {
-            _ = new ClearData(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearData(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSignature()
         {
             var mock = MockClearData();
@@ -84,13 +78,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ClearData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ClearData(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSize1()
         {
             var mock = MockClearData();
@@ -98,9 +89,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ClearData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ClearData(chapter));
         }
 
         public static IEnumerable<object[]> InvalidCharacters
@@ -108,16 +97,13 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ClearDataTestInvalidChara(int chara)
         {
             var mock = MockClearData();
             _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ClearData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new ClearData(chapter));
         }
     }
 }
