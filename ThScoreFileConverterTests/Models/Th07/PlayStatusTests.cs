@@ -91,39 +91,28 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void PlayStatusTestNullChapter()
-        {
-            _ = new PlayStatus(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayStatus(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSignature()
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = new PlayStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PlayStatus(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSize1()
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = new PlayStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PlayStatus(chapter));
         }
     }
 }

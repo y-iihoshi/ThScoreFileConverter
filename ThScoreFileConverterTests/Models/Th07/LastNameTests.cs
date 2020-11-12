@@ -57,39 +57,28 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void LastNameTestNullChapter()
-        {
-            _ = new LastName(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new LastName(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LastNameTestInvalidSignature()
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = new LastName(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new LastName(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LastNameTestInvalidSize1()
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = new LastName(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new LastName(chapter));
         }
     }
 }

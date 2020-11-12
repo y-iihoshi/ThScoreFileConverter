@@ -19,12 +19,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TimeReplacerTestNull()
-        {
-            _ = new TimeReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new TimeReplacer(null!));
 
         [TestMethod]
         public void ReplaceTestPlay()

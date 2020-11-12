@@ -63,17 +63,11 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void PracticeScoreTestNullChapter()
-        {
-            _ = new PracticeScore(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PracticeScore(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void PracticeScoreTestInvalidSignature()
         {
             var mock = MockPracticeScore();
@@ -81,13 +75,10 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PracticeScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PracticeScore(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void PracticeScoreTestInvalidSize1()
         {
             var mock = MockPracticeScore();
@@ -95,9 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PracticeScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PracticeScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidCharacters
@@ -105,16 +94,13 @@ namespace ThScoreFileConverterTests.Models.Th07
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidChara(int chara)
         {
             var mock = MockPracticeScore();
             _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PracticeScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new PracticeScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -122,16 +108,13 @@ namespace ThScoreFileConverterTests.Models.Th07
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidLevel(int level)
         {
             var mock = MockPracticeScore();
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PracticeScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new PracticeScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidStages
@@ -139,16 +122,13 @@ namespace ThScoreFileConverterTests.Models.Th07
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidStage(int stage)
         {
             var mock = MockPracticeScore();
             _ = mock.SetupGet(m => m.Stage).Returns(TestUtils.Cast<Stage>(stage));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PracticeScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new PracticeScore(chapter));
         }
     }
 }

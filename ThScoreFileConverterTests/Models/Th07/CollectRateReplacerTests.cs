@@ -52,12 +52,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CollectRateReplacerTestNull()
-        {
-            _ = new CollectRateReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CollectRateReplacer(null!));
 
         [TestMethod]
         public void CollectRateReplacerTestEmpty()

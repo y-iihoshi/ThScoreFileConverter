@@ -76,26 +76,20 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var header = new FileHeaderBase();
-            header.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => header.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened()
         {
             var properties = ValidProperties;
             var array = MakeByteArray(properties);
             array = array.Take(array.Length - 1).ToArray();
 
-            _ = TestUtils.Create<FileHeaderBase>(array);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<FileHeaderBase>(array));
         }
 
         [TestMethod]
@@ -168,13 +162,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void WriteToTestNull()
         {
             var header = new FileHeaderBase();
-            header.WriteTo(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => header.WriteTo(null!));
         }
     }
 }
