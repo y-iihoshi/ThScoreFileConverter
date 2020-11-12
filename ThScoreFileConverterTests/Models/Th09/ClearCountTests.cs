@@ -56,26 +56,21 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var clearCount = new ClearCount();
-            clearCount.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => clearCount.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedTrials()
         {
             var mock = MockClearCount();
             var counts = mock.Object.Counts;
             _ = mock.SetupGet(m => m.Counts).Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
 
-            _ = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

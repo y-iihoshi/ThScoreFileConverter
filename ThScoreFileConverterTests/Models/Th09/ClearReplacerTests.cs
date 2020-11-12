@@ -39,20 +39,12 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearReplacerTestNullRankings()
-        {
-            _ = new ClearReplacer(null!, ClearCounts);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(null!, ClearCounts));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearReplacerTestNullClearCounts()
-        {
-            _ = new ClearReplacer(Rankings, null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(Rankings, null!));
 
         [TestMethod]
         public void ClearReplacerTestEmptyRankings()
