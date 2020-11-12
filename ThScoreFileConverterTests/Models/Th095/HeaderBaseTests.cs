@@ -72,17 +72,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var header = new HeaderBase();
-            header.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => header.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmptySignature()
         {
             var properties = MakeProperties(string.Empty);
@@ -93,13 +89,11 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             // The actual value of the DecodedBodySize property can not be read.
             // so EndOfStreamException will be thrown.
-            _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedSignature()
         {
             var properties = MakeProperties(ValidProperties.signature.Substring(0, 3));
@@ -110,9 +104,8 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             // The actual value of the DecodedBodySize property can not be read.
             // so EndOfStreamException will be thrown.
-            _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -134,15 +127,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestNegativeEncodedAllSize()
         {
             var properties = ValidProperties;
             properties.encodedAllSize = -1;
 
-            _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -182,15 +173,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestNegativeEncodedBodySize()
         {
             var properties = ValidProperties;
             properties.encodedBodySize = -1;
 
-            _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -230,15 +219,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestNegativeDecodedBodySize()
         {
             var properties = ValidProperties;
             properties.decodedBodySize = -1;
 
-            _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -273,16 +260,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void WriteToTestNull()
         {
             var properties = ValidProperties;
             var byteArray = MakeByteArray(properties);
 
             var header = TestUtils.Create<HeaderBase>(byteArray);
-            header.WriteTo(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => header.WriteTo(null!));
         }
     }
 }

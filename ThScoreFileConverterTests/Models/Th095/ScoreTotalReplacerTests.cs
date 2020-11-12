@@ -30,12 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNull()
-        {
-            _ = new ScoreTotalReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreTotalReplacer(null!));
 
         [TestMethod]
         public void ScoreTotalReplacerTestEmpty()

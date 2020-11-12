@@ -80,13 +80,8 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ChapterTestNull()
-        {
-            _ = new ChapterWrapper(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ChapterWrapper(null!));
 
         [TestMethod]
         public void ChapterTestCopyWithExpected()
@@ -99,43 +94,35 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ChapterTestNullWithExpected()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = new ChapterWrapper(null!, chapter.Signature, chapter.Version, chapter.Size);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ChapterWrapper(null!, chapter.Signature, chapter.Version, chapter.Size));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ChapterTestInvalidSignature()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = new ChapterWrapper(chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = new ChapterWrapper(chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ChapterTestInvalidVersion()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = new ChapterWrapper(chapter, chapter.Signature, (ushort)(chapter.Version - 1), chapter.Size);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = new ChapterWrapper(chapter, chapter.Signature, (ushort)(chapter.Version - 1), chapter.Size));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ChapterTestInvalidSize()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = new ChapterWrapper(chapter, chapter.Signature, chapter.Version, chapter.Size - 1);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = new ChapterWrapper(chapter, chapter.Signature, chapter.Version, chapter.Size - 1));
         }
 
         [TestMethod]
@@ -148,17 +135,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var chapter = new Chapter();
-            chapter.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => chapter.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadFromTestEmptySignature()
         {
             var properties = ValidProperties;
@@ -170,13 +153,11 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             // The actual value of the Size property becomes negative,
             // so ArgumentOutOfRangeException will be thrown.
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadFromTestShortenedSignature()
         {
             var properties = ValidProperties;
@@ -192,13 +173,11 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             // The actual value of the Size property becomes negative,
             // so ArgumentOutOfRangeException will be thrown.
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestExceededSignature()
         {
             var properties = ValidProperties;
@@ -210,33 +189,28 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             // The actual value of the Size property becomes too large,
             // so EndOfStreamException will be thrown.
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadFromTestNegativeSize()
         {
             var properties = ValidProperties;
             properties.size = -1;
 
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadFromTestZeroSize()
         {
             var properties = ValidProperties;
             properties.size = 0;
 
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -253,15 +227,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestExceededSize()
         {
             var properties = ValidProperties;
             ++properties.size;
 
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -277,15 +249,13 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmptyData()
         {
             var properties = ValidProperties;
             properties.data = Array.Empty<byte>();
 
-            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
