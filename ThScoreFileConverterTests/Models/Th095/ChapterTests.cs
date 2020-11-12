@@ -106,7 +106,8 @@ namespace ThScoreFileConverterTests.Models.Th095
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = new ChapterWrapper(chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size));
+                () => _ = new ChapterWrapper(
+                    chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size));
         }
 
         [TestMethod]

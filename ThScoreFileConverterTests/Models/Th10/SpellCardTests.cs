@@ -64,39 +64,32 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var spellCard = new SpellCard();
-            spellCard.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => spellCard.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName()
         {
             var mock = MockSpellCard();
             var name = mock.Object.Name;
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededName()
         {
             var mock = MockSpellCard();
             var name = mock.Object.Name;
             _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
-            _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -104,15 +97,13 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level)
         {
             var mock = MockSpellCard();
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
-            _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
         }
     }
 }
