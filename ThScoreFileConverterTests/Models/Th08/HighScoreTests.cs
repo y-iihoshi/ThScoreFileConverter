@@ -114,13 +114,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void HighScoreTestNullChapter()
-        {
-            _ = new HighScore(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new HighScore(null!));
 
         [TestMethod]
         public void HighScoreTestScore()
@@ -156,7 +151,6 @@ namespace ThScoreFileConverterTests.Models.Th08
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSignature()
         {
             var mock = MockHighScore();
@@ -164,13 +158,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new HighScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new HighScore(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSize1()
         {
             var mock = MockHighScore();
@@ -178,9 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new HighScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new HighScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidCharacters
@@ -188,16 +177,13 @@ namespace ThScoreFileConverterTests.Models.Th08
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidChara(int chara)
         {
             var mock = MockHighScore();
             _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new HighScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new HighScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -205,16 +191,13 @@ namespace ThScoreFileConverterTests.Models.Th08
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidLevel(int level)
         {
             var mock = MockHighScore();
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new HighScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new HighScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidStageProgresses
@@ -222,16 +205,13 @@ namespace ThScoreFileConverterTests.Models.Th08
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidStageProgress(int stageProgress)
         {
             var mock = MockHighScore();
             _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new HighScore(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new HighScore(chapter));
         }
     }
 }

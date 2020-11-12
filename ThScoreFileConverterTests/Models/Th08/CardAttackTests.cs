@@ -88,17 +88,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CardAttackTestNullChapter()
-        {
-            _ = new CardAttack(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CardAttack(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSignature()
         {
             var mock = MockCardAttack();
@@ -106,13 +100,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new CardAttack(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardAttack(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSize1()
         {
             var mock = MockCardAttack();
@@ -120,9 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new CardAttack(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardAttack(chapter));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -130,16 +119,13 @@ namespace ThScoreFileConverterTests.Models.Th08
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void CardAttackTestInvalidLevel(int level)
         {
             var mock = MockCardAttack();
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<LevelPracticeWithTotal>(level));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new CardAttack(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new CardAttack(chapter));
         }
 
         [TestMethod]

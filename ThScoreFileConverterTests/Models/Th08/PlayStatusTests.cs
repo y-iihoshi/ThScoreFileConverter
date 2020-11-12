@@ -88,17 +88,11 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void PlayStatusTestNullChapter()
-        {
-            _ = new PlayStatus(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayStatus(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSignature()
         {
             var mock = MockPlayStatus();
@@ -106,13 +100,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PlayStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PlayStatus(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void PlayStatusTestInvalidSize1()
         {
             var mock = MockPlayStatus();
@@ -120,9 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new PlayStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PlayStatus(chapter));
         }
     }
 }

@@ -72,26 +72,21 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var playCount = new PlayCount();
-            playCount.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => playCount.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedTrials()
         {
             var mock = MockPlayCount();
             var trials = mock.Object.Trials;
             _ = mock.SetupGet(m => m.Trials).Returns(trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary());
 
-            _ = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

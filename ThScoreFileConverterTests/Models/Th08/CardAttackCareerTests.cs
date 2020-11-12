@@ -75,17 +75,13 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var career = new CardAttackCareer();
-            career.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => career.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedMaxBonuses()
         {
             var mock = MockCardAttackCareer();
@@ -93,9 +89,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.MaxBonuses).Returns(
                 maxBonuses.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -115,7 +110,6 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedTrialCounts()
         {
             var mock = MockCardAttackCareer();
@@ -123,9 +117,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.TrialCounts).Returns(
                 trialCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -145,7 +138,6 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedClearCounts()
         {
             var mock = MockCardAttackCareer();
@@ -153,9 +145,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
                 clearCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
