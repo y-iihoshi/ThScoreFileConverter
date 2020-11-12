@@ -56,37 +56,30 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var highScore = new HighScore();
-            highScore.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => highScore.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedName()
         {
             var stub = new HighScoreStub(ValidStub);
             stub.EncodedName = stub.EncodedName.SkipLast(1).ToArray();
 
-            _ = TestUtils.Create<HighScore>(MakeByteArray(stub));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<HighScore>(MakeByteArray(stub)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestExceededName()
         {
             var stub = new HighScoreStub(ValidStub);
             stub.EncodedName = stub.EncodedName.Concat(new byte[] { default }).ToArray();
 
-            _ = TestUtils.Create<HighScore>(MakeByteArray(stub));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<HighScore>(MakeByteArray(stub)));
         }
 
         [DataTestMethod]
@@ -156,7 +149,6 @@ namespace ThScoreFileConverterTests.Models.Th075
         [DataRow(11, 31)]
         [DataRow(12, 0)]
         [DataRow(12, 32)]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestInvalidMonthDay(int month, int day)
         {
             var properties = new HighScoreStub(ValidStub)
@@ -165,9 +157,8 @@ namespace ThScoreFileConverterTests.Models.Th075
                 Day = (byte)day,
             };
 
-            _ = TestUtils.Create<HighScore>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<HighScore>(MakeByteArray(properties)));
         }
     }
 }

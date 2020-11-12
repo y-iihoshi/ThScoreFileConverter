@@ -109,13 +109,10 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var clearData = new ClearData();
-            clearData.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => clearData.ReadFrom(null!));
         }
     }
 }

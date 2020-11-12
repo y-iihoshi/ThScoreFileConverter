@@ -61,13 +61,10 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => allScoreData.ReadFrom(null!));
         }
     }
 }

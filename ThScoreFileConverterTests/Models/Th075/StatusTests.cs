@@ -68,26 +68,21 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var status = new Status();
-            status.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => status.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName()
         {
             var properties = ValidProperties;
             properties.encodedLastName =
                 properties.encodedLastName.Take(properties.encodedLastName.Length - 1).ToArray();
 
-            _ = TestUtils.Create<Status>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<Status>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -103,7 +98,6 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedArcadeScores()
         {
             var properties = new Properties(ValidProperties);
@@ -111,9 +105,8 @@ namespace ThScoreFileConverterTests.Models.Th075
                 .Where(pair => pair.Key != (CharaWithReserved.Meiling, CharaWithReserved.Meiling)).ToDictionary();
             properties.arcadeScores = scores;
 
-            _ = TestUtils.Create<Status>(MakeByteArray(properties));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<Status>(MakeByteArray(properties)));
         }
 
         [TestMethod]
