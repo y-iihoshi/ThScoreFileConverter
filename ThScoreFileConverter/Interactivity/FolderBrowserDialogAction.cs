@@ -123,7 +123,7 @@ namespace ThScoreFileConverter.Interactivity
             switch (dialogResult)
             {
                 case WinForms.DialogResult.OK:
-                    if (this.OkCommand is { })
+                    if (this.OkCommand is not null)
                     {
                         var result = new FolderBrowserDialogActionResult(dialog.SelectedPath);
                         if (this.OkCommand.CanExecute(result))
@@ -133,7 +133,7 @@ namespace ThScoreFileConverter.Interactivity
                     break;
 
                 case WinForms.DialogResult.Cancel:
-                    if (this.CancelCommand is { })
+                    if (this.CancelCommand is not null)
                     {
                         if (this.CancelCommand.CanExecute(null))
                             this.CancelCommand.Execute(null);

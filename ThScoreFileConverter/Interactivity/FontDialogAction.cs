@@ -301,7 +301,7 @@ namespace ThScoreFileConverter.Interactivity
             using var dialog = this.CreateDialog();
             using var disposable = new SingleAssignmentDisposable();
 
-            if (this.ShowApply && (this.ApplyCommand is { }))
+            if (this.ShowApply && (this.ApplyCommand is not null))
             {
                 disposable.Disposable = Observable
                     .FromEvent<EventHandler, EventArgs>(
@@ -316,12 +316,12 @@ namespace ThScoreFileConverter.Interactivity
             switch (dialogResult)
             {
                 case WinForms.DialogResult.OK:
-                    if (this.OkCommand is { })
+                    if (this.OkCommand is not null)
                         ExecuteCommand(this.OkCommand, dialog.Font, dialog.Color);
                     break;
 
                 case WinForms.DialogResult.Cancel:
-                    if (this.CancelCommand is { })
+                    if (this.CancelCommand is not null)
                         ExecuteCommand(this.CancelCommand, oldFont, oldColor);
                     break;
 

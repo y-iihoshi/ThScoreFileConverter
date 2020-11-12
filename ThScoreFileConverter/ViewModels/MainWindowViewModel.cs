@@ -568,7 +568,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="selectedItems">A list indicating the path strings which are deleted.</param>
         private void DeleteTemplateFiles(IList? selectedItems)
         {
-            if (selectedItems is { })
+            if (selectedItems is not null)
                 this.TemplateFiles = this.TemplateFiles.Except(selectedItems.Cast<string>());
         }
 
@@ -608,7 +608,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </returns>
         private bool CanConvert()
         {
-            return (this.converter is { })
+            return (this.converter is not null)
                 && !string.IsNullOrEmpty(this.ScoreFile)
                 && this.TemplateFiles.Any()
                 && !string.IsNullOrEmpty(this.OutputDirectory)
@@ -668,7 +668,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
-                        if (filePath is { })
+                        if (filePath is not null)
                             this.ScoreFile = filePath;
                     }
                 }
@@ -693,7 +693,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                        if (dirPath is { })
+                        if (dirPath is not null)
                             this.BestShotDirectory = dirPath;
                     }
                 }
@@ -742,7 +742,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                        if (dirPath is { })
+                        if (dirPath is not null)
                             this.OutputDirectory = dirPath;
                     }
                 }

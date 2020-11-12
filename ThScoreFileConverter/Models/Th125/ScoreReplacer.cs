@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Models.Th125
                     2 => Utils.ToNumberString(score?.BestshotScore ?? default),
                     3 => Utils.ToNumberString(score?.TrialCount ?? default),
                     4 => Utils.ToNumberString(score?.FirstSuccess ?? default),
-                    5 => (score is { })
+                    5 => (score is not null)
                         ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
                             .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)
                         : "----/--/-- --:--:--",

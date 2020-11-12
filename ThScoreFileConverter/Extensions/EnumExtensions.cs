@@ -91,7 +91,7 @@ namespace ThScoreFileConverter.Extensions
                     .Select(field =>
                         (enumValue: field.GetValue(null) is TEnum value ? value : default,
                             attr: GetAttribute<TAttribute>(field, false)))
-                    .Where(pair => pair.attr is { })
+                    .Where(pair => pair.attr is not null)
                     .ToDictionary(pair => pair.enumValue, pair => pair.attr!);
             }
         }

@@ -57,13 +57,13 @@ namespace ThScoreFileConverter.Models.Th143
                         else
                         {
                             return Utils.ToNumberString(
-                                (score is { }) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
+                                (score is not null) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
                                 ? challengeCount : default);
                         }
 
                     case 3:     // cleared count
                         return Utils.ToNumberString(
-                            (score is { }) && score.ClearCounts.TryGetValue(item, out var clearCount)
+                            (score is not null) && score.ClearCounts.TryGetValue(item, out var clearCount)
                             ? clearCount : default);
                     default:    // unreachable
                         return match.ToString();

@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Adapters
         /// <inheritdoc/>
         public void UpdateResources(FontFamily fontFamily, double? fontSize)
         {
-            if (fontFamily is { })
+            if (fontFamily is not null)
                 this.FontFamily = fontFamily;
             if (fontSize.HasValue)
                 this.FontSize = fontSize.Value;

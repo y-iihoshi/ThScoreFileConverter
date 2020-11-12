@@ -62,7 +62,7 @@ namespace ThScoreFileConverter.Models
             decoded.Seek(0, SeekOrigin.Begin);
             this.allScoreData = Read(decoded);
 
-            return this.allScoreData is { };
+            return this.allScoreData is not null;
         }
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
@@ -96,7 +96,7 @@ namespace ThScoreFileConverter.Models
         {
             using var decoded = new MemoryStream();
 
-            if (!(output is FileStream outputFile))
+            if (output is not FileStream outputFile)
                 throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
             var chara = Path.GetFileName(outputFile.Name)
                 .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
@@ -233,9 +233,9 @@ namespace ThScoreFileConverter.Models
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.Header is { }) &&
+            if ((allScoreData.Header is not null) &&
                 //// (allScoreData.scores.Count >= 0) &&
-                (allScoreData.Status is { }))
+                (allScoreData.Status is not null))
                 return allScoreData;
             else
                 return null;

@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Squirrel
                 var index = SQObject.Create(reader);
                 var value = SQObject.Create(reader);
 
-                if (!(index is SQInteger i))
+                if (index is not SQInteger i)
                     throw new InvalidDataException(Resources.InvalidDataExceptionIndexMustBeAnInteger);
                 if (i >= num)
                     throw new InvalidDataException(Resources.InvalidDataExceptionIndexIsOutOfRange);

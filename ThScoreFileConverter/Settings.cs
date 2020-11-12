@@ -191,7 +191,7 @@ namespace ThScoreFileConverter
                 if (settings.OutputCodePageId.HasValue &&
                     ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
                     this.OutputCodePageId = settings.OutputCodePageId.Value;
-                if (settings.Language is { })
+                if (settings.Language is not null)
                     this.Language = settings.Language;
             }
             catch (FileNotFoundException)

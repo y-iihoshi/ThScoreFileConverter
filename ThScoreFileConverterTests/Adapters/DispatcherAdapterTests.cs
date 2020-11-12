@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Adapters
     {
         private static App SetupApp()
         {
-            if (!(Application.Current is App app))
+            if (Application.Current is not App app)
             {
                 app = new App() { ShutdownMode = ShutdownMode.OnExplicitShutdown };
                 app.InitializeComponent();

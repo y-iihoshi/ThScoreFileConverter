@@ -38,14 +38,14 @@ namespace ThScoreFileConverter.Models.Th095
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                var score = scores.FirstOrDefault(elem => (elem is { }) && elem.LevelScene.Equals(key));
+                var score = scores.FirstOrDefault(elem => (elem is not null) && elem.LevelScene.Equals(key));
 
                 return type switch
                 {
                     1 => Utils.ToNumberString(score?.HighScore ?? default),
                     2 => Utils.ToNumberString(score?.BestshotScore ?? default),
                     3 => Utils.ToNumberString(score?.TrialCount ?? default),
-                    4 => (score is { }) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%",
+                    4 => (score is not null) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%",
                     _ => match.ToString(),  // unreachable
                 };
             });
