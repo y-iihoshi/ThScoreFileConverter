@@ -47,12 +47,8 @@ namespace ThScoreFileConverterTests.Models.Th14
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CharaExReplacerTestNull()
-        {
-            _ = new CharaExReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CharaExReplacer(null!));
 
         [TestMethod]
         public void CharaExReplacerTestEmpty()
