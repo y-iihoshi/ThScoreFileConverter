@@ -104,22 +104,17 @@ namespace ThScoreFileConverterTests.Models.Th135
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => allScoreData.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmpty()
         {
-            _ = TestUtils.Create<AllScoreData>(Array.Empty<byte>());
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<AllScoreData>(Array.Empty<byte>()));
         }
 
         [TestMethod]
