@@ -31,12 +31,8 @@ namespace ThScoreFileConverterTests.Models.Th145
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearRankReplacerTestNull()
-        {
-            _ = new ClearRankReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearRankReplacer(null!));
 
         [TestMethod]
         public void ClearRankReplacerTestEmpty()

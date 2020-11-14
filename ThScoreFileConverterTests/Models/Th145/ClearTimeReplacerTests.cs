@@ -37,12 +37,8 @@ namespace ThScoreFileConverterTests.Models.Th145
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearTimeReplacerTestNull()
-        {
-            _ = new ClearTimeReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearTimeReplacer(null!));
 
         [TestMethod]
         public void ClearTimeReplacerTestEmpty()
