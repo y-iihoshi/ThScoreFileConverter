@@ -142,22 +142,12 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
-        {
-            _ = SQObject.Create(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQObject.Create(null!));
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void CreateTestShorteneed()
-        {
-            _ = CreateTestHelper(new byte[3]);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<EndOfStreamException>(() => _ = CreateTestHelper(new byte[3]));
 
         [DataTestMethod]
         [DataRow(SQOT.Class)]
@@ -169,12 +159,10 @@ namespace ThScoreFileConverterTests.Squirrel
         [DataRow(SQOT.UserData)]
         [DataRow(SQOT.UserPointer)]
         [DataRow(SQOT.WeakRef)]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CreateTestInvalid(SQOT type)
         {
-            _ = CreateTestHelper(TestUtils.MakeByteArray((int)type));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)type)));
         }
     }
 }

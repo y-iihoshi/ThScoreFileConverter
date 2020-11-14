@@ -65,13 +65,8 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
-        {
-            _ = SQTable.Create(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQTable.Create(null!));
 
         [DataTestMethod]
         [DataRow(new[] { (int)SQOT.Table, (int)SQOT.Null },
@@ -95,12 +90,10 @@ namespace ThScoreFileConverterTests.Squirrel
             DisplayName = "missing key or value")]
         [DataRow(new[] { (int)SQOT.Table },
             DisplayName = "empty and missing sentinel")]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void CreateTestShortened(int[] array)
         {
-            _ = CreateTestHelper(TestUtils.MakeByteArray(array));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = CreateTestHelper(TestUtils.MakeByteArray(array)));
         }
 
         [DataTestMethod]
@@ -126,12 +119,10 @@ namespace ThScoreFileConverterTests.Squirrel
             DisplayName = "missing key data and sentinel")]
         [DataRow(new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, 456 },
             DisplayName = "missing value type and sentinel")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CreateTestInvalid(int[] array)
         {
-            _ = CreateTestHelper(TestUtils.MakeByteArray(array));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = CreateTestHelper(TestUtils.MakeByteArray(array)));
         }
     }
 }

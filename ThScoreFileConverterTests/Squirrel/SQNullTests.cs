@@ -34,21 +34,14 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
-        {
-            _ = SQNull.Create(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQNull.Create(null!));
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CreateTestInvalid()
         {
-            _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool)));
         }
 
         [TestMethod]

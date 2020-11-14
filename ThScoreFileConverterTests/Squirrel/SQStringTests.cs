@@ -44,13 +44,8 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
-        {
-            _ = SQString.Create(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQString.Create(null!));
 
         [DataTestMethod]
         [DataRow(0, "")]
@@ -72,22 +67,18 @@ namespace ThScoreFileConverterTests.Squirrel
         [DataTestMethod]
         [DataRow("abc")]
         [DataRow("博麗 霊夢")]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void CreateTestShortened(string value)
         {
             var bytes = TestUtils.CP932Encoding.GetBytes(value);
-            _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, bytes.Length + 1, bytes));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, bytes.Length + 1, bytes)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CreateTestInvalid()
         {
-            _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 3, "abc"));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 3, "abc")));
         }
 
         [TestMethod]
