@@ -27,17 +27,11 @@ namespace ThScoreFileConverterTests.Models.Th11
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void StatusTestNullChapter()
-        {
-            _ = new Status(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Status(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSignature()
         {
             var mock = MockStatus();
@@ -45,13 +39,10 @@ namespace ThScoreFileConverterTests.Models.Th11
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
-            _ = new Status(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidVersion()
         {
             var mock = MockStatus();
@@ -59,13 +50,10 @@ namespace ThScoreFileConverterTests.Models.Th11
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
-            _ = new Status(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSize()
         {
             var mock = MockStatus();
@@ -73,9 +61,7 @@ namespace ThScoreFileConverterTests.Models.Th11
             _ = mock.SetupGet(m => m.Size).Returns(++size);
 
             var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
-            _ = new Status(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
         }
 
         [DataTestMethod]
