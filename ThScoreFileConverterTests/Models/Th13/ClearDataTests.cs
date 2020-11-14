@@ -154,17 +154,11 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearDataTestNullChapter()
-        {
-            _ = new ClearData(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearData(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSignature()
         {
             var mock = MockClearData();
@@ -172,13 +166,10 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ClearData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ClearData(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidVersion()
         {
             var mock = MockClearData();
@@ -186,13 +177,10 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ClearData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ClearData(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSize()
         {
             var mock = MockClearData();
@@ -200,9 +188,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ClearData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ClearData(chapter));
         }
 
         [DataTestMethod]

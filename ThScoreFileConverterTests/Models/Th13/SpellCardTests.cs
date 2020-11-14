@@ -83,9 +83,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         {
             var spellCard = new SpellCard<TLevel>();
 
-            spellCard.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => spellCard.ReadFrom(null!));
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -96,9 +94,8 @@ namespace ThScoreFileConverterTests.Models.Th13
             var name = mock.Object.Name;
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -109,9 +106,8 @@ namespace ThScoreFileConverterTests.Models.Th13
             var name = mock.Object.Name;
             _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
-            _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -121,9 +117,8 @@ namespace ThScoreFileConverterTests.Models.Th13
             var mock = MockSpellCard<TLevel>();
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<TLevel>(level));
 
-            _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidTh13LevelPractices
@@ -143,23 +138,19 @@ namespace ThScoreFileConverterTests.Models.Th13
             => ReadFromTestHelper<LevelPractice>();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Th13ReadFromTestNull()
             => ReadFromTestNullHelper<LevelPractice>();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th13ReadFromTestShortenedName()
             => ReadFromTestShortenedNameHelper<LevelPractice>();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th13ReadFromTestExceededName()
             => ReadFromTestExceededNameHelper<LevelPractice>();
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidTh13LevelPractices))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th13ReadFromTestInvalidLevel(int level)
             => ReadFromTestInvalidLevelHelper<LevelPractice>(level);
 
@@ -176,23 +167,19 @@ namespace ThScoreFileConverterTests.Models.Th13
             => ReadFromTestHelper<Level>();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Th14ReadFromTestNull()
             => ReadFromTestNullHelper<Level>();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th14ReadFromTestShortenedName()
             => ReadFromTestShortenedNameHelper<Level>();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th14ReadFromTestExceededName()
             => ReadFromTestExceededNameHelper<Level>();
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th14ReadFromTestInvalidLevel(int level)
             => ReadFromTestInvalidLevelHelper<Level>(level);
 
@@ -209,23 +196,19 @@ namespace ThScoreFileConverterTests.Models.Th13
             => ReadFromTestHelper<Level>();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Th16ReadFromTestNull()
             => ReadFromTestNullHelper<Level>();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th16ReadFromTestShortenedName()
             => ReadFromTestShortenedNameHelper<Level>();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th16ReadFromTestExceededName()
             => ReadFromTestExceededNameHelper<Level>();
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void Th16ReadFromTestInvalidLevel(int level)
             => ReadFromTestInvalidLevelHelper<Level>(level);
 

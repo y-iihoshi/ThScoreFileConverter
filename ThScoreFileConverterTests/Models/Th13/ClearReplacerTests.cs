@@ -50,12 +50,8 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ClearReplacerTestNull()
-        {
-            _ = new ClearReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(null!));
 
         [TestMethod]
         public void ClearReplacerTestEmpty()

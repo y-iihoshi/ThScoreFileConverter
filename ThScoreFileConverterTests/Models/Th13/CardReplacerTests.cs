@@ -36,12 +36,8 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CardReplacerTestNull()
-        {
-            _ = new CardReplacer(null!, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CardReplacer(null!, false));
 
         [TestMethod]
         public void CardReplacerTestEmpty()
