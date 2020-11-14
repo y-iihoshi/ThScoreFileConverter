@@ -8,12 +8,8 @@ namespace ThScoreFileConverterTests.Models
     public class TimeTests
     {
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestNegative()
-        {
-            _ = new Time(-1);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(-1));
 
         [TestMethod]
         public void TimeTestZero()
@@ -42,12 +38,8 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestNegativeFrame()
-        {
-            _ = new Time(-1, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(-1, true));
 
         [TestMethod]
         public void TimeTestZeroFrame()
@@ -76,12 +68,8 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestNegativeMillisecond()
-        {
-            _ = new Time(-1, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(-1, false));
 
         [TestMethod]
         public void TimeTestZeroMillisecond()
@@ -123,12 +111,8 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeHour()
-        {
-            _ = new Time(-1, 34, 56, 43);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(-1, 34, 56, 43));
 
         [TestMethod]
         public void TimeTestComponentsExceededHours()
@@ -144,52 +128,28 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeMinute()
-        {
-            _ = new Time(12, -1, 56, 43);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, -1, 56, 43));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsExceededMinutes()
-        {
-            _ = new Time(12, 60, 56, 43);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 60, 56, 43));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeSecond()
-        {
-            _ = new Time(12, 34, -1, 43);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, -1, 43));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsExceededSeconds()
-        {
-            _ = new Time(12, 34, 60, 43);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 60, 43));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeFrame()
-        {
-            _ = new Time(12, 34, 56, -1);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 56, -1));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsExceededFrames()
-        {
-            _ = new Time(12, 34, 56, 60);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 56, 60));
 
         [TestMethod]
         public void TimeTestComponentsWithFrames()
@@ -205,12 +165,8 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeHour()
-        {
-            _ = new Time(-1, 34, 56, 43, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(-1, 34, 56, 43, true));
 
         [TestMethod]
         public void TimeTestComponentsWithFramesExceededHours()
@@ -226,52 +182,28 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeMinute()
-        {
-            _ = new Time(12, -1, 56, 43, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, -1, 56, 43, true));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesExceededMinutes()
-        {
-            _ = new Time(12, 60, 56, 43, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 60, 56, 43, true));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeSecond()
-        {
-            _ = new Time(12, 34, -1, 43, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, -1, 43, true));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesExceededSeconds()
-        {
-            _ = new Time(12, 34, 60, 43, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 60, 43, true));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeFrame()
-        {
-            _ = new Time(12, 34, 56, -1, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 56, -1, true));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesExceededFrames()
-        {
-            _ = new Time(12, 34, 56, 60, true);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 56, 60, true));
 
         [TestMethod]
         public void TimeTestComponentsWithMilliseconds()
@@ -287,12 +219,8 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeHour()
-        {
-            _ = new Time(-1, 34, 56, 789, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(-1, 34, 56, 789, false));
 
         [TestMethod]
         public void TimeTestComponentsWithMillisecondsExceededHours()
@@ -308,52 +236,28 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeMinute()
-        {
-            _ = new Time(12, -1, 56, 789, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, -1, 56, 789, false));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsExceededMinutes()
-        {
-            _ = new Time(12, 60, 56, 789, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 60, 56, 789, false));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeSecond()
-        {
-            _ = new Time(12, 34, -1, 789, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, -1, 789, false));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsExceededSeconds()
-        {
-            _ = new Time(12, 34, 60, 789, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 60, 789, false));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeMillisecond()
-        {
-            _ = new Time(12, 34, 56, -1, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 56, -1, false));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsExceededMilliseconds()
-        {
-            _ = new Time(12, 34, 56, 1000, false);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = new Time(12, 34, 56, 1000, false));
 
         [TestMethod]
         public void ToStringTestOneDigit()

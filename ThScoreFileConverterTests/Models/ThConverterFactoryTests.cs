@@ -16,13 +16,8 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
-        {
-            _ = ThConverterFactory.Create(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = ThConverterFactory.Create(null!));
 
         [TestMethod]
         public void CreateTestEmptyKey()

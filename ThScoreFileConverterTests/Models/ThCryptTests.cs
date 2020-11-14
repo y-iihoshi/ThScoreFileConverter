@@ -30,14 +30,13 @@ namespace ThScoreFileConverterTests.Models
         private const int LIMIT = 0x20;
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public void EncryptTest()
         {
             using var input = new MemoryStream(this.decrypted);
             using var output = new MemoryStream();
 
-            ThCrypt.Encrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NotImplementedException>(
+                () => ThCrypt.Encrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
@@ -57,13 +56,12 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void DecryptTestNullInput()
         {
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(null!, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NullReferenceException>(
+                () => ThCrypt.Decrypt(null!, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
@@ -86,26 +84,24 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void DecryptTestUnreadableInput()
         {
             using var input = new UnreadableMemoryStream();
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(input, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NotSupportedException>(
+                () => ThCrypt.Decrypt(input, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void DecryptTestClosedInput()
         {
             using var output = new MemoryStream();
             var input = new MemoryStream(this.encryptedBySmallBlock);
             input.Close();
 
-            ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ObjectDisposedException>(
+                () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
@@ -148,47 +144,43 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void DecryptTestNullOutput()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
 
-            ThCrypt.Decrypt(input, null!, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NullReferenceException>(
+                () => ThCrypt.Decrypt(input, null!, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void DecryptTestUnwritableOutput()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
             using var output = new MemoryStream(Array.Empty<byte>(), false);
 
-            ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NotSupportedException>(
+                () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void DecryptTestClosedOutput()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
             var output = new MemoryStream();
             output.Close();
 
-            ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ObjectDisposedException>(
+                () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestNegativeSize()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(input, output, -1, KEY, STEP, SMALL_BLOCK, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => ThCrypt.Decrypt(input, output, -1, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]
@@ -296,25 +288,23 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestNegativeBlock()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, -1, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, -1, LIMIT));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DivideByZeroException))]
         public void DecryptTestZeroBlock()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, 0, LIMIT);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<DivideByZeroException>(
+                () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, 0, LIMIT));
         }
 
         [TestMethod]
@@ -379,14 +369,13 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestNegativeLimit()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, -1);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, -1));
         }
 
         [TestMethod]

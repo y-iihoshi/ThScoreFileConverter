@@ -44,21 +44,17 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void ParseTestEmpty()
         {
             var parser = new EnumShortNameParser<Level>();
-            _ = parser.Parse(string.Empty);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidOperationException>(() => _ = parser.Parse(string.Empty));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void ParseTestUnknown()
         {
             var parser = new EnumShortNameParser<Level>();
-            _ = parser.Parse("A");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidOperationException>(() => _ = parser.Parse("A"));
         }
     }
 }

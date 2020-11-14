@@ -9,7 +9,6 @@ using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests
 {
@@ -42,20 +41,12 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void LoadTestNullPath()
-        {
-            Settings.Instance.Load(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.Load(null!));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void LoadTestEmptyPath()
-        {
-            Settings.Instance.Load(string.Empty);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentException>(() => Settings.Instance.Load(string.Empty));
 
         [TestMethod]
         public void LoadTestNonexistentPath()
@@ -73,92 +64,79 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyFile()
-        {
-            Settings.Instance.Load(@"TestData\empty.xml");
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<InvalidDataException>(() => Settings.Instance.Load(@"TestData\empty.xml"));
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-root-node.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNoRootNode()
         {
-            Settings.Instance.Load(@"TestData\no-root-node.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\no-root-node.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-root-node.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidRootNode()
         {
-            Settings.Instance.Load(@"TestData\invalid-root-node.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-root-node.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\wrong-namespace.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestWrongNamespace()
         {
-            Settings.Instance.Load(@"TestData\wrong-namespace.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\wrong-namespace.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-child-nodes.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNoChildNodes()
         {
-            Settings.Instance.Load(@"TestData\no-child-nodes.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\no-child-nodes.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-last-title.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNoLastTitle()
         {
-            Settings.Instance.Load(@"TestData\no-last-title.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\no-last-title.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-last-title.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyLastTitle()
         {
-            Settings.Instance.Load(@"TestData\empty-last-title.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-last-title.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\nonexistent-last-title.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNonexistentLastTitle()
         {
-            Settings.Instance.Load(@"TestData\nonexistent-last-title.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\nonexistent-last-title.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-dictionary.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNoDictionary()
         {
-            Settings.Instance.Load(@"TestData\no-dictionary.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\no-dictionary.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-dictionary.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyDictionary()
         {
-            Settings.Instance.Load(@"TestData\empty-dictionary.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-dictionary.xml"));
         }
 
         [TestMethod]
@@ -171,12 +149,8 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-key.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNoKey()
-        {
-            Settings.Instance.Load(@"TestData\no-key.xml");
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<InvalidDataException>(() => Settings.Instance.Load(@"TestData\no-key.xml"));
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-key.xml", @"TestData")]
@@ -196,12 +170,8 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-value.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNoValue()
-        {
-            Settings.Instance.Load(@"TestData\no-value.xml");
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<InvalidDataException>(() => Settings.Instance.Load(@"TestData\no-value.xml"));
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-value.xml", @"TestData")]
@@ -250,20 +220,18 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-hide-untried-cards.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyHideUntriedCards()
         {
-            Settings.Instance.Load(@"TestData\empty-hide-untried-cards.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-hide-untried-cards.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-hide-untried-cards.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidHideUntriedCards()
         {
-            Settings.Instance.Load(@"TestData\invalid-hide-untried-cards.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-hide-untried-cards.xml"));
         }
 
         [TestMethod]
@@ -376,47 +344,42 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-font-size.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyFontSize()
         {
-            Settings.Instance.Load(@"TestData\empty-font-size.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-font-size.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-font-size.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidFontSize()
         {
-            Settings.Instance.Load(@"TestData\invalid-font-size.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-font-size.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\negative-font-size.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestNegativeFontSize()
         {
-            Settings.Instance.Load(@"TestData\negative-font-size.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\negative-font-size.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\zero-font-size.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestZeroFontSize()
         {
-            Settings.Instance.Load(@"TestData\zero-font-size.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\zero-font-size.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\exceeded-font-size.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestExceededFontSize()
         {
-            Settings.Instance.Load(@"TestData\exceeded-font-size.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\exceeded-font-size.xml"));
         }
 
         [TestMethod]
@@ -429,20 +392,18 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-output-number-group-separator.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyOutputNumberGroupSeparator()
         {
-            Settings.Instance.Load(@"TestData\empty-output-number-group-separator.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-output-number-group-separator.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-output-number-group-separator.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidOutputNumberGroupSeparator()
         {
-            Settings.Instance.Load(@"TestData\invalid-output-number-group-separator.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-output-number-group-separator.xml"));
         }
 
         [TestMethod]
@@ -455,20 +416,18 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-input-code-page-id.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyInputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\empty-input-code-page-id.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-input-code-page-id.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-input-code-page-id.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidInputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\invalid-input-code-page-id.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-input-code-page-id.xml"));
         }
 
         [TestMethod]
@@ -489,20 +448,18 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-output-code-page-id.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyOutputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\empty-output-code-page-id.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\empty-output-code-page-id.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-output-code-page-id.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidOutputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\invalid-output-code-page-id.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-output-code-page-id.xml"));
         }
 
         [TestMethod]
@@ -547,11 +504,10 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-character.xml", @"TestData")]
-        [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestInvalidCharacter()
         {
-            Settings.Instance.Load(@"TestData\invalid-character.xml");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => Settings.Instance.Load(@"TestData\invalid-character.xml"));
         }
 
         [TestMethod]
@@ -615,44 +571,27 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void FontFamilyNameTestNull()
-        {
-            Settings.Instance.FontFamilyName = null!;
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.FontFamilyName = null!);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void FontSizeTestNull()
-        {
-            Settings.Instance.FontSize = null;
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.FontSize = null);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void OutputNumberGroupSeparatorTestNull()
         {
-            Settings.Instance.OutputNumberGroupSeparator = null;
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => Settings.Instance.OutputNumberGroupSeparator = null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void InputCodePageIdTestNull()
-        {
-            Settings.Instance.InputCodePageId = null;
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.InputCodePageId = null);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void OutputCodePageIdTestNull()
-        {
-            Settings.Instance.OutputCodePageId = null;
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.OutputCodePageId = null);
     }
 }
 

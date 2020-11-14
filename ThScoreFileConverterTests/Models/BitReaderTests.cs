@@ -20,24 +20,16 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void BitReaderTestNoStream()
-        {
-            _ = new BitReader(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new BitReader(null!));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void BitReaderTestUnreadable()
         {
             var stream = new MemoryStream();
             stream.Close();
 
-            _ = new BitReader(stream);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentException>(() => _ = new BitReader(stream));
         }
 
         [TestMethod]
@@ -103,14 +95,12 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadBitsTestNegativeNumBits()
         {
             using var stream = new MemoryStream(new byte[] { 0x53 });
             var reader = new BitReader(stream);
 
-            _ = reader.ReadBits(-1);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = reader.ReadBits(-1));
         }
 
         [TestMethod]

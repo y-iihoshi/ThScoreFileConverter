@@ -34,14 +34,12 @@ namespace ThScoreFileConverterTests.Models
         };
 
         [TestMethod]
-        [ExpectedException(typeof(NotImplementedException))]
         public void CompressTest()
         {
             using var input = new MemoryStream(this.decompressed);
             using var output = new MemoryStream();
 
-            Lzss.Compress(input, output);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NotImplementedException>(() => Lzss.Compress(input, output));
         }
 
         [TestMethod]
@@ -60,13 +58,11 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DecompressTestNullInput()
         {
             using var output = new MemoryStream();
 
-            Lzss.Decompress(null!, output);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => Lzss.Decompress(null!, output));
         }
 
         [TestMethod]
@@ -89,26 +85,22 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void DecompressTestUnreadableInput()
         {
             using var input = new UnreadableMemoryStream();
             using var output = new MemoryStream();
 
-            Lzss.Decompress(input, output);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentException>(() => Lzss.Decompress(input, output));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void DecompressTestClosedInput()
         {
             using var output = new MemoryStream();
             var input = new MemoryStream(this.compressed);
             input.Close();
 
-            Lzss.Decompress(input, output);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentException>(() => Lzss.Decompress(input, output));
         }
 
         [TestMethod]
@@ -151,36 +143,30 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void DecompressTestNullOutput()
         {
             using var input = new MemoryStream(this.compressed);
 
-            Lzss.Decompress(input, null!);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NullReferenceException>(() => Lzss.Decompress(input, null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void DecompressTestUnwritableOutput()
         {
             using var input = new MemoryStream(this.compressed);
             using var output = new MemoryStream(Array.Empty<byte>(), false);
 
-            Lzss.Decompress(input, output);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<NotSupportedException>(() => Lzss.Decompress(input, output));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void DecompressTestClosedOutput()
         {
             using var input = new MemoryStream(this.compressed);
             var output = new MemoryStream();
             output.Close();
 
-            Lzss.Decompress(input, output);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ObjectDisposedException>(() => Lzss.Decompress(input, output));
         }
     }
 }

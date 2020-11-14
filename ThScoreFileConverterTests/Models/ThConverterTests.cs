@@ -20,7 +20,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ConvertTestNull()
         {
             var converter = new Mock<ThConverter> { CallBase = true }.Object;
@@ -33,13 +32,10 @@ namespace ThScoreFileConverterTests.Models
                 (sender, e) => Console.WriteLine(
                     Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
 
-            converter.Convert(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => converter.Convert(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestInvalidType()
         {
             var converter = new Mock<ThConverter> { CallBase = true }.Object;
@@ -52,13 +48,10 @@ namespace ThScoreFileConverterTests.Models
                 (sender, e) => Console.WriteLine(
                     Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
 
-            converter.Convert(1);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentException>(() => converter.Convert(1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestNoSettings()
         {
             var converter = new Mock<ThConverter> { CallBase = true }.Object;
@@ -71,9 +64,7 @@ namespace ThScoreFileConverterTests.Models
                 (sender, e) => Console.WriteLine(
                     Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
 
-            converter.Convert(new SettingsPerTitle());
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentException>(() => converter.Convert(new SettingsPerTitle()));
         }
     }
 }

@@ -34,59 +34,46 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ThConverterEventArgsTestNullPath()
-        {
-            _ = new ThConverterEventArgs(null!, 2, 5);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ThConverterEventArgs(null!, 2, 5));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void ThConverterEventArgsTestEmptyPath()
-        {
-            _ = new ThConverterEventArgs(string.Empty, 2, 5);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentException>(() => _ = new ThConverterEventArgs(string.Empty, 2, 5));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeCurrent()
         {
-            _ = new ThConverterEventArgs(@"path\to\file", -1, 5);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = new ThConverterEventArgs(@"path\to\file", -1, 5));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroCurrent()
         {
-            _ = new ThConverterEventArgs(@"path\to\file", 0, 5);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = new ThConverterEventArgs(@"path\to\file", 0, 5));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestExtendedCurrent()
         {
-            _ = new ThConverterEventArgs(@"path\to\file", 6, 5);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = new ThConverterEventArgs(@"path\to\file", 6, 5));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeTotal()
         {
-            _ = new ThConverterEventArgs(@"path\to\file", 2, -1);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = new ThConverterEventArgs(@"path\to\file", 2, -1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroTotal()
         {
-            _ = new ThConverterEventArgs(@"path\to\file", 2, 0);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => _ = new ThConverterEventArgs(@"path\to\file", 2, 0));
         }
     }
 }
