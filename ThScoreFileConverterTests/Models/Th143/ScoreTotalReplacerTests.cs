@@ -43,12 +43,8 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNullScores()
-        {
-            _ = new ScoreTotalReplacer(null!, ItemStatuses);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreTotalReplacer(null!, ItemStatuses));
 
         [TestMethod]
         public void ScoreTotalReplacerTestEmptyScores()
@@ -59,12 +55,8 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNullItemStatuses()
-        {
-            _ = new ScoreTotalReplacer(Scores, null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreTotalReplacer(Scores, null!));
 
         [TestMethod]
         public void ScoreTotalReplacerTestEmptyItemStatuses()

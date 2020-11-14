@@ -17,12 +17,8 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void NicknameReplacerTestNull()
-        {
-            _ = new NicknameReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new NicknameReplacer(null!));
 
         [TestMethod]
         public void ReplaceTest()

@@ -77,17 +77,11 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ItemStatusTestNullChapter()
-        {
-            _ = new ItemStatus(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ItemStatus(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ItemStatusTestInvalidSignature()
         {
             var mock = MockItemStatus();
@@ -95,13 +89,10 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ItemStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ItemStatus(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ItemStatusTestInvalidVersion()
         {
             var mock = MockItemStatus();
@@ -109,13 +100,10 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ItemStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ItemStatus(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ItemStatusTestInvalidSize()
         {
             var mock = MockItemStatus();
@@ -123,9 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ItemStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ItemStatus(chapter));
         }
 
         public static IEnumerable<object[]> InvalidItems
@@ -133,16 +119,13 @@ namespace ThScoreFileConverterTests.Models.Th143
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidItems))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ItemStatusTestInvalidItems(int item)
         {
             var mock = MockItemStatus();
             _ = mock.SetupGet(m => m.Item).Returns(TestUtils.Cast<ItemWithTotal>(item));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new ItemStatus(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new ItemStatus(chapter));
         }
 
         [DataTestMethod]

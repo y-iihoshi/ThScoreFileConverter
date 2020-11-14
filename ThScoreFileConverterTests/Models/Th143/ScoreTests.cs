@@ -72,17 +72,11 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTestNullChapter()
-        {
-            _ = new Score(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Score(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ScoreTestInvalidSignature()
         {
             var mock = MockScore();
@@ -90,13 +84,10 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new Score(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Score(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ScoreTestInvalidVersion()
         {
             var mock = MockScore();
@@ -104,13 +95,10 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new Score(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Score(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ScoreTestInvalidSize()
         {
             var mock = MockScore();
@@ -118,9 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new Score(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Score(chapter));
         }
 
         [DataTestMethod]

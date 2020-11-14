@@ -23,11 +23,10 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShotExReplacerTestNullBestShots()
         {
-            _ = new ShotExReplacer(null!, @"C:\path\to\output\");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ShotExReplacer(null!, @"C:\path\to\output\"));
         }
 
         [TestMethod]
