@@ -68,17 +68,11 @@ namespace ThScoreFileConverterTests.Models.Th17
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void StatusTestNull()
-        {
-            _ = new Status(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Status(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSignature()
         {
             var mock = MockStatus();
@@ -87,13 +81,10 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
 
-            _ = new Status(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidVersion()
         {
             var mock = MockStatus();
@@ -102,13 +93,10 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
 
-            _ = new Status(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void StatusTestInvalidSize()
         {
             var mock = MockStatus();
@@ -117,9 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
 
-            _ = new Status(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
         }
 
         [DataTestMethod]
