@@ -24,12 +24,8 @@ namespace ThScoreFileConverterTests.Models.Th16
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void PracticeReplacerTestNull()
-        {
-            _ = new PracticeReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PracticeReplacer(null!));
 
         [TestMethod]
         public void PracticeReplacerTestEmpty()
