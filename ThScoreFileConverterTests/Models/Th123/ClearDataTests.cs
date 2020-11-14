@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th123;
 
 namespace ThScoreFileConverterTests.Models.Th123
@@ -15,11 +13,9 @@ namespace ThScoreFileConverterTests.Models.Th123
         public void ReadFromTest() => Th105.ClearDataTests.ReadFromTestHelper<Chara>();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => Th105.ClearDataTests.ReadFromTestNullHelper<Chara>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened() => Th105.ClearDataTests.ReadFromTestShortenedHelper<Chara>();
 
         [TestMethod]

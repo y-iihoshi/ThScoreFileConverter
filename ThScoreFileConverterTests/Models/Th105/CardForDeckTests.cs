@@ -47,25 +47,19 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var cardForDeck = new CardForDeck();
-            cardForDeck.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => cardForDeck.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened()
         {
             var mock = MockCardForDeck();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = TestUtils.Create<CardForDeck>(array);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<CardForDeck>(array));
         }
 
         [TestMethod]

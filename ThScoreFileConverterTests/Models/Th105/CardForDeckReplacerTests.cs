@@ -40,19 +40,17 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CardForDeckReplacerTestNullSystemCards()
         {
-            _ = new CardForDeckReplacer(null!, ClearDataDictionary, false);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new CardForDeckReplacer(null!, ClearDataDictionary, false));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CardForDeckReplacerTestNullClearDataDictionary()
         {
-            _ = new CardForDeckReplacer(SystemCards, null!, false);
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new CardForDeckReplacer(SystemCards, null!, false));
         }
 
         [TestMethod]

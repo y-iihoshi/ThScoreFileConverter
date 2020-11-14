@@ -94,9 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TChara : struct, Enum
         {
             var clearData = new ClearData<TChara>();
-            clearData.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => clearData.ReadFrom(null!));
         }
 
         internal static void ReadFromTestShortenedHelper<TChara>()
@@ -105,9 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             var mock = MockClearData<TChara>();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = TestUtils.Create<ClearData<TChara>>(array);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<ClearData<TChara>>(array));
         }
 
         internal static void ReadFromTestExceededHelper<TChara>()
@@ -147,11 +143,9 @@ namespace ThScoreFileConverterTests.Models.Th105
         public void ReadFromTest() => ReadFromTestHelper<Chara>();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => ReadFromTestNullHelper<Chara>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara>();
 
         [TestMethod]
