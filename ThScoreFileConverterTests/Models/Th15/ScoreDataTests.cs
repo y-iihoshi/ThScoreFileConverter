@@ -68,13 +68,10 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var scoreData = new ScoreData();
-            scoreData.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => scoreData.ReadFrom(null!));
         }
 
         public static IEnumerable<object[]> InvalidStageProgresses
@@ -82,28 +79,24 @@ namespace ThScoreFileConverterTests.Models.Th15
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidStageProgress(int stageProgress)
         {
             var mock = MockScoreData();
             _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
 
-            _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName()
         {
             var mock = MockScoreData();
             var name = mock.Object.Name;
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

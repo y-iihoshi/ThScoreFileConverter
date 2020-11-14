@@ -133,25 +133,19 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var clearData = new ClearDataPerGameMode();
-            clearData.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => clearData.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened()
         {
             var mock = MockClearDataPerGameMode();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = TestUtils.Create<ClearDataPerGameMode>(array);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<ClearDataPerGameMode>(array));
         }
 
         [TestMethod]
