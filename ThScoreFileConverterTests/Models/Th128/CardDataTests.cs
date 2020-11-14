@@ -76,17 +76,11 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CardDataTestNullChapter()
-        {
-            _ = new CardData(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CardData(null!));
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CardDataTestInvalidSignature()
         {
             var mock = MockCardData();
@@ -94,13 +88,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new CardData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardData(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CardDataTestInvalidVersion()
         {
             var mock = MockCardData();
@@ -108,13 +99,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new CardData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardData(chapter));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void CardDataTestInvalidSize()
         {
             var mock = MockCardData();
@@ -122,9 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = new CardData(chapter);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardData(chapter));
         }
 
         [DataTestMethod]

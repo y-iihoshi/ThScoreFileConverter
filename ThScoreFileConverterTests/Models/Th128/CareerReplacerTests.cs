@@ -30,12 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CareerReplacerTestNull()
-        {
-            _ = new CareerReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CareerReplacer(null!));
 
         [TestMethod]
         public void CareerReplacerTestEmpty()
