@@ -19,12 +19,8 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreReplacerTestNull()
-        {
-            _ = new ScoreReplacer(null!);
-            Assert.Fail(TestUtils.Unreachable);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreReplacer(null!));
 
         [TestMethod]
         public void ScoreReplacerTestEmpty()

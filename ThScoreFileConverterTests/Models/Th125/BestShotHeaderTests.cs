@@ -136,30 +136,24 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull()
         {
             var header = new BestShotHeader();
 
-            header.ReadFrom(null!);
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(() => header.ReadFrom(null!));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature()
         {
             var mock = MockBestShotHeader();
             _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature()
         {
             var mock = MockBestShotHeader();
@@ -170,22 +164,19 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Signature).Returns(signature[0..^1]);
 #endif
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidDataException>(
+                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature()
         {
             var mock = MockBestShotHeader();
             var signature = mock.Object.Signature;
             _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -193,28 +184,24 @@ namespace ThScoreFileConverterTests.Models.Th125
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level)
         {
             var mock = MockBestShotHeader();
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<InvalidCastException>(
+                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedCardName()
         {
             var mock = MockBestShotHeader();
             var cardName = mock.Object.CardName;
             _ = mock.SetupGet(m => m.CardName).Returns(cardName.SkipLast(1).ToArray());
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
-
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<EndOfStreamException>(
+                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

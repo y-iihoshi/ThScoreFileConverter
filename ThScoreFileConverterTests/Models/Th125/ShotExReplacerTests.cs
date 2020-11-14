@@ -35,11 +35,10 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShotExReplacerTestNullBestShots()
         {
-            _ = new ShotExReplacer(null!, Scores, @"C:\path\to\output\");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ShotExReplacer(null!, Scores, @"C:\path\to\output\"));
         }
 
         [TestMethod]
@@ -62,11 +61,10 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShotExReplacerTestNullScores()
         {
-            _ = new ShotExReplacer(BestShots, null!, @"C:\path\to\output\");
-            Assert.Fail(TestUtils.Unreachable);
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ShotExReplacer(BestShots, null!, @"C:\path\to\output\"));
         }
 
         [TestMethod]
