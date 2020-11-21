@@ -208,11 +208,12 @@ namespace ThScoreFileConverter
         public void Save(string path)
         {
             using var stream = new FileStream(path, FileMode.Create, FileAccess.Write);
-            using var writer = XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = false, Indent = true });
+            var settings = new XmlWriterSettings { CloseOutput = false, Indent = true };
+            using var writer = XmlWriter.Create(stream, settings);
             var serializer = new DataContractSerializer(typeof(Settings));
 
             serializer.WriteObject(writer, this);
-            writer.WriteWhitespace(writer.Settings.NewLineChars);
+            writer.WriteWhitespace(settings.NewLineChars);
             writer.Flush();
         }
 
