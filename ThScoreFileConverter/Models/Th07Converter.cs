@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th07;
