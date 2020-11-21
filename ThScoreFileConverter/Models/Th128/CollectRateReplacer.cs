@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning restore SA1600 // Elements should be documented
+#pragma warning disable SA1600 // Elements should be documented
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,6 @@ using System.Text.RegularExpressions;
 namespace ThScoreFileConverter.Models.Th128
 {
     // %T128CRG[x][yyy][z]
-#pragma warning disable SA1600 // Elements should be documented
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
