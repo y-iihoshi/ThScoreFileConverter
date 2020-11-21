@@ -343,26 +343,17 @@ namespace ThScoreFileConverter.Models.Th075
 
             return charaStageEnemyTable.ToDictionary(
                 charaStageEnemyPair => charaStageEnemyPair.Key,
-                charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(stageEnemyPair =>
-                {
-                    switch (stageEnemyPair.Stage)
-                    {
-                        case Stage.One:
-                        case Stage.Two:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(8);
-                        case Stage.Three:
-                        case Stage.Four:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(12);
-                        case Stage.Five:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(16);
-                        case Stage.Six:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(20);
-                        case Stage.Seven:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(24);
-                        default:
-                            return null;    // unreachable
-                    }
-                }));
+                charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(
+                    stageEnemyPair => cardNumberTable[stageEnemyPair.Enemy].Take(
+                        stageEnemyPair.Stage switch
+                        {
+                            Stage.One or Stage.Two => 8,
+                            Stage.Three or Stage.Four => 12,
+                            Stage.Five => 16,
+                            Stage.Six => 20,
+                            Stage.Seven => 24,
+                            _ => 0, // unreachable
+                        })));
         }
     }
 }
