@@ -86,9 +86,11 @@ namespace ThScoreFileConverterTests.Interactivity
             var action = new FontDialogAction();
             Assert.AreEqual(SysDraw.SystemFonts.DefaultFont, action.Font);
 
-            var font = SysDraw.SystemFonts.CaptionFont;
-            action.Font = font;
-            Assert.AreSame(font, action.Font);
+            var oldFont = action.Font;
+            var newFont = SysDraw.SystemFonts.DialogFont;
+            action.Font = newFont;
+            Assert.AreNotSame(oldFont, action.Font);
+            Assert.AreSame(newFont, action.Font);
         }
 
         [TestMethod]
@@ -183,7 +185,7 @@ namespace ThScoreFileConverterTests.Interactivity
                 AllowVerticalFonts = false,
                 Color = SysDraw.Color.White,
                 FixedPitchOnly = true,
-                Font = SysDraw.SystemFonts.CaptionFont,
+                Font = SysDraw.SystemFonts.DialogFont,
                 FontMustExist = true,
                 MaxSize = 72,
                 MinSize = 8,
