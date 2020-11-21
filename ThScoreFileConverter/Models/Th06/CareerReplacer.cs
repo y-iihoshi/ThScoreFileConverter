@@ -32,13 +32,11 @@ namespace ThScoreFileConverter.Models.Th06
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ICardAttack, int> getCount = type switch
                 {
                     1 => attack => attack.ClearCount,
                     _ => attack => attack.TrialCount,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

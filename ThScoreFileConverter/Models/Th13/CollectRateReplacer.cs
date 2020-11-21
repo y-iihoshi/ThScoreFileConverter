@@ -53,7 +53,6 @@ namespace ThScoreFileConverter.Models.Th13
                 if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ISpellCard<LevelPractice>, bool> findByKindType = (kind, type) switch
                 {
                     ("S", 1) => card => (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0),
@@ -79,7 +78,6 @@ namespace ThScoreFileConverter.Models.Th13
                     (_, StageWithTotal.Total) => Utils.True,
                     _ => card => Definitions.CardTable[card.Id].Stage == (StagePractice)stage,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)

@@ -33,7 +33,6 @@ namespace ThScoreFileConverter.Models.Th16
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<IClearData, long> getValueByType = type switch
                 {
                     1 => clearData => clearData.TotalPlayCount,
@@ -54,7 +53,6 @@ namespace ThScoreFileConverter.Models.Th16
                     2 => value => new Time(value * 10, false).ToString(),
                     _ => Utils.ToNumberString,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return toString(getValueByChara(clearDataDictionary));
             });

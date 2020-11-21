@@ -48,7 +48,6 @@ namespace ThScoreFileConverter.Models.Th15
                     mode = GameMode.Pointdevice;
 #endif
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<Th13.ISpellCard<Level>, bool> findByType = type switch
                 {
                     1 => card => card.ClearCount > 0,
@@ -68,7 +67,6 @@ namespace ThScoreFileConverter.Models.Th15
                     (_, StageWithTotal.Total) => Utils.True,
                     _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)

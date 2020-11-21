@@ -42,7 +42,6 @@ namespace ThScoreFileConverter.Models.Th10
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ISpellCard<Level>, bool> findByLevel = level switch
                 {
                     LevelWithTotal.Total => Utils.True,
@@ -62,7 +61,6 @@ namespace ThScoreFileConverter.Models.Th10
                     1 => card => card.ClearCount > 0,
                     _ => card => card.TrialCount > 0,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)

@@ -55,14 +55,12 @@ namespace ThScoreFileConverter.Models.Th075
                     return value;
                 }
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<IClearData, IEnumerable<int>> getValues = type switch
                 {
                     1 => data => data.MaxBonuses,
                     2 => data => data.CardGotCount.Select(ToInteger),
                     _ => data => data.CardTrialCount.Select(ToInteger),
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

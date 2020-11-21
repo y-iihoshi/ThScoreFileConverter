@@ -43,7 +43,6 @@ namespace ThScoreFileConverter.Models.Th128
                     (level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total))
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<IClearData, long> getValueByType = (level, type) switch
                 {
                     (_, 1) => clearData => clearData.TotalPlayCount,
@@ -65,7 +64,6 @@ namespace ThScoreFileConverter.Models.Th128
                     2 => value => new Time(value).ToString(),
                     _ => Utils.ToNumberString,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return toString(getValueByRoute(clearDataDictionary));
             });

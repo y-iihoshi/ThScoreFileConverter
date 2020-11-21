@@ -36,7 +36,6 @@ namespace ThScoreFileConverter.Models.Th08
                 var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ICardAttack, bool> isValidLevel = kind switch
                 {
                     "S" => attack => Definitions.CardTable[attack.CardId].Level != LevelPractice.LastWord,
@@ -55,7 +54,6 @@ namespace ThScoreFileConverter.Models.Th08
                     2 => attack => getCareer(attack).ClearCounts[chara],
                     _ => attack => getCareer(attack).TrialCounts[chara],
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

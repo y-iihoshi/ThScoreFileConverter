@@ -42,7 +42,6 @@ namespace ThScoreFileConverter.Models.Th07
                 if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ICardAttack, bool> findByLevel = level switch
                 {
                     LevelWithTotal.Total => Utils.True,
@@ -68,7 +67,6 @@ namespace ThScoreFileConverter.Models.Th07
                     1 => attack => attack.ClearCounts[chara] > 0,
                     _ => attack => attack.TrialCounts[chara] > 0,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     cardAttacks.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType)));

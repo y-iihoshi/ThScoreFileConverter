@@ -35,7 +35,6 @@ namespace ThScoreFileConverter.Models.Th105
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ISpellCardResult<Chara>, long> getValue = type switch
                 {
                     1 => result => result.GotCount,
@@ -56,7 +55,6 @@ namespace ThScoreFileConverter.Models.Th105
                     },
                     _ => Utils.ToNumberString,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.SpellCardResults : ImmutableDictionary<(Chara, int), ISpellCardResult<Chara>>.Empty;

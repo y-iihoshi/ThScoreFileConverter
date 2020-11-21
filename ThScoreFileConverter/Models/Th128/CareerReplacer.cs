@@ -32,14 +32,12 @@ namespace ThScoreFileConverter.Models.Th128
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ISpellCard, int> getCount = type switch
                 {
                     1 => card => card.NoIceCount,
                     2 => card => card.NoMissCount,
                     _ => card => card.TrialCount,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

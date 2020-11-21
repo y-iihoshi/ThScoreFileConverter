@@ -33,7 +33,6 @@ namespace ThScoreFileConverter.Models.Th06
                 var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ICardAttack, bool> findByStage = stage switch
                 {
                     StageWithTotal.Total => Utils.True,
@@ -46,7 +45,6 @@ namespace ThScoreFileConverter.Models.Th06
                     1 => attack => attack.ClearCount > 0,
                     _ => attack => attack.TrialCount > 0,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(cardAttacks.Values.Count(Utils.MakeAndPredicate(findByStage, findByType)));
             });

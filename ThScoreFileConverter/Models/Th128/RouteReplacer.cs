@@ -33,7 +33,6 @@ namespace ThScoreFileConverter.Models.Th128
                 var route = Parsers.RouteWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<IClearData, long> getValueByType = type switch
                 {
                     1 => clearData => clearData.TotalPlayCount,
@@ -54,7 +53,6 @@ namespace ThScoreFileConverter.Models.Th128
                     2 => value => new Time(value).ToString(),
                     _ => Utils.ToNumberString,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return toString(getValueByRoute(clearDataDictionary));
             });

@@ -40,14 +40,12 @@ namespace ThScoreFileConverter.Models.Th075
                 if (chara == Chara.Meiling)
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<IClearData, IEnumerable<short>> getValues = type switch
                 {
                     1 => data => data.CardGotCount,
                     2 => data => data.CardTrialCount,
                     _ => data => data.CardTrulyGot.Select(got => (short)got),
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 IEnumerable<(int cardId, int cardIndex)> MakeCardIdIndexPairs(Level lv)
                 {

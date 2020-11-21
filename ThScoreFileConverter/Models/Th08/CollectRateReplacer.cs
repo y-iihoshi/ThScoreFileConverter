@@ -47,7 +47,6 @@ namespace ThScoreFileConverter.Models.Th08
                 if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<ICardAttackCareer, bool> findByType = type switch
                 {
                     1 => career => career.ClearCounts[chara] > 0,
@@ -80,7 +79,6 @@ namespace ThScoreFileConverter.Models.Th08
                     _ => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage)),
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     cardAttacks.Values.Count(Utils.MakeAndPredicate(findByKind, findByLevel, findByStage)));

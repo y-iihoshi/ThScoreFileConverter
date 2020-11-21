@@ -193,7 +193,6 @@ namespace ThScoreFileConverterTests.Models
         {
             var defaultValue = default(TResult);
 
-#pragma warning disable IDE0007 // Use implicit type
             Func<object> getNextValue = defaultValue switch
             {
                 byte _ => () => Random.Next(byte.MaxValue + 1),
@@ -211,7 +210,6 @@ namespace ThScoreFileConverterTests.Models
                 },
                 _ => throw new NotImplementedException(),
             };
-#pragma warning restore IDE0007 // Use implicit type
 
             return Enumerable
                 .Repeat(defaultValue, length)

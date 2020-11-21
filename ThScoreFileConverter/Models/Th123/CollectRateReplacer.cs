@@ -38,7 +38,6 @@ namespace ThScoreFileConverter.Models.Th123
                 if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara>>, bool> findByLevel = level switch
                 {
                     Th105.LevelWithTotal.Total => Utils.True,
@@ -50,7 +49,6 @@ namespace ThScoreFileConverter.Models.Th123
                     1 => pair => pair.Value.GotCount > 0,
                     _ => pair => pair.Value.TrialCount > 0,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.SpellCardResults

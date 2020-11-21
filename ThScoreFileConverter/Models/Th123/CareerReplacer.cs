@@ -38,7 +38,6 @@ namespace ThScoreFileConverter.Models.Th123
                 if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                     return match.ToString();
 
-#pragma warning disable IDE0007 // Use implicit type
                 Func<Th105.ISpellCardResult<Chara>, long> getValue = type switch
                 {
                     1 => result => result.GotCount,
@@ -59,7 +58,6 @@ namespace ThScoreFileConverter.Models.Th123
                     },
                     _ => Utils.ToNumberString,
                 };
-#pragma warning restore IDE0007 // Use implicit type
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.SpellCardResults
