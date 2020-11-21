@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -120,8 +119,9 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the maximum font size.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "For binding.")]
+#pragma warning disable CA1822 // Mark members as static
         public int MaxFontSize => (int)Settings.MaxFontSize;
+#pragma warning restore CA1822 // Mark members as static
 
         /// <summary>
         /// Gets or sets a value indicating whether numeric values is output with thousand separator
