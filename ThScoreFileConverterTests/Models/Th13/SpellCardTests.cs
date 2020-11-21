@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -54,7 +53,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             Assert.AreEqual(expected.PracticeScore, actual.PracticeScore);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void SpellCardTestHelper<TLevel>()
             where TLevel : struct, Enum
         {
@@ -65,7 +63,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             Assert.IsFalse(spellCard.HasTried);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestHelper<TLevel>()
             where TLevel : struct, Enum
         {
@@ -77,7 +74,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             Assert.IsTrue(spellCard.HasTried);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNullHelper<TLevel>()
             where TLevel : struct, Enum
         {
@@ -86,7 +82,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = Assert.ThrowsException<ArgumentNullException>(() => spellCard.ReadFrom(null!));
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedNameHelper<TLevel>()
             where TLevel : struct, Enum
         {
@@ -98,7 +93,6 @@ namespace ThScoreFileConverterTests.Models.Th13
                 () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededNameHelper<TLevel>()
             where TLevel : struct, Enum
         {
@@ -110,7 +104,6 @@ namespace ThScoreFileConverterTests.Models.Th13
                 () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestInvalidLevelHelper<TLevel>(int level)
             where TLevel : struct, Enum
         {
