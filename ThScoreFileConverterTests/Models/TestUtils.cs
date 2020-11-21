@@ -149,9 +149,10 @@ namespace ThScoreFileConverterTests.Models
                                 var elementType = array.GetType().GetElementType();
                                 if (elementType is not null)
                                 {
-                                    byteArray = byteArray.Concat(
-                                        fromArray.MakeGenericMethod(elementType)
-                                            .Invoke(null, new object[] { array }) as IEnumerable<byte>);
+                                    var array2 = fromArray.MakeGenericMethod(elementType)
+                                        .Invoke(null, new object[] { array });
+                                    if (array2 is IEnumerable<byte> enumerable)
+                                        byteArray = byteArray.Concat(enumerable);
                                 }
                             }
                         }
@@ -164,9 +165,10 @@ namespace ThScoreFileConverterTests.Models
                             var argType = arg.GetType();
                             if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
                             {
-                                byteArray = byteArray.Concat(
-                                    fromDictonary.MakeGenericMethod(argType.GetGenericArguments())
-                                        .Invoke(null, new object[] { arg }) as IEnumerable<byte>);
+                                var array = fromDictonary.MakeGenericMethod(argType.GetGenericArguments())
+                                    .Invoke(null, new object[] { arg });
+                                if (array is IEnumerable<byte> enumerable)
+                                    byteArray = byteArray.Concat(enumerable);
                             }
                         }
                         break;

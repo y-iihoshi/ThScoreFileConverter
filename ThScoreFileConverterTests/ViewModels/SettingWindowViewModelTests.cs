@@ -238,7 +238,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var numChanged = 0;
             using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            var newFont = SysDraw.SystemFonts.SmallCaptionFont;
+            var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
             var color = default(SysDraw.Color);
             var result = new FontDialogActionResult(newFont, color);
             Assert.IsTrue(command.CanExecute(result));
@@ -304,7 +304,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var numChanged = 0;
             using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            var newFont = SysDraw.SystemFonts.SmallCaptionFont;
+            var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
             var color = default(SysDraw.Color);
             var result = new FontDialogActionResult(newFont, color);
             Assert.IsTrue(command.CanExecute(result));
@@ -370,7 +370,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var numChanged = 0;
             using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-            var newFont = SysDraw.SystemFonts.SmallCaptionFont;
+            var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
             var color = default(SysDraw.Color);
             var result = new FontDialogActionResult(newFont, color);
             Assert.IsTrue(command.CanExecute(result));
