@@ -26,12 +26,10 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="input">The stream to input data.</param>
         /// <param name="output">The stream that is output the compressed data.</param>
-#pragma warning disable IDE0060 // Remove unused parameter
         public static void Compress(Stream input, Stream output)
         {
             throw new NotImplementedException(Resources.NotImplementedExceptionLzssCompressionIsNotSupported);
         }
-#pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>
         /// Decompresses the LZSS formatted data.

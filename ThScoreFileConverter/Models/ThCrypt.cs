@@ -27,13 +27,11 @@ namespace ThScoreFileConverter.Models
         /// <param name="step">The step.</param>
         /// <param name="block">The size of block.</param>
         /// <param name="limit">The limit value.</param>
-#pragma warning disable IDE0060 // Remove unused parameter
         public static void Encrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
         {
             throw new NotImplementedException(Resources.NotImplementedExceptionEncryptionIsNotSupported);
         }
-#pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>
         /// Decrypts data.
