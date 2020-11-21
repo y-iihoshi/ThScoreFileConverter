@@ -28,7 +28,6 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="Views.SettingWindow"/>.
     /// </summary>
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via ViewModelLocator.")]
     internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
         private readonly ISettings settings;

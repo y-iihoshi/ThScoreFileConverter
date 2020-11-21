@@ -34,7 +34,6 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="Views.MainWindow"/>.
     /// </summary>
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "For binding.")]
     internal class MainWindowViewModel : BindableBase, IDisposable
     {
         /// <summary>

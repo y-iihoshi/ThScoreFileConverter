@@ -17,7 +17,6 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th06Converter : ThConverter
     {
         private AllScoreData? allScoreData;

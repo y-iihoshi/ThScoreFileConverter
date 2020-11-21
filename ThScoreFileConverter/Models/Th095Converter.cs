@@ -25,7 +25,6 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th095Converter : ThConverter
     {
         private readonly Dictionary<(Th095.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =

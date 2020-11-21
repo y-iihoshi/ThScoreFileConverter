@@ -23,7 +23,6 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="Views.AboutWindow"/>.
     /// </summary>
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via ViewModelLocator.")]
     internal class AboutWindowViewModel : BindableBase, IDialogAware
     {
         /// <summary>
