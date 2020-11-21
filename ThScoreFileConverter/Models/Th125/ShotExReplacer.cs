@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Models.Th125
 
                 if (bestshots.TryGetValue((chara, level, scene), out var bestshot))
                 {
-                    IScore score;
+                    IScore? score;
                     IEnumerable<string> detailStrings;
                     switch (type)
                     {
