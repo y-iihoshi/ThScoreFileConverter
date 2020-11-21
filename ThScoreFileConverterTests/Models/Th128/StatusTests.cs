@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -83,7 +82,6 @@ namespace ThScoreFileConverterTests.Models.Th128
         public void StatusTestNullChapter()
             => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Status(null!));
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void StatusTestInvalidSignature()
         {

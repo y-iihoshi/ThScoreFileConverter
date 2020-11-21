@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -83,7 +82,6 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ScoreTestNullChapter()
             => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Score(null!));
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void ScoreTestInvalidSignature()
         {

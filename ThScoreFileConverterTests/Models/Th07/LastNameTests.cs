@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
@@ -60,7 +59,6 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void LastNameTestNullChapter()
             => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new LastName(null!));
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void LastNameTestInvalidSignature()
         {

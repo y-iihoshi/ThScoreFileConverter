@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -101,7 +100,6 @@ namespace ThScoreFileConverterTests.Models.Th11
         public void ClearDataTestNullChapter()
             => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearData(null!));
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void ClearDataTestInvalidSignature()
         {

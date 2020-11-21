@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -149,7 +148,6 @@ namespace ThScoreFileConverterTests.Models.Th08
             CollectionAssert.That.AreEqual(cardFlags, highScore.CardFlags.Values);
         }
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void HighScoreTestInvalidSignature()
         {

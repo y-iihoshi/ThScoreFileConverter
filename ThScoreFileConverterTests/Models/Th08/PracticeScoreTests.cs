@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -69,7 +68,6 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void PracticeScoreTestNullChapter()
             => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PracticeScore(null!));
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void PracticeScoreTestInvalidSignature()
         {

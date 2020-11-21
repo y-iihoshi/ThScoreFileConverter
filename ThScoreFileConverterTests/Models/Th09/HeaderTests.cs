@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -53,7 +52,6 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void HeaderTestNull() => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Header(null!));
 
-        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         public void HeaderTestInvalidSignature()
         {
