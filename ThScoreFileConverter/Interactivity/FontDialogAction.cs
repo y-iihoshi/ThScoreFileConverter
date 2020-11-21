@@ -174,9 +174,9 @@ namespace ThScoreFileConverter.Interactivity
         /// <summary>
         /// Gets or sets the selected font.
         /// </summary>
-        public SysDraw.Font? Font
+        public SysDraw.Font Font
         {
-            get => this.GetValue(FontProperty) as SysDraw.Font;
+            get => (SysDraw.Font)this.GetValue(FontProperty);
             set => this.SetValue(FontProperty, value);
         }
 
