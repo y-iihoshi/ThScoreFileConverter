@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqtable = new SQTable();
 
             Assert.AreEqual(SQOT.Table, sqtable.Type);
-            Assert.AreEqual(0, sqtable.Value.Count());
+            Assert.AreEqual(0, sqtable.Value.Count);
         }
 
         internal static SQTable CreateTestHelper(byte[] bytes)
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));
 
             Assert.AreEqual(SQOT.Table, sqtable.Type);
-            Assert.AreEqual(0, sqtable.Value.Count());
+            Assert.AreEqual(0, sqtable.Value.Count);
         }
 
         [DataTestMethod]

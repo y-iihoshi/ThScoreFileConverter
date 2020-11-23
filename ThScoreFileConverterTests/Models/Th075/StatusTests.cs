@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var status = new Status();
 
             Assert.AreEqual(string.Empty, status.LastName);
-            Assert.AreEqual(0, status.ArcadeScores.Count());
+            Assert.AreEqual(0, status.ArcadeScores.Count);
         }
 
         [TestMethod]
