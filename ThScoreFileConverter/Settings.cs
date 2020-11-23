@@ -158,8 +158,8 @@ namespace ThScoreFileConverter
                 using var reader = XmlReader.Create(stream, new XmlReaderSettings { CloseInput = false });
                 var serializer = new DataContractSerializer(typeof(Settings));
 
-                var settings = (Settings)serializer.ReadObject(reader);
-
+                if (serializer.ReadObject(reader) is not Settings settings)
+                    throw NewFileMayBeBrokenException(path);
                 if (settings.LastTitle is null)
                     throw NewFileMayBeBrokenException(path);
                 if (ThConverterFactory.Create(settings.LastTitle) is null)
@@ -208,11 +208,12 @@ namespace ThScoreFileConverter
         public void Save(string path)
         {
             using var stream = new FileStream(path, FileMode.Create, FileAccess.Write);
-            using var writer = XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = false, Indent = true });
+            var settings = new XmlWriterSettings { CloseOutput = false, Indent = true };
+            using var writer = XmlWriter.Create(stream, settings);
             var serializer = new DataContractSerializer(typeof(Settings));
 
             serializer.WriteObject(writer, this);
-            writer.WriteWhitespace(writer.Settings.NewLineChars);
+            writer.WriteWhitespace(settings.NewLineChars);
             writer.Flush();
         }
 
