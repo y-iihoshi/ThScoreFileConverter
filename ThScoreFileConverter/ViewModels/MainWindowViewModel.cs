@@ -777,7 +777,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
