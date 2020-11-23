@@ -270,7 +270,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var fileName = Path.GetTempFileName();
             try
             {
-                var result = new OpenFileDialogActionResult(fileName, new string[] { });
+                var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
                 Assert.IsTrue(command.CanExecute(result));
                 Assert.AreEqual(0, numChanged);
 
@@ -296,7 +296,7 @@ namespace ThScoreFileConverterTests.ViewModels
             using var disposed = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
 
             var fileName = window.ScoreFile;
-            var result = new OpenFileDialogActionResult(fileName, new string[] { });
+            var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
 
@@ -316,7 +316,7 @@ namespace ThScoreFileConverterTests.ViewModels
             using var disposed = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
 
             var fileName = "nonexistent.txt";
-            var result = new OpenFileDialogActionResult(fileName, new string[] { });
+            var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
 
@@ -633,7 +633,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.AreEqual(1, numChanged);
                 CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
 
-                var empty = new string[] { };
+                var empty = Array.Empty<string>();
 
                 Assert.IsFalse(command.CanExecute(empty));
                 Assert.AreEqual(1, numChanged);
