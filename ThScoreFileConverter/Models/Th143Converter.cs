@@ -109,8 +109,10 @@ namespace ThScoreFileConverter.Models
 
             try
             {
+#if !NET5_0
                 var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
                 permission.Demand();
+#endif
 
                 var bitmapData = bitmap.LockBits(
                     new Rectangle(0, 0, header.Width, header.Height),
