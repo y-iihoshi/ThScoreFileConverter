@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
 
@@ -40,7 +41,11 @@ namespace ThScoreFileConverter.Commands
         /// </summary>
         /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
+#if NET5_0
+        public bool CanExecute([NotNullWhen(true)] object? parameter)
+#else
         public bool CanExecute(object parameter)
+#endif
         {
             return parameter is Window;
         }
@@ -49,7 +54,11 @@ namespace ThScoreFileConverter.Commands
         /// Called when the command is invoked.
         /// </summary>
         /// <param name="parameter">A <see cref="Window"/> instance which is closed.</param>
+#if NET5_0
+        public void Execute(object? parameter)
+#else
         public void Execute(object parameter)
+#endif
         {
 #pragma warning disable CA1062 // Validate arguments of public methods
             if (this.CanExecute(parameter))

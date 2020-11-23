@@ -21,7 +21,11 @@ namespace ThScoreFileConverterTests.Interactivity
 
         public bool DesignMode => default;
 
+#if NET5_0
+        public string? Name { get; set; } = string.Empty;
+#else
         public string Name { get; set; } = string.Empty;
+#endif
 
         public object GetService(Type serviceType) => null!;
     }

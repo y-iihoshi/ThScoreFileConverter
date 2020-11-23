@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -21,9 +22,17 @@ namespace ThScoreFileConverterTests.Interactivity
         public event EventHandler? CanExecuteChanged;
 #pragma warning restore CS0067
 
+#if NET5_0
+        public bool CanExecute([NotNullWhen(true)] object? parameter) => true;
+#else
         public bool CanExecute(object parameter) => true;
+#endif
 
+#if NET5_0
+        public void Execute(object? parameter)
+#else
         public void Execute(object parameter)
+#endif
         {
             Assert.IsTrue(parameter is DragEventArgs);
             this.action.Invoke();
