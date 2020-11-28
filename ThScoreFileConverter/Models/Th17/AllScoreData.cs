@@ -7,9 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th17
 {
@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th17
 
         public AllScoreData()
         {
-            this.clearData = new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+            this.clearData = new Dictionary<CharaWithTotal, IClearData>(EnumHelper<CharaWithTotal>.NumValues);
         }
 
         public Th095.HeaderBase? Header { get; private set; }

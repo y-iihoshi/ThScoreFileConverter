@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th07
         public CardAttack(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var charas = EnumHelper.GetEnumerable<CharaWithTotal>();
+            var charas = EnumHelper<CharaWithTotal>.Enumerable;
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

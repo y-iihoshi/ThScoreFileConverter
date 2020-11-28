@@ -7,10 +7,10 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th09
 {
@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Models.Th09
 
         public AllScoreData()
         {
-            var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
+            var numPairs = EnumHelper<Chara>.NumValues * EnumHelper<Level>.NumValues;
             this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
         }
 

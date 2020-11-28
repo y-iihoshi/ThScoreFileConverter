@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th12
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.ReimuB)
-                         && (m.Rankings == EnumHelper.GetEnumerable<Level>().ToDictionary(
+                         && (m.Rankings == EnumHelper<Level>.Enumerable.ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);
@@ -150,7 +150,7 @@ namespace ThScoreFileConverterTests.Models.Th12
                 var mock = new Mock<IClearData>();
                 _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.ReimuB);
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    EnumHelper.GetEnumerable<Level>().ToDictionary(
+                    EnumHelper<Level>.Enumerable.ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));

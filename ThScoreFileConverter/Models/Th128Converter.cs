@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverter.Properties;
 
@@ -169,7 +170,7 @@ namespace ThScoreFileConverter.Models
             }
 
             if ((allScoreData.Header is not null) &&
-                (allScoreData.ClearData.Count == Enum.GetValues(typeof(RouteWithTotal)).Length) &&
+                (allScoreData.ClearData.Count == EnumHelper<RouteWithTotal>.NumValues) &&
                 (allScoreData.CardData is not null) &&
                 (allScoreData.Status is not null))
                 return allScoreData;

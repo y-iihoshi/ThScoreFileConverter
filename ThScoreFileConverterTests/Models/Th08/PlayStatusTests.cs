@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.TotalRunningTime).Returns(new Time(12, 34, 56, 789, false));
             _ = mock.SetupGet(m => m.TotalPlayTime).Returns(new Time(23, 45, 19, 876, false));
             _ = mock.SetupGet(m => m.PlayCounts).Returns(
-                EnumHelper.GetEnumerable<Level>().ToDictionary(
+                EnumHelper<Level>.Enumerable.ToDictionary(
                     level => level, level => PlayCountTests.MockPlayCount().Object));
             _ = mock.SetupGet(m => m.TotalPlayCount).Returns(PlayCountTests.MockPlayCount().Object);
             _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(21));

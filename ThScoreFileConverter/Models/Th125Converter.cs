@@ -18,6 +18,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverter.Properties;
 
@@ -28,7 +29,7 @@ namespace ThScoreFileConverter.Models
         private readonly Dictionary<
             (Chara, Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =
             new Dictionary<(Chara, Th125.Level, int), (string, IBestShotHeader)>(
-                Enum.GetValues(typeof(Chara)).Length * Definitions.SpellCards.Count);
+                EnumHelper<Chara>.NumValues * Definitions.SpellCards.Count);
 
         private AllScoreData? allScoreData;
 

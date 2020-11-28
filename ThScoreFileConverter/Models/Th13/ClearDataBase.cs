@@ -31,9 +31,7 @@ namespace ThScoreFileConverter.Models.Th13
         protected ClearDataBase(Th10.Chapter chapter, int validSize, int numCards)
             : base(chapter, ValidSignature, ValidVersion, validSize)
         {
-            var levelsWithTotal = EnumHelper.GetEnumerable<TLevelPracticeWithTotal>();
-            var levels = EnumHelper.GetEnumerable<TLevelPractice>();
-            var stages = EnumHelper.GetEnumerable<TStagePractice>();
+            var levelsWithTotal = EnumHelper<TLevelPracticeWithTotal>.Enumerable;
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
@@ -54,8 +52,8 @@ namespace ThScoreFileConverter.Models.Th13
             this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
             this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
 
-            this.Practices = levels
-                .SelectMany(level => stages.Select(stage => (level, stage)))
+            this.Practices = EnumHelper<TLevelPractice>.Enumerable
+                .SelectMany(level => EnumHelper<TStagePractice>.Enumerable.Select(stage => (level, stage)))
                 .ToDictionary(pair => pair, _ =>
                 {
                     var practice = new Practice();

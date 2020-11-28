@@ -56,9 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th16
                 return mock.Object;
             }
 
-            var levels = EnumHelper.GetEnumerable<Level>();
-            var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>();
-            var stages = EnumHelper.GetEnumerable<StagePractice>();
+            var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable;
 
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CR");
@@ -78,8 +76,8 @@ namespace ThScoreFileConverterTests.Models.Th16
             _ = mock.SetupGet(m => m.ClearFlags).Returns(
                 levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
             _ = mock.SetupGet(m => m.Practices).Returns(
-                levels
-                    .SelectMany(level => stages.Select(stage => (level, stage)))
+                EnumHelper<Level>.Enumerable
+                    .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
                     .ToDictionary(pair => pair, pair => CreatePractice(pair)));
             _ = mock.SetupGet(m => m.Cards).Returns(
                 Enumerable.Range(1, 119).ToDictionary(index => index, index => CreateSpellCard(index)));

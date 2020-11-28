@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th128
         public ClearData(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var levels = EnumHelper<Level>.Enumerable;
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

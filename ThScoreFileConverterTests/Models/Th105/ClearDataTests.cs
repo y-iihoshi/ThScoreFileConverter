@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     .Select(value => CreateCardForDeck(value))
                     .ToDictionary(card => card.Id));
             _ = mock.SetupGet(m => m.SpellCardResults).Returns(
-                EnumHelper.GetEnumerable<TChara>()
+                EnumHelper<TChara>.Enumerable
                     .Select((chara, index) => CreateSpellCardResult(chara, index))
                     .ToDictionary(result => (result.Enemy, result.Id)));
             return mock;

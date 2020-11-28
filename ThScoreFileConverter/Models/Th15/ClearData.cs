@@ -24,24 +24,20 @@ namespace ThScoreFileConverter.Models.Th15
         public ClearData(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            var modes = EnumHelper.GetEnumerable<GameMode>();
-            var levels = EnumHelper.GetEnumerable<Level>();
-            var stages = EnumHelper.GetEnumerable<StagePractice>();
-
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
 
             this.Chara = (CharaWithTotal)reader.ReadInt32();
 
-            this.GameModeData = modes.ToDictionary(mode => mode, _ =>
+            this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(mode => mode, _ =>
             {
                 var data = new ClearDataPerGameMode();
                 data.ReadFrom(reader);
                 return data as IClearDataPerGameMode;
             });
 
-            this.Practices = levels
-                .SelectMany(level => stages.Select(stage => (level, stage)))
+            this.Practices = EnumHelper<Level>.Enumerable
+                .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
                 .ToDictionary(pair => pair, _ =>
                 {
                     var practice = new Th13.Practice();

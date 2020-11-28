@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Properties;
 using AllScoreData = ThScoreFileConverter.Models.Th13.AllScoreData<
@@ -170,7 +171,7 @@ namespace ThScoreFileConverter.Models
             }
 
             if ((allScoreData.Header is not null) &&
-                (allScoreData.ClearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
+                (allScoreData.ClearData.Count == EnumHelper<CharaWithTotal>.NumValues) &&
                 (allScoreData.Status is not null))
                 return allScoreData;
             else

@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th123
 {
@@ -41,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th123
                 if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                     return match.ToString();
 
-                var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
+                var numLevels = EnumHelper<Th105.Level>.NumValues;
                 var index = (number - 1) / numLevels;
                 if (Definitions.EnemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
                     && (index < enemyCardIdPairs.Count()))

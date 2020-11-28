@@ -23,8 +23,8 @@ namespace ThScoreFileConverter.Models.Th08
         public PracticeScore(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var stages = EnumHelper.GetEnumerable<Stage>();
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var stageLevelPairs = EnumHelper<Stage>.Enumerable.SelectMany(
+                stage => EnumHelper<Level>.Enumerable.Select(level => (stage, level)));
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
@@ -32,10 +32,8 @@ namespace ThScoreFileConverter.Models.Th08
             //// The fields for Stage.Extra and Level.Extra actually exist...
 
             _ = reader.ReadUInt32();        // always 0x00000002?
-            this.PlayCounts = stages.SelectMany(stage => levels.Select(level => (stage, level)))
-                .ToDictionary(pair => pair, _ => reader.ReadInt32());
-            this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
-                .ToDictionary(pair => pair, _ => reader.ReadInt32());
+            this.PlayCounts = stageLevelPairs.ToDictionary(pair => pair, _ => reader.ReadInt32());
+            this.HighScores = stageLevelPairs.ToDictionary(pair => pair, _ => reader.ReadInt32());
             this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
             _ = reader.ReadExactBytes(3);   // always 0x000001?
         }

@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th08
                 throw new ArgumentNullException(nameof(reader));
 
             this.TotalTrial = reader.ReadInt32();
-            this.Trials = EnumHelper.GetEnumerable<Chara>().ToDictionary(chara => chara, _ => reader.ReadInt32());
+            this.Trials = EnumHelper<Chara>.Enumerable.ToDictionary(chara => chara, _ => reader.ReadInt32());
             _ = reader.ReadUInt32();    // always 0x00000000?
             this.TotalClear = reader.ReadInt32();
             this.TotalContinue = reader.ReadInt32();

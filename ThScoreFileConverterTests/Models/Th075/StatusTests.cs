@@ -31,8 +31,8 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
             decodedLastName = "Player1 ",
-            arcadeScores = EnumHelper.GetEnumerable<CharaWithReserved>()
-                .SelectMany(player => EnumHelper.GetEnumerable<CharaWithReserved>().Select(enemy => (player, enemy)))
+            arcadeScores = EnumHelper<CharaWithReserved>.Enumerable
+                .SelectMany(player => EnumHelper<CharaWithReserved>.Enumerable.Select(enemy => (player, enemy)))
                 .ToDictionary(pair => pair, pair => ((int)pair.player * 100) + (int)pair.enemy),
         };
 

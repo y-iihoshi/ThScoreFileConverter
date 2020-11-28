@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 var mock = new Mock<IClearDataPerGameMode>();
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
+                    EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
                             as IReadOnlyList<IScoreData>));
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 {
                                     GameMode.Pointdevice,
                                     Mock.Of<IClearDataPerGameMode>(
-                                        c => c.Rankings == EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
+                                        c => c.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
                                             level => level,
                                             level => new[]
                                             {
@@ -163,7 +163,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 {
                                     GameMode.Pointdevice,
                                     Mock.Of<IClearDataPerGameMode>(
-                                        c => c.Rankings == EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
+                                        c => c.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
                                             level => level,
                                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>))
                                 },

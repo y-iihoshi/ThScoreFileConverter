@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
@@ -22,15 +21,10 @@ namespace ThScoreFileConverter.Models
         where TEnum : struct, Enum
     {
         /// <summary>
-        /// Elements of <typeparamref name="TEnum"/>.
-        /// </summary>
-        private static readonly IEnumerable<TEnum> Elements = EnumHelper.GetEnumerable<TEnum>();
-
-        /// <summary>
         /// A regular expression of the short names of <typeparamref name="TEnum"/>.
         /// </summary>
         private static readonly string PatternImpl =
-            string.Join("|", Elements.Select(elem => elem.ToShortName()).Distinct().ToArray());
+            string.Join("|", EnumHelper<TEnum>.Enumerable.Select(elem => elem.ToShortName()).Distinct().ToArray());
 
         /// <summary>
         /// Gets a regular expression of the short names of <typeparamref name="TEnum"/>.
@@ -44,7 +38,7 @@ namespace ThScoreFileConverter.Models
         /// <returns>A value of <typeparamref name="TEnum"/>.</returns>
         public TEnum Parse(string shortName)
         {
-            return Elements.First(
+            return EnumHelper<TEnum>.Enumerable.First(
                 elem => elem.ToShortName().Equals(shortName, StringComparison.OrdinalIgnoreCase));
         }
     }

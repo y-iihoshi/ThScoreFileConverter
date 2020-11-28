@@ -7,9 +7,9 @@
 
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverter.Properties;
 
@@ -72,8 +72,8 @@ namespace ThScoreFileConverter.Models
             {
             }
 
-            var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
-            var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
+            var numCharas = EnumHelper<CharaWithReserved>.NumValues;
+            var numLevels = EnumHelper<Th075.Level>.NumValues;
             if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
                 (allScoreData.Status is not null))
                 return allScoreData;

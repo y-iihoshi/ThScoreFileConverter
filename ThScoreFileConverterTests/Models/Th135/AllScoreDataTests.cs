@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         internal static Properties GetValidProperties() => new Properties()
         {
             storyProgress = 1,
-            storyClearFlags = EnumHelper.GetEnumerable<Chara>().ToDictionary(
+            storyClearFlags = EnumHelper<Chara>.Enumerable.ToDictionary(
                 chara => chara, chara => TestUtils.Cast<LevelFlags>(30 - (int)chara)),
             endingCount = 2,
             ending2Count = 3,

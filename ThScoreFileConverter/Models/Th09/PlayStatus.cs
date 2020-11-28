@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th09
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var charas = EnumHelper.GetEnumerable<Chara>();
+            var charas = EnumHelper<Chara>.Enumerable;
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

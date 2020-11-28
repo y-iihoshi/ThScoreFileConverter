@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverter.Properties;
 
@@ -184,10 +185,8 @@ namespace ThScoreFileConverter.Models
                 // It's OK, do nothing.
             }
 
-            var numCharas = Enum.GetValues(typeof(Chara)).Length;
-            var numLevels = Enum.GetValues(typeof(Level)).Length;
             if ((allScoreData.Header is not null) &&
-                (allScoreData.Rankings.Count == numCharas * numLevels) &&
+                (allScoreData.Rankings.Count == EnumHelper<Chara>.NumValues * EnumHelper<Level>.NumValues) &&
                 (allScoreData.PlayStatus is not null) &&
                 (allScoreData.LastName is not null) &&
                 (allScoreData.VersionInfo is not null))

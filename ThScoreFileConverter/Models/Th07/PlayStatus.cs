@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th07
             seconds = reader.ReadInt32();
             milliseconds = reader.ReadInt32();
             this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
-            this.PlayCounts = EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(level => level, level =>
+            this.PlayCounts = EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(level => level, level =>
             {
                 var playCount = new PlayCount();
                 playCount.ReadFrom(reader);

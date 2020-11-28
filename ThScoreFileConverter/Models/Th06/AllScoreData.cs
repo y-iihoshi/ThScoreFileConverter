@@ -7,10 +7,10 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th06.Chara,
     ThScoreFileConverter.Models.Level>;
@@ -30,9 +30,9 @@ namespace ThScoreFileConverter.Models.Th06
 
         public AllScoreData()
         {
-            var numCharas = Enum.GetValues(typeof(Chara)).Length;
-            var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
-            var numTriples = numPairs * Enum.GetValues(typeof(Stage)).Length;
+            var numCharas = EnumHelper<Chara>.NumValues;
+            var numPairs = numCharas * EnumHelper<Level>.NumValues;
+            var numTriples = numPairs * EnumHelper<Stage>.NumValues;
             this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
             this.clearData = new Dictionary<Chara, IClearData>(numCharas);
             this.cardAttacks = new Dictionary<int, ICardAttack>(Definitions.CardTable.Count);

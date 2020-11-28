@@ -19,8 +19,8 @@ namespace ThScoreFileConverterTests.Models.Th075
 
         internal static Properties ValidProperties { get; } = new Properties()
         {
-            clearData = EnumHelper.GetEnumerable<CharaWithReserved>()
-                .SelectMany(chara => EnumHelper.GetEnumerable<Level>().Select(level => (chara, level)))
+            clearData = EnumHelper<CharaWithReserved>.Enumerable
+                .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
                 .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
             status = StatusTests.ValidProperties,
         };

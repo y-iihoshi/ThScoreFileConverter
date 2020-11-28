@@ -31,10 +31,9 @@ namespace ThScoreFileConverterTests.Models.Th07
             size2 = 0x160,
             totalRunningTime = new Time(12, 34, 56, 789, false),
             totalPlayTime = new Time(23, 45, 19, 876, false),
-            playCounts = EnumHelper.GetEnumerable<LevelWithTotal>()
-                .ToDictionary(
-                    level => level,
-                    level => new PlayCountTests.Properties(PlayCountTests.ValidProperties)),
+            playCounts = EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                level => level,
+                level => new PlayCountTests.Properties(PlayCountTests.ValidProperties)),
         };
 
         internal static byte[] MakeData(in Properties properties)

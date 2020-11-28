@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th07
         public ClearData(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var levels = EnumHelper<Level>.Enumerable;
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

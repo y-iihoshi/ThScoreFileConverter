@@ -39,13 +39,15 @@ namespace ThScoreFileConverterTests.Helpers
         }
 
         [TestMethod]
-        public void GetEnumerableTest()
+        public void EnumerableTest()
         {
-            var enumerable = EnumHelper.GetEnumerable<DayOfWeek>();
             var i = (int)DayOfWeek.Sunday;
-            foreach (var value in enumerable)
+            foreach (var value in EnumHelper<DayOfWeek>.Enumerable)
                 Assert.AreEqual((DayOfWeek)i++, value);
             Assert.AreEqual(7, i);
         }
+
+        [TestMethod]
+        public void NumValuesTest() => Assert.AreEqual(7, EnumHelper<DayOfWeek>.NumValues);
     }
 }

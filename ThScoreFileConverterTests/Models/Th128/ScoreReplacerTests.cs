@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             {
                 Mock.Of<IClearData>(
                     m => (m.Route == RouteWithTotal.A2)
-                         && (m.Rankings == EnumHelper.GetEnumerable<Level>().ToDictionary(
+                         && (m.Rankings == EnumHelper<Level>.Enumerable.ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Route);

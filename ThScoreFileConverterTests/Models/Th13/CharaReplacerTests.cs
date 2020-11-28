@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th13
     {
         private static IEnumerable<IClearData> CreateClearDataList()
         {
-            var levels = EnumHelper.GetEnumerable<LevelPracticeWithTotal>();
+            var levels = EnumHelper<LevelPracticeWithTotal>.Enumerable;
             return new[]
             {
                 Mock.Of<IClearData>(

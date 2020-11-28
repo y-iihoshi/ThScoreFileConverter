@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Properties;
 
@@ -191,7 +192,7 @@ namespace ThScoreFileConverter.Models
                 //// (allScoreData.rankings.Count >= 0) &&
                 //// (allScoreData.cardAttacks.Length == NumCards) &&
                 //// (allScoreData.practiceScores.Count >= 0) &&
-                (allScoreData.ClearData.Count == Enum.GetValues(typeof(Chara)).Length))
+                (allScoreData.ClearData.Count == EnumHelper<Chara>.NumValues))
                 return allScoreData;
             else
                 return null;

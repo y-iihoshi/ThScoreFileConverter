@@ -8,7 +8,7 @@
 <#@ import namespace="ThScoreFileConverter.Models.Th135" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levels = EnumHelper.GetEnumerable<Level>()
+    var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var characters = new List<(Chara chara, string name)>

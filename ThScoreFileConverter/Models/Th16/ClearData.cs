@@ -25,9 +25,7 @@ namespace ThScoreFileConverter.Models.Th16
         public ClearData(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>();
-            var levels = EnumHelper.GetEnumerable<Level>();
-            var stages = EnumHelper.GetEnumerable<StagePractice>();
+            var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable;
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
@@ -60,8 +58,8 @@ namespace ThScoreFileConverter.Models.Th16
             this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
             _ = reader.ReadUInt32();
 
-            this.Practices = levels
-                .SelectMany(level => stages.Select(stage => (level, stage)))
+            this.Practices = EnumHelper<Level>.Enumerable
+                .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
                 .ToDictionary(pair => pair, _ =>
                 {
                     var practice = new Th13.Practice();

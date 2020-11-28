@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th143
     {
         internal static Mock<IScore> MockScore()
         {
-            var items = EnumHelper.GetEnumerable<ItemWithTotal>();
+            var items = EnumHelper<ItemWithTotal>.Enumerable;
             var mock = new Mock<IScore>();
             _ = mock.SetupGet(m => m.Signature).Returns("SN");
             _ = mock.SetupGet(m => m.Version).Returns(1);

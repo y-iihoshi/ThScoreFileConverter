@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             var highScoreMock = HighScoreTests.MockHighScore();
             var clearCountMock = ClearCountTests.MockClearCount();
             _ = clearCountMock.SetupGet(m => m.Counts).Returns(
-                EnumHelper.GetEnumerable<Level>().ToDictionary(level => level, _ => 0));
+                EnumHelper<Level>.Enumerable.ToDictionary(level => level, _ => 0));
 
             ClearCounts =
                 new[] { (highScoreMock.Object.Chara, ClearCountTests.MockClearCount().Object) }.ToDictionary();

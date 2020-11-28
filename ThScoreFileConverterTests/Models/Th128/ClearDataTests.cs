@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 return mock.Object;
             }
 
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var levels = EnumHelper<Level>.Enumerable;
 
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CR");

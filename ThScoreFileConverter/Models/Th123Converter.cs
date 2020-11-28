@@ -7,10 +7,10 @@
 
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverter.Properties;
 
@@ -110,7 +110,7 @@ namespace ThScoreFileConverter.Models
             {
             }
 
-            var numCharas = Enum.GetValues(typeof(Chara)).Length - 1;   // Except Oonamazu
+            var numCharas = EnumHelper<Chara>.NumValues - 1;   // Except Oonamazu
             if (allScoreData.ClearData.Count == numCharas)
                 return allScoreData;
             else

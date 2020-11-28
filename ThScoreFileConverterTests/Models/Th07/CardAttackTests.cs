@@ -15,25 +15,20 @@ namespace ThScoreFileConverterTests.Models.Th07
     {
         internal static Mock<ICardAttack> MockCardAttack()
         {
+            var pairs = EnumHelper<CharaWithTotal>.Enumerable.Select((chara, index) => (chara, index));
             var mock = new Mock<ICardAttack>();
 
             _ = mock.SetupGet(m => m.Signature).Returns("CATK");
             _ = mock.SetupGet(m => m.Size1).Returns(0x78);
             _ = mock.SetupGet(m => m.Size2).Returns(0x78);
             _ = mock.SetupGet(m => m.MaxBonuses).Returns(
-                EnumHelper.GetEnumerable<CharaWithTotal>()
-                    .Select((chara, index) => (chara, index))
-                    .ToDictionary(pair => pair.chara, pair => (uint)pair.index));
+                pairs.ToDictionary(pair => pair.chara, pair => (uint)pair.index));
             _ = mock.SetupGet(m => m.CardId).Returns(123);
             _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
             _ = mock.SetupGet(m => m.TrialCounts).Returns(
-                EnumHelper.GetEnumerable<CharaWithTotal>()
-                    .Select((chara, index) => (chara, index))
-                    .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)));
+                pairs.ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)));
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
-                EnumHelper.GetEnumerable<CharaWithTotal>()
-                    .Select((chara, index) => (chara, index))
-                    .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)));
+                pairs.ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)));
 
             var hasTried = mock.Object.TrialCounts.TryGetValue(CharaWithTotal.Total, out var count) && (count > 0);
             _ = mock.Setup(m => m.HasTried()).Returns(hasTried);

@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 return mock.Object;
             }
 
-            var charas = EnumHelper.GetEnumerable<Chara>();
+            var charas = EnumHelper<Chara>.Enumerable;
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(

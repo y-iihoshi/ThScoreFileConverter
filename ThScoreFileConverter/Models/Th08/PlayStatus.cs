@@ -24,9 +24,6 @@ namespace ThScoreFileConverter.Models.Th08
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = EnumHelper.GetEnumerable<Level>();
-            var numLevels = levels.Count();
-
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
 
@@ -42,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th08
             milliseconds = reader.ReadInt32();
             this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
 
-            var playCounts = EnumHelper.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(level => level, _ =>
+            var playCounts = EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(level => level, _ =>
             {
                 var playCount = new PlayCount();
                 playCount.ReadFrom(reader);

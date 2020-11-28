@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 Mock.Of<IClearDataPerGameMode>(
                                     c => (c.TotalPlayCount == 23)
                                          && (c.PlayTime == 4567890)
-                                         && (c.ClearCounts == EnumHelper.GetEnumerable<LevelWithTotal>()
+                                         && (c.ClearCounts == EnumHelper<LevelWithTotal>.Enumerable
                                             .ToDictionary(level => level, level => 100 - (int)level)))
                             },
                             {
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 Mock.Of<IClearDataPerGameMode>(
                                     c => (c.TotalPlayCount == 34)
                                          && (c.PlayTime == 5678901)
-                                         && (c.ClearCounts == EnumHelper.GetEnumerable<LevelWithTotal>()
+                                         && (c.ClearCounts == EnumHelper<LevelWithTotal>.Enumerable
                                             .ToDictionary(level => level, level => 150 - (int)level)))
                             },
                         })
@@ -45,7 +45,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 Mock.Of<IClearDataPerGameMode>(
                                     c => (c.TotalPlayCount == 12)
                                          && (c.PlayTime == 3456789)
-                                         && (c.ClearCounts == EnumHelper.GetEnumerable<LevelWithTotal>()
+                                         && (c.ClearCounts == EnumHelper<LevelWithTotal>.Enumerable
                                             .ToDictionary(level => level, level => 50 - (int)level)))
                             },
                         })),

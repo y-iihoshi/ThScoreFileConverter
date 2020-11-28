@@ -18,18 +18,15 @@ namespace ThScoreFileConverterTests.Models.Th06
     {
         internal static Mock<IClearData> MockClearData()
         {
+            var pairs = EnumHelper<Level>.Enumerable.Select((level, index) => (level, index));
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CLRD");
             _ = mock.SetupGet(m => m.Size1).Returns(0x18);
             _ = mock.SetupGet(m => m.Size2).Returns(0x18);
             _ = mock.SetupGet(m => m.StoryFlags).Returns(
-                EnumHelper.GetEnumerable<Level>()
-                    .Select((level, index) => (level, index))
-                    .ToDictionary(pair => pair.level, pair => (byte)pair.index));
+                pairs.ToDictionary(pair => pair.level, pair => (byte)pair.index));
             _ = mock.SetupGet(m => m.PracticeFlags).Returns(
-                EnumHelper.GetEnumerable<Level>()
-                    .Select((level, index) => (level, index))
-                    .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)));
+                pairs.ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)));
             _ = mock.SetupGet(m => m.Chara).Returns(Chara.ReimuB);
             return mock;
         }

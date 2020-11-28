@@ -26,10 +26,6 @@ namespace ThScoreFileConverterTests.Models.Th15
                 return mock.Object;
             }
 
-            var modes = EnumHelper.GetEnumerable<GameMode>();
-            var levels = EnumHelper.GetEnumerable<Level>();
-            var stages = EnumHelper.GetEnumerable<StagePractice>();
-
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CR");
             _ = mock.SetupGet(m => m.Version).Returns(1);
@@ -37,12 +33,12 @@ namespace ThScoreFileConverterTests.Models.Th15
             _ = mock.SetupGet(m => m.Size).Returns(0xA4A0);
             _ = mock.SetupGet(m => m.Chara).Returns(CharaWithTotal.Marisa);
             _ = mock.SetupGet(m => m.GameModeData).Returns(
-                modes.ToDictionary(
+                EnumHelper<GameMode>.Enumerable.ToDictionary(
                     mode => mode,
                     _ => ClearDataPerGameModeTests.MockClearDataPerGameMode().Object));
             _ = mock.SetupGet(m => m.Practices).Returns(
-                levels
-                    .SelectMany(level => stages.Select(stage => (level, stage)))
+                EnumHelper<Level>.Enumerable
+                    .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
                     .ToDictionary(pair => pair, pair => CreatePractice(pair)));
             return mock;
         }

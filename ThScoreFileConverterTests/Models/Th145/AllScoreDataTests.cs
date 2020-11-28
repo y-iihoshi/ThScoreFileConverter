@@ -34,8 +34,8 @@ namespace ThScoreFileConverterTests.Models.Th145
 
         internal static Properties MakeValidProperties()
         {
-            var charas = EnumHelper.GetEnumerable<Chara>();
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var charas = EnumHelper<Chara>.Enumerable;
+            var levels = EnumHelper<Level>.Enumerable;
 
             return new Properties()
             {

@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         internal static Properties ValidProperties { get; } = new Properties()
         {
             totalTrial = 1,
-            trials = EnumHelper.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary(),
+            trials = EnumHelper<Chara>.Enumerable.Select((chara, index) => (chara, index)).ToDictionary(),
             totalRetry = 2,
             totalClear = 3,
             totalContinue = 4,

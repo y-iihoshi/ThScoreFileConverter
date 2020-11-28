@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models.Th09
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            this.Counts = EnumHelper.GetEnumerable<Level>().ToDictionary(level => level, _ => reader.ReadInt32());
+            this.Counts = EnumHelper<Level>.Enumerable.ToDictionary(level => level, _ => reader.ReadInt32());
             _ = reader.ReadUInt32();
         }
     }

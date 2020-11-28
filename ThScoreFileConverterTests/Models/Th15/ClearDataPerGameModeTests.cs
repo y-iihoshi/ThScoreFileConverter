@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 return mock.Object;
             }
 
-            var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>();
+            var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable;
 
             var mock = new Mock<IClearDataPerGameMode>();
             _ = mock.SetupGet(m => m.Rankings).Returns(

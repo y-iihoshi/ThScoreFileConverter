@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th123
                 return mock.Object;
             }
 
-            var charas = EnumHelper.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu);
+            var charas = EnumHelper<Chara>.Enumerable.Where(chara => chara != Chara.Oonamazu);
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(

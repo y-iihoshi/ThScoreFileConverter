@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th105
 {
@@ -64,7 +65,7 @@ namespace ThScoreFileConverter.Models.Th105
                 }
                 else
                 {
-                    var numLevels = Enum.GetValues(typeof(Level)).Length;
+                    var numLevels = EnumHelper<Level>.NumValues;
                     var index = (number - 1) / numLevels;
                     if (Definitions.EnemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
                         && (index < enemyCardIdPairs.Count()))

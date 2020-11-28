@@ -53,9 +53,9 @@ namespace ThScoreFileConverterTests.Models.Th12
                 return mock.Object;
             }
 
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var levels = EnumHelper<Level>.Enumerable;
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
-            var stages = EnumHelper.GetEnumerable<Stage>();
+            var stages = EnumHelper<Stage>.Enumerable;
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
             var mock = new Mock<IClearData>();

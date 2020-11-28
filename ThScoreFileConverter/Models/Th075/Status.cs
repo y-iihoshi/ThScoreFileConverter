@@ -34,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th075
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var charas = EnumHelper.GetEnumerable<CharaWithReserved>();
+            var charas = EnumHelper<CharaWithReserved>.Enumerable;
 
             this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
             this.ArcadeScores = charas.SelectMany(player => charas.Select(enemy => (player, enemy)))

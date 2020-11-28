@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th075
     public class CharaReplacerTests
     {
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            EnumHelper.GetEnumerable<Level>().ToDictionary(
+            EnumHelper<Level>.Enumerable.ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => ClearDataTests.MockClearData().Object);
 

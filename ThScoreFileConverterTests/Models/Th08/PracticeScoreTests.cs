@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models.Th08
     {
         internal static Mock<IPracticeScore> MockPracticeScore()
         {
-            var pairs = EnumHelper.GetEnumerable<Stage>()
-                .SelectMany(stage => EnumHelper.GetEnumerable<Level>().Select(level => (stage, level)));
+            var pairs = EnumHelper<Stage>.Enumerable
+                .SelectMany(stage => EnumHelper<Level>.Enumerable.Select(level => (stage, level)));
             var mock = new Mock<IPracticeScore>();
             _ = mock.SetupGet(m => m.Signature).Returns("PSCR");
             _ = mock.SetupGet(m => m.Size1).Returns(0x178);

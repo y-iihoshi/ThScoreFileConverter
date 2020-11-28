@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models.Th08
 
             var clearDataMock = ClearDataTests.MockClearData();
             _ = clearDataMock.SetupGet(m => m.StoryFlags).Returns(
-                EnumHelper.GetEnumerable<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B));
+                EnumHelper<Level>.Enumerable.ToDictionary(level => level, _ => PlayableStages.Stage6B));
             var clearData = new[] { clearDataMock.Object }.ToDictionary(entry => entry.Chara);
 
             var replacer = new ClearReplacer(rankings, clearData);

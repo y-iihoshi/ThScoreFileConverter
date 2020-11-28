@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th075
     {
         public AllScoreData()
         {
-            var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
-            var numLevels = Enum.GetValues(typeof(Level)).Length;
+            var numCharas = EnumHelper<CharaWithReserved>.NumValues;
+            var numLevels = EnumHelper<Level>.NumValues;
             this.ClearData = new Dictionary<(CharaWithReserved, Level), IClearData>(numCharas * numLevels);
         }
 
@@ -30,10 +29,8 @@ namespace ThScoreFileConverter.Models.Th075
 
         public void ReadFrom(BinaryReader reader)
         {
-            var levels = EnumHelper.GetEnumerable<Level>();
-
-            this.ClearData = EnumHelper.GetEnumerable<CharaWithReserved>()
-                .SelectMany(chara => levels.Select(level => (chara, level)))
+            this.ClearData = EnumHelper<CharaWithReserved>.Enumerable
+                .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
                 .ToDictionary(pair => pair, pair =>
                 {
                     var clearData = new ClearData();

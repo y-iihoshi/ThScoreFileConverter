@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th13
 {
@@ -29,7 +30,7 @@ namespace ThScoreFileConverter.Models.Th13
             this.clearData = new Dictionary<
                 TCharaWithTotal,
                 IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>>(
-                Enum.GetValues(typeof(TCharaWithTotal)).Length);
+                EnumHelper<TCharaWithTotal>.NumValues);
         }
 
         public Th095.HeaderBase? Header { get; private set; }

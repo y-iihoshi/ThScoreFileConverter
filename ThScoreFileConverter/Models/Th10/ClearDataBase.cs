@@ -26,9 +26,9 @@ namespace ThScoreFileConverter.Models.Th10
         protected ClearDataBase(Chapter chapter, ushort validVersion, int validSize, int numCards)
             : base(chapter, ValidSignature, validVersion, validSize)
         {
-            var levels = EnumHelper.GetEnumerable<Level>();
+            var levels = EnumHelper<Level>.Enumerable;
             var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
-            var stages = EnumHelper.GetEnumerable<Stage>();
+            var stages = EnumHelper<Stage>.Enumerable;
             var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
 
             using var stream = new MemoryStream(this.Data, false);

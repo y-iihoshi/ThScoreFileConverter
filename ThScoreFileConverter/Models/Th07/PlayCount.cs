@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th07
     {
         public PlayCount()
         {
-            this.Trials = new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
+            this.Trials = new Dictionary<Chara, int>(EnumHelper<Chara>.NumValues);
         }
 
         public int TotalTrial { get; private set; }
@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th07
                 throw new ArgumentNullException(nameof(reader));
 
             this.TotalTrial = reader.ReadInt32();
-            this.Trials = EnumHelper.GetEnumerable<Chara>().ToDictionary(chara => chara, chara => reader.ReadInt32());
+            this.Trials = EnumHelper<Chara>.Enumerable.ToDictionary(chara => chara, chara => reader.ReadInt32());
             this.TotalRetry = reader.ReadInt32();
             this.TotalClear = reader.ReadInt32();
             this.TotalContinue = reader.ReadInt32();

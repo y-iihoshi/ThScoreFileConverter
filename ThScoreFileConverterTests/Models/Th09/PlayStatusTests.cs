@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th09
     {
         internal static Mock<IPlayStatus> MockPlayStatus()
         {
-            var characters = EnumHelper.GetEnumerable<Chara>();
+            var characters = EnumHelper<Chara>.Enumerable;
             var pairs = characters.Select((chara, index) => (chara, index));
             var mock = new Mock<IPlayStatus>();
             _ = mock.SetupGet(m => m.Signature).Returns("PLST");

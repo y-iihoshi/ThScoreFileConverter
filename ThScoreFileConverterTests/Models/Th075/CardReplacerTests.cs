@@ -21,10 +21,10 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            EnumHelper.GetEnumerable<Level>().ToDictionary(
+            EnumHelper<Level>.Enumerable.ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => ClearDataTests.MockClearData().Object)
-            .Concat(EnumHelper.GetEnumerable<Level>().ToDictionary(
+            .Concat(EnumHelper<Level>.Enumerable.ToDictionary(
                 level => (CharaWithReserved.Marisa, level),
                 level => CreateClearData()))
             .ToDictionary();

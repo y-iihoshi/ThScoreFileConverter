@@ -25,19 +25,14 @@ namespace ThScoreFileConverterTests.Models.Th08
 
         internal static Mock<ICardAttackCareer> MockCardAttackCareer()
         {
+            var pairs = EnumHelper<CharaWithTotal>.Enumerable.Select((chara, index) => (chara, index));
             var mock = new Mock<ICardAttackCareer>();
             _ = mock.SetupGet(m => m.MaxBonuses).Returns(
-                EnumHelper.GetEnumerable<CharaWithTotal>()
-                    .Select((chara, index) => (chara, index))
-                    .ToDictionary(pair => pair.chara, pair => (uint)pair.index));
+                pairs.ToDictionary(pair => pair.chara, pair => (uint)pair.index));
             _ = mock.SetupGet(m => m.TrialCounts).Returns(
-                EnumHelper.GetEnumerable<CharaWithTotal>()
-                    .Select((chara, index) => (chara, index))
-                    .ToDictionary(pair => pair.chara, pair => 20 + pair.index));
+                pairs.ToDictionary(pair => pair.chara, pair => 20 + pair.index));
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
-                EnumHelper.GetEnumerable<CharaWithTotal>()
-                    .Select((chara, index) => (chara, index))
-                    .ToDictionary(pair => pair.chara, pair => 20 - pair.index));
+                pairs.ToDictionary(pair => pair.chara, pair => 20 - pair.index));
             return mock;
         }
 

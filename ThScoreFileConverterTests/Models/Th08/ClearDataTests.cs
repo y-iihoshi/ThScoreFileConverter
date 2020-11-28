@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     {
         internal static Mock<IClearData> MockClearData()
         {
-            var pairs = EnumHelper.GetEnumerable<Level>().Select((level, index) => (level, index));
+            var pairs = EnumHelper<Level>.Enumerable.Select((level, index) => (level, index));
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CLRD");
             _ = mock.SetupGet(m => m.Size1).Returns(0x24);

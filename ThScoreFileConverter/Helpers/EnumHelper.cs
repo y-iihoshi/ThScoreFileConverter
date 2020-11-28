@@ -6,9 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 namespace ThScoreFileConverter.Helpers
 {
@@ -69,21 +67,6 @@ namespace ThScoreFileConverter.Helpers
             var underlying = Convert.ChangeType(
                 value, typeof(TEnum).GetEnumUnderlyingType(), CultureInfo.InvariantCulture);
             return Enum.IsDefined(typeof(TEnum), underlying) ? (TEnum)underlying : throw new InvalidCastException();
-        }
-
-        /// <summary>
-        /// Gets the <see cref="IEnumerable{T}"/> instance to enumerate values of the <typeparamref name="TEnum"/>
-        /// type.
-        /// </summary>
-        /// <typeparam name="TEnum">The enumeration type.</typeparam>
-        /// <returns>
-        /// The <see cref="IEnumerable{T}"/> instance to enumerate values of the <typeparamref name="TEnum"/> type.
-        /// </returns>
-        [CLSCompliant(false)]
-        public static IEnumerable<TEnum> GetEnumerable<TEnum>()
-            where TEnum : struct, Enum
-        {
-            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
         }
     }
 }

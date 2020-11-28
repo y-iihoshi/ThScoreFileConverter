@@ -9,9 +9,9 @@
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#@ import namespace="Th105 = ThScoreFileConverter.Models.Th105" #>
 <#
-    var levels = EnumHelper.GetEnumerable<Th105.Level>()
+    var levels = EnumHelper<Th105.Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = EnumHelper.GetEnumerable<Th105.LevelWithTotal>()
+    var levelsWithTotal = EnumHelper<Th105.LevelWithTotal>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = Th105.LevelWithTotal.Total.ToShortName();
@@ -62,7 +62,7 @@
         (Chara.Meiling, 64),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.numCards);
 
-    var cardTypes = EnumHelper.GetEnumerable<Th105.CardType>()
+    var cardTypes = EnumHelper<Th105.CardType>.Enumerable
         .ToDictionary(cardType => cardType.ToShortName(), cardType => cardType.ToString());
 
     var cardsPerCharaAndType = new List<(Chara chara, Th105.CardType cardType, int numCards)>

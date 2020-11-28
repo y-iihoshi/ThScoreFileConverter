@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         {
             var mock = new Mock<IClearCount>();
             _ = mock.SetupGet(m => m.Counts).Returns(
-                EnumHelper.GetEnumerable<Level>().Select((level, index) => (level, index)).ToDictionary());
+                EnumHelper<Level>.Enumerable.Select((level, index) => (level, index)).ToDictionary());
             return mock;
         }
 
