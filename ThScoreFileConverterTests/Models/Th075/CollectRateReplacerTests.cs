@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            Utils.GetEnumerable<Level>().ToDictionary(
+            EnumHelper.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => CreateClearData());
 

@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
@@ -119,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.ReimuB)
-                         && (m.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
+                         && (m.Rankings == EnumHelper.GetEnumerable<Level>().ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);
@@ -148,7 +149,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var mock = new Mock<IClearData>();
                 _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.ReimuB);
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    Utils.GetEnumerable<Level>().ToDictionary(
+                    EnumHelper.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));

@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Models.Th07.Chara,
     ThScoreFileConverter.Models.Th07.Level,
@@ -31,9 +32,9 @@ namespace ThScoreFileConverter.Models.Th07
             _ = reader.ReadUInt32();    // always 0x00000001?
             this.Score = reader.ReadUInt32();
             this.SlowRate = reader.ReadSingle();
-            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-            this.Level = Utils.ToEnum<Level>(reader.ReadByte());
-            this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
+            this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
+            this.Level = EnumHelper.To<Level>(reader.ReadByte());
+            this.StageProgress = EnumHelper.To<StageProgress>(reader.ReadByte());
             this.Name = reader.ReadExactBytes(9);
             this.Date = reader.ReadExactBytes(6);
             this.ContinueCount = reader.ReadUInt16();

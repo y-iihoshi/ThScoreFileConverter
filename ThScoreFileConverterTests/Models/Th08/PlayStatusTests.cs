@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
@@ -22,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.TotalRunningTime).Returns(new Time(12, 34, 56, 789, false));
             _ = mock.SetupGet(m => m.TotalPlayTime).Returns(new Time(23, 45, 19, 876, false));
             _ = mock.SetupGet(m => m.PlayCounts).Returns(
-                Utils.GetEnumerable<Level>().ToDictionary(
+                EnumHelper.GetEnumerable<Level>().ToDictionary(
                     level => level, level => PlayCountTests.MockPlayCount().Object));
             _ = mock.SetupGet(m => m.TotalPlayCount).Returns(PlayCountTests.MockPlayCount().Object);
             _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(21));

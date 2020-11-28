@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
@@ -25,15 +26,15 @@ namespace ThScoreFileConverter.Models.Th10
         protected ClearDataBase(Chapter chapter, ushort validVersion, int validSize, int numCards)
             : base(chapter, ValidSignature, validVersion, validSize)
         {
-            var levels = Utils.GetEnumerable<Level>();
+            var levels = EnumHelper.GetEnumerable<Level>();
             var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
-            var stages = Utils.GetEnumerable<Stage>();
+            var stages = EnumHelper.GetEnumerable<Stage>();
             var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
 
-            this.Chara = Utils.ToEnum<TCharaWithTotal>(reader.ReadInt32());
+            this.Chara = EnumHelper.To<TCharaWithTotal>(reader.ReadInt32());
 
             this.Rankings = levels.ToDictionary(
                 level => level,

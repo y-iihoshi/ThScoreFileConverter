@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075
 {
@@ -33,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th075
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var charas = Utils.GetEnumerable<CharaWithReserved>();
+            var charas = EnumHelper.GetEnumerable<CharaWithReserved>();
 
             this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
             this.ArcadeScores = charas.SelectMany(player => charas.Select(enemy => (player, enemy)))

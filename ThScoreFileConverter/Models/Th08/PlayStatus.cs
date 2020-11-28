@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08
 {
@@ -23,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th08
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = Utils.GetEnumerable<Level>();
+            var levels = EnumHelper.GetEnumerable<Level>();
             var numLevels = levels.Count();
 
             using var stream = new MemoryStream(this.Data, false);
@@ -41,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th08
             milliseconds = reader.ReadInt32();
             this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
 
-            var playCounts = Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(level => level, _ =>
+            var playCounts = EnumHelper.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(level => level, _ =>
             {
                 var playCount = new PlayCount();
                 playCount.ReadFrom(reader);

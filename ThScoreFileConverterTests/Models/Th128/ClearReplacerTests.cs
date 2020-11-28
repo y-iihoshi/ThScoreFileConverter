@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
@@ -26,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(c => c.Route).Returns(RouteWithTotal.A2);
             _ = mock.SetupGet(c => c.Rankings).Returns(
-                Utils.GetEnumerable<Level>().ToDictionary(
+                EnumHelper.GetEnumerable<Level>().ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
                         as IReadOnlyList<IScoreData>));
@@ -105,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             {
                 Mock.Of<IClearData>(
                     m => (m.Route == RouteWithTotal.A2)
-                         && (m.Rankings == Utils.GetEnumerable<Level>().ToDictionary(
+                         && (m.Rankings == EnumHelper.GetEnumerable<Level>().ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Route);

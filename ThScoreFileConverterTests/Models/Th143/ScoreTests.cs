@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Extensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th143
     {
         internal static Mock<IScore> MockScore()
         {
-            var items = Utils.GetEnumerable<ItemWithTotal>();
+            var items = EnumHelper.GetEnumerable<ItemWithTotal>();
             var mock = new Mock<IScore>();
             _ = mock.SetupGet(m => m.Signature).Returns("SN");
             _ = mock.SetupGet(m => m.Version).Returns(1);

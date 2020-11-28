@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th155;
 using ThScoreFileConverterTests.Extensions;
 
@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             return new Properties()
             {
-                storyDictionary = Utils.GetEnumerable<StoryChara>().ToDictionary(
+                storyDictionary = EnumHelper.GetEnumerable<StoryChara>().ToDictionary(
                     chara => chara,
                     chara => new AllScoreData.Story
                     {

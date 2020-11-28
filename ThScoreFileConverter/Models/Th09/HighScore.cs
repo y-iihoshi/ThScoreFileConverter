@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th09
 {
@@ -27,8 +28,8 @@ namespace ThScoreFileConverter.Models.Th09
             _ = reader.ReadUInt32();    // always 0x00000002?
             this.Score = reader.ReadUInt32();
             _ = reader.ReadUInt32();    // always 0x00000000?
-            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-            this.Level = Utils.ToEnum<Level>(reader.ReadByte());
+            this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
+            this.Level = EnumHelper.To<Level>(reader.ReadByte());
             this.Rank = reader.ReadInt16();
             this.Name = reader.ReadExactBytes(9);
             this.Date = reader.ReadExactBytes(9);

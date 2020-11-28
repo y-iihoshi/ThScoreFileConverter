@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -21,17 +21,17 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = mock.SetupGet(m => m.Size1).Returns(0x78);
             _ = mock.SetupGet(m => m.Size2).Returns(0x78);
             _ = mock.SetupGet(m => m.MaxBonuses).Returns(
-                Utils.GetEnumerable<CharaWithTotal>()
+                EnumHelper.GetEnumerable<CharaWithTotal>()
                     .Select((chara, index) => (chara, index))
                     .ToDictionary(pair => pair.chara, pair => (uint)pair.index));
             _ = mock.SetupGet(m => m.CardId).Returns(123);
             _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
             _ = mock.SetupGet(m => m.TrialCounts).Returns(
-                Utils.GetEnumerable<CharaWithTotal>()
+                EnumHelper.GetEnumerable<CharaWithTotal>()
                     .Select((chara, index) => (chara, index))
                     .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)));
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
-                Utils.GetEnumerable<CharaWithTotal>()
+                EnumHelper.GetEnumerable<CharaWithTotal>()
                     .Select((chara, index) => (chara, index))
                     .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)));
 

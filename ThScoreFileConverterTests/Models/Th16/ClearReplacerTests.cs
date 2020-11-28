@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
@@ -26,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Aya);
             _ = mock.SetupGet(c => c.Rankings).Returns(
-                Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
                         as IReadOnlyList<IScoreData>));
@@ -76,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             {
                 Mock.Of<IClearData>(
                     c => (c.Chara == CharaWithTotal.Aya)
-                         && (c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                         && (c.Rankings == EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
                             level => level,
                             level => new[]
                             {
@@ -118,7 +119,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Aya)
-                         && (m.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                         && (m.Rankings == EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);

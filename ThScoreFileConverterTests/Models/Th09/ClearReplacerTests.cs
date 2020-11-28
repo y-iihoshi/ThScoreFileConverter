@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 
@@ -24,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             var highScoreMock = HighScoreTests.MockHighScore();
             var clearCountMock = ClearCountTests.MockClearCount();
             _ = clearCountMock.SetupGet(m => m.Counts).Returns(
-                Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => 0));
+                EnumHelper.GetEnumerable<Level>().ToDictionary(level => level, _ => 0));
 
             ClearCounts =
                 new[] { (highScoreMock.Object.Chara, ClearCountTests.MockClearCount().Object) }.ToDictionary();

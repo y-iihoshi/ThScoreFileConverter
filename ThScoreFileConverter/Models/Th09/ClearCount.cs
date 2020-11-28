@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th09
 {
@@ -29,7 +30,7 @@ namespace ThScoreFileConverter.Models.Th09
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            this.Counts = Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => reader.ReadInt32());
+            this.Counts = EnumHelper.GetEnumerable<Level>().ToDictionary(level => level, _ => reader.ReadInt32());
             _ = reader.ReadUInt32();
         }
     }

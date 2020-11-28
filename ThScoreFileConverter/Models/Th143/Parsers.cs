@@ -7,6 +7,7 @@
 
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th143
 {
@@ -31,6 +32,6 @@ namespace ThScoreFileConverter.Models.Th143
         /// Gets the pattern used for parsing as a long name of a <see cref="Day"/> enumerator.
         /// </summary>
         public static string DayLongPattern { get; } =
-            string.Join("|", Utils.GetEnumerable<Day>().Select(day => day.ToLongName()).ToArray());
+            string.Join("|", EnumHelper.GetEnumerable<Day>().Select(day => day.ToLongName()).ToArray());
     }
 }

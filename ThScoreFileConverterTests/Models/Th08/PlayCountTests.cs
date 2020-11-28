@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 
@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var mock = new Mock<IPlayCount>();
             _ = mock.SetupGet(m => m.TotalTrial).Returns(1);
             _ = mock.SetupGet(m => m.Trials).Returns(
-                Utils.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary());
+                EnumHelper.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary());
             _ = mock.SetupGet(m => m.TotalClear).Returns(3);
             _ = mock.SetupGet(m => m.TotalContinue).Returns(4);
             _ = mock.SetupGet(m => m.TotalPractice).Returns(5);

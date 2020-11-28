@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th143
 {
@@ -32,8 +33,8 @@ namespace ThScoreFileConverter.Models.Th143
             _ = reader.ReadExactBytes(0x17);
             this.TotalPlayTime = reader.ReadInt32();
             _ = reader.ReadInt32();
-            this.LastMainItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
-            this.LastSubItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+            this.LastMainItem = EnumHelper.To<ItemWithTotal>(reader.ReadInt32());
+            this.LastSubItem = EnumHelper.To<ItemWithTotal>(reader.ReadInt32());
             _ = reader.ReadExactBytes(0x54);
             this.NicknameFlags = reader.ReadExactBytes(71);
             _ = reader.ReadExactBytes(0x12D);

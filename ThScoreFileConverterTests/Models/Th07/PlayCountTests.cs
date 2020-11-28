@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
 
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         internal static Properties ValidProperties { get; } = new Properties()
         {
             totalTrial = 1,
-            trials = Utils.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary(),
+            trials = EnumHelper.GetEnumerable<Chara>().Select((chara, index) => (chara, index)).ToDictionary(),
             totalRetry = 2,
             totalClear = 3,
             totalContinue = 4,

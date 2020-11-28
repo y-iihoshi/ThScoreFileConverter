@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Extensions;
@@ -55,9 +56,9 @@ namespace ThScoreFileConverterTests.Models.Th16
                 return mock.Object;
             }
 
-            var levels = Utils.GetEnumerable<Level>();
-            var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();
-            var stages = Utils.GetEnumerable<StagePractice>();
+            var levels = EnumHelper.GetEnumerable<Level>();
+            var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>();
+            var stages = EnumHelper.GetEnumerable<StagePractice>();
 
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CR");

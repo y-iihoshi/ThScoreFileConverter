@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 
@@ -27,15 +27,15 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             var mock = new Mock<ICardAttackCareer>();
             _ = mock.SetupGet(m => m.MaxBonuses).Returns(
-                Utils.GetEnumerable<CharaWithTotal>()
+                EnumHelper.GetEnumerable<CharaWithTotal>()
                     .Select((chara, index) => (chara, index))
                     .ToDictionary(pair => pair.chara, pair => (uint)pair.index));
             _ = mock.SetupGet(m => m.TrialCounts).Returns(
-                Utils.GetEnumerable<CharaWithTotal>()
+                EnumHelper.GetEnumerable<CharaWithTotal>()
                     .Select((chara, index) => (chara, index))
                     .ToDictionary(pair => pair.chara, pair => 20 + pair.index));
             _ = mock.SetupGet(m => m.ClearCounts).Returns(
-                Utils.GetEnumerable<CharaWithTotal>()
+                EnumHelper.GetEnumerable<CharaWithTotal>()
                     .Select((chara, index) => (chara, index))
                     .ToDictionary(pair => pair.chara, pair => 20 - pair.index));
             return mock;

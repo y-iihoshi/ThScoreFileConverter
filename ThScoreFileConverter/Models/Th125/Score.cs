@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th125
 {
@@ -26,10 +27,10 @@ namespace ThScoreFileConverter.Models.Th125
             using var reader = new BinaryReader(stream);
 
             var number = reader.ReadUInt32();
-            this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
+            this.LevelScene = (EnumHelper.To<Level>(number / 10), (int)((number % 10) + 1));
             this.HighScore = reader.ReadInt32();
             _ = reader.ReadExactBytes(0x04);
-            this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
+            this.Chara = EnumHelper.To<Chara>(reader.ReadInt32());
             _ = reader.ReadExactBytes(0x04);
             this.TrialCount = reader.ReadInt32();
             this.FirstSuccess = reader.ReadInt32();

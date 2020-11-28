@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th12;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
@@ -52,9 +53,9 @@ namespace ThScoreFileConverterTests.Models.Th12
                 return mock.Object;
             }
 
-            var levels = Utils.GetEnumerable<Level>();
+            var levels = EnumHelper.GetEnumerable<Level>();
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
-            var stages = Utils.GetEnumerable<Stage>();
+            var stages = EnumHelper.GetEnumerable<Stage>();
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
             var mock = new Mock<IClearData>();

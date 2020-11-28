@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -24,11 +24,11 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = mock.SetupGet(m => m.Size1).Returns(0x1C);
             _ = mock.SetupGet(m => m.Size2).Returns(0x1C);
             _ = mock.SetupGet(m => m.StoryFlags).Returns(
-                Utils.GetEnumerable<Level>()
+                EnumHelper.GetEnumerable<Level>()
                     .Select((level, index) => (level, index))
                     .ToDictionary(pair => pair.level, pair => (byte)pair.index));
             _ = mock.SetupGet(m => m.PracticeFlags).Returns(
-                Utils.GetEnumerable<Level>()
+                EnumHelper.GetEnumerable<Level>()
                     .Select((level, index) => (level, index))
                     .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)));
             _ = mock.SetupGet(m => m.Chara).Returns(Chara.ReimuB);

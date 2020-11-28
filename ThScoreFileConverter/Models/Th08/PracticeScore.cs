@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08
 {
@@ -22,8 +23,8 @@ namespace ThScoreFileConverter.Models.Th08
         public PracticeScore(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var stages = Utils.GetEnumerable<Stage>();
-            var levels = Utils.GetEnumerable<Level>();
+            var stages = EnumHelper.GetEnumerable<Stage>();
+            var levels = EnumHelper.GetEnumerable<Level>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
@@ -35,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th08
                 .ToDictionary(pair => pair, _ => reader.ReadInt32());
             this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
                 .ToDictionary(pair => pair, _ => reader.ReadInt32());
-            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+            this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
             _ = reader.ReadExactBytes(3);   // always 0x000001?
         }
 

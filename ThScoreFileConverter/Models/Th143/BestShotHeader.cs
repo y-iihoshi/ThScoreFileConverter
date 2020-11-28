@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th143
 {
@@ -42,7 +43,7 @@ namespace ThScoreFileConverter.Models.Th143
                 throw new InvalidDataException();
 
             _ = reader.ReadUInt16();    // always 0xDF01?
-            this.Day = Utils.ToEnum<Day>(reader.ReadInt16());
+            this.Day = EnumHelper.To<Day>(reader.ReadInt16());
             this.Scene = (short)(reader.ReadInt16() + 1);
             _ = reader.ReadUInt16();    // 0x0100 ... Version?
             this.Width = reader.ReadInt16();

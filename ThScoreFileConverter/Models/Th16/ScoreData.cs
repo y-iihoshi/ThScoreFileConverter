@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th16
 {
@@ -38,13 +39,13 @@ namespace ThScoreFileConverter.Models.Th16
                 throw new ArgumentNullException(nameof(reader));
 
             this.Score = reader.ReadUInt32();
-            this.StageProgress = Utils.ToEnum<Th13.StageProgress>(reader.ReadByte());
+            this.StageProgress = EnumHelper.To<Th13.StageProgress>(reader.ReadByte());
             this.ContinueCount = reader.ReadByte();
             this.Name = reader.ReadExactBytes(10);
             this.DateTime = reader.ReadUInt32();
             _ = reader.ReadUInt32();
             this.SlowRate = reader.ReadSingle();
-            this.Season = Utils.ToEnum<Season>(reader.ReadInt32());
+            this.Season = EnumHelper.To<Season>(reader.ReadInt32());
         }
     }
 }

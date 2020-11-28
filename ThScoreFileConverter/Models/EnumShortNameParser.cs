@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models
 {
@@ -23,7 +24,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Elements of <typeparamref name="TEnum"/>.
         /// </summary>
-        private static readonly IEnumerable<TEnum> Elements = Utils.GetEnumerable<TEnum>();
+        private static readonly IEnumerable<TEnum> Elements = EnumHelper.GetEnumerable<TEnum>();
 
         /// <summary>
         /// A regular expression of the short names of <typeparamref name="TEnum"/>.

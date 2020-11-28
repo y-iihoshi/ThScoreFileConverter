@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
@@ -19,8 +19,8 @@ namespace ThScoreFileConverterTests.Models.Th075
 
         internal static Properties ValidProperties { get; } = new Properties()
         {
-            clearData = Utils.GetEnumerable<CharaWithReserved>()
-                .SelectMany(chara => Utils.GetEnumerable<Level>().Select(level => (chara, level)))
+            clearData = EnumHelper.GetEnumerable<CharaWithReserved>()
+                .SelectMany(chara => EnumHelper.GetEnumerable<Level>().Select(level => (chara, level)))
                 .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
             status = StatusTests.ValidProperties,
         };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
@@ -114,7 +115,7 @@ namespace ThScoreFileConverterTests.Models.Th08
 
             var clearDataMock = ClearDataTests.MockClearData();
             _ = clearDataMock.SetupGet(m => m.StoryFlags).Returns(
-                Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B));
+                EnumHelper.GetEnumerable<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B));
             var clearData = new[] { clearDataMock.Object }.ToDictionary(entry => entry.Chara);
 
             var replacer = new ClearReplacer(rankings, clearData);

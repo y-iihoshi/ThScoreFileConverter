@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th145;
 using ThScoreFileConverterTests.Extensions;
 using Level = ThScoreFileConverter.Models.Th145.Level;
@@ -34,8 +34,8 @@ namespace ThScoreFileConverterTests.Models.Th145
 
         internal static Properties MakeValidProperties()
         {
-            var charas = Utils.GetEnumerable<Chara>();
-            var levels = Utils.GetEnumerable<Level>();
+            var charas = EnumHelper.GetEnumerable<Chara>();
+            var levels = EnumHelper.GetEnumerable<Level>();
 
             return new Properties()
             {

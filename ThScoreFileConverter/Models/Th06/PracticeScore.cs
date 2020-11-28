@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th06
 {
@@ -24,9 +25,9 @@ namespace ThScoreFileConverter.Models.Th06
 
             _ = reader.ReadUInt32();    // always 0x00000010?
             this.HighScore = reader.ReadInt32();
-            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-            this.Level = Utils.ToEnum<Level>(reader.ReadByte());
-            this.Stage = Utils.ToEnum<Stage>(reader.ReadByte());
+            this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
+            this.Level = EnumHelper.To<Level>(reader.ReadByte());
+            this.Stage = EnumHelper.To<Stage>(reader.ReadByte());
             _ = reader.ReadByte();
         }
 

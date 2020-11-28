@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th135;
 using ThScoreFileConverterTests.Extensions;
 
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         internal static Properties GetValidProperties() => new Properties()
         {
             storyProgress = 1,
-            storyClearFlags = Utils.GetEnumerable<Chara>().ToDictionary(
+            storyClearFlags = EnumHelper.GetEnumerable<Chara>().ToDictionary(
                 chara => chara, chara => TestUtils.Cast<LevelFlags>(30 - (int)chara)),
             endingCount = 2,
             ending2Count = 3,

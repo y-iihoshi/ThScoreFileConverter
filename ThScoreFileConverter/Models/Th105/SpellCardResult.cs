@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th105
 {
@@ -36,8 +37,8 @@ namespace ThScoreFileConverter.Models.Th105
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            this.Enemy = Utils.ToEnum<TChara>(reader.ReadInt32());
-            this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
+            this.Enemy = EnumHelper.To<TChara>(reader.ReadInt32());
+            this.Level = EnumHelper.To<Level>(reader.ReadInt32());
             this.Id = reader.ReadInt32();
             this.TrialCount = reader.ReadInt32();
             this.GotCount = reader.ReadInt32();

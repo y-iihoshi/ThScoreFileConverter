@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
@@ -16,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     {
         internal static Mock<IClearData> MockClearData()
         {
-            var pairs = Utils.GetEnumerable<Level>().Select((level, index) => (level, index));
+            var pairs = EnumHelper.GetEnumerable<Level>().Select((level, index) => (level, index));
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CLRD");
             _ = mock.SetupGet(m => m.Size1).Returns(0x24);

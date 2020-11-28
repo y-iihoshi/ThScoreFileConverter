@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128
 {
@@ -23,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th128
         public ClearData(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            var levels = Utils.GetEnumerable<Level>();
+            var levels = EnumHelper.GetEnumerable<Level>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08
 {
@@ -33,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th08
             _ = reader.ReadUInt32();    // always 0x00000003?
             this.CardId = (short)(reader.ReadInt16() + 1);
             _ = reader.ReadByte();
-            this.Level = Utils.ToEnum<LevelPracticeWithTotal>(reader.ReadByte());   // Last Word == Normal...
+            this.Level = EnumHelper.To<LevelPracticeWithTotal>(reader.ReadByte());  // Last Word == Normal...
             this.CardName = reader.ReadExactBytes(0x30);
             this.EnemyName = reader.ReadExactBytes(0x30);
             this.Comment = reader.ReadExactBytes(0x80);

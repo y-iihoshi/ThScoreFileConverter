@@ -4,13 +4,14 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th123" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#@ import namespace="Th105 = ThScoreFileConverter.Models.Th105" #>
 <#
-    var levels = Models.Utils.GetEnumerable<Th105.Level>()
+    var levels = EnumHelper.GetEnumerable<Th105.Level>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = Models.Utils.GetEnumerable<Th105.LevelWithTotal>()
+    var levelsWithTotal = EnumHelper.GetEnumerable<Th105.LevelWithTotal>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = Th105.LevelWithTotal.Total.ToShortName();
@@ -61,7 +62,7 @@
         (Chara.Meiling, 64),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.numCards);
 
-    var cardTypes = Models.Utils.GetEnumerable<Th105.CardType>()
+    var cardTypes = EnumHelper.GetEnumerable<Th105.CardType>()
         .ToDictionary(cardType => cardType.ToShortName(), cardType => cardType.ToString());
 
     var cardsPerCharaAndType = new List<(Chara chara, Th105.CardType cardType, int numCards)>

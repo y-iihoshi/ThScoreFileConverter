@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverterTests.Extensions;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th123
                 return mock.Object;
             }
 
-            var charas = Utils.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu);
+            var charas = EnumHelper.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu);
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(

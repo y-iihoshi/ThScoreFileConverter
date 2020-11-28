@@ -4,10 +4,11 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th155" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levels = Models.Utils.GetEnumerable<Level>().ToDictionary(
+    var levels = EnumHelper.GetEnumerable<Level>().ToDictionary(
         level => level.ToShortName(),
         level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 

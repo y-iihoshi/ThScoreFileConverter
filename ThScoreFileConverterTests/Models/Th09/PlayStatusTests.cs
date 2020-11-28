@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th09
     {
         internal static Mock<IPlayStatus> MockPlayStatus()
         {
-            var characters = Utils.GetEnumerable<Chara>();
+            var characters = EnumHelper.GetEnumerable<Chara>();
             var pairs = characters.Select((chara, index) => (chara, index));
             var mock = new Mock<IPlayStatus>();
             _ = mock.SetupGet(m => m.Signature).Returns("PLST");

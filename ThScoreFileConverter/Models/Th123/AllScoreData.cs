@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th123
 {
@@ -23,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th123
 
         public AllScoreData()
         {
-            var validNumCharas = Utils.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu).Count();
+            var validNumCharas = EnumHelper.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu).Count();
             this.storyClearCounts = new Dictionary<Chara, byte>(validNumCharas);
             this.systemCards = new Dictionary<int, Th105.ICardForDeck>(Definitions.SystemCardNameTable.Count);
             this.clearData = new Dictionary<Chara, Th105.IClearData<Chara>>(validNumCharas);
@@ -40,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th123
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var validNumCharas = Utils.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu).Count();
+            var validNumCharas = EnumHelper.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu).Count();
 
             _ = reader.ReadUInt32();            // version? (0xD2 == 210 --> ver.1.10?)
             _ = reader.ReadUInt32();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th075
     public class CharaReplacerTests
     {
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            Utils.GetEnumerable<Level>().ToDictionary(
+            EnumHelper.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => ClearDataTests.MockClearData().Object);
 

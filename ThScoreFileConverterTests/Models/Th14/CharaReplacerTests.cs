@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th14;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th14
     {
         private static IEnumerable<IClearData> CreateClearDataList()
         {
-            var levels = Utils.GetEnumerable<LevelPracticeWithTotal>();
+            var levels = EnumHelper.GetEnumerable<LevelPracticeWithTotal>();
             return new[]
             {
                 Mock.Of<IClearData>(

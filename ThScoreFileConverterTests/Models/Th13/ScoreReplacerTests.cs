@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th13;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
@@ -123,7 +123,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Marisa)
-                         && (m.Rankings == Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                         && (m.Rankings == EnumHelper.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);
@@ -152,7 +152,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 var mock = new Mock<IClearData>();
                 _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                    EnumHelper.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));
@@ -181,7 +181,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 var mock = new Mock<IClearData>();
                 _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    Utils.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
+                    EnumHelper.GetEnumerable<LevelPracticeWithTotal>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));

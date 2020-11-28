@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
@@ -159,7 +160,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 {
                                     GameMode.Pointdevice,
                                     Mock.Of<IClearDataPerGameMode>(
-                                        c => c.Rankings == Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                                        c => c.Rankings == EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
                                             level => level,
                                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>))
                                 },
@@ -190,7 +191,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 var mock = new Mock<IClearDataPerGameMode>();
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                    EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));
@@ -227,7 +228,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 var mock = new Mock<IClearDataPerGameMode>();
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    Utils.GetEnumerable<LevelWithTotal>().ToDictionary(
+                    EnumHelper.GetEnumerable<LevelWithTotal>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));

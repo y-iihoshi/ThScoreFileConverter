@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
@@ -58,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 return mock.Object;
             }
 
-            var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();
+            var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>();
 
             var mock = new Mock<IClearDataPerGameMode>();
             _ = mock.SetupGet(m => m.Rankings).Returns(

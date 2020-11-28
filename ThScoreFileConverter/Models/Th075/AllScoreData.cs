@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075
 {
@@ -29,9 +30,9 @@ namespace ThScoreFileConverter.Models.Th075
 
         public void ReadFrom(BinaryReader reader)
         {
-            var levels = Utils.GetEnumerable<Level>();
+            var levels = EnumHelper.GetEnumerable<Level>();
 
-            this.ClearData = Utils.GetEnumerable<CharaWithReserved>()
+            this.ClearData = EnumHelper.GetEnumerable<CharaWithReserved>()
                 .SelectMany(chara => levels.Select(level => (chara, level)))
                 .ToDictionary(pair => pair, pair =>
                 {

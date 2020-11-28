@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08
 {
@@ -21,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th08
         public ClearData(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = Utils.GetEnumerable<Level>();
+            var levels = EnumHelper.GetEnumerable<Level>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
@@ -30,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th08
             this.StoryFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
             this.PracticeFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
             _ = reader.ReadByte();      // always 0x00?
-            this.Chara = Utils.ToEnum<CharaWithTotal>(reader.ReadByte());
+            this.Chara = EnumHelper.To<CharaWithTotal>(reader.ReadByte());
             _ = reader.ReadUInt16();    // always 0x0000?
         }
 

@@ -4,19 +4,20 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th13" #>
 <#
-    var levels = Utils.GetEnumerable<Level>()
+    var levels = EnumHelper.GetEnumerable<Level>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>()
+    var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = LevelWithTotal.Total.ToShortName();
     var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var levelsSpellPractice = Utils.GetEnumerable<LevelPractice>().ToDictionary(
+    var levelsSpellPractice = EnumHelper.GetEnumerable<LevelPractice>().ToDictionary(
         level => level.ToShortName(),
         level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 

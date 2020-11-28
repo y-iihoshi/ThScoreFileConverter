@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th07
 {
@@ -39,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th07
                 throw new ArgumentNullException(nameof(reader));
 
             this.TotalTrial = reader.ReadInt32();
-            this.Trials = Utils.GetEnumerable<Chara>().ToDictionary(chara => chara, chara => reader.ReadInt32());
+            this.Trials = EnumHelper.GetEnumerable<Chara>().ToDictionary(chara => chara, chara => reader.ReadInt32());
             this.TotalRetry = reader.ReadInt32();
             this.TotalClear = reader.ReadInt32();
             this.TotalContinue = reader.ReadInt32();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 
@@ -13,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th16
     {
         private static IEnumerable<IClearData> CreateClearDataList()
         {
-            var levels = Utils.GetEnumerable<LevelWithTotal>();
+            var levels = EnumHelper.GetEnumerable<LevelWithTotal>();
             return new[]
             {
                 Mock.Of<IClearData>(

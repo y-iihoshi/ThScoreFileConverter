@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
@@ -38,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th10
             this.ClearCount = reader.ReadInt32();
             this.TrialCount = reader.ReadInt32();
             this.Id = reader.ReadInt32() + 1;
-            this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
+            this.Level = EnumHelper.To<Level>(reader.ReadInt32());
         }
     }
 }

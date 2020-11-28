@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -30,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             size2 = 0x160,
             totalRunningTime = new Time(12, 34, 56, 789, false),
             totalPlayTime = new Time(23, 45, 19, 876, false),
-            playCounts = Utils.GetEnumerable<LevelWithTotal>()
+            playCounts = EnumHelper.GetEnumerable<LevelWithTotal>()
                 .ToDictionary(
                     level => level,
                     level => new PlayCountTests.Properties(PlayCountTests.ValidProperties)),

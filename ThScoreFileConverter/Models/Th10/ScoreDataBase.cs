@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
@@ -37,7 +38,7 @@ namespace ThScoreFileConverter.Models.Th10
                 throw new ArgumentNullException(nameof(reader));
 
             this.Score = reader.ReadUInt32();
-            this.StageProgress = Utils.ToEnum<TStageProgress>(reader.ReadByte());
+            this.StageProgress = EnumHelper.To<TStageProgress>(reader.ReadByte());
             this.ContinueCount = reader.ReadByte();
             this.Name = reader.ReadExactBytes(10);
             this.DateTime = reader.ReadUInt32();

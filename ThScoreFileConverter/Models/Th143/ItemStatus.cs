@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th143
 {
@@ -24,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th143
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
 
-            this.Item = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+            this.Item = EnumHelper.To<ItemWithTotal>(reader.ReadInt32());
             this.UseCount = reader.ReadInt32();
             this.ClearedCount = reader.ReadInt32();
             this.ClearedScenes = reader.ReadInt32();

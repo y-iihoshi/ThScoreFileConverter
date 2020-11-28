@@ -22,47 +22,6 @@ namespace ThScoreFileConverterTests.Models
             => Settings.Instance.OutputNumberGroupSeparator = this.outputSeparator;
 
         [TestMethod]
-        public void ParseEnumTestValidName()
-            => Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday"));
-
-        [TestMethod]
-        public void ParseEnumTestInvalidName()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = Utils.ParseEnum<DayOfWeek>("Sun"));
-
-        [TestMethod]
-        public void ParseEnumTestEmpty()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = Utils.ParseEnum<DayOfWeek>(string.Empty));
-
-        [TestMethod]
-        public void ParseEnumTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = Utils.ParseEnum<DayOfWeek>(null!));
-
-        [TestMethod]
-        public void ParseEnumTestCaseSensitiveValidName()
-            => Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", false));
-
-        [TestMethod]
-        public void ParseEnumTestCaseSensitiveInvalidName()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = Utils.ParseEnum<DayOfWeek>("sunday", false));
-
-        [TestMethod]
-        public void ParseEnumTestCaseInsensitiveValidName()
-        {
-            Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", true));
-            Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("sunday", true));
-        }
-
-        [TestMethod]
-        public void GetEnumerableTest()
-        {
-            var enumerable = Utils.GetEnumerable<DayOfWeek>();
-            var i = (int)DayOfWeek.Sunday;
-            foreach (var value in enumerable)
-                Assert.AreEqual((DayOfWeek)i++, value);
-            Assert.AreEqual(7, i);
-        }
-
-        [TestMethod]
         public void ToNumberStringTest()
         {
             Settings.Instance.OutputNumberGroupSeparator = true;

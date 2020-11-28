@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th15
 {
@@ -42,7 +43,7 @@ namespace ThScoreFileConverter.Models.Th15
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();
+            var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>();
 
             this.Rankings = levelsWithTotal.ToDictionary(
                 level => level,

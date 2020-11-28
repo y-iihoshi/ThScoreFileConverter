@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th125
 {
@@ -78,7 +79,7 @@ namespace ThScoreFileConverter.Models.Th125
                 throw new InvalidDataException();
 
             _ = reader.ReadUInt16();    // always 0x0405?
-            this.Level = Utils.ToEnum<Level>(reader.ReadInt16() - 1);
+            this.Level = EnumHelper.To<Level>(reader.ReadInt16() - 1);
             this.Scene = reader.ReadInt16();
             _ = reader.ReadUInt16();    // 0x0100 ... Version?
             this.Width = reader.ReadInt16();

@@ -4,12 +4,13 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th11" #>
 <#
-    var levels = Utils.GetEnumerable<Level>()
+    var levels = EnumHelper.GetEnumerable<Level>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>()
+    var levelsWithTotal = EnumHelper.GetEnumerable<LevelWithTotal>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = LevelWithTotal.Total.ToShortName();

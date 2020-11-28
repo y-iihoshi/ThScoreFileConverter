@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Extensions;
 
@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 return mock.Object;
             }
 
-            var charas = Utils.GetEnumerable<Chara>();
+            var charas = EnumHelper.GetEnumerable<Chara>();
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(

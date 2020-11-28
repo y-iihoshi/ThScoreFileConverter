@@ -7,6 +7,7 @@
 
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th095
 {
@@ -25,6 +26,6 @@ namespace ThScoreFileConverter.Models.Th095
         /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
         /// </summary>
         public static string LevelLongPattern { get; } =
-            string.Join("|", Utils.GetEnumerable<Level>().Select(level => level.ToLongName()).ToArray());
+            string.Join("|", EnumHelper.GetEnumerable<Level>().Select(level => level.ToLongName()).ToArray());
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th07
 {
@@ -22,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th07
         public CardAttack(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var charas = Utils.GetEnumerable<CharaWithTotal>();
+            var charas = EnumHelper.GetEnumerable<CharaWithTotal>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

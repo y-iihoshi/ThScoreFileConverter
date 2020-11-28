@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th105;
 using Level = ThScoreFileConverter.Models.Th105.Level;
 
@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     .Select(value => CreateCardForDeck(value))
                     .ToDictionary(card => card.Id));
             _ = mock.SetupGet(m => m.SpellCardResults).Returns(
-                Utils.GetEnumerable<TChara>()
+                EnumHelper.GetEnumerable<TChara>()
                     .Select((chara, index) => CreateSpellCardResult(chara, index))
                     .ToDictionary(result => (result.Enemy, result.Id)));
             return mock;
