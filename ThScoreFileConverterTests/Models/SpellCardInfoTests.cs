@@ -93,12 +93,5 @@ namespace ThScoreFileConverterTests.Models
             _ = Assert.ThrowsException<ArgumentException>(
                 () => _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One));
         }
-
-        [TestMethod]
-        public void SpellCardInfoTestNullLevels()
-        {
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One, null!));
-        }
     }
 }

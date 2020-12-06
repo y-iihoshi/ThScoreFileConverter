@@ -51,8 +51,6 @@ namespace ThScoreFileConverter.Models
                 throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(name));
             if (!Enum.IsDefined(typeof(TStage), stage))
                 throw new ArgumentOutOfRangeException(nameof(stage));
-            if (levels is null)
-                throw new ArgumentNullException(nameof(levels));
             if (levels.Length <= 0)
                 throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(levels));
             if (levels.Any(level => !Enum.IsDefined(typeof(TLevel), level)))
