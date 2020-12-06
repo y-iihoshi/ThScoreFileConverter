@@ -78,6 +78,7 @@ namespace ThScoreFileConverter.Models.Th075
         [EnumAltName("ML")]
         Meiling,
 
+#pragma warning disable CA1700 // Do not name enum values 'Reserved'
         /// <summary>
         /// Reserved character #12.
         /// </summary>
@@ -101,5 +102,6 @@ namespace ThScoreFileConverter.Models.Th075
         /// </summary>
         [EnumAltName("15")]
         Reserved15,
+#pragma warning restore CA1700 // Do not name enum values 'Reserved'
     }
 }
