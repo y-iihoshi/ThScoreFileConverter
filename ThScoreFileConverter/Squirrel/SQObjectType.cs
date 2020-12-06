@@ -13,7 +13,9 @@ namespace ThScoreFileConverter.Squirrel
     /// Represents an object type defined by Squirrel 3.1.
     /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.
     /// </summary>
+#pragma warning disable CA1008 // Enums should have zero value
     public enum SQObjectType
+#pragma warning restore CA1008 // Enums should have zero value
     {
         /// <summary>
         /// The type Null has exactly one value, called null.
