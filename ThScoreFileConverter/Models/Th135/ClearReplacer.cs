@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th135
 
         private readonly MatchEvaluator evaluator;
 
-        public ClearReplacer(IReadOnlyDictionary<Chara, LevelFlags> storyClearFlags)
+        public ClearReplacer(IReadOnlyDictionary<Chara, Levels> storyClearFlags)
         {
             if (storyClearFlags is null)
                 throw new ArgumentNullException(nameof(storyClearFlags));
@@ -37,16 +37,16 @@ namespace ThScoreFileConverter.Models.Th135
                     switch (level)
                     {
                         case Level.Easy:
-                            cleared = (flags & LevelFlags.Easy) == LevelFlags.Easy;
+                            cleared = (flags & Levels.Easy) == Levels.Easy;
                             break;
                         case Level.Normal:
-                            cleared = (flags & LevelFlags.Normal) == LevelFlags.Normal;
+                            cleared = (flags & Levels.Normal) == Levels.Normal;
                             break;
                         case Level.Hard:
-                            cleared = (flags & LevelFlags.Hard) == LevelFlags.Hard;
+                            cleared = (flags & Levels.Hard) == Levels.Hard;
                             break;
                         case Level.Lunatic:
-                            cleared = (flags & LevelFlags.Lunatic) == LevelFlags.Lunatic;
+                            cleared = (flags & Levels.Lunatic) == Levels.Lunatic;
                             break;
                         default:    // unreachable
                             break;

@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = true,
-                        Ed = LevelFlags.OverDrive,
+                        Ed = Levels.OverDrive,
                     }
                 },
                 {
@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = true,
-                        Ed = LevelFlags.Lunatic,
+                        Ed = Levels.Lunatic,
                     }
                 },
                 {
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = true,
-                        Ed = LevelFlags.Hard,
+                        Ed = Levels.Hard,
                     }
                 },
                 {
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = true,
-                        Ed = LevelFlags.Normal,
+                        Ed = Levels.Normal,
                     }
                 },
                 {
@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = true,
-                        Ed = LevelFlags.Easy,
+                        Ed = Levels.Easy,
                     }
                 },
                 {
@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = true,
-                        Ed = LevelFlags.None,
+                        Ed = Levels.None,
                     }
                 },
             };
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     new AllScoreData.Story
                     {
                         Available = false,
-                        Ed = LevelFlags.Hard,
+                        Ed = Levels.Hard,
                     }
                 },
             };

@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th145
         public AllScoreData()
         {
             this.allData = new SQTable();
-            this.StoryClearFlags = ImmutableDictionary<Chara, LevelFlags>.Empty;
+            this.StoryClearFlags = ImmutableDictionary<Chara, Levels>.Empty;
             this.BgmFlags = ImmutableDictionary<int, bool>.Empty;
             this.ClearRanks = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
             this.ClearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models.Th145
 
         public int StoryProgress => this.GetValue<int>("story_progress");
 
-        public IReadOnlyDictionary<Chara, LevelFlags> StoryClearFlags { get; private set; }
+        public IReadOnlyDictionary<Chara, Levels> StoryClearFlags { get; private set; }
 
         public int EndingCount => this.GetValue<int>("ed_count");
 
@@ -75,7 +75,7 @@ namespace ThScoreFileConverter.Models.Th145
                     this.StoryClearFlags = storyClearFlags.Value
                         .Select((flag, index) => (flag, index))
                         .Where(pair => pair.flag is SQInteger)
-                        .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(SQInteger)pair.flag);
+                        .ToDictionary(pair => (Chara)pair.index, pair => (Levels)(int)(SQInteger)pair.flag);
                 }
             }
         }

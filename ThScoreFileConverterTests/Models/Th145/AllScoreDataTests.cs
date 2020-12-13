@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         internal struct Properties
         {
             public int storyProgress;
-            public Dictionary<Chara, LevelFlags> storyClearFlags;
+            public Dictionary<Chara, Levels> storyClearFlags;
             public int endingCount;
             public int ending2Count;
             public bool isEnabledStageTanuki1;
@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th145
             {
                 storyProgress = 1,
                 storyClearFlags = charas.ToDictionary(
-                    chara => chara, chara => TestUtils.Cast<LevelFlags>(30 - (int)chara)),
+                    chara => chara, chara => TestUtils.Cast<Levels>(30 - (int)chara)),
                 endingCount = 2,
                 ending2Count = 3,
                 isEnabledStageTanuki1 = true,

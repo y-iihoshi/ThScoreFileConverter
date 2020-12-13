@@ -8,10 +8,10 @@ namespace ThScoreFileConverterTests.Models.Th135
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<Chara, LevelFlags> StoryClearFlags { get; } =
-            new Dictionary<Chara, LevelFlags>
+        internal static IReadOnlyDictionary<Chara, Levels> StoryClearFlags { get; } =
+            new Dictionary<Chara, Levels>
             {
-                { Chara.Marisa, LevelFlags.Easy | LevelFlags.Hard },
+                { Chara.Marisa, Levels.Easy | Levels.Hard },
             };
 
         [TestMethod]
@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         [TestMethod]
         public void ClearReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, LevelFlags>();
+            var dictionary = new Dictionary<Chara, Levels>();
             var replacer = new ClearReplacer(dictionary);
             Assert.IsNotNull(replacer);
         }
@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, LevelFlags>();
+            var dictionary = new Dictionary<Chara, Levels>();
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEAREMR"));
             Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARNMR"));

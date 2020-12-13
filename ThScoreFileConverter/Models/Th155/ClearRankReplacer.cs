@@ -33,22 +33,22 @@ namespace ThScoreFileConverter.Models.Th155
 
                 if (storyDictionary.TryGetValue(chara, out var story)
                     && story.Available
-                    && ((story.Ed & ToLevelFlag(level)) != LevelFlags.None))
+                    && ((story.Ed & ToLevels(level)) != Levels.None))
                     return "Clear";
                 else
                     return "Not Clear";
             });
 
-            static LevelFlags ToLevelFlag(Level level)
+            static Levels ToLevels(Level level)
             {
                 return level switch
                 {
-                    Level.Easy      => LevelFlags.Easy,
-                    Level.Normal    => LevelFlags.Normal,
-                    Level.Hard      => LevelFlags.Hard,
-                    Level.Lunatic   => LevelFlags.Lunatic,
-                    Level.OverDrive => LevelFlags.OverDrive,
-                    _               => LevelFlags.None,
+                    Level.Easy      => Levels.Easy,
+                    Level.Normal    => Levels.Normal,
+                    Level.Hard      => Levels.Hard,
+                    Level.Lunatic   => Levels.Lunatic,
+                    Level.OverDrive => Levels.OverDrive,
+                    _               => Levels.None,
                 };
             }
         }

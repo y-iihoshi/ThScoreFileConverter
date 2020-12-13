@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     chara => new AllScoreData.Story
                     {
                         Stage = 1,
-                        Ed = LevelFlags.Normal,
+                        Ed = Levels.Normal,
                         Available = true,
                         OverDrive = 2,
                         StageOverDrive = 3,

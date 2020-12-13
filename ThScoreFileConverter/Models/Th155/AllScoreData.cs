@@ -93,7 +93,7 @@ namespace ThScoreFileConverter.Models.Th155
                         if ((key == "stage") && (pair.Value is SQInteger stage))
                             story.Stage = stage;
                         if ((key == "ed") && (pair.Value is SQInteger ed))
-                            story.Ed = (LevelFlags)(int)ed;
+                            story.Ed = (Levels)(int)ed;
                         if ((key == "available") && (pair.Value is SQBool available))
                             story.Available = available;
                         if ((key == "overdrive") && (pair.Value is SQInteger overDrive))
@@ -205,7 +205,7 @@ namespace ThScoreFileConverter.Models.Th155
         public struct Story
         {
             public int Stage;
-            public LevelFlags Ed;
+            public Levels Ed;
             public bool Available;
             public int OverDrive;
             public int StageOverDrive;

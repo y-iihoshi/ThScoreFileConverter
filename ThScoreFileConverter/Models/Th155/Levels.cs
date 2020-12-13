@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="LevelFlags.cs" company="None">
+// <copyright file="Levels.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -7,13 +7,13 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th135
+namespace ThScoreFileConverter.Models.Th155
 {
     /// <summary>
     /// Represents bit flags of levels.
     /// </summary>
     [Flags]
-    public enum LevelFlags
+    public enum Levels
     {
         /// <summary>
         /// Represents that any level is not related.
@@ -39,5 +39,10 @@ namespace ThScoreFileConverter.Models.Th135
         /// Represents level Lunatic.
         /// </summary>
         Lunatic = 8,
+
+        /// <summary>
+        /// Represents level OverDrive.
+        /// </summary>
+        OverDrive = 16,
     }
 }
