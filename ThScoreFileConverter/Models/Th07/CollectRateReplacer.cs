@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th07.Parsers;
 
 namespace ThScoreFileConverter.Models.Th07
@@ -44,9 +45,9 @@ namespace ThScoreFileConverter.Models.Th07
 
                 Func<ICardAttack, bool> findByLevel = level switch
                 {
-                    LevelWithTotal.Total => Utils.True,
-                    LevelWithTotal.Extra => Utils.True,
-                    LevelWithTotal.Phantasm => Utils.True,
+                    LevelWithTotal.Total => FuncHelper.True,
+                    LevelWithTotal.Extra => FuncHelper.True,
+                    LevelWithTotal.Phantasm => FuncHelper.True,
                     _ => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Level == (Level)level)),
                 };
@@ -57,7 +58,7 @@ namespace ThScoreFileConverter.Models.Th07
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Extra)),
                     (LevelWithTotal.Phantasm, _) => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Phantasm)),
-                    (_, StageWithTotal.Total) => Utils.True,
+                    (_, StageWithTotal.Total) => FuncHelper.True,
                     _ => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage)),
                 };
@@ -69,7 +70,7 @@ namespace ThScoreFileConverter.Models.Th07
                 };
 
                 return Utils.ToNumberString(
-                    cardAttacks.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType)));
+                    cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByLevel, findByStage, findByType)));
             });
         }
 

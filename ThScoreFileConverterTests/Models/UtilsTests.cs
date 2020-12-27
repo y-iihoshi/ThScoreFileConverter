@@ -49,27 +49,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void TrueTest()
-        {
-            Assert.IsTrue(Utils.True(false));
-            Assert.IsTrue(Utils.True(true));
-            Assert.IsTrue(Utils.True(0));
-            Assert.IsTrue(Utils.True(1));
-            Assert.IsTrue(Utils.True(new int?()));
-            Assert.IsTrue(Utils.True(new object()));
-            Assert.IsTrue(Utils.True<object?>(null));
-        }
-
-        [TestMethod]
-        public void MakeAndPredicateTest()
-        {
-            var pred = Utils.MakeAndPredicate<int>(x => (x > 3), x => (x < 5));
-            Assert.IsFalse(pred(3));
-            Assert.IsTrue(pred(4));
-            Assert.IsFalse(pred(5));
-        }
-
-        [TestMethod]
         public void ToZeroBasedTest()
         {
             Assert.AreEqual(0, Utils.ToZeroBased(1));

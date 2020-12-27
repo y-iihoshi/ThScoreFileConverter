@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -63,9 +64,9 @@ namespace ThScoreFileConverter.Models.Th13
 
                 Func<ISpellCard<LevelPractice>, bool> findByLevel = level switch
                 {
-                    LevelPracticeWithTotal.Total => Utils.True,
-                    LevelPracticeWithTotal.Extra => Utils.True,
-                    LevelPracticeWithTotal.OverDrive => Utils.True,
+                    LevelPracticeWithTotal.Total => FuncHelper.True,
+                    LevelPracticeWithTotal.Extra => FuncHelper.True,
+                    LevelPracticeWithTotal.OverDrive => FuncHelper.True,
                     _ => card => card.Level == (LevelPractice)level,
                 };
 
@@ -75,13 +76,14 @@ namespace ThScoreFileConverter.Models.Th13
                         card => Definitions.CardTable[card.Id].Stage == StagePractice.Extra,
                     (LevelPracticeWithTotal.OverDrive, _) =>
                         card => Definitions.CardTable[card.Id].Stage == StagePractice.OverDrive,
-                    (_, StageWithTotal.Total) => Utils.True,
+                    (_, StageWithTotal.Total) => FuncHelper.True,
                     _ => card => Definitions.CardTable[card.Id].Stage == (StagePractice)stage,
                 };
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards.Values.Count(Utils.MakeAndPredicate(findByKindType, findByLevel, findByStage))
+                    ? clearData.Cards.Values
+                        .Count(FuncHelper.MakeAndPredicate(findByKindType, findByLevel, findByStage))
                     : default);
             }
         }

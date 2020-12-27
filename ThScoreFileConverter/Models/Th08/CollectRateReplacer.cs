@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th08.Parsers;
 
 namespace ThScoreFileConverter.Models.Th08
@@ -63,9 +64,9 @@ namespace ThScoreFileConverter.Models.Th08
 
                 Func<ICardAttack, bool> findByLevel = level switch
                 {
-                    LevelPracticeWithTotal.Total => Utils.True,
-                    LevelPracticeWithTotal.Extra => Utils.True,
-                    LevelPracticeWithTotal.LastWord => Utils.True,
+                    LevelPracticeWithTotal.Total => FuncHelper.True,
+                    LevelPracticeWithTotal.Extra => FuncHelper.True,
+                    LevelPracticeWithTotal.LastWord => FuncHelper.True,
                     _ => attack => attack.Level == level,
                 };
 
@@ -75,13 +76,13 @@ namespace ThScoreFileConverter.Models.Th08
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.Extra)),
                     (LevelPracticeWithTotal.LastWord, _) => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.LastWord)),
-                    (_, StageWithTotal.Total) => Utils.True,
+                    (_, StageWithTotal.Total) => FuncHelper.True,
                     _ => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage)),
                 };
 
                 return Utils.ToNumberString(
-                    cardAttacks.Values.Count(Utils.MakeAndPredicate(findByKind, findByLevel, findByStage)));
+                    cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByKind, findByLevel, findByStage)));
             }
         }
 

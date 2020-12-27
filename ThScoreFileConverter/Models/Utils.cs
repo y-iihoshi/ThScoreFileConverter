@@ -62,29 +62,6 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
-        /// Always returns <c>true</c>.
-        /// </summary>
-        /// <typeparam name="T">The type of the argument.</typeparam>
-        /// <param name="arg">An argument. Not used.</param>
-        /// <returns>Always <c>true</c>.</returns>
-        public static bool True<T>(T arg)
-        {
-            _ = arg;
-            return true;
-        }
-
-        /// <summary>
-        /// Makes a logical-and predicate by one or more predicates.
-        /// </summary>
-        /// <typeparam name="T">The type of the instance to evaluate.</typeparam>
-        /// <param name="predicates">The predicates combined with logical-and operators.</param>
-        /// <returns>A logical-and predicate.</returns>
-        public static Func<T, bool> MakeAndPredicate<T>(params Func<T, bool>[] predicates)
-        {
-            return arg => predicates.All(pred => pred(arg));
-        }
-
-        /// <summary>
         /// Converts a one digit value from one-based to zero-based.
         /// </summary>
         /// <param name="input">A one digit value to convert.</param>

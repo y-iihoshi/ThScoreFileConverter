@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th06.Parsers;
 
 namespace ThScoreFileConverter.Models.Th06
@@ -35,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th06
 
                 Func<ICardAttack, bool> findByStage = stage switch
                 {
-                    StageWithTotal.Total => Utils.True,
+                    StageWithTotal.Total => FuncHelper.True,
                     _ => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage)),
                 };
@@ -46,7 +47,8 @@ namespace ThScoreFileConverter.Models.Th06
                     _ => attack => attack.TrialCount > 0,
                 };
 
-                return Utils.ToNumberString(cardAttacks.Values.Count(Utils.MakeAndPredicate(findByStage, findByType)));
+                return Utils.ToNumberString(
+                    cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByStage, findByType)));
             });
         }
 

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th08.Parsers;
 
 namespace ThScoreFileConverter.Models.Th08
@@ -39,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th08
                 Func<ICardAttack, bool> isValidLevel = kind switch
                 {
                     "S" => attack => Definitions.CardTable[attack.CardId].Level != LevelPractice.LastWord,
-                    _ => Utils.True,
+                    _ => FuncHelper.True,
                 };
 
                 Func<ICardAttack, ICardAttackCareer> getCareer = kind switch

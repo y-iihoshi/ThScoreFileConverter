@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -45,7 +46,7 @@ namespace ThScoreFileConverter.Models.Th13
                 Func<ISpellCard<LevelPractice>, bool> isValidLevel = kind switch
                 {
                     "S" => card => card.Level != LevelPractice.OverDrive,
-                    _ => Utils.True,
+                    _ => FuncHelper.True,
                 };
 
                 Func<ISpellCard<LevelPractice>, int> getCount = (kind, type) switch

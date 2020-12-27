@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th105
 {
@@ -37,7 +38,7 @@ namespace ThScoreFileConverter.Models.Th105
 
                 Func<KeyValuePair<(Chara, int), ISpellCardResult<Chara>>, bool> findByLevel = level switch
                 {
-                    LevelWithTotal.Total => Utils.True,
+                    LevelWithTotal.Total => FuncHelper.True,
                     _ => pair => pair.Value.Level == (Level)level,
                 };
 

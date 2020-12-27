@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
@@ -44,15 +45,15 @@ namespace ThScoreFileConverter.Models.Th10
 
                 Func<ISpellCard<Level>, bool> findByLevel = level switch
                 {
-                    LevelWithTotal.Total => Utils.True,
-                    LevelWithTotal.Extra => Utils.True,
+                    LevelWithTotal.Total => FuncHelper.True,
+                    LevelWithTotal.Extra => FuncHelper.True,
                     _ => card => card.Level == (Level)level,
                 };
 
                 Func<ISpellCard<Level>, bool> findByStage = (level, stage) switch
                 {
                     (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
-                    (_, StageWithTotal.Total) => Utils.True,
+                    (_, StageWithTotal.Total) => FuncHelper.True,
                     _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
                 };
 
@@ -64,7 +65,7 @@ namespace ThScoreFileConverter.Models.Th10
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
+                    ? clearData.Cards.Values.Count(FuncHelper.MakeAndPredicate(findByLevel, findByStage, findByType))
                     : default);
             });
         }
