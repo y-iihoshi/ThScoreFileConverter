@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th07.Parsers;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Models.Th07.Chara,
@@ -38,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th07
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
                 var chara = CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var rank = IntegerHelper.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 var key = (chara, level);

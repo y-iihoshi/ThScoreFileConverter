@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128
 {
@@ -33,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th128
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var rank = IntegerHelper.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 if ((level == Level.Extra) && (route != RouteWithTotal.Extra))

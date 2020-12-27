@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th12.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
@@ -35,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th12
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var rank = IntegerHelper.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
