@@ -9,8 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
@@ -34,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th14
 
             this.evaluator = new MatchEvaluator(match =>
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                var number = IntegerHelper.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
                 if (Definitions.CardTable.TryGetValue(number, out var cardInfo))

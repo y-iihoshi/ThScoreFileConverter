@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128
 {
@@ -29,8 +29,8 @@ namespace ThScoreFileConverter.Models.Th128
 
             this.evaluator = new MatchEvaluator(match =>
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var number = IntegerHelper.Parse(match.Groups[1].Value);
+                var type = IntegerHelper.Parse(match.Groups[2].Value);
 
                 Func<ISpellCard, int> getCount = type switch
                 {

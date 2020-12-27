@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
@@ -39,9 +38,9 @@ namespace ThScoreFileConverter.Models.Th13
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
-                var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var number = IntegerHelper.Parse(match.Groups[2].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[4].Value);
 
                 Func<ISpellCard<LevelPractice>, bool> isValidLevel = kind switch
                 {

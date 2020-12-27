@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th09.Parsers;
 
 namespace ThScoreFileConverter.Models.Th09
@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th09
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
                 var chara = CharaParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[3].Value);
 
                 var count = clearCounts.TryGetValue(chara, out var clearCount)
                     && clearCount.Counts.TryGetValue(level, out var c) ? c : default;

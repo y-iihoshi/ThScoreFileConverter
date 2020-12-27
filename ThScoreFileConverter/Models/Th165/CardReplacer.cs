@@ -9,10 +9,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th165
 {
@@ -32,8 +32,8 @@ namespace ThScoreFileConverter.Models.Th165
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                var scene = IntegerHelper.Parse(match.Groups[2].Value);
+                var type = IntegerHelper.Parse(match.Groups[3].Value);
 
                 var key = (day, scene);
                 if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))

@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th15
 {
@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Th15
             {
                 var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[3].Value);
 
                 Func<IClearDataPerGameMode, long> getValueByType = type switch
                 {

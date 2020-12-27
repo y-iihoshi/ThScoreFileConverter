@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th13
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[3].Value);
 
                 Func<IClearData, long> getValueByType = (level, type) switch
                 {

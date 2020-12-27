@@ -10,9 +10,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th17.Parsers;
 
 namespace ThScoreFileConverter.Models.Th17
@@ -33,9 +33,9 @@ namespace ThScoreFileConverter.Models.Th17
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
-                var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var number = IntegerHelper.Parse(match.Groups[2].Value);
                 var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[4].Value);
 
                 Func<Th13.ISpellCard<Level>, int> getCount = (kind, type) switch
                 {

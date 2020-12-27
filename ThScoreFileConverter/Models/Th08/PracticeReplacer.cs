@@ -9,8 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th08.Parsers;
 
 namespace ThScoreFileConverter.Models.Th08
@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th08
                 var level = LevelParser.Parse(match.Groups[1].Value);
                 var chara = CharaParser.Parse(match.Groups[2].Value);
                 var stage = StageParser.Parse(match.Groups[3].Value);
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[4].Value);
 
                 if (level == Level.Extra)
                     return match.ToString();

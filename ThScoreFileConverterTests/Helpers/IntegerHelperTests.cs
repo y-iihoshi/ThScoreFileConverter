@@ -40,5 +40,14 @@ namespace ThScoreFileConverterTests.Helpers
         [TestMethod]
         public void ToOneBasedTestExceeded()
             => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToOneBased(10));
+
+        [TestMethod]
+        public void IntegerHelperTest()
+        {
+            Assert.AreEqual(123, IntegerHelper.Parse("123"));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => IntegerHelper.Parse(null!));
+            _ = Assert.ThrowsException<FormatException>(() => IntegerHelper.Parse(string.Empty));
+            _ = Assert.ThrowsException<FormatException>(() => IntegerHelper.Parse("abc"));
+        }
     }
 }

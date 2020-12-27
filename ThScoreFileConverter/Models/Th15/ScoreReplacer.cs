@@ -38,8 +38,8 @@ namespace ThScoreFileConverter.Models.Th15
                 var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2].Value);
                 var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[3].Value);
-                var rank = IntegerHelper.ToZeroBased(int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture));
-                var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
+                var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[4].Value));
+                var type = IntegerHelper.Parse(match.Groups[5].Value);
 
 #if false   // FIXME
                 if (level == LevelWithTotal.Extra)

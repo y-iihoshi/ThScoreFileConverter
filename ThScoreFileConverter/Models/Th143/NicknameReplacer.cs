@@ -8,9 +8,9 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th143
 {
@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th143
 
             this.evaluator = new MatchEvaluator(match =>
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                var number = IntegerHelper.Parse(match.Groups[1].Value);
 
                 if ((number > 0) && (number <= Definitions.Nicknames.Count))
                 {

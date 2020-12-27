@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
@@ -42,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th17
                 var level = LevelWithTotalParser.Parse(match.Groups[2].Value);
                 var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
-                var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[5].Value);
 
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();

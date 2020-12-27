@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
@@ -32,8 +31,8 @@ namespace ThScoreFileConverter.Models.Th075
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var rank = IntegerHelper.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
+                var type = IntegerHelper.Parse(match.Groups[4].Value);
 
                 if (chara == Chara.Meiling)
                     return match.ToString();

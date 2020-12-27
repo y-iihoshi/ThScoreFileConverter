@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
@@ -32,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th06
             this.evaluator = new MatchEvaluator(match =>
             {
                 var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
-                var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var type = IntegerHelper.Parse(match.Groups[2].Value);
 
                 Func<ICardAttack, bool> findByStage = stage switch
                 {

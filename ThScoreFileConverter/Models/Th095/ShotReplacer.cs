@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th095
 {
@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th095
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var scene = IntegerHelper.Parse(match.Groups[2].Value);
 
                 var key = (level, scene);
                 if (!Definitions.SpellCards.ContainsKey(key))

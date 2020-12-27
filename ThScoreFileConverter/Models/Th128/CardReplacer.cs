@@ -9,8 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128
 {
@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th128
 
             this.evaluator = new MatchEvaluator(match =>
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                var number = IntegerHelper.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
                 if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
