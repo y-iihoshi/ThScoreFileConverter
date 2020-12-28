@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		CustomDictionary.xml = CustomDictionary.xml
+		Directory.Build.props = Directory.Build.props
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
@@ -39,8 +40,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ResXSortingComparison = Ordinal
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {F9FF4036-8B11-4183-A109-25508475052A}
+		RESX_SortFileContentOnSave = True
+		RESX_ResXSortingComparison = Ordinal
 	EndGlobalSection
 EndGlobal

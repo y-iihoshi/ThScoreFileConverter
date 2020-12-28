@@ -3,8 +3,6 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;netcoreapp3.1;net5.0-windows</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <UseWPF>true</UseWPF>
