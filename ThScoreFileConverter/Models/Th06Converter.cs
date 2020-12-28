@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
@@ -17,6 +18,9 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
+#if !DEBUG
+    [SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
+#endif
     internal class Th06Converter : ThConverter
     {
         private AllScoreData? allScoreData;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -27,6 +28,9 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="Views.SettingWindow"/>.
     /// </summary>
+#if !DEBUG
+    [SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+#endif
     internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
         private readonly ISettings settings;
