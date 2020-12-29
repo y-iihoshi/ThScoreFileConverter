@@ -68,21 +68,8 @@ namespace ThScoreFileConverter.Models.Th095
                         case 5:     // slow rate
                             return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                         case 6:     // date & time
-                            {
-                                var score = scores.FirstOrDefault(
-                                    elem => (elem is not null) && elem.LevelScene.Equals(key));
-                                if (score is not null)
-                                {
-                                    return new DateTime(1970, 1, 1)
-                                        .AddSeconds(score.DateTime).ToLocalTime()
-                                        .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                                }
-                                else
-                                {
-                                    return "----/--/-- --:--:--";
-                                }
-                            }
-
+                            return DateTimeHelper.GetString(
+                                scores.FirstOrDefault(s => (s is not null) && s.LevelScene.Equals(key))?.DateTime);
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -96,7 +83,7 @@ namespace ThScoreFileConverter.Models.Th095
                         3 => "0",
                         4 => "--------",
                         5 => "-----%",
-                        6 => "----/--/-- --:--:--",
+                        6 => DateTimeHelper.GetString(null),
                         _ => match.ToString(),
                     };
                 }

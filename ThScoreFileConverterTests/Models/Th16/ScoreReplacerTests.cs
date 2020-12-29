@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         public void ReplaceTestDateTime()
         {
             var replacer = new ScoreReplacer(ClearDataDictionary);
-            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T16SCRHAY24"));
         }
 
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             Assert.AreEqual("--------", replacer.Replace("%T16SCRHAY21"));
             Assert.AreEqual("0", replacer.Replace("%T16SCRHAY22"));
             Assert.AreEqual("-------", replacer.Replace("%T16SCRHAY23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T16SCRHAY24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T16SCRHAY24"));
             Assert.AreEqual("-----%", replacer.Replace("%T16SCRHAY25"));
             Assert.AreEqual("-----", replacer.Replace("%T16SCRHAY26"));
         }
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             Assert.AreEqual("--------", replacer.Replace("%T16SCRHAY21"));
             Assert.AreEqual("0", replacer.Replace("%T16SCRHAY22"));
             Assert.AreEqual("-------", replacer.Replace("%T16SCRHAY23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T16SCRHAY24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T16SCRHAY24"));
             Assert.AreEqual("-----%", replacer.Replace("%T16SCRHAY25"));
         }
 
@@ -135,7 +135,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             Assert.AreEqual("--------", replacer.Replace("%T16SCRHAY21"));
             Assert.AreEqual("0", replacer.Replace("%T16SCRHAY22"));
             Assert.AreEqual("-------", replacer.Replace("%T16SCRHAY23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T16SCRHAY24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T16SCRHAY24"));
             Assert.AreEqual("-----%", replacer.Replace("%T16SCRHAY25"));
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th17;
 
 namespace ThScoreFileConverterTests.Models.Th17
@@ -80,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         public void ReplaceTestDateTime()
         {
             var replacer = new ScoreReplacer(ClearDataDictionary);
-            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T17SCRHMB24"));
         }
 
@@ -99,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             Assert.AreEqual("--------", replacer.Replace("%T17SCRHMB21"));
             Assert.AreEqual("0", replacer.Replace("%T17SCRHMB22"));
             Assert.AreEqual("-------", replacer.Replace("%T17SCRHMB23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T17SCRHMB24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T17SCRHMB24"));
             Assert.AreEqual("-----%", replacer.Replace("%T17SCRHMB25"));
         }
 
@@ -110,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             Assert.AreEqual("--------", replacer.Replace("%T17SCRHRA21"));
             Assert.AreEqual("0", replacer.Replace("%T17SCRHRA22"));
             Assert.AreEqual("-------", replacer.Replace("%T17SCRHRA23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T17SCRHRA24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T17SCRHRA24"));
             Assert.AreEqual("-----%", replacer.Replace("%T17SCRHRA25"));
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverterTests.Models.Th095
@@ -135,7 +136,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         public void ReplaceTestDateTime()
         {
             var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
-            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T95SHOTEX236"));
         }
 
@@ -149,7 +150,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             Assert.AreEqual("0", replacer.Replace("%T95SHOTEX233"));
             Assert.AreEqual("--------", replacer.Replace("%T95SHOTEX234"));
             Assert.AreEqual("-----%", replacer.Replace("%T95SHOTEX235"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T95SHOTEX236"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T95SHOTEX236"));
         }
 
         [TestMethod]
@@ -168,7 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         {
             var scores = new List<IScore>();
             var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T95SHOTEX236"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T95SHOTEX236"));
         }
 
         [TestMethod]
@@ -176,7 +177,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         {
             var scores = new List<IScore> { null! };
             var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T95SHOTEX236"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T95SHOTEX236"));
         }
 
         [TestMethod]

@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
@@ -57,10 +56,7 @@ namespace ThScoreFileConverter.Models.Th11
                             return "Not Clear";
                         return ranking.StageProgress.ToShortName();
                     case 4:     // date & time
-                        if (ranking.DateTime == 0)
-                            return "----/--/-- --:--:--";
-                        return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
-                            .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                        return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
                     case 5:     // slow
                         if (ranking.DateTime == 0)
                             return "-----%";

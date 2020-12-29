@@ -121,9 +121,7 @@ namespace ThScoreFileConverter.Models.Th165
                         case 3:     // height
                             return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
                         case 4:     // date & time
-                            return new DateTime(1970, 1, 1)
-                                .AddSeconds(bestshot.Header.DateTime).ToLocalTime()
-                                .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            return DateTimeHelper.GetString(bestshot.Header.DateTime);
                         case 5:     // hashtags
                             var hashtags = HashtagList(bestshot.Header)
                                 .Where(hashtag => hashtag.Outputs)
@@ -148,7 +146,7 @@ namespace ThScoreFileConverter.Models.Th165
                         1 => string.Empty,
                         2 => "0",
                         3 => "0",
-                        4 => "----/--/-- --:--:--",
+                        4 => DateTimeHelper.GetString(null),
                         5 => string.Empty,
                         6 => "0",
                         7 => "0",

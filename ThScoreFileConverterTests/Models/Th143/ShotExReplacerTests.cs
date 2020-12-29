@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Th143
@@ -94,7 +95,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         public void ReplaceTestDateTime()
         {
             var replacer = new ShotExReplacer(BestShots, @"C:\path\to\output\");
-            var expected = new DateTime(1970, 1, 1).AddSeconds(6).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(6);
             Assert.AreEqual(expected, replacer.Replace("%T143SHOTEX234"));
         }
 
@@ -105,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOTEXL01"));
             Assert.AreEqual("0", replacer.Replace("%T143SHOTEXL02"));
             Assert.AreEqual("0", replacer.Replace("%T143SHOTEXL03"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T143SHOTEXL04"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T143SHOTEXL04"));
         }
 
         [TestMethod]
@@ -116,7 +117,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOTEX231"));
             Assert.AreEqual("0", replacer.Replace("%T143SHOTEX232"));
             Assert.AreEqual("0", replacer.Replace("%T143SHOTEX233"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T143SHOTEX234"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T143SHOTEX234"));
         }
 
         [TestMethod]

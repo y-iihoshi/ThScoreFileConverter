@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         public void ReplaceTestDateTime()
         {
             var replacer = new ScoreReplacer(ClearDataDictionary);
-            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T15SCRPHMR24"));
         }
 
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
             Assert.AreEqual("0", replacer.Replace("%T15SCRPHMR22"));
             Assert.AreEqual("-------", replacer.Replace("%T15SCRPHMR23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T15SCRPHMR24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T15SCRPHMR24"));
             Assert.AreEqual("-----%", replacer.Replace("%T15SCRPHMR25"));
             Assert.AreEqual("-----", replacer.Replace("%T15SCRPHMR26"));
         }
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
             Assert.AreEqual("0", replacer.Replace("%T15SCRPHMR22"));
             Assert.AreEqual("-------", replacer.Replace("%T15SCRPHMR23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T15SCRPHMR24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T15SCRPHMR24"));
             Assert.AreEqual("-----%", replacer.Replace("%T15SCRPHMR25"));
             Assert.AreEqual("-----", replacer.Replace("%T15SCRPHMR26"));
         }
@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
             Assert.AreEqual("0", replacer.Replace("%T15SCRPHMR22"));
             Assert.AreEqual("-------", replacer.Replace("%T15SCRPHMR23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T15SCRPHMR24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T15SCRPHMR24"));
             Assert.AreEqual("-----%", replacer.Replace("%T15SCRPHMR25"));
             Assert.AreEqual("-----", replacer.Replace("%T15SCRPHMR26"));
         }
@@ -171,7 +171,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
             Assert.AreEqual("0", replacer.Replace("%T15SCRPHMR22"));
             Assert.AreEqual("-------", replacer.Replace("%T15SCRPHMR23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T15SCRPHMR24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T15SCRPHMR24"));
             Assert.AreEqual("-----%", replacer.Replace("%T15SCRPHMR25"));
             Assert.AreEqual("-----", replacer.Replace("%T15SCRPHMR26"));
         }

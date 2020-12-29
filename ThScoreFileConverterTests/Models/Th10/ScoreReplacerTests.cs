@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         public void ReplaceTestDateTime()
         {
             var replacer = new ScoreReplacer(ClearDataDictionary);
-            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T10SCRHRB24"));
         }
 
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             Assert.AreEqual("--------", replacer.Replace("%T10SCRHRB21"));
             Assert.AreEqual("0", replacer.Replace("%T10SCRHRB22"));
             Assert.AreEqual("-------", replacer.Replace("%T10SCRHRB23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T10SCRHRB24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T10SCRHRB24"));
             Assert.AreEqual("-----%", replacer.Replace("%T10SCRHRB25"));
         }
 
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             Assert.AreEqual("--------", replacer.Replace("%T10SCRHRB21"));
             Assert.AreEqual("0", replacer.Replace("%T10SCRHRB22"));
             Assert.AreEqual("-------", replacer.Replace("%T10SCRHRB23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T10SCRHRB24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T10SCRHRB24"));
             Assert.AreEqual("-----%", replacer.Replace("%T10SCRHRB25"));
         }
 
@@ -129,7 +129,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             Assert.AreEqual("--------", replacer.Replace("%T10SCRHRB21"));
             Assert.AreEqual("0", replacer.Replace("%T10SCRHRB22"));
             Assert.AreEqual("-------", replacer.Replace("%T10SCRHRB23"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T10SCRHRB24"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T10SCRHRB24"));
             Assert.AreEqual("-----%", replacer.Replace("%T10SCRHRB25"));
         }
 

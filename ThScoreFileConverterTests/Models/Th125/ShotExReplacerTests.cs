@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th125;
 
 namespace ThScoreFileConverterTests.Models.Th125
@@ -135,7 +136,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ReplaceTestDateTime()
         {
             var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
-            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T125SHOTEXH236"));
         }
 
@@ -167,7 +168,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             Assert.AreEqual("0", replacer.Replace("%T125SHOTEXH233"));
             Assert.AreEqual("--------", replacer.Replace("%T125SHOTEXH234"));
             Assert.AreEqual("-----%", replacer.Replace("%T125SHOTEXH235"));
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T125SHOTEXH236"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T125SHOTEXH236"));
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH237"));
         }
 
@@ -187,7 +188,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         {
             var scores = new List<IScore>();
             var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T125SHOTEXH236"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T125SHOTEXH236"));
         }
 
         [TestMethod]
@@ -195,7 +196,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         {
             var scores = new List<IScore> { null! };
             var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
-            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T125SHOTEXH236"));
+            Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T125SHOTEXH236"));
         }
 
         [TestMethod]
