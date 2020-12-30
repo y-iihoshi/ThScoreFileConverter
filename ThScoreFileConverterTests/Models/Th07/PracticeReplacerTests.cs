@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
+using Moq;
 using ThScoreFileConverter.Models.Th07;
+using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -14,55 +15,64 @@ namespace ThScoreFileConverterTests.Models.Th07
             new[] { PracticeScoreTests.MockPracticeScore().Object }
             .ToDictionary(element => (element.Chara, element.Level, element.Stage));
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void PracticeReplacerTest()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void PracticeReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PracticeReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new PracticeReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void PracticeReplacerTestEmpty()
         {
             var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
-            var replacer = new PracticeReplacer(practiceScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestScore()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
 
-            var replacer = new PracticeReplacer(PracticeScores);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("1,234,560", replacer.Replace("%T07PRACHRB61"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("1234560", replacer.Replace("%T07PRACHRB61"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 1234560", replacer.Replace("%T07PRACHRB61"));
         }
 
         [TestMethod]
         public void ReplaceTestTrialCount()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
-            Assert.AreEqual("987", replacer.Replace("%T07PRACHRB62"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
+            Assert.AreEqual("invoked: 987", replacer.Replace("%T07PRACHRB62"));
         }
 
         [TestMethod]
         public void ReplaceTestEmpty()
         {
             var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
-            var replacer = new PracticeReplacer(practiceScores);
-            Assert.AreEqual("0", replacer.Replace("%T07PRACHRB61"));
-            Assert.AreEqual("0", replacer.Replace("%T07PRACHRB62"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T07PRACHRB61"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T07PRACHRB62"));
         }
 
         [TestMethod]
@@ -71,7 +81,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var mock = PracticeScoreTests.MockPracticeScore();
             _ = mock.SetupGet(m => m.Level).Returns(Level.Extra);
             var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
-            var replacer = new PracticeReplacer(practiceScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACXRB61", replacer.Replace("%T07PRACXRB61"));
         }
 
@@ -81,7 +92,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var mock = PracticeScoreTests.MockPracticeScore();
             _ = mock.SetupGet(m => m.Stage).Returns(Stage.Extra);
             var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
-            var replacer = new PracticeReplacer(practiceScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACHRBX1", replacer.Replace("%T07PRACHRBX1"));
         }
 
@@ -91,7 +103,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var mock = PracticeScoreTests.MockPracticeScore();
             _ = mock.SetupGet(m => m.Level).Returns(Level.Phantasm);
             var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
-            var replacer = new PracticeReplacer(practiceScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACPRB61", replacer.Replace("%T07PRACPRB61"));
         }
 
@@ -101,63 +114,72 @@ namespace ThScoreFileConverterTests.Models.Th07
             var mock = PracticeScoreTests.MockPracticeScore();
             _ = mock.SetupGet(m => m.Stage).Returns(Stage.Phantasm);
             var practiceScores = new[] { mock.Object }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
-            var replacer = new PracticeReplacer(practiceScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACHRBP1", replacer.Replace("%T07PRACHRBP1"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
-            Assert.AreEqual("0", replacer.Replace("%T07PRACNRB61"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T07PRACNRB61"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentChara()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
-            Assert.AreEqual("0", replacer.Replace("%T07PRACHRA61"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T07PRACHRA61"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentStage()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
-            Assert.AreEqual("0", replacer.Replace("%T07PRACHRB51"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T07PRACHRB51"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
             Assert.AreEqual("%T07XXXXHRB61", replacer.Replace("%T07XXXXHRB61"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACYRB61", replacer.Replace("%T07PRACYRB61"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACHXX61", replacer.Replace("%T07PRACHXX61"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidStage()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACHRBY1", replacer.Replace("%T07PRACHRBY1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new PracticeReplacer(PracticeScores);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(PracticeScores, formatterMock.Object);
             Assert.AreEqual("%T07PRACHRB6X", replacer.Replace("%T07PRACHRB6X"));
         }
     }

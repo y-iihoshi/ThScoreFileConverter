@@ -27,7 +27,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
+        public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
@@ -68,7 +68,7 @@ namespace ThScoreFileConverter.Models.Th07
                     _ => attack => attack.TrialCounts[chara] > 0,
                 };
 
-                return Utils.ToNumberString(
+                return formatter.FormatNumber(
                     cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByLevel, findByStage, findByType)));
             });
         }

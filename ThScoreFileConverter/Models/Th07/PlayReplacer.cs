@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         private readonly MatchEvaluator evaluator;
 
-        public PlayReplacer(PlayStatus playStatus)
+        public PlayReplacer(PlayStatus playStatus, INumberFormatter formatter)
         {
             if (playStatus is null)
                 throw new ArgumentNullException(nameof(playStatus));
@@ -35,17 +35,17 @@ namespace ThScoreFileConverter.Models.Th07
                 switch (charaAndMore)
                 {
                     case "CL":  // clear count
-                        return Utils.ToNumberString(playCount.TotalClear);
+                        return formatter.FormatNumber(playCount.TotalClear);
                     case "CN":  // continue count
-                        return Utils.ToNumberString(playCount.TotalContinue);
+                        return formatter.FormatNumber(playCount.TotalContinue);
                     case "PR":  // practice count
-                        return Utils.ToNumberString(playCount.TotalPractice);
+                        return formatter.FormatNumber(playCount.TotalPractice);
                     case "RT":  // retry count
-                        return Utils.ToNumberString(playCount.TotalRetry);
+                        return formatter.FormatNumber(playCount.TotalRetry);
                     default:
                         {
                             var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
-                            return Utils.ToNumberString((chara == CharaWithTotal.Total)
+                            return formatter.FormatNumber((chara == CharaWithTotal.Total)
                                 ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                         }
                 }
