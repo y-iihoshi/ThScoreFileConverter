@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
-using ThScoreFileConverter.Wrappers;
+using ThScoreFileConverter.Adapters;
 
 namespace ThScoreFileConverterTests.Adapters
 {

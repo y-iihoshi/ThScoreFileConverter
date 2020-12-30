@@ -15,7 +15,6 @@ using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
-using ThScoreFileConverter.Wrappers;
 using Unity;
 using WPFLocalizeExtension.Engine;
 using Prop = ThScoreFileConverter.Properties;

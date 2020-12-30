@@ -8,7 +8,7 @@
 using System;
 using System.Windows.Threading;
 
-namespace ThScoreFileConverter.Wrappers
+namespace ThScoreFileConverter.Adapters
 {
     /// <summary>
     /// Defines the interface of a wrapper of <see cref="Dispatcher"/>.

@@ -22,11 +22,11 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
-using ThScoreFileConverter.Wrappers;
 using WPFLocalizeExtension.Engine;
 
 namespace ThScoreFileConverter.ViewModels

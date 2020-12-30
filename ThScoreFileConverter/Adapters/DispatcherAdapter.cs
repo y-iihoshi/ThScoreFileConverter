@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace ThScoreFileConverter.Wrappers
+namespace ThScoreFileConverter.Adapters
 {
     /// <summary>
     /// Wrapper of <see cref="Dispatcher"/>.
