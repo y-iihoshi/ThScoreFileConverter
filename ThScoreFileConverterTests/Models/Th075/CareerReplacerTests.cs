@@ -6,7 +6,6 @@ using Moq;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
-using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {

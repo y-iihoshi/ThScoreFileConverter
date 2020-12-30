@@ -10,7 +10,6 @@ using ThScoreFileConverterTests.Extensions;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
-using Level = ThScoreFileConverter.Models.Th07.Level;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {

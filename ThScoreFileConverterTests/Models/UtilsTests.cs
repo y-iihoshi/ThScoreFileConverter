@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Engine;
-using Utils = ThScoreFileConverter.Models.Utils;
 
 namespace ThScoreFileConverterTests.Models
 {

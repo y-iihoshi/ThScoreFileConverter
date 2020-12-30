@@ -6,7 +6,6 @@ using Moq;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
-using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {
@@ -176,25 +175,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(ClearData, formatterMock.Object);
             Assert.AreEqual("%T75CRGHRMX", replacer.Replace("%T75CRGHRMX"));
-        }
-
-        [TestMethod]
-        public void ReplaceTestInvalidCardId()
-        {
-#if false
-            var cardAttacks = new List<ICardAttack>
-            {
-                new CardAttackStub(CardAttackTests.ValidStub)
-                {
-                    CardId = 142,
-                    CardName = TestUtils.MakeRandomArray<byte>(0x30),
-                },
-            }.ToDictionary(element => (int)element.CardId);
-            var replacer = new CollectRateReplacer(cardAttacks);
-            Assert.AreEqual("0", replacer.Replace("%T75CRGHRM1"));
-            Assert.AreEqual("0", replacer.Replace("%T75CRGXRB1"));
-            Assert.AreEqual("0", replacer.Replace("%T75CRGPRB1"));
-#endif
         }
     }
 }

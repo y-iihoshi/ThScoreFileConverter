@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th145;
 using ThScoreFileConverterTests.Extensions;
-using Level = ThScoreFileConverter.Models.Th145.Level;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverterTests.Models.Th145
