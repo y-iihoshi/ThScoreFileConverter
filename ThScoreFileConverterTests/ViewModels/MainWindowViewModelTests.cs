@@ -26,6 +26,8 @@ namespace ThScoreFileConverterTests.ViewModels
     {
         private static Mock<IDialogService> MockDialogService() => new Mock<IDialogService>();
 
+        private static Mock<IDispatcherAdapter> MockDispatcherAdapter() => new Mock<IDispatcherAdapter>();
+
         private static Mock<ISettings> MockSettings()
         {
             var mock = new Mock<ISettings>();
@@ -34,14 +36,12 @@ namespace ThScoreFileConverterTests.ViewModels
             return mock;
         }
 
-        private static Mock<IDispatcherAdapter> MockDispatcherAdapter() => new Mock<IDispatcherAdapter>();
-
         private static MainWindowViewModel CreateViewModel()
         {
             var dialogServiceMock = MockDialogService();
-            var settingsMock = MockSettings();
             var dispatcherAdapterMock = MockDispatcherAdapter();
-            return new MainWindowViewModel(dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
+            var settingsMock = MockSettings();
+            return new MainWindowViewModel(dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object);
         }
 
         private static DragEventArgs? CreateDragEventArgs(IDataObject data, RoutedEvent routedEvent)
@@ -77,19 +77,10 @@ namespace ThScoreFileConverterTests.ViewModels
         [TestMethod]
         public void MainWindowViewModelTestNullDialogService()
         {
+            var dispatcherAdapterMock = MockDispatcherAdapter();
             var settingsMock = MockSettings();
-            var dispatcherAdapterMock = MockDispatcherAdapter();
             _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(null!, settingsMock.Object, dispatcherAdapterMock.Object));
-        }
-
-        [TestMethod]
-        public void MainWindowViewModelTestNullSettings()
-        {
-            var dialogServiceMock = MockDialogService();
-            var dispatcherAdapterMock = MockDispatcherAdapter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(dialogServiceMock.Object, null!, dispatcherAdapterMock.Object));
+                () => new MainWindowViewModel(null!, dispatcherAdapterMock.Object, settingsMock.Object));
         }
 
         [TestMethod]
@@ -98,7 +89,16 @@ namespace ThScoreFileConverterTests.ViewModels
             var dialogServiceMock = MockDialogService();
             var settingsMock = MockSettings();
             _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(dialogServiceMock.Object, settingsMock.Object, null!));
+                () => new MainWindowViewModel(dialogServiceMock.Object, null!, settingsMock.Object));
+        }
+
+        [TestMethod]
+        public void MainWindowViewModelTestNullSettings()
+        {
+            var dialogServiceMock = MockDialogService();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => new MainWindowViewModel(dialogServiceMock.Object, dispatcherAdapterMock.Object, null!));
         }
 
         [TestMethod]
@@ -133,11 +133,11 @@ namespace ThScoreFileConverterTests.ViewModels
         public void LastWorkNumberTest()
         {
             var dialogServiceMock = MockDialogService();
+            var dispatcherAdapterMock = MockDispatcherAdapter();
             var settingsMock = MockSettings();
             var initialLastTitle = settingsMock.Object.LastTitle;
-            var dispatcherAdapterMock = MockDispatcherAdapter();
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
+                dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object);
             Assert.AreEqual(settingsMock.Object.LastTitle, window.LastWorkNumber);
             Assert.AreNotEqual(initialLastTitle, settingsMock.Object.LastTitle);
 
@@ -205,10 +205,10 @@ namespace ThScoreFileConverterTests.ViewModels
         public void ImageOutputDirectoryTest()
         {
             var dialogServiceMock = MockDialogService();
-            var settingsMock = MockSettings();
             var dispatcherAdapterMock = MockDispatcherAdapter();
+            var settingsMock = MockSettings();
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
+                dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object);
             Assert.AreEqual(string.Empty, window.ImageOutputDirectory);
 
             var numChanged = 0;
@@ -233,10 +233,10 @@ namespace ThScoreFileConverterTests.ViewModels
         public void HidesUntriedCardsTestWithoutConverter()
         {
             var dialogServiceMock = MockDialogService();
-            var settingsMock = MockSettings();
             var dispatcherAdapterMock = MockDispatcherAdapter();
+            var settingsMock = MockSettings();
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
+                dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object);
             Assert.IsTrue(window.HidesUntriedCards);
 
             var numChanged = 0;
@@ -1173,11 +1173,11 @@ namespace ThScoreFileConverterTests.ViewModels
         public void OpenAboutWindowCommandTest()
         {
             var dialogServiceMock = MockDialogService();
-            var settingsMock = MockSettings();
             var dispatcherAdapterMock = MockDispatcherAdapter();
+            var settingsMock = MockSettings();
 
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
+                dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object);
 
             var command = window.OpenAboutWindowCommand;
             Assert.IsNotNull(command);
@@ -1193,11 +1193,11 @@ namespace ThScoreFileConverterTests.ViewModels
         public void OpenSettingWindowCommandTest()
         {
             var dialogServiceMock = MockDialogService();
-            var settingsMock = MockSettings();
             var dispatcherAdapterMock = MockDispatcherAdapter();
+            var settingsMock = MockSettings();
 
             using var window = new MainWindowViewModel(
-                dialogServiceMock.Object, settingsMock.Object, dispatcherAdapterMock.Object);
+                dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object);
 
             var command = window.OpenSettingWindowCommand;
             Assert.IsNotNull(command);

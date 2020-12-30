@@ -72,14 +72,19 @@ namespace ThScoreFileConverter.ViewModels
         };
 
         /// <summary>
-        /// The settings of this application.
+        /// An <see cref="IDialogService"/>.
         /// </summary>
-        private readonly ISettings settings;
+        private readonly IDialogService dialogService;
 
         /// <summary>
         /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
         /// </summary>
         private readonly IDispatcherAdapter dispatcher;
+
+        /// <summary>
+        /// The settings of this application.
+        /// </summary>
+        private readonly ISettings settings;
 
         /// <summary>
         /// A group of disposable resources.
@@ -100,11 +105,11 @@ namespace ThScoreFileConverter.ViewModels
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
-        /// <param name="settings">The settings of this application.</param>
         /// <param name="dispatcher">
         /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
         /// </param>
-        public MainWindowViewModel(IDialogService dialogService, ISettings settings, IDispatcherAdapter dispatcher)
+        /// <param name="settings">The settings of this application.</param>
+        public MainWindowViewModel(IDialogService dialogService, IDispatcherAdapter dispatcher, ISettings settings)
         {
             if (dialogService is null)
                 throw new ArgumentNullException(nameof(dialogService));
@@ -115,10 +120,9 @@ namespace ThScoreFileConverter.ViewModels
             if (dispatcher is null)
                 throw new ArgumentNullException(nameof(dispatcher));
 
-            this.DialogService = dialogService;
-
-            this.settings = settings;
+            this.dialogService = dialogService;
             this.dispatcher = dispatcher;
+            this.settings = settings;
             this.disposables = new CompositeDisposable();
             this.disposed = false;
             this.converter = null;
@@ -471,11 +475,6 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private SettingsPerTitle CurrentSetting => this.settings.Dictionary[this.settings.LastTitle];
 
-        /// <summary>
-        /// Gets the <see cref="IDialogService"/>.
-        /// </summary>
-        private IDialogService DialogService { get; }
-
         /// <inheritdoc/>
         public void Dispose()
         {
@@ -761,7 +760,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void OpenAboutWindow()
         {
-            this.DialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
+            this.dialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
         }
 
         /// <summary>
@@ -769,7 +768,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void OpenSettingWindow()
         {
-            this.DialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
+            this.dialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
         }
 
         #endregion
