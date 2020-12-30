@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
+        public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
@@ -40,11 +40,11 @@ namespace ThScoreFileConverter.Models.Th06
 
                 if (number == 0)
                 {
-                    return Utils.ToNumberString(cardAttacks.Values.Sum(getCount));
+                    return formatter.FormatNumber(cardAttacks.Values.Sum(getCount));
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
-                    return Utils.ToNumberString(
+                    return formatter.FormatNumber(
                         cardAttacks.TryGetValue(number, out var attack) ? getCount(attack) : default);
                 }
                 else

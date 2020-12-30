@@ -29,7 +29,8 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
+        public ScoreReplacer(
+            IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings, INumberFormatter formatter)
         {
             if (rankings is null)
                 throw new ArgumentNullException(nameof(rankings));
@@ -48,7 +49,7 @@ namespace ThScoreFileConverter.Models.Th06
                 return type switch
                 {
                     1 => Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0],
-                    2 => Utils.ToNumberString(score.Score),
+                    2 => formatter.FormatNumber(score.Score),
                     3 => score.StageProgress.ToShortName(),
                     _ => match.ToString(),  // unreachable
                 };
