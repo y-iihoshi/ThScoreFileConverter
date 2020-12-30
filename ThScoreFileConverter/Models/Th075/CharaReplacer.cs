@@ -22,7 +22,8 @@ namespace ThScoreFileConverter.Models.Th075
 
         private readonly MatchEvaluator evaluator;
 
-        public CharaReplacer(IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> clearData)
+        public CharaReplacer(
+            IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> clearData, INumberFormatter formatter)
         {
             if (clearData is null)
                 throw new ArgumentNullException(nameof(clearData));
@@ -40,10 +41,10 @@ namespace ThScoreFileConverter.Models.Th075
                     ? value : new ClearData();
                 return type switch
                 {
-                    1 => Utils.ToNumberString(data.UseCount),
-                    2 => Utils.ToNumberString(data.ClearCount),
-                    3 => Utils.ToNumberString(data.MaxCombo),
-                    4 => Utils.ToNumberString(data.MaxDamage),
+                    1 => formatter.FormatNumber(data.UseCount),
+                    2 => formatter.FormatNumber(data.ClearCount),
+                    3 => formatter.FormatNumber(data.MaxCombo),
+                    4 => formatter.FormatNumber(data.MaxDamage),
                     _ => match.ToString(),  // unreachable
                 };
             });

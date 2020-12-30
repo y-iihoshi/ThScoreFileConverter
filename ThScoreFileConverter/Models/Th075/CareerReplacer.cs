@@ -23,7 +23,9 @@ namespace ThScoreFileConverter.Models.Th075
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
+        public CareerReplacer(
+            IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
+            INumberFormatter formatter)
         {
             if (clearData is null)
                 throw new ArgumentNullException(nameof(clearData));
@@ -64,13 +66,13 @@ namespace ThScoreFileConverter.Models.Th075
 
                 if (number == 0)
                 {
-                    return Utils.ToNumberString(clearData
+                    return formatter.FormatNumber(clearData
                         .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                         .Sum(pair => getValues(pair.Value).Sum()));
                 }
                 else if (number <= Definitions.CardIdTable[chara].Count())
                 {
-                    return Utils.ToNumberString(clearData
+                    return formatter.FormatNumber(clearData
                         .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                         .Sum(pair => getValues(pair.Value).ElementAt(number - 1)));
                 }

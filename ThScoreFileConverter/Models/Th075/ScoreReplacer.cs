@@ -22,7 +22,8 @@ namespace ThScoreFileConverter.Models.Th075
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> clearData)
+        public ScoreReplacer(
+            IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> clearData, INumberFormatter formatter)
         {
             if (clearData is null)
                 throw new ArgumentNullException(nameof(clearData));
@@ -44,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th075
                 return type switch
                 {
                     1 => score.Name,
-                    2 => Utils.ToNumberString(score.Score),
+                    2 => formatter.FormatNumber(score.Score),
                     3 => Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day),
                     _ => match.ToString(),  // unreachable
                 };

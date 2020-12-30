@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
+using Moq;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
+using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
@@ -17,160 +18,155 @@ namespace ThScoreFileConverterTests.Models.Th075
                 level => (CharaWithReserved.Reimu, level),
                 level => ClearDataTests.MockClearData().Object);
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void CharaReplacerTest()
         {
-            var replacer = new CharaReplacer(ClearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void CharaReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CharaReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CharaReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void CharaReplacerTestEmpty()
         {
             var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
-            var replacer = new CharaReplacer(clearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(clearData, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestUseCount()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
 
-            var replacer = new CharaReplacer(ClearData);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("1,234", replacer.Replace("%T75CHRHRM1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("1234", replacer.Replace("%T75CHRHRM1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 1234", replacer.Replace("%T75CHRHRM1"));
         }
 
         [TestMethod]
         public void ReplaceTestClearCount()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
 
-            var replacer = new CharaReplacer(ClearData);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("2,345", replacer.Replace("%T75CHRHRM2"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("2345", replacer.Replace("%T75CHRHRM2"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 2345", replacer.Replace("%T75CHRHRM2"));
         }
 
         [TestMethod]
         public void ReplaceTestMaxCombo()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
 
-            var replacer = new CharaReplacer(ClearData);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("3,456", replacer.Replace("%T75CHRHRM3"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("3456", replacer.Replace("%T75CHRHRM3"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 3456", replacer.Replace("%T75CHRHRM3"));
         }
 
         [TestMethod]
         public void ReplaceTestMaxDamage()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
 
-            var replacer = new CharaReplacer(ClearData);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("4,567", replacer.Replace("%T75CHRHRM4"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("4567", replacer.Replace("%T75CHRHRM4"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 4567", replacer.Replace("%T75CHRHRM4"));
         }
 
         [TestMethod]
         public void ReplaceTestEmpty()
         {
             var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
-            var replacer = new CharaReplacer(clearData);
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHRM1"));
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHRM2"));
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHRM3"));
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHRM4"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(clearData, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHRM1"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHRM2"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHRM3"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHRM4"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentUseCount()
         {
-            var replacer = new CharaReplacer(ClearData);
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHMR1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHMR1"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentClearCount()
         {
-            var replacer = new CharaReplacer(ClearData);
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHMR2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHMR2"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentMaxCombo()
         {
-            var replacer = new CharaReplacer(ClearData);
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHMR3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHMR3"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentMaxDamage()
         {
-            var replacer = new CharaReplacer(ClearData);
-            Assert.AreEqual("0", replacer.Replace("%T75CHRHMR4"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHMR4"));
         }
 
         [TestMethod]
         public void ReplaceTestMeiling()
         {
-            var replacer = new CharaReplacer(ClearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
             Assert.AreEqual("%T75CHRHML1", replacer.Replace("%T75CHRHML1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new CharaReplacer(ClearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
             Assert.AreEqual("%T75XXXHRM1", replacer.Replace("%T75XXXHRM1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new CharaReplacer(ClearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
             Assert.AreEqual("%T75CHRXRM1", replacer.Replace("%T75CHRXRM1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new CharaReplacer(ClearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
             Assert.AreEqual("%T75CHRHXX1", replacer.Replace("%T75CHRHXX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new CharaReplacer(ClearData);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CharaReplacer(ClearData, formatterMock.Object);
             Assert.AreEqual("%T75CHRHRMX", replacer.Replace("%T75CHRHRMX"));
         }
     }

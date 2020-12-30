@@ -23,15 +23,19 @@ namespace ThScoreFileConverter.Models.Th075
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
+        public CollectRateReplacer(
+            IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
+            INumberFormatter formatter)
         {
             if (clearData is null)
                 throw new ArgumentNullException(nameof(clearData));
 
-            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearData));
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearData, formatter));
 
             static string EvaluatorImpl(
-                Match match, IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
+                Match match,
+                IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
+                INumberFormatter formatter)
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
@@ -61,7 +65,7 @@ namespace ThScoreFileConverter.Models.Th075
 
                 if (level == LevelWithTotal.Total)
                 {
-                    return Utils.ToNumberString(clearData
+                    return formatter.FormatNumber(clearData
                         .Where(dataPair => dataPair.Key.chara == (CharaWithReserved)chara)
                         .Sum(dataPair => getValues(dataPair.Value)
                             .Where((value, index) =>
@@ -70,7 +74,7 @@ namespace ThScoreFileConverter.Models.Th075
                 }
                 else
                 {
-                    return Utils.ToNumberString(clearData
+                    return formatter.FormatNumber(clearData
                         .Where(dataPair => dataPair.Key == ((CharaWithReserved)chara, (Level)level))
                         .Sum(dataPair => getValues(dataPair.Value)
                             .Where((value, index) =>
