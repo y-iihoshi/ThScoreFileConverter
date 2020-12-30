@@ -47,6 +47,16 @@ namespace ThScoreFileConverter.Models
         };
 
         /// <summary>
+        /// Gets whether a new instance of the subclass of <see cref="ThConverter"/> can be create.
+        /// </summary>
+        /// <param name="key">The string to specify the subclass.</param>
+        /// <returns><c>true</c> if the instance can be create, otherwise <c>false</c>.</returns>
+        public static bool CanCreate(string key)
+        {
+            return ConverterTypes.ContainsKey(key);
+        }
+
+        /// <summary>
         /// Creates a new instance of the subclass of the <see cref="ThConverter"/> class.
         /// </summary>
         /// <param name="key">The string to specify the subclass.</param>

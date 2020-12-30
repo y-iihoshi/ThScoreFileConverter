@@ -162,7 +162,7 @@ namespace ThScoreFileConverter
                     throw NewFileMayBeBrokenException(path);
                 if (settings.LastTitle is null)
                     throw NewFileMayBeBrokenException(path);
-                if (ThConverterFactory.Create(settings.LastTitle) is null)
+                if (!ThConverterFactory.CanCreate(settings.LastTitle))
                     throw NewFileMayBeBrokenException(path);
                 if (settings.Dictionary is null)
                     throw NewFileMayBeBrokenException(path);
