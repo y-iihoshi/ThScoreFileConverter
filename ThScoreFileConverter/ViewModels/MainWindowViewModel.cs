@@ -638,7 +638,7 @@ namespace ThScoreFileConverter.ViewModels
                 this.IsIdle.Value = false;
                 this.Log.Value = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
                     + Environment.NewLine;
-                new Thread(this.converter!.Convert).Start(this.CurrentSetting);
+                new Thread(this.converter!.Convert).Start((this.CurrentSetting, this.formatter));
             }
         }
 

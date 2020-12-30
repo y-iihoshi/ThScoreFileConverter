@@ -68,18 +68,23 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Converts a score file.
         /// </summary>
-        /// <param name="threadArg">An instance of the <see cref="SettingsPerTitle"/> class.</param>
+        /// <param name="threadArg">
+        /// A tuple of <see cref="SettingsPerTitle"/> and <see cref="INumberFormatter"/>.
+        /// </param>
         public void Convert(object? threadArg)
         {
             try
             {
-                if (threadArg is null)
-                    throw new ArgumentNullException(nameof(threadArg));
-
-                if (threadArg is SettingsPerTitle settings)
-                    this.Convert(settings);
-                else
-                    throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(threadArg));
+                switch (threadArg)
+                {
+                    case (SettingsPerTitle settings, INumberFormatter formatter):
+                        this.Convert(settings, formatter);
+                        break;
+                    case null:
+                        throw new ArgumentNullException(nameof(threadArg));
+                    default:
+                        throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(threadArg));
+                }
             }
             catch (Exception e)
             {
@@ -105,8 +110,9 @@ namespace ThScoreFileConverter.Models
         /// <remarks>Needs to be overridden by a subclass.</remarks>
         /// <param name="input">The input stream that treats a template file.</param>
         /// <param name="output">The stream for outputting the converted data.</param>
+        /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
-        protected virtual void Convert(Stream input, Stream output, bool hideUntriedCards)
+        protected virtual void Convert(Stream input, Stream output, INumberFormatter formatter, bool hideUntriedCards)
         {
             const int DefaultBufferSize = 1024;
 
@@ -116,7 +122,7 @@ namespace ThScoreFileConverter.Models
                 output, Encoding.GetEncoding(Settings.Instance.OutputCodePageId!.Value), DefaultBufferSize, true);
 
             var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
-            var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
+            var replacers = this.CreateReplacers(formatter, hideUntriedCards, outputFilePath);
 
             var allLines = reader.ReadToEnd();
 
@@ -142,10 +148,12 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Creates the instances which implement IStringReplaceable interface.
         /// </summary>
+        /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
         /// <param name="outputFilePath">The file path for outputting the converted data.</param>
         /// <returns>The created instances which implement IStringReplaceable interface.</returns>
-        protected virtual IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
+        protected virtual IEnumerable<IStringReplaceable> CreateReplacers(
+            INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
         {
             throw new NotImplementedException();
         }
@@ -199,7 +207,8 @@ namespace ThScoreFileConverter.Models
         /// Converts a score file.
         /// </summary>
         /// <param name="settings">The settings per work.</param>
-        private void Convert(SettingsPerTitle settings)
+        /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
+        private void Convert(SettingsPerTitle settings, INumberFormatter formatter)
         {
             using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
             _ = scr.Seek(0, SeekOrigin.Begin);
@@ -230,7 +239,7 @@ namespace ThScoreFileConverter.Models
                 var result = GetOutputFilePath(template, settings.OutputDirectory);
                 using var tmpl = new FileStream(template, FileMode.Open, FileAccess.Read);
                 using var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write);
-                this.Convert(tmpl, rslt, settings.HideUntriedCards);
+                this.Convert(tmpl, rslt, formatter, settings.HideUntriedCards);
                 this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, numFiles));
             }
 

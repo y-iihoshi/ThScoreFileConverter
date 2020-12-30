@@ -54,7 +54,8 @@ namespace ThScoreFileConverter.Models
             return this.allScoreData is not null;
         }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(
+            INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
         {
             if (this.allScoreData is null)
             {
