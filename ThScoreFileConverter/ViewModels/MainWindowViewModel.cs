@@ -87,6 +87,11 @@ namespace ThScoreFileConverter.ViewModels
         private readonly ISettings settings;
 
         /// <summary>
+        /// An <see cref="INumberFormatter"/>.
+        /// </summary>
+        private readonly INumberFormatter formatter;
+
+        /// <summary>
         /// A group of disposable resources.
         /// </summary>
         private readonly CompositeDisposable disposables;
@@ -109,20 +114,26 @@ namespace ThScoreFileConverter.ViewModels
         /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
         /// </param>
         /// <param name="settings">The settings of this application.</param>
-        public MainWindowViewModel(IDialogService dialogService, IDispatcherAdapter dispatcher, ISettings settings)
+        /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
+        public MainWindowViewModel(
+            IDialogService dialogService, IDispatcherAdapter dispatcher, ISettings settings, INumberFormatter formatter)
         {
             if (dialogService is null)
                 throw new ArgumentNullException(nameof(dialogService));
 
+            if (dispatcher is null)
+                throw new ArgumentNullException(nameof(dispatcher));
+
             if (settings is null)
                 throw new ArgumentNullException(nameof(settings));
 
-            if (dispatcher is null)
-                throw new ArgumentNullException(nameof(dispatcher));
+            if (formatter is null)
+                throw new ArgumentNullException(nameof(formatter));
 
             this.dialogService = dialogService;
             this.dispatcher = dispatcher;
             this.settings = settings;
+            this.formatter = formatter;
             this.disposables = new CompositeDisposable();
             this.disposed = false;
             this.converter = null;

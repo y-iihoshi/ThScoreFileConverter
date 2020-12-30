@@ -46,6 +46,7 @@ namespace ThScoreFileConverter
 
             _ = containerRegistry.RegisterInstance(this.adapter);
             _ = containerRegistry.RegisterInstance<ISettings>(Settings.Instance);
+            _ = containerRegistry.Register<INumberFormatter, NumberFormatter>();
             _ = containerRegistry.Register<IDispatcherAdapter, DispatcherAdapter>();
             containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
             containerRegistry.RegisterDialog<SettingWindow>(nameof(SettingWindowViewModel));
