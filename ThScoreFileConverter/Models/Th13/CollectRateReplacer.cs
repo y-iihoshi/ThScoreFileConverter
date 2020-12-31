@@ -32,15 +32,18 @@ namespace ThScoreFileConverter.Models.Th13
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public CollectRateReplacer(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
 
-            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearDataDictionary));
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearDataDictionary, formatter));
 
             static string EvaluatorImpl(
-                Match match, IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+                Match match,
+                IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary,
+                INumberFormatter formatter)
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
@@ -79,7 +82,7 @@ namespace ThScoreFileConverter.Models.Th13
                     _ => card => Definitions.CardTable[card.Id].Stage == (StagePractice)stage,
                 };
 
-                return Utils.ToNumberString(
+                return formatter.FormatNumber(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.Cards.Values
                         .Count(FuncHelper.MakeAndPredicate(findByKindType, findByLevel, findByStage))

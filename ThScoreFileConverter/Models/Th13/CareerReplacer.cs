@@ -30,7 +30,8 @@ namespace ThScoreFileConverter.Models.Th13
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public CareerReplacer(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -60,17 +61,17 @@ namespace ThScoreFileConverter.Models.Th13
                     ? clearData.Cards : ImmutableDictionary<int, ISpellCard<LevelPractice>>.Empty;
                 if (number == 0)
                 {
-                    return Utils.ToNumberString(cards.Values.Where(isValidLevel).Sum(getCount));
+                    return formatter.FormatNumber(cards.Values.Where(isValidLevel).Sum(getCount));
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
                     if (cards.TryGetValue(number, out var card))
                     {
-                        return isValidLevel(card) ? Utils.ToNumberString(getCount(card)) : match.ToString();
+                        return isValidLevel(card) ? formatter.FormatNumber(getCount(card)) : match.ToString();
                     }
                     else
                     {
-                        return Utils.ToNumberString(default(int));
+                        return formatter.FormatNumber(default(int));
                     }
                 }
                 else
