@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th165
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyList<IScore> scores)
+        public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
             if (scores is null)
                 throw new ArgumentNullException(nameof(scores));
@@ -45,10 +45,10 @@ namespace ThScoreFileConverter.Models.Th165
 
                 return type switch
                 {
-                    1 => Utils.ToNumberString(score?.HighScore ?? default),
-                    2 => Utils.ToNumberString(score?.ChallengeCount ?? default),
-                    3 => Utils.ToNumberString(score?.ClearCount ?? default),
-                    4 => Utils.ToNumberString(score?.NumPhotos ?? default),
+                    1 => formatter.FormatNumber(score?.HighScore ?? default),
+                    2 => formatter.FormatNumber(score?.ChallengeCount ?? default),
+                    3 => formatter.FormatNumber(score?.ClearCount ?? default),
+                    4 => formatter.FormatNumber(score?.NumPhotos ?? default),
                     _ => match.ToString(),  // unreachable
                 };
             });

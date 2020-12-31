@@ -91,7 +91,9 @@ namespace ThScoreFileConverter.Models.Th165
         private readonly MatchEvaluator evaluator;
 
         public ShotExReplacer(
-            IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
+            IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots,
+            INumberFormatter formatter,
+            string outputFilePath)
         {
             if (bestshots is null)
                 throw new ArgumentNullException(nameof(bestshots));
@@ -128,13 +130,13 @@ namespace ThScoreFileConverter.Models.Th165
                                 .Select(hashtag => hashtag.Name);
                             return string.Join(Environment.NewLine, hashtags.ToArray());
                         case 6:     // number of views
-                            return Utils.ToNumberString(bestshot.Header.NumViewed);
+                            return formatter.FormatNumber(bestshot.Header.NumViewed);
                         case 7:     // number of likes
-                            return Utils.ToNumberString(bestshot.Header.NumLikes);
+                            return formatter.FormatNumber(bestshot.Header.NumLikes);
                         case 8:     // number of favs
-                            return Utils.ToNumberString(bestshot.Header.NumFavs);
+                            return formatter.FormatNumber(bestshot.Header.NumFavs);
                         case 9:     // score
-                            return Utils.ToNumberString(bestshot.Header.Score);
+                            return formatter.FormatNumber(bestshot.Header.Score);
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -148,10 +150,10 @@ namespace ThScoreFileConverter.Models.Th165
                         3 => "0",
                         4 => DateTimeHelper.GetString(null),
                         5 => string.Empty,
-                        6 => "0",
-                        7 => "0",
-                        8 => "0",
-                        9 => "0",
+                        6 => formatter.FormatNumber(0),
+                        7 => formatter.FormatNumber(0),
+                        8 => formatter.FormatNumber(0),
+                        9 => formatter.FormatNumber(0),
                         _ => match.ToString(),
                     };
                 }

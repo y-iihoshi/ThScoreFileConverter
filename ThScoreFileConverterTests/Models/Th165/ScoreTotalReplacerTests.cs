@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
+using Moq;
+using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th165;
 
 namespace ThScoreFileConverterTests.Models.Th165
@@ -21,115 +22,134 @@ namespace ThScoreFileConverterTests.Models.Th165
 
         internal static IStatus Status { get; } = StatusTests.MockStatus().Object;
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void ScoreTotalReplacerTest()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ScoreTotalReplacerTestNullScores()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreTotalReplacer(null!, Status));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ScoreTotalReplacer(null!, Status, formatterMock.Object));
+        }
 
         [TestMethod]
         public void ScoreTotalReplacerTestEmptyScores()
         {
             var scores = new List<IScore>();
-            var replacer = new ScoreTotalReplacer(scores, Status);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(scores, Status, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ScoreTotalReplacerTestNullStatus()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreTotalReplacer(Scores, null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ScoreTotalReplacer(Scores, null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void ReplaceTestTotalScore()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-            var replacer = new ScoreTotalReplacer(Scores, Status);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("2,469,134", replacer.Replace("%T165SCRTL1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("2469134", replacer.Replace("%T165SCRTL1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 2469134", replacer.Replace("%T165SCRTL1"));
         }
 
         [TestMethod]
         public void ReplaceTestTotalChallengeCount()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
-            Assert.AreEqual("112", replacer.Replace("%T165SCRTL2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 112", replacer.Replace("%T165SCRTL2"));
         }
 
         [TestMethod]
         public void ReplaceTestTotalClearCount()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
-            Assert.AreEqual("68", replacer.Replace("%T165SCRTL3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 68", replacer.Replace("%T165SCRTL3"));
         }
 
         [TestMethod]
         public void ReplaceTestNumSucceededScenes()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
-            Assert.AreEqual("2", replacer.Replace("%T165SCRTL4"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 2", replacer.Replace("%T165SCRTL4"));
         }
 
         [TestMethod]
         public void ReplaceTestTotalNumPhotos()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
-            Assert.AreEqual("156", replacer.Replace("%T165SCRTL5"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 156", replacer.Replace("%T165SCRTL5"));
         }
 
         [TestMethod]
         public void ReplaceTestNumNicknames()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
-            Assert.AreEqual("34", replacer.Replace("%T165SCRTL6"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 34", replacer.Replace("%T165SCRTL6"));
         }
 
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
             var scores = new List<IScore>();
-            var replacer = new ScoreTotalReplacer(scores, Status);
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL1"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL2"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL3"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL4"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL5"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL1"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL2"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL3"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL4"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL5"));
         }
 
         [TestMethod]
         public void ReplaceTestNullScore()
         {
             var scores = new List<IScore> { null! };
-            var replacer = new ScoreTotalReplacer(scores, Status);
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL1"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL2"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL3"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL4"));
-            Assert.AreEqual("0", replacer.Replace("%T165SCRTL5"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(scores, Status, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL1"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL2"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL3"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL4"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T165SCRTL5"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
             Assert.AreEqual("%T165XXXXX1", replacer.Replace("%T165XXXXX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new ScoreTotalReplacer(Scores, Status);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreTotalReplacer(Scores, Status, formatterMock.Object);
             Assert.AreEqual("%T165SCRTLX", replacer.Replace("%T165SCRTLX"));
         }
     }
