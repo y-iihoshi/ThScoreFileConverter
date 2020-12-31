@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
@@ -16,52 +15,60 @@ namespace ThScoreFileConverterTests.Models.Th16
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
             new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void PracticeReplacerTest()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void PracticeReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PracticeReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new PracticeReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void PracticeReplacerTestEmpty()
         {
             var dictionary = new Dictionary<CharaWithTotal, IClearData>();
-            var replacer = new PracticeReplacer(dictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTest()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-            var replacer = new PracticeReplacer(ClearDataDictionary);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("1,234,360", replacer.Replace("%T16PRACHAY3"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("1234360", replacer.Replace("%T16PRACHAY3"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 1234360", replacer.Replace("%T16PRACHAY3"));
         }
 
         [TestMethod]
         public void ReplaceTestLevelExtra()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T16PRACXAY3", replacer.Replace("%T16PRACXAY3"));
         }
 
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T16PRACHAYX", replacer.Replace("%T16PRACHAYX"));
         }
 
@@ -69,8 +76,9 @@ namespace ThScoreFileConverterTests.Models.Th16
         public void ReplaceTestEmpty()
         {
             var dictionary = new Dictionary<CharaWithTotal, IClearData>();
-            var replacer = new PracticeReplacer(dictionary);
-            Assert.AreEqual("0", replacer.Replace("%T16PRACHAY3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(dictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T16PRACHAY3"));
         }
 
         [TestMethod]
@@ -82,36 +90,41 @@ namespace ThScoreFileConverterTests.Models.Th16
                     m => (m.Chara == CharaWithTotal.Aya)
                          && (m.Practices == new Dictionary<(Level, StagePractice), IPractice>()))
             }.ToDictionary(clearData => clearData.Chara);
+            var formatterMock = MockNumberFormatter();
 
-            var replacer = new PracticeReplacer(dictionary);
-            Assert.AreEqual("0", replacer.Replace("%T16PRACHAY3"));
+            var replacer = new PracticeReplacer(dictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T16PRACHAY3"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T16XXXXHAY3", replacer.Replace("%T16XXXXHAY3"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T16PRACYAY3", replacer.Replace("%T16PRACYAY3"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T16PRACHXX3", replacer.Replace("%T16PRACHXX3"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidStage()
         {
-            var replacer = new PracticeReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T16PRACHAYY", replacer.Replace("%T16PRACHAYY"));
         }
     }
