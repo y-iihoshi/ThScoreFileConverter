@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Engine;
 
@@ -10,34 +9,6 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class UtilsTests
     {
-        private bool? outputSeparator = null;
-
-        [TestInitialize]
-        public void Initialize()
-            => this.outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-        [TestCleanup]
-        public void Cleanup()
-            => Settings.Instance.OutputNumberGroupSeparator = this.outputSeparator;
-
-        [TestMethod]
-        public void ToNumberStringTest()
-        {
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("12345678", Utils.ToNumberString(12345678));
-        }
-
-        [TestMethod]
-        public void ToNumberStringTestWithSeparator()
-            => Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678, true));
-
-        [TestMethod]
-        public void ToNumberStringTestWithoutSeparator()
-            => Assert.AreEqual("12345678", Utils.ToNumberString(12345678, false));
-
         [TestMethod]
         public void FormatTest()
         {

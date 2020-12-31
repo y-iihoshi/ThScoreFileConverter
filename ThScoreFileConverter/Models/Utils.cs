@@ -19,33 +19,6 @@ namespace ThScoreFileConverter.Models
     public static class Utils
     {
         /// <summary>
-        /// Returns a string that represents the specified numeric value.
-        /// </summary>
-        /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
-        /// <param name="number">A numeric value.</param>
-        /// <returns>A string that represents <paramref name="number"/>.</returns>
-        public static string ToNumberString<T>(T number)
-            where T : struct
-        {
-            return ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator!.Value);
-        }
-
-        /// <summary>
-        /// Returns a string that represents the specified numeric value.
-        /// </summary>
-        /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
-        /// <param name="number">A numeric value.</param>
-        /// <param name="outputSeparator">
-        /// <c>true</c> if use a thousand separator character; otherwise, <c>false</c>.
-        /// </param>
-        /// <returns>A string that represents <paramref name="number"/>.</returns>
-        public static string ToNumberString<T>(T number, bool outputSeparator)
-            where T : struct
-        {
-            return outputSeparator ? Format("{0:N0}", number) : (number.ToString() ?? string.Empty);
-        }
-
-        /// <summary>
         /// Wraps the <c>string.Format()</c> method to specify an IFormatProvider instance.
         /// </summary>
         /// <param name="fmt">A composite format string.</param>
