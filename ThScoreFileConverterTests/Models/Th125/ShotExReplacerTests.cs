@@ -173,7 +173,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             var formatterMock = MockNumberFormatter();
             _ = formatterMock
                 .Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-                .Returns((object value) => value.ToString());
+                .Returns((object value) => value.ToString() ?? string.Empty);
             var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             var expected = string.Join(Environment.NewLine, new string[]
             {
