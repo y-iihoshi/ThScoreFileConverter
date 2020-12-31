@@ -24,7 +24,8 @@ namespace ThScoreFileConverter.Models.Th09
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
+        public ScoreReplacer(
+            IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings, INumberFormatter formatter)
         {
             if (rankings is null)
                 throw new ArgumentNullException(nameof(rankings));
@@ -46,7 +47,7 @@ namespace ThScoreFileConverter.Models.Th09
                         return (score is not null)
                             ? Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
-                        return Utils.ToNumberString(
+                        return formatter.FormatNumber(
                             (score is not null) ? ((score.Score * 10) + score.ContinueCount) : default);
                     case 3:     // date
                         date = (score is not null)

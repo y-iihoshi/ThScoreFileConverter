@@ -66,9 +66,9 @@ namespace ThScoreFileConverter.Models
 
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this.allScoreData.Rankings),
+                new ScoreReplacer(this.allScoreData.Rankings, formatter),
                 new TimeReplacer(this.allScoreData.PlayStatus),
-                new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts),
+                new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts, formatter),
             };
         }
 

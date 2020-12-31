@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
@@ -20,6 +21,14 @@ namespace ThScoreFileConverterTests.Models.Th09
 
         internal static IReadOnlyDictionary<Chara, IClearCount> ZeroClearCounts { get; }
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         static ClearReplacerTests()
         {
             var highScoreMock = HighScoreTests.MockHighScore();
@@ -35,23 +44,33 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ClearReplacerTest()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ClearReplacerTestNullRankings()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(null!, ClearCounts));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ClearReplacer(null!, ClearCounts, formatterMock.Object));
+        }
 
         [TestMethod]
         public void ClearReplacerTestNullClearCounts()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(Rankings, null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new ClearReplacer(Rankings, null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void ClearReplacerTestEmptyRankings()
         {
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
-            var replacer = new ClearReplacer(rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(rankings, ClearCounts, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
@@ -63,28 +82,32 @@ namespace ThScoreFileConverterTests.Models.Th09
             {
                 { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
             };
-            var replacer = new ClearReplacer(rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(rankings, ClearCounts, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestClearCount()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
-            Assert.AreEqual("2", replacer.Replace("%T09CLEARHMR1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
+            Assert.AreEqual("invoked: 2", replacer.Replace("%T09CLEARHMR1"));
         }
 
         [TestMethod]
         public void ReplaceTestCleared()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.AreEqual("Cleared", replacer.Replace("%T09CLEARHMR2"));
         }
 
         [TestMethod]
         public void ReplaceTestNotCleared()
         {
-            var replacer = new ClearReplacer(Rankings, ZeroClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ZeroClearCounts, formatterMock.Object);
             Assert.AreEqual("Not Cleared", replacer.Replace("%T09CLEARHMR2"));
         }
 
@@ -95,7 +118,8 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = mock.SetupGet(m => m.Date).Returns(TestUtils.CP932Encoding.GetBytes("--/--\0"));
             var rankings = new[] { new[] { mock.Object } }.ToDictionary(
                 ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
-            var replacer = new ClearReplacer(rankings, ZeroClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock.Object);
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
         }
 
@@ -103,7 +127,8 @@ namespace ThScoreFileConverterTests.Models.Th09
         public void ReplaceTestEmptyRankings()
         {
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
-            var replacer = new ClearReplacer(rankings, ZeroClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock.Object);
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
         }
 
@@ -115,7 +140,8 @@ namespace ThScoreFileConverterTests.Models.Th09
             {
                 { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
             };
-            var replacer = new ClearReplacer(rankings, ZeroClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock.Object);
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
         }
 
@@ -128,44 +154,50 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = clearCountMock.SetupGet(m => m.Counts).Returns(
                 counts.Where(pair => pair.Key != Level.Normal).ToDictionary());
             var clearCounts = new[] { (highScoreMock.Object.Chara, clearCountMock.Object) }.ToDictionary();
-            var replacer = new ClearReplacer(Rankings, clearCounts);
-            Assert.AreEqual("0", replacer.Replace("%T09CLEARNMR1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, clearCounts, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T09CLEARNMR1"));
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARNMR2"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentChara()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
-            Assert.AreEqual("0", replacer.Replace("%T09CLEARHRM1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T09CLEARHRM1"));
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHRM2"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.AreEqual("%T09XXXXXHMR1", replacer.Replace("%T09XXXXXHMR1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.AreEqual("%T09CLEARYMR1", replacer.Replace("%T09CLEARYMR1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.AreEqual("%T09CLEARHXX1", replacer.Replace("%T09CLEARHXX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new ClearReplacer(Rankings, ClearCounts);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.AreEqual("%T09CLEARHMRX", replacer.Replace("%T09CLEARHMRX"));
         }
     }

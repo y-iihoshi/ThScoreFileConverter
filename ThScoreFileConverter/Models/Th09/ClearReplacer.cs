@@ -26,7 +26,8 @@ namespace ThScoreFileConverter.Models.Th09
 
         public ClearReplacer(
             IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings,
-            IReadOnlyDictionary<Chara, IClearCount> clearCounts)
+            IReadOnlyDictionary<Chara, IClearCount> clearCounts,
+            INumberFormatter formatter)
         {
             if (rankings is null)
                 throw new ArgumentNullException(nameof(rankings));
@@ -44,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th09
 
                 if (type == 1)
                 {
-                    return Utils.ToNumberString(count);
+                    return formatter.FormatNumber(count);
                 }
                 else
                 {
