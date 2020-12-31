@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
+using Moq;
+using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 
 namespace ThScoreFileConverterTests.Models.Th17
@@ -13,177 +14,172 @@ namespace ThScoreFileConverterTests.Models.Th17
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
             new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void CareerReplacerTest()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void CareerReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CareerReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new CareerReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void CareerReplacerTestEmpty()
         {
             var dictionary = new Dictionary<CharaWithTotal, IClearData>();
-            var replacer = new CareerReplacer(dictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestStoryClearCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("13", replacer.Replace("%T17CS001MB1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 13", replacer.Replace("%T17CS001MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTrialCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("57", replacer.Replace("%T17CS001MB2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 57", replacer.Replace("%T17CS001MB2"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeClearCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("35", replacer.Replace("%T17CP001MB1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 35", replacer.Replace("%T17CP001MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTrialCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("79", replacer.Replace("%T17CP001MB2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 79", replacer.Replace("%T17CP001MB2"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTotalClearCount()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-            var replacer = new CareerReplacer(ClearDataDictionary);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("3,213", replacer.Replace("%T17CS000MB1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("3213", replacer.Replace("%T17CS000MB1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 3213", replacer.Replace("%T17CS000MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTotalTrialCount()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-            var replacer = new CareerReplacer(ClearDataDictionary);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("8,107", replacer.Replace("%T17CS000MB2"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("8107", replacer.Replace("%T17CS000MB2"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 8107", replacer.Replace("%T17CS000MB2"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTotalClearCount()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-            var replacer = new CareerReplacer(ClearDataDictionary);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("5,780", replacer.Replace("%T17CP000MB1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("5780", replacer.Replace("%T17CP000MB1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 5780", replacer.Replace("%T17CP000MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTotalTrialCount()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
-
-            var replacer = new CareerReplacer(ClearDataDictionary);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("10,419", replacer.Replace("%T17CP000MB2"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("10419", replacer.Replace("%T17CP000MB2"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 10419", replacer.Replace("%T17CP000MB2"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentStoryClearCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("0", replacer.Replace("%T17CS001RA1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T17CS001RA1"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentStoryTrialCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("0", replacer.Replace("%T17CS001RA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T17CS001RA2"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentPracticeClearCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("0", replacer.Replace("%T17CP001RA1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T17CP001RA1"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentPracticeTrialCount()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
-            Assert.AreEqual("0", replacer.Replace("%T17CP001RA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T17CP001RA2"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T17XS001MB1", replacer.Replace("%T17XS001MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidGameMode()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T17CX001MB1", replacer.Replace("%T17CX001MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidNumber()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T17CS102MB1", replacer.Replace("%T17CS102MB1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T17CS001XX1", replacer.Replace("%T17CS001XX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new CareerReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T17CS001MB3", replacer.Replace("%T17CS001MB3"));
         }
     }
