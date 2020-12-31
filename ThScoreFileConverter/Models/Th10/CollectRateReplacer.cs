@@ -27,7 +27,8 @@ namespace ThScoreFileConverter.Models.Th10
         private readonly MatchEvaluator evaluator;
 
         public CollectRateReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
+            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal, StageProgress>> clearDataDictionary,
+            INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -62,7 +63,7 @@ namespace ThScoreFileConverter.Models.Th10
                     _ => card => card.TrialCount > 0,
                 };
 
-                return Utils.ToNumberString(
+                return formatter.FormatNumber(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.Cards.Values.Count(FuncHelper.MakeAndPredicate(findByLevel, findByStage, findByType))
                     : default);
