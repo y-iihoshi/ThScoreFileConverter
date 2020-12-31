@@ -23,7 +23,9 @@ namespace ThScoreFileConverter.Models.Th095
         private readonly MatchEvaluator evaluator;
 
         public ShotReplacer(
-            IReadOnlyDictionary<(Level, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
+            IReadOnlyDictionary<(Level, int), (string Path, IBestShotHeader Header)> bestshots,
+            INumberFormatter formatter,
+            string outputFilePath)
         {
             if (bestshots is null)
                 throw new ArgumentNullException(nameof(bestshots));
@@ -43,9 +45,9 @@ namespace ThScoreFileConverter.Models.Th095
                 {
                     var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
                     var alternativeString = Utils.Format(
-                        "ClearData: {0}{3}Slow: {1:F6}%{3}SpellName: {2}",
-                        Utils.ToNumberString(bestshot.Header.ResultScore),
-                        bestshot.Header.SlowRate,
+                        "ClearData: {0}{3}Slow: {1}{3}SpellName: {2}",
+                        formatter.FormatNumber(bestshot.Header.ResultScore),
+                        formatter.FormatPercent(bestshot.Header.SlowRate, 6),
                         Encoding.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
                         Environment.NewLine);
                     return Utils.Format(

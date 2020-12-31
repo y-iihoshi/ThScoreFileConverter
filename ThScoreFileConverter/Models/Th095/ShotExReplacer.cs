@@ -27,6 +27,7 @@ namespace ThScoreFileConverter.Models.Th095
         public ShotExReplacer(
             IReadOnlyDictionary<(Level, int), (string Path, IBestShotHeader Header)> bestshots,
             IReadOnlyList<IScore> scores,
+            INumberFormatter formatter,
             string outputFilePath)
         {
             if (bestshots is null)
@@ -64,9 +65,9 @@ namespace ThScoreFileConverter.Models.Th095
                         case 3:     // height
                             return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
                         case 4:     // score
-                            return Utils.ToNumberString(bestshot.Header.ResultScore);
+                            return formatter.FormatNumber(bestshot.Header.ResultScore);
                         case 5:     // slow rate
-                            return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
+                            return formatter.FormatPercent(bestshot.Header.SlowRate, 6);
                         case 6:     // date & time
                             return DateTimeHelper.GetString(
                                 scores.FirstOrDefault(s => (s is not null) && s.LevelScene.Equals(key))?.DateTime);
