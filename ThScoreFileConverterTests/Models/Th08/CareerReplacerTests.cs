@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
+using Moq;
+using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08
@@ -50,74 +51,86 @@ namespace ThScoreFileConverterTests.Models.Th08
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
             CreateCardAttacks().ToDictionary(element => (int)element.CardId);
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void CareerReplacerTest()
         {
-            var replacer = new CareerReplacer(CardAttacks);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void CareerReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CareerReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new CareerReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void CareerReplacerTestEmpty()
         {
             var cardAttacks = new Dictionary<int, ICardAttack>();
-            var replacer = new CareerReplacer(cardAttacks);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(cardAttacks, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestStoryMaxBonus()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("1", replacer.Replace("%T08CS123MA1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 1", replacer.Replace("%T08CS123MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryClearCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("19", replacer.Replace("%T08CS123MA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 19", replacer.Replace("%T08CS123MA2"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTrialCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("21", replacer.Replace("%T08CS123MA3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 21", replacer.Replace("%T08CS123MA3"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTotalMaxBonus()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
 
-            var replacer = new CareerReplacer(CardAttacks);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("1,001", replacer.Replace("%T08CS000MA1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("1001", replacer.Replace("%T08CS000MA1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 1001", replacer.Replace("%T08CS000MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTotalClearCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("57", replacer.Replace("%T08CS000MA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 57", replacer.Replace("%T08CS000MA2"));
         }
 
         [TestMethod]
         public void ReplaceTestStoryTotalTrialCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("84", replacer.Replace("%T08CS000MA3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 84", replacer.Replace("%T08CS000MA3"));
         }
 
         [TestMethod]
@@ -126,108 +139,114 @@ namespace ThScoreFileConverterTests.Models.Th08
             var mock = CardAttackTests.MockCardAttack();
             _ = mock.SetupGet(m => m.CardId).Returns(206);
             var cardAttacks = new[] { mock.Object, }.ToDictionary(attack => (int)attack.CardId);
+            var formatterMock = MockNumberFormatter();
 
-            var replacer = new CareerReplacer(cardAttacks);
+            var replacer = new CareerReplacer(cardAttacks, formatterMock.Object);
             Assert.AreEqual("%T08CS206MA1", replacer.Replace("%T08CS206MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeMaxBonus()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("1", replacer.Replace("%T08CP123MA1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 1", replacer.Replace("%T08CP123MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeClearCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("19", replacer.Replace("%T08CP123MA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 19", replacer.Replace("%T08CP123MA2"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTrialCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("21", replacer.Replace("%T08CP123MA3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 21", replacer.Replace("%T08CP123MA3"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTotalMaxBonus()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
 
-            var replacer = new CareerReplacer(CardAttacks);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("2,002", replacer.Replace("%T08CP000MA1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("2002", replacer.Replace("%T08CP000MA1"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 2002", replacer.Replace("%T08CP000MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTotalClearCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("95", replacer.Replace("%T08CP000MA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 95", replacer.Replace("%T08CP000MA2"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeTotalTrialCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("126", replacer.Replace("%T08CP000MA3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 126", replacer.Replace("%T08CP000MA3"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentMaxBonus()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("0", replacer.Replace("%T08CS001MA1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T08CS001MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentClearCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("0", replacer.Replace("%T08CS001MA2"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T08CS001MA2"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentTrialCount()
         {
-            var replacer = new CareerReplacer(CardAttacks);
-            Assert.AreEqual("0", replacer.Replace("%T08CS001MA3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T08CS001MA3"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new CareerReplacer(CardAttacks);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
             Assert.AreEqual("%T08XS123MA1", replacer.Replace("%T08XS123MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidGameMode()
         {
-            var replacer = new CareerReplacer(CardAttacks);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
             Assert.AreEqual("%T08CX123MA1", replacer.Replace("%T08CX123MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidNumber()
         {
-            var replacer = new CareerReplacer(CardAttacks);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
             Assert.AreEqual("%T08CS223MA1", replacer.Replace("%T08CS223MA1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new CareerReplacer(CardAttacks);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
             Assert.AreEqual("%T08CS123MA4", replacer.Replace("%T08CS123MA4"));
         }
     }

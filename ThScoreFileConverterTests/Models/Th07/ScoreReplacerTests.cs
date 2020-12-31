@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var mock = new Mock<INumberFormatter>();
             _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
                 .Returns((object value) => "invoked: " + value.ToString());
-            _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), 3))
+            _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
                 .Returns((double value, int precision) => "invoked: " + value.ToString($"F{precision}") + "%");
             return mock;
         }

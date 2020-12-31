@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08
@@ -9,77 +11,98 @@ namespace ThScoreFileConverterTests.Models.Th08
     {
         internal static IPlayStatus PlayStatus { get; } = PlayStatusTests.MockPlayStatus().Object;
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void PlayReplacerTest()
         {
-            var replacer = new PlayReplacer(PlayStatus);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void PlayReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void ReplaceTest()
         {
-            var replacer = new PlayReplacer(PlayStatus);
-            Assert.AreEqual("2", replacer.Replace("%T08PLAYHSR"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+            Assert.AreEqual("invoked: 2", replacer.Replace("%T08PLAYHSR"));
         }
 
         [TestMethod]
         public void ReplaceTestLevelTotal()
         {
-            var replacer = new PlayReplacer(PlayStatus);
-            Assert.AreEqual("2", replacer.Replace("%T08PLAYTSR"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+            Assert.AreEqual("invoked: 2", replacer.Replace("%T08PLAYTSR"));
         }
 
         [TestMethod]
         public void ReplaceTestCharaTotal()
         {
-            var replacer = new PlayReplacer(PlayStatus);
-            Assert.AreEqual("1", replacer.Replace("%T08PLAYHTL"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+            Assert.AreEqual("invoked: 1", replacer.Replace("%T08PLAYHTL"));
         }
 
         [TestMethod]
         public void ReplaceTestClearCount()
         {
-            var replacer = new PlayReplacer(PlayStatus);
-            Assert.AreEqual("3", replacer.Replace("%T08PLAYHCL"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+            Assert.AreEqual("invoked: 3", replacer.Replace("%T08PLAYHCL"));
         }
 
         [TestMethod]
         public void ReplaceTestContinueCount()
         {
-            var replacer = new PlayReplacer(PlayStatus);
-            Assert.AreEqual("4", replacer.Replace("%T08PLAYHCN"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+            Assert.AreEqual("invoked: 4", replacer.Replace("%T08PLAYHCN"));
         }
 
         [TestMethod]
         public void ReplaceTestPracticeCount()
         {
-            var replacer = new PlayReplacer(PlayStatus);
-            Assert.AreEqual("5", replacer.Replace("%T08PLAYHPR"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+            Assert.AreEqual("invoked: 5", replacer.Replace("%T08PLAYHPR"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new PlayReplacer(PlayStatus);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
             Assert.AreEqual("%T08XXXXHSR", replacer.Replace("%T08XXXXHSR"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new PlayReplacer(PlayStatus);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
             Assert.AreEqual("%T08PLAYYSR", replacer.Replace("%T08PLAYYSR"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new PlayReplacer(PlayStatus);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
             Assert.AreEqual("%T08PLAYHXX", replacer.Replace("%T08PLAYHXX"));
         }
     }

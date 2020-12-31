@@ -29,7 +29,8 @@ namespace ThScoreFileConverter.Models.Th08
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
+        public ScoreReplacer(
+            IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings, INumberFormatter formatter)
         {
             if (rankings is null)
                 throw new ArgumentNullException(nameof(rankings));
@@ -51,7 +52,7 @@ namespace ThScoreFileConverter.Models.Th08
                     case "1":   // name
                         return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
                     case "2":   // score
-                        return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
+                        return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
                     case "3":   // stage
                         if ((level == Level.Extra) &&
                             (Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0') == "--/--"))
@@ -61,27 +62,27 @@ namespace ThScoreFileConverter.Models.Th08
                     case "4":   // date
                         return Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
                     case "5":   // slow rate
-                        return Utils.Format("{0:F3}%", score.SlowRate);
+                        return formatter.FormatPercent(score.SlowRate, 3);
                     case "6":   // play time
                         return new Time(score.PlayTime).ToString();
                     case "7":   // initial number of players
-                        return Utils.ToNumberString(score.PlayerNum + 1);
+                        return formatter.FormatNumber(score.PlayerNum + 1);
                     case "8":   // point items
-                        return Utils.ToNumberString(score.PointItem);
+                        return formatter.FormatNumber(score.PointItem);
                     case "9":   // time point
-                        return Utils.ToNumberString(score.TimePoint);
+                        return formatter.FormatNumber(score.TimePoint);
                     case "0":   // miss count
-                        return Utils.ToNumberString(score.MissCount);
+                        return formatter.FormatNumber(score.MissCount);
                     case "A":   // bomb count
-                        return Utils.ToNumberString(score.BombCount);
+                        return formatter.FormatNumber(score.BombCount);
                     case "B":   // last spell count
-                        return Utils.ToNumberString(score.LastSpellCount);
+                        return formatter.FormatNumber(score.LastSpellCount);
                     case "C":   // pause count
-                        return Utils.ToNumberString(score.PauseCount);
+                        return formatter.FormatNumber(score.PauseCount);
                     case "D":   // continue count
-                        return Utils.ToNumberString(score.ContinueCount);
+                        return formatter.FormatNumber(score.ContinueCount);
                     case "E":   // human rate
-                        return Utils.Format("{0:F2}%", score.HumanRate / 100.0);
+                        return formatter.FormatPercent(score.HumanRate / 100.0, 2);
                     case "F":   // got spell cards
                         cardStrings = score.CardFlags.Where(pair => pair.Value > 0).Select(pair =>
                         {
@@ -90,7 +91,7 @@ namespace ThScoreFileConverter.Models.Th08
                         });
                         return string.Join(Environment.NewLine, cardStrings.ToArray());
                     case "G":   // number of got spell cards
-                        return Utils.ToNumberString(score.CardFlags.Values.Count(flag => flag > 0));
+                        return formatter.FormatNumber(score.CardFlags.Values.Count(flag => flag > 0));
                     default:    // unreachable
                         return match.ToString();
                 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter;
+using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
@@ -19,22 +19,37 @@ namespace ThScoreFileConverterTests.Models.Th08
             new[] { new[] { HighScoreTests.MockHighScore().Object } }.ToDictionary(
                 ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
+                .Returns((double value, int precision) => "invoked: " + value.ToString($"F{precision}") + "%");
+            return mock;
+        }
+
         [TestMethod]
         public void ScoreReplacerTest()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ScoreReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void ScoreReplacerTestEmptyRankings()
         {
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
@@ -45,37 +60,33 @@ namespace ThScoreFileConverterTests.Models.Th08
             {
                 { Rankings.First().Key, new List<IHighScore>() },
             };
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestName()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("Player1", replacer.Replace("%T08SCRHMA11"));
         }
 
         [TestMethod]
         public void ReplaceTestScore()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
 
-            var replacer = new ScoreReplacer(Rankings);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("12,345,672", replacer.Replace("%T08SCRHMA12"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("12345672", replacer.Replace("%T08SCRHMA12"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 12345672", replacer.Replace("%T08SCRHMA12"));
         }
 
         [TestMethod]
         public void ReplaceTestStage()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("Stage 3", replacer.Replace("%T08SCRHMA13"));
         }
 
@@ -86,116 +97,114 @@ namespace ThScoreFileConverterTests.Models.Th08
             {
                 { (Chara.MarisaAlice, Level.Extra), new List<IHighScore>() },
             };
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.AreEqual("Extra Stage", replacer.Replace("%T08SCRXMA13"));
         }
 
         [TestMethod]
         public void ReplaceTestDate()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("01/23", replacer.Replace("%T08SCRHMA14"));
         }
 
         [TestMethod]
         public void ReplaceTestSlowRate()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("9.870%", replacer.Replace("%T08SCRHMA15"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 9.870%", replacer.Replace("%T08SCRHMA15"));
         }
 
         [TestMethod]
         public void ReplaceTestPlayTime()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("4:34:20", replacer.Replace("%T08SCRHMA16"));
         }
 
         [TestMethod]
         public void ReplaceTestPlayerNum()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("6", replacer.Replace("%T08SCRHMA17"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 6", replacer.Replace("%T08SCRHMA17"));
         }
 
         [TestMethod]
         public void ReplaceTestPointItem()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
 
-            var replacer = new ScoreReplacer(Rankings);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("1,234", replacer.Replace("%T08SCRHMA18"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("1234", replacer.Replace("%T08SCRHMA18"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 1234", replacer.Replace("%T08SCRHMA18"));
         }
 
         [TestMethod]
         public void ReplaceTestTimePoint()
         {
-            var outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
 
-            var replacer = new ScoreReplacer(Rankings);
-
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("65,432", replacer.Replace("%T08SCRHMA19"));
-
-            Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("65432", replacer.Replace("%T08SCRHMA19"));
-
-            Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            Assert.AreEqual("invoked: 65432", replacer.Replace("%T08SCRHMA19"));
         }
 
         [TestMethod]
         public void ReplaceTestMissCount()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("9", replacer.Replace("%T08SCRHMA10"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 9", replacer.Replace("%T08SCRHMA10"));
         }
 
         [TestMethod]
         public void ReplaceTestBombCount()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("6", replacer.Replace("%T08SCRHMA1A"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 6", replacer.Replace("%T08SCRHMA1A"));
         }
 
         [TestMethod]
         public void ReplaceTestLastSpellCount()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("12", replacer.Replace("%T08SCRHMA1B"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 12", replacer.Replace("%T08SCRHMA1B"));
         }
 
         [TestMethod]
         public void ReplaceTestPauseCount()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("3", replacer.Replace("%T08SCRHMA1C"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 3", replacer.Replace("%T08SCRHMA1C"));
         }
 
         [TestMethod]
         public void ReplaceTestContinueCount()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("2", replacer.Replace("%T08SCRHMA1D"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 2", replacer.Replace("%T08SCRHMA1D"));
         }
 
         [TestMethod]
         public void ReplaceTestHumanRate()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("78.90%", replacer.Replace("%T08SCRHMA1E"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 78.90%", replacer.Replace("%T08SCRHMA1E"));
         }
 
         [TestMethod]
         public void ReplaceTestGotSpellCards()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual(
                 "No.003 灯符「ファイヤフライフェノメノン」" + Environment.NewLine + "No.007 蠢符「リトルバグ」",
                 replacer.Replace("%T08SCRHMA1F"));
@@ -208,7 +217,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.CardFlags).Returns(Enumerable.Range(1, 222).ToDictionary(id => id, _ => (byte)0));
             var rankings = new[] { new[] { mock.Object } }.ToDictionary(
                 ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.AreEqual(string.Empty, replacer.Replace("%T08SCRHMA1F"));
         }
 
@@ -219,22 +229,25 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.CardFlags).Returns(new Dictionary<int, byte> { { 223, 1 } });
             var rankings = new[] { new[] { mock.Object } }.ToDictionary(
                 ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.AreEqual(string.Empty, replacer.Replace("%T08SCRHMA1F"));
         }
 
         [TestMethod]
         public void ReplaceTestNumGotSpellCards()
         {
-            var replacer = new ScoreReplacer(Rankings);
-            Assert.AreEqual("2", replacer.Replace("%T08SCRHMA1G"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
+            Assert.AreEqual("invoked: 2", replacer.Replace("%T08SCRHMA1G"));
         }
 
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T08SCRHMA11"));
         }
 
@@ -245,63 +258,72 @@ namespace ThScoreFileConverterTests.Models.Th08
             {
                 { Rankings.First().Key, new List<IHighScore>() },
             };
-            var replacer = new ScoreReplacer(rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T08SCRHMA11"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentChara()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T08SCRHRY11"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T08SCRNMA11"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentRank()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T08SCRHMA21"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("%T08XXXHMA11", replacer.Replace("%T08XXXHMA11"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("%T08SCRYMA11", replacer.Replace("%T08SCRYMA11"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("%T08SCRHXX11", replacer.Replace("%T08SCRHXX11"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidRank()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("%T08SCRHMAX1", replacer.Replace("%T08SCRHMAX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new ScoreReplacer(Rankings);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
             Assert.AreEqual("%T08SCRHMA1X", replacer.Replace("%T08SCRHMA1X"));
         }
     }

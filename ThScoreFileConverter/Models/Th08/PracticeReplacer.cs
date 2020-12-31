@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th08
 
         private readonly MatchEvaluator evaluator;
 
-        public PracticeReplacer(IReadOnlyDictionary<Chara, IPracticeScore> practiceScores)
+        public PracticeReplacer(IReadOnlyDictionary<Chara, IPracticeScore> practiceScores, INumberFormatter formatter)
         {
             if (practiceScores is null)
                 throw new ArgumentNullException(nameof(practiceScores));
@@ -45,18 +45,18 @@ namespace ThScoreFileConverter.Models.Th08
                     var key = (stage, level);
                     if (type == 1)
                     {
-                        return Utils.ToNumberString(
+                        return formatter.FormatNumber(
                             practiceScore.HighScores.TryGetValue(key, out var highScore) ? (highScore * 10) : default);
                     }
                     else
                     {
-                        return Utils.ToNumberString(
+                        return formatter.FormatNumber(
                             practiceScore.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
                     }
                 }
                 else
                 {
-                    return Utils.ToNumberString(default(int));
+                    return formatter.FormatNumber(default(int));
                 }
             });
         }

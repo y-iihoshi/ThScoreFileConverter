@@ -27,14 +27,15 @@ namespace ThScoreFileConverter.Models.Th08
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
+        public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
 
-            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, cardAttacks));
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, cardAttacks, formatter));
 
-            static string EvaluatorImpl(Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks)
+            static string EvaluatorImpl(
+                Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var level = LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
@@ -80,7 +81,7 @@ namespace ThScoreFileConverter.Models.Th08
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage)),
                 };
 
-                return Utils.ToNumberString(
+                return formatter.FormatNumber(
                     cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByKind, findByLevel, findByStage)));
             }
         }
