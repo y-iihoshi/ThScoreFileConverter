@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th125;
+using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
 
 namespace ThScoreFileConverterTests.Models.Th125
 {
@@ -28,25 +30,38 @@ namespace ThScoreFileConverterTests.Models.Th125
 
         internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
+                .Returns((double value, int precision) => "invoked: " + value.ToString($"F{precision}") + "%");
+            return mock;
+        }
+
         [TestMethod]
         public void ShotExReplacerTest()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ShotExReplacerTestNullBestShots()
         {
+            var formatterMock = MockNumberFormatter();
             _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(null!, Scores, @"C:\path\to\output\"));
+                () => _ = new ShotExReplacer(null!, Scores, formatterMock.Object, @"C:\path\to\output\"));
         }
 
         [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
             var bestshots = new Dictionary<(Chara, Level, int), (string, IBestShotHeader)>();
-            var replacer = new ShotExReplacer(bestshots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
         }
 
@@ -57,85 +72,97 @@ namespace ThScoreFileConverterTests.Models.Th125
             {
                 ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
-            var replacer = new ShotExReplacer(bestshots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ShotExReplacerTestNullScores()
         {
+            var formatterMock = MockNumberFormatter();
             _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(BestShots, null!, @"C:\path\to\output\"));
+                () => _ = new ShotExReplacer(BestShots, null!, formatterMock.Object, @"C:\path\to\output\"));
         }
 
         [TestMethod]
         public void ShotExReplacerTestEmptyScores()
         {
             var scores = new List<IScore>();
-            var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ShotExReplacerTestNullOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, null!);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, null!);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ShotExReplacerTestEmptyOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, string.Empty);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, string.Empty);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ShotExReplacerTestInvalidOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, "abcde");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, "abcde");
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestPath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(@"bestshots/bs2_02_3.png", replacer.Replace("%T125SHOTEXH231"));
         }
 
         [TestMethod]
         public void ReplaceTestWidth()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("4", replacer.Replace("%T125SHOTEXH232"));
         }
 
         [TestMethod]
         public void ReplaceTestHeight()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("5", replacer.Replace("%T125SHOTEXH233"));
         }
 
         [TestMethod]
         public void ReplaceTestScore()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
-            Assert.AreEqual("13", replacer.Replace("%T125SHOTEXH234"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
+            Assert.AreEqual("invoked: 13", replacer.Replace("%T125SHOTEXH234"));
         }
 
         [TestMethod]
         public void ReplaceTestSlowRate()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
-            Assert.AreEqual("11.000000%", replacer.Replace("%T125SHOTEXH235"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
+            Assert.AreEqual("invoked: 11.000000%", replacer.Replace("%T125SHOTEXH235"));
         }
 
         [TestMethod]
         public void ReplaceTestDateTime()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             var expected = DateTimeHelper.GetString(34567890);
             Assert.AreEqual(expected, replacer.Replace("%T125SHOTEXH236"));
         }
@@ -143,7 +170,11 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void ReplaceTestDetailInfo()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            _ = formatterMock
+                .Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => value.ToString());
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             var expected = string.Join(Environment.NewLine, new string[]
             {
                 @"Base Point           14",
@@ -162,7 +193,8 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ReplaceTestEmptyBestShots()
         {
             var bestshots = new Dictionary<(Chara, Level, int), (string, IBestShotHeader)>();
-            var replacer = new ShotExReplacer(bestshots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH231"));
             Assert.AreEqual("0", replacer.Replace("%T125SHOTEXH232"));
             Assert.AreEqual("0", replacer.Replace("%T125SHOTEXH233"));
@@ -179,7 +211,8 @@ namespace ThScoreFileConverterTests.Models.Th125
             {
                 ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
-            var replacer = new ShotExReplacer(bestshots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH231"));
         }
 
@@ -187,7 +220,8 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ReplaceTestEmptyScores()
         {
             var scores = new List<IScore>();
-            var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T125SHOTEXH236"));
         }
 
@@ -195,91 +229,104 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ReplaceTestNullScore()
         {
             var scores = new List<IScore> { null! };
-            var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T125SHOTEXH236"));
         }
 
         [TestMethod]
         public void ReplaceTestNullOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, null!);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, null!);
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH231"));
         }
 
         [TestMethod]
         public void ReplaceTestEmptyOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, string.Empty);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, string.Empty);
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH231"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, "abcde");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, "abcde");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH231"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentChara()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXA231"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH131"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentScene()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH221"));
         }
 
         [TestMethod]
         public void ReplaceTestNonexistentSpellCard()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("%T125SHOTEXH991", replacer.Replace("%T125SHOTEXH991"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("%T125XXXXXXH231", replacer.Replace("%T125XXXXXXH231"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidChara()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("%T125SHOTEXX231", replacer.Replace("%T125SHOTEXX231"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("%T125SHOTEXHY31", replacer.Replace("%T125SHOTEXHY31"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidScene()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("%T125SHOTEXH2X1", replacer.Replace("%T125SHOTEXH2X1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
+            var formatterMock = MockNumberFormatter();
+            var replacer = new ShotExReplacer(BestShots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual("%T125SHOTEXH23X", replacer.Replace("%T125SHOTEXH23X"));
         }
     }

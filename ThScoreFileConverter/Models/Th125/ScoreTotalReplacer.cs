@@ -23,14 +23,14 @@ namespace ThScoreFileConverter.Models.Th125
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreTotalReplacer(IReadOnlyList<IScore> scores)
+        public ScoreTotalReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
             if (scores is null)
                 throw new ArgumentNullException(nameof(scores));
 
-            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, scores));
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, scores, formatter));
 
-            static string EvaluatorImpl(Match match, IReadOnlyList<IScore> scores)
+            static string EvaluatorImpl(Match match, IReadOnlyList<IScore> scores, INumberFormatter formatter)
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
                 var method = IntegerHelper.Parse(match.Groups[2].Value);
@@ -48,15 +48,15 @@ namespace ThScoreFileConverter.Models.Th125
 
                 return type switch
                 {
-                    1 => Utils.ToNumberString(
+                    1 => formatter.FormatNumber(
                         scores.Sum(score => (long)(TriedAndSucceeded(score) ? score.HighScore : default))),
-                    2 => Utils.ToNumberString(
+                    2 => formatter.FormatNumber(
                         scores.Sum(score => (long)(IsTarget(score) ? score.BestshotScore : default))),
-                    3 => Utils.ToNumberString(
+                    3 => formatter.FormatNumber(
                         scores.Sum(score => (long)(IsTarget(score) ? score.TrialCount : default))),
-                    4 => Utils.ToNumberString(
+                    4 => formatter.FormatNumber(
                         scores.Sum(score => (long)(TriedAndSucceeded(score) ? score.FirstSuccess : default))),
-                    5 => Utils.ToNumberString(scores.Count(TriedAndSucceeded)),
+                    5 => formatter.FormatNumber(scores.Count(TriedAndSucceeded)),
                     _ => match.ToString(),  // unreachable
                 };
             }

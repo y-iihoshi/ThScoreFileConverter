@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th125
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyList<IScore> scores)
+        public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
             if (scores is null)
                 throw new ArgumentNullException(nameof(scores));
@@ -43,10 +43,10 @@ namespace ThScoreFileConverter.Models.Th125
 
                 return type switch
                 {
-                    1 => Utils.ToNumberString(score?.HighScore ?? default),
-                    2 => Utils.ToNumberString(score?.BestshotScore ?? default),
-                    3 => Utils.ToNumberString(score?.TrialCount ?? default),
-                    4 => Utils.ToNumberString(score?.FirstSuccess ?? default),
+                    1 => formatter.FormatNumber(score?.HighScore ?? default),
+                    2 => formatter.FormatNumber(score?.BestshotScore ?? default),
+                    3 => formatter.FormatNumber(score?.TrialCount ?? default),
+                    4 => formatter.FormatNumber(score?.FirstSuccess ?? default),
                     5 => DateTimeHelper.GetString(score?.DateTime),
                     _ => match.ToString(),  // unreachable
                 };

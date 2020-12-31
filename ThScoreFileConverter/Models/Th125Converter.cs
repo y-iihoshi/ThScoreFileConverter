@@ -78,12 +78,12 @@ namespace ThScoreFileConverter.Models
 
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this.allScoreData.Scores),
-                new ScoreTotalReplacer(this.allScoreData.Scores),
+                new ScoreReplacer(this.allScoreData.Scores, formatter),
+                new ScoreTotalReplacer(this.allScoreData.Scores, formatter),
                 new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
                 new TimeReplacer(this.allScoreData.Status),
-                new ShotReplacer(this.bestshots, outputFilePath),
-                new ShotExReplacer(this.bestshots, this.allScoreData.Scores, outputFilePath),
+                new ShotReplacer(this.bestshots, formatter, outputFilePath),
+                new ShotExReplacer(this.bestshots, this.allScoreData.Scores, formatter, outputFilePath),
             };
         }
 
