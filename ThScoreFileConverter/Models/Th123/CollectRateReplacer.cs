@@ -24,7 +24,8 @@ namespace ThScoreFileConverter.Models.Th123
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary)
+        public CollectRateReplacer(
+            IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -53,7 +54,7 @@ namespace ThScoreFileConverter.Models.Th123
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.SpellCardResults
                     : ImmutableDictionary<(Chara, int), Th105.ISpellCardResult<Chara>>.Empty;
-                return Utils.ToNumberString(spellCardResults.Where(findByLevel).Count(countByType));
+                return formatter.FormatNumber(spellCardResults.Where(findByLevel).Count(countByType));
             });
         }
 
