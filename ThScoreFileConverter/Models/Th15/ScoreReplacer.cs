@@ -27,7 +27,8 @@ namespace ThScoreFileConverter.Models.Th15
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public ScoreReplacer(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -56,7 +57,7 @@ namespace ThScoreFileConverter.Models.Th15
                         return ranking.Name.Any()
                             ? Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
-                        return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
+                        return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
                     case 3:     // stage
                         if (ranking.DateTime == 0)
                             return Th13.StageProgress.None.ToShortName();
@@ -70,11 +71,11 @@ namespace ThScoreFileConverter.Models.Th15
                     case 5:     // slow
                         if (ranking.DateTime == 0)
                             return "-----%";
-                        return Utils.Format("{0:F3}%", ranking.SlowRate);
+                        return formatter.FormatPercent(ranking.SlowRate, 3);
                     case 6:     // retry
                         if (ranking.DateTime == 0)
                             return "-----";
-                        return Utils.ToNumberString(ranking.RetryCount);
+                        return formatter.FormatNumber(ranking.RetryCount);
                     default:    // unreachable
                         return match.ToString();
                 }

@@ -63,14 +63,14 @@ namespace ThScoreFileConverter.Models
 
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this.allScoreData.ClearData),
-                new CareerReplacer(this.allScoreData.ClearData),
+                new ScoreReplacer(this.allScoreData.ClearData, formatter),
+                new CareerReplacer(this.allScoreData.ClearData, formatter),
                 new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
-                new CollectRateReplacer(this.allScoreData.ClearData),
+                new CollectRateReplacer(this.allScoreData.ClearData, formatter),
                 new ClearReplacer(this.allScoreData.ClearData),
-                new CharaReplacer(this.allScoreData.ClearData),
-                new CharaExReplacer(this.allScoreData.ClearData),
-                new PracticeReplacer(this.allScoreData.ClearData),
+                new CharaReplacer(this.allScoreData.ClearData, formatter),
+                new CharaExReplacer(this.allScoreData.ClearData, formatter),
+                new PracticeReplacer(this.allScoreData.ClearData, formatter),
             };
         }
 

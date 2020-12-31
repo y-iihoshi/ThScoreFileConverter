@@ -24,7 +24,8 @@ namespace ThScoreFileConverter.Models.Th15
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public CareerReplacer(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -47,11 +48,11 @@ namespace ThScoreFileConverter.Models.Th15
                     ? clearDataPerGameMode.Cards : ImmutableDictionary<int, Th13.ISpellCard<Level>>.Empty;
                 if (number == 0)
                 {
-                    return Utils.ToNumberString(cards.Values.Sum(getCount));
+                    return formatter.FormatNumber(cards.Values.Sum(getCount));
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
-                    return Utils.ToNumberString(cards.TryGetValue(number, out var card) ? getCount(card) : default);
+                    return formatter.FormatNumber(cards.TryGetValue(number, out var card) ? getCount(card) : default);
                 }
                 else
                 {
