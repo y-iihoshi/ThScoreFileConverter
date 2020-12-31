@@ -27,7 +27,8 @@ namespace ThScoreFileConverter.Models.Th12
 
         private readonly MatchEvaluator evaluator;
 
-        public CharaExReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public CharaExReplacer(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -57,7 +58,7 @@ namespace ThScoreFileConverter.Models.Th12
                 Func<long, string> toString = type switch
                 {
                     2 => value => new Time(value).ToString(),
-                    _ => Utils.ToNumberString,
+                    _ => formatter.FormatNumber,
                 };
 
                 return toString(getValueByChara(clearDataDictionary));
