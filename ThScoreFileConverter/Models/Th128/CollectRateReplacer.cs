@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th128
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards)
+        public CollectRateReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, INumberFormatter formatter)
         {
             if (spellCards is null)
                 throw new ArgumentNullException(nameof(spellCards));
@@ -60,7 +60,7 @@ namespace ThScoreFileConverter.Models.Th128
                     _ => card => card.TrialCount > 0,
                 };
 
-                return Utils.ToNumberString(
+                return formatter.FormatNumber(
                     spellCards.Values.Count(FuncHelper.MakeAndPredicate(findByLevel, findByStage, findByType)));
             });
         }

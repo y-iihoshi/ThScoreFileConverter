@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th128
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards)
+        public CareerReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, INumberFormatter formatter)
         {
             if (spellCards is null)
                 throw new ArgumentNullException(nameof(spellCards));
@@ -41,11 +41,11 @@ namespace ThScoreFileConverter.Models.Th128
 
                 if (number == 0)
                 {
-                    return Utils.ToNumberString(spellCards.Values.Sum(getCount));
+                    return formatter.FormatNumber(spellCards.Values.Sum(getCount));
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
-                    return Utils.ToNumberString(
+                    return formatter.FormatNumber(
                         spellCards.TryGetValue(number, out var card) ? getCount(card) : default);
                 }
                 else

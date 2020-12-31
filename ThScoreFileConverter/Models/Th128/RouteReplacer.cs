@@ -23,7 +23,8 @@ namespace ThScoreFileConverter.Models.Th128
 
         private readonly MatchEvaluator evaluator;
 
-        public RouteReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
+        public RouteReplacer(
+            IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -51,7 +52,7 @@ namespace ThScoreFileConverter.Models.Th128
                 Func<long, string> toString = type switch
                 {
                     2 => value => new Time(value).ToString(),
-                    _ => Utils.ToNumberString,
+                    _ => formatter.FormatNumber,
                 };
 
                 return toString(getValueByRoute(clearDataDictionary));

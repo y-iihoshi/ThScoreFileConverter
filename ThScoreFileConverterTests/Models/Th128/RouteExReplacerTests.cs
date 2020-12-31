@@ -33,117 +33,144 @@ namespace ThScoreFileConverterTests.Models.Th128
         internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
             CreateClearDataList().ToDictionary(clearData => clearData.Route);
 
+        private static Mock<INumberFormatter> MockNumberFormatter()
+        {
+            var mock = new Mock<INumberFormatter>();
+            _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
+                .Returns((object value) => "invoked: " + value.ToString());
+            return mock;
+        }
+
         [TestMethod]
         public void RouteExReplacerTest()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void RouteExReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new RouteExReplacer(null!));
+        {
+            var formatterMock = MockNumberFormatter();
+            _ = Assert.ThrowsException<ArgumentNullException>(
+                () => _ = new RouteExReplacer(null!, formatterMock.Object));
+        }
 
         [TestMethod]
         public void RouteExReplacerTestEmpty()
         {
             var dictionary = new Dictionary<RouteWithTotal, IClearData>();
-            var replacer = new RouteExReplacer(dictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }
 
         [TestMethod]
         public void ReplaceTestTotalPlayCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("23", replacer.Replace("%T128ROUTEEXHA21"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 23", replacer.Replace("%T128ROUTEEXHA21"));
         }
 
         [TestMethod]
         public void ReplaceTestPlayTime()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("21:08:51", replacer.Replace("%T128ROUTEEXHA22"));
         }
 
         [TestMethod]
         public void ReplaceTestClearCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("98", replacer.Replace("%T128ROUTEEXHA23"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 98", replacer.Replace("%T128ROUTEEXHA23"));
         }
 
         [TestMethod]
         public void ReplaceTestLevelTotalTotalPlayCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("23", replacer.Replace("%T128ROUTEEXTA21"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 23", replacer.Replace("%T128ROUTEEXTA21"));
         }
 
         [TestMethod]
         public void ReplaceTestLevelTotalPlayTime()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("21:08:51", replacer.Replace("%T128ROUTEEXTA22"));
         }
 
         [TestMethod]
         public void ReplaceTestLevelTotalClearCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("490", replacer.Replace("%T128ROUTEEXTA23"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 490", replacer.Replace("%T128ROUTEEXTA23"));
         }
 
         [TestMethod]
         public void ReplaceTestRouteTotalTotalPlayCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("35", replacer.Replace("%T128ROUTEEXHTL1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 35", replacer.Replace("%T128ROUTEEXHTL1"));
         }
 
         [TestMethod]
         public void ReplaceTestRouteTotalPlayTime()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("37:09:04", replacer.Replace("%T128ROUTEEXHTL2"));
         }
 
         [TestMethod]
         public void ReplaceTestRouteTotalClearCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("146", replacer.Replace("%T128ROUTEEXHTL3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 146", replacer.Replace("%T128ROUTEEXHTL3"));
         }
 
         [TestMethod]
         public void ReplaceTestTotalTotalPlayCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("35", replacer.Replace("%T128ROUTEEXTTL1"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 35", replacer.Replace("%T128ROUTEEXTTL1"));
         }
 
         [TestMethod]
         public void ReplaceTestTotalPlayTime()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("37:09:04", replacer.Replace("%T128ROUTEEXTTL2"));
         }
 
         [TestMethod]
         public void ReplaceTestTotalClearCount()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
-            Assert.AreEqual("730", replacer.Replace("%T128ROUTEEXTTL3"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 730", replacer.Replace("%T128ROUTEEXTTL3"));
         }
 
         [TestMethod]
         public void ReplaceTestEmpty()
         {
             var dictionary = new Dictionary<RouteWithTotal, IClearData>();
-            var replacer = new RouteExReplacer(dictionary);
-            Assert.AreEqual("0", replacer.Replace("%T128ROUTEEXHA21"));
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(dictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEEXHA21"));
             Assert.AreEqual("0:00:00", replacer.Replace("%T128ROUTEEXHA22"));
-            Assert.AreEqual("0", replacer.Replace("%T128ROUTEEXHA23"));
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEEXHA23"));
         }
 
         [TestMethod]
@@ -154,50 +181,57 @@ namespace ThScoreFileConverterTests.Models.Th128
                 Mock.Of<IClearData>(
                     m => (m.Route == RouteWithTotal.A2) && (m.ClearCounts == new Dictionary<Level, int>()))
             }.ToDictionary(clearData => clearData.Route);
+            var formatterMock = MockNumberFormatter();
 
-            var replacer = new RouteExReplacer(dictionary);
-            Assert.AreEqual("0", replacer.Replace("%T128ROUTEEXHA23"));
+            var replacer = new RouteExReplacer(dictionary, formatterMock.Object);
+            Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEEXHA23"));
         }
 
         [TestMethod]
         public void ReplaceTestLevelExtra()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T128ROUTEEXXA21", replacer.Replace("%T128ROUTEEXXA21"));
         }
 
         [TestMethod]
         public void ReplaceTestRouteExtra()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T128ROUTEEXHEX1", replacer.Replace("%T128ROUTEEXHEX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T128XXXXXXXHA21", replacer.Replace("%T128XXXXXXXHA21"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidLevel()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T128ROUTEEXYA21", replacer.Replace("%T128ROUTEEXYA21"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidRoute()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T128ROUTEEXHXX1", replacer.Replace("%T128ROUTEEXHXX1"));
         }
 
         [TestMethod]
         public void ReplaceTestInvalidType()
         {
-            var replacer = new RouteExReplacer(ClearDataDictionary);
+            var formatterMock = MockNumberFormatter();
+            var replacer = new RouteExReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.AreEqual("%T128ROUTEEXHA2X", replacer.Replace("%T128ROUTEEXHA2X"));
         }
     }
