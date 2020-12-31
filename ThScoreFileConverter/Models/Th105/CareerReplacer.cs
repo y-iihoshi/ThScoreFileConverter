@@ -24,7 +24,8 @@ namespace ThScoreFileConverter.Models.Th105
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary)
+        public CareerReplacer(
+            IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -53,7 +54,7 @@ namespace ThScoreFileConverter.Models.Th105
                             time.Seconds,
                             time.Frames * 1000 / 60);
                     },
-                    _ => Utils.ToNumberString,
+                    _ => formatter.FormatNumber,
                 };
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)

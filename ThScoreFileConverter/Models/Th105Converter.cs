@@ -59,10 +59,10 @@ namespace ThScoreFileConverter.Models
 
             return new List<IStringReplaceable>
             {
-                new CareerReplacer(this.allScoreData.ClearData),
+                new CareerReplacer(this.allScoreData.ClearData, formatter),
                 new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
-                new CollectRateReplacer(this.allScoreData.ClearData),
-                new CardForDeckReplacer(this.allScoreData.SystemCards, this.allScoreData.ClearData, hideUntriedCards),
+                new CollectRateReplacer(this.allScoreData.ClearData, formatter),
+                new CardForDeckReplacer(this.allScoreData.SystemCards, this.allScoreData.ClearData, formatter, hideUntriedCards),
             };
         }
 

@@ -26,6 +26,7 @@ namespace ThScoreFileConverter.Models.Th105
         public CardForDeckReplacer(
             IReadOnlyDictionary<int, ICardForDeck> systemCards,
             IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary,
+            INumberFormatter formatter,
             bool hideUntriedCards)
         {
             if (systemCards is null)
@@ -83,7 +84,7 @@ namespace ThScoreFileConverter.Models.Th105
                 }
                 else
                 {
-                    return Utils.ToNumberString(cardForDeck.MaxNumber);
+                    return formatter.FormatNumber(cardForDeck.MaxNumber);
                 }
             });
 
