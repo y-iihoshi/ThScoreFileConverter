@@ -24,7 +24,9 @@ namespace ThScoreFileConverter.Models.Th143
         private readonly MatchEvaluator evaluator;
 
         public ScoreTotalReplacer(
-            IReadOnlyList<IScore> scores, IReadOnlyDictionary<ItemWithTotal, IItemStatus> itemStatuses)
+            IReadOnlyList<IScore> scores,
+            IReadOnlyDictionary<ItemWithTotal, IItemStatus> itemStatuses,
+            INumberFormatter formatter)
         {
             if (scores is null)
                 throw new ArgumentNullException(nameof(scores));
@@ -39,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th143
                 switch (type)
                 {
                     case 1:     // total score
-                        return Utils.ToNumberString(scores.Sum(score => (long)((score?.HighScore * 10) ?? default)));
+                        return formatter.FormatNumber(scores.Sum(score => (long)((score?.HighScore * 10) ?? default)));
                     case 2:     // total of challenge counts
                         if (item == ItemWithTotal.NoItem)
                         {
@@ -47,19 +49,19 @@ namespace ThScoreFileConverter.Models.Th143
                         }
                         else
                         {
-                            return Utils.ToNumberString(
+                            return formatter.FormatNumber(
                                 itemStatuses.TryGetValue(item, out var status) ? status.UseCount : default);
                         }
 
                     case 3:     // total of cleared counts
                         {
-                            return Utils.ToNumberString(
+                            return formatter.FormatNumber(
                                 itemStatuses.TryGetValue(item, out var status) ? status.ClearedCount : default);
                         }
 
                     case 4:     // num of cleared scenes
                         {
-                            return Utils.ToNumberString(
+                            return formatter.FormatNumber(
                                 itemStatuses.TryGetValue(item, out var status) ? status.ClearedScenes : default);
                         }
 

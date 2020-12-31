@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th143
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyList<IScore> scores)
+        public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
             if (scores is null)
                 throw new ArgumentNullException(nameof(scores));
@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models.Th143
                 switch (type)
                 {
                     case 1:     // high score
-                        return Utils.ToNumberString((score?.HighScore * 10) ?? default);
+                        return formatter.FormatNumber((score?.HighScore * 10) ?? default);
                     case 2:     // challenge count
                         if (item == ItemWithTotal.NoItem)
                         {
@@ -56,13 +56,13 @@ namespace ThScoreFileConverter.Models.Th143
                         }
                         else
                         {
-                            return Utils.ToNumberString(
+                            return formatter.FormatNumber(
                                 (score is not null) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
                                 ? challengeCount : default);
                         }
 
                     case 3:     // cleared count
-                        return Utils.ToNumberString(
+                        return formatter.FormatNumber(
                             (score is not null) && score.ClearCounts.TryGetValue(item, out var clearCount)
                             ? clearCount : default);
                     default:    // unreachable
