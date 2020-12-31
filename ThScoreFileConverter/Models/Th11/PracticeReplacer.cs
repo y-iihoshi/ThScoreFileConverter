@@ -26,7 +26,8 @@ namespace ThScoreFileConverter.Models.Th11
 
         private readonly MatchEvaluator evaluator;
 
-        public PracticeReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public PracticeReplacer(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -42,7 +43,7 @@ namespace ThScoreFileConverter.Models.Th11
                 if (stage == Stage.Extra)
                     return match.ToString();
 
-                return Utils.ToNumberString(
+                return formatter.FormatNumber(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.Practices.TryGetValue((level, stage), out var practice)
                     ? (practice.Score * 10) : default);
