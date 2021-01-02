@@ -118,18 +118,6 @@ namespace ThScoreFileConverter.ViewModels
         public MainWindowViewModel(
             IDialogService dialogService, IDispatcherAdapter dispatcher, ISettings settings, INumberFormatter formatter)
         {
-            if (dialogService is null)
-                throw new ArgumentNullException(nameof(dialogService));
-
-            if (dispatcher is null)
-                throw new ArgumentNullException(nameof(dispatcher));
-
-            if (settings is null)
-                throw new ArgumentNullException(nameof(settings));
-
-            if (formatter is null)
-                throw new ArgumentNullException(nameof(formatter));
-
             this.dialogService = dialogService;
             this.dispatcher = dispatcher;
             this.settings = settings;

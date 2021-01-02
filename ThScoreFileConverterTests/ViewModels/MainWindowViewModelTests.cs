@@ -79,50 +79,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        public void MainWindowViewModelTestNullDialogService()
-        {
-            var dispatcherAdapterMock = MockDispatcherAdapter();
-            var settingsMock = MockSettings();
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(
-                    null!, dispatcherAdapterMock.Object, settingsMock.Object, formatterMock.Object));
-        }
-
-        [TestMethod]
-        public void MainWindowViewModelTestNullDispatcherAdapter()
-        {
-            var dialogServiceMock = MockDialogService();
-            var settingsMock = MockSettings();
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(
-                    dialogServiceMock.Object, null!, settingsMock.Object, formatterMock.Object));
-        }
-
-        [TestMethod]
-        public void MainWindowViewModelTestNullSettings()
-        {
-            var dialogServiceMock = MockDialogService();
-            var dispatcherAdapterMock = MockDispatcherAdapter();
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(
-                    dialogServiceMock.Object, dispatcherAdapterMock.Object, null!, formatterMock.Object));
-        }
-
-        [TestMethod]
-        public void MainWindowViewModelTestNullNumberFormatter()
-        {
-            var dialogServiceMock = MockDialogService();
-            var dispatcherAdapterMock = MockDispatcherAdapter();
-            var settingsMock = MockSettings();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new MainWindowViewModel(
-                    dialogServiceMock.Object, dispatcherAdapterMock.Object, settingsMock.Object, null!));
-        }
-
-        [TestMethod]
         public void TitleTest()
         {
             using var window = CreateViewModel();

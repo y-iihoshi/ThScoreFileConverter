@@ -46,12 +46,6 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
         public SettingWindowViewModel(ISettings settings, IResourceDictionaryAdapter adapter)
         {
-            if (settings is null)
-                throw new ArgumentNullException(nameof(settings));
-
-            if (adapter is null)
-                throw new ArgumentNullException(nameof(adapter));
-
             if (!settings.OutputNumberGroupSeparator.HasValue)
             {
                 throw new ArgumentException(

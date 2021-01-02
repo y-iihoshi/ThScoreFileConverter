@@ -48,22 +48,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        public void SettingWindowViewModelTestNullSettings()
-        {
-            var adapterMock = MockResourceDictionaryAdapter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new SettingWindowViewModel(null!, adapterMock.Object));
-        }
-
-        [TestMethod]
-        public void SettingWindowViewModelTestNullAdapter()
-        {
-            var settingsMock = MockSettings();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => new SettingWindowViewModel(settingsMock.Object, null!));
-        }
-
-        [TestMethod]
         public void SettingWindowViewModelTestNullOutputNumberGroupSeparator()
         {
             var settingsMock = new Mock<ISettings>()
