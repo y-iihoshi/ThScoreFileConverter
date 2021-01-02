@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -41,14 +40,6 @@ namespace ThScoreFileConverterTests.Models.Th06
             var formatterMock = MockNumberFormatter();
             var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void CareerReplacerTestNull()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new CareerReplacer(null!, formatterMock.Object));
         }
 
         [TestMethod]

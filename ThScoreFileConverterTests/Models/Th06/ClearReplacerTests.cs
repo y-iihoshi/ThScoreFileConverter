@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -32,10 +31,6 @@ namespace ThScoreFileConverterTests.Models.Th06
             var replacer = new ClearReplacer(Rankings);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void ClearReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(null!));
 
         [TestMethod]
         public void ClearReplacerTestEmptyRankings()

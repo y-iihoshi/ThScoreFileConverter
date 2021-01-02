@@ -24,9 +24,6 @@ namespace ThScoreFileConverter.Models.Th06
 
         public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
-            if (cardAttacks is null)
-                throw new ArgumentNullException(nameof(cardAttacks));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = IntegerHelper.Parse(match.Groups[1].Value);
