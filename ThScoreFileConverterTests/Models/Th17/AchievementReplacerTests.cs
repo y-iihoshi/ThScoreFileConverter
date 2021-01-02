@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th17;
 
 namespace ThScoreFileConverterTests.Models.Th17
@@ -15,10 +14,6 @@ namespace ThScoreFileConverterTests.Models.Th17
             var replacer = new AchievementReplacer(Status);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void AchievementReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new AchievementReplacer(null!));
 
         [TestMethod]
         public void ReplaceTest()

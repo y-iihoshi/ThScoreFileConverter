@@ -28,9 +28,6 @@ namespace ThScoreFileConverter.Models.Th17
         public CareerReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();

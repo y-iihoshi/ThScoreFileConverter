@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -28,9 +27,6 @@ namespace ThScoreFileConverter.Models.Th17
         public ScoreReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = (LevelWithTotal)LevelParser.Parse(match.Groups[1].Value);
