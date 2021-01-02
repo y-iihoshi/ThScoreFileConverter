@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Adapters;
@@ -16,10 +15,6 @@ namespace ThScoreFileConverterTests.Adapters
             var adapter = new ResourceDictionaryAdapter(dictionary);
             Assert.IsNotNull(adapter);
         }
-
-        [TestMethod]
-        public void ResourceDictionaryAdapterTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ResourceDictionaryAdapter(null!));
 
         [TestMethod]
         public void FontFamilyKeyTest()

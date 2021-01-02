@@ -5,7 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Windows;
 using System.Windows.Media;
 
@@ -24,9 +23,6 @@ namespace ThScoreFileConverter.Adapters
         /// <param name="dictionary">A resource dictionary to be adapted.</param>
         public ResourceDictionaryAdapter(ResourceDictionary dictionary)
         {
-            if (dictionary is null)
-                throw new ArgumentNullException(nameof(dictionary));
-
             this.dictionary = dictionary;
         }
 
