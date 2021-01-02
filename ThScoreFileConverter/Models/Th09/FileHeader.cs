@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th09
@@ -42,9 +41,6 @@ namespace ThScoreFileConverter.Models.Th09
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.unknown1 = reader.ReadUInt16();
             this.Checksum = reader.ReadUInt16();
             this.Version = reader.ReadInt16();
@@ -57,9 +53,6 @@ namespace ThScoreFileConverter.Models.Th09
 
         public void WriteTo(BinaryWriter writer)
         {
-            if (writer is null)
-                throw new ArgumentNullException(nameof(writer));
-
             writer.Write(this.unknown1);
             writer.Write(this.Checksum);
             writer.Write(this.Version);

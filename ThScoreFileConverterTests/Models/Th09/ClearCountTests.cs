@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -54,13 +53,6 @@ namespace ThScoreFileConverterTests.Models.Th09
             var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, clearCount);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var clearCount = new ClearCount();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => clearCount.ReadFrom(null!));
         }
 
         [TestMethod]

@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -27,9 +26,6 @@ namespace ThScoreFileConverter.Models.Th09
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Counts = EnumHelper<Level>.Enumerable.ToDictionary(level => level, _ => reader.ReadInt32());
             _ = reader.ReadUInt32();
         }

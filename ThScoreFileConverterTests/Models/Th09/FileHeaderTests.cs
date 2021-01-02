@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th09;
@@ -70,13 +69,6 @@ namespace ThScoreFileConverterTests.Models.Th09
 
             Validate(header, properties);
             Assert.IsTrue(header.IsValid);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var header = new FileHeader();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => header.ReadFrom(null!));
         }
 
         [TestMethod]
@@ -168,13 +160,6 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = writer.BaseStream.Read(actualArray, 0, actualArray.Length);
 
             CollectionAssert.AreEqual(array, actualArray);
-        }
-
-        [TestMethod]
-        public void WriteToTestNull()
-        {
-            var header = new FileHeader();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => header.WriteTo(null!));
         }
     }
 }

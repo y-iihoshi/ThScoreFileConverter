@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -47,22 +46,6 @@ namespace ThScoreFileConverterTests.Models.Th09
             var formatterMock = MockNumberFormatter();
             var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock.Object);
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void ClearReplacerTestNullRankings()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ClearReplacer(null!, ClearCounts, formatterMock.Object));
-        }
-
-        [TestMethod]
-        public void ClearReplacerTestNullClearCounts()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ClearReplacer(Rankings, null!, formatterMock.Object));
         }
 
         [TestMethod]
