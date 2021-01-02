@@ -67,13 +67,6 @@ namespace ThScoreFileConverterTests.Models.Th16
             Validate(mock.Object, scoreData);
         }
 
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var scoreData = new ScoreData();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => scoreData.ReadFrom(null!));
-        }
-
         public static IEnumerable<object[]> InvalidStageProgresses
             => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
 
