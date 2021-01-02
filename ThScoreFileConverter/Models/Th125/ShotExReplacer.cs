@@ -30,11 +30,6 @@ namespace ThScoreFileConverter.Models.Th125
             INumberFormatter formatter,
             string outputFilePath)
         {
-            if (bestshots is null)
-                throw new ArgumentNullException(nameof(bestshots));
-            if (scores is null)
-                throw new ArgumentNullException(nameof(scores));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);

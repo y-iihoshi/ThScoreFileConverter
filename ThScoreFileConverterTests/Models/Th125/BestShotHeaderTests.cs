@@ -136,14 +136,6 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var header = new BestShotHeader();
-
-            _ = Assert.ThrowsException<ArgumentNullException>(() => header.ReadFrom(null!));
-        }
-
-        [TestMethod]
         public void ReadFromTestEmptySignature()
         {
             var mock = MockBestShotHeader();

@@ -49,14 +49,6 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        public void ShotExReplacerTestNullBestShots()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(null!, Scores, formatterMock.Object, @"C:\path\to\output\"));
-        }
-
-        [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
             var bestshots = new Dictionary<(Chara, Level, int), (string, IBestShotHeader)>();
@@ -75,14 +67,6 @@ namespace ThScoreFileConverterTests.Models.Th125
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void ShotExReplacerTestNullScores()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(BestShots, null!, formatterMock.Object, @"C:\path\to\output\"));
         }
 
         [TestMethod]
