@@ -56,14 +56,6 @@ namespace ThScoreFileConverterTests.Models.Th165
         }
 
         [TestMethod]
-        public void ShotExReplacerTestNullOutputFilePath()
-        {
-            var formatterMock = MockNumberFormatter();
-            var replacer = new ShotExReplacer(BestShots, formatterMock.Object, null!);
-            Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
         public void ShotExReplacerTestEmptyOutputFilePath()
         {
             var formatterMock = MockNumberFormatter();
@@ -199,14 +191,6 @@ namespace ThScoreFileConverterTests.Models.Th165
             }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
-            Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));
-        }
-
-        [TestMethod]
-        public void ReplaceTestNullOutputFilePath()
-        {
-            var formatterMock = MockNumberFormatter();
-            var replacer = new ShotExReplacer(BestShots, formatterMock.Object, null!);
             Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));
         }
 

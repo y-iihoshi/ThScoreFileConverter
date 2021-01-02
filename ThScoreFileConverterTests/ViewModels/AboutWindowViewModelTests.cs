@@ -74,13 +74,5 @@ namespace ThScoreFileConverterTests.ViewModels
             window.OnDialogOpened(parameters);
             Assert.IsTrue(true);
         }
-
-        [TestMethod]
-        public void OnDialogOpenedTestNull()
-        {
-            var window = new AboutWindowViewModel();
-            window.OnDialogOpened(null!);
-            Assert.IsTrue(true);
-        }
     }
 }

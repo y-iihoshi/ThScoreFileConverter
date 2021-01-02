@@ -50,14 +50,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void GetLocalizedObjectTestNullKey()
-        {
-            var obj = LocalizationProvider.Instance.GetLocalizedObject(
-                null!, new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
-            Assert.IsNull(obj);
-        }
-
-        [TestMethod]
         public void GetLocalizedObjectTestEmptyKey()
         {
             var obj = LocalizationProvider.Instance.GetLocalizedObject(
@@ -71,22 +63,6 @@ namespace ThScoreFileConverterTests.Models
             var obj = LocalizationProvider.Instance.GetLocalizedObject(
                 "TH01", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
             Assert.IsNull(obj);
-        }
-
-        [TestMethod]
-        public void GetLocalizedObjectTestNullTarget()
-        {
-            var obj = LocalizationProvider.Instance.GetLocalizedObject(
-                "TH06", null!, CultureInfo.GetCultureInfo("ja-JP"));
-            Assert.AreEqual("東方紅魔郷", obj);
-        }
-
-        [TestMethod]
-        public void GetLocalizedObjectTestNullCulture()
-        {
-            var key = "TH06";
-            var obj = LocalizationProvider.Instance.GetLocalizedObject(key, new DependencyObject(), null!);
-            Assert.AreEqual(Resources.ResourceManager.GetObject(key, CultureInfo.CurrentUICulture), obj);
         }
 
         [TestMethod]

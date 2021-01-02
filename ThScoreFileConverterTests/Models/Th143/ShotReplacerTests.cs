@@ -41,13 +41,6 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ShotReplacerTestNullOutputFilePath()
-        {
-            var replacer = new ShotReplacer(BestShots, null!);
-            Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
         public void ShotReplacerTestEmptyOutputFilePath()
         {
             var replacer = new ShotReplacer(BestShots, string.Empty);
@@ -98,13 +91,6 @@ namespace ThScoreFileConverterTests.Models.Th143
                 ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Day, (int)element.header.Scene));
             var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
-            Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOT23"));
-        }
-
-        [TestMethod]
-        public void ReplaceTestNullOutputFilePath()
-        {
-            var replacer = new ShotReplacer(BestShots, null!);
             Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOT23"));
         }
 

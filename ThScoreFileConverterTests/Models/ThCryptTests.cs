@@ -56,15 +56,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void DecryptTestNullInput()
-        {
-            using var output = new MemoryStream();
-
-            _ = Assert.ThrowsException<NullReferenceException>(
-                () => ThCrypt.Decrypt(null!, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
-        }
-
-        [TestMethod]
         public void DecryptTestNullStreamInput()
         {
             using var output = new MemoryStream();
@@ -141,15 +132,6 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.AreEqual(this.decrypted.Length, actual.Length);
             CollectionAssert.AreNotEqual(this.decrypted, actual);
-        }
-
-        [TestMethod]
-        public void DecryptTestNullOutput()
-        {
-            using var input = new MemoryStream(this.encryptedBySmallBlock);
-
-            _ = Assert.ThrowsException<NullReferenceException>(
-                () => ThCrypt.Decrypt(input, null!, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
         }
 
         [TestMethod]

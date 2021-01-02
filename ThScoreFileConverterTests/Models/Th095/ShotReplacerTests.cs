@@ -57,14 +57,6 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void ShotReplacerTestNullOutputFilePath()
-        {
-            var formatterMock = MockNumberFormatter();
-            var replacer = new ShotReplacer(BestShots, formatterMock.Object, null!);
-            Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
         public void ShotReplacerTestEmptyOutputFilePath()
         {
             var formatterMock = MockNumberFormatter();
@@ -115,14 +107,6 @@ namespace ThScoreFileConverterTests.Models.Th095
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
-            Assert.AreEqual(string.Empty, replacer.Replace("%T95SHOT23"));
-        }
-
-        [TestMethod]
-        public void ReplaceTestNullOutputFilePath()
-        {
-            var formatterMock = MockNumberFormatter();
-            var replacer = new ShotReplacer(BestShots, formatterMock.Object, null!);
             Assert.AreEqual(string.Empty, replacer.Replace("%T95SHOT23"));
         }
 

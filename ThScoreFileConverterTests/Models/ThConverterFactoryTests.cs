@@ -11,10 +11,6 @@ namespace ThScoreFileConverterTests.Models
         public void CanCreateTest() => Assert.IsTrue(ThConverterFactory.CanCreate("TH06"));
 
         [TestMethod]
-        public void CanCreateTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = ThConverterFactory.CanCreate(null!));
-
-        [TestMethod]
         public void CanCreateTestEmptyKey() => Assert.IsFalse(ThConverterFactory.CanCreate(string.Empty));
 
         [TestMethod]
@@ -27,10 +23,6 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.AreEqual(typeof(Th06Converter), converter?.GetType());
         }
-
-        [TestMethod]
-        public void CreateTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = ThConverterFactory.Create(null!));
 
         [TestMethod]
         public void CreateTestEmptyKey()

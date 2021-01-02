@@ -473,14 +473,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        public void OnDialogOpenedTestNull()
-        {
-            using var window = CreateViewModel();
-            window.OnDialogOpened(null!);
-            Assert.IsTrue(true);
-        }
-
-        [TestMethod]
         public void DisposeTest()
         {
             using var window = CreateViewModel();
