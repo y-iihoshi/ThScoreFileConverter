@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,9 +37,6 @@ namespace ThScoreFileConverter.Models.Th123
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             var validNumCharas = EnumHelper<Chara>.Enumerable.Where(chara => chara != Chara.Oonamazu).Count();
 
             _ = reader.ReadUInt32();            // version? (0xD2 == 210 --> ver.1.10?)

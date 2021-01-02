@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -97,14 +96,6 @@ namespace ThScoreFileConverterTests.Models.Th123
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void CollectRateReplacerTestNull()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new CollectRateReplacer(null!, formatterMock.Object));
         }
 
         [TestMethod]

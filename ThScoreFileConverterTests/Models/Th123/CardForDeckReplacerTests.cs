@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -49,22 +48,6 @@ namespace ThScoreFileConverterTests.Models.Th123
             var formatterMock = MockNumberFormatter();
             var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock.Object, false);
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void CardForDeckReplacerTestNullSystemCards()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new CardForDeckReplacer(null!, ClearDataDictionary, formatterMock.Object, false));
-        }
-
-        [TestMethod]
-        public void CardForDeckReplacerTestNullClearDataDictionary()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new CardForDeckReplacer(SystemCards, null!, formatterMock.Object, false));
         }
 
         [TestMethod]
