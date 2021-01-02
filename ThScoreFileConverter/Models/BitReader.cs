@@ -38,9 +38,12 @@ namespace ThScoreFileConverter.Models
         /// The stream to read. Since a <see cref="BitReader"/> instance does not own <paramref name="stream"/>,
         /// it is responsible for the caller to close <paramref name="stream"/>.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
         public BitReader(Stream stream)
         {
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
             if (!stream.CanRead)
                 throw new ArgumentException(Resources.ArgumentExceptionStreamMustBeReadable, nameof(stream));
 

@@ -20,6 +20,10 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
+        public void BitReaderTestNoStream()
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new BitReader(null!));
+
+        [TestMethod]
         public void BitReaderTestUnreadable()
         {
             var stream = new MemoryStream();
