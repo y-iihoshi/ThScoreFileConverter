@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Squirrel;
@@ -140,10 +139,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.IsNotNull(sqinstance);
             Assert.AreEqual(SQOT.Instance, sqinstance!.Type);
         }
-
-        [TestMethod]
-        public void CreateTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQObject.Create(null!));
 
         [TestMethod]
         public void CreateTestShorteneed()

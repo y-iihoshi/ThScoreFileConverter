@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,9 +35,6 @@ namespace ThScoreFileConverter.Squirrel
 
         public static SQArray Create(BinaryReader reader, bool skipType = false)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             if (!skipType)
             {
                 var type = reader.ReadInt32();

@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -38,9 +37,6 @@ namespace ThScoreFileConverter.Squirrel
 
         public static SQTable Create(BinaryReader reader, bool skipType = false)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             if (!skipType)
             {
                 var type = reader.ReadInt32();

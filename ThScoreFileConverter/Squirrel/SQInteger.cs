@@ -34,9 +34,6 @@ namespace ThScoreFileConverter.Squirrel
 
         public static SQInteger Create(BinaryReader reader, bool skipType = false)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             if (!skipType)
             {
                 var type = reader.ReadInt32();

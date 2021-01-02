@@ -43,10 +43,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.AreEqual(expected, sqstring, false, CultureInfo.InvariantCulture);
         }
 
-        [TestMethod]
-        public void CreateTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQString.Create(null!));
-
         [DataTestMethod]
         [DataRow(0, "")]
         [DataRow(0, "abc")]

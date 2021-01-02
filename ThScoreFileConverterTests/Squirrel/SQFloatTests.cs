@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverterTests.Models;
@@ -44,10 +43,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.AreEqual(expected, sqfloat.Value);
             Assert.AreEqual(expected, sqfloat);
         }
-
-        [TestMethod]
-        public void CreateTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = SQFloat.Create(null!));
 
         [TestMethod]
         public void CreateTestShortened()

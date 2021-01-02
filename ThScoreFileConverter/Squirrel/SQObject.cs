@@ -42,9 +42,6 @@ namespace ThScoreFileConverter.Squirrel
 
         public static SQObject Create(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             var type = (SQObjectType)reader.ReadInt32();
 
             return SQObjectReaders.TryGetValue(type, out var objectReader)
