@@ -29,9 +29,6 @@ namespace ThScoreFileConverter.Models.Th12
         public CareerReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = IntegerHelper.Parse(match.Groups[1].Value);
