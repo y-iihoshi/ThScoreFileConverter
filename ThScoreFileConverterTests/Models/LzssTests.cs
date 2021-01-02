@@ -58,14 +58,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void DecompressTestNullInput()
-        {
-            using var output = new MemoryStream();
-
-            _ = Assert.ThrowsException<ArgumentNullException>(() => Lzss.Decompress(null!, output));
-        }
-
-        [TestMethod]
         public void DecompressTestNullStreamInput()
         {
             using var output = new MemoryStream();
@@ -140,14 +132,6 @@ namespace ThScoreFileConverterTests.Models
             _ = output.Read(actual, 0, actual.Length);
 
             CollectionAssert.AreNotEqual(this.decompressed, actual);
-        }
-
-        [TestMethod]
-        public void DecompressTestNullOutput()
-        {
-            using var input = new MemoryStream(this.compressed);
-
-            _ = Assert.ThrowsException<NullReferenceException>(() => Lzss.Decompress(input, null!));
         }
 
         [TestMethod]

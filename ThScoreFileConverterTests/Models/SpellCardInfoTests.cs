@@ -38,13 +38,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void SpellCardInfoTestNullName()
-        {
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new CardInfo(1, null!, Stage.One, Level.Hard, Level.Lunatic));
-        }
-
-        [TestMethod]
         public void SpellCardInfoTestEmptyName()
         {
             _ = Assert.ThrowsException<ArgumentException>(

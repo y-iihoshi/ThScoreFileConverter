@@ -20,10 +20,9 @@ namespace ThScoreFileConverter.Models
         /// Initializes a new instance of the <see cref="NumberFormatter"/> class.
         /// </summary>
         /// <param name="settings">The settings of this application.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="settings"/> is <c>null</c>.</exception>
         public NumberFormatter(ISettings settings)
         {
-            this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            this.settings = settings;
         }
 
         /// <inheritdoc/>

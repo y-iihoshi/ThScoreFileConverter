@@ -29,9 +29,6 @@ namespace ThScoreFileConverter.Models
         /// <param name="stage">The stage which the spell card is used.</param>
         /// <param name="levels">The level(s) which the spell card is used.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is negative.</exception>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="name"/> or <paramref name="levels"/> are <c>null</c>.
-        /// </exception>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="stage"/> does not exist in the <typeparamref name="TStage"/> enumeration.
@@ -45,8 +42,6 @@ namespace ThScoreFileConverter.Models
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(name));
             if (!Enum.IsDefined(typeof(TStage), stage))

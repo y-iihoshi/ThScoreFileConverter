@@ -15,9 +15,5 @@ namespace ThScoreFileConverterTests.Models
             var args = new ExceptionOccurredEventArgs(ex);
             Assert.AreSame(ex, args.Exception);
         }
-
-        [TestMethod]
-        public void ExceptionOccurredEventArgsTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ExceptionOccurredEventArgs(null!));
     }
 }

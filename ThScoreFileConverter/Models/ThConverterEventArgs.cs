@@ -31,15 +31,12 @@ namespace ThScoreFileConverter.Models
         /// <param name="path">The path of the last output file.</param>
         /// <param name="current">The number of the files that have been output.</param>
         /// <param name="total">The total number of the files.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="path"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="path"/> is empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="current"/> is not positive or greater than <paramref name="total"/>.
         /// </exception>
         public ThConverterEventArgs(string path, int current, int total)
         {
-            if (path is null)
-                throw new ArgumentNullException(nameof(path));
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(path));
             if (current <= 0)

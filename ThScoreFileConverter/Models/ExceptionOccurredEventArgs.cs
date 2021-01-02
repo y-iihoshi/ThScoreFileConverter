@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="ex">The exception data.</param>
         public ExceptionOccurredEventArgs(Exception ex)
         {
-            this.Exception = ex ?? throw new ArgumentNullException(nameof(ex));
+            this.Exception = ex;
         }
 
         /// <summary>
