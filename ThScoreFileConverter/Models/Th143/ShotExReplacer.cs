@@ -26,9 +26,6 @@ namespace ThScoreFileConverter.Models.Th143
         public ShotExReplacer(
             IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
         {
-            if (bestshots is null)
-                throw new ArgumentNullException(nameof(bestshots));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);

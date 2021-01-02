@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -25,9 +24,6 @@ namespace ThScoreFileConverter.Models.Th143
 
         public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
-            if (scores is null)
-                throw new ArgumentNullException(nameof(scores));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);

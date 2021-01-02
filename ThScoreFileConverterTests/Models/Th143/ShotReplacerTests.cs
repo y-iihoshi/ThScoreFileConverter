@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th143;
@@ -20,13 +19,6 @@ namespace ThScoreFileConverterTests.Models.Th143
         {
             var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void ShotReplacerTestNullBestShots()
-        {
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotReplacer(null!, @"C:\path\to\output\"));
         }
 
         [TestMethod]

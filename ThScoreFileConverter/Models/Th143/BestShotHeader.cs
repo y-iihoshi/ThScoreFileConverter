@@ -35,9 +35,6 @@ namespace ThScoreFileConverter.Models.Th143
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
             if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                 throw new InvalidDataException();

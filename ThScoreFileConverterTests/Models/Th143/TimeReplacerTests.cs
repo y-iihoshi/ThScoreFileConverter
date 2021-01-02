@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Th143
@@ -13,10 +12,6 @@ namespace ThScoreFileConverterTests.Models.Th143
             var replacer = new TimeReplacer(StatusTests.MockStatus().Object);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void TimeReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new TimeReplacer(null!));
 
         [TestMethod]
         public void ReplaceTest()
