@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -49,10 +48,6 @@ namespace ThScoreFileConverterTests.Models.Th14
             var replacer = new ClearReplacer(ClearDataDictionary);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void ClearReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(null!));
 
         [TestMethod]
         public void ClearReplacerTestEmpty()
