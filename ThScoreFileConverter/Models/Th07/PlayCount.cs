@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,9 +35,6 @@ namespace ThScoreFileConverter.Models.Th07
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.TotalTrial = reader.ReadInt32();
             this.Trials = EnumHelper<Chara>.Enumerable.ToDictionary(chara => chara, chara => reader.ReadInt32());
             this.TotalRetry = reader.ReadInt32();

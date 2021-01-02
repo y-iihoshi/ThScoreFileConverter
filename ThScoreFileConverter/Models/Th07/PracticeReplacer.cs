@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
@@ -26,9 +25,6 @@ namespace ThScoreFileConverter.Models.Th07
         public PracticeReplacer(
             IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> practiceScores, INumberFormatter formatter)
         {
-            if (practiceScores is null)
-                throw new ArgumentNullException(nameof(practiceScores));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);

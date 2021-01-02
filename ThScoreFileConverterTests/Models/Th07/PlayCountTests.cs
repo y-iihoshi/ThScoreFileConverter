@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -83,13 +82,6 @@ namespace ThScoreFileConverterTests.Models.Th07
             var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
             Validate(playCount, properties);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var playCount = new PlayCount();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => playCount.ReadFrom(null!));
         }
 
         [TestMethod]

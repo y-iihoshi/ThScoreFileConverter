@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th07;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -27,13 +26,6 @@ namespace ThScoreFileConverterTests.Models.Th07
             var formatterMock = MockNumberFormatter();
             var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void PlayReplacerTestNull()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayReplacer(null!, formatterMock.Object));
         }
 
         [TestMethod]

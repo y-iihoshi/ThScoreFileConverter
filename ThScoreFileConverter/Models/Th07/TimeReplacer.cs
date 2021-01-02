@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Text.RegularExpressions;
 
 namespace ThScoreFileConverter.Models.Th07
@@ -21,9 +20,6 @@ namespace ThScoreFileConverter.Models.Th07
 
         public TimeReplacer(PlayStatus playStatus)
         {
-            if (playStatus is null)
-                throw new ArgumentNullException(nameof(playStatus));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
