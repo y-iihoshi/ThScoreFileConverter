@@ -38,13 +38,6 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void ScoreReplacerTestNull()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ScoreReplacer(null!, formatterMock.Object));
-        }
-
-        [TestMethod]
         public void ScoreReplacerTestEmptyRankings()
         {
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();

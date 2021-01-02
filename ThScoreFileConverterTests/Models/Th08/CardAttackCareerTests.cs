@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -67,13 +66,6 @@ namespace ThScoreFileConverterTests.Models.Th08
             var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, career);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var career = new CardAttackCareer();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => career.ReadFrom(null!));
         }
 
         [TestMethod]

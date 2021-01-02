@@ -29,9 +29,6 @@ namespace ThScoreFileConverter.Models.Th08
 
         public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
-            if (cardAttacks is null)
-                throw new ArgumentNullException(nameof(cardAttacks));
-
             this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, cardAttacks, formatter));
 
             static string EvaluatorImpl(

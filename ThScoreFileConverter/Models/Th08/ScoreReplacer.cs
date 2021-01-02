@@ -32,9 +32,6 @@ namespace ThScoreFileConverter.Models.Th08
         public ScoreReplacer(
             IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings, INumberFormatter formatter)
         {
-            if (rankings is null)
-                throw new ArgumentNullException(nameof(rankings));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
