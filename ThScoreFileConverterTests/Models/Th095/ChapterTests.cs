@@ -80,10 +80,6 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void ChapterTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ChapterWrapper(null!));
-
-        [TestMethod]
         public void ChapterTestCopyWithExpected()
         {
             var chapter1 = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
@@ -91,14 +87,6 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             Validate(ValidProperties, chapter2);
             Assert.IsTrue(chapter2.IsValid);
-        }
-
-        [TestMethod]
-        public void ChapterTestNullWithExpected()
-        {
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ChapterWrapper(null!, chapter.Signature, chapter.Version, chapter.Size));
         }
 
         [TestMethod]

@@ -79,10 +79,6 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
-        public void ScoreTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Score(null!));
-
-        [TestMethod]
         public void ScoreTestInvalidSignature()
         {
             var mock = MockScore();
