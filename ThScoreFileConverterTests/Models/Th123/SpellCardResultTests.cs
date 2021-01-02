@@ -13,9 +13,6 @@ namespace ThScoreFileConverterTests.Models.Th123
         public void ReadFromTest() => Th105.SpellCardResultTests.ReadFromTestHelper<Chara>();
 
         [TestMethod]
-        public void ReadFromTestNull() => Th105.SpellCardResultTests.ReadFromTestNullHelper<Chara>();
-
-        [TestMethod]
         public void ReadFromTestShortened() => Th105.SpellCardResultTests.ReadFromTestShortenedHelper<Chara>();
 
         [TestMethod]

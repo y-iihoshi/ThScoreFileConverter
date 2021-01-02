@@ -89,13 +89,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             Validate(mock.Object, clearData);
         }
 
-        internal static void ReadFromTestNullHelper<TChara>()
-            where TChara : struct, Enum
-        {
-            var clearData = new ClearData<TChara>();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => clearData.ReadFrom(null!));
-        }
-
         internal static void ReadFromTestShortenedHelper<TChara>()
             where TChara : struct, Enum
         {
@@ -140,9 +133,6 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         [TestMethod]
         public void ReadFromTest() => ReadFromTestHelper<Chara>();
-
-        [TestMethod]
-        public void ReadFromTestNull() => ReadFromTestNullHelper<Chara>();
 
         [TestMethod]
         public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara>();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -44,13 +43,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, cardForDeck);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var cardForDeck = new CardForDeck();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => cardForDeck.ReadFrom(null!));
         }
 
         [TestMethod]

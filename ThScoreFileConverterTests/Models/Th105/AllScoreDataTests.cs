@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -92,13 +91,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
             Validate(properties, allScoreData);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var allScoreData = new AllScoreData();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => allScoreData.ReadFrom(null!));
         }
 
         [TestMethod]

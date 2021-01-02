@@ -63,13 +63,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             Validate(mock.Object, spellCardResult);
         }
 
-        internal static void ReadFromTestNullHelper<TChara>()
-            where TChara : struct, Enum
-        {
-            var spellCardResult = new SpellCardResult<TChara>();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => spellCardResult.ReadFrom(null!));
-        }
-
         internal static void ReadFromTestShortenedHelper<TChara>()
             where TChara : struct, Enum
         {
@@ -96,9 +89,6 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         [TestMethod]
         public void ReadFromTest() => ReadFromTestHelper<Chara>();
-
-        [TestMethod]
-        public void ReadFromTestNull() => ReadFromTestNullHelper<Chara>();
 
         [TestMethod]
         public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara>();

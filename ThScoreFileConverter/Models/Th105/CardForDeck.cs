@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th105
@@ -24,9 +23,6 @@ namespace ThScoreFileConverter.Models.Th105
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Id = reader.ReadInt32();
             this.MaxNumber = reader.ReadInt32();
         }

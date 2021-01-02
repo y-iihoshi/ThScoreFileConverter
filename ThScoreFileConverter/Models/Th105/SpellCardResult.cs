@@ -34,9 +34,6 @@ namespace ThScoreFileConverter.Models.Th105
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Enemy = EnumHelper.To<TChara>(reader.ReadInt32());
             this.Level = EnumHelper.To<Level>(reader.ReadInt32());
             this.Id = reader.ReadInt32();

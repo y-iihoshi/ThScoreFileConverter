@@ -13,9 +13,6 @@ namespace ThScoreFileConverterTests.Models.Th123
         public void ReadFromTest() => Th105.ClearDataTests.ReadFromTestHelper<Chara>();
 
         [TestMethod]
-        public void ReadFromTestNull() => Th105.ClearDataTests.ReadFromTestNullHelper<Chara>();
-
-        [TestMethod]
         public void ReadFromTestShortened() => Th105.ClearDataTests.ReadFromTestShortenedHelper<Chara>();
 
         [TestMethod]

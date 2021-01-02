@@ -33,9 +33,6 @@ namespace ThScoreFileConverter.Models.Th105
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             var numCards = reader.ReadInt32();
             this.cardsForDeck = new Dictionary<int, ICardForDeck>(numCards);
             for (var index = 0; index < numCards; index++)

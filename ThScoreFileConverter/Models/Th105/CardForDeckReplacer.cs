@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -29,11 +28,6 @@ namespace ThScoreFileConverter.Models.Th105
             INumberFormatter formatter,
             bool hideUntriedCards)
         {
-            if (systemCards is null)
-                throw new ArgumentNullException(nameof(systemCards));
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
