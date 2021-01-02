@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th10
@@ -20,9 +19,6 @@ namespace ThScoreFileConverter.Models.Th10
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Score = reader.ReadUInt32();
             this.StageFlag = reader.ReadUInt32();
         }

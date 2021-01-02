@@ -28,9 +28,6 @@ namespace ThScoreFileConverter.Models.Th10
         public CharaReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1].Value);

@@ -30,9 +30,6 @@ namespace ThScoreFileConverter.Models.Th10
             IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal, StageProgress>> clearDataDictionary,
             INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);

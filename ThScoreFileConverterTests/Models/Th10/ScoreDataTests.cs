@@ -71,13 +71,6 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var scoreData = new ScoreData();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => scoreData.ReadFrom(null!));
-        }
-
-        [TestMethod]
         public void ReadFromTestShortenedName()
         {
             var mock = MockScoreData<StageProgress>();

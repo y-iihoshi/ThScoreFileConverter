@@ -34,9 +34,6 @@ namespace ThScoreFileConverter.Models.Th10
 
         public virtual void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Score = reader.ReadUInt32();
             this.StageProgress = EnumHelper.To<TStageProgress>(reader.ReadByte());
             this.ContinueCount = reader.ReadByte();
