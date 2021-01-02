@@ -258,15 +258,5 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             CollectionAssert.AreEqual(byteArray, wroteByteArray);
         }
-
-        [TestMethod]
-        public void WriteToTestNull()
-        {
-            var properties = ValidProperties;
-            var byteArray = MakeByteArray(properties);
-
-            var header = TestUtils.Create<HeaderBase>(byteArray);
-            _ = Assert.ThrowsException<ArgumentNullException>(() => header.WriteTo(null!));
-        }
     }
 }

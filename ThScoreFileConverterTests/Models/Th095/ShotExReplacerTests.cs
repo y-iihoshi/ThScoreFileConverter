@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -49,14 +48,6 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void ShotExReplacerTestNullBestShots()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(null!, Scores, formatterMock.Object, @"C:\path\to\output\"));
-        }
-
-        [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
             var bestshots = new Dictionary<(Level, int), (string, IBestShotHeader)>();
@@ -75,14 +66,6 @@ namespace ThScoreFileConverterTests.Models.Th095
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void ShotExReplacerTestNullScores()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(BestShots, null!, formatterMock.Object, @"C:\path\to\output\"));
         }
 
         [TestMethod]

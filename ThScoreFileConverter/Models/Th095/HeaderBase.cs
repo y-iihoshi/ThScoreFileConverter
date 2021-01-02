@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Properties;
@@ -42,9 +41,6 @@ namespace ThScoreFileConverter.Models.Th095
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
 
             this.EncodedAllSize = reader.ReadInt32();
@@ -74,9 +70,6 @@ namespace ThScoreFileConverter.Models.Th095
 
         public void WriteTo(BinaryWriter writer)
         {
-            if (writer is null)
-                throw new ArgumentNullException(nameof(writer));
-
             writer.Write(Encoding.Default.GetBytes(this.Signature));
             writer.Write(this.EncodedAllSize);
             writer.Write(this.unknown1);
