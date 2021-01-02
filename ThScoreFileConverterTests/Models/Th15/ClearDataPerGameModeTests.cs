@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
@@ -131,13 +130,6 @@ namespace ThScoreFileConverterTests.Models.Th15
             var clearData = TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, clearData);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var clearData = new ClearDataPerGameMode();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => clearData.ReadFrom(null!));
         }
 
         [TestMethod]

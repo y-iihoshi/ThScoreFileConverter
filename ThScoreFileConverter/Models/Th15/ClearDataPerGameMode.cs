@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -40,9 +39,6 @@ namespace ThScoreFileConverter.Models.Th15
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable;
 
             this.Rankings = levelsWithTotal.ToDictionary(

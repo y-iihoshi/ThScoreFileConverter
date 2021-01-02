@@ -26,9 +26,6 @@ namespace ThScoreFileConverter.Models.Th15
         public CharaReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
