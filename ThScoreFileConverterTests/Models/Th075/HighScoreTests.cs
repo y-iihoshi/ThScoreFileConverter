@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -53,13 +52,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             var highScore = TestUtils.Create<HighScore>(MakeByteArray(ValidStub));
 
             Validate(ValidStub, highScore);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var highScore = new HighScore();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => highScore.ReadFrom(null!));
         }
 
         [TestMethod]

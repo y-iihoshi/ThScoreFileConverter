@@ -124,13 +124,6 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var chapter = new Chapter();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => chapter.ReadFrom(null!));
-        }
-
-        [TestMethod]
         public void ReadFromTestEmptySignature()
         {
             var properties = ValidProperties;

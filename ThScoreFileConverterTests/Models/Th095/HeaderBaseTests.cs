@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th095;
 
@@ -69,13 +68,6 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             Validate(properties, header);
             Assert.IsTrue(header.IsValid);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var header = new HeaderBase();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => header.ReadFrom(null!));
         }
 
         [TestMethod]
