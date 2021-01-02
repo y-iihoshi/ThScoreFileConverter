@@ -95,9 +95,6 @@ namespace ThScoreFileConverter.Models.Th165
             INumberFormatter formatter,
             string outputFilePath)
         {
-            if (bestshots is null)
-                throw new ArgumentNullException(nameof(bestshots));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);

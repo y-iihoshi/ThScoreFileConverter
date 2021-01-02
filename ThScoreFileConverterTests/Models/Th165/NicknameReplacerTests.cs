@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 
 namespace ThScoreFileConverterTests.Models.Th165
@@ -15,10 +14,6 @@ namespace ThScoreFileConverterTests.Models.Th165
             var replacer = new NicknameReplacer(Status);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void NicknameReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new NicknameReplacer(null!));
 
         [TestMethod]
         public void ReplaceTest()

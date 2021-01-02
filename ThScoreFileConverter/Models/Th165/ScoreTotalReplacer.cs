@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,11 +23,6 @@ namespace ThScoreFileConverter.Models.Th165
 
         public ScoreTotalReplacer(IReadOnlyList<IScore> scores, IStatus status, INumberFormatter formatter)
         {
-            if (scores is null)
-                throw new ArgumentNullException(nameof(scores));
-            if (status is null)
-                throw new ArgumentNullException(nameof(status));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var type = IntegerHelper.Parse(match.Groups[1].Value);

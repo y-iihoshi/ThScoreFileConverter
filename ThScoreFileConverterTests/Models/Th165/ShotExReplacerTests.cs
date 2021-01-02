@@ -35,14 +35,6 @@ namespace ThScoreFileConverterTests.Models.Th165
         }
 
         [TestMethod]
-        public void ShotExReplacerTestNullBestShots()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ShotExReplacer(null!, formatterMock.Object, @"C:\path\to\output\"));
-        }
-
-        [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
             var bestshots = new Dictionary<(Day, int), (string, IBestShotHeader)>();

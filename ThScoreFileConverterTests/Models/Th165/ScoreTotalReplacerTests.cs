@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
@@ -39,28 +38,12 @@ namespace ThScoreFileConverterTests.Models.Th165
         }
 
         [TestMethod]
-        public void ScoreTotalReplacerTestNullScores()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ScoreTotalReplacer(null!, Status, formatterMock.Object));
-        }
-
-        [TestMethod]
         public void ScoreTotalReplacerTestEmptyScores()
         {
             var scores = new List<IScore>();
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreTotalReplacer(scores, Status, formatterMock.Object);
             Assert.IsNotNull(replacer);
-        }
-
-        [TestMethod]
-        public void ScoreTotalReplacerTestNullStatus()
-        {
-            var formatterMock = MockNumberFormatter();
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ScoreTotalReplacer(Scores, null!, formatterMock.Object));
         }
 
         [TestMethod]
