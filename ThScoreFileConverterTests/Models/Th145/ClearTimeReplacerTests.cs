@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th145;
 
@@ -35,10 +34,6 @@ namespace ThScoreFileConverterTests.Models.Th145
             var replacer = new ClearTimeReplacer(ClearTimes);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void ClearTimeReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearTimeReplacer(null!));
 
         [TestMethod]
         public void ClearTimeReplacerTestEmpty()

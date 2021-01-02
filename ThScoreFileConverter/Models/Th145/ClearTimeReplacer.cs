@@ -24,9 +24,6 @@ namespace ThScoreFileConverter.Models.Th145
 
         public ClearTimeReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearTimes)
         {
-            if (clearTimes is null)
-                throw new ArgumentNullException(nameof(clearTimes));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
