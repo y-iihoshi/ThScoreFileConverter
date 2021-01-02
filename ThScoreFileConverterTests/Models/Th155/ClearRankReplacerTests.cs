@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th155;
 
@@ -67,10 +66,6 @@ namespace ThScoreFileConverterTests.Models.Th155
             var replacer = new ClearRankReplacer(StoryDictionary);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void ClearRankReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearRankReplacer(null!));
 
         [TestMethod]
         public void ClearRankReplacerTestEmpty()

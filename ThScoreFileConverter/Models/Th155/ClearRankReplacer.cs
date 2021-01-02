@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -23,9 +22,6 @@ namespace ThScoreFileConverter.Models.Th155
 
         public ClearRankReplacer(IReadOnlyDictionary<StoryChara, AllScoreData.Story> storyDictionary)
         {
-            if (storyDictionary is null)
-                throw new ArgumentNullException(nameof(storyDictionary));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
