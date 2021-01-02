@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th135;
 
@@ -20,10 +19,6 @@ namespace ThScoreFileConverterTests.Models.Th135
             var replacer = new ClearReplacer(StoryClearFlags);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void ClearReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearReplacer(null!));
 
         [TestMethod]
         public void ClearReplacerTestEmpty()

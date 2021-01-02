@@ -104,13 +104,6 @@ namespace ThScoreFileConverterTests.Models.Th135
         }
 
         [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var allScoreData = new AllScoreData();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => allScoreData.ReadFrom(null!));
-        }
-
-        [TestMethod]
         public void ReadFromTestEmpty()
         {
             _ = Assert.ThrowsException<EndOfStreamException>(
