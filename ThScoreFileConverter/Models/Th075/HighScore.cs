@@ -32,9 +32,6 @@ namespace ThScoreFileConverter.Models.Th075
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Name = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
 
             this.Month = reader.ReadByte();

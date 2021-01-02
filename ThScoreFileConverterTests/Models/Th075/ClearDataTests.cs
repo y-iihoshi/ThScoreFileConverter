@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -106,13 +105,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             var clearData = TestUtils.Create<ClearData>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, clearData);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var clearData = new ClearData();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => clearData.ReadFrom(null!));
         }
     }
 }

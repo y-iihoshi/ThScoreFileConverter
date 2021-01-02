@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -34,10 +33,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             var replacer = new CardReplacer(ClearData, true);
             Assert.IsNotNull(replacer);
         }
-
-        [TestMethod]
-        public void CardReplacerTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CardReplacer(null!, true));
 
         [TestMethod]
         public void CardReplacerTestEmpty()

@@ -27,9 +27,6 @@ namespace ThScoreFileConverter.Models.Th075
             IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
             INumberFormatter formatter)
         {
-            if (clearData is null)
-                throw new ArgumentNullException(nameof(clearData));
-
             this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearData, formatter));
 
             static string EvaluatorImpl(
