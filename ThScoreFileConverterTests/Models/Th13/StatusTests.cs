@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -77,10 +76,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             Validate(mock.Object, status);
             Assert.IsFalse(status.IsValid);
         }
-
-        [TestMethod]
-        public void StatusTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Status(null!));
 
         [TestMethod]
         public void StatusTestInvalidSignature()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th165;
@@ -67,10 +66,6 @@ namespace ThScoreFileConverterTests.Models.Th165
             Validate(mock.Object, score);
             Assert.IsFalse(score.IsValid);
         }
-
-        [TestMethod]
-        public void ScoreTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Score(null!));
 
         [TestMethod]
         public void ScoreTestInvalidSignature()

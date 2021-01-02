@@ -76,10 +76,6 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ItemStatusTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ItemStatus(null!));
-
-        [TestMethod]
         public void ItemStatusTestInvalidSignature()
         {
             var mock = MockItemStatus();

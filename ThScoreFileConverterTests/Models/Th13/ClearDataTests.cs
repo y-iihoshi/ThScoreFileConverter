@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -149,10 +148,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             Validate(mock.Object, clearData);
             Assert.IsFalse(clearData.IsValid);
         }
-
-        [TestMethod]
-        public void ClearDataTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearData(null!));
 
         [TestMethod]
         public void ClearDataTestInvalidSignature()

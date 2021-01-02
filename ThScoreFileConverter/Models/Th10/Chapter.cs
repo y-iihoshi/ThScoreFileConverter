@@ -30,9 +30,6 @@ namespace ThScoreFileConverter.Models.Th10
 
         protected Chapter(Chapter chapter)
         {
-            if (chapter is null)
-                throw new ArgumentNullException(nameof(chapter));
-
             this.Signature = chapter.Signature;
             this.Version = chapter.Version;
             this.Checksum = chapter.Checksum;
@@ -84,9 +81,6 @@ namespace ThScoreFileConverter.Models.Th10
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
             this.Version = reader.ReadUInt16();
             this.Checksum = reader.ReadUInt32();
