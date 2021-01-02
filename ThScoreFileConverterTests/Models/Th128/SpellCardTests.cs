@@ -76,13 +76,6 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var spellCard = new SpellCard();
-            _ = Assert.ThrowsException<ArgumentNullException>(() => spellCard.ReadFrom(null!));
-        }
-
-        [TestMethod]
         public void ReadFromTestShortenedName()
         {
             var mock = MockSpellCard();

@@ -27,9 +27,6 @@ namespace ThScoreFileConverter.Models.Th128
 
         public CollectRateReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, INumberFormatter formatter)
         {
-            if (spellCards is null)
-                throw new ArgumentNullException(nameof(spellCards));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);

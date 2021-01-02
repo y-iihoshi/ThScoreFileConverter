@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
@@ -23,9 +22,6 @@ namespace ThScoreFileConverter.Models.Th128
 
         public CardReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, bool hideUntriedCards)
         {
-            if (spellCards is null)
-                throw new ArgumentNullException(nameof(spellCards));
-
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = IntegerHelper.Parse(match.Groups[1].Value);
