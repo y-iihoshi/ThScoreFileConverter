@@ -63,10 +63,6 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        public void ClearDataTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ClearData(null!));
-
-        [TestMethod]
         public void ClearDataTestInvalidSignature()
         {
             var mock = MockClearData();

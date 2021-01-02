@@ -75,10 +75,6 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void HighScoreTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new HighScore(null!));
-
-        [TestMethod]
         public void HighScoreTestScore()
         {
             var score = 1234567u;

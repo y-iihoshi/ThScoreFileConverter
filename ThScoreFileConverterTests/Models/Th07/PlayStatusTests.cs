@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -88,10 +87,6 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, playStatus);
         }
-
-        [TestMethod]
-        public void PlayStatusTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayStatus(null!));
 
         [TestMethod]
         public void PlayStatusTestInvalidSignature()

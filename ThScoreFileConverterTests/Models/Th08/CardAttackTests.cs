@@ -87,10 +87,6 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void CardAttackTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CardAttack(null!));
-
-        [TestMethod]
         public void CardAttackTestInvalidSignature()
         {
             var mock = MockCardAttack();

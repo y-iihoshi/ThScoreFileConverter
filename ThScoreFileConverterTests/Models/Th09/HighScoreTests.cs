@@ -72,10 +72,6 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         [TestMethod]
-        public void HighScoreTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new HighScore(null!));
-
-        [TestMethod]
         public void HighScoreTestInvalidSignature()
         {
             var mock = MockHighScore();

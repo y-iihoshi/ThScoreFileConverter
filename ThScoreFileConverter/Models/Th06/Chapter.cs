@@ -27,9 +27,6 @@ namespace ThScoreFileConverter.Models.Th06
 
         protected Chapter(Chapter chapter)
         {
-            if (chapter is null)
-                throw new ArgumentNullException(nameof(chapter));
-
             this.Signature = chapter.Signature;
             this.Size1 = chapter.Size1;
             this.Size2 = chapter.Size2;
@@ -65,9 +62,6 @@ namespace ThScoreFileConverter.Models.Th06
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(4));
             this.Size1 = reader.ReadInt16();
             this.Size2 = reader.ReadInt16();

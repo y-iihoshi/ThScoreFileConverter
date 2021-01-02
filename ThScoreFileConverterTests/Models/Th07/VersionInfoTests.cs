@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
@@ -54,10 +53,6 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, versionInfo);
         }
-
-        [TestMethod]
-        public void VersionInfoTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new VersionInfo(null!));
 
         [TestMethod]
         public void VersionInfoTestInvalidSignature()

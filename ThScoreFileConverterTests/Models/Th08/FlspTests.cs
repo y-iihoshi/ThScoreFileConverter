@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -50,10 +49,6 @@ namespace ThScoreFileConverterTests.Models.Th08
 
             Validate(properties, flsp);
         }
-
-        [TestMethod]
-        public void FlspTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new FLSP(null!));
 
         [TestMethod]
         public void FlspTestInvalidSignature()

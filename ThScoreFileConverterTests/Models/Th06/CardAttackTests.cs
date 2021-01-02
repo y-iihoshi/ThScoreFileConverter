@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -59,10 +58,6 @@ namespace ThScoreFileConverterTests.Models.Th06
             Validate(mock.Object, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
         }
-
-        [TestMethod]
-        public void CardAttackTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new CardAttack(null!));
 
         [TestMethod]
         public void CardAttackTestInvalidSignature()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
@@ -48,9 +47,6 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
         }
-
-        [TestMethod]
-        public void HeaderTestNull() => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new Header(null!));
 
         [TestMethod]
         public void HeaderTestInvalidSignature()

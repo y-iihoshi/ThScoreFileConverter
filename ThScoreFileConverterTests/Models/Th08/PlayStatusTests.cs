@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -86,10 +85,6 @@ namespace ThScoreFileConverterTests.Models.Th08
 
             Validate(mock.Object, playStatus);
         }
-
-        [TestMethod]
-        public void PlayStatusTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PlayStatus(null!));
 
         [TestMethod]
         public void PlayStatusTestInvalidSignature()

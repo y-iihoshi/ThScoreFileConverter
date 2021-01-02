@@ -66,10 +66,6 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void PracticeScoreTestNullChapter()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new PracticeScore(null!));
-
-        [TestMethod]
         public void PracticeScoreTestInvalidSignature()
         {
             var mock = MockPracticeScore();

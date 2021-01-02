@@ -74,24 +74,12 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        public void ChapterTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new ChapterWrapper(null!));
-
-        [TestMethod]
         public void ChapterTestCopyWithExpected()
         {
             var chapter1 = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
             var chapter2 = new ChapterWrapper(chapter1, chapter1.Signature, chapter1.Size1);
 
             Validate(ValidProperties, chapter2);
-        }
-
-        [TestMethod]
-        public void ChapterTestNullWithExpected()
-        {
-            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new ChapterWrapper(null!, chapter.Signature.ToLowerInvariant(), chapter.Size1));
         }
 
         [TestMethod]
