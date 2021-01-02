@@ -74,14 +74,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             Assert.IsTrue(spellCard.HasTried);
         }
 
-        internal static void ReadFromTestNullHelper<TLevel>()
-            where TLevel : struct, Enum
-        {
-            var spellCard = new SpellCard<TLevel>();
-
-            _ = Assert.ThrowsException<ArgumentNullException>(() => spellCard.ReadFrom(null!));
-        }
-
         internal static void ReadFromTestShortenedNameHelper<TLevel>()
             where TLevel : struct, Enum
         {
@@ -131,10 +123,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             => ReadFromTestHelper<LevelPractice>();
 
         [TestMethod]
-        public void Th13ReadFromTestNull()
-            => ReadFromTestNullHelper<LevelPractice>();
-
-        [TestMethod]
         public void Th13ReadFromTestShortenedName()
             => ReadFromTestShortenedNameHelper<LevelPractice>();
 
@@ -160,10 +148,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             => ReadFromTestHelper<Level>();
 
         [TestMethod]
-        public void Th14ReadFromTestNull()
-            => ReadFromTestNullHelper<Level>();
-
-        [TestMethod]
         public void Th14ReadFromTestShortenedName()
             => ReadFromTestShortenedNameHelper<Level>();
 
@@ -187,10 +171,6 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void Th16ReadFromTest()
             => ReadFromTestHelper<Level>();
-
-        [TestMethod]
-        public void Th16ReadFromTestNull()
-            => ReadFromTestNullHelper<Level>();
 
         [TestMethod]
         public void Th16ReadFromTestShortenedName()

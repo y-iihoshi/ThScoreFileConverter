@@ -35,9 +35,6 @@ namespace ThScoreFileConverter.Models.Th13
         public CollectRateReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
         {
-            if (clearDataDictionary is null)
-                throw new ArgumentNullException(nameof(clearDataDictionary));
-
             this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearDataDictionary, formatter));
 
             static string EvaluatorImpl(

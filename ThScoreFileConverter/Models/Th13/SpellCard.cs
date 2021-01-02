@@ -39,9 +39,6 @@ namespace ThScoreFileConverter.Models.Th13
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader is null)
-                throw new ArgumentNullException(nameof(reader));
-
             this.Name = reader.ReadExactBytes(0x80);
             this.ClearCount = reader.ReadInt32();
             this.PracticeClearCount = reader.ReadInt32();

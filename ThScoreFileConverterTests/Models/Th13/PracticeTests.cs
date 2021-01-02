@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th13;
 
@@ -43,14 +42,6 @@ namespace ThScoreFileConverterTests.Models.Th13
             var practice = TestUtils.Create<Practice>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, practice);
-        }
-
-        [TestMethod]
-        public void ReadFromTestNull()
-        {
-            var practice = new Practice();
-
-            _ = Assert.ThrowsException<ArgumentNullException>(() => practice.ReadFrom(null!));
         }
     }
 }
