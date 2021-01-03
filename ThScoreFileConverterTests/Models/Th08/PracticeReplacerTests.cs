@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var practiceScoreMock = PracticeScoreTests.MockPracticeScore();
             var highScores = practiceScoreMock.Object.HighScores;
             _ = practiceScoreMock.SetupGet(m => m.HighScores).Returns(
-                highScores.Where(pair => pair.Key.Item2 != Level.Normal).ToDictionary());
+                highScores.Where(pair => pair.Key.Level != Level.Normal).ToDictionary());
             var practiceScores = new[] { practiceScoreMock.Object }.ToDictionary(score => score.Chara);
             var formatterMock = MockNumberFormatter();
 
@@ -133,7 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var practiceScoreMock = PracticeScoreTests.MockPracticeScore();
             var highScores = practiceScoreMock.Object.HighScores;
             _ = practiceScoreMock.SetupGet(m => m.HighScores).Returns(
-                highScores.Where(pair => pair.Key.Item1 != Stage.Five).ToDictionary());
+                highScores.Where(pair => pair.Key.Stage != Stage.Five).ToDictionary());
             var practiceScores = new[] { practiceScoreMock.Object }.ToDictionary(score => score.Chara);
             var formatterMock = MockNumberFormatter();
 

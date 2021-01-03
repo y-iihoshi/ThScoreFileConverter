@@ -50,7 +50,7 @@ namespace ThScoreFileConverter.Models.Th15
 
         public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-        public IReadOnlyDictionary<(Level, StagePractice), Th13.IPractice> Practices { get; }
+        public IReadOnlyDictionary<(Level Level, StagePractice Stage), Th13.IPractice> Practices { get; }
 
         public static bool CanInitialize(Th10.Chapter chapter)
         {

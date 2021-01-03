@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th09
         private readonly MatchEvaluator evaluator;
 
         public ClearReplacer(
-            IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings,
+            IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
             IReadOnlyDictionary<Chara, IClearCount> clearCounts,
             INumberFormatter formatter)
         {

@@ -23,7 +23,8 @@ namespace ThScoreFileConverter.Models.Th07
         private readonly MatchEvaluator evaluator;
 
         public PracticeReplacer(
-            IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> practiceScores, INumberFormatter formatter)
+            IReadOnlyDictionary<(Chara Chara, Level Level, Stage Stage), IPracticeScore> practiceScores,
+            INumberFormatter formatter)
         {
             this.evaluator = new MatchEvaluator(match =>
             {

@@ -41,13 +41,14 @@ namespace ThScoreFileConverter.Models.Th06
 
         public Header? Header { get; private set; }
 
-        public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
+        public IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
         public IReadOnlyDictionary<Chara, IClearData> ClearData => this.clearData;
 
         public IReadOnlyDictionary<int, ICardAttack> CardAttacks => this.cardAttacks;
 
-        public IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores => this.practiceScores;
+        public IReadOnlyDictionary<(Chara Chara, Level Level, Stage Stage), IPracticeScore> PracticeScores
+            => this.practiceScores;
 
         public void Set(Header header)
         {

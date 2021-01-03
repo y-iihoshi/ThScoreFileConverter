@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th095
         private readonly MatchEvaluator evaluator;
 
         public ShotExReplacer(
-            IReadOnlyDictionary<(Level, int), (string Path, IBestShotHeader Header)> bestshots,
+            IReadOnlyDictionary<(Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots,
             IReadOnlyList<IScore> scores,
             INumberFormatter formatter,
             string outputFilePath)

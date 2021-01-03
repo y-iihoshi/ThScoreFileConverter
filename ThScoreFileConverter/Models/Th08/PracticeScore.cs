@@ -38,9 +38,9 @@ namespace ThScoreFileConverter.Models.Th08
             _ = reader.ReadExactBytes(3);   // always 0x000001?
         }
 
-        public IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; }
+        public IReadOnlyDictionary<(Stage Stage, Level Level), int> PlayCounts { get; }
 
-        public IReadOnlyDictionary<(Stage, Level), int> HighScores { get; } // Divided by 10
+        public IReadOnlyDictionary<(Stage Stage, Level Level), int> HighScores { get; } // Divided by 10
 
         public Chara Chara { get; }
     }

@@ -81,7 +81,7 @@ namespace ThScoreFileConverter.Models.Th13
 
         public IReadOnlyDictionary<TLevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
-        public IReadOnlyDictionary<(TLevelPractice, TStagePractice), IPractice> Practices { get; }
+        public IReadOnlyDictionary<(TLevelPractice Level, TStagePractice Stage), IPractice> Practices { get; }
 
         public IReadOnlyDictionary<int, ISpellCard<TLevel>> Cards { get; }
 

@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th08
 
         public Header? Header { get; private set; }
 
-        public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
+        public IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
         public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 

@@ -76,7 +76,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public IReadOnlyDictionary<Level, int> ClearCounts { get; }
 
-        public IReadOnlyDictionary<(Level, Stage), IPractice> Practices { get; }
+        public IReadOnlyDictionary<(Level Level, Stage Stage), IPractice> Practices { get; }
 
         public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
 

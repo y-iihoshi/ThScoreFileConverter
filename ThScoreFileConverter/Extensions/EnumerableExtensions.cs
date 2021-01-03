@@ -90,13 +90,14 @@ namespace ThScoreFileConverter.Extensions
         /// <returns>
         /// A <see cref="Dictionary{TKey, TValue}"/> that contains values of type <typeparamref name="TValue"/>.
         /// </returns>
-        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey, TValue)> source)
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<(TKey Key, TValue Value)> source)
             where TKey : notnull
         {
             if (source is null)
                 throw new ArgumentNullException(nameof(source));
 
-            return source.ToDictionary(pair => pair.Item1, pair => pair.Item2);
+            return source.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }

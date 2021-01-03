@@ -22,7 +22,8 @@ namespace ThScoreFileConverter.Models.Th143
         private readonly MatchEvaluator evaluator;
 
         public ShotReplacer(
-            IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
+            IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
+            string outputFilePath)
         {
             this.evaluator = new MatchEvaluator(match =>
             {

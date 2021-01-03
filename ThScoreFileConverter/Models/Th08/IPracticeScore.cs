@@ -15,8 +15,8 @@ namespace ThScoreFileConverter.Models.Th08
     {
         Chara Chara { get; }
 
-        IReadOnlyDictionary<(Stage, Level), int> HighScores { get; }
+        IReadOnlyDictionary<(Stage Stage, Level Level), int> HighScores { get; }
 
-        IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; }
+        IReadOnlyDictionary<(Stage Stage, Level Level), int> PlayCounts { get; }
     }
 }

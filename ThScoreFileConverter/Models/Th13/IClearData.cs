@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th13
 
         int PlayTime { get; }
 
-        IReadOnlyDictionary<(TLevelPractice, TStagePractice), IPractice> Practices { get; }
+        IReadOnlyDictionary<(TLevelPractice Level, TStagePractice Stage), IPractice> Practices { get; }
 
         IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
 
