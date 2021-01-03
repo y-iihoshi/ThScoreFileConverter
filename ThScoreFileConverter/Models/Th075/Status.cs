@@ -26,7 +26,7 @@ namespace ThScoreFileConverter.Models.Th075
 
         public string LastName { get; private set; }
 
-        public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> ArcadeScores { get; private set; }
+        public IReadOnlyDictionary<(CharaWithReserved Player, CharaWithReserved Enemy), int> ArcadeScores { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
         {

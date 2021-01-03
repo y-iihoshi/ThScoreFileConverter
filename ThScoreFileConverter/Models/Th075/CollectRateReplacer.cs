@@ -24,14 +24,14 @@ namespace ThScoreFileConverter.Models.Th075
         private readonly MatchEvaluator evaluator;
 
         public CollectRateReplacer(
-            IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
+            IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
             INumberFormatter formatter)
         {
             this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearData, formatter));
 
             static string EvaluatorImpl(
                 Match match,
-                IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
+                IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
                 INumberFormatter formatter)
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models.Th075
                     _ => data => data.CardTrulyGot.Select(got => (short)got),
                 };
 
-                IEnumerable<(int cardId, int cardIndex)> MakeCardIdIndexPairs(Level lv)
+                IEnumerable<(int CardId, int CardIndex)> MakeCardIdIndexPairs(Level lv)
                 {
                     return Definitions.CardIdTable[chara]
                         .Select((id, index) => (id, index))
@@ -63,10 +63,10 @@ namespace ThScoreFileConverter.Models.Th075
                 if (level == LevelWithTotal.Total)
                 {
                     return formatter.FormatNumber(clearData
-                        .Where(dataPair => dataPair.Key.chara == (CharaWithReserved)chara)
+                        .Where(dataPair => dataPair.Key.Chara == (CharaWithReserved)chara)
                         .Sum(dataPair => getValues(dataPair.Value)
                             .Where((value, index) =>
-                                MakeCardIdIndexPairs(dataPair.Key.level).Any(pair => pair.cardIndex == index))
+                                MakeCardIdIndexPairs(dataPair.Key.Level).Any(pair => pair.CardIndex == index))
                             .Count(IsPositive)));
                 }
                 else
@@ -75,7 +75,7 @@ namespace ThScoreFileConverter.Models.Th075
                         .Where(dataPair => dataPair.Key == ((CharaWithReserved)chara, (Level)level))
                         .Sum(dataPair => getValues(dataPair.Value)
                             .Where((value, index) =>
-                                MakeCardIdIndexPairs((Level)level).Any(pair => pair.cardIndex == index))
+                                MakeCardIdIndexPairs((Level)level).Any(pair => pair.CardIndex == index))
                             .Count(IsPositive)));
                 }
             }

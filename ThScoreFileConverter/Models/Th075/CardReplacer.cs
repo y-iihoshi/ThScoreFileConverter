@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th075
         private readonly MatchEvaluator evaluator;
 
         public CardReplacer(
-            IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData, bool hideUntriedCards)
+            IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData, bool hideUntriedCards)
         {
             this.evaluator = new MatchEvaluator(match =>
             {
@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th075
                     if (hideUntriedCards)
                     {
                         var dataList = clearData
-                            .Where(pair => pair.Key.chara == (CharaWithReserved)chara).Select(pair => pair.Value);
+                            .Where(pair => pair.Key.Chara == (CharaWithReserved)chara).Select(pair => pair.Value);
                         if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
                             return (type == "N") ? "??????????" : "?????";
                     }

@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th075
             this.ClearData = new Dictionary<(CharaWithReserved, Level), IClearData>(numCharas * numLevels);
         }
 
-        public IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> ClearData { get; private set; }
+        public IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> ClearData { get; private set; }
 
         public Status? Status { get; private set; }
 

@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th075
         private readonly MatchEvaluator evaluator;
 
         public CareerReplacer(
-            IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData,
+            IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
             INumberFormatter formatter)
         {
             this.evaluator = new MatchEvaluator(match =>
@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th075
                 {
                     if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
                     {
-                        return clearData.Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                        return clearData.Where(pair => pair.Key.Chara == (CharaWithReserved)chara)
                             .Any(pair => pair.Value.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
                     }
                     else
@@ -64,13 +64,13 @@ namespace ThScoreFileConverter.Models.Th075
                 if (number == 0)
                 {
                     return formatter.FormatNumber(clearData
-                        .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                        .Where(pair => pair.Key.Chara == (CharaWithReserved)chara)
                         .Sum(pair => getValues(pair.Value).Sum()));
                 }
                 else if (number <= Definitions.CardIdTable[chara].Count())
                 {
                     return formatter.FormatNumber(clearData
-                        .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                        .Where(pair => pair.Key.Chara == (CharaWithReserved)chara)
                         .Sum(pair => getValues(pair.Value).ElementAt(number - 1)));
                 }
                 else
