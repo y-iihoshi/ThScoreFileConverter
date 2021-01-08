@@ -82,7 +82,7 @@ jobs:
       shell: cmd
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2.2.1
+      uses: actions/upload-artifact@v2.2.2
       with:
         name: ThScoreFileConverter.${{ matrix.target-framework }}
         path: publish\${{ matrix.target-framework }}
