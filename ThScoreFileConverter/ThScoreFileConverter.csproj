@@ -68,7 +68,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="LivetCask.Behaviors" Version="3.2.3.1" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
     <PackageReference Include="ReactiveProperty" Version="7.5.1" />
     <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.321">
