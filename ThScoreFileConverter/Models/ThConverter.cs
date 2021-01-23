@@ -77,8 +77,8 @@ namespace ThScoreFileConverter.Models
             {
                 switch (threadArg)
                 {
-                    case (SettingsPerTitle settings, INumberFormatter formatter):
-                        this.Convert(settings, formatter);
+                    case (SettingsPerTitle settings, int inputCodePageId, int outputCodePageId, INumberFormatter formatter):
+                        this.Convert(settings, inputCodePageId, outputCodePageId, formatter);
                         break;
                     case null:
                         throw new ArgumentNullException(nameof(threadArg));
@@ -201,8 +201,11 @@ namespace ThScoreFileConverter.Models
         /// Converts a score file.
         /// </summary>
         /// <param name="settings">The settings per work.</param>
+        /// <param name="inputCodePageId">The code page identifier for input files.</param>
+        /// <param name="outputCodePageId">The code page identifier for output files.</param>
         /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
-        private void Convert(SettingsPerTitle settings, INumberFormatter formatter)
+        private void Convert(
+            SettingsPerTitle settings, int inputCodePageId, int outputCodePageId, INumberFormatter formatter)
         {
             using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
             _ = scr.Seek(0, SeekOrigin.Begin);
@@ -227,8 +230,8 @@ namespace ThScoreFileConverter.Models
             }
 
             const int DefaultBufferSize = 1024;
-            var inputEncoding = Encoding.GetEncoding(Settings.Instance.InputCodePageId!.Value);
-            var outputEncoding = Encoding.GetEncoding(Settings.Instance.OutputCodePageId!.Value);
+            var inputEncoding = Encoding.GetEncoding(inputCodePageId);
+            var outputEncoding = Encoding.GetEncoding(outputCodePageId);
             var numFiles = settings.TemplateFiles.Count();
             for (var index = 0; index < numFiles; index++)
             {
