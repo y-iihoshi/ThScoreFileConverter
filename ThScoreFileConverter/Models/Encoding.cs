@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace ThScoreFileConverter.Models
 {
     /// <summary>
@@ -15,9 +17,11 @@ namespace ThScoreFileConverter.Models
         static Encoding()
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
             CP932 = System.Text.Encoding.GetEncoding(932);
             Default = System.Text.Encoding.Default;
             UTF8 = new System.Text.UTF8Encoding(false);
+            Encodings = new Dictionary<int, System.Text.Encoding>();
         }
 
         /// <summary>
@@ -36,15 +40,24 @@ namespace ThScoreFileConverter.Models
         public static System.Text.Encoding UTF8 { get; }
 
         /// <summary>
+        /// Gets the dictionary caching <see cref="System.Text.Encoding"/> instances.
+        /// </summary>
+        private static IDictionary<int, System.Text.Encoding> Encodings { get; }
+
+        /// <summary>
         /// Returns the encoding associated with the specified code page identifier.
         /// </summary>
         /// <param name="codePage">The code page identifier of the preferred encoding.</param>
         /// <returns>The <see cref="System.Text.Encoding"/> associated with <paramref name="codePage"/>.</returns>
         public static System.Text.Encoding GetEncoding(int codePage)
         {
+            if (Encodings.TryGetValue(codePage, out var encoding))
+                return encoding;
+
             // To prevent BOM output for UTF-8
-            return (codePage == 65001)
-                ? new System.Text.UTF8Encoding(false) : System.Text.Encoding.GetEncoding(codePage);
+            encoding = (codePage == 65001) ? UTF8 : System.Text.Encoding.GetEncoding(codePage);
+            Encodings.Add(codePage, encoding);
+            return encoding;
         }
     }
 }
