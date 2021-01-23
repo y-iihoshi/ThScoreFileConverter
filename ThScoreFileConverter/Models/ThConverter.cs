@@ -228,7 +228,7 @@ namespace ThScoreFileConverter.Models
 
             const int DefaultBufferSize = 1024;
             var inputEncoding = Encoding.GetEncoding(Settings.Instance.InputCodePageId!.Value);
-            var outputEncoding = Encoding.GetEncoding(Settings.Instance.InputCodePageId!.Value);
+            var outputEncoding = Encoding.GetEncoding(Settings.Instance.OutputCodePageId!.Value);
             var numFiles = settings.TemplateFiles.Count();
             for (var index = 0; index < numFiles; index++)
             {
