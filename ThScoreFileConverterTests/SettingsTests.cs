@@ -592,6 +592,10 @@ namespace ThScoreFileConverterTests
         [TestMethod]
         public void OutputCodePageIdTestNull()
             => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.OutputCodePageId = null);
+
+        [TestMethod]
+        public void LanguageTestNull()
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.Language = null);
     }
 }
 
