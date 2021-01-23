@@ -27,6 +27,7 @@ namespace ThScoreFileConverter
     public partial class App : PrismApplication
     {
         private readonly IResourceDictionaryAdapter adapter;
+        private readonly ISettings settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
@@ -34,6 +35,7 @@ namespace ThScoreFileConverter
         public App()
         {
             this.adapter = new ResourceDictionaryAdapter(this.Resources);
+            this.settings = new Settings();
         }
 
         /// <inheritdoc/>
@@ -45,7 +47,7 @@ namespace ThScoreFileConverter
 #endif
 
             _ = containerRegistry.RegisterInstance(this.adapter);
-            _ = containerRegistry.RegisterInstance<ISettings>(Settings.Instance);
+            _ = containerRegistry.RegisterInstance(this.settings);
             _ = containerRegistry.Register<INumberFormatter, NumberFormatter>();
             _ = containerRegistry.Register<IDispatcherAdapter, DispatcherAdapter>();
             containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
@@ -63,7 +65,7 @@ namespace ThScoreFileConverter
         {
             try
             {
-                Settings.Instance.Load(Prop.Resources.SettingFileName);
+                this.settings.Load(Prop.Resources.SettingFileName);
             }
             catch (InvalidDataException)
             {
@@ -81,14 +83,14 @@ namespace ThScoreFileConverter
                     MessageBoxImage.Warning);
             }
 
-            this.adapter.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+            this.adapter.UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
 
             var provider = LocalizationProvider.Instance;
             LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.DefaultProviderProperty, provider);
             LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.IncludeInvariantCultureProperty, false);
             LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-            if (provider.AvailableCultures.Any(culture => culture.Name == Settings.Instance.Language))
-                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(Settings.Instance.Language!);
+            if (provider.AvailableCultures.Any(culture => culture.Name == this.settings.Language))
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(this.settings.Language!);
             else if (provider.AvailableCultures.Any(culture => culture.Equals(CultureInfo.CurrentCulture)))
                 LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
             else
@@ -102,11 +104,11 @@ namespace ThScoreFileConverter
         {
             base.OnExit(e);
 
-            Settings.Instance.Language = LocalizeDictionary.Instance.Culture.Name;
-            Settings.Instance.FontFamilyName = this.adapter.FontFamily.ToString();
-            Settings.Instance.FontSize = this.adapter.FontSize;
+            this.settings.Language = LocalizeDictionary.Instance.Culture.Name;
+            this.settings.FontFamilyName = this.adapter.FontFamily.ToString();
+            this.settings.FontSize = this.adapter.FontSize;
 
-            Settings.Instance.Save(Prop.Resources.SettingFileName);
+            this.settings.Save(Prop.Resources.SettingFileName);
         }
     }
 }

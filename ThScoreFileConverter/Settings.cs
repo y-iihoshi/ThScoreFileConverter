@@ -25,6 +25,7 @@ namespace ThScoreFileConverter
     [DataContract]
     public sealed class Settings : ISettings
     {
+        private string lastTitle;
         private string fontFamilyName;
         private double? fontSize;
         private bool? outputNumberGroupSeparator;
@@ -33,11 +34,11 @@ namespace ThScoreFileConverter
         private string? language;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="Settings" /> class from being created.
+        /// Initializes a new instance of the <see cref="Settings"/> class.
         /// </summary>
-        private Settings()
+        public Settings()
         {
-            this.LastTitle = string.Empty;
+            this.lastTitle = string.Empty;
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
             this.fontFamilyName = SystemFonts.MessageFontFamily.Source;
             this.fontSize = SystemFonts.MessageFontSize;
@@ -46,11 +47,6 @@ namespace ThScoreFileConverter
             this.outputCodePageId = 65001;
             this.language = CultureInfo.InvariantCulture.Name;
         }
-
-        /// <summary>
-        /// Gets the instance.
-        /// </summary>
-        public static Settings Instance { get; } = new Settings();
 
         /// <summary>
         /// Gets the valid code page identifiers for this application.
@@ -64,7 +60,11 @@ namespace ThScoreFileConverter
 
         /// <inheritdoc/>
         [DataMember(Order = 0)]
-        public string LastTitle { get; set; }
+        public string LastTitle
+        {
+            get => this.lastTitle;
+            set => this.lastTitle = value ?? throw NewArgumentNullException();
+        }
 
         /// <inheritdoc/>
         [DataMember(Order = 1)]

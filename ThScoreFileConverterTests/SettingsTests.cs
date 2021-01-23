@@ -1,10 +1,7 @@
-﻿#if NETFRAMEWORK
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
@@ -15,64 +12,54 @@ namespace ThScoreFileConverterTests
     [TestClass]
     public class SettingsTests
     {
-        internal static string GetBackingFieldName(string propertyName) => $"<{propertyName}>k__BackingField";
-
-        internal static T CreateInstance<T>(params object[] parameters)
-        {
-            var bindingFlags =
-                BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            return (T)typeof(T).InvokeMember(null, bindingFlags, null, null, parameters);
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            // Reset the singleton instance per test case.
-            new PrivateType(typeof(Settings)).SetStaticField(
-                GetBackingFieldName(nameof(Settings.Instance)), CreateInstance<Settings>());
-        }
-
         [TestMethod]
-        public void InstanceTest()
+        public void SettingsTest()
         {
-            var instance1 = Settings.Instance;
-            var instance2 = Settings.Instance;
-            Assert.AreSame(instance1, instance2);
+            var settings = new Settings();
+            Assert.AreEqual(string.Empty, settings.LastTitle);
+            Assert.AreEqual(0, settings.Dictionary.Count);
+            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
+            Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
+            Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+            Assert.AreEqual(65001, settings.InputCodePageId);
+            Assert.AreEqual(65001, settings.OutputCodePageId);
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
         }
 
         [TestMethod]
         public void LoadTestNullPath()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.Load(null!));
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Load(null!));
 
         [TestMethod]
         public void LoadTestEmptyPath()
-            => _ = Assert.ThrowsException<ArgumentException>(() => Settings.Instance.Load(string.Empty));
+            => _ = Assert.ThrowsException<ArgumentException>(() => new Settings().Load(string.Empty));
 
         [TestMethod]
         public void LoadTestNonexistentPath()
         {
-            Settings.Instance.Load(@"TestData\nonexistent.xml");
-            Assert.AreEqual(string.Empty, Settings.Instance.LastTitle);
-            Assert.AreEqual(0, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, Settings.Instance.FontFamilyName);
-            Assert.AreEqual(SystemFonts.MessageFontSize, Settings.Instance.FontSize);
-            Assert.AreEqual(true, Settings.Instance.OutputNumberGroupSeparator);
-            Assert.AreEqual(65001, Settings.Instance.InputCodePageId);
-            Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
-            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+            var settings = new Settings();
+            settings.Load(@"TestData\nonexistent.xml");
+            Assert.AreEqual(string.Empty, settings.LastTitle);
+            Assert.AreEqual(0, settings.Dictionary.Count);
+            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
+            Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
+            Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+            Assert.AreEqual(65001, settings.InputCodePageId);
+            Assert.AreEqual(65001, settings.OutputCodePageId);
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty.xml", @"TestData")]
         public void LoadTestEmptyFile()
-            => _ = Assert.ThrowsException<InvalidDataException>(() => Settings.Instance.Load(@"TestData\empty.xml"));
+            => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\empty.xml"));
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-root-node.xml", @"TestData")]
         public void LoadTestNoRootNode()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\no-root-node.xml"));
+                () => new Settings().Load(@"TestData\no-root-node.xml"));
         }
 
         [TestMethod]
@@ -80,7 +67,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidRootNode()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-root-node.xml"));
+                () => new Settings().Load(@"TestData\invalid-root-node.xml"));
         }
 
         [TestMethod]
@@ -88,7 +75,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestWrongNamespace()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\wrong-namespace.xml"));
+                () => new Settings().Load(@"TestData\wrong-namespace.xml"));
         }
 
         [TestMethod]
@@ -96,7 +83,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestNoChildNodes()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\no-child-nodes.xml"));
+                () => new Settings().Load(@"TestData\no-child-nodes.xml"));
         }
 
         [TestMethod]
@@ -104,7 +91,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestNoLastTitle()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\no-last-title.xml"));
+                () => new Settings().Load(@"TestData\no-last-title.xml"));
         }
 
         [TestMethod]
@@ -112,7 +99,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyLastTitle()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-last-title.xml"));
+                () => new Settings().Load(@"TestData\empty-last-title.xml"));
         }
 
         [TestMethod]
@@ -120,7 +107,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestNonexistentLastTitle()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\nonexistent-last-title.xml"));
+                () => new Settings().Load(@"TestData\nonexistent-last-title.xml"));
         }
 
         [TestMethod]
@@ -128,7 +115,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestNoDictionary()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\no-dictionary.xml"));
+                () => new Settings().Load(@"TestData\no-dictionary.xml"));
         }
 
         [TestMethod]
@@ -136,53 +123,57 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyDictionary()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-dictionary.xml"));
+                () => new Settings().Load(@"TestData\empty-dictionary.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-key-value-types.xml", @"TestData")]
         public void LoadTestInvalidKeyValueTypes()
         {
-            Settings.Instance.Load(@"TestData\invalid-key-value-types.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            var settings = new Settings();
+            settings.Load(@"TestData\invalid-key-value-types.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-key.xml", @"TestData")]
         public void LoadTestNoKey()
-            => _ = Assert.ThrowsException<InvalidDataException>(() => Settings.Instance.Load(@"TestData\no-key.xml"));
+            => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-key.xml"));
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-key.xml", @"TestData")]
         public void LoadTestEmptyKey()
         {
-            Settings.Instance.Load(@"TestData\empty-key.xml");
-            Assert.AreEqual(2, Settings.Instance.Dictionary.Count);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-key.xml");
+            Assert.AreEqual(2, settings.Dictionary.Count);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\unknown-key.xml", @"TestData")]
         public void LoadTestUnknownKey()
         {
-            Settings.Instance.Load(@"TestData\unknown-key.xml");
-            Assert.AreEqual(2, Settings.Instance.Dictionary.Count);
+            var settings = new Settings();
+            settings.Load(@"TestData\unknown-key.xml");
+            Assert.AreEqual(2, settings.Dictionary.Count);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-value.xml", @"TestData")]
         public void LoadTestNoValue()
-            => _ = Assert.ThrowsException<InvalidDataException>(() => Settings.Instance.Load(@"TestData\no-value.xml"));
+            => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-value.xml"));
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-value.xml", @"TestData")]
         public void LoadTestEmptyValue()
         {
-            Settings.Instance.Load(@"TestData\empty-value.xml");
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-value.xml");
 
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            Assert.AreEqual(1, settings.Dictionary.Count);
 
             var expected = new SettingsPerTitle();
-            var actual = Settings.Instance.Dictionary.First().Value;
+            var actual = settings.Dictionary.First().Value;
             Assert.AreEqual(expected.BestShotDirectory, actual.BestShotDirectory);
             Assert.AreEqual(expected.HideUntriedCards, actual.HideUntriedCards);
             Assert.AreEqual(expected.ImageOutputDirectory, actual.ImageOutputDirectory);
@@ -195,27 +186,30 @@ namespace ThScoreFileConverterTests
         [DeploymentItem(@"TestData\no-best-shot-directory.xml", @"TestData")]
         public void LoadTestNoBestShotDirectory()
         {
-            Settings.Instance.Load(@"TestData\no-best-shot-directory.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.BestShotDirectory);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-best-shot-directory.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.BestShotDirectory);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-best-shot-directory.xml", @"TestData")]
         public void LoadTestEmptyBestShotDirectory()
         {
-            Settings.Instance.Load(@"TestData\empty-best-shot-directory.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.BestShotDirectory);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-best-shot-directory.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.BestShotDirectory);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-hide-untried-cards.xml", @"TestData")]
         public void LoadTestNoHideUntriedCards()
         {
-            Settings.Instance.Load(@"TestData\no-hide-untried-cards.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.IsTrue(Settings.Instance.Dictionary.First().Value.HideUntriedCards);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-hide-untried-cards.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.IsTrue(settings.Dictionary.First().Value.HideUntriedCards);
         }
 
         [TestMethod]
@@ -223,7 +217,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyHideUntriedCards()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-hide-untried-cards.xml"));
+                () => new Settings().Load(@"TestData\empty-hide-untried-cards.xml"));
         }
 
         [TestMethod]
@@ -231,115 +225,127 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidHideUntriedCards()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-hide-untried-cards.xml"));
+                () => new Settings().Load(@"TestData\invalid-hide-untried-cards.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-image-output-directory.xml", @"TestData")]
         public void LoadTestNoImageOutputDirectory()
         {
-            Settings.Instance.Load(@"TestData\no-image-output-directory.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ImageOutputDirectory);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-image-output-directory.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ImageOutputDirectory);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-image-output-directory.xml", @"TestData")]
         public void LoadTestEmptyImageOutputDirectory()
         {
-            Settings.Instance.Load(@"TestData\empty-image-output-directory.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ImageOutputDirectory);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-image-output-directory.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ImageOutputDirectory);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-output-directory.xml", @"TestData")]
         public void LoadTestNoOutputDirectory()
         {
-            Settings.Instance.Load(@"TestData\no-output-directory.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.OutputDirectory);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-output-directory.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.OutputDirectory);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-output-directory.xml", @"TestData")]
         public void LoadTestEmptyOutputDirectory()
         {
-            Settings.Instance.Load(@"TestData\empty-output-directory.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.OutputDirectory);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-output-directory.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.OutputDirectory);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-score-file.xml", @"TestData")]
         public void LoadTestNoScoreFile()
         {
-            Settings.Instance.Load(@"TestData\no-score-file.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ScoreFile);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-score-file.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ScoreFile);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-score-file.xml", @"TestData")]
         public void LoadTestEmptyScoreFile()
         {
-            Settings.Instance.Load(@"TestData\empty-score-file.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ScoreFile);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-score-file.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ScoreFile);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-template-files.xml", @"TestData")]
         public void LoadTestNoTemplateFiles()
         {
-            Settings.Instance.Load(@"TestData\no-template-files.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-template-files.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
             CollectionAssert.That.AreEqual(
-                Enumerable.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), settings.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-template-files.xml", @"TestData")]
         public void LoadTestEmptyTemplateFiles()
         {
-            Settings.Instance.Load(@"TestData\empty-template-files.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-template-files.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
             CollectionAssert.That.AreEqual(
-                Enumerable.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), settings.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-template-files.xml", @"TestData")]
         public void LoadTestInvalidTemplateFiles()
         {
-            Settings.Instance.Load(@"TestData\invalid-template-files.xml");
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            var settings = new Settings();
+            settings.Load(@"TestData\invalid-template-files.xml");
+            Assert.AreEqual(1, settings.Dictionary.Count);
             CollectionAssert.That.AreEqual(
-                Enumerable.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), settings.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-font-family-name.xml", @"TestData")]
         public void LoadTestNoFontFamilyName()
         {
-            Settings.Instance.Load(@"TestData\no-font-family-name.xml");
-            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, Settings.Instance.FontFamilyName);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-font-family-name.xml");
+            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-font-family-name.xml", @"TestData")]
         public void LoadTestEmptyFontFamilyName()
         {
-            Settings.Instance.Load(@"TestData\empty-font-family-name.xml");
-            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, Settings.Instance.FontFamilyName);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-font-family-name.xml");
+            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-font-size.xml", @"TestData")]
         public void LoadTestNoFontSize()
         {
-            Settings.Instance.Load(@"TestData\no-font-size.xml");
-            Assert.AreEqual(SystemFonts.MessageFontSize, Settings.Instance.FontSize);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-font-size.xml");
+            Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
         }
 
         [TestMethod]
@@ -347,7 +353,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-font-size.xml"));
+                () => new Settings().Load(@"TestData\empty-font-size.xml"));
         }
 
         [TestMethod]
@@ -355,7 +361,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-font-size.xml"));
+                () => new Settings().Load(@"TestData\invalid-font-size.xml"));
         }
 
         [TestMethod]
@@ -363,7 +369,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestNegativeFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\negative-font-size.xml"));
+                () => new Settings().Load(@"TestData\negative-font-size.xml"));
         }
 
         [TestMethod]
@@ -371,7 +377,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestZeroFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\zero-font-size.xml"));
+                () => new Settings().Load(@"TestData\zero-font-size.xml"));
         }
 
         [TestMethod]
@@ -379,15 +385,16 @@ namespace ThScoreFileConverterTests
         public void LoadTestExceededFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\exceeded-font-size.xml"));
+                () => new Settings().Load(@"TestData\exceeded-font-size.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-output-number-group-separator.xml", @"TestData")]
         public void LoadTestNoOutputNumberGroupSeparator()
         {
-            Settings.Instance.Load(@"TestData\no-output-number-group-separator.xml");
-            Assert.AreEqual(true, Settings.Instance.OutputNumberGroupSeparator);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-output-number-group-separator.xml");
+            Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
         }
 
         [TestMethod]
@@ -395,7 +402,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyOutputNumberGroupSeparator()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-output-number-group-separator.xml"));
+                () => new Settings().Load(@"TestData\empty-output-number-group-separator.xml"));
         }
 
         [TestMethod]
@@ -403,15 +410,16 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidOutputNumberGroupSeparator()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-output-number-group-separator.xml"));
+                () => new Settings().Load(@"TestData\invalid-output-number-group-separator.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-input-code-page-id.xml", @"TestData")]
         public void LoadTestNoInputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\no-input-code-page-id.xml");
-            Assert.AreEqual(65001, Settings.Instance.InputCodePageId);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-input-code-page-id.xml");
+            Assert.AreEqual(65001, settings.InputCodePageId);
         }
 
         [TestMethod]
@@ -419,7 +427,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyInputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-input-code-page-id.xml"));
+                () => new Settings().Load(@"TestData\empty-input-code-page-id.xml"));
         }
 
         [TestMethod]
@@ -427,23 +435,25 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidInputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-input-code-page-id.xml"));
+                () => new Settings().Load(@"TestData\invalid-input-code-page-id.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\unsupported-input-code-page-id.xml", @"TestData")]
         public void LoadTestUnsupportedInputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\unsupported-input-code-page-id.xml");
-            Assert.AreEqual(65001, Settings.Instance.InputCodePageId);
+            var settings = new Settings();
+            settings.Load(@"TestData\unsupported-input-code-page-id.xml");
+            Assert.AreEqual(65001, settings.InputCodePageId);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-output-code-page-id.xml", @"TestData")]
         public void LoadTestNoOutputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\no-output-code-page-id.xml");
-            Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-output-code-page-id.xml");
+            Assert.AreEqual(65001, settings.OutputCodePageId);
         }
 
         [TestMethod]
@@ -451,7 +461,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestEmptyOutputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\empty-output-code-page-id.xml"));
+                () => new Settings().Load(@"TestData\empty-output-code-page-id.xml"));
         }
 
         [TestMethod]
@@ -459,47 +469,52 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidOutputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-output-code-page-id.xml"));
+                () => new Settings().Load(@"TestData\invalid-output-code-page-id.xml"));
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\unsupported-output-code-page-id.xml", @"TestData")]
         public void LoadTestUnsupportedOutputCodePageId()
         {
-            Settings.Instance.Load(@"TestData\unsupported-output-code-page-id.xml");
-            Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
+            var settings = new Settings();
+            settings.Load(@"TestData\unsupported-output-code-page-id.xml");
+            Assert.AreEqual(65001, settings.OutputCodePageId);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\no-language.xml", @"TestData")]
         public void LoadTestNoLanguage()
         {
-            Settings.Instance.Load(@"TestData\no-language.xml");
-            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+            var settings = new Settings();
+            settings.Load(@"TestData\no-language.xml");
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
         public void LoadTestEmptyLanguage()
         {
-            Settings.Instance.Load(@"TestData\empty-language.xml");
-            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+            var settings = new Settings();
+            settings.Load(@"TestData\empty-language.xml");
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
         public void LoadTestInvalidLanguage()
         {
-            Settings.Instance.Load(@"TestData\invalid-language.xml");
-            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+            var settings = new Settings();
+            settings.Load(@"TestData\invalid-language.xml");
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
         }
 
         [TestMethod]
         [DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
         public void LoadTestValidLanguageJaJp()
         {
-            Settings.Instance.Load(@"TestData\valid-language-ja-JP.xml");
-            Assert.AreEqual("ja-JP", Settings.Instance.Language);
+            var settings = new Settings();
+            settings.Load(@"TestData\valid-language-ja-JP.xml");
+            Assert.AreEqual("ja-JP", settings.Language);
         }
 
         [TestMethod]
@@ -507,14 +522,22 @@ namespace ThScoreFileConverterTests
         public void LoadTestInvalidCharacter()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => Settings.Instance.Load(@"TestData\invalid-character.xml"));
+                () => new Settings().Load(@"TestData\invalid-character.xml"));
         }
 
         [TestMethod]
         public void SaveTest()
         {
-            var expectedLastTitle = "TH06";
-            var expectedSettingsPerTitle = new SettingsPerTitle
+            var settings = new Settings
+            {
+                LastTitle = "TH06",
+                FontFamilyName = "font-family-name",
+                FontSize = 12.3,
+                OutputNumberGroupSeparator = false,
+                InputCodePageId = 932,
+                OutputCodePageId = 932,
+            };
+            settings.Dictionary.Add(settings.LastTitle, new SettingsPerTitle
             {
                 BestShotDirectory = "bestshot",
                 HideUntriedCards = true,
@@ -522,81 +545,70 @@ namespace ThScoreFileConverterTests
                 OutputDirectory = "output",
                 ScoreFile = "score.dat",
                 TemplateFiles = new[] { "template1", "template2" },
-            };
-            var expectedFontFamilyName = "font-family-name";
-            var expectedFontSize = 12.3;
-            var expectedOutputNumberGroupSeparator = false;
-            var expectedInputCodePageId = 932;
-            var expectedOutputCodePageId = 932;
-
-            Settings.Instance.LastTitle = expectedLastTitle;
-            Settings.Instance.Dictionary.Add(expectedLastTitle, expectedSettingsPerTitle);
-            Settings.Instance.FontFamilyName = expectedFontFamilyName;
-            Settings.Instance.FontSize = expectedFontSize;
-            Settings.Instance.OutputNumberGroupSeparator = expectedOutputNumberGroupSeparator;
-            Settings.Instance.InputCodePageId = expectedInputCodePageId;
-            Settings.Instance.OutputCodePageId = expectedOutputCodePageId;
+            });
 
             var tempfile = Path.GetTempFileName();
-            Settings.Instance.Save(tempfile);
+            settings.Save(tempfile);
 
-            Settings.Instance.LastTitle = string.Empty;
-            Settings.Instance.Dictionary.Clear();
-            Settings.Instance.FontFamilyName = string.Empty;
-            Settings.Instance.FontSize = 0;
-            Settings.Instance.OutputNumberGroupSeparator = true;
-            Settings.Instance.InputCodePageId = 65001;
-            Settings.Instance.OutputCodePageId = 65001;
-
-            Settings.Instance.Load(tempfile);
+            var settings2 = new Settings();
+            settings2.Load(tempfile);
             File.Delete(tempfile);
 
-            Assert.AreEqual(expectedLastTitle, Settings.Instance.LastTitle);
-            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
-            Assert.IsTrue(Settings.Instance.Dictionary.ContainsKey(expectedLastTitle));
+            Assert.AreEqual(settings.LastTitle, settings2.LastTitle);
+            Assert.AreEqual(1, settings2.Dictionary.Count);
+            Assert.IsTrue(settings2.Dictionary.ContainsKey(settings.LastTitle));
 
-            var actualSettingsPerTitle = Settings.Instance.Dictionary[expectedLastTitle];
-            Assert.AreEqual(expectedSettingsPerTitle.BestShotDirectory, actualSettingsPerTitle.BestShotDirectory);
-            Assert.AreEqual(expectedSettingsPerTitle.HideUntriedCards, actualSettingsPerTitle.HideUntriedCards);
-            Assert.AreEqual(expectedSettingsPerTitle.ImageOutputDirectory, actualSettingsPerTitle.ImageOutputDirectory);
-            Assert.AreEqual(expectedSettingsPerTitle.OutputDirectory, actualSettingsPerTitle.OutputDirectory);
-            Assert.AreEqual(expectedSettingsPerTitle.ScoreFile, actualSettingsPerTitle.ScoreFile);
-            CollectionAssert.That.AreEqual(expectedSettingsPerTitle.TemplateFiles, actualSettingsPerTitle.TemplateFiles);
+            var expected = settings.Dictionary[settings.LastTitle];
+            var actual= settings2.Dictionary[settings2.LastTitle];
+            Assert.AreEqual(expected.BestShotDirectory, actual.BestShotDirectory);
+            Assert.AreEqual(expected.HideUntriedCards, actual.HideUntriedCards);
+            Assert.AreEqual(expected.ImageOutputDirectory, actual.ImageOutputDirectory);
+            Assert.AreEqual(expected.OutputDirectory, actual.OutputDirectory);
+            Assert.AreEqual(expected.ScoreFile, actual.ScoreFile);
+            CollectionAssert.That.AreEqual(expected.TemplateFiles, actual.TemplateFiles);
 
-            Assert.AreEqual(expectedFontFamilyName, Settings.Instance.FontFamilyName);
-            Assert.AreEqual(expectedFontSize, Settings.Instance.FontSize);
-            Assert.AreEqual(expectedOutputNumberGroupSeparator, Settings.Instance.OutputNumberGroupSeparator);
-            Assert.AreEqual(expectedInputCodePageId, Settings.Instance.InputCodePageId);
-            Assert.AreEqual(expectedOutputCodePageId, Settings.Instance.OutputCodePageId);
+            Assert.AreEqual(settings.FontFamilyName, settings2.FontFamilyName);
+            Assert.AreEqual(settings.FontSize, settings2.FontSize);
+            Assert.AreEqual(settings.OutputNumberGroupSeparator, settings2.OutputNumberGroupSeparator);
+            Assert.AreEqual(settings.InputCodePageId, settings2.InputCodePageId);
+            Assert.AreEqual(settings.OutputCodePageId, settings2.OutputCodePageId);
         }
+
+        [TestMethod]
+        public void LastTitleTestNull()
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().LastTitle = null!);
 
         [TestMethod]
         public void FontFamilyNameTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.FontFamilyName = null!);
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontFamilyName = null!);
 
         [TestMethod]
         public void FontSizeTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.FontSize = null);
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontSize = null);
 
         [TestMethod]
         public void OutputNumberGroupSeparatorTestNull()
-        {
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => Settings.Instance.OutputNumberGroupSeparator = null);
-        }
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputNumberGroupSeparator = null);
 
         [TestMethod]
         public void InputCodePageIdTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.InputCodePageId = null);
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().InputCodePageId = null);
 
         [TestMethod]
         public void OutputCodePageIdTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.OutputCodePageId = null);
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputCodePageId = null);
 
         [TestMethod]
         public void LanguageTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => Settings.Instance.Language = null);
+            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Language = null);
+
+        [TestMethod]
+        public void LanguageTestInvalid()
+        {
+            var settings = new Settings();
+            var language = settings.Language;
+            settings.Language = "invalid";
+            Assert.AreEqual(language, settings.Language);
+        }
     }
 }
-
-#endif
