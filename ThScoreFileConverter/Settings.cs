@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
@@ -24,6 +25,7 @@ namespace ThScoreFileConverter
     [DataContract]
     public sealed class Settings : ISettings
     {
+        private string lastTitle;
         private string fontFamilyName;
         private double? fontSize;
         private bool? outputNumberGroupSeparator;
@@ -32,11 +34,11 @@ namespace ThScoreFileConverter
         private string? language;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="Settings" /> class from being created.
+        /// Initializes a new instance of the <see cref="Settings"/> class.
         /// </summary>
-        private Settings()
+        public Settings()
         {
-            this.LastTitle = string.Empty;
+            this.lastTitle = string.Empty;
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
             this.fontFamilyName = SystemFonts.MessageFontFamily.Source;
             this.fontSize = SystemFonts.MessageFontSize;
@@ -45,11 +47,6 @@ namespace ThScoreFileConverter
             this.outputCodePageId = 65001;
             this.language = CultureInfo.InvariantCulture.Name;
         }
-
-        /// <summary>
-        /// Gets the instance.
-        /// </summary>
-        public static Settings Instance { get; } = new Settings();
 
         /// <summary>
         /// Gets the valid code page identifiers for this application.
@@ -63,7 +60,11 @@ namespace ThScoreFileConverter
 
         /// <inheritdoc/>
         [DataMember(Order = 0)]
-        public string LastTitle { get; set; }
+        public string LastTitle
+        {
+            get => this.lastTitle;
+            set => this.lastTitle = value ?? throw NewArgumentNullException();
+        }
 
         /// <inheritdoc/>
         [DataMember(Order = 1)]
@@ -74,11 +75,7 @@ namespace ThScoreFileConverter
         public string FontFamilyName
         {
             get => this.fontFamilyName;
-            set
-            {
-                this.OnNullablePropertyChanging(value);
-                this.fontFamilyName = value;
-            }
+            set => this.fontFamilyName = value ?? throw NewArgumentNullException();
         }
 
         /// <inheritdoc/>
@@ -86,11 +83,7 @@ namespace ThScoreFileConverter
         public double? FontSize
         {
             get => this.fontSize;
-            set
-            {
-                this.OnNullablePropertyChanging(value);
-                this.fontSize = value;
-            }
+            set => this.fontSize = value ?? throw NewArgumentNullException();
         }
 
         /// <inheritdoc/>
@@ -98,11 +91,7 @@ namespace ThScoreFileConverter
         public bool? OutputNumberGroupSeparator
         {
             get => this.outputNumberGroupSeparator;
-            set
-            {
-                this.OnNullablePropertyChanging(value);
-                this.outputNumberGroupSeparator = value;
-            }
+            set => this.outputNumberGroupSeparator = value ?? throw NewArgumentNullException();
         }
 
         /// <inheritdoc/>
@@ -110,11 +99,7 @@ namespace ThScoreFileConverter
         public int? InputCodePageId
         {
             get => this.inputCodePageId;
-            set
-            {
-                this.OnNullablePropertyChanging(value);
-                this.inputCodePageId = value;
-            }
+            set => this.inputCodePageId = value ?? throw NewArgumentNullException();
         }
 
         /// <inheritdoc/>
@@ -122,11 +107,7 @@ namespace ThScoreFileConverter
         public int? OutputCodePageId
         {
             get => this.outputCodePageId;
-            set
-            {
-                this.OnNullablePropertyChanging(value);
-                this.outputCodePageId = value;
-            }
+            set => this.outputCodePageId = value ?? throw NewArgumentNullException();
         }
 
         /// <inheritdoc/>
@@ -136,11 +117,12 @@ namespace ThScoreFileConverter
             get => this.language;
             set
             {
-                this.OnNullablePropertyChanging(value);
+                if (value is null)
+                    throw NewArgumentNullException();
 
                 try
                 {
-                    _ = CultureInfo.GetCultureInfo(value!);
+                    _ = CultureInfo.GetCultureInfo(value);
                     this.language = value;
                 }
                 catch (CultureNotFoundException)
@@ -229,10 +211,9 @@ namespace ThScoreFileConverter
                 Utils.Format(Resources.InvalidDataExceptionFileMayBeBroken, file), innerException);
         }
 
-        private void OnNullablePropertyChanging<T>(T value)
+        private static Exception NewArgumentNullException([CallerMemberName] string name = "")
         {
-            if (ReferenceEquals(this, Instance) && (value is null))
-                throw new ArgumentNullException(nameof(value));
+            return new ArgumentNullException(name);
         }
     }
 }

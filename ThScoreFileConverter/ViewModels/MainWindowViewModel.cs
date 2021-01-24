@@ -626,7 +626,10 @@ namespace ThScoreFileConverter.ViewModels
                 this.IsIdle.Value = false;
                 this.Log.Value = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
                     + Environment.NewLine;
-                new Thread(this.converter!.Convert).Start((this.CurrentSetting, this.formatter));
+                var inputCodePageId = this.settings.InputCodePageId!.Value;
+                var outputCodePageId = this.settings.OutputCodePageId!.Value;
+                new Thread(this.converter!.Convert).Start(
+                    (this.CurrentSetting, inputCodePageId, outputCodePageId, this.formatter));
             }
         }
 

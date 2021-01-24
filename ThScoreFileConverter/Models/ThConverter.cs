@@ -77,8 +77,8 @@ namespace ThScoreFileConverter.Models
             {
                 switch (threadArg)
                 {
-                    case (SettingsPerTitle settings, INumberFormatter formatter):
-                        this.Convert(settings, formatter);
+                    case (SettingsPerTitle settings, int inputCodePageId, int outputCodePageId, INumberFormatter formatter):
+                        this.Convert(settings, inputCodePageId, outputCodePageId, formatter);
                         break;
                     case null:
                         throw new ArgumentNullException(nameof(threadArg));
@@ -108,20 +108,14 @@ namespace ThScoreFileConverter.Models
         /// Converts the stream indicating score data.
         /// </summary>
         /// <remarks>Needs to be overridden by a subclass.</remarks>
-        /// <param name="input">The input stream that treats a template file.</param>
-        /// <param name="output">The stream for outputting the converted data.</param>
+        /// <param name="reader">The reader of the input stream that treats a template file.</param>
+        /// <param name="writer">The stream writer for outputting the converted data.</param>
         /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
-        protected virtual void Convert(Stream input, Stream output, INumberFormatter formatter, bool hideUntriedCards)
+        protected virtual void Convert(
+            StreamReader reader, StreamWriter writer, INumberFormatter formatter, bool hideUntriedCards)
         {
-            const int DefaultBufferSize = 1024;
-
-            using var reader = new StreamReader(
-                input, Encoding.GetEncoding(Settings.Instance.InputCodePageId!.Value), true, DefaultBufferSize, true);
-            using var writer = new StreamWriter(
-                output, Encoding.GetEncoding(Settings.Instance.OutputCodePageId!.Value), DefaultBufferSize, true);
-
-            var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
+            var outputFilePath = (writer.BaseStream is FileStream outputFile) ? outputFile.Name : string.Empty;
             var replacers = this.CreateReplacers(formatter, hideUntriedCards, outputFilePath);
 
             var allLines = reader.ReadToEnd();
@@ -207,8 +201,11 @@ namespace ThScoreFileConverter.Models
         /// Converts a score file.
         /// </summary>
         /// <param name="settings">The settings per work.</param>
+        /// <param name="inputCodePageId">The code page identifier for input files.</param>
+        /// <param name="outputCodePageId">The code page identifier for output files.</param>
         /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
-        private void Convert(SettingsPerTitle settings, INumberFormatter formatter)
+        private void Convert(
+            SettingsPerTitle settings, int inputCodePageId, int outputCodePageId, INumberFormatter formatter)
         {
             using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
             _ = scr.Seek(0, SeekOrigin.Begin);
@@ -232,6 +229,9 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
+            const int DefaultBufferSize = 1024;
+            var inputEncoding = Encoding.GetEncoding(inputCodePageId);
+            var outputEncoding = Encoding.GetEncoding(outputCodePageId);
             var numFiles = settings.TemplateFiles.Count();
             for (var index = 0; index < numFiles; index++)
             {
@@ -239,7 +239,9 @@ namespace ThScoreFileConverter.Models
                 var result = GetOutputFilePath(template, settings.OutputDirectory);
                 using var tmpl = new FileStream(template, FileMode.Open, FileAccess.Read);
                 using var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write);
-                this.Convert(tmpl, rslt, formatter, settings.HideUntriedCards);
+                using var reader = new StreamReader(tmpl, inputEncoding, true, DefaultBufferSize, true);
+                using var writer = new StreamWriter(rslt, outputEncoding, DefaultBufferSize, true);
+                this.Convert(reader, writer, formatter, settings.HideUntriedCards);
                 this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, numFiles));
             }
 
