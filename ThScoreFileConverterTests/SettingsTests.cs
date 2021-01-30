@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -609,6 +610,54 @@ namespace ThScoreFileConverterTests
             var language = settings.Language;
             settings.Language = "invalid";
             Assert.AreEqual(language, settings.Language);
+        }
+
+        [TestMethod]
+        public void SetPropertyTest()
+        {
+            var numCalled = 0;
+            void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+            {
+                ++numCalled;
+            }
+
+            var settings = new Settings();
+            settings.PropertyChanged += OnPropertyChanged;
+            try
+            {
+                var lastTitle = nameof(settings.LastTitle);
+                settings.LastTitle = lastTitle;
+                Assert.AreEqual(lastTitle, settings.LastTitle);
+                Assert.AreEqual(1, numCalled);
+            }
+            finally
+            {
+                settings.PropertyChanged -= OnPropertyChanged;
+            }
+        }
+
+        [TestMethod]
+        public void SetPropertyTestNoChange()
+        {
+            var numCalled = 0;
+            void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+            {
+                ++numCalled;
+            }
+
+            var settings = new Settings();
+            settings.PropertyChanged += OnPropertyChanged;
+            try
+            {
+                var lastTitle = settings.LastTitle;
+                settings.LastTitle = lastTitle;
+                Assert.AreEqual(lastTitle, settings.LastTitle);
+                Assert.AreEqual(0, numCalled);
+            }
+            finally
+            {
+                settings.PropertyChanged -= OnPropertyChanged;
+            }
         }
     }
 }
