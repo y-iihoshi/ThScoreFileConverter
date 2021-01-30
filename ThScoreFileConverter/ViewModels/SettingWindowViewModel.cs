@@ -15,6 +15,7 @@ using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Interactivity;
@@ -33,7 +34,6 @@ namespace ThScoreFileConverter.ViewModels
 #endif
     internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
-        private readonly ISettings settings;
         private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
         private readonly CompositeDisposable disposables;
         private bool disposed;
@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         /// <param name="settings">The settings of this application.</param>
         /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
-        public SettingWindowViewModel(ISettings settings, IResourceDictionaryAdapter adapter)
+        public SettingWindowViewModel(Settings settings, IResourceDictionaryAdapter adapter)
         {
             if (!settings.OutputNumberGroupSeparator.HasValue)
             {
@@ -58,11 +58,17 @@ namespace ThScoreFileConverter.ViewModels
             if (!settings.OutputCodePageId.HasValue)
                 throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
 
-            this.settings = settings;
             this.resourceDictionaryAdapter = adapter;
             this.disposables = new CompositeDisposable();
             this.disposed = false;
             this.font = null;
+
+            this.OutputNumberGroupSeparator = settings.ToReactivePropertyAsSynchronized(
+                x => x.OutputNumberGroupSeparator, value => (bool)value!, value => value);
+            this.InputCodePageId = settings.ToReactivePropertyAsSynchronized(
+                x => x.InputCodePageId, value => (int)value!, value => value);
+            this.OutputCodePageId = settings.ToReactivePropertyAsSynchronized(
+                x => x.OutputCodePageId, value => (int)value!, value => value);
 
             var encodings = Settings.ValidCodePageIds
                 .ToDictionary(id => id, id => Encoding.GetEncoding(id).EncodingName);
@@ -122,22 +128,10 @@ namespace ThScoreFileConverter.ViewModels
 #pragma warning restore CA1822 // Mark members as static
 
         /// <summary>
-        /// Gets or sets a value indicating whether numeric values is output with thousand separator
+        /// Gets a value indicating whether numeric values is output with thousand separator
         /// characters.
         /// </summary>
-        public bool OutputNumberGroupSeparator
-        {
-            get => this.settings.OutputNumberGroupSeparator!.Value;
-
-            set
-            {
-                if (this.settings.OutputNumberGroupSeparator != value)
-                {
-                    this.settings.OutputNumberGroupSeparator = value;
-                    this.RaisePropertyChanged(nameof(this.OutputNumberGroupSeparator));
-                }
-            }
-        }
+        public ReactiveProperty<bool> OutputNumberGroupSeparator { get; }
 
         /// <summary>
         /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
@@ -146,21 +140,9 @@ namespace ThScoreFileConverter.ViewModels
         public IDictionary<int, string> InputEncodings { get; }
 
         /// <summary>
-        /// Gets or sets the code page identifier for input files.
+        /// Gets the code page identifier for input files.
         /// </summary>
-        public int InputCodePageId
-        {
-            get => this.settings.InputCodePageId!.Value;
-
-            set
-            {
-                if (this.settings.InputCodePageId != value)
-                {
-                    this.settings.InputCodePageId = value;
-                    this.RaisePropertyChanged(nameof(this.InputCodePageId));
-                }
-            }
-        }
+        public ReactiveProperty<int> InputCodePageId { get; }
 
         /// <summary>
         /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
@@ -169,21 +151,9 @@ namespace ThScoreFileConverter.ViewModels
         public IDictionary<int, string> OutputEncodings { get; }
 
         /// <summary>
-        /// Gets or sets the code page identifier for output files.
+        /// Gets the code page identifier for output files.
         /// </summary>
-        public int OutputCodePageId
-        {
-            get => this.settings.OutputCodePageId!.Value;
-
-            set
-            {
-                if (this.settings.OutputCodePageId != value)
-                {
-                    this.settings.OutputCodePageId = value;
-                    this.RaisePropertyChanged(nameof(this.OutputCodePageId));
-                }
-            }
-        }
+        public ReactiveProperty<int> OutputCodePageId { get; }
 
         /// <summary>
         /// Gets or sets the culture.
@@ -267,6 +237,10 @@ namespace ThScoreFileConverter.ViewModels
 
             if (disposing)
             {
+                this.OutputCodePageId.Dispose();
+                this.InputCodePageId.Dispose();
+                this.OutputNumberGroupSeparator.Dispose();
+
                 this.font?.Dispose();
                 this.disposables.Dispose();
             }
