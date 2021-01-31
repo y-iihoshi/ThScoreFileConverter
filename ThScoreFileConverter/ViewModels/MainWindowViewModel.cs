@@ -142,7 +142,7 @@ namespace ThScoreFileConverter.ViewModels
             this.disposables.Add(currentSetting);
 
             this.ScoreFile = currentSetting
-                .ToReactivePropertyAsSynchronized(x => x.Value.ScoreFile, ReactivePropertyMode.DistinctUntilChanged);
+                .ToReactivePropertySlimAsSynchronized(x => x.Value.ScoreFile, ReactivePropertyMode.DistinctUntilChanged);
             this.OpenScoreFileDialogInitialDirectory = this.ScoreFile
                 .Select(file => Path.GetDirectoryName(file) ?? string.Empty)
                 .ToReadOnlyReactivePropertySlim(string.Empty, ReactivePropertyMode.DistinctUntilChanged);
@@ -268,7 +268,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a path of the score file.
         /// </summary>
-        public ReactiveProperty<string> ScoreFile { get; }
+        public ReactivePropertySlim<string> ScoreFile { get; }
 
         /// <summary>
         /// Gets the initial directory to select a score file.
