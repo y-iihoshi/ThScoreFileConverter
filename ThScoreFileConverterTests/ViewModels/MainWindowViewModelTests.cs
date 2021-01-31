@@ -179,16 +179,15 @@ namespace ThScoreFileConverterTests.ViewModels
             var formatterMock = MockNumberFormatter();
             using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
-            Assert.AreEqual(string.Empty, window.ImageOutputDirectory);
+            Assert.AreEqual(string.Empty, window.ImageOutputDirectory.Value);
 
             var numChanged = 0;
-            using var disposed =
-                window.ObserveProperty(w => w.ImageOutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.ImageOutputDirectory.Subscribe(_ => ++numChanged);
 
             var expected = "abc";
-            window.ImageOutputDirectory = expected;
+            window.ImageOutputDirectory.Value = expected;
             Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(expected, window.ImageOutputDirectory);
+            Assert.AreEqual(expected, window.ImageOutputDirectory.Value);
             Assert.AreEqual(expected, settings.Dictionary[window.Works.First().Number].ImageOutputDirectory);
         }
 

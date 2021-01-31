@@ -155,6 +155,8 @@ namespace ThScoreFileConverter.ViewModels
                 .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
             this.OutputDirectory = currentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.OutputDirectory, rpMode);
+            this.ImageOutputDirectory = currentSetting
+                .ToReactivePropertySlimAsSynchronized(x => x.Value.ImageOutputDirectory, rpMode);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -188,7 +190,6 @@ namespace ThScoreFileConverter.ViewModels
             this.OpenAboutWindowCommand = new DelegateCommand(this.OpenAboutWindow);
             this.OpenSettingWindowCommand = new DelegateCommand(this.OpenSettingWindow);
 
-            this.PropertyChanged += this.OnPropertyChanged;
             this.disposables.Add(
                 LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
                     .Subscribe(_ => this.RaisePropertyChanged(nameof(this.SupportedVersions))));
@@ -215,7 +216,6 @@ namespace ThScoreFileConverter.ViewModels
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
-                    this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
                     this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
                     this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
 
@@ -233,6 +233,8 @@ namespace ThScoreFileConverter.ViewModels
                 }));
             this.disposables.Add(
                 this.OutputDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+            this.disposables.Add(
+                this.ImageOutputDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
 
             if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
                 this.LastWorkNumber.Value = WorksImpl.First().Number;
@@ -313,21 +315,9 @@ namespace ThScoreFileConverter.ViewModels
         public ReactivePropertySlim<string> OutputDirectory { get; }
 
         /// <summary>
-        /// Gets or sets a name of the output directory for image files.
+        /// Gets a name of the output directory for image files.
         /// </summary>
-        public string ImageOutputDirectory
-        {
-            get => this.CurrentSetting.ImageOutputDirectory;
-
-            set
-            {
-                if (this.CurrentSetting.ImageOutputDirectory != value)
-                {
-                    this.CurrentSetting.ImageOutputDirectory = value;
-                    this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
-                }
-            }
-        }
+        public ReactivePropertySlim<string> ImageOutputDirectory { get; }
 
         /// <summary>
         /// Gets a value indicating whether the conversion process can replace spell card names.
@@ -465,6 +455,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.ImageOutputDirectory.Dispose();
                 this.OutputDirectory.Dispose();
                 this.OpenTemplateFilesDialogInitialDirectory.Dispose();
                 this.TemplateFiles.Dispose();
@@ -592,7 +583,7 @@ namespace ThScoreFileConverter.ViewModels
                 && this.TemplateFiles.Value.Any()
                 && !string.IsNullOrEmpty(this.OutputDirectory.Value)
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory.Value))
-                && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));
+                && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory.Value));
         }
 
         /// <summary>
@@ -755,21 +746,6 @@ namespace ThScoreFileConverter.ViewModels
         #endregion
 
         #region Event handlers
-
-        /// <summary>
-        /// Handles the event indicating a property value is changed.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.ImageOutputDirectory):
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                    break;
-            }
-        }
 
         /// <summary>
         /// Handles the event indicating the conversion process per file has finished.

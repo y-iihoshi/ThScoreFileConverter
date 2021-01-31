@@ -258,7 +258,7 @@
                      Grid.Column="1"
                      Grid.Row="4"
                      IsEnabled="{Binding CanHandleBestShot}"
-                     Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ImageOutputDirectory.Value, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"/>
             <CheckBox Grid.Column="1"
                       Grid.ColumnSpan="2"
