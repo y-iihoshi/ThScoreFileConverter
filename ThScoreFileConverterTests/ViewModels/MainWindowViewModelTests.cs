@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.AreNotEqual(initialLastTitle, settings.LastTitle);
 
             var numChanged = 0;
-            using var disposed = window.LastWorkNumber.Subscribe(_ => ++numChanged);
+            using var disposable = window.LastWorkNumber.Subscribe(_ => ++numChanged);
 
             var expected = "abc";
             window.LastWorkNumber.Value = expected;
@@ -146,7 +146,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void BestShotDirectoryTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(string.Empty, window.BestShotDirectory);
+            Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
         }
 
         [TestMethod]
@@ -236,7 +236,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileName = Path.GetTempFileName();
             try
@@ -264,7 +264,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileName = window.ScoreFile.Value;
             var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
@@ -284,7 +284,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileName = "nonexistent.txt";
             var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
@@ -304,7 +304,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
             var path = Path.GetTempPath();
             var result = new FolderBrowserDialogActionResult(path);
@@ -313,7 +313,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(result);
             Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(path, window.BestShotDirectory);
+            Assert.AreEqual(path, window.BestShotDirectory.Value);
         }
 
         [TestMethod]
@@ -325,9 +325,9 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
-            var path = window.BestShotDirectory;
+            var path = window.BestShotDirectory.Value;
             var result = new FolderBrowserDialogActionResult(path);
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
@@ -345,7 +345,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
             var path = "nonexistent";
             var result = new FolderBrowserDialogActionResult(path);
@@ -793,7 +793,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -822,7 +822,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileNames = new[] { "nonexistent.txt" };
 
@@ -844,7 +844,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -864,7 +864,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
+            using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -884,7 +884,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            _ = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
             var dirNames = Enumerable.Range(1, 3).Select(index =>
             {
@@ -901,7 +901,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(args!);
                 Assert.AreEqual(1, numChanged);
-                Assert.AreEqual(dirNames[0], window.BestShotDirectory);
+                Assert.AreEqual(dirNames[0], window.BestShotDirectory.Value);
             }
             finally
             {
@@ -919,7 +919,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
             var dirNames = new[] { "nonexistent" };
 
@@ -929,7 +929,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.BestShotDirectory);
+            Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
         }
 
         [TestMethod]
@@ -941,7 +941,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -949,7 +949,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.BestShotDirectory);
+            Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
         }
 
         [TestMethod]
@@ -961,7 +961,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.BestShotDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -969,7 +969,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.BestShotDirectory);
+            Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
         }
 
         [TestMethod]

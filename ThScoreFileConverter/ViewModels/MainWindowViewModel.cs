@@ -127,25 +127,27 @@ namespace ThScoreFileConverter.ViewModels
             this.disposed = false;
             this.converter = null;
 
+            var rpMode = ReactivePropertyMode.DistinctUntilChanged;
+
             this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
             this.Works = WorksImpl;
             this.IsIdle = new ReactivePropertySlim<bool>(true);
-            this.LastWorkNumber = this.settings
-                .ToReactivePropertySlimAsSynchronized(x => x.LastTitle, ReactivePropertyMode.DistinctUntilChanged);
+            this.LastWorkNumber = this.settings.ToReactivePropertySlimAsSynchronized(x => x.LastTitle, rpMode);
             this.disposables.Add(
                 this.LastWorkNumber.Subscribe(
                     value => _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle())));
 
             var currentSetting = this.LastWorkNumber
                 .Select(title => this.settings.Dictionary[title])
-                .ToReadOnlyReactivePropertySlim(mode: ReactivePropertyMode.DistinctUntilChanged);
+                .ToReadOnlyReactivePropertySlim(mode: rpMode);
             this.disposables.Add(currentSetting);
 
-            this.ScoreFile = currentSetting
-                .ToReactivePropertySlimAsSynchronized(x => x.Value.ScoreFile, ReactivePropertyMode.DistinctUntilChanged);
+            this.ScoreFile = currentSetting.ToReactivePropertySlimAsSynchronized(x => x.Value.ScoreFile, rpMode);
             this.OpenScoreFileDialogInitialDirectory = this.ScoreFile
                 .Select(file => Path.GetDirectoryName(file) ?? string.Empty)
-                .ToReadOnlyReactivePropertySlim(string.Empty, ReactivePropertyMode.DistinctUntilChanged);
+                .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
+            this.BestShotDirectory = currentSetting
+                .ToReactivePropertySlimAsSynchronized(x => x.Value.BestShotDirectory, rpMode);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -206,7 +208,6 @@ namespace ThScoreFileConverter.ViewModels
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
-                    this.RaisePropertyChanged(nameof(this.BestShotDirectory));
                     this.RaisePropertyChanged(nameof(this.TemplateFiles));
                     this.RaisePropertyChanged(nameof(this.OutputDirectory));
                     this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
@@ -216,6 +217,8 @@ namespace ThScoreFileConverter.ViewModels
                     this.ConvertCommand.RaiseCanExecuteChanged();
                 }));
             this.disposables.Add(this.ScoreFile.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+            this.disposables.Add(
+                this.BestShotDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
 
             if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
                 this.LastWorkNumber.Value = WorksImpl.First().Number;
@@ -278,19 +281,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a path of the best shot directory.
         /// </summary>
-        public string BestShotDirectory
-        {
-            get => this.CurrentSetting.BestShotDirectory;
-
-            private set
-            {
-                if ((this.CurrentSetting.BestShotDirectory != value) && Directory.Exists(value))
-                {
-                    this.CurrentSetting.BestShotDirectory = value;
-                    this.RaisePropertyChanged(nameof(this.BestShotDirectory));
-                }
-            }
-        }
+        public ReactivePropertySlim<string> BestShotDirectory { get; }
 
         /// <summary>
         /// Gets a list of the paths of template files.
@@ -498,6 +489,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.BestShotDirectory.Dispose();
                 this.OpenScoreFileDialogInitialDirectory.Dispose();
                 this.ScoreFile.Dispose();
                 this.LastWorkNumber.Dispose();
@@ -535,7 +527,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="result">A result of <see cref="FolderBrowserDialogAction"/>.</param>
         private void SelectBestShotDirectory(FolderBrowserDialogActionResult result)
         {
-            this.BestShotDirectory = result.SelectedPath;
+            if (Directory.Exists(result.SelectedPath))
+                this.BestShotDirectory.Value = result.SelectedPath;
         }
 
         /// <summary>
@@ -617,7 +610,7 @@ namespace ThScoreFileConverter.ViewModels
                 && !string.IsNullOrEmpty(this.ScoreFile.Value)
                 && this.TemplateFiles.Any()
                 && !string.IsNullOrEmpty(this.OutputDirectory)
-                && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory))
+                && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory.Value))
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));
         }
 
@@ -676,7 +669,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
-                        if (filePath is not null && File.Exists(filePath))
+                        if (filePath is not null)
                             this.ScoreFile.Value = filePath;
                     }
                 }
@@ -702,7 +695,7 @@ namespace ThScoreFileConverter.ViewModels
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
                         if (dirPath is not null)
-                            this.BestShotDirectory = dirPath;
+                            this.BestShotDirectory.Value = dirPath;
                     }
                 }
             }
@@ -791,10 +784,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.BestShotDirectory):
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                    break;
-
                 case nameof(this.TemplateFiles):
                     this.RaisePropertyChanged(nameof(this.OpenTemplateFilesDialogInitialDirectory));
                     this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();

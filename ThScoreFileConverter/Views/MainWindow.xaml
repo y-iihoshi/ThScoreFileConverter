@@ -144,7 +144,7 @@
                      Grid.Row="1"
                      IsEnabled="{Binding CanHandleBestShot}"
                      IsReadOnly="True"
-                     Text="{Binding BestShotDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding BestShotDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <xb:Interaction.Behaviors>
                     <i:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
