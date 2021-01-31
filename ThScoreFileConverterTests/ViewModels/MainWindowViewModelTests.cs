@@ -153,14 +153,14 @@ namespace ThScoreFileConverterTests.ViewModels
         public void TemplateFilesTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(0, window.TemplateFiles.Count());
+            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
         }
 
         [TestMethod]
         public void OpenTemplateFilesDialogInitialDirectoryTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(string.Empty, window.OpenTemplateFilesDialogInitialDirectory);
+            Assert.AreEqual(string.Empty, window.OpenTemplateFilesDialogInitialDirectory.Value);
         }
 
         [TestMethod]
@@ -384,7 +384,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -395,7 +395,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
             }
             finally
             {
@@ -413,7 +413,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 5).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -427,7 +427,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames1, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames1, window.TemplateFiles.Value);
 
                 result = new OpenFileDialogActionResult(string.Empty, fileNames2);
                 Assert.IsTrue(command.CanExecute(result));
@@ -435,7 +435,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(result);
                 Assert.AreEqual(2, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
             }
             finally
             {
@@ -453,16 +453,16 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
-            var fileNames = window.TemplateFiles.ToArray();
+            var fileNames = window.TemplateFiles.Value.ToArray();
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
 
             command.Execute(result);
             Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
         }
 
         [TestMethod]
@@ -474,7 +474,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = new[] { "nonexistent.txt" };
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
@@ -483,7 +483,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(result);
             Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(0, window.TemplateFiles.Count());
+            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
         }
 
         [TestMethod]
@@ -495,7 +495,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -503,14 +503,14 @@ namespace ThScoreFileConverterTests.ViewModels
                 var result = new OpenFileDialogActionResult(string.Empty, fileNames);
                 window.AddTemplateFilesCommand.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
 
                 Assert.IsTrue(command.CanExecute(fileNames));
                 Assert.AreEqual(1, numChanged);
 
                 command.Execute(fileNames.Take(2).ToList());
                 Assert.AreEqual(2, numChanged);
-                CollectionAssert.That.AreEqual(fileNames.TakeLast(1), window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames.TakeLast(1), window.TemplateFiles.Value);
             }
             finally
             {
@@ -528,7 +528,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -536,14 +536,14 @@ namespace ThScoreFileConverterTests.ViewModels
                 var result = new OpenFileDialogActionResult(string.Empty, fileNames);
                 window.AddTemplateFilesCommand.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
 
                 Assert.IsTrue(command.CanExecute(fileNames));
                 Assert.AreEqual(1, numChanged);
 
                 command.Execute(fileNames.ToList());
                 Assert.AreEqual(2, numChanged);
-                Assert.AreEqual(0, window.TemplateFiles.Count());
+                Assert.AreEqual(0, window.TemplateFiles.Value.Count());
             }
             finally
             {
@@ -561,7 +561,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -569,14 +569,14 @@ namespace ThScoreFileConverterTests.ViewModels
                 var result = new OpenFileDialogActionResult(string.Empty, fileNames);
                 window.AddTemplateFilesCommand.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
 
                 Assert.IsFalse(command.CanExecute(null));
                 Assert.AreEqual(1, numChanged);
 
                 command.Execute(null);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
             }
             finally
             {
@@ -594,7 +594,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -602,7 +602,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 var result = new OpenFileDialogActionResult(string.Empty, fileNames);
                 window.AddTemplateFilesCommand.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
 
                 var empty = Array.Empty<string>();
 
@@ -611,7 +611,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(empty);
                 Assert.AreEqual(2, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
             }
             finally
             {
@@ -629,7 +629,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -637,14 +637,14 @@ namespace ThScoreFileConverterTests.ViewModels
                 var result = new OpenFileDialogActionResult(string.Empty, fileNames);
                 window.AddTemplateFilesCommand.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
 
                 Assert.IsTrue(command.CanExecute());
                 Assert.AreEqual(1, numChanged);
 
                 command.Execute();
                 Assert.AreEqual(2, numChanged);
-                Assert.AreEqual(0, window.TemplateFiles.Count());
+                Assert.AreEqual(0, window.TemplateFiles.Value.Count());
             }
             finally
             {
@@ -662,14 +662,14 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             Assert.IsFalse(command.CanExecute());
             Assert.AreEqual(0, numChanged);
 
             command.Execute();
             Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(0, window.TemplateFiles.Count());
+            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
         }
 
         [TestMethod]
@@ -981,7 +981,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -994,7 +994,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(args!);
                 Assert.AreEqual(1, numChanged);
-                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles);
+                CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
             }
             finally
             {
@@ -1012,7 +1012,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -1020,7 +1020,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(0, window.TemplateFiles.Count());
+            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
         }
 
         [TestMethod]
@@ -1032,7 +1032,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.TemplateFiles, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -1040,7 +1040,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(0, window.TemplateFiles.Count());
+            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
         }
 
         [TestMethod]

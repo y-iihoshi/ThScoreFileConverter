@@ -181,7 +181,7 @@
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      AllowDrop="True"
                      Height="100"
-                     ItemsSource="{Binding TemplateFiles}"
+                     ItemsSource="{Binding TemplateFiles.Value}"
                      SelectionMode="Multiple"
                      VerticalAlignment="Top">
                 <xb:Interaction.Behaviors>
@@ -201,7 +201,7 @@
                     <xb:Interaction.Triggers>
                         <xb:EventTrigger EventName="Click">
                             <i:OpenFileDialogAction Filter="{lex:Loc TemplateFileFilter}"
-                                                    InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory}"
+                                                    InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory.Value}"
                                                     Multiselect="True"
                                                     OkCommand="{Binding AddTemplateFilesCommand}"
                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>

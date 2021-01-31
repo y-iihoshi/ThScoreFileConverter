@@ -148,6 +148,11 @@ namespace ThScoreFileConverter.ViewModels
                 .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
             this.BestShotDirectory = currentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.BestShotDirectory, rpMode);
+            this.TemplateFiles = currentSetting
+                .ToReactivePropertySlimAsSynchronized(x => x.Value.TemplateFiles, rpMode);
+            this.OpenTemplateFilesDialogInitialDirectory = this.TemplateFiles
+                .Select(files => Path.GetDirectoryName(files.LastOrDefault()) ?? string.Empty)
+                .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -208,7 +213,6 @@ namespace ThScoreFileConverter.ViewModels
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
-                    this.RaisePropertyChanged(nameof(this.TemplateFiles));
                     this.RaisePropertyChanged(nameof(this.OutputDirectory));
                     this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
                     this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
@@ -219,6 +223,13 @@ namespace ThScoreFileConverter.ViewModels
             this.disposables.Add(this.ScoreFile.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
             this.disposables.Add(
                 this.BestShotDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+            this.disposables.Add(
+                this.TemplateFiles.Subscribe(value =>
+                {
+                    this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
+                    this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
+                    this.ConvertCommand.RaiseCanExecuteChanged();
+                }));
 
             if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
                 this.LastWorkNumber.Value = WorksImpl.First().Number;
@@ -286,38 +297,12 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a list of the paths of template files.
         /// </summary>
-        public IEnumerable<string> TemplateFiles
-        {
-            get => this.CurrentSetting.TemplateFiles;
-
-            private set
-            {
-                this.CurrentSetting.TemplateFiles = value.Where(elem => File.Exists(elem)).ToArray();
-                this.RaisePropertyChanged(nameof(this.TemplateFiles));
-            }
-        }
+        public ReactivePropertySlim<IEnumerable<string>> TemplateFiles { get; }
 
         /// <summary>
         /// Gets the initial directory to select template files.
         /// </summary>
-        public string OpenTemplateFilesDialogInitialDirectory
-        {
-            get
-            {
-                try
-                {
-                    return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault()) ?? string.Empty;
-                }
-                catch (ArgumentException)
-                {
-                    return string.Empty;
-                }
-                catch (PathTooLongException)
-                {
-                    return string.Empty;
-                }
-            }
-        }
+        public ReadOnlyReactivePropertySlim<string> OpenTemplateFilesDialogInitialDirectory { get; }
 
         /// <summary>
         /// Gets a path of the output directory.
@@ -489,6 +474,8 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.OpenTemplateFilesDialogInitialDirectory.Dispose();
+                this.TemplateFiles.Dispose();
                 this.BestShotDirectory.Dispose();
                 this.OpenScoreFileDialogInitialDirectory.Dispose();
                 this.ScoreFile.Dispose();
@@ -545,7 +532,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
         private void AddTemplateFiles(OpenFileDialogActionResult result)
         {
-            this.TemplateFiles = this.TemplateFiles.Union(result.FileNames);
+            this.TemplateFiles.Value = this.TemplateFiles.Value
+                .Union(result.FileNames.Where(file => File.Exists(file))).ToArray();
         }
 
         /// <summary>
@@ -567,7 +555,7 @@ namespace ThScoreFileConverter.ViewModels
         private void DeleteTemplateFiles(IList? selectedItems)
         {
             if (selectedItems is not null)
-                this.TemplateFiles = this.TemplateFiles.Except(selectedItems.Cast<string>());
+                this.TemplateFiles.Value = this.TemplateFiles.Value.Except(selectedItems.Cast<string>()).ToArray();
         }
 
         /// <summary>
@@ -578,7 +566,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </returns>
         private bool CanDeleteAllTemplateFiles()
         {
-            return this.TemplateFiles.Any();
+            return this.TemplateFiles.Value.Any();
         }
 
         /// <summary>
@@ -586,7 +574,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void DeleteAllTemplateFiles()
         {
-            this.TemplateFiles = Enumerable.Empty<string>();
+            this.TemplateFiles.Value = Enumerable.Empty<string>();
         }
 
         /// <summary>
@@ -608,7 +596,7 @@ namespace ThScoreFileConverter.ViewModels
         {
             return (this.converter is not null)
                 && !string.IsNullOrEmpty(this.ScoreFile.Value)
-                && this.TemplateFiles.Any()
+                && this.TemplateFiles.Value.Any()
                 && !string.IsNullOrEmpty(this.OutputDirectory)
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory.Value))
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));
@@ -718,8 +706,8 @@ namespace ThScoreFileConverter.ViewModels
                 {
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
-                        this.TemplateFiles = this.TemplateFiles
-                            .Union(droppedPaths.Where(path => File.Exists(path)));
+                        this.TemplateFiles.Value = this.TemplateFiles.Value
+                            .Union(droppedPaths.Where(path => File.Exists(path))).ToArray();
                     }
                 }
             }
@@ -784,13 +772,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.TemplateFiles):
-                    this.RaisePropertyChanged(nameof(this.OpenTemplateFilesDialogInitialDirectory));
-                    this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
-                    this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                    break;
-
                 case nameof(this.OutputDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
