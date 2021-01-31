@@ -125,7 +125,7 @@
                 <xb:Interaction.Triggers>
                     <xb:EventTrigger EventName="Click">
                         <i:OpenFileDialogAction Filter="{lex:Loc ScoreFileFilter}"
-                                                InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory}"
+                                                InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory.Value}"
                                                 OkCommand="{Binding SelectScoreFileCommand}"
                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     </xb:EventTrigger>

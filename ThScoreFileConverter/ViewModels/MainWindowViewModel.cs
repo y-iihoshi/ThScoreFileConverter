@@ -143,6 +143,9 @@ namespace ThScoreFileConverter.ViewModels
 
             this.ScoreFile = currentSetting
                 .ToReactivePropertyAsSynchronized(x => x.Value.ScoreFile, ReactivePropertyMode.DistinctUntilChanged);
+            this.OpenScoreFileDialogInitialDirectory = this.ScoreFile
+                .Select(file => Path.GetDirectoryName(file) ?? string.Empty)
+                .ToReadOnlyReactivePropertySlim(string.Empty, ReactivePropertyMode.DistinctUntilChanged);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -202,7 +205,6 @@ namespace ThScoreFileConverter.ViewModels
                     this.IsIdle.Value = true;
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
-                    this.ScoreFile.ForceNotify();
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
                     this.RaisePropertyChanged(nameof(this.BestShotDirectory));
                     this.RaisePropertyChanged(nameof(this.TemplateFiles));
@@ -213,12 +215,7 @@ namespace ThScoreFileConverter.ViewModels
 
                     this.ConvertCommand.RaiseCanExecuteChanged();
                 }));
-            this.disposables.Add(
-                this.ScoreFile.Subscribe(value =>
-                {
-                    this.RaisePropertyChanged(nameof(this.OpenScoreFileDialogInitialDirectory));
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                }));
+            this.disposables.Add(this.ScoreFile.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
 
             if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
                 this.LastWorkNumber.Value = WorksImpl.First().Number;
@@ -276,24 +273,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the initial directory to select a score file.
         /// </summary>
-        public string OpenScoreFileDialogInitialDirectory
-        {
-            get
-            {
-                try
-                {
-                    return Path.GetDirectoryName(this.ScoreFile.Value) ?? string.Empty;
-                }
-                catch (ArgumentException)
-                {
-                    return string.Empty;
-                }
-                catch (PathTooLongException)
-                {
-                    return string.Empty;
-                }
-            }
-        }
+        public ReadOnlyReactivePropertySlim<string> OpenScoreFileDialogInitialDirectory { get; }
 
         /// <summary>
         /// Gets a path of the best shot directory.
@@ -518,6 +498,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.OpenScoreFileDialogInitialDirectory.Dispose();
                 this.ScoreFile.Dispose();
                 this.LastWorkNumber.Dispose();
                 this.IsIdle.Dispose();

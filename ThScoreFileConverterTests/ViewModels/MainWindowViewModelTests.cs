@@ -139,7 +139,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void OpenScoreFileDialogInitialDirectoryTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(string.Empty, window.OpenScoreFileDialogInitialDirectory);
+            Assert.AreEqual(string.Empty, window.OpenScoreFileDialogInitialDirectory.Value);
         }
 
         [TestMethod]
