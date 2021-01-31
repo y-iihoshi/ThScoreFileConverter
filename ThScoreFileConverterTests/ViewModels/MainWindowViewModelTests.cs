@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void ScoreFileTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(string.Empty, window.ScoreFile);
+            Assert.AreEqual(string.Empty, window.ScoreFile.Value);
         }
 
         [TestMethod]
@@ -236,7 +236,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var disposed = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileName = Path.GetTempFileName();
             try
@@ -247,7 +247,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(result);
                 Assert.AreEqual(1, numChanged);
-                Assert.AreEqual(fileName, window.ScoreFile);
+                Assert.AreEqual(fileName, window.ScoreFile.Value);
             }
             finally
             {
@@ -264,9 +264,9 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var disposed = window.ScoreFile.Subscribe(_ => ++numChanged);
 
-            var fileName = window.ScoreFile;
+            var fileName = window.ScoreFile.Value;
             var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
@@ -284,7 +284,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var disposed = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileName = "nonexistent.txt";
             var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
@@ -793,7 +793,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileNames = Enumerable.Range(1, 3).Select(_ => Path.GetTempFileName()).ToArray();
             try
@@ -804,7 +804,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(args!);
                 Assert.AreEqual(1, numChanged);
-                Assert.AreEqual(fileNames[0], window.ScoreFile);
+                Assert.AreEqual(fileNames[0], window.ScoreFile.Value);
             }
             finally
             {
@@ -822,7 +822,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var fileNames = new[] { "nonexistent.txt" };
 
@@ -832,7 +832,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.ScoreFile);
+            Assert.AreEqual(string.Empty, window.ScoreFile.Value);
         }
 
         [TestMethod]
@@ -844,7 +844,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -852,7 +852,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.ScoreFile);
+            Assert.AreEqual(string.Empty, window.ScoreFile.Value);
         }
 
         [TestMethod]
@@ -864,7 +864,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.ScoreFile, false).Subscribe(_ => ++numChanged);
+            using var _ = window.ScoreFile.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -872,7 +872,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.ScoreFile);
+            Assert.AreEqual(string.Empty, window.ScoreFile.Value);
         }
 
         [TestMethod]

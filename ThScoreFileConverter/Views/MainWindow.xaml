@@ -110,7 +110,7 @@
                      Grid.Column="1"
                      Grid.Row="0"
                      IsReadOnly="True"
-                     Text="{Binding ScoreFile, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ScoreFile.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <xb:Interaction.Behaviors>
                     <i:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"

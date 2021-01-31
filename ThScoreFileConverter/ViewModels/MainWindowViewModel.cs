@@ -13,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -131,6 +132,17 @@ namespace ThScoreFileConverter.ViewModels
             this.IsIdle = new ReactivePropertySlim<bool>(true);
             this.LastWorkNumber = this.settings
                 .ToReactivePropertySlimAsSynchronized(x => x.LastTitle, ReactivePropertyMode.DistinctUntilChanged);
+            this.disposables.Add(
+                this.LastWorkNumber.Subscribe(
+                    value => _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle())));
+
+            var currentSetting = this.LastWorkNumber
+                .Select(title => this.settings.Dictionary[title])
+                .ToReadOnlyReactivePropertySlim(mode: ReactivePropertyMode.DistinctUntilChanged);
+            this.disposables.Add(currentSetting);
+
+            this.ScoreFile = currentSetting
+                .ToReactivePropertyAsSynchronized(x => x.Value.ScoreFile, ReactivePropertyMode.DistinctUntilChanged);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -173,8 +185,6 @@ namespace ThScoreFileConverter.ViewModels
             this.disposables.Add(
                 this.LastWorkNumber.Subscribe(value =>
                 {
-                    _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle());
-
                     this.converter = ThConverterFactory.Create(value);
                     if (this.converter is null)
                     {
@@ -192,7 +202,7 @@ namespace ThScoreFileConverter.ViewModels
                     this.IsIdle.Value = true;
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
-                    this.RaisePropertyChanged(nameof(this.ScoreFile));
+                    this.ScoreFile.ForceNotify();
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
                     this.RaisePropertyChanged(nameof(this.BestShotDirectory));
                     this.RaisePropertyChanged(nameof(this.TemplateFiles));
@@ -201,6 +211,12 @@ namespace ThScoreFileConverter.ViewModels
                     this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
                     this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
 
+                    this.ConvertCommand.RaiseCanExecuteChanged();
+                }));
+            this.disposables.Add(
+                this.ScoreFile.Subscribe(value =>
+                {
+                    this.RaisePropertyChanged(nameof(this.OpenScoreFileDialogInitialDirectory));
                     this.ConvertCommand.RaiseCanExecuteChanged();
                 }));
 
@@ -255,19 +271,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a path of the score file.
         /// </summary>
-        public string ScoreFile
-        {
-            get => this.CurrentSetting.ScoreFile;
-
-            private set
-            {
-                if ((this.CurrentSetting.ScoreFile != value) && File.Exists(value))
-                {
-                    this.CurrentSetting.ScoreFile = value;
-                    this.RaisePropertyChanged(nameof(this.ScoreFile));
-                }
-            }
-        }
+        public ReactiveProperty<string> ScoreFile { get; }
 
         /// <summary>
         /// Gets the initial directory to select a score file.
@@ -278,7 +282,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 try
                 {
-                    return Path.GetDirectoryName(this.ScoreFile) ?? string.Empty;
+                    return Path.GetDirectoryName(this.ScoreFile.Value) ?? string.Empty;
                 }
                 catch (ArgumentException)
                 {
@@ -514,6 +518,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.ScoreFile.Dispose();
                 this.LastWorkNumber.Dispose();
                 this.IsIdle.Dispose();
                 this.disposables.Dispose();
@@ -539,7 +544,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
         private void SelectScoreFile(OpenFileDialogActionResult result)
         {
-            this.ScoreFile = result.FileName;
+            if (File.Exists(result.FileName))
+                this.ScoreFile.Value = result.FileName;
         }
 
         /// <summary>
@@ -627,7 +633,7 @@ namespace ThScoreFileConverter.ViewModels
         private bool CanConvert()
         {
             return (this.converter is not null)
-                && !string.IsNullOrEmpty(this.ScoreFile)
+                && !string.IsNullOrEmpty(this.ScoreFile.Value)
                 && this.TemplateFiles.Any()
                 && !string.IsNullOrEmpty(this.OutputDirectory)
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory))
@@ -689,8 +695,8 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
-                        if (filePath is not null)
-                            this.ScoreFile = filePath;
+                        if (filePath is not null && File.Exists(filePath))
+                            this.ScoreFile.Value = filePath;
                     }
                 }
             }
@@ -804,11 +810,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.ScoreFile):
-                    this.RaisePropertyChanged(nameof(this.OpenScoreFileDialogInitialDirectory));
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                    break;
-
                 case nameof(this.BestShotDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
@@ -867,6 +868,6 @@ namespace ThScoreFileConverter.ViewModels
             this.IsIdle.Value = true;
         }
 
-#endregion
+        #endregion
     }
 }
