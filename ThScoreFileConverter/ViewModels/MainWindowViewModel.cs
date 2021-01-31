@@ -136,27 +136,26 @@ namespace ThScoreFileConverter.ViewModels
                 this.LastWorkNumber.Subscribe(
                     value => _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle())));
 
-            var currentSetting = this.LastWorkNumber
+            this.CurrentSetting = this.LastWorkNumber
                 .Select(title => this.settings.Dictionary[title])
-                .ToReadOnlyReactivePropertySlim(mode: rpMode);
-            this.disposables.Add(currentSetting);
+                .ToReadOnlyReactivePropertySlim(new SettingsPerTitle(), mode: rpMode);
 
-            this.ScoreFile = currentSetting.ToReactivePropertySlimAsSynchronized(x => x.Value.ScoreFile, rpMode);
+            this.ScoreFile = this.CurrentSetting.ToReactivePropertySlimAsSynchronized(x => x.Value.ScoreFile, rpMode);
             this.OpenScoreFileDialogInitialDirectory = this.ScoreFile
                 .Select(file => Path.GetDirectoryName(file) ?? string.Empty)
                 .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
-            this.BestShotDirectory = currentSetting
+            this.BestShotDirectory = this.CurrentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.BestShotDirectory, rpMode);
-            this.TemplateFiles = currentSetting
+            this.TemplateFiles = this.CurrentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.TemplateFiles, rpMode);
             this.OpenTemplateFilesDialogInitialDirectory = this.TemplateFiles
                 .Select(files => Path.GetDirectoryName(files.LastOrDefault()) ?? string.Empty)
                 .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
-            this.OutputDirectory = currentSetting
+            this.OutputDirectory = this.CurrentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.OutputDirectory, rpMode);
-            this.ImageOutputDirectory = currentSetting
+            this.ImageOutputDirectory = this.CurrentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.ImageOutputDirectory, rpMode);
-            this.HidesUntriedCards = currentSetting
+            this.HidesUntriedCards = this.CurrentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.HideUntriedCards, rpMode);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
@@ -418,7 +417,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the setting for the currently selected Touhou work.
         /// </summary>
-        private SettingsPerTitle CurrentSetting => this.settings.Dictionary[this.settings.LastTitle];
+        private ReadOnlyReactivePropertySlim<SettingsPerTitle> CurrentSetting { get; }
 
         /// <inheritdoc/>
         public void Dispose()
@@ -453,6 +452,7 @@ namespace ThScoreFileConverter.ViewModels
                 this.ScoreFile.Dispose();
                 this.LastWorkNumber.Dispose();
                 this.IsIdle.Dispose();
+                this.CurrentSetting.Dispose();
                 this.disposables.Dispose();
             }
 
@@ -588,7 +588,7 @@ namespace ThScoreFileConverter.ViewModels
                 var inputCodePageId = this.settings.InputCodePageId!.Value;
                 var outputCodePageId = this.settings.OutputCodePageId!.Value;
                 new Thread(this.converter!.Convert).Start(
-                    (this.CurrentSetting, inputCodePageId, outputCodePageId, this.formatter));
+                    (this.CurrentSetting.Value, inputCodePageId, outputCodePageId, this.formatter));
             }
         }
 
