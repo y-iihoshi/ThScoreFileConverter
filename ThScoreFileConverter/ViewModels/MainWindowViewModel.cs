@@ -84,7 +84,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// The settings of this application.
         /// </summary>
-        private readonly ISettings settings;
+        private readonly Settings settings;
 
         /// <summary>
         /// An <see cref="INumberFormatter"/>.
@@ -116,7 +116,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="settings">The settings of this application.</param>
         /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
         public MainWindowViewModel(
-            IDialogService dialogService, IDispatcherAdapter dispatcher, ISettings settings, INumberFormatter formatter)
+            IDialogService dialogService, IDispatcherAdapter dispatcher, Settings settings, INumberFormatter formatter)
         {
             this.dialogService = dialogService;
             this.dispatcher = dispatcher;
@@ -129,6 +129,8 @@ namespace ThScoreFileConverter.ViewModels
             this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
             this.Works = WorksImpl;
             this.IsIdle = new ReactivePropertySlim<bool>(true);
+            this.LastWorkNumber = this.settings
+                .ToReactivePropertySlimAsSynchronized(x => x.LastTitle, ReactivePropertyMode.DistinctUntilChanged);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -168,11 +170,44 @@ namespace ThScoreFileConverter.ViewModels
                     .Subscribe(_ => this.RaisePropertyChanged(nameof(this.SupportedVersions))));
 
             this.disposables.Add(this.IsIdle.Subscribe(idle => this.OverrideCursor(idle ? null : Cursors.Wait)));
+            this.disposables.Add(
+                this.LastWorkNumber.Subscribe(value =>
+                {
+                    _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle());
 
-            if (string.IsNullOrEmpty(this.LastWorkNumber))
-                this.LastWorkNumber = WorksImpl.First().Number;
+                    this.converter = ThConverterFactory.Create(value);
+                    if (this.converter is null)
+                    {
+                        this.Log.Value = $"Failed to create a converter: {nameof(this.LastWorkNumber)} = {value}"
+                            + Environment.NewLine;
+                    }
+                    else
+                    {
+                        this.converter.ConvertFinished += this.OnConvertFinished;
+                        this.converter.ConvertAllFinished += this.OnConvertAllFinished;
+                        this.converter.ExceptionOccurred += this.OnExceptionOccurred;
+                        this.Log.Value = string.Empty;
+                    }
+
+                    this.IsIdle.Value = true;
+
+                    this.RaisePropertyChanged(nameof(this.SupportedVersions));
+                    this.RaisePropertyChanged(nameof(this.ScoreFile));
+                    this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
+                    this.RaisePropertyChanged(nameof(this.BestShotDirectory));
+                    this.RaisePropertyChanged(nameof(this.TemplateFiles));
+                    this.RaisePropertyChanged(nameof(this.OutputDirectory));
+                    this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
+                    this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
+                    this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
+
+                    this.ConvertCommand.RaiseCanExecuteChanged();
+                }));
+
+            if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
+                this.LastWorkNumber.Value = WorksImpl.First().Number;
             else
-                this.RaisePropertyChanged(nameof(this.LastWorkNumber));
+                this.LastWorkNumber.ForceNotify();
         }
 
         /// <summary>
@@ -206,27 +241,9 @@ namespace ThScoreFileConverter.ViewModels
         public bool CanHandleBestShot => this.converter?.HasBestShotConverter ?? false;
 
         /// <summary>
-        /// Gets or sets a number string indicating the last selected work.
+        /// Gets a number string indicating the last selected work.
         /// </summary>
-        public string LastWorkNumber
-        {
-            get => this.settings.LastTitle;
-
-            set
-            {
-#if false
-                // Note: The following occurs CS0206.
-                this.SetProperty(ref this.settings.LastTitle, value);
-#else
-                if (this.settings.LastTitle != value)
-                {
-                    this.settings.LastTitle = value;
-                    _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle());
-                    this.RaisePropertyChanged(nameof(this.LastWorkNumber));
-                }
-#endif
-            }
-        }
+        public ReactivePropertySlim<string> LastWorkNumber { get; }
 
         /// <summary>
         /// Gets a string indicating the supported versions of the score file to convert.
@@ -497,6 +514,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.LastWorkNumber.Dispose();
                 this.IsIdle.Dispose();
                 this.disposables.Dispose();
             }
@@ -786,37 +804,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.LastWorkNumber):
-                    this.converter = ThConverterFactory.Create(this.settings.LastTitle);
-                    if (this.converter is null)
-                    {
-                        this.Log.Value = "Failed to create a converter: "
-                            + $"{nameof(this.settings.LastTitle)} = {this.settings.LastTitle}"
-                            + Environment.NewLine;
-                    }
-                    else
-                    {
-                        this.converter.ConvertFinished += this.OnConvertFinished;
-                        this.converter.ConvertAllFinished += this.OnConvertAllFinished;
-                        this.converter.ExceptionOccurred += this.OnExceptionOccurred;
-                        this.Log.Value = string.Empty;
-                    }
-
-                    this.IsIdle.Value = true;
-
-                    this.RaisePropertyChanged(nameof(this.SupportedVersions));
-                    this.RaisePropertyChanged(nameof(this.ScoreFile));
-                    this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
-                    this.RaisePropertyChanged(nameof(this.BestShotDirectory));
-                    this.RaisePropertyChanged(nameof(this.TemplateFiles));
-                    this.RaisePropertyChanged(nameof(this.OutputDirectory));
-                    this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
-                    this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
-                    this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
-
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                    break;
-
                 case nameof(this.ScoreFile):
                     this.RaisePropertyChanged(nameof(this.OpenScoreFileDialogInitialDirectory));
                     this.ConvertCommand.RaiseCanExecuteChanged();
@@ -880,6 +867,6 @@ namespace ThScoreFileConverter.ViewModels
             this.IsIdle.Value = true;
         }
 
-        #endregion
+#endregion
     }
 }

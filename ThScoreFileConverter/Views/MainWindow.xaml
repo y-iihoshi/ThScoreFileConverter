@@ -31,7 +31,7 @@
 
             <ComboBox Grid.Column="0"
                       ItemsSource="{Binding Works}"
-                      SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
+                      SelectedValue="{Binding LastWorkNumber.Value, Mode=TwoWay}"
                       SelectedValuePath="Number"
                       VerticalAlignment="Center">
                 <ComboBox.ItemContainerStyle>
