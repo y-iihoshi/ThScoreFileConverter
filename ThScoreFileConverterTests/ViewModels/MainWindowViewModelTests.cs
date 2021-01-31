@@ -167,7 +167,7 @@ namespace ThScoreFileConverterTests.ViewModels
         public void OutputDirectoryTest()
         {
             using var window = CreateViewModel();
-            Assert.AreEqual(string.Empty, window.OutputDirectory);
+            Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
         }
 
         [TestMethod]
@@ -681,7 +681,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
             var path = Path.GetTempPath();
             var result = new FolderBrowserDialogActionResult(path);
@@ -690,7 +690,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(result);
             Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(path, window.OutputDirectory);
+            Assert.AreEqual(path, window.OutputDirectory.Value);
         }
 
         [TestMethod]
@@ -702,9 +702,9 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
-            var path = window.OutputDirectory;
+            var path = window.OutputDirectory.Value;
             var result = new FolderBrowserDialogActionResult(path);
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
@@ -722,7 +722,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
             var path = "nonexistent";
             var result = new FolderBrowserDialogActionResult(path);
@@ -1052,7 +1052,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            _ = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
             var dirNames = Enumerable.Range(1, 3).Select(index =>
             {
@@ -1069,7 +1069,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
                 command.Execute(args!);
                 Assert.AreEqual(1, numChanged);
-                Assert.AreEqual(dirNames[0], window.OutputDirectory);
+                Assert.AreEqual(dirNames[0], window.OutputDirectory.Value);
             }
             finally
             {
@@ -1087,7 +1087,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
             var dirNames = new[] { "nonexistent" };
 
@@ -1097,7 +1097,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.OutputDirectory);
+            Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
         }
 
         [TestMethod]
@@ -1109,7 +1109,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -1117,7 +1117,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.OutputDirectory);
+            Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
         }
 
         [TestMethod]
@@ -1129,7 +1129,7 @@ namespace ThScoreFileConverterTests.ViewModels
             Assert.IsNotNull(command);
 
             var numChanged = 0;
-            using var _ = window.ObserveProperty(w => w.OutputDirectory, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
             var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
             Assert.IsNotNull(args);
@@ -1137,7 +1137,7 @@ namespace ThScoreFileConverterTests.ViewModels
 
             command.Execute(args!);
             Assert.AreEqual(0, numChanged);
-            Assert.AreEqual(string.Empty, window.OutputDirectory);
+            Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
         }
 
         [TestMethod]

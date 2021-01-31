@@ -153,6 +153,8 @@ namespace ThScoreFileConverter.ViewModels
             this.OpenTemplateFilesDialogInitialDirectory = this.TemplateFiles
                 .Select(files => Path.GetDirectoryName(files.LastOrDefault()) ?? string.Empty)
                 .ToReadOnlyReactivePropertySlim(string.Empty, rpMode);
+            this.OutputDirectory = currentSetting
+                .ToReactivePropertySlimAsSynchronized(x => x.Value.OutputDirectory, rpMode);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -213,7 +215,6 @@ namespace ThScoreFileConverter.ViewModels
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
-                    this.RaisePropertyChanged(nameof(this.OutputDirectory));
                     this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
                     this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
                     this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
@@ -230,6 +231,8 @@ namespace ThScoreFileConverter.ViewModels
                     this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.ConvertCommand.RaiseCanExecuteChanged();
                 }));
+            this.disposables.Add(
+                this.OutputDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
 
             if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
                 this.LastWorkNumber.Value = WorksImpl.First().Number;
@@ -307,19 +310,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a path of the output directory.
         /// </summary>
-        public string OutputDirectory
-        {
-            get => this.CurrentSetting.OutputDirectory;
-
-            private set
-            {
-                if ((this.CurrentSetting.OutputDirectory != value) && Directory.Exists(value))
-                {
-                    this.CurrentSetting.OutputDirectory = value;
-                    this.RaisePropertyChanged(nameof(this.OutputDirectory));
-                }
-            }
-        }
+        public ReactivePropertySlim<string> OutputDirectory { get; }
 
         /// <summary>
         /// Gets or sets a name of the output directory for image files.
@@ -474,6 +465,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.OutputDirectory.Dispose();
                 this.OpenTemplateFilesDialogInitialDirectory.Dispose();
                 this.TemplateFiles.Dispose();
                 this.BestShotDirectory.Dispose();
@@ -583,7 +575,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="result">A result of <see cref="FolderBrowserDialogAction"/>.</param>
         private void SelectOutputDirectory(FolderBrowserDialogActionResult result)
         {
-            this.OutputDirectory = result.SelectedPath;
+            if (Directory.Exists(result.SelectedPath))
+                this.OutputDirectory.Value = result.SelectedPath;
         }
 
         /// <summary>
@@ -597,7 +590,7 @@ namespace ThScoreFileConverter.ViewModels
             return (this.converter is not null)
                 && !string.IsNullOrEmpty(this.ScoreFile.Value)
                 && this.TemplateFiles.Value.Any()
-                && !string.IsNullOrEmpty(this.OutputDirectory)
+                && !string.IsNullOrEmpty(this.OutputDirectory.Value)
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory.Value))
                 && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));
         }
@@ -732,7 +725,7 @@ namespace ThScoreFileConverter.ViewModels
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
                         if (dirPath is not null)
-                            this.OutputDirectory = dirPath;
+                            this.OutputDirectory.Value = dirPath;
                     }
                 }
             }
@@ -772,10 +765,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.OutputDirectory):
-                    this.ConvertCommand.RaiseCanExecuteChanged();
-                    break;
-
                 case nameof(this.ImageOutputDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;

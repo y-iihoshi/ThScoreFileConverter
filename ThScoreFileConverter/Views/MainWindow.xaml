@@ -225,7 +225,7 @@
                      Grid.Column="1"
                      Grid.Row="3"
                      IsReadOnly="True"
-                     Text="{Binding OutputDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding OutputDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <xb:Interaction.Behaviors>
                     <i:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
