@@ -207,15 +207,15 @@ namespace ThScoreFileConverterTests.ViewModels
             var formatterMock = MockNumberFormatter();
             using var window = new MainWindowViewModel(
                 dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
-            Assert.IsTrue(window.HidesUntriedCards);
+            Assert.IsTrue(window.HidesUntriedCards.Value);
 
             var numChanged = 0;
-            using var disposed = window.ObserveProperty(w => w.HidesUntriedCards, false).Subscribe(_ => ++numChanged);
+            using var disposable = window.HidesUntriedCards.Subscribe(_ => ++numChanged);
 
             var expected = false;
-            window.HidesUntriedCards = expected;
+            window.HidesUntriedCards.Value = expected;
             Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(expected, window.HidesUntriedCards);
+            Assert.AreEqual(expected, window.HidesUntriedCards.Value);
             Assert.AreEqual(expected, settings.Dictionary[window.Works.First().Number].HideUntriedCards);
         }
 

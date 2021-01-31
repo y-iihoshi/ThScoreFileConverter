@@ -264,7 +264,7 @@
                       Grid.ColumnSpan="2"
                       Grid.Row="5"
                       Content="{lex:Loc ViewsMainWindowCheckBoxHideUntriedCardNames}"
-                      IsChecked="{Binding HidesUntriedCards}"
+                      IsChecked="{Binding HidesUntriedCards.Value}"
                       IsEnabled="{Binding CanReplaceCardNames}"/>
         </Grid>
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -157,6 +156,8 @@ namespace ThScoreFileConverter.ViewModels
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.OutputDirectory, rpMode);
             this.ImageOutputDirectory = currentSetting
                 .ToReactivePropertySlimAsSynchronized(x => x.Value.ImageOutputDirectory, rpMode);
+            this.HidesUntriedCards = currentSetting
+                .ToReactivePropertySlimAsSynchronized(x => x.Value.HideUntriedCards, rpMode);
             this.Log = new ReactivePropertySlim<string>(string.Empty);
 
             this.SelectScoreFileCommand =
@@ -217,7 +218,6 @@ namespace ThScoreFileConverter.ViewModels
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
                     this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
-                    this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
 
                     this.ConvertCommand.RaiseCanExecuteChanged();
                 }));
@@ -325,21 +325,9 @@ namespace ThScoreFileConverter.ViewModels
         public bool CanReplaceCardNames => this.converter?.HasCardReplacer ?? false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the conversion process hides untried cards.
+        /// Gets a value indicating whether the conversion process hides untried cards.
         /// </summary>
-        public bool HidesUntriedCards
-        {
-            get => this.CurrentSetting.HideUntriedCards;
-
-            set
-            {
-                if (this.CurrentSetting.HideUntriedCards != value)
-                {
-                    this.CurrentSetting.HideUntriedCards = value;
-                    this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
-                }
-            }
-        }
+        public ReactivePropertySlim<bool> HidesUntriedCards { get; }
 
         /// <summary>
         /// Gets a log text.
@@ -455,6 +443,7 @@ namespace ThScoreFileConverter.ViewModels
             if (disposing)
             {
                 this.Log.Dispose();
+                this.HidesUntriedCards.Dispose();
                 this.ImageOutputDirectory.Dispose();
                 this.OutputDirectory.Dispose();
                 this.OpenTemplateFilesDialogInitialDirectory.Dispose();
