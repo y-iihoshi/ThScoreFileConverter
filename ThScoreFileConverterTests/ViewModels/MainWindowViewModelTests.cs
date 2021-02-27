@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.ViewModels
             var numChanged = 0;
             using var disposable = window.LastWorkNumber.Subscribe(_ => ++numChanged);
 
-            var expected = "abc";
+            var expected = "TH07";
             window.LastWorkNumber.Value = expected;
             Assert.AreEqual(1, numChanged);
             Assert.AreEqual(expected, window.LastWorkNumber.Value);

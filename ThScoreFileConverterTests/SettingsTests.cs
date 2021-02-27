@@ -538,7 +538,7 @@ namespace ThScoreFileConverterTests
                 InputCodePageId = 932,
                 OutputCodePageId = 932,
             };
-            settings.Dictionary.Add(settings.LastTitle, new SettingsPerTitle
+            settings.Dictionary[settings.LastTitle] = new SettingsPerTitle
             {
                 BestShotDirectory = "bestshot",
                 HideUntriedCards = true,
@@ -546,7 +546,7 @@ namespace ThScoreFileConverterTests
                 OutputDirectory = "output",
                 ScoreFile = "score.dat",
                 TemplateFiles = new[] { "template1", "template2" },
-            });
+            };
 
             var tempfile = Path.GetTempFileName();
             settings.Save(tempfile);
@@ -625,7 +625,7 @@ namespace ThScoreFileConverterTests
             settings.PropertyChanged += OnPropertyChanged;
             try
             {
-                var lastTitle = nameof(settings.LastTitle);
+                var lastTitle = "TH06";
                 settings.LastTitle = lastTitle;
                 Assert.AreEqual(lastTitle, settings.LastTitle);
                 Assert.AreEqual(1, numCalled);

@@ -23,7 +23,6 @@ using Prism.Services.Dialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -132,9 +131,6 @@ namespace ThScoreFileConverter.ViewModels
             this.Works = WorksImpl;
             this.IsIdle = new ReactivePropertySlim<bool>(true);
             this.LastWorkNumber = this.settings.ToReactivePropertySlimAsSynchronized(x => x.LastTitle, rpMode);
-            this.disposables.Add(
-                this.LastWorkNumber.Subscribe(
-                    value => _ = this.settings.Dictionary.TryAdd(value, new SettingsPerTitle())));
 
             this.CurrentSetting = this.LastWorkNumber
                 .Select(title => this.settings.Dictionary[title])

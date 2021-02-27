@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 
@@ -67,7 +68,17 @@ namespace ThScoreFileConverter
         public string LastTitle
         {
             get => this.lastTitle;
-            set => this.SetProperty(ref this.lastTitle, value);
+            set
+            {
+                if (value is null)
+                    throw new ArgumentNullException(nameof(value));
+
+                if (ThConverterFactory.CanCreate(value))
+                {
+                    if (this.SetProperty(ref this.lastTitle, value))
+                        _ = this.Dictionary?.TryAdd(this.lastTitle, new SettingsPerTitle());
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -222,16 +233,18 @@ namespace ThScoreFileConverter
         /// <param name="storage">A backing field of the property to be set a value.</param>
         /// <param name="value">A value to set.</param>
         /// <param name="propertyName">The name of the property.</param>
-        private void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
+        /// <returns><c>true</c> if <paramref name="storage"/> was changed; otherwise <c>false</c>.</returns>
+        private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
         {
             if (value is null)
                 throw new ArgumentNullException(nameof(value));
 
             if (EqualityComparer<T>.Default.Equals(storage, value))
-                return;
+                return false;
 
             storage = value;
             this.RaisePropertyChanged(propertyName);
+            return true;
         }
 
         /// <summary>
