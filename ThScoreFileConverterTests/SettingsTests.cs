@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             Assert.AreEqual(string.Empty, settings.LastTitle);
-            Assert.AreEqual(0, settings.Dictionary.Count);
+            Assert.AreEqual(0, settings.NumTitles);
             Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
             Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
             Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests
             var settings = new Settings();
             settings.Load(@"TestData\nonexistent.xml");
             Assert.AreEqual(string.Empty, settings.LastTitle);
-            Assert.AreEqual(0, settings.Dictionary.Count);
+            Assert.AreEqual(0, settings.NumTitles);
             Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
             Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
             Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
@@ -133,7 +133,7 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\invalid-key-value-types.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(1, settings.NumTitles);
         }
 
         [TestMethod]
@@ -147,7 +147,7 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\empty-key.xml");
-            Assert.AreEqual(2, settings.Dictionary.Count);
+            Assert.AreEqual(2, settings.NumTitles);
         }
 
         [TestMethod]
@@ -156,7 +156,7 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\unknown-key.xml");
-            Assert.AreEqual(2, settings.Dictionary.Count);
+            Assert.AreEqual(2, settings.NumTitles);
         }
 
         [TestMethod]
@@ -171,10 +171,10 @@ namespace ThScoreFileConverterTests
             var settings = new Settings();
             settings.Load(@"TestData\empty-value.xml");
 
-            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(1, settings.NumTitles);
 
             var expected = new SettingsPerTitle();
-            var actual = settings.Dictionary.First().Value;
+            var actual = settings.GetSettingsPerTitle(settings.LastTitle);
             Assert.AreEqual(expected.BestShotDirectory, actual.BestShotDirectory);
             Assert.AreEqual(expected.HideUntriedCards, actual.HideUntriedCards);
             Assert.AreEqual(expected.ImageOutputDirectory, actual.ImageOutputDirectory);
@@ -189,8 +189,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\no-best-shot-directory.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.BestShotDirectory);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).BestShotDirectory);
         }
 
         [TestMethod]
@@ -199,8 +199,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\empty-best-shot-directory.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.BestShotDirectory);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).BestShotDirectory);
         }
 
         [TestMethod]
@@ -209,8 +209,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\no-hide-untried-cards.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.IsTrue(settings.Dictionary.First().Value.HideUntriedCards);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.IsTrue(settings.GetSettingsPerTitle(settings.LastTitle).HideUntriedCards);
         }
 
         [TestMethod]
@@ -235,8 +235,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\no-image-output-directory.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ImageOutputDirectory);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ImageOutputDirectory);
         }
 
         [TestMethod]
@@ -245,8 +245,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\empty-image-output-directory.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ImageOutputDirectory);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ImageOutputDirectory);
         }
 
         [TestMethod]
@@ -255,8 +255,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\no-output-directory.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.OutputDirectory);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).OutputDirectory);
         }
 
         [TestMethod]
@@ -265,8 +265,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\empty-output-directory.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.OutputDirectory);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).OutputDirectory);
         }
 
         [TestMethod]
@@ -275,8 +275,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\no-score-file.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ScoreFile);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ScoreFile);
         }
 
         [TestMethod]
@@ -285,8 +285,8 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\empty-score-file.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
-            Assert.AreEqual(string.Empty, settings.Dictionary.First().Value.ScoreFile);
+            Assert.AreEqual(1, settings.NumTitles);
+            Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ScoreFile);
         }
 
         [TestMethod]
@@ -295,9 +295,9 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\no-template-files.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(1, settings.NumTitles);
             CollectionAssert.That.AreEqual(
-                Enumerable.Empty<string>(), settings.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
         }
 
         [TestMethod]
@@ -306,9 +306,9 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\empty-template-files.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(1, settings.NumTitles);
             CollectionAssert.That.AreEqual(
-                Enumerable.Empty<string>(), settings.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
         }
 
         [TestMethod]
@@ -317,9 +317,9 @@ namespace ThScoreFileConverterTests
         {
             var settings = new Settings();
             settings.Load(@"TestData\invalid-template-files.xml");
-            Assert.AreEqual(1, settings.Dictionary.Count);
+            Assert.AreEqual(1, settings.NumTitles);
             CollectionAssert.That.AreEqual(
-                Enumerable.Empty<string>(), settings.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
         }
 
         [TestMethod]
@@ -538,15 +538,14 @@ namespace ThScoreFileConverterTests
                 InputCodePageId = 932,
                 OutputCodePageId = 932,
             };
-            settings.Dictionary[settings.LastTitle] = new SettingsPerTitle
-            {
-                BestShotDirectory = "bestshot",
-                HideUntriedCards = true,
-                ImageOutputDirectory = "images",
-                OutputDirectory = "output",
-                ScoreFile = "score.dat",
-                TemplateFiles = new[] { "template1", "template2" },
-            };
+
+            var settingsPerTitle = settings.GetSettingsPerTitle(settings.LastTitle);
+            settingsPerTitle.BestShotDirectory = "bestshot";
+            settingsPerTitle.HideUntriedCards = true;
+            settingsPerTitle.ImageOutputDirectory = "images";
+            settingsPerTitle.OutputDirectory = "output";
+            settingsPerTitle.ScoreFile = "score.dat";
+            settingsPerTitle.TemplateFiles = new[] { "template1", "template2" };
 
             var tempfile = Path.GetTempFileName();
             settings.Save(tempfile);
@@ -556,11 +555,10 @@ namespace ThScoreFileConverterTests
             File.Delete(tempfile);
 
             Assert.AreEqual(settings.LastTitle, settings2.LastTitle);
-            Assert.AreEqual(1, settings2.Dictionary.Count);
-            Assert.IsTrue(settings2.Dictionary.ContainsKey(settings.LastTitle));
+            Assert.AreEqual(1, settings2.NumTitles);
 
-            var expected = settings.Dictionary[settings.LastTitle];
-            var actual= settings2.Dictionary[settings2.LastTitle];
+            var expected = settings.GetSettingsPerTitle(settings.LastTitle);
+            var actual= settings2.GetSettingsPerTitle(settings2.LastTitle);
             Assert.AreEqual(expected.BestShotDirectory, actual.BestShotDirectory);
             Assert.AreEqual(expected.HideUntriedCards, actual.HideUntriedCards);
             Assert.AreEqual(expected.ImageOutputDirectory, actual.ImageOutputDirectory);

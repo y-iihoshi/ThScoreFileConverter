@@ -188,7 +188,7 @@ namespace ThScoreFileConverterTests.ViewModels
             window.ImageOutputDirectory.Value = expected;
             Assert.AreEqual(1, numChanged);
             Assert.AreEqual(expected, window.ImageOutputDirectory.Value);
-            Assert.AreEqual(expected, settings.Dictionary[window.Works.First().Number].ImageOutputDirectory);
+            Assert.AreEqual(expected, settings.GetSettingsPerTitle(window.Works.First().Number).ImageOutputDirectory);
         }
 
         [TestMethod]
@@ -216,7 +216,7 @@ namespace ThScoreFileConverterTests.ViewModels
             window.HidesUntriedCards.Value = expected;
             Assert.AreEqual(1, numChanged);
             Assert.AreEqual(expected, window.HidesUntriedCards.Value);
-            Assert.AreEqual(expected, settings.Dictionary[window.Works.First().Number].HideUntriedCards);
+            Assert.AreEqual(expected, settings.GetSettingsPerTitle(window.Works.First().Number).HideUntriedCards);
         }
 
         [TestMethod]

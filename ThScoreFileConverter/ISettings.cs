@@ -15,11 +15,6 @@ namespace ThScoreFileConverter
     public interface ISettings
     {
         /// <summary>
-        /// Gets the dictionary of <see cref="SettingsPerTitle"/> instances.
-        /// </summary>
-        Dictionary<string, SettingsPerTitle> Dictionary { get; }
-
-        /// <summary>
         /// Gets or sets the font family name used for the UI of this application.
         /// </summary>
         string FontFamilyName { get; set; }

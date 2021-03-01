@@ -133,7 +133,7 @@ namespace ThScoreFileConverter.ViewModels
             this.LastWorkNumber = this.settings.ToReactivePropertySlimAsSynchronized(x => x.LastTitle, rpMode);
 
             this.CurrentSetting = this.LastWorkNumber
-                .Select(title => this.settings.Dictionary[title])
+                .Select(this.settings.GetSettingsPerTitle)
                 .ToReadOnlyReactivePropertySlim(new SettingsPerTitle(), mode: rpMode);
 
             this.ScoreFile = this.CurrentSetting.ToReactivePropertySlimAsSynchronized(x => x.Value.ScoreFile, rpMode);

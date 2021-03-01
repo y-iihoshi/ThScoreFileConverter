@@ -82,10 +82,6 @@ namespace ThScoreFileConverter
         }
 
         /// <inheritdoc/>
-        [DataMember(Order = 1)]
-        public Dictionary<string, SettingsPerTitle> Dictionary { get; private set; }
-
-        /// <inheritdoc/>
         [DataMember(Order = 2)]
         public string FontFamilyName
         {
@@ -145,6 +141,18 @@ namespace ThScoreFileConverter
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the number of <see cref="SettingsPerTitle"/> instances.
+        /// </summary>
+        /// <returns>The number of <see cref="SettingsPerTitle"/> instances.</returns>
+        public int NumTitles => this.Dictionary.Count;
+
+        /// <summary>
+        /// Gets or sets the dictionary of <see cref="SettingsPerTitle"/> instances.
+        /// </summary>
+        [DataMember(Order = 1)]
+        private Dictionary<string, SettingsPerTitle> Dictionary { get; set; }
 
         /// <inheritdoc/>
         public void Load(string path)
@@ -212,6 +220,16 @@ namespace ThScoreFileConverter
             serializer.WriteObject(writer, this);
             writer.WriteWhitespace(settings.NewLineChars);
             writer.Flush();
+        }
+
+        /// <summary>
+        /// Gets the setting per title.
+        /// </summary>
+        /// <param name="title">The key of the title.</param>
+        /// <returns>The <see cref="SettingsPerTitle"/>instance.</returns>
+        public SettingsPerTitle GetSettingsPerTitle(string title)
+        {
+            return this.Dictionary.TryGetValue(title, out var settings) ? settings : new SettingsPerTitle();
         }
 
         /// <summary>
