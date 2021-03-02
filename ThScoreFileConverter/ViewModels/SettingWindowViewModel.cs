@@ -137,7 +137,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
         /// input files.
         /// </summary>
-        public IDictionary<int, string> InputEncodings { get; }
+        public IReadOnlyDictionary<int, string> InputEncodings { get; }
 
         /// <summary>
         /// Gets the code page identifier for input files.
@@ -148,7 +148,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
         /// output files.
         /// </summary>
-        public IDictionary<int, string> OutputEncodings { get; }
+        public IReadOnlyDictionary<int, string> OutputEncodings { get; }
 
         /// <summary>
         /// Gets the code page identifier for output files.
