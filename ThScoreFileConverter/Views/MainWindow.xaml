@@ -31,7 +31,7 @@
 
             <ComboBox Grid.Column="0"
                       ItemsSource="{Binding Works}"
-                      SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
+                      SelectedValue="{Binding LastWorkNumber.Value, Mode=TwoWay}"
                       SelectedValuePath="Number"
                       VerticalAlignment="Center">
                 <ComboBox.ItemContainerStyle>
@@ -110,7 +110,7 @@
                      Grid.Column="1"
                      Grid.Row="0"
                      IsReadOnly="True"
-                     Text="{Binding ScoreFile, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ScoreFile.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <xb:Interaction.Behaviors>
                     <i:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"
@@ -125,7 +125,7 @@
                 <xb:Interaction.Triggers>
                     <xb:EventTrigger EventName="Click">
                         <i:OpenFileDialogAction Filter="{lex:Loc ScoreFileFilter}"
-                                                InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory}"
+                                                InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory.Value}"
                                                 OkCommand="{Binding SelectScoreFileCommand}"
                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                     </xb:EventTrigger>
@@ -144,7 +144,7 @@
                      Grid.Row="1"
                      IsEnabled="{Binding CanHandleBestShot}"
                      IsReadOnly="True"
-                     Text="{Binding BestShotDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding BestShotDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <xb:Interaction.Behaviors>
                     <i:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
@@ -181,7 +181,7 @@
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      AllowDrop="True"
                      Height="100"
-                     ItemsSource="{Binding TemplateFiles}"
+                     ItemsSource="{Binding TemplateFiles.Value}"
                      SelectionMode="Multiple"
                      VerticalAlignment="Top">
                 <xb:Interaction.Behaviors>
@@ -201,7 +201,7 @@
                     <xb:Interaction.Triggers>
                         <xb:EventTrigger EventName="Click">
                             <i:OpenFileDialogAction Filter="{lex:Loc TemplateFileFilter}"
-                                                    InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory}"
+                                                    InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory.Value}"
                                                     Multiselect="True"
                                                     OkCommand="{Binding AddTemplateFilesCommand}"
                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
@@ -225,7 +225,7 @@
                      Grid.Column="1"
                      Grid.Row="3"
                      IsReadOnly="True"
-                     Text="{Binding OutputDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding OutputDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <xb:Interaction.Behaviors>
                     <i:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
@@ -258,13 +258,13 @@
                      Grid.Column="1"
                      Grid.Row="4"
                      IsEnabled="{Binding CanHandleBestShot}"
-                     Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ImageOutputDirectory.Value, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"/>
             <CheckBox Grid.Column="1"
                       Grid.ColumnSpan="2"
                       Grid.Row="5"
                       Content="{lex:Loc ViewsMainWindowCheckBoxHideUntriedCardNames}"
-                      IsChecked="{Binding HidesUntriedCards}"
+                      IsChecked="{Binding HidesUntriedCards.Value}"
                       IsEnabled="{Binding CanReplaceCardNames}"/>
         </Grid>
 

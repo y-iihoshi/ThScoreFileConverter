@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 
@@ -23,7 +25,7 @@ namespace ThScoreFileConverter
     /// Represents the settings of this application.
     /// </summary>
     [DataContract]
-    public sealed class Settings : ISettings
+    public sealed class Settings : ISettings, INotifyPropertyChanged
     {
         private string lastTitle;
         private string fontFamilyName;
@@ -48,6 +50,9 @@ namespace ThScoreFileConverter
             this.language = CultureInfo.InvariantCulture.Name;
         }
 
+        /// <inheritdoc/>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         /// <summary>
         /// Gets the valid code page identifiers for this application.
         /// </summary>
@@ -63,19 +68,25 @@ namespace ThScoreFileConverter
         public string LastTitle
         {
             get => this.lastTitle;
-            set => this.lastTitle = value ?? throw NewArgumentNullException();
-        }
+            set
+            {
+                if (value is null)
+                    throw new ArgumentNullException(nameof(value));
 
-        /// <inheritdoc/>
-        [DataMember(Order = 1)]
-        public Dictionary<string, SettingsPerTitle> Dictionary { get; private set; }
+                if (ThConverterFactory.CanCreate(value))
+                {
+                    if (this.SetProperty(ref this.lastTitle, value))
+                        _ = this.Dictionary?.TryAdd(this.lastTitle, new SettingsPerTitle());
+                }
+            }
+        }
 
         /// <inheritdoc/>
         [DataMember(Order = 2)]
         public string FontFamilyName
         {
             get => this.fontFamilyName;
-            set => this.fontFamilyName = value ?? throw NewArgumentNullException();
+            set => this.SetProperty(ref this.fontFamilyName, value);
         }
 
         /// <inheritdoc/>
@@ -83,7 +94,7 @@ namespace ThScoreFileConverter
         public double? FontSize
         {
             get => this.fontSize;
-            set => this.fontSize = value ?? throw NewArgumentNullException();
+            set => this.SetProperty(ref this.fontSize, value);
         }
 
         /// <inheritdoc/>
@@ -91,7 +102,7 @@ namespace ThScoreFileConverter
         public bool? OutputNumberGroupSeparator
         {
             get => this.outputNumberGroupSeparator;
-            set => this.outputNumberGroupSeparator = value ?? throw NewArgumentNullException();
+            set => this.SetProperty(ref this.outputNumberGroupSeparator, value);
         }
 
         /// <inheritdoc/>
@@ -99,7 +110,7 @@ namespace ThScoreFileConverter
         public int? InputCodePageId
         {
             get => this.inputCodePageId;
-            set => this.inputCodePageId = value ?? throw NewArgumentNullException();
+            set => this.SetProperty(ref this.inputCodePageId, value);
         }
 
         /// <inheritdoc/>
@@ -107,7 +118,7 @@ namespace ThScoreFileConverter
         public int? OutputCodePageId
         {
             get => this.outputCodePageId;
-            set => this.outputCodePageId = value ?? throw NewArgumentNullException();
+            set => this.SetProperty(ref this.outputCodePageId, value);
         }
 
         /// <inheritdoc/>
@@ -118,18 +129,30 @@ namespace ThScoreFileConverter
             set
             {
                 if (value is null)
-                    throw NewArgumentNullException();
+                    throw new ArgumentNullException(nameof(value));
 
                 try
                 {
                     _ = CultureInfo.GetCultureInfo(value);
-                    this.language = value;
+                    this.SetProperty(ref this.language, value);
                 }
                 catch (CultureNotFoundException)
                 {
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the number of <see cref="SettingsPerTitle"/> instances.
+        /// </summary>
+        /// <returns>The number of <see cref="SettingsPerTitle"/> instances.</returns>
+        public int NumTitles => this.Dictionary.Count;
+
+        /// <summary>
+        /// Gets or sets the dictionary of <see cref="SettingsPerTitle"/> instances.
+        /// </summary>
+        [DataMember(Order = 1)]
+        private Dictionary<string, SettingsPerTitle> Dictionary { get; set; }
 
         /// <inheritdoc/>
         public void Load(string path)
@@ -200,6 +223,16 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
+        /// Gets the setting per title.
+        /// </summary>
+        /// <param name="title">The key of the title.</param>
+        /// <returns>The <see cref="SettingsPerTitle"/>instance.</returns>
+        public SettingsPerTitle GetSettingsPerTitle(string title)
+        {
+            return this.Dictionary.TryGetValue(title, out var settings) ? settings : new SettingsPerTitle();
+        }
+
+        /// <summary>
         /// Creates a new exception object indicating the file may be broken.
         /// </summary>
         /// <param name="file">A path of the file that may be broken.</param>
@@ -211,9 +244,34 @@ namespace ThScoreFileConverter
                 Utils.Format(Resources.InvalidDataExceptionFileMayBeBroken, file), innerException);
         }
 
-        private static Exception NewArgumentNullException([CallerMemberName] string name = "")
+        /// <summary>
+        /// Sets a value to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of a value.</typeparam>
+        /// <param name="storage">A backing field of the property to be set a value.</param>
+        /// <param name="value">A value to set.</param>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <returns><c>true</c> if <paramref name="storage"/> was changed; otherwise <c>false</c>.</returns>
+        private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
         {
-            return new ArgumentNullException(name);
+            if (value is null)
+                throw new ArgumentNullException(nameof(value));
+
+            if (EqualityComparer<T>.Default.Equals(storage, value))
+                return false;
+
+            storage = value;
+            this.RaisePropertyChanged(propertyName);
+            return true;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

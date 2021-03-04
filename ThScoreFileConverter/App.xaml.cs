@@ -27,7 +27,7 @@ namespace ThScoreFileConverter
     public partial class App : PrismApplication
     {
         private readonly IResourceDictionaryAdapter adapter;
-        private readonly ISettings settings;
+        private readonly Settings settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
@@ -48,6 +48,7 @@ namespace ThScoreFileConverter
 
             _ = containerRegistry.RegisterInstance(this.adapter);
             _ = containerRegistry.RegisterInstance(this.settings);
+            _ = containerRegistry.RegisterInstance<ISettings>(this.settings);
             _ = containerRegistry.Register<INumberFormatter, NumberFormatter>();
             _ = containerRegistry.Register<IDispatcherAdapter, DispatcherAdapter>();
             containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
