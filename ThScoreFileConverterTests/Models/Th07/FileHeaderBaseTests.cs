@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th07
 
         internal static Properties ValidProperties { get; } = MakeProperties(34, 56);
 
-        internal static Properties MakeProperties(short version, int size) => new Properties()
+        internal static Properties MakeProperties(short version, int size) => new()
         {
             checksum = 12,
             version = version,

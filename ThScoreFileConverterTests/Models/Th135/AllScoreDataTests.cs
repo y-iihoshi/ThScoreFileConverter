@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             public Dictionary<int, bool> bgmFlags;
         }
 
-        internal static Properties GetValidProperties() => new Properties()
+        internal static Properties GetValidProperties() => new()
         {
             storyProgress = 1,
             storyClearFlags = EnumHelper<Chara>.Enumerable.ToDictionary(

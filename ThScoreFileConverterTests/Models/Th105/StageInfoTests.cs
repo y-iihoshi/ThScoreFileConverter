@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static Properties<TChara> MakeValidProperties<TChara>()
             where TChara : struct, Enum
-            => new Properties<TChara>()
+            => new()
             {
                 stage = Stage.Two,
                 enemy = TestUtils.Cast<TChara>(2),

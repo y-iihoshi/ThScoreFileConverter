@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         internal static Properties ValidProperties { get; } = MakeProperties("abcd");
 
-        internal static Properties MakeProperties(string signature) => new Properties()
+        internal static Properties MakeProperties(string signature) => new()
         {
             signature = signature,
             encodedAllSize = 36,

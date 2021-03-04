@@ -23,11 +23,11 @@ namespace ThScoreFileConverterTests.ViewModels
     [TestClass]
     public class MainWindowViewModelTests
     {
-        private static Mock<IDialogService> MockDialogService() => new Mock<IDialogService>();
+        private static Mock<IDialogService> MockDialogService() => new();
 
-        private static Mock<IDispatcherAdapter> MockDispatcherAdapter() => new Mock<IDispatcherAdapter>();
+        private static Mock<IDispatcherAdapter> MockDispatcherAdapter() => new();
 
-        private static Mock<INumberFormatter> MockNumberFormatter() => new Mock<INumberFormatter>();
+        private static Mock<INumberFormatter> MockNumberFormatter() => new();
 
         private static MainWindowViewModel CreateViewModel()
         {
