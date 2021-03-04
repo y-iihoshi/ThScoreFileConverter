@@ -5,7 +5,7 @@
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
     <Description>Unit test project for ThScoreFileConverter.</Description>
-    <Copyright>Copyright © 2017-2020 IIHOSHI Yoshinori</Copyright>
+    <Copyright>Copyright © 2017-2021 IIHOSHI Yoshinori</Copyright>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 

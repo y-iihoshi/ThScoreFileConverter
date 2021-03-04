@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'ThScoreFileConverter'
-copyright = '2013-2020, IIHOSHI Yoshinori'
+copyright = '2013-2021, IIHOSHI Yoshinori'
 author = 'IIHOSHI Yoshinori'
 
 # The version info for the project you're documenting, acts as replacement for

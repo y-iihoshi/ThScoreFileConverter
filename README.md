@@ -43,6 +43,7 @@ format from best shot files.
 
 ### Will be supported
 * TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)
+* TH18 東方虹龍洞　～ Unconnected Marketeers.
 
 ## Environments
 
@@ -51,8 +52,8 @@ format from best shot files.
 * .NET Framework 4.8
 * .NET Core 3.1
 * .NET 5
-* Visual Studio Community 2019 16.8.2
-* Python 3.9.0
+* Visual Studio Community 2019 16.9.0
+* Python 3.9.2
 
 ### Tested environment
 * Same as above.
