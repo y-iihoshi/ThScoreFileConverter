@@ -7,6 +7,7 @@
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
     <Copyright>© 2013-2021 IIHOSHI Yoshinori</Copyright>
@@ -58,9 +59,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersionTask" Version="5.5.1">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    <PackageReference Include="GitVersion.MsBuild" Version="5.6.6">
       <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="IDisposableAnalyzers" Version="3.4.13">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
