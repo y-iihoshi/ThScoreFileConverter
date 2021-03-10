@@ -11,6 +11,62 @@ using ThScoreFileConverterTests.Extensions;
 namespace ThScoreFileConverterTests
 {
     [TestClass]
+#if NETFRAMEWORK
+    [DeploymentItem(@"TestData\empty.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-root-node.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-root-node.xml", @"TestData")]
+    [DeploymentItem(@"TestData\wrong-namespace.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-child-nodes.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-last-title.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-last-title.xml", @"TestData")]
+    [DeploymentItem(@"TestData\nonexistent-last-title.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-dictionary.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-dictionary.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-key-value-types.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-key.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-key.xml", @"TestData")]
+    [DeploymentItem(@"TestData\unknown-key.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-value.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-value.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-best-shot-directory.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-best-shot-directory.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-hide-untried-cards.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-hide-untried-cards.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-hide-untried-cards.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-image-output-directory.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-image-output-directory.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-output-directory.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-output-directory.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-score-file.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-score-file.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-template-files.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-template-files.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-template-files.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-font-family-name.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-font-family-name.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-font-size.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-font-size.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-font-size.xml", @"TestData")]
+    [DeploymentItem(@"TestData\negative-font-size.xml", @"TestData")]
+    [DeploymentItem(@"TestData\zero-font-size.xml", @"TestData")]
+    [DeploymentItem(@"TestData\exceeded-font-size.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-output-number-group-separator.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-output-number-group-separator.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-output-number-group-separator.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-input-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-input-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-input-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\unsupported-input-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-output-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-output-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-output-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\unsupported-output-code-page-id.xml", @"TestData")]
+    [DeploymentItem(@"TestData\no-language.xml", @"TestData")]
+    [DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
+    [DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
+    [DeploymentItem(@"TestData\invalid-character.xml", @"TestData")]
+#endif
     public class SettingsTests
     {
         [TestMethod]
@@ -51,12 +107,10 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty.xml", @"TestData")]
         public void LoadTestEmptyFile()
             => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\empty.xml"));
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-root-node.xml", @"TestData")]
         public void LoadTestNoRootNode()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -64,7 +118,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-root-node.xml", @"TestData")]
         public void LoadTestInvalidRootNode()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -72,7 +125,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\wrong-namespace.xml", @"TestData")]
         public void LoadTestWrongNamespace()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -80,7 +132,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-child-nodes.xml", @"TestData")]
         public void LoadTestNoChildNodes()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -88,7 +139,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-last-title.xml", @"TestData")]
         public void LoadTestNoLastTitle()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -96,7 +146,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-last-title.xml", @"TestData")]
         public void LoadTestEmptyLastTitle()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -104,7 +153,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\nonexistent-last-title.xml", @"TestData")]
         public void LoadTestNonexistentLastTitle()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -112,7 +160,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-dictionary.xml", @"TestData")]
         public void LoadTestNoDictionary()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -120,7 +167,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-dictionary.xml", @"TestData")]
         public void LoadTestEmptyDictionary()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -128,7 +174,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-key-value-types.xml", @"TestData")]
         public void LoadTestInvalidKeyValueTypes()
         {
             var settings = new Settings();
@@ -137,12 +182,10 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-key.xml", @"TestData")]
         public void LoadTestNoKey()
             => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-key.xml"));
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-key.xml", @"TestData")]
         public void LoadTestEmptyKey()
         {
             var settings = new Settings();
@@ -151,7 +194,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\unknown-key.xml", @"TestData")]
         public void LoadTestUnknownKey()
         {
             var settings = new Settings();
@@ -160,12 +202,10 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-value.xml", @"TestData")]
         public void LoadTestNoValue()
             => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-value.xml"));
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-value.xml", @"TestData")]
         public void LoadTestEmptyValue()
         {
             var settings = new Settings();
@@ -184,7 +224,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-best-shot-directory.xml", @"TestData")]
         public void LoadTestNoBestShotDirectory()
         {
             var settings = new Settings();
@@ -194,7 +233,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-best-shot-directory.xml", @"TestData")]
         public void LoadTestEmptyBestShotDirectory()
         {
             var settings = new Settings();
@@ -204,7 +242,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-hide-untried-cards.xml", @"TestData")]
         public void LoadTestNoHideUntriedCards()
         {
             var settings = new Settings();
@@ -214,7 +251,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-hide-untried-cards.xml", @"TestData")]
         public void LoadTestEmptyHideUntriedCards()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -222,7 +258,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-hide-untried-cards.xml", @"TestData")]
         public void LoadTestInvalidHideUntriedCards()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -230,7 +265,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-image-output-directory.xml", @"TestData")]
         public void LoadTestNoImageOutputDirectory()
         {
             var settings = new Settings();
@@ -240,7 +274,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-image-output-directory.xml", @"TestData")]
         public void LoadTestEmptyImageOutputDirectory()
         {
             var settings = new Settings();
@@ -250,7 +283,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-output-directory.xml", @"TestData")]
         public void LoadTestNoOutputDirectory()
         {
             var settings = new Settings();
@@ -260,7 +292,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-output-directory.xml", @"TestData")]
         public void LoadTestEmptyOutputDirectory()
         {
             var settings = new Settings();
@@ -270,7 +301,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-score-file.xml", @"TestData")]
         public void LoadTestNoScoreFile()
         {
             var settings = new Settings();
@@ -280,7 +310,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-score-file.xml", @"TestData")]
         public void LoadTestEmptyScoreFile()
         {
             var settings = new Settings();
@@ -290,7 +319,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-template-files.xml", @"TestData")]
         public void LoadTestNoTemplateFiles()
         {
             var settings = new Settings();
@@ -301,7 +329,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-template-files.xml", @"TestData")]
         public void LoadTestEmptyTemplateFiles()
         {
             var settings = new Settings();
@@ -312,7 +339,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-template-files.xml", @"TestData")]
         public void LoadTestInvalidTemplateFiles()
         {
             var settings = new Settings();
@@ -323,7 +349,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-font-family-name.xml", @"TestData")]
         public void LoadTestNoFontFamilyName()
         {
             var settings = new Settings();
@@ -332,7 +357,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-font-family-name.xml", @"TestData")]
         public void LoadTestEmptyFontFamilyName()
         {
             var settings = new Settings();
@@ -341,7 +365,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-font-size.xml", @"TestData")]
         public void LoadTestNoFontSize()
         {
             var settings = new Settings();
@@ -350,7 +373,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-font-size.xml", @"TestData")]
         public void LoadTestEmptyFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -358,7 +380,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-font-size.xml", @"TestData")]
         public void LoadTestInvalidFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -366,7 +387,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\negative-font-size.xml", @"TestData")]
         public void LoadTestNegativeFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -374,7 +394,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\zero-font-size.xml", @"TestData")]
         public void LoadTestZeroFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -382,7 +401,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\exceeded-font-size.xml", @"TestData")]
         public void LoadTestExceededFontSize()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -390,7 +408,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-output-number-group-separator.xml", @"TestData")]
         public void LoadTestNoOutputNumberGroupSeparator()
         {
             var settings = new Settings();
@@ -399,7 +416,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-output-number-group-separator.xml", @"TestData")]
         public void LoadTestEmptyOutputNumberGroupSeparator()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -407,7 +423,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-output-number-group-separator.xml", @"TestData")]
         public void LoadTestInvalidOutputNumberGroupSeparator()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -415,7 +430,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-input-code-page-id.xml", @"TestData")]
         public void LoadTestNoInputCodePageId()
         {
             var settings = new Settings();
@@ -424,7 +438,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-input-code-page-id.xml", @"TestData")]
         public void LoadTestEmptyInputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -432,7 +445,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-input-code-page-id.xml", @"TestData")]
         public void LoadTestInvalidInputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -440,7 +452,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\unsupported-input-code-page-id.xml", @"TestData")]
         public void LoadTestUnsupportedInputCodePageId()
         {
             var settings = new Settings();
@@ -449,7 +460,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-output-code-page-id.xml", @"TestData")]
         public void LoadTestNoOutputCodePageId()
         {
             var settings = new Settings();
@@ -458,7 +468,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-output-code-page-id.xml", @"TestData")]
         public void LoadTestEmptyOutputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -466,7 +475,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-output-code-page-id.xml", @"TestData")]
         public void LoadTestInvalidOutputCodePageId()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
@@ -474,7 +482,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\unsupported-output-code-page-id.xml", @"TestData")]
         public void LoadTestUnsupportedOutputCodePageId()
         {
             var settings = new Settings();
@@ -483,7 +490,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\no-language.xml", @"TestData")]
         public void LoadTestNoLanguage()
         {
             var settings = new Settings();
@@ -492,7 +498,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
         public void LoadTestEmptyLanguage()
         {
             var settings = new Settings();
@@ -501,7 +506,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
         public void LoadTestInvalidLanguage()
         {
             var settings = new Settings();
@@ -510,7 +514,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
         public void LoadTestValidLanguageJaJp()
         {
             var settings = new Settings();
@@ -519,7 +522,6 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\invalid-character.xml", @"TestData")]
         public void LoadTestInvalidCharacter()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
