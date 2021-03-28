@@ -23,22 +23,38 @@ namespace ThScoreFileConverter.Models.Th13
     {
         private readonly Dictionary<
             TCharaWithTotal,
-            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>> clearData;
+            IClearData<
+                TCharaWithTotal,
+                TLevel,
+                TLevelPractice,
+                TLevelPracticeWithTotal,
+                TStagePractice,
+                Th10.IScoreData<StageProgress>>> clearData;
 
         public AllScoreData()
         {
             this.clearData = new Dictionary<
                 TCharaWithTotal,
-                IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>>(
-                EnumHelper<TCharaWithTotal>.NumValues);
+                IClearData<
+                    TCharaWithTotal,
+                    TLevel,
+                    TLevelPractice,
+                    TLevelPracticeWithTotal,
+                    TStagePractice,
+                    Th10.IScoreData<StageProgress>>>(EnumHelper<TCharaWithTotal>.NumValues);
         }
 
         public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyDictionary<
             TCharaWithTotal,
-            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>> ClearData
-            => this.clearData;
+            IClearData<
+                TCharaWithTotal,
+                TLevel,
+                TLevelPractice,
+                TLevelPracticeWithTotal,
+                TStagePractice,
+                Th10.IScoreData<StageProgress>>> ClearData => this.clearData;
 
         public Th125.IStatus? Status { get; private set; }
 
@@ -48,7 +64,13 @@ namespace ThScoreFileConverter.Models.Th13
         }
 
         public void Set(
-            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice> data)
+            IClearData<
+                TCharaWithTotal,
+                TLevel,
+                TLevelPractice,
+                TLevelPracticeWithTotal,
+                TStagePractice,
+                Th10.IScoreData<StageProgress>> data)
         {
             _ = this.clearData.TryAdd(data.Chara, data);
         }

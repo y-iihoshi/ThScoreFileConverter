@@ -4,6 +4,7 @@ using Moq;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Models.Th095;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
 namespace ThScoreFileConverterTests.Models.Th13
@@ -68,13 +69,9 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TStPrac : struct, Enum
         {
             var chara = TestUtils.Cast<TChWithT>(1);
-#if false
-            var clearData = Mock.Of<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>(m => m.Chara == chara);
-#else
-            var mock = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>();
+            var mock = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, IScoreData>>();
             _ = mock.SetupGet(m => m.Chara).Returns(chara);
             var clearData = mock.Object;
-#endif
 
             var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
             allScoreData.Set(clearData);
@@ -90,17 +87,12 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TStPrac : struct, Enum
         {
             var chara = TestUtils.Cast<TChWithT>(1);
-#if false
-            var clearData1 = Mock.Of<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>(m => m.Chara == chara);
-            var clearData2 = Mock.Of<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>(m => m.Chara == chara);
-#else
-            var mock1 = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>();
+            var mock1 = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, IScoreData>>();
             _ = mock1.SetupGet(m => m.Chara).Returns(chara);
             var clearData1 = mock1.Object;
-            var mock2 = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>();
+            var mock2 = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, IScoreData>>();
             _ = mock2.SetupGet(m => m.Chara).Returns(chara);
             var clearData2 = mock2.Object;
-#endif
 
             var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
             allScoreData.Set(clearData1);

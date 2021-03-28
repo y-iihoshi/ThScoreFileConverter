@@ -18,7 +18,13 @@ namespace ThScoreFileConverter.Models.Th13
     internal class ClearDataBase<
         TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
         : Th10.Chapter,
-          IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
+          IClearData<
+              TCharaWithTotal,
+              TLevel,
+              TLevelPractice,
+              TLevelPracticeWithTotal,
+              TStagePractice,
+              Th10.IScoreData<StageProgress>>
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
