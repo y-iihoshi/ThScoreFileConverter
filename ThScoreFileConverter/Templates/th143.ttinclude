@@ -6,6 +6,8 @@
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th143" #>
 <#
+    var title = "弾幕アマノジャク";
+
     var days = new List<(Day day, string id, string name)>
     {
         (Day.First,   "Day1",    "一日目"),

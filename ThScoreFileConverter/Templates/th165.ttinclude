@@ -6,6 +6,8 @@
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th165" #>
 <#
+    var title = "秘封ナイトメアダイアリー";
+
     var days = new List<(Day day, string name)>
     {
         (Day.Sunday,             "日曜日"),

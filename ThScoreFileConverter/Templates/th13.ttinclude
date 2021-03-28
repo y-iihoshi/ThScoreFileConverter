@@ -8,6 +8,8 @@
 <#@ import namespace="ThScoreFileConverter.Models" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th13" #>
 <#
+    var title = "東方神霊廟";
+
     var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
     var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable

@@ -9,6 +9,8 @@
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#@ import namespace="Th105 = ThScoreFileConverter.Models.Th105" #>
 <#
+    var title = "東方非想天則";
+
     var levels = EnumHelper<Th105.Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
     var levelsWithTotal = EnumHelper<Th105.LevelWithTotal>.Enumerable

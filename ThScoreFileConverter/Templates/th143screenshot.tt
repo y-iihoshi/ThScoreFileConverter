@@ -7,7 +7,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>弾幕アマノジャク スクリーンショット一覧</title>
+  <title><#= title #> スクリーンショット一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -21,7 +21,7 @@
  <body>
 
   <header>
-   <h1>弾幕アマノジャク スクリーンショット一覧</h1>
+   <h1><#= title #> スクリーンショット一覧</h1>
    <hr />
    <nav>
     <ul>

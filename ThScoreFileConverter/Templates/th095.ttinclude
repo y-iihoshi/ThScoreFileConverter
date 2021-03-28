@@ -6,6 +6,8 @@
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th095" #>
 <#
+    var title = "東方文花帖";
+
     var levels = new List<(Level level, string id, string name)>
     {
         (Level.One,   "Level1", "Level 1"),

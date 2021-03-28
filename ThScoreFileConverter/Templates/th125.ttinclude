@@ -6,6 +6,8 @@
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th125" #>
 <#
+    var title = "ダブルスポイラー";
+
     var levels = new List<(Level level, string id, string shortName, string longName)>
     {
         (Level.One,     "Level1",  "1",  "Level 1"),

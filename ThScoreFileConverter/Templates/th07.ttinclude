@@ -8,6 +8,8 @@
 <#@ import namespace="ThScoreFileConverter.Models.Th07" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
+    var title = "東方妖々夢";
+
     var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
     var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable
