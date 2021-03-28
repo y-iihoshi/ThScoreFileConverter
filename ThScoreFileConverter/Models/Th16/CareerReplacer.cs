@@ -13,6 +13,13 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
+using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
+    ThScoreFileConverter.Models.Th16.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th16.StagePractice,
+    ThScoreFileConverter.Models.Th16.IScoreData>;
 
 namespace ThScoreFileConverter.Models.Th16
 {

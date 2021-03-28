@@ -5,6 +5,13 @@ using Moq;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
+using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
+    ThScoreFileConverter.Models.Th16.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th16.StagePractice,
+    ThScoreFileConverter.Models.Th16.IScoreData>;
 
 namespace ThScoreFileConverterTests.Models.Th16
 {

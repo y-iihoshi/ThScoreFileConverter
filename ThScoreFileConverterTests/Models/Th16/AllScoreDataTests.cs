@@ -3,6 +3,13 @@ using Moq;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Models.Th095;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
+using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
+    ThScoreFileConverter.Models.Th16.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th16.StagePractice,
+    ThScoreFileConverter.Models.Th16.IScoreData>;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
 namespace ThScoreFileConverterTests.Models.Th16
