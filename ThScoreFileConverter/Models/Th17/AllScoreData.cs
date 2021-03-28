@@ -10,6 +10,12 @@
 using System.Collections.Generic;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
+using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
+    ThScoreFileConverter.Models.Th17.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th17.StagePractice>;
 
 namespace ThScoreFileConverter.Models.Th17
 {
