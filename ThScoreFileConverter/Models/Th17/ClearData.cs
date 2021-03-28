@@ -38,8 +38,8 @@ namespace ThScoreFileConverter.Models.Th17
                 {
                     var score = new ScoreData();
                     score.ReadFrom(reader);
-                    return score as IScoreData;
-                }).ToList() as IReadOnlyList<IScoreData>);
+                    return score as Th10.IScoreData<Th13.StageProgress>;
+                }).ToList() as IReadOnlyList<Th10.IScoreData<Th13.StageProgress>>);
 
             _ = reader.ReadExactBytes(0x140);
 
@@ -70,7 +70,7 @@ namespace ThScoreFileConverter.Models.Th17
 
         public CharaWithTotal Chara { get; }
 
-        public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
+        public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<Th10.IScoreData<Th13.StageProgress>>> Rankings { get; }
 
         public int TotalPlayCount { get; }
 

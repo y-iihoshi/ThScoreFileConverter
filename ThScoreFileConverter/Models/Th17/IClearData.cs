@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th17
 
         IReadOnlyDictionary<(Level Level, StagePractice Stage), Th13.IPractice> Practices { get; }
 
-        IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
+        IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<Th10.IScoreData<Th13.StageProgress>>> Rankings { get; }
 
         int TotalPlayCount { get; }
     }

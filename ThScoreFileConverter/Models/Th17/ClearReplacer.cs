@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Th17
                 var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.Rankings.TryGetValue(level, out var ranking)
                     ? ranking.Where(score => score.DateTime > 0)
-                    : new List<IScoreData>();
+                    : new List<Th10.IScoreData<Th13.StageProgress>>();
                 var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : Th13.StageProgress.None;
 
                 if (stageProgress == Th13.StageProgress.Extra)

@@ -7,30 +7,15 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th17
 {
-    internal class ScoreData : IBinaryReadable, IScoreData
+    internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>
     {
-        public uint Score { get; private set; }             // Divided by 10
-
-        public Th13.StageProgress StageProgress { get; private set; }
-
-        public byte ContinueCount { get; private set; }
-
-        // The last 2 bytes are always 0x00 ?
-        public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
-
-        public uint DateTime { get; private set; }          // UNIX time
-
-        public float SlowRate { get; private set; }
-
-        public void ReadFrom(BinaryReader reader)
+        public override void ReadFrom(BinaryReader reader)
         {
             this.Score = reader.ReadUInt32();
             this.StageProgress = EnumHelper.To<Th13.StageProgress>(reader.ReadByte());

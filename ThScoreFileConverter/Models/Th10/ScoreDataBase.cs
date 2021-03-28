@@ -19,18 +19,18 @@ namespace ThScoreFileConverter.Models.Th10
     internal class ScoreDataBase<TStageProgress> : IBinaryReadable, IScoreData<TStageProgress>
         where TStageProgress : struct, Enum
     {
-        public uint Score { get; private set; }     // Divided by 10
+        public uint Score { get; protected set; }   // Divided by 10
 
-        public TStageProgress StageProgress { get; private set; }
+        public TStageProgress StageProgress { get; protected set; }
 
-        public byte ContinueCount { get; private set; }
+        public byte ContinueCount { get; protected set; }
 
         // The last 2 bytes are always 0x00 ?
-        public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
+        public IEnumerable<byte> Name { get; protected set; } = Enumerable.Empty<byte>();
 
-        public uint DateTime { get; private set; }  // UNIX time
+        public uint DateTime { get; protected set; }    // UNIX time
 
-        public float SlowRate { get; private set; } // Really...?
+        public float SlowRate { get; protected set; }   // Really...?
 
         public virtual void ReadFrom(BinaryReader reader)
         {

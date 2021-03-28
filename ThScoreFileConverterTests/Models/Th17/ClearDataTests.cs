@@ -9,6 +9,7 @@ using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.Extensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
@@ -125,7 +126,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             {
                 for (var index = 0; index < pair.Value.Count; ++index)
                 {
-                    ScoreDataTests.Validate(actual.Rankings[pair.Key][index], pair.Value[index]);
+                    Th10.ScoreDataTests.Validate(actual.Rankings[pair.Key][index], pair.Value[index]);
                 }
             }
 
