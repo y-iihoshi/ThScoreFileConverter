@@ -14,12 +14,14 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th13
 {
-    internal class AllScoreData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
+    internal class AllScoreData<
+        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TScoreData>
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
+        where TScoreData : Th10.IScoreData<StageProgress>
     {
         private readonly Dictionary<
             TCharaWithTotal,
@@ -29,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th13
                 TLevelPractice,
                 TLevelPracticeWithTotal,
                 TStagePractice,
-                Th10.IScoreData<StageProgress>>> clearData;
+                TScoreData>> clearData;
 
         public AllScoreData()
         {
@@ -41,7 +43,7 @@ namespace ThScoreFileConverter.Models.Th13
                     TLevelPractice,
                     TLevelPracticeWithTotal,
                     TStagePractice,
-                    Th10.IScoreData<StageProgress>>>(EnumHelper<TCharaWithTotal>.NumValues);
+                    TScoreData>>(EnumHelper<TCharaWithTotal>.NumValues);
         }
 
         public Th095.HeaderBase? Header { get; private set; }
@@ -54,7 +56,7 @@ namespace ThScoreFileConverter.Models.Th13
                 TLevelPractice,
                 TLevelPracticeWithTotal,
                 TStagePractice,
-                Th10.IScoreData<StageProgress>>> ClearData => this.clearData;
+                TScoreData>> ClearData => this.clearData;
 
         public Th125.IStatus? Status { get; private set; }
 
@@ -70,7 +72,7 @@ namespace ThScoreFileConverter.Models.Th13
                 TLevelPractice,
                 TLevelPracticeWithTotal,
                 TStagePractice,
-                Th10.IScoreData<StageProgress>> data)
+                TScoreData> data)
         {
             _ = this.clearData.TryAdd(data.Chara, data);
         }
