@@ -15,13 +15,14 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th13
 {
     internal class AllScoreData<
-        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TScoreData>
+        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TScoreData, TStatus>
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
         where TScoreData : Th10.IScoreData<StageProgress>
+        where TStatus : Th125.IStatus
     {
         private readonly Dictionary<
             TCharaWithTotal,
@@ -58,7 +59,7 @@ namespace ThScoreFileConverter.Models.Th13
                 TStagePractice,
                 TScoreData>> ClearData => this.clearData;
 
-        public Th125.IStatus? Status { get; private set; }
+        public TStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {
@@ -77,7 +78,7 @@ namespace ThScoreFileConverter.Models.Th13
             _ = this.clearData.TryAdd(data.Chara, data);
         }
 
-        public void Set(Th125.IStatus status)
+        public void Set(TStatus status)
         {
             this.Status = status;
         }
