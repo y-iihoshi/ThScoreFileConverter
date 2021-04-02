@@ -14,6 +14,14 @@ using System.IO;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverter.Properties;
+using AllScoreData = ThScoreFileConverter.Models.Th13.AllScoreData<
+    ThScoreFileConverter.Models.Th17.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th17.StagePractice,
+    ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>,
+    ThScoreFileConverter.Models.Th17.IStatus>;
 
 namespace ThScoreFileConverter.Models
 {
