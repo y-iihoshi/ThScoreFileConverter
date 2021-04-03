@@ -8,8 +8,6 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th17
 {
@@ -17,12 +15,7 @@ namespace ThScoreFileConverter.Models.Th17
     {
         public override void ReadFrom(BinaryReader reader)
         {
-            this.Score = reader.ReadUInt32();
-            this.StageProgress = EnumHelper.To<Th13.StageProgress>(reader.ReadByte());
-            this.ContinueCount = reader.ReadByte();
-            this.Name = reader.ReadExactBytes(10);
-            this.DateTime = reader.ReadUInt32();
-            _ = reader.ReadUInt32();
+            base.ReadFrom(reader);
             this.SlowRate = reader.ReadSingle();
             _ = reader.ReadUInt32();
         }
