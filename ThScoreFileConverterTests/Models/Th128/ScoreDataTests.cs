@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th128;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
@@ -8,16 +9,33 @@ namespace ThScoreFileConverterTests.Models.Th128
     public class ScoreDataTests
     {
         internal static byte[] MakeByteArray(IScoreData scoreData)
-            => Th10.ScoreDataTests.MakeByteArray(scoreData, 8);
+            => Th10.ScoreDataTests.MakeByteArray(scoreData, UnknownSize);
+
+        internal static int UnknownSize { get; } = 8;
+
+        [TestMethod]
+        public void ScoreDataTest()
+            => Th10.ScoreDataTests.ScoreDataTestHelper<ScoreData, StageProgress>();
 
         [TestMethod]
         public void ReadFromTest()
-        {
-            var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
-            var array = MakeByteArray(mock.Object);
-            var scoreData = TestUtils.Create<ScoreData>(array);
+            => Th10.ScoreDataTests.ReadFromTestHelper<ScoreData, StageProgress>(UnknownSize);
 
-            Th10.ScoreDataTests.Validate(mock.Object, scoreData);
-        }
+        [TestMethod]
+        public void ReadFromTestShortenedName()
+            => Th10.ScoreDataTests.ReadFromTestShortenedNameHelper<ScoreData, StageProgress>(UnknownSize);
+
+        [TestMethod]
+        public void ReadFromTestExceededName()
+            => Th10.ScoreDataTests.ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
+
+        public static IEnumerable<object[]> InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidStageProgresses))]
+        public void ReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10.ScoreDataTests.ReadFromTestInvalidStageProgressHelper<ScoreData, StageProgress>(
+                UnknownSize, stageProgress);
     }
 }
