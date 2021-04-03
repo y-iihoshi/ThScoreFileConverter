@@ -14,42 +14,21 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th143
 {
     internal class AllScoreData
+        : Th095.AllScoreDataBase<IScore, IStatus>
     {
-        private readonly List<IScore> scores;
         private readonly Dictionary<ItemWithTotal, IItemStatus> itemStatuses;
 
         public AllScoreData()
+            : base(Definitions.SpellCards.Count)
         {
-            this.scores = new List<IScore>(Definitions.SpellCards.Count);
             this.itemStatuses = new Dictionary<ItemWithTotal, IItemStatus>(EnumHelper<ItemWithTotal>.NumValues);
         }
 
-        public Th095.HeaderBase? Header { get; private set; }
-
-        public IReadOnlyList<IScore> Scores => this.scores;
-
         public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses => this.itemStatuses;
-
-        public IStatus? Status { get; private set; }
-
-        public void Set(Th095.HeaderBase header)
-        {
-            this.Header = header;
-        }
-
-        public void Set(IScore score)
-        {
-            this.scores.Add(score);
-        }
 
         public void Set(IItemStatus status)
         {
             _ = this.itemStatuses.TryAdd(status.Item, status);
-        }
-
-        public void Set(IStatus status)
-        {
-            this.Status = status;
         }
     }
 }

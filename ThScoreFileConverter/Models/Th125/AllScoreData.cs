@@ -7,38 +7,14 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
-
 namespace ThScoreFileConverter.Models.Th125
 {
     internal class AllScoreData
+        : Th095.AllScoreDataBase<IScore, IStatus>
     {
-        private readonly List<IScore> scores;
-
         public AllScoreData()
+            : base(Definitions.SpellCards.Count)
         {
-            this.scores = new List<IScore>(Definitions.SpellCards.Count);
-        }
-
-        public Th095.HeaderBase? Header { get; private set; }
-
-        public IReadOnlyList<IScore> Scores => this.scores;
-
-        public IStatus? Status { get; private set; }
-
-        public void Set(Th095.HeaderBase header)
-        {
-            this.Header = header;
-        }
-
-        public void Set(IScore score)
-        {
-            this.scores.Add(score);
-        }
-
-        public void Set(IStatus status)
-        {
-            this.Status = status;
         }
     }
 }

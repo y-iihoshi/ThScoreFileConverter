@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverterTests.Models.Th095;
-using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models.Th143
 {
@@ -12,65 +10,27 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void AllScoreDataTest()
         {
-            var allScoreData = new AllScoreData();
+            Th095.AllScoreDataTests.AllScoreDataTestHelper<AllScoreData, IScore, IStatus>();
 
-            Assert.IsNull(allScoreData.Header);
-            Assert.AreEqual(0, allScoreData.Scores.Count);
+            var allScoreData = new AllScoreData();
             Assert.AreEqual(0, allScoreData.ItemStatuses.Count);
-            Assert.IsNull(allScoreData.Status);
         }
 
         [TestMethod]
         public void SetHeaderTest()
-        {
-            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
-            var header = TestUtils.Create<HeaderBase>(array);
-
-            var allScoreData = new AllScoreData();
-            allScoreData.Set(header);
-
-            Assert.AreSame(header, allScoreData.Header);
-        }
+            => Th095.AllScoreDataTests.SetHeaderTestHelper<AllScoreData, IScore, IStatus>();
 
         [TestMethod]
         public void SetHeaderTestTwice()
-        {
-            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
-            var header1 = TestUtils.Create<HeaderBase>(array);
-            var header2 = TestUtils.Create<HeaderBase>(array);
-
-            var allScoreData = new AllScoreData();
-            allScoreData.Set(header1);
-            allScoreData.Set(header2);
-
-            Assert.AreNotSame(header1, allScoreData.Header);
-            Assert.AreSame(header2, allScoreData.Header);
-        }
+            => Th095.AllScoreDataTests.SetHeaderTestTwiceHelper<AllScoreData, IScore, IStatus>();
 
         [TestMethod]
         public void SetScoreTest()
-        {
-            var score = Mock.Of<IScore>();
-
-            var allScoreData = new AllScoreData();
-            allScoreData.Set(score);
-
-            Assert.AreSame(score, allScoreData.Scores[0]);
-        }
+            => Th095.AllScoreDataTests.SetScoreTestHelper<AllScoreData, IScore, IStatus>();
 
         [TestMethod]
         public void SetScoreTestTwice()
-        {
-            var score1 = Mock.Of<IScore>();
-            var score2 = Mock.Of<IScore>();
-
-            var allScoreData = new AllScoreData();
-            allScoreData.Set(score1);
-            allScoreData.Set(score2);
-
-            Assert.AreSame(score1, allScoreData.Scores[0]);
-            Assert.AreSame(score2, allScoreData.Scores[1]);
-        }
+            => Th095.AllScoreDataTests.SetScoreTestTwiceHelper<AllScoreData, IScore, IStatus>();
 
         [TestMethod]
         public void SetItemStatusTest()
@@ -101,27 +61,10 @@ namespace ThScoreFileConverterTests.Models.Th143
 
         [TestMethod]
         public void SetStatusTest()
-        {
-            var status = Mock.Of<IStatus>();
-
-            var allScoreData = new AllScoreData();
-            allScoreData.Set(status);
-
-            Assert.AreSame(status, allScoreData.Status);
-        }
+            => Th095.AllScoreDataTests.SetStatusTestHelper<AllScoreData, IScore, IStatus>();
 
         [TestMethod]
         public void SetStatusTestTwice()
-        {
-            var status1 = Mock.Of<IStatus>();
-            var status2 = Mock.Of<IStatus>();
-
-            var allScoreData = new AllScoreData();
-            allScoreData.Set(status1);
-            allScoreData.Set(status2);
-
-            Assert.AreNotSame(status1, allScoreData.Status);
-            Assert.AreSame(status2, allScoreData.Status);
-        }
+            => Th095.AllScoreDataTests.SetStatusTestTwiceHelper<AllScoreData, IScore, IStatus>();
     }
 }
