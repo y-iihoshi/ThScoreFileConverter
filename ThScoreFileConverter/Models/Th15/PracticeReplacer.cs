@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverter.Models.Th15
 {

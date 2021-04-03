@@ -8,6 +8,7 @@ using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th13;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverterTests.Models.Th15
 {

@@ -2,6 +2,7 @@
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
+using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverterTests.Models.Th16
 {

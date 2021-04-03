@@ -5,6 +5,7 @@ using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverterTests.Models.Th15
 {

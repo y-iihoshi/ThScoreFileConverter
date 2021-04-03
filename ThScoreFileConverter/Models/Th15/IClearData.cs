@@ -17,6 +17,6 @@ namespace ThScoreFileConverter.Models.Th15
 
         IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-        IReadOnlyDictionary<(Level Level, StagePractice Stage), Th13.IPractice> Practices { get; }
+        IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th13.IPractice> Practices { get; }
     }
 }

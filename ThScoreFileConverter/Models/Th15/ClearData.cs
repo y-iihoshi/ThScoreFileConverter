@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th15
             });
 
             this.Practices = EnumHelper<Level>.Enumerable
-                .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
+                .SelectMany(level => EnumHelper<Th14.StagePractice>.Enumerable.Select(stage => (level, stage)))
                 .ToDictionary(pair => pair, _ =>
                 {
                     var practice = new Th13.Practice();
@@ -50,7 +50,7 @@ namespace ThScoreFileConverter.Models.Th15
 
         public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-        public IReadOnlyDictionary<(Level Level, StagePractice Stage), Th13.IPractice> Practices { get; }
+        public IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th13.IPractice> Practices { get; }
 
         public static bool CanInitialize(Th10.Chapter chapter)
         {

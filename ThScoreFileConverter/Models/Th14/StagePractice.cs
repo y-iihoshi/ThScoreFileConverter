@@ -8,7 +8,7 @@
 namespace ThScoreFileConverter.Models.Th14
 {
     /// <summary>
-    /// Represents stages of DDC spell practice.
+    /// Represents stages of spell practice for DDC and later works.
     /// </summary>
     public enum StagePractice
     {

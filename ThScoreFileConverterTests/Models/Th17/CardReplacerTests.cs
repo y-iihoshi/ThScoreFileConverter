@@ -8,7 +8,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.LevelWithTotal,
-    ThScoreFileConverter.Models.Th17.StagePractice,
+    ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
