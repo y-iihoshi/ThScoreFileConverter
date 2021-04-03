@@ -16,7 +16,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th17.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
@@ -46,8 +46,11 @@ namespace ThScoreFileConverter.Models.Th17
                     (_, 1) => clearData => clearData.TotalPlayCount,
                     (_, 2) => clearData => clearData.PlayTime,
                     (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts
-                        .Where(pair => pair.Key != LevelWithTotal.Total).Sum(pair => pair.Value),
-                    _ => clearData => clearData.ClearCounts.TryGetValue(level, out var count) ? count : default,
+                        .Where(pair => (pair.Key != Th14.LevelPracticeWithTotal.NotUsed)
+                            && (pair.Key != Th14.LevelPracticeWithTotal.Total))
+                        .Sum(pair => pair.Value),
+                    _ => clearData => clearData.ClearCounts
+                        .TryGetValue((Th14.LevelPracticeWithTotal)level, out var count) ? count : default,
                 };
 
                 Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch

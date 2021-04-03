@@ -9,9 +9,10 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
+using LevelPracticeWithTotal = ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th16
@@ -119,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Aya)
-                         && (m.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>()))
+                         && (m.Rankings == new Dictionary<LevelPracticeWithTotal, IReadOnlyList<IScoreData>>()))
             }.ToDictionary(clearData => clearData.Chara);
             var formatterMock = MockNumberFormatter();
 
@@ -138,7 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Aya)
-                         && (m.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                         && (m.Rankings == EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);
@@ -168,7 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th16
                 var mock = new Mock<IClearData>();
                 _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Aya);
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                    EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));
@@ -198,7 +199,7 @@ namespace ThScoreFileConverterTests.Models.Th16
                 var mock = new Mock<IClearData>();
                 _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Aya);
                 _ = mock.SetupGet(c => c.Rankings).Returns(
-                    EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                    EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
                             as IReadOnlyList<IScoreData>));

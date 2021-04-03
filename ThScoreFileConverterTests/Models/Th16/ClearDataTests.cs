@@ -12,11 +12,12 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using LevelPracticeWithTotal = ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal;
 using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
@@ -63,7 +64,7 @@ namespace ThScoreFileConverterTests.Models.Th16
                 return mock.Object;
             }
 
-            var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable;
+            var levelsWithTotal = EnumHelper<LevelPracticeWithTotal>.Enumerable;
 
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(m => m.Signature).Returns("CR");
@@ -96,15 +97,12 @@ namespace ThScoreFileConverterTests.Models.Th16
                 (int)clearData.Chara,
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
-                new byte[0x140],
                 clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,
                 clearData.ClearCounts.Values.ToArray(),
-                0u,
                 clearData.ClearFlags.Values.ToArray(),
-                0u,
                 clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
 

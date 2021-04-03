@@ -9,9 +9,10 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
+using LevelPracticeWithTotal = ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal;
 
 namespace ThScoreFileConverterTests.Models.Th16
 {
@@ -20,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th16
     {
         private static IEnumerable<IClearData> CreateClearDataList()
         {
-            var levels = EnumHelper<LevelWithTotal>.Enumerable;
+            var levels = EnumHelper<LevelPracticeWithTotal>.Enumerable;
             return new[]
             {
                 Mock.Of<IClearData>(
@@ -177,7 +178,8 @@ namespace ThScoreFileConverterTests.Models.Th16
             var dictionary = new[]
             {
                 Mock.Of<IClearData>(
-                    m => (m.Chara == CharaWithTotal.Aya) && (m.ClearCounts == new Dictionary<LevelWithTotal, int>()))
+                    m => (m.Chara == CharaWithTotal.Aya)
+                        && (m.ClearCounts == new Dictionary<LevelPracticeWithTotal, int>()))
             }.ToDictionary(element => element.Chara);
             var formatterMock = MockNumberFormatter();
 

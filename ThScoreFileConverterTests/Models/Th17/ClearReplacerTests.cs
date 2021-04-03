@@ -9,10 +9,11 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th17.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
+using LevelPracticeWithTotal = ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th17
@@ -22,11 +23,11 @@ namespace ThScoreFileConverterTests.Models.Th17
     {
         private static IEnumerable<IClearData> CreateClearDataList()
         {
-            static IScoreData CreateScoreData(LevelWithTotal level, int index)
+            static IScoreData CreateScoreData(LevelPracticeWithTotal level, int index)
             {
                 var mock = new Mock<IScoreData>();
                 _ = mock.SetupGet(s => s.StageProgress).Returns(
-                    level == LevelWithTotal.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
+                    level == LevelPracticeWithTotal.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
                 _ = mock.SetupGet(s => s.DateTime).Returns((uint)index % 2);
                 return mock.Object;
             }
@@ -34,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             var mock = new Mock<IClearData>();
             _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.ReimuB);
             _ = mock.SetupGet(c => c.Rankings).Returns(
-                EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
                         as IReadOnlyList<IScoreData>));
@@ -80,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             {
                 Mock.Of<IClearData>(
                     c => (c.Chara == CharaWithTotal.ReimuB)
-                         && (c.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                         && (c.Rankings == EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                             level => level,
                             level => new[]
                             {
@@ -108,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.ReimuB)
-                         && (m.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>()))
+                         && (m.Rankings == new Dictionary<LevelPracticeWithTotal, IReadOnlyList<IScoreData>>()))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ClearReplacer(dictionary);
@@ -122,7 +123,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.ReimuB)
-                         && (m.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                         && (m.Rankings == EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                             level => level,
                             level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);

@@ -11,7 +11,7 @@ using ClearDataBase = ThScoreFileConverter.Models.Th16.ClearDataBase<
     ThScoreFileConverter.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData,
     ThScoreFileConverter.Models.Th16.ScoreData>;

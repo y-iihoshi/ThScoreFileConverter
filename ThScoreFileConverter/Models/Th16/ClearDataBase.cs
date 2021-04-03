@@ -55,8 +55,6 @@ namespace ThScoreFileConverter.Models.Th16
                     return score as TIScoreData;
                 }).ToList() as IReadOnlyList<TIScoreData>);
 
-            _ = reader.ReadExactBytes(0x140);
-
             this.Cards = Enumerable.Range(0, numCards).Select(_ =>
             {
                 var card = new Th13.SpellCard<TLevel>();
@@ -68,9 +66,7 @@ namespace ThScoreFileConverter.Models.Th16
             this.PlayTime = reader.ReadInt32();
             _ = reader.ReadUInt32();
             this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
-            _ = reader.ReadUInt32();
             this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
-            _ = reader.ReadUInt32();
 
             this.Practices = EnumHelper<TLevelPractice>.Enumerable
                 .SelectMany(level => EnumHelper<TStagePractice>.Enumerable.Select(stage => (level, stage)))

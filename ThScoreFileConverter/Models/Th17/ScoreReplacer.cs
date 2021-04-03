@@ -17,7 +17,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th17.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.LevelWithTotal,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th17
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = (LevelWithTotal)LevelParser.Parse(match.Groups[1].Value);
+                var level = (Th14.LevelPracticeWithTotal)LevelParser.Parse(match.Groups[1].Value);
                 var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
                 var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
