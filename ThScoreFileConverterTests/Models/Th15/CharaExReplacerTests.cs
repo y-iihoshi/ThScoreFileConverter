@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaExReplacer(ClearDataDictionary, formatterMock.Object);
-            Assert.AreEqual("invoked: 585", replacer.Replace("%T15CHARAEXPTMR3"));
+            Assert.AreEqual("invoked: 490", replacer.Replace("%T15CHARAEXPTMR3"));
         }
 
         [TestMethod]
@@ -167,7 +167,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaExReplacer(ClearDataDictionary, formatterMock.Object);
-            Assert.AreEqual("invoked: 870", replacer.Replace("%T15CHARAEXPTTL3"));
+            Assert.AreEqual("invoked: 730", replacer.Replace("%T15CHARAEXPTTL3"));
         }
 
         [TestMethod]
@@ -215,7 +215,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaExReplacer(ClearDataDictionary, formatterMock.Object);
-            Assert.AreEqual("invoked: 885", replacer.Replace("%T15CHARAEXLTMR3"));
+            Assert.AreEqual("invoked: 740", replacer.Replace("%T15CHARAEXLTMR3"));
         }
 
         [TestMethod]
@@ -263,7 +263,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaExReplacer(ClearDataDictionary, formatterMock.Object);
-            Assert.AreEqual("invoked: 885", replacer.Replace("%T15CHARAEXLTTL3"));
+            Assert.AreEqual("invoked: 740", replacer.Replace("%T15CHARAEXLTTL3"));
         }
 
         [TestMethod]

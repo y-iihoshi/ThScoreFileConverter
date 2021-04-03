@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         {
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaExReplacer(ClearDataDictionary, formatterMock.Object);
-            Assert.AreEqual("invoked: 679", replacer.Replace("%T13CHARAEXTMR3"));
+            Assert.AreEqual("invoked: 585", replacer.Replace("%T13CHARAEXTMR3"));
         }
 
         [TestMethod]
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         {
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaExReplacer(ClearDataDictionary, formatterMock.Object);
-            Assert.AreEqual("invoked: 1008", replacer.Replace("%T13CHARAEXTTL3"));
+            Assert.AreEqual("invoked: 870", replacer.Replace("%T13CHARAEXTTL3"));
         }
 
         [TestMethod]

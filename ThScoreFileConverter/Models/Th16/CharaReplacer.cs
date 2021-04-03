@@ -42,7 +42,8 @@ namespace ThScoreFileConverter.Models.Th16
                 {
                     1 => clearData => clearData.TotalPlayCount,
                     2 => clearData => clearData.PlayTime,
-                    _ => clearData => clearData.ClearCounts.Values.Sum(),
+                    _ => clearData => clearData.ClearCounts
+                        .Where(pair => pair.Key != LevelWithTotal.Total).Sum(pair => pair.Value),
                 };
 
                 Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
