@@ -46,7 +46,9 @@ namespace ThScoreFileConverter.Models.Th14
                     (_, 1) => clearData => clearData.TotalPlayCount,
                     (_, 2) => clearData => clearData.PlayTime,
                     (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts
-                        .Where(pair => pair.Key != LevelPracticeWithTotal.Total).Sum(pair => pair.Value),
+                        .Where(pair => (pair.Key != LevelPracticeWithTotal.NotUsed)
+                            && (pair.Key != LevelPracticeWithTotal.Total))
+                        .Sum(pair => pair.Value),
                     _ => clearData => clearData.ClearCounts.TryGetValue((LevelPracticeWithTotal)level, out var count)
                         ? count : default,
                 };
