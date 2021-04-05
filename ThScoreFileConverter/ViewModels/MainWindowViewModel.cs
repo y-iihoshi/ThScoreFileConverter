@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -34,7 +33,7 @@ namespace ThScoreFileConverter.ViewModels
     /// The view model class for <see cref="Views.MainWindow"/>.
     /// </summary>
 #if !DEBUG
-    [SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
     internal class MainWindowViewModel : BindableBase, IDisposable
     {

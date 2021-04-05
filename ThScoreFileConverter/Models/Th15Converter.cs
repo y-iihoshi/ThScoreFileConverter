@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th15;
@@ -18,7 +17,7 @@ using ThScoreFileConverter.Properties;
 namespace ThScoreFileConverter.Models
 {
 #if !DEBUG
-    [SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
     internal class Th15Converter : ThConverter
     {

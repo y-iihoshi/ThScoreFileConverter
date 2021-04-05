@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Reflection;
 using System.Windows;
@@ -24,7 +23,7 @@ namespace ThScoreFileConverter.ViewModels
     /// The view model class for <see cref="Views.AboutWindow"/>.
     /// </summary>
 #if !DEBUG
-    [SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
     internal class AboutWindowViewModel : BindableBase, IDialogAware
     {

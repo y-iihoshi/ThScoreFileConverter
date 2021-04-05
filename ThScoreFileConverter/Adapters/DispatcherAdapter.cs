@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -16,7 +15,7 @@ namespace ThScoreFileConverter.Adapters
     /// Wrapper of <see cref="Dispatcher"/>.
     /// </summary>
 #if !DEBUG
-    [SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
     internal class DispatcherAdapter : IDispatcherAdapter
     {

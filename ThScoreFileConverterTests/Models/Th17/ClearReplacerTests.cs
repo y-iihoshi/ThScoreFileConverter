@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th17.CharaWithTotal,
