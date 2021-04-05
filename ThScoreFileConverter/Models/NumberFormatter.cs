@@ -12,6 +12,9 @@ namespace ThScoreFileConverter.Models
     /// <summary>
     /// Provides several methods for formatting numbers.
     /// </summary>
+#if !DEBUG
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+#endif
     internal class NumberFormatter : INumberFormatter
     {
         private readonly ISettings settings;
