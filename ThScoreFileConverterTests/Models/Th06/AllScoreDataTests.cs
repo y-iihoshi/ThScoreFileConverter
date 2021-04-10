@@ -2,6 +2,7 @@
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverterTests.UnitTesting;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Models.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<

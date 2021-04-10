@@ -2,6 +2,7 @@
 using Moq;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th095;
+using ThScoreFileConverterTests.UnitTesting;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 

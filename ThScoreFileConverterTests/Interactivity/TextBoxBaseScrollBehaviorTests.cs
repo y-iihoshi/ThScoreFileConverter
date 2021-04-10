@@ -8,7 +8,6 @@ using System.Windows.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
-using ThScoreFileConverterTests.Models;
 using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Interactivity

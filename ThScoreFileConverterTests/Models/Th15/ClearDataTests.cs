@@ -6,6 +6,7 @@ using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;

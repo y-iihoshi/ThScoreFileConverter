@@ -15,7 +15,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 #endif
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.UnitTesting
 {
 #if DEFINE_TEST
     [TestClass]
