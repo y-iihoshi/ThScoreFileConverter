@@ -1,4 +1,6 @@
-﻿using System;
+﻿// #define DEFINE_TEST
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,8 +10,16 @@ using System.Text;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
+#if DEFINE_TEST
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
+#endif
+
 namespace ThScoreFileConverterTests.Models
 {
+#if DEFINE_TEST
+    [TestClass]
+#endif
     public static class TestUtils
     {
         static TestUtils()
@@ -27,6 +37,19 @@ namespace ThScoreFileConverterTests.Models
 
         public static Encoding CP932Encoding { get; }
 
+#if DEFINE_TEST
+        private static Dictionary<string, int> Counter { get; } = new();
+
+        [AssemblyCleanup]
+        public static void Cleanup()
+        {
+            foreach (var pair in Counter.OrderByDescending(p => p.Value))
+            {
+                Console.WriteLine(pair);
+            }
+        }
+#endif
+
         public static byte[] MakeByteArray(params object[] args)
         {
             if (args is null)
@@ -42,71 +65,54 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var arg in args)
             {
+#if DEFINE_TEST
+                Counter.TryAdd(arg.GetType().Name, 0);
+                ++Counter[arg.GetType().Name];
+#endif
                 switch (arg)
                 {
-                    case byte[] bytesArg:
-                        writer.Write(bytesArg);
-                        break;
-                    case char[] charsArg:
-                        writer.Write(charsArg);
-                        break;
-                    case sbyte sbyteArg:
-                        writer.Write(sbyteArg);
-                        break;
-                    case byte byteArg:
-                        writer.Write(byteArg);
-                        break;
-                    case char charArg:
-                        writer.Write(charArg);
-                        break;
-                    case short shortArg:
-                        writer.Write(shortArg);
-                        break;
-                    case ushort ushortArg:
-                        writer.Write(ushortArg);
-                        break;
                     case int intArg:
                         writer.Write(intArg);
+                        break;
+                    case byte[] bytesArg:
+                        writer.Write(bytesArg);
                         break;
                     case uint uintArg:
                         writer.Write(uintArg);
                         break;
-                    case long longArg:
-                        writer.Write(longArg);
+                    case byte byteArg:
+                        writer.Write(byteArg);
                         break;
-                    case ulong ulongArg:
-                        writer.Write(ulongArg);
+                    case float floatArg:
+                        writer.Write(floatArg);
                         break;
-                    case Array arrayArg when IsRankOneArray<short>(arrayArg):
-                        foreach (var val in (short[])arrayArg)
-                            writer.Write(val);
+                    case ushort ushortArg:
+                        writer.Write(ushortArg);
                         break;
-                    case Array arrayArg when IsRankOneArray<ushort>(arrayArg):
-                        foreach (var val in (ushort[])arrayArg)
-                            writer.Write(val);
+                    case short shortArg:
+                        writer.Write(shortArg);
+                        break;
+                    case char[] charsArg:
+                        writer.Write(charsArg);
+                        break;
+                    case string stringArg:
+                        writer.Write(stringArg);
                         break;
                     case Array arrayArg when IsRankOneArray<int>(arrayArg):
                         foreach (var val in (int[])arrayArg)
+                            writer.Write(val);
+                        break;
+                    case Array arrayArg when IsRankOneArray<short>(arrayArg):
+                        foreach (var val in (short[])arrayArg)
                             writer.Write(val);
                         break;
                     case Array arrayArg when IsRankOneArray<uint>(arrayArg):
                         foreach (var val in (uint[])arrayArg)
                             writer.Write(val);
                         break;
-                    case bool boolArg:
-                        writer.Write(boolArg);
-                        break;
-                    case double doubleArg:
-                        writer.Write(doubleArg);
-                        break;
-                    case float floatArg:
-                        writer.Write(floatArg);
-                        break;
-                    case string stringArg:
-                        writer.Write(stringArg);
-                        break;
-                    case decimal decimalArg:
-                        writer.Write(decimalArg);
+                    case Array arrayArg when IsRankOneArray<ushort>(arrayArg):
+                        foreach (var val in (ushort[])arrayArg)
+                            writer.Write(val);
                         break;
                     default:
                         throw new NotImplementedException();
