@@ -72,13 +72,21 @@ namespace ThScoreFileConverterTests.Models
                     case ulong ulongArg:
                         writer.Write(ulongArg);
                         break;
-                    case ushort[] ushortsArg:
-                        foreach (var val in ushortsArg)
-                            writer.Write(val);
+                    case Array arrayArg when arrayArg.GetValue(0) is short:
+                        foreach (var val in arrayArg)
+                            writer.Write((short)val);
                         break;
-                    case int[] intsArg:
-                        foreach (var val in intsArg)
-                            writer.Write(val);
+                    case Array arrayArg when arrayArg.GetValue(0) is ushort:
+                        foreach (var val in arrayArg)
+                            writer.Write((ushort)val);
+                        break;
+                    case Array arrayArg when arrayArg.GetValue(0) is int:
+                        foreach (var val in arrayArg)
+                            writer.Write((int)val);
+                        break;
+                    case Array arrayArg when arrayArg.GetValue(0) is uint:
+                        foreach (var val in arrayArg)
+                            writer.Write((uint)val);
                         break;
                     case bool boolArg:
                         writer.Write(boolArg);
