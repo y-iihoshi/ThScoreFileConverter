@@ -6,7 +6,7 @@ using Moq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
-using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Models.Th13
 {

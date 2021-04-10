@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ThScoreFileConverterTests.Extensions
+namespace ThScoreFileConverterTests.UnitTesting
 {
     public static class CollectionAssertExtensions
     {

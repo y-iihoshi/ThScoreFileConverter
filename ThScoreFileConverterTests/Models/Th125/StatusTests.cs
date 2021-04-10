@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th125;
-using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th095.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th125

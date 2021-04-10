@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.UnitTesting;
 using IChapter = ThScoreFileConverter.Models.Th095.IChapter;
 
 namespace ThScoreFileConverterTests.Models.Th10

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
-using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests
 {

@@ -4,8 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th075.Stubs;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {

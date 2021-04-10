@@ -12,7 +12,7 @@ using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using ThScoreFileConverter.ViewModels;
-using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.UnitTesting;
 using WPFLocalizeExtension.Engine;
 using SysDraw = System.Drawing;
 
