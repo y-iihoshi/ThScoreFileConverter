@@ -32,6 +32,11 @@ namespace ThScoreFileConverterTests.Models
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
+            static bool IsRankOneArray<T>(Array array)
+            {
+                return (array.Rank == 1) && (array.GetType().GetElementType() == typeof(T));
+            }
+
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, CP932Encoding);
 
@@ -72,21 +77,21 @@ namespace ThScoreFileConverterTests.Models
                     case ulong ulongArg:
                         writer.Write(ulongArg);
                         break;
-                    case Array arrayArg when arrayArg.GetValue(0) is short:
-                        foreach (var val in arrayArg)
-                            writer.Write((short)val);
+                    case Array arrayArg when IsRankOneArray<short>(arrayArg):
+                        foreach (var val in (short[])arrayArg)
+                            writer.Write(val);
                         break;
-                    case Array arrayArg when arrayArg.GetValue(0) is ushort:
-                        foreach (var val in arrayArg)
-                            writer.Write((ushort)val);
+                    case Array arrayArg when IsRankOneArray<ushort>(arrayArg):
+                        foreach (var val in (ushort[])arrayArg)
+                            writer.Write(val);
                         break;
-                    case Array arrayArg when arrayArg.GetValue(0) is int:
-                        foreach (var val in arrayArg)
-                            writer.Write((int)val);
+                    case Array arrayArg when IsRankOneArray<int>(arrayArg):
+                        foreach (var val in (int[])arrayArg)
+                            writer.Write(val);
                         break;
-                    case Array arrayArg when arrayArg.GetValue(0) is uint:
-                        foreach (var val in arrayArg)
-                            writer.Write((uint)val);
+                    case Array arrayArg when IsRankOneArray<uint>(arrayArg):
+                        foreach (var val in (uint[])arrayArg)
+                            writer.Write(val);
                         break;
                     case bool boolArg:
                         writer.Write(boolArg);
