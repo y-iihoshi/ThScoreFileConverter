@@ -244,11 +244,8 @@ namespace ThScoreFileConverterTests.Models.Th095
             using var writer = new BinaryWriter(stream);
             header.WriteTo(writer);
 
-            var wroteByteArray = new byte[writer.BaseStream.Length];
-            writer.BaseStream.Position = 0;
-            _ = writer.BaseStream.Read(wroteByteArray, 0, wroteByteArray.Length);
-
-            CollectionAssert.AreEqual(byteArray, wroteByteArray);
+            writer.Flush();
+            CollectionAssert.AreEqual(byteArray, stream.ToArray());
         }
     }
 }

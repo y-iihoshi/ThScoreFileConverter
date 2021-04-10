@@ -123,12 +123,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             header.WriteTo(writer);
 
             writer.Flush();
-            _ = writer.Seek(0, SeekOrigin.Begin);
-
-            var actualArray = new byte[writer.BaseStream.Length];
-            _ = writer.BaseStream.Read(actualArray, 0, actualArray.Length);
-
-            CollectionAssert.AreEqual(array, actualArray);
+            CollectionAssert.AreEqual(array, stream.ToArray());
         }
     }
 }

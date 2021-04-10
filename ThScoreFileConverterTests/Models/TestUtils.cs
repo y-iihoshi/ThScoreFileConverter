@@ -101,12 +101,7 @@ namespace ThScoreFileConverterTests.Models
             }
 
             writer.Flush();
-
-            var array = new byte[writer.BaseStream.Length];
-            writer.BaseStream.Position = 0;
-            _ = writer.BaseStream.Read(array, 0, array.Length);
-
-            return array;
+            return stream.ToArray();
         }
 
         public static IEnumerable<byte> MakeSQByteArray(params object?[] args)

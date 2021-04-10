@@ -49,12 +49,7 @@ namespace ThScoreFileConverterTests.Models
             using var output = new MemoryStream();
 
             Lzss.Decompress(input, output);
-
-            var actual = new byte[output.Length];
-            output.Position = 0;
-            _ = output.Read(actual, 0, actual.Length);
-
-            CollectionAssert.AreEqual(this.decompressed, actual);
+            CollectionAssert.AreEqual(this.decompressed, output.ToArray());
         }
 
         [TestMethod]
@@ -103,12 +98,7 @@ namespace ThScoreFileConverterTests.Models
             using var output = new MemoryStream();
 
             Lzss.Decompress(input, output);
-
-            var actual = new byte[output.Length];
-            output.Position = 0;
-            _ = output.Read(actual, 0, actual.Length);
-
-            CollectionAssert.AreNotEqual(this.decompressed, actual);
+            CollectionAssert.AreNotEqual(this.decompressed, output.ToArray());
         }
 
         [TestMethod]
@@ -126,12 +116,7 @@ namespace ThScoreFileConverterTests.Models
             using var output = new MemoryStream();
 
             Lzss.Decompress(input, output);
-
-            var actual = new byte[output.Length];
-            output.Position = 0;
-            _ = output.Read(actual, 0, actual.Length);
-
-            CollectionAssert.AreNotEqual(this.decompressed, actual);
+            CollectionAssert.AreNotEqual(this.decompressed, output.ToArray());
         }
 
         [TestMethod]
