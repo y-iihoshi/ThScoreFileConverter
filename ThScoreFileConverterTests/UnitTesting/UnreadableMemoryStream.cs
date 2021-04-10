@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.UnitTesting
 {
     public class UnreadableMemoryStream : MemoryStream
     {
