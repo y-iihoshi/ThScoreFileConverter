@@ -62,4 +62,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-ThScoreFileConverter/Templates/*.html linguist-generated=true
+TemplateGenerator/Templates/*.html linguist-generated=true

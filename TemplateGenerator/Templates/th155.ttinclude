@@ -1,5 +1,5 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
