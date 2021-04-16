@@ -1,14 +1,14 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th10" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th13" #>
 <#
-    var title = "東方風神録";
+    var title = "東方神霊廟";
 
     var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
@@ -19,28 +19,28 @@
     var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
+    var levelsSpellPractice = EnumHelper<LevelPractice>.Enumerable.ToDictionary(
+        level => level.ToShortName(),
+        level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+
     var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
 
-    var characters = new List<(Chara chara, string name, string equipment)>
+    var characters = new List<(Chara chara, string name)>
     {
-        (Chara.ReimuA,  "博麗 霊夢",   "（誘導装備）"),
-        (Chara.ReimuB,  "博麗 霊夢",   "（前方集中装備）"),
-        (Chara.ReimuC,  "博麗 霊夢",   "（封印装備）"),
-        (Chara.MarisaA, "霧雨 魔理沙", "（高威力装備）"),
-        (Chara.MarisaB, "霧雨 魔理沙", "（貫通装備）"),
-        (Chara.MarisaC, "霧雨 魔理沙", "（魔法使い装備）"),
-    }.ToDictionary(tuple => tuple.chara.ToShortName(), tuple => (Name: tuple.name, Equip: tuple.equipment));
+        (Chara.Reimu,  "博麗 霊夢"),
+        (Chara.Marisa, "霧雨 魔理沙"),
+        (Chara.Sanae,  "東風谷 早苗"),
+        (Chara.Youmu,  "魂魄 妖夢"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
-    var charactersWithTotal = new List<(CharaWithTotal chara, string name, string equipment)>
+    var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
     {
-        (CharaWithTotal.ReimuA,  "博麗 霊夢",    "（誘導装備）"),
-        (CharaWithTotal.ReimuB,  "博麗 霊夢",    "（前方集中装備）"),
-        (CharaWithTotal.ReimuC,  "博麗 霊夢",    "（封印装備）"),
-        (CharaWithTotal.MarisaA, "霧雨 魔理沙",  "（高威力装備）"),
-        (CharaWithTotal.MarisaB, "霧雨 魔理沙",  "（貫通装備）"),
-        (CharaWithTotal.MarisaC, "霧雨 魔理沙",  "（魔法使い装備）"),
-        (CharaWithTotal.Total,   "全主人公合計", string.Empty),
-    }.ToDictionary(tuple => tuple.chara.ToShortName(), tuple => (Name: tuple.name, Equip: tuple.equipment));
+        (CharaWithTotal.Reimu,  "博麗 霊夢"),
+        (CharaWithTotal.Marisa, "霧雨 魔理沙"),
+        (CharaWithTotal.Sanae,  "東風谷 早苗"),
+        (CharaWithTotal.Youmu,  "魂魄 妖夢"),
+        (CharaWithTotal.Total,  "全主人公合計"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charaKeyTotal = CharaWithTotal.Total.ToShortName();
     var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
@@ -73,27 +73,42 @@
     var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
+    var stagesSpellPractice = new List<(StagePractice stage, string name)>
+    {
+        (StagePractice.One,       "Stage 1"),
+        (StagePractice.Two,       "Stage 2"),
+        (StagePractice.Three,     "Stage 3"),
+        (StagePractice.Four,      "Stage 4"),
+        (StagePractice.Five,      "Stage 5"),
+        (StagePractice.Six,       "Stage 6"),
+        (StagePractice.Extra,     "Extra"),
+        (StagePractice.OverDrive, "Over Drive"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
+
     var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
 
-    var cardsPerLevel = new List<(Level level, int numCards)>
+    var cardsPerLevel = new List<(LevelPractice level, int numCards)>
     {
-        (Level.Easy,    23),
-        (Level.Normal,  24),
-        (Level.Hard,    25),
-        (Level.Lunatic, 25),
-        (Level.Extra,   13),
+        (LevelPractice.Easy,      24),
+        (LevelPractice.Normal,    26),
+        (LevelPractice.Hard,      28),
+        (LevelPractice.Lunatic,   28),
+        (LevelPractice.Extra,     13),
+        (LevelPractice.OverDrive,  8),
     }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
-    var cardsPerStage = new List<(Stage stage, int numCards)>
+    var cardsPerStage = new List<(StagePractice stage, int numCards)>
     {
-        (Stage.One,   10),
-        (Stage.Two,   16),
-        (Stage.Three, 16),
-        (Stage.Four,  15),
-        (Stage.Five,  20),
-        (Stage.Six,   20),
-        (Stage.Extra, 13),
+        (StagePractice.One,       14),
+        (StagePractice.Two,       16),
+        (StagePractice.Three,     14),
+        (StagePractice.Four,      15),
+        (StagePractice.Five,      19),
+        (StagePractice.Six,       28),
+        (StagePractice.Extra,     13),
+        (StagePractice.OverDrive,  8),
     }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
-    var numCards = cardsPerLevel.Values.Sum();
+    var numCardsSpellPractice = cardsPerLevel.Values.Sum();
+    var numCards = numCardsSpellPractice - cardsPerLevel[StagePractice.OverDrive.ToShortName()];
 #>

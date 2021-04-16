@@ -1,14 +1,14 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th16" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th14" #>
 <#
-    var title = "東方天空璋";
+    var title = "東方輝針城";
 
     var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
@@ -23,19 +23,23 @@
 
     var characters = new List<(Chara chara, string name)>
     {
-        (Chara.Reimu,  "博麗 霊夢"),
-        (Chara.Cirno,  "日焼けしたチルノ"),
-        (Chara.Aya,    "射命丸 文"),
-        (Chara.Marisa, "霧雨 魔理沙"),
+        (Chara.ReimuA,  "博麗 霊夢 (A)"),
+        (Chara.ReimuB,  "博麗 霊夢 (B)"),
+        (Chara.MarisaA, "霧雨 魔理沙 (A)"),
+        (Chara.MarisaB, "霧雨 魔理沙 (B)"),
+        (Chara.SakuyaA, "十六夜 咲夜 (A)"),
+        (Chara.SakuyaB, "十六夜 咲夜 (B)"),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
     {
-        (CharaWithTotal.Reimu,  "博麗 霊夢"),
-        (CharaWithTotal.Cirno,  "日焼けしたチルノ"),
-        (CharaWithTotal.Aya,    "射命丸 文"),
-        (CharaWithTotal.Marisa, "霧雨 魔理沙"),
-        (CharaWithTotal.Total,  "全主人公合計"),
+        (CharaWithTotal.ReimuA,  "博麗 霊夢 (A)"),
+        (CharaWithTotal.ReimuB,  "博麗 霊夢 (B)"),
+        (CharaWithTotal.MarisaA, "霧雨 魔理沙 (A)"),
+        (CharaWithTotal.MarisaB, "霧雨 魔理沙 (B)"),
+        (CharaWithTotal.SakuyaA, "十六夜 咲夜 (A)"),
+        (CharaWithTotal.SakuyaB, "十六夜 咲夜 (B)"),
+        (CharaWithTotal.Total,   "全主人公合計"),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charaKeyTotal = CharaWithTotal.Total.ToShortName();
@@ -75,20 +79,20 @@
     {
         (Level.Easy,    26),
         (Level.Normal,  26),
-        (Level.Hard,    27),
-        (Level.Lunatic, 27),
-        (Level.Extra,   13),
+        (Level.Hard,    28),
+        (Level.Lunatic, 28),
+        (Level.Extra,   12),
     }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
     var cardsPerStage = new List<(Stage stage, int numCards)>
     {
-        (Stage.One,    8),
-        (Stage.Two,   12),
+        (Stage.One,   10),
+        (Stage.Two,   16),
         (Stage.Three, 14),
-        (Stage.Four,  12),
-        (Stage.Five,  24),
-        (Stage.Six,   36),
-        (Stage.Extra, 13),
+        (Stage.Four,  24),
+        (Stage.Five,  20),
+        (Stage.Six,   24),
+        (Stage.Extra, 12),
     }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
     var numCards = cardsPerLevel.Values.Sum();

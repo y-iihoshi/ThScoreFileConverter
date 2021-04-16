@@ -1,14 +1,14 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th11" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th12" #>
 <#
-    var title = "東方地霊殿";
+    var title = "東方星蓮船";
 
     var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
@@ -23,23 +23,23 @@
 
     var characters = new List<(Chara chara, string name)>
     {
-        (Chara.ReimuYukari,     "霊夢 &amp; 紫"),
-        (Chara.ReimuSuika,      "霊夢 &amp; 萃香"),
-        (Chara.ReimuAya,        "霊夢 &amp; 文"),
-        (Chara.MarisaAlice,     "魔理沙 &amp; アリス"),
-        (Chara.MarisaPatchouli, "魔理沙 &amp; パチュリー"),
-        (Chara.MarisaNitori,    "魔理沙 &amp; にとり"),
+        (Chara.ReimuA,  "博麗 霊夢（夢）"),
+        (Chara.ReimuB,  "博麗 霊夢（霊）"),
+        (Chara.MarisaA, "霧雨 魔理沙（恋）"),
+        (Chara.MarisaB, "霧雨 魔理沙（魔）"),
+        (Chara.SanaeA,  "東風谷 早苗（蛇）"),
+        (Chara.SanaeB,  "東風谷 早苗（蛙）"),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
     {
-        (CharaWithTotal.ReimuYukari,     "霊夢 &amp; 紫"),
-        (CharaWithTotal.ReimuSuika,      "霊夢 &amp; 萃香"),
-        (CharaWithTotal.ReimuAya,        "霊夢 &amp; 文"),
-        (CharaWithTotal.MarisaAlice,     "魔理沙 &amp; アリス"),
-        (CharaWithTotal.MarisaPatchouli, "魔理沙 &amp; パチュリー"),
-        (CharaWithTotal.MarisaNitori,    "魔理沙 &amp; にとり"),
-        (CharaWithTotal.Total,           "全主人公合計"),
+        (CharaWithTotal.ReimuA,  "博麗 霊夢（夢）"),
+        (CharaWithTotal.ReimuB,  "博麗 霊夢（霊）"),
+        (CharaWithTotal.MarisaA, "霧雨 魔理沙（恋）"),
+        (CharaWithTotal.MarisaB, "霧雨 魔理沙（魔）"),
+        (CharaWithTotal.SanaeA,  "東風谷 早苗（蛇）"),
+        (CharaWithTotal.SanaeB,  "東風谷 早苗（蛙）"),
+        (CharaWithTotal.Total,   "全主人公合計"),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charaKeyTotal = CharaWithTotal.Total.ToShortName();
@@ -77,10 +77,10 @@
 
     var cardsPerLevel = new List<(Level level, int numCards)>
     {
-        (Level.Easy,    40),
-        (Level.Normal,  40),
-        (Level.Hard,    41),
-        (Level.Lunatic, 41),
+        (Level.Easy,    23),
+        (Level.Normal,  25),
+        (Level.Hard,    26),
+        (Level.Lunatic, 26),
         (Level.Extra,   13),
     }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
@@ -89,9 +89,9 @@
         (Stage.One,   10),
         (Stage.Two,   16),
         (Stage.Three, 16),
-        (Stage.Four,  76),
+        (Stage.Four,  15),
         (Stage.Five,  20),
-        (Stage.Six,   24),
+        (Stage.Six,   23),
         (Stage.Extra, 13),
     }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 

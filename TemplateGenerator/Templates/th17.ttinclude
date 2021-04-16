@@ -1,14 +1,14 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Helpers" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th15" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th17" #>
 <#
-    var title = "東方紺珠伝";
+    var title = "東方鬼形獣";
 
     var levels = EnumHelper<Level>.Enumerable
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
@@ -23,19 +23,29 @@
 
     var characters = new List<(Chara chara, string name)>
     {
-        (Chara.Reimu,  "博麗 霊夢"),
-        (Chara.Marisa, "霧雨 魔理沙"),
-        (Chara.Sanae,  "東風谷 早苗"),
-        (Chara.Reisen, "鈴仙・優曇華院・イナバ"),
+        (Chara.ReimuA,  "博麗 霊夢 (狼)"),
+        (Chara.ReimuB,  "博麗 霊夢 (獺)"),
+        (Chara.ReimuC,  "博麗 霊夢 (鷲)"),
+        (Chara.MarisaA, "霧雨 魔理沙 (狼)"),
+        (Chara.MarisaB, "霧雨 魔理沙 (獺)"),
+        (Chara.MarisaC, "霧雨 魔理沙 (鷲)"),
+        (Chara.YoumuA,  "魂魄 妖夢 (狼)"),
+        (Chara.YoumuB,  "魂魄 妖夢 (獺)"),
+        (Chara.YoumuC,  "魂魄 妖夢 (鷲)"),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
     {
-        (CharaWithTotal.Reimu,  "博麗 霊夢"),
-        (CharaWithTotal.Marisa, "霧雨 魔理沙"),
-        (CharaWithTotal.Sanae,  "東風谷 早苗"),
-        (CharaWithTotal.Reisen, "鈴仙・優曇華院・イナバ"),
-        (CharaWithTotal.Total,  "全主人公合計"),
+        (CharaWithTotal.ReimuA,  "博麗 霊夢 (狼)"),
+        (CharaWithTotal.ReimuB,  "博麗 霊夢 (獺)"),
+        (CharaWithTotal.ReimuC,  "博麗 霊夢 (鷲)"),
+        (CharaWithTotal.MarisaA, "霧雨 魔理沙 (狼)"),
+        (CharaWithTotal.MarisaB, "霧雨 魔理沙 (獺)"),
+        (CharaWithTotal.MarisaC, "霧雨 魔理沙 (鷲)"),
+        (CharaWithTotal.YoumuA,  "魂魄 妖夢 (狼)"),
+        (CharaWithTotal.YoumuB,  "魂魄 妖夢 (獺)"),
+        (CharaWithTotal.YoumuC,  "魂魄 妖夢 (鷲)"),
+        (CharaWithTotal.Total,   "全主人公合計"),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
     var charaKeyTotal = CharaWithTotal.Total.ToShortName();
@@ -73,29 +83,31 @@
 
     var cardsPerLevel = new List<(Level level, int numCards)>
     {
-        (Level.Easy,    26),
-        (Level.Normal,  26),
-        (Level.Hard,    27),
-        (Level.Lunatic, 27),
+        (Level.Easy,    22),
+        (Level.Normal,  22),
+        (Level.Hard,    22),
+        (Level.Lunatic, 22),
         (Level.Extra,   13),
     }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
     var cardsPerStage = new List<(Stage stage, int numCards)>
     {
-        (Stage.One,   10),
+        (Stage.One,    8),
         (Stage.Two,   12),
-        (Stage.Three, 20),
-        (Stage.Four,  16),
-        (Stage.Five,  20),
+        (Stage.Three, 12),
+        (Stage.Four,  12),
+        (Stage.Five,  16),
         (Stage.Six,   28),
         (Stage.Extra, 13),
     }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
     var numCards = cardsPerLevel.Values.Sum();
 
-    var gameModes = new List<(GameMode mode, string name)>
+    var careerKinds = new Dictionary<string, string>
     {
-        (GameMode.Pointdevice, "完全無欠モード"),
-        (GameMode.Legacy,      "レガシーモード"),
-    }.ToDictionary(pair => pair.mode.ToShortName(), pair => pair.name);
+        { "S", "ゲーム本編" },
+        { "P", "スペルプラクティス" },
+    };
+
+    var numAchievements = 40;
 #>

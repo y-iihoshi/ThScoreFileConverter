@@ -1,4 +1,4 @@
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
 <#
     var projectName = nameof(ThScoreFileConverter);
     var projectUrl = ThScoreFileConverter.Properties.Resources.ProjectUrl;
