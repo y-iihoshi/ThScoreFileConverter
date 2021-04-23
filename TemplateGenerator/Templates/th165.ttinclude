@@ -1,8 +1,10 @@
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="TemplateGenerator.Models.Th165" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th165" #>
 <#
@@ -62,5 +64,5 @@
 
     var numDreams = dreamsPerDay.Values.Sum();
 
-    var numNicknames = 50;
+    var numNicknames = Definitions.NumNicknames;
 #>

@@ -1,8 +1,10 @@
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="TemplateGenerator.Models.Th143" #>
 <#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th143" #>
 <#
@@ -61,5 +63,5 @@
     var itemKeyOrderTotalFirst = itemsWithTotal.Keys.TakeLast(1).Concat(itemsWithTotal.Keys.SkipLast(1));
     var itemKeyOrderTotalLast = itemsWithTotal.Keys;
 
-    var numNicknames = 70;
+    var numNicknames = Definitions.NumNicknames;
 #>

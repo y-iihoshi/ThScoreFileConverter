@@ -791,6 +791,9 @@
     <T4ParameterValues Include="TargetDir">
       <Value>$(TargetDir)</Value>
     </T4ParameterValues>
+    <T4ParameterValues Include="TargetPath">
+      <Value>$(TargetPath)</Value>
+    </T4ParameterValues>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net48'">
