@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
@@ -16,7 +16,7 @@ namespace TemplateGenerator.Models.Th06
             (Chara.ReimuB,  "博麗 霊夢（夢）"),
             (Chara.MarisaA, "霧雨 魔理沙（魔）"),
             (Chara.MarisaB, "霧雨 魔理沙（恋）"),
-        }.ToDictionary(pair => pair.Item1.ToShortName(), pair => pair.Item2);
+        }.ToStringKeyedDictionary();
 
         public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } = new[]
         {
@@ -27,7 +27,7 @@ namespace TemplateGenerator.Models.Th06
             (Stage.Five,   8),
             (Stage.Six,   11),
             (Stage.Extra, 13),
-        }.ToDictionary(pair => pair.Item1.ToShortName(), pair => pair.Item2);
+        }.ToStringKeyedDictionary();
 
         public static bool CanPractice(string levelKey, string stageKey)
         {

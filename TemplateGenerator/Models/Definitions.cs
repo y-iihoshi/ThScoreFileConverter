@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Extensions;
+using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 
@@ -8,14 +8,7 @@ namespace TemplateGenerator.Models
 {
     public class Definitions
     {
-        public static IReadOnlyDictionary<string, string> LevelNames { get; } = EnumHelper<Level>.Enumerable
-            .ToDictionary(level => level.ToShortName(), level => level.ToString());
-
-        public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } = EnumHelper<Level>.Enumerable
-            .Where(level => level != Level.Extra)
-            .ToDictionary(level => level.ToShortName(), level => level.ToString());
-
-        public static IReadOnlyDictionary<string, string> StageNames { get; } = new[]
+        private static readonly IEnumerable<(Stage, string)> StageNamesImpl = new[]
         {
             (Stage.One,   "Stage 1"),
             (Stage.Two,   "Stage 2"),
@@ -24,10 +17,19 @@ namespace TemplateGenerator.Models
             (Stage.Five,  "Stage 5"),
             (Stage.Six,   "Stage 6"),
             (Stage.Extra, "Extra"),
-        }.ToDictionary(pair => pair.Item1.ToShortName(), pair => pair.Item2);
+        };
+
+        public static IReadOnlyDictionary<string, string> LevelNames { get; } =
+            EnumHelper<Level>.Enumerable.ToStringDictionary();
+
+        public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } =
+            EnumHelper<Level>.Enumerable.Where(CanPractice).ToStringDictionary();
+
+        public static IReadOnlyDictionary<string, string> StageNames { get; } =
+            StageNamesImpl.ToStringKeyedDictionary();
 
         public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-            StageNames.Where(pair => pair.Key != Stage.Extra.ToShortName()).ToDictionary();
+            StageNamesImpl.Where(pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
 
         public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
         {
@@ -39,12 +41,20 @@ namespace TemplateGenerator.Models
             (StageWithTotal.Six,   "Stage 6"),
             (StageWithTotal.Extra, "Extra"),
             (StageWithTotal.Total, "Total"),
-        }.ToDictionary(pair => pair.Item1.ToShortName(), pair => pair.Item2);
+        }.ToStringKeyedDictionary();
 
-        public static IEnumerable<string> StageKeysTotalFirst { get; } =
-            StageWithTotalNames.Keys.TakeLast(1).Concat(StageWithTotalNames.Keys.SkipLast(1));
+        public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 
-        public static IEnumerable<string> StageKeysTotalLast { get; } =
-            StageWithTotalNames.Keys;
+        public static IEnumerable<string> StageKeysTotalLast { get; } = StageWithTotalNames.Keys;
+
+        public static bool CanPractice(Level level)
+        {
+            return level != Level.Extra;
+        }
+
+        public static bool CanPractice(Stage stage)
+        {
+            return stage != Stage.Extra;
+        }
     }
 }
