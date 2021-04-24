@@ -1,114 +1,39 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th13" #>
+<#@ import namespace="TemplateGenerator.Models.Th13" #>
 <#
-    var title = "東方神霊廟";
+    var title = Definitions.Title;
 
-    var levels = EnumHelper<Level>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levels = Definitions.LevelNames;
+    var levelsPractice = Definitions.LevelPracticeNames;
+    var levelsSpellPractice = Definitions.LevelSpellPracticeNames;
+    var levelsWithTotal = Definitions.LevelWithTotalNames;
 
-    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
-    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
-    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+    var levelKeyOrderTotalFirst = Definitions.LevelKeysTotalFirst;
+    var levelKeyOrderTotalLast = Definitions.LevelKeysTotalLast;
+    var levelKeyTotal = levelKeyOrderTotalFirst.First();
 
-    var levelsSpellPractice = EnumHelper<LevelPractice>.Enumerable.ToDictionary(
-        level => level.ToShortName(),
-        level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+    var characters = Definitions.CharacterNames;
+    var charactersWithTotal = Definitions.CharacterWithTotalNames;
 
-    var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
+    var charaKeyOrderTotalFirst = Definitions.CharacterKeysTotalFirst;
+    var charaKeyOrderTotalLast = Definitions.CharacterKeysTotalLast;
+    var charaKeyTotal = charaKeyOrderTotalFirst.First();
 
-    var characters = new List<(Chara chara, string name)>
-    {
-        (Chara.Reimu,  "博麗 霊夢"),
-        (Chara.Marisa, "霧雨 魔理沙"),
-        (Chara.Sanae,  "東風谷 早苗"),
-        (Chara.Youmu,  "魂魄 妖夢"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var stages = Definitions.StageNames;
+    var stagesPractice = Definitions.StagePracticeNames;
+    var stagesSpellPractice = Definitions.StageSpellPracticeNames;
+    var stagesWithTotal = Definitions.StageWithTotalNames;
 
-    var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
-    {
-        (CharaWithTotal.Reimu,  "博麗 霊夢"),
-        (CharaWithTotal.Marisa, "霧雨 魔理沙"),
-        (CharaWithTotal.Sanae,  "東風谷 早苗"),
-        (CharaWithTotal.Youmu,  "魂魄 妖夢"),
-        (CharaWithTotal.Total,  "全主人公合計"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var stageKeyOrderTotalFirst = Definitions.StageKeysTotalFirst;
+    var stageKeyOrderTotalLast = Definitions.StageKeysTotalLast;
+    var stageKeyTotal = stageKeyOrderTotalFirst.First();
 
-    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
-    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
-    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+    var cardsPerLevel = Definitions.NumCardsPerLevel;
+    var cardsPerStage = Definitions.NumCardsPerStage;
 
-    var stages = new List<(Stage stage, string name)>
-    {
-        (Stage.One,   "Stage 1"),
-        (Stage.Two,   "Stage 2"),
-        (Stage.Three, "Stage 3"),
-        (Stage.Four,  "Stage 4"),
-        (Stage.Five,  "Stage 5"),
-        (Stage.Six,   "Stage 6"),
-        (Stage.Extra, "Extra"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
-
-    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
-    {
-        (StageWithTotal.One,   "Stage 1"),
-        (StageWithTotal.Two,   "Stage 2"),
-        (StageWithTotal.Three, "Stage 3"),
-        (StageWithTotal.Four,  "Stage 4"),
-        (StageWithTotal.Five,  "Stage 5"),
-        (StageWithTotal.Six,   "Stage 6"),
-        (StageWithTotal.Extra, "Extra"),
-        (StageWithTotal.Total, "Total"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
-
-    var stageKeyTotal = StageWithTotal.Total.ToShortName();
-    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
-    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
-
-    var stagesSpellPractice = new List<(StagePractice stage, string name)>
-    {
-        (StagePractice.One,       "Stage 1"),
-        (StagePractice.Two,       "Stage 2"),
-        (StagePractice.Three,     "Stage 3"),
-        (StagePractice.Four,      "Stage 4"),
-        (StagePractice.Five,      "Stage 5"),
-        (StagePractice.Six,       "Stage 6"),
-        (StagePractice.Extra,     "Extra"),
-        (StagePractice.OverDrive, "Over Drive"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
-
-    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
-
-    var cardsPerLevel = new List<(LevelPractice level, int numCards)>
-    {
-        (LevelPractice.Easy,      24),
-        (LevelPractice.Normal,    26),
-        (LevelPractice.Hard,      28),
-        (LevelPractice.Lunatic,   28),
-        (LevelPractice.Extra,     13),
-        (LevelPractice.OverDrive,  8),
-    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
-
-    var cardsPerStage = new List<(StagePractice stage, int numCards)>
-    {
-        (StagePractice.One,       14),
-        (StagePractice.Two,       16),
-        (StagePractice.Three,     14),
-        (StagePractice.Four,      15),
-        (StagePractice.Five,      19),
-        (StagePractice.Six,       28),
-        (StagePractice.Extra,     13),
-        (StagePractice.OverDrive,  8),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
-
-    var numCardsSpellPractice = cardsPerLevel.Values.Sum();
-    var numCards = numCardsSpellPractice - cardsPerLevel[StagePractice.OverDrive.ToShortName()];
+    var numCardsSpellPractice = Definitions.NumCardsWithOverDrive;
+    var numCards = Definitions.NumCardsWithoutOverDrive;
 #>
