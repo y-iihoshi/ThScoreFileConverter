@@ -25,6 +25,13 @@ namespace TemplateGenerator.Models
         public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } =
             EnumHelper<Level>.Enumerable.Where(CanPractice).ToStringDictionary();
 
+        public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
+            EnumHelper<LevelWithTotal>.Enumerable.ToStringDictionary();
+
+        public static IEnumerable<string> LevelKeysTotalFirst { get; } = LevelWithTotalNames.Keys.RotateRight();
+
+        public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
+
         public static IReadOnlyDictionary<string, string> StageNames { get; } =
             StageNamesImpl.ToStringKeyedDictionary();
 
