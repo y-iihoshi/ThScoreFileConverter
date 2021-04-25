@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 
@@ -63,5 +64,11 @@ namespace TemplateGenerator.Models
         {
             return stage != Stage.Extra;
         }
+
+        public static IReadOnlyDictionary<string, string> CareerKinds { get; } = new[]
+        {
+            ("S", "ゲーム本編"),
+            ("P", "スペルプラクティス"),
+        }.ToDictionary();
     }
 }
