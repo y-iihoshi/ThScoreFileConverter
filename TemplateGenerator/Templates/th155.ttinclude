@@ -1,31 +1,8 @@
-<#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th155" #>
-<#@ import namespace="Models = ThScoreFileConverter.Models" #>
+<#@ import namespace="TemplateGenerator.Models.Th155" #>
 <#
-    var title = "東方憑依華";
-
-    var levels = EnumHelper<Level>.Enumerable.ToDictionary(
-        level => level.ToShortName(),
-        level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
-
-    var characters = new List<(StoryChara chara, string name)>
-    {
-        (StoryChara.ReimuKasen,         "霊夢 &amp; 華扇"),
-        (StoryChara.MarisaKoishi,       "魔理沙 &amp; こいし"),
-        (StoryChara.NitoriKokoro,       "にとり &amp; こころ"),
-        (StoryChara.MamizouMokou,       "マミゾウ &amp; 妹紅"),
-        (StoryChara.MikoByakuren,       "神子 &amp; 白蓮"),
-        (StoryChara.FutoIchirin,        "布都 &amp; 一輪"),
-        (StoryChara.ReisenDoremy,       "鈴仙 &amp; ドレミー"),
-        (StoryChara.SumirekoDoremy,     "菫子 &amp; ドレミー"),
-        (StoryChara.TenshiShinmyoumaru, "天子 &amp; 針妙丸"),
-        (StoryChara.YukariReimu,        "紫 &amp; 霊夢"),
-        (StoryChara.JoonShion,          "女苑 &amp; 紫苑"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var title = Definitions.Title;
+    var levels = Definitions.LevelNames;
+    var characters = Definitions.StoryCharacterNames;
 #>
