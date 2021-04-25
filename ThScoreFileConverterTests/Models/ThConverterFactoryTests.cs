@@ -7,13 +7,22 @@ namespace ThScoreFileConverterTests.Models
     public class ThConverterFactoryTests
     {
         [TestMethod]
-        public void CanCreateTest() => Assert.IsTrue(ThConverterFactory.CanCreate("TH06"));
+        public void CanCreateTest()
+        {
+            Assert.IsTrue(ThConverterFactory.CanCreate("TH06"));
+        }
 
         [TestMethod]
-        public void CanCreateTestEmptyKey() => Assert.IsFalse(ThConverterFactory.CanCreate(string.Empty));
+        public void CanCreateTestEmptyKey()
+        {
+            Assert.IsFalse(ThConverterFactory.CanCreate(string.Empty));
+        }
 
         [TestMethod]
-        public void CanCreateTestInvalidKey() => Assert.IsFalse(ThConverterFactory.CanCreate("invalidKey"));
+        public void CanCreateTestInvalidKey()
+        {
+            Assert.IsFalse(ThConverterFactory.CanCreate("invalidKey"));
+        }
 
         [TestMethod]
         public void CreateTest()

@@ -36,7 +36,8 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         internal static byte[] MakeByteArray(IPlayStatus playStatus)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 playStatus.Signature.ToCharArray(),
                 playStatus.Size1,
                 playStatus.Size2,
@@ -55,6 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                 playStatus.StoryFlags.Values.ToArray(),
                 playStatus.ExtraFlags.Values.ToArray(),
                 playStatus.ClearCounts.SelectMany(pair => ClearCountTests.MakeByteArray(pair.Value)).ToArray());
+        }
 
         internal static void Validate(IPlayStatus expected, IPlayStatus actual)
         {

@@ -23,10 +23,13 @@ namespace ThScoreFileConverterTests.Interactivity
 #pragma warning restore CS0067
 
 #if NET5_0
-        public bool CanExecute([NotNullWhen(true)] object? parameter) => true;
+        public bool CanExecute([NotNullWhen(true)] object? parameter)
 #else
-        public bool CanExecute(object parameter) => true;
+        public bool CanExecute(object parameter)
 #endif
+        {
+            return true;
+        }
 
 #if NET5_0
         public void Execute(object? parameter)

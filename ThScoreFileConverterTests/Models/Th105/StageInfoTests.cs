@@ -19,12 +19,14 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static Properties<TChara> MakeValidProperties<TChara>()
             where TChara : struct, Enum
-            => new()
+        {
+            return new()
             {
                 stage = Stage.Two,
                 enemy = TestUtils.Cast<TChara>(2),
                 cardIds = new List<int>() { 3, 4, 5 },
             };
+        }
 
         internal static void Validate<TChara>(in Properties<TChara> expected, in StageInfo<TChara> actual)
             where TChara : struct, Enum
@@ -45,6 +47,9 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        public void StageInfoTest() => StageInfoTestHelper<Chara>();
+        public void StageInfoTest()
+        {
+            StageInfoTestHelper<Chara>();
+        }
     }
 }

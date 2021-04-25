@@ -38,16 +38,20 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         internal static byte[] MakeData(ICardData cardData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray());
+        }
 
         internal static byte[] MakeByteArray(ICardData cardData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 cardData.Signature.ToCharArray(),
                 cardData.Version,
                 cardData.Checksum,
                 cardData.Size,
                 MakeData(cardData));
+        }
 
         internal static void Validate(ICardData expected, ICardData actual)
         {

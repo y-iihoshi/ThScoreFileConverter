@@ -28,23 +28,27 @@ namespace ThScoreFileConverterTests.Models.Th135
             public Dictionary<int, bool> bgmFlags;
         }
 
-        internal static Properties GetValidProperties() => new()
+        internal static Properties GetValidProperties()
         {
-            storyProgress = 1,
-            storyClearFlags = EnumHelper<Chara>.Enumerable.ToDictionary(
-                chara => chara, chara => TestUtils.Cast<Levels>(30 - (int)chara)),
-            endingCount = 2,
-            ending2Count = 3,
-            isEnabledStageTanuki1 = true,
-            isEnabledStageTanuki2 = true,
-            isEnabledStageKokoro = false,
-            isPlayableMamizou = true,
-            isPlayableKokoro = false,
-            bgmFlags = Enumerable.Range(1, 10).ToDictionary(id => id, id => id % 2 == 0),
-        };
+            return new()
+            {
+                storyProgress = 1,
+                storyClearFlags = EnumHelper<Chara>.Enumerable.ToDictionary(
+                    chara => chara, chara => TestUtils.Cast<Levels>(30 - (int)chara)),
+                endingCount = 2,
+                ending2Count = 3,
+                isEnabledStageTanuki1 = true,
+                isEnabledStageTanuki2 = true,
+                isEnabledStageKokoro = false,
+                isPlayableMamizou = true,
+                isPlayableKokoro = false,
+                bgmFlags = Enumerable.Range(1, 10).ToDictionary(id => id, id => id % 2 == 0),
+            };
+        }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => Array.Empty<byte>()
+        {
+            return Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story_progress", properties.storyProgress,
@@ -59,6 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th135
                     "enable_bgm", properties.bgmFlags))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray();
+        }
 
         internal static void Validate(in Properties expected, in AllScoreData actual)
         {

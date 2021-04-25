@@ -26,12 +26,14 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         internal static byte[] MakeByteArray(ISpellCard<Level> spellCard)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 spellCard.Name,
                 spellCard.ClearCount,
                 spellCard.TrialCount,
                 spellCard.Id - 1,
                 (int)spellCard.Level);
+        }
 
         internal static void Validate(ISpellCard<Level> expected, ISpellCard<Level> actual)
         {

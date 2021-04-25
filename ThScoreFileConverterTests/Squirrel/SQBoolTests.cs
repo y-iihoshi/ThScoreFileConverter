@@ -66,19 +66,34 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNull() => Assert.IsFalse(SQBool.True.Equals(null!));
+        public void EqualsTestNull()
+        {
+            Assert.IsFalse(SQBool.True.Equals(null!));
+        }
 
         [TestMethod]
-        public void EqualsTestNullObject() => Assert.IsFalse(SQBool.True.Equals((object)null!));
+        public void EqualsTestNullObject()
+        {
+            Assert.IsFalse(SQBool.True.Equals((object)null!));
+        }
 
         [TestMethod]
-        public void EqualsTestInvalidType() => Assert.IsFalse(SQBool.True.Equals(SQNull.Instance));
+        public void EqualsTestInvalidType()
+        {
+            Assert.IsFalse(SQBool.True.Equals(SQNull.Instance));
+        }
 
         [TestMethod]
-        public void EqualsTestSelf() => Assert.IsTrue(SQBool.True.Equals(SQBool.True));
+        public void EqualsTestSelf()
+        {
+            Assert.IsTrue(SQBool.True.Equals(SQBool.True));
+        }
 
         [TestMethod]
-        public void EqualsTestSelfObject() => Assert.IsTrue(SQBool.True.Equals(SQBool.True as object));
+        public void EqualsTestSelfObject()
+        {
+            Assert.IsTrue(SQBool.True.Equals(SQBool.True as object));
+        }
 
         [TestMethod]
         public void EqualsTestEqual()
@@ -89,7 +104,10 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNotEqual() => Assert.IsFalse(SQBool.True.Equals(SQBool.False));
+        public void EqualsTestNotEqual()
+        {
+            Assert.IsFalse(SQBool.True.Equals(SQBool.False));
+        }
 
         [TestMethod]
         public void GetHashCodeTestEqual()
@@ -101,6 +119,8 @@ namespace ThScoreFileConverterTests.Squirrel
 
         [TestMethod]
         public void GetHashCodeTestNotEqual()
-            => Assert.AreNotEqual(SQBool.True.GetHashCode(), SQBool.False.GetHashCode());
+        {
+            Assert.AreNotEqual(SQBool.True.GetHashCode(), SQBool.False.GetHashCode());
+        }
     }
 }

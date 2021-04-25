@@ -17,7 +17,9 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         internal static byte[] MakeByteArray(IPractice practice)
-            => TestUtils.MakeByteArray(practice.Score, practice.StageFlag);
+        {
+            return TestUtils.MakeByteArray(practice.Score, practice.StageFlag);
+        }
 
         internal static void Validate(IPractice expected, IPractice actual)
         {

@@ -23,23 +23,33 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         public void ScoreFileTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().ScoreFile = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().ScoreFile = null!);
+        }
 
         [TestMethod]
         public void BestShotDirectoryTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().BestShotDirectory = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().BestShotDirectory = null!);
+        }
 
         [TestMethod]
         public void TemplateFilesTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().TemplateFiles = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().TemplateFiles = null!);
+        }
 
         [TestMethod]
         public void OutputDirectoryTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().OutputDirectory = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().OutputDirectory = null!);
+        }
 
         [TestMethod]
         public void ImageOutputDirectoryNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().ImageOutputDirectory = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().ImageOutputDirectory = null!);
+        }
 
         [TestMethod]
         public void SetPropertyTest()

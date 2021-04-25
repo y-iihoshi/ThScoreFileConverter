@@ -47,7 +47,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         internal static byte[] MakeByteArray(IHighScore highScore)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 highScore.Signature.ToCharArray(),
                 highScore.Size1,
                 highScore.Size2,
@@ -74,6 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 highScore.HumanRate,
                 highScore.CardFlags.Values.ToArray(),
                 new byte[2]);
+        }
 
         internal static void Validate(IHighScore expected, IHighScore actual)
         {

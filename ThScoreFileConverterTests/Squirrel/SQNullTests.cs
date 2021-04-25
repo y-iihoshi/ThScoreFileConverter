@@ -40,19 +40,34 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNull() => Assert.IsFalse(SQNull.Instance.Equals(null!));
+        public void EqualsTestNull()
+        {
+            Assert.IsFalse(SQNull.Instance.Equals(null!));
+        }
 
         [TestMethod]
-        public void EqualsTestNullObject() => Assert.IsFalse(SQNull.Instance.Equals((object)null!));
+        public void EqualsTestNullObject()
+        {
+            Assert.IsFalse(SQNull.Instance.Equals((object)null!));
+        }
 
         [TestMethod]
-        public void EqualsTestInvalidType() => Assert.IsFalse(SQNull.Instance.Equals(SQBool.True));
+        public void EqualsTestInvalidType()
+        {
+            Assert.IsFalse(SQNull.Instance.Equals(SQBool.True));
+        }
 
         [TestMethod]
-        public void EqualsTestSelf() => Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance));
+        public void EqualsTestSelf()
+        {
+            Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance));
+        }
 
         [TestMethod]
-        public void EqualsTestSelfObject() => Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance as object));
+        public void EqualsTestSelfObject()
+        {
+            Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance as object));
+        }
 
         [TestMethod]
         public void EqualsTest()

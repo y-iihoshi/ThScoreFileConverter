@@ -11,7 +11,10 @@ namespace ThScoreFileConverterTests.Models.Th11
     [TestClass]
     public class StatusTests
     {
-        internal static Mock<IStatus> MockStatus() => Th10.StatusTests.MockStatus(0x0000, 17);
+        internal static Mock<IStatus> MockStatus()
+        {
+            return Th10.StatusTests.MockStatus(0x0000, 17);
+        }
 
         [TestMethod]
         public void StatusTestChapter()

@@ -10,25 +10,35 @@ namespace ThScoreFileConverterTests.Models.Th13
     public class ScoreDataTests
     {
         internal static byte[] MakeByteArray(IScoreData scoreData)
-            => Th10.ScoreDataTests.MakeByteArray(scoreData, UnknownSize);
+        {
+            return Th10.ScoreDataTests.MakeByteArray(scoreData, UnknownSize);
+        }
 
         internal static int UnknownSize { get; } = 4;
 
         [TestMethod]
         public void ScoreDataTest()
-            => Th10.ScoreDataTests.ScoreDataTestHelper<ScoreData, StageProgress>();
+        {
+            Th10.ScoreDataTests.ScoreDataTestHelper<ScoreData, StageProgress>();
+        }
 
         [TestMethod]
         public void ReadFromTest()
-            => Th10.ScoreDataTests.ReadFromTestHelper<ScoreData, StageProgress>(UnknownSize);
+        {
+            Th10.ScoreDataTests.ReadFromTestHelper<ScoreData, StageProgress>(UnknownSize);
+        }
 
         [TestMethod]
         public void ReadFromTestShortenedName()
-            => Th10.ScoreDataTests.ReadFromTestShortenedNameHelper<ScoreData, StageProgress>(UnknownSize);
+        {
+            Th10.ScoreDataTests.ReadFromTestShortenedNameHelper<ScoreData, StageProgress>(UnknownSize);
+        }
 
         [TestMethod]
         public void ReadFromTestExceededName()
-            => Th10.ScoreDataTests.ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
+        {
+            Th10.ScoreDataTests.ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
+        }
 
         public static IEnumerable<object[]> InvalidStageProgresses
             => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
@@ -36,7 +46,9 @@ namespace ThScoreFileConverterTests.Models.Th13
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
         public void ReadFromTestInvalidStageProgress(int stageProgress)
-            => Th10.ScoreDataTests.ReadFromTestInvalidStageProgressHelper<ScoreData, StageProgress>(
+        {
+            Th10.ScoreDataTests.ReadFromTestInvalidStageProgressHelper<ScoreData, StageProgress>(
                 UnknownSize, stageProgress);
+        }
     }
 }

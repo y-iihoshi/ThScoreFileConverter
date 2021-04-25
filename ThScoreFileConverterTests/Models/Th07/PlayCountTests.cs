@@ -43,13 +43,15 @@ namespace ThScoreFileConverterTests.Models.Th07
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.totalTrial,
                 properties.trials.Values.ToArray(),
                 properties.totalRetry,
                 properties.totalClear,
                 properties.totalContinue,
                 properties.totalPractice);
+        }
 
         internal static void Validate(in PlayCount playCount, in Properties properties)
         {

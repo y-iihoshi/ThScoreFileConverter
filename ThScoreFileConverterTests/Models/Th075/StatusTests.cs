@@ -36,10 +36,12 @@ namespace ThScoreFileConverterTests.Models.Th075
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.encodedLastName,
                 properties.arcadeScores.Values.Select(score => score + 10).ToArray(),
                 new byte[0x128]);
+        }
 
         internal static void Validate(in Properties properties, in Status status)
         {

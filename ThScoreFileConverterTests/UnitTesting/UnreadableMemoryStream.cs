@@ -10,15 +10,23 @@ namespace ThScoreFileConverterTests.UnitTesting
         public override bool CanRead => false;
 
         public override int Read(byte[] buffer, int offset, int count)
-            => throw new NotSupportedException();
+        {
+            throw new NotSupportedException();
+        }
 
         public override int ReadByte()
-            => throw new NotSupportedException();
+        {
+            throw new NotSupportedException();
+        }
 
         public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
-            => throw new NotSupportedException();
+        {
+            throw new NotSupportedException();
+        }
 
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
-            => throw new NotSupportedException();
+        {
+            throw new NotSupportedException();
+        }
     }
 }

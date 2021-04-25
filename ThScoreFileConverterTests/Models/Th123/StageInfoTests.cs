@@ -7,6 +7,9 @@ namespace ThScoreFileConverterTests.Models.Th123
     public class StageInfoTests
     {
         [TestMethod]
-        public void StageInfoTest() => Th105.StageInfoTests.StageInfoTestHelper<Chara>();
+        public void StageInfoTest()
+        {
+            Th105.StageInfoTests.StageInfoTestHelper<Chara>();
+        }
     }
 }

@@ -30,7 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         internal static byte[] MakeData(IScore score)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 ((int)score.LevelScene.Level * 10) + score.LevelScene.Scene - 1,
                 score.HighScore,
                 new byte[4],
@@ -43,14 +44,17 @@ namespace ThScoreFileConverterTests.Models.Th125
                 new uint[3],
                 score.BestshotScore,
                 new byte[8]);
+        }
 
         internal static byte[] MakeByteArray(IScore score)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 score.Signature.ToCharArray(),
                 score.Version,
                 score.Size,
                 score.Checksum,
                 MakeData(score));
+        }
 
         internal static void Validate(IScore expected, IScore actual)
         {

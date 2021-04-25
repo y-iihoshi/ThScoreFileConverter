@@ -26,7 +26,8 @@ namespace ThScoreFileConverterTests.Models.Th06
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 (ushort)0,
                 properties.checksum,
                 properties.version,
@@ -34,6 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 properties.size,
                 0u,
                 properties.decodedAllSize);
+        }
 
         internal static void Validate(in FileHeader header, in Properties properties)
         {

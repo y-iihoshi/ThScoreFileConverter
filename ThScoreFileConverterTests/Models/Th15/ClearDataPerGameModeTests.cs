@@ -78,7 +78,8 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
@@ -90,6 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 0u,
                 clearData.ClearFlags.Values.ToArray(),
                 0u);
+        }
 
         internal static void Validate(IClearDataPerGameMode expected, IClearDataPerGameMode actual)
         {

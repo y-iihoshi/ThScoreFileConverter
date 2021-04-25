@@ -50,7 +50,8 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         internal static byte[] MakeData(IClearData clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 (int)clearData.Route,
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
@@ -58,14 +59,17 @@ namespace ThScoreFileConverterTests.Models.Th128
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values.ToArray());
+        }
 
         internal static byte[] MakeByteArray(IClearData clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 clearData.Signature.ToCharArray(),
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
                 MakeData(clearData));
+        }
 
         internal static void Validate(IClearData expected, IClearData actual)
         {

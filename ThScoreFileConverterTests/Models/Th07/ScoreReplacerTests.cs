@@ -15,7 +15,9 @@ namespace ThScoreFileConverterTests.Models.Th07
     public class ScoreReplacerTests
     {
         private static IEnumerable<IReadOnlyList<IHighScore>> CreateRankings()
-            => new[] { new[] { HighScoreTests.MockHighScore().Object } };
+        {
+            return new[] { new[] { HighScoreTests.MockHighScore().Object } };
+        }
 
         internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
             CreateRankings().ToDictionary(ranking => (ranking[0].Chara, ranking[0].Level));

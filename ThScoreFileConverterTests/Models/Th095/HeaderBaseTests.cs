@@ -26,22 +26,27 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         internal static Properties ValidProperties { get; } = MakeProperties("abcd");
 
-        internal static Properties MakeProperties(string signature) => new()
+        internal static Properties MakeProperties(string signature)
         {
-            signature = signature,
-            encodedAllSize = 36,
-            encodedBodySize = 12,
-            decodedBodySize = 56,
-        };
+            return new()
+            {
+                signature = signature,
+                encodedAllSize = 36,
+                encodedBodySize = 12,
+                decodedBodySize = 56,
+            };
+        }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(),
                 properties.encodedAllSize,
                 0u,
                 0u,
                 properties.encodedBodySize,
                 properties.decodedBodySize);
+        }
 
         internal static void Validate(in Properties expected, in HeaderBase actual)
         {

@@ -80,7 +80,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
@@ -92,20 +93,25 @@ namespace ThScoreFileConverterTests.Models.Th10
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 clearData.Cards.Values.SelectMany(
                     card => SpellCardTests.MakeByteArray(card)).ToArray());
+        }
 
         internal static byte[] MakeByteArray<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 clearData.Signature.ToCharArray(),
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
                 MakeData(clearData, scoreDataUnknownSize));
+        }
 
         internal static byte[] MakeByteArray(IClearData<CharaWithTotal, StageProgress> clearData)
-            => MakeByteArray(clearData, 0);
+        {
+            return MakeByteArray(clearData, 0);
+        }
 
         internal static void Validate<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> expected, IClearData<TCharaWithTotal, TStageProgress> actual)

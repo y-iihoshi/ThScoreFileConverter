@@ -46,7 +46,8 @@ namespace ThScoreFileConverterTests.Models.Th123
         }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 new uint[2],
                 properties.storyClearCounts.Select(pair => pair.Value).ToArray(),
                 new byte[0x14 - properties.storyClearCounts.Count],
@@ -59,6 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th123
                 properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
                 properties.clearData.Count,
                 properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)).ToArray());
+        }
 
         internal static void Validate(in Properties expected, in AllScoreData actual)
         {

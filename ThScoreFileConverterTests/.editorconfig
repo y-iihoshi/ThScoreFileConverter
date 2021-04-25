@@ -1,4 +1,0 @@
-root = false
-
-[*.cs]
-csharp_style_expression_bodied_methods = when_on_single_line:suggestion

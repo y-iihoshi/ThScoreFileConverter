@@ -85,11 +85,15 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         public void LoadTestNullPath()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Load(null!));
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Load(null!));
+        }
 
         [TestMethod]
         public void LoadTestEmptyPath()
-            => _ = Assert.ThrowsException<ArgumentException>(() => new Settings().Load(string.Empty));
+        {
+            _ = Assert.ThrowsException<ArgumentException>(() => new Settings().Load(string.Empty));
+        }
 
         [TestMethod]
         public void LoadTestNonexistentPath()
@@ -108,7 +112,9 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         public void LoadTestEmptyFile()
-            => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\empty.xml"));
+        {
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\empty.xml"));
+        }
 
         [TestMethod]
         public void LoadTestNoRootNode()
@@ -183,7 +189,9 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         public void LoadTestNoKey()
-            => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-key.xml"));
+        {
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-key.xml"));
+        }
 
         [TestMethod]
         public void LoadTestEmptyKey()
@@ -203,7 +211,9 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         public void LoadTestNoValue()
-            => _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-value.xml"));
+        {
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-value.xml"));
+        }
 
         [TestMethod]
         public void LoadTestEmptyValue()
@@ -577,31 +587,45 @@ namespace ThScoreFileConverterTests
 
         [TestMethod]
         public void LastTitleTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().LastTitle = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().LastTitle = null!);
+        }
 
         [TestMethod]
         public void FontFamilyNameTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontFamilyName = null!);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontFamilyName = null!);
+        }
 
         [TestMethod]
         public void FontSizeTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontSize = null);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontSize = null);
+        }
 
         [TestMethod]
         public void OutputNumberGroupSeparatorTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputNumberGroupSeparator = null);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputNumberGroupSeparator = null);
+        }
 
         [TestMethod]
         public void InputCodePageIdTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().InputCodePageId = null);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().InputCodePageId = null);
+        }
 
         [TestMethod]
         public void OutputCodePageIdTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputCodePageId = null);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputCodePageId = null);
+        }
 
         [TestMethod]
         public void LanguageTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Language = null);
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Language = null);
+        }
 
         [TestMethod]
         public void LanguageTestInvalid()

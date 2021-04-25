@@ -30,20 +30,24 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         internal static byte[] MakeData(IScore score)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 score.Number,
                 score.ClearCounts.Values.ToArray(),
                 score.ChallengeCounts.Values.ToArray(),
                 score.HighScore,
                 new byte[0x2A8]);
+        }
 
         internal static byte[] MakeByteArray(IScore score)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 score.Signature.ToCharArray(),
                 score.Version,
                 score.Checksum,
                 score.Size,
                 MakeData(score));
+        }
 
         internal static void Validate(IScore expected, IScore actual)
         {

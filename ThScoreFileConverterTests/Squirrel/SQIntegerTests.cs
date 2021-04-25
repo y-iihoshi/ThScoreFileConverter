@@ -56,13 +56,22 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNull() => Assert.IsFalse(new SQInteger().Equals(null!));
+        public void EqualsTestNull()
+        {
+            Assert.IsFalse(new SQInteger().Equals(null!));
+        }
 
         [TestMethod]
-        public void EqualsTestNullObject() => Assert.IsFalse(new SQInteger().Equals((object)null!));
+        public void EqualsTestNullObject()
+        {
+            Assert.IsFalse(new SQInteger().Equals((object)null!));
+        }
 
         [TestMethod]
-        public void EqualsTestInvalidType() => Assert.IsFalse(new SQInteger().Equals(SQNull.Instance));
+        public void EqualsTestInvalidType()
+        {
+            Assert.IsFalse(new SQInteger().Equals(SQNull.Instance));
+        }
 
         [TestMethod]
         public void EqualsTestSelf()
@@ -81,17 +90,27 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestEqual() => Assert.IsTrue(new SQInteger().Equals(new SQInteger(0)));
+        public void EqualsTestEqual()
+        {
+            Assert.IsTrue(new SQInteger().Equals(new SQInteger(0)));
+        }
 
         [TestMethod]
-        public void EqualsTestNotEqual() => Assert.IsFalse(new SQInteger().Equals(new SQInteger(1)));
+        public void EqualsTestNotEqual()
+        {
+            Assert.IsFalse(new SQInteger().Equals(new SQInteger(1)));
+        }
 
         [TestMethod]
         public void GetHashCodeTestEqual()
-            => Assert.AreEqual(new SQInteger().GetHashCode(), new SQInteger(0).GetHashCode());
+        {
+            Assert.AreEqual(new SQInteger().GetHashCode(), new SQInteger(0).GetHashCode());
+        }
 
         [TestMethod]
         public void GetHashCodeTestNotEqual()
-            => Assert.AreNotEqual(new SQInteger().GetHashCode(), new SQInteger(1).GetHashCode());
+        {
+            Assert.AreNotEqual(new SQInteger().GetHashCode(), new SQInteger(1).GetHashCode());
+        }
     }
 }

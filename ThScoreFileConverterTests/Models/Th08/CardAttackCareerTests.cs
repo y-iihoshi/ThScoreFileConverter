@@ -36,10 +36,12 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         internal static byte[] MakeByteArray(ICardAttackCareer career)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 career.MaxBonuses.Values.ToArray(),
                 career.TrialCounts.Values.ToArray(),
                 career.ClearCounts.Values.ToArray());
+        }
 
         internal static void Validate(ICardAttackCareer expected, ICardAttackCareer actual)
         {

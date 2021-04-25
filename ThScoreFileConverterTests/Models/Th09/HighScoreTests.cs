@@ -30,7 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         internal static byte[] MakeByteArray(IHighScore highScore)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 highScore.Signature.ToCharArray(),
                 highScore.Size1,
                 highScore.Size2,
@@ -44,6 +45,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                 highScore.Date,
                 (byte)0,
                 highScore.ContinueCount);
+        }
 
         internal static void Validate(IHighScore expected, IHighScore actual)
         {

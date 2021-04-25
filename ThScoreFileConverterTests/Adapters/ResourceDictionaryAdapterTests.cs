@@ -18,11 +18,15 @@ namespace ThScoreFileConverterTests.Adapters
 
         [TestMethod]
         public void FontFamilyKeyTest()
-            => Assert.AreEqual(nameof(ResourceDictionaryAdapter.FontFamilyKey), ResourceDictionaryAdapter.FontFamilyKey);
+        {
+            Assert.AreEqual(nameof(ResourceDictionaryAdapter.FontFamilyKey), ResourceDictionaryAdapter.FontFamilyKey);
+        }
 
         [TestMethod]
         public void FontSizeKeyTest()
-            => Assert.AreEqual(nameof(ResourceDictionaryAdapter.FontSizeKey), ResourceDictionaryAdapter.FontSizeKey);
+        {
+            Assert.AreEqual(nameof(ResourceDictionaryAdapter.FontSizeKey), ResourceDictionaryAdapter.FontSizeKey);
+        }
 
         [TestMethod]
         public void FontFamilyTest()

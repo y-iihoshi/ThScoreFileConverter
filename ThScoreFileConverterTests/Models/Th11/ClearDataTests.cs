@@ -83,7 +83,9 @@ namespace ThScoreFileConverterTests.Models.Th11
         }
 
         internal static byte[] MakeByteArray(IClearData clearData)
-            => Th10.ClearDataTests.MakeByteArray(clearData, 4);
+        {
+            return Th10.ClearDataTests.MakeByteArray(clearData, 4);
+        }
 
         [TestMethod]
         public void ClearDataTestChapter()

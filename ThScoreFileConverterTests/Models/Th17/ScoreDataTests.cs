@@ -15,7 +15,8 @@ namespace ThScoreFileConverterTests.Models.Th17
     public class ScoreDataTests
     {
         internal static byte[] MakeByteArray(in IScoreData scoreData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 scoreData.Score,
                 (byte)scoreData.StageProgress,
                 scoreData.ContinueCount,
@@ -24,6 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                 0u,
                 scoreData.SlowRate,
                 0u);
+        }
 
         [TestMethod]
         public void ReadFromTest()

@@ -51,7 +51,8 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         internal static byte[] MakeByteArray(IClearData clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 clearData.UseCount,
                 clearData.ClearCount,
                 clearData.MaxCombo,
@@ -66,6 +67,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 new byte[0x38],
                 clearData.Ranking.SelectMany(
                     element => HighScoreTests.MakeByteArray((HighScoreStub)element)).ToArray());
+        }
 
         internal static void Validate(IClearData expected, IClearData actual)
         {

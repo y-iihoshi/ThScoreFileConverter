@@ -26,7 +26,8 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         internal static byte[] MakeByteArray(IPracticeScore score)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 score.Signature.ToCharArray(),
                 score.Size1,
                 score.Size2,
@@ -36,6 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 (byte)score.Level,
                 (byte)score.Stage,
                 (byte)0);
+        }
 
         internal static void Validate(IPracticeScore expected, IPracticeScore actual)
         {

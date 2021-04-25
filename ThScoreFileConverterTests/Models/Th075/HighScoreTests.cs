@@ -21,12 +21,14 @@ namespace ThScoreFileConverterTests.Models.Th075
         };
 
         internal static byte[] MakeByteArray(in HighScoreStub stub)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 stub.EncodedName.ToArray(),
                 stub.Month,
                 stub.Day,
                 new byte[2],
                 stub.Score);
+        }
 
         internal static void Validate(IHighScore expected, IHighScore actual)
         {

@@ -29,7 +29,8 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         internal static byte[] MakeByteArray<TStageProgress>(IScoreData<TStageProgress> scoreData, int unknownSize)
             where TStageProgress : struct, Enum
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 scoreData.Score,
                 (byte)TestUtils.Cast<int>(scoreData.StageProgress),
                 scoreData.ContinueCount,
@@ -37,6 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 scoreData.DateTime,
                 scoreData.SlowRate,
                 new byte[unknownSize]);
+        }
 
         internal static void Validate<TStageProgress>(
             IScoreData<TStageProgress> expected, IScoreData<TStageProgress> actual)
@@ -115,19 +117,27 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         [TestMethod]
         public void ScoreDataTest()
-            => ScoreDataTestHelper<ScoreData, StageProgress>();
+        {
+            ScoreDataTestHelper<ScoreData, StageProgress>();
+        }
 
         [TestMethod]
         public void ReadFromTest()
-            => ReadFromTestHelper<ScoreData, StageProgress>(UnknownSize);
+        {
+            ReadFromTestHelper<ScoreData, StageProgress>(UnknownSize);
+        }
 
         [TestMethod]
         public void ReadFromTestShortenedName()
-            => ReadFromTestShortenedNameHelper<ScoreData, StageProgress>(UnknownSize);
+        {
+            ReadFromTestShortenedNameHelper<ScoreData, StageProgress>(UnknownSize);
+        }
 
         [TestMethod]
         public void ReadFromTestExceededName()
-            => ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
+        {
+            ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
+        }
 
         public static IEnumerable<object[]> InvalidStageProgresses
             => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
@@ -135,6 +145,8 @@ namespace ThScoreFileConverterTests.Models.Th10
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
         public void ReadFromTestInvalidStageProgress(int stageProgress)
-            => ReadFromTestInvalidStageProgressHelper<ScoreData, StageProgress>(UnknownSize, stageProgress);
+        {
+            ReadFromTestInvalidStageProgressHelper<ScoreData, StageProgress>(UnknownSize, stageProgress);
+        }
     }
 }

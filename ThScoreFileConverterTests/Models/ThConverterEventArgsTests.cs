@@ -35,7 +35,9 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void ThConverterEventArgsTestEmptyPath()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = new ThConverterEventArgs(string.Empty, 2, 5));
+        {
+            _ = Assert.ThrowsException<ArgumentException>(() => _ = new ThConverterEventArgs(string.Empty, 2, 5));
+        }
 
         [TestMethod]
         public void ThConverterEventArgsTestNegativeCurrent()

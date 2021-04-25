@@ -61,7 +61,8 @@ namespace ThScoreFileConverterTests.Models.Th145
         }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => Array.Empty<byte>()
+        {
+            return Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story_progress", properties.storyProgress,
@@ -84,6 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th145
                             perCharaPair => perCharaPair.Value).ToArray()).ToArray()))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray();
+        }
 
         internal static void Validate(in Properties expected, in AllScoreData actual)
         {

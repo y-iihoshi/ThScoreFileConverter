@@ -45,21 +45,25 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         internal static byte[] MakeData(IClearData clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 (int)clearData.Chara,
                 clearData.GameModeData.Values.SelectMany(
                     data => ClearDataPerGameModeTests.MakeByteArray(data)).ToArray(),
                 clearData.Practices.Values.SelectMany(
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
+        }
 
         internal static byte[] MakeByteArray(IClearData clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 clearData.Signature.ToCharArray(),
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
                 MakeData(clearData));
+        }
 
         internal static void Validate(IClearData expected, IClearData actual)
         {

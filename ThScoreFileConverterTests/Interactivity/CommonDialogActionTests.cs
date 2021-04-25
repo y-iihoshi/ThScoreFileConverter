@@ -27,7 +27,10 @@ namespace ThScoreFileConverterTests.Interactivity
         public string Name { get; set; } = string.Empty;
 #endif
 
-        public object GetService(Type serviceType) => null!;
+        public object GetService(Type serviceType)
+        {
+            return null!;
+        }
     }
 
     [TestClass]

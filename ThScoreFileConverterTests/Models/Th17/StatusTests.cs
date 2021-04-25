@@ -27,7 +27,8 @@ namespace ThScoreFileConverterTests.Models.Th17
         }
 
         internal static byte[] MakeByteArray(IStatus status)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Version,
                 status.Checksum,
@@ -40,6 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                 TestUtils.MakeRandomArray<byte>(4),
                 status.Achievements.ToArray(),
                 TestUtils.MakeRandomArray<byte>(0x438));
+        }
 
         internal static void Validate(IStatus expected, IStatus actual)
         {

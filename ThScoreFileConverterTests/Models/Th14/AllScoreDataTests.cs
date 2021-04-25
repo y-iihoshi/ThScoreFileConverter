@@ -11,37 +11,51 @@ namespace ThScoreFileConverterTests.Models.Th14
     {
         [TestMethod]
         public void AllScoreDataTest()
-            => Th13.AllScoreDataTests.AllScoreDataTestHelper<
+        {
+            Th13.AllScoreDataTests.AllScoreDataTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetHeaderTest()
-            => Th13.AllScoreDataTests.SetHeaderTestHelper<
+        {
+            Th13.AllScoreDataTests.SetHeaderTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetHeaderTestTwice()
-            => Th13.AllScoreDataTests.SetHeaderTestTwiceHelper<
+        {
+            Th13.AllScoreDataTests.SetHeaderTestTwiceHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetClearDataTest()
-            => Th13.AllScoreDataTests.SetClearDataTestHelper<
+        {
+            Th13.AllScoreDataTests.SetClearDataTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetClearDataTestTwice()
-            => Th13.AllScoreDataTests.SetClearDataTestTwiceHelper<
+        {
+            Th13.AllScoreDataTests.SetClearDataTestTwiceHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetStatusTest()
-            => Th13.AllScoreDataTests.SetStatusTestHelper<
+        {
+            Th13.AllScoreDataTests.SetStatusTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetStatusTestTwice()
-            => Th13.AllScoreDataTests.SetStatusTestTwiceHelper<
+        {
+            Th13.AllScoreDataTests.SetStatusTestTwiceHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
     }
 }

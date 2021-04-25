@@ -29,7 +29,8 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         internal static byte[] MakeByteArray(ISpellCard spellCard)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 spellCard.Name,
                 spellCard.ClearCount,
                 spellCard.PracticeClearCount,
@@ -38,6 +39,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 spellCard.Id - 1,
                 TestUtils.Cast<int>(spellCard.Level),
                 spellCard.PracticeScore);
+        }
 
         internal static void Validate(ISpellCard expected, ISpellCard actual)
         {

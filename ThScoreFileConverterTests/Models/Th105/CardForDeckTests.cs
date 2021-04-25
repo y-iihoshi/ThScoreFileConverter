@@ -20,7 +20,9 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         internal static byte[] MakeByteArray(ICardForDeck cardForDeck)
-            => TestUtils.MakeByteArray(cardForDeck.Id, cardForDeck.MaxNumber);
+        {
+            return TestUtils.MakeByteArray(cardForDeck.Id, cardForDeck.MaxNumber);
+        }
 
         internal static void Validate(ICardForDeck expected, ICardForDeck actual)
         {

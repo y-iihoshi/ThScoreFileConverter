@@ -32,7 +32,8 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         internal static byte[] MakeByteArray(IBestShotHeader header)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 header.Signature.ToCharArray(),
                 (ushort)0,
                 TestUtils.Cast<short>(header.Day),
@@ -44,6 +45,7 @@ namespace ThScoreFileConverterTests.Models.Th143
                 header.DateTime,
                 header.SlowRate,
                 TestUtils.MakeRandomArray<byte>(0x58));
+        }
 
         internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
         {

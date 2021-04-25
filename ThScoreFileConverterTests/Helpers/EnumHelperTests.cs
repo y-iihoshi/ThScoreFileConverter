@@ -9,27 +9,39 @@ namespace ThScoreFileConverterTests.Helpers
     {
         [TestMethod]
         public void ParseEnumTestValidName()
-            => Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday"));
+        {
+            Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday"));
+        }
 
         [TestMethod]
         public void ParseEnumTestInvalidName()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = EnumHelper.Parse<DayOfWeek>("Sun"));
+        {
+            _ = Assert.ThrowsException<ArgumentException>(() => _ = EnumHelper.Parse<DayOfWeek>("Sun"));
+        }
 
         [TestMethod]
         public void ParseEnumTestEmpty()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = EnumHelper.Parse<DayOfWeek>(string.Empty));
+        {
+            _ = Assert.ThrowsException<ArgumentException>(() => _ = EnumHelper.Parse<DayOfWeek>(string.Empty));
+        }
 
         [TestMethod]
         public void ParseEnumTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = EnumHelper.Parse<DayOfWeek>(null!));
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = EnumHelper.Parse<DayOfWeek>(null!));
+        }
 
         [TestMethod]
         public void ParseEnumTestCaseSensitiveValidName()
-            => Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday", false));
+        {
+            Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday", false));
+        }
 
         [TestMethod]
         public void ParseEnumTestCaseSensitiveInvalidName()
-            => _ = Assert.ThrowsException<ArgumentException>(() => _ = EnumHelper.Parse<DayOfWeek>("sunday", false));
+        {
+            _ = Assert.ThrowsException<ArgumentException>(() => _ = EnumHelper.Parse<DayOfWeek>("sunday", false));
+        }
 
         [TestMethod]
         public void ParseEnumTestCaseInsensitiveValidName()
@@ -48,6 +60,9 @@ namespace ThScoreFileConverterTests.Helpers
         }
 
         [TestMethod]
-        public void NumValuesTest() => Assert.AreEqual(7, EnumHelper<DayOfWeek>.NumValues);
+        public void NumValuesTest()
+        {
+            Assert.AreEqual(7, EnumHelper<DayOfWeek>.NumValues);
+        }
     }
 }

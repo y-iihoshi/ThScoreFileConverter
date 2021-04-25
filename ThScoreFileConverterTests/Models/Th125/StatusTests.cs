@@ -24,21 +24,25 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         internal static byte[] MakeData(IStatus status)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 status.LastName,
                 new byte[0x2],
                 status.BgmFlags,
                 new byte[0x2E],
                 status.TotalPlayTime,
                 new byte[0x424]);
+        }
 
         internal static byte[] MakeByteArray(IStatus status)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Version,
                 status.Size,
                 status.Checksum,
                 MakeData(status));
+        }
 
         internal static void Validate(IStatus expected, IStatus actual)
         {

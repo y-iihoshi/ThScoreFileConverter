@@ -25,9 +25,11 @@ namespace ThScoreFileConverterTests.Models.Th075
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray(),
                 StatusTests.MakeByteArray(properties.status));
+        }
 
         internal static void Validate(in Properties properties, in AllScoreData allScoreData)
         {

@@ -44,7 +44,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         internal static byte[] MakeByteArray(ICardAttack attack)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 attack.Signature.ToCharArray(),
                 attack.Size1,
                 attack.Size2,
@@ -58,6 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 CardAttackCareerTests.MakeByteArray(attack.StoryCareer),
                 CardAttackCareerTests.MakeByteArray(attack.PracticeCareer),
                 0u);
+        }
 
         internal static void Validate(ICardAttack expected, ICardAttack actual)
         {

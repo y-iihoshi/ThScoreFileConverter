@@ -19,6 +19,8 @@ namespace ThScoreFileConverterTests.Interactivity
 
         [TestMethod]
         public void FolderBrowserDialogActionResultTestNull()
-            => _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new FolderBrowserDialogActionResult(null!));
+        {
+            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new FolderBrowserDialogActionResult(null!));
+        }
     }
 }

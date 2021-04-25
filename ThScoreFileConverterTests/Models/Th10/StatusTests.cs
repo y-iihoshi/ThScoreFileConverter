@@ -10,7 +10,10 @@ namespace ThScoreFileConverterTests.Models.Th10
     [TestClass]
     public class StatusTests
     {
-        internal static Mock<IStatus> MockStatus() => MockStatus(0x0000, 18);
+        internal static Mock<IStatus> MockStatus()
+        {
+            return MockStatus(0x0000, 18);
+        }
 
         internal static Mock<IStatus> MockStatus(ushort version, int numBgms)
         {
@@ -39,12 +42,14 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         internal static byte[] MakeByteArray(IStatus status)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Version,
                 status.Checksum,
                 status.Size,
                 MakeData(status));
+        }
 
         internal static void Validate(IStatus expected, IStatus actual)
         {

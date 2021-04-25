@@ -28,7 +28,8 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         internal static byte[] MakeByteArray(IScoreData scoreData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 scoreData.Score,
                 (byte)scoreData.StageProgress,
                 scoreData.ContinueCount,
@@ -37,6 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 0u,
                 scoreData.SlowRate,
                 scoreData.RetryCount);
+        }
 
         internal static void Validate(IScoreData expected, IScoreData actual)
         {

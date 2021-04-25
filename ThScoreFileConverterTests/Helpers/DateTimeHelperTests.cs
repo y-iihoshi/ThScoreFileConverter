@@ -17,7 +17,9 @@ namespace ThScoreFileConverterTests.Helpers
 
         [TestMethod]
         public void FormatTest()
-            => Assert.IsTrue(DateTimeHelper.ValidFormat.Length == DateTimeHelper.InvalidFormat.Length);
+        {
+            Assert.IsTrue(DateTimeHelper.ValidFormat.Length == DateTimeHelper.InvalidFormat.Length);
+        }
 
         [DataTestMethod]
         [DataRow(-1)]
@@ -32,6 +34,8 @@ namespace ThScoreFileConverterTests.Helpers
 
         [TestMethod]
         public void GetStringTestNull()
-            => Assert.AreEqual(DateTimeHelper.InvalidFormat, DateTimeHelper.GetString(null));
+        {
+            Assert.AreEqual(DateTimeHelper.InvalidFormat, DateTimeHelper.GetString(null));
+        }
     }
 }

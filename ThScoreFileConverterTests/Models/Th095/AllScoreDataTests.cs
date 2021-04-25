@@ -111,30 +111,44 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         public void AllScoreDataTest()
-            => AllScoreDataTestHelper<AllScoreData, IScore, IStatus>();
+        {
+            AllScoreDataTestHelper<AllScoreData, IScore, IStatus>();
+        }
 
         [TestMethod]
         public void SetHeaderTest()
-            => SetHeaderTestHelper<AllScoreData, IScore, IStatus>();
+        {
+            SetHeaderTestHelper<AllScoreData, IScore, IStatus>();
+        }
 
         [TestMethod]
         public void SetHeaderTestTwice()
-            => SetHeaderTestTwiceHelper<AllScoreData, IScore, IStatus>();
+        {
+            SetHeaderTestTwiceHelper<AllScoreData, IScore, IStatus>();
+        }
 
         [TestMethod]
         public void SetScoreTest()
-            => SetScoreTestHelper<AllScoreData, IScore, IStatus>();
+        {
+            SetScoreTestHelper<AllScoreData, IScore, IStatus>();
+        }
 
         [TestMethod]
         public void SetScoreTestTwice()
-            => SetScoreTestTwiceHelper<AllScoreData, IScore, IStatus>();
+        {
+            SetScoreTestTwiceHelper<AllScoreData, IScore, IStatus>();
+        }
 
         [TestMethod]
         public void SetStatusTest()
-            => SetStatusTestHelper<AllScoreData, IScore, IStatus>();
+        {
+            SetStatusTestHelper<AllScoreData, IScore, IStatus>();
+        }
 
         [TestMethod]
         public void SetStatusTestTwice()
-            => SetStatusTestTwiceHelper<AllScoreData, IScore, IStatus>();
+        {
+            SetStatusTestTwiceHelper<AllScoreData, IScore, IStatus>();
+        }
     }
 }

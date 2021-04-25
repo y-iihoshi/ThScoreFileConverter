@@ -152,37 +152,51 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void AllScoreDataTest()
-            => AllScoreDataTestHelper<
+        {
+            AllScoreDataTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetHeaderTest()
-            => SetHeaderTestHelper<
+        {
+            SetHeaderTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetHeaderTestTwice()
-            => SetHeaderTestTwiceHelper<
+        {
+            SetHeaderTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetClearDataTest()
-            => SetClearDataTestHelper<
+        {
+            SetClearDataTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetClearDataTestTwice()
-            => SetClearDataTestTwiceHelper<
+        {
+            SetClearDataTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetStatusTest()
-            => SetStatusTestHelper<
+        {
+            SetStatusTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
 
         [TestMethod]
         public void SetStatusTestTwice()
-            => SetStatusTestTwiceHelper<
+        {
+            SetStatusTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData, IStatus>();
+        }
     }
 }

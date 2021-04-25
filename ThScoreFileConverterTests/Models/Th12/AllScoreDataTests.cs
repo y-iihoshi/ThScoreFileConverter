@@ -9,30 +9,44 @@ namespace ThScoreFileConverterTests.Models.Th12
     {
         [TestMethod]
         public void AllScoreDataTest()
-            => Th10.AllScoreDataTests.AllScoreDataTestHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.AllScoreDataTestHelper<CharaWithTotal, StageProgress>();
+        }
 
         [TestMethod]
         public void SetHeaderTest()
-            => Th10.AllScoreDataTests.SetHeaderTestHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.SetHeaderTestHelper<CharaWithTotal, StageProgress>();
+        }
 
         [TestMethod]
         public void SetHeaderTestTwice()
-            => Th10.AllScoreDataTests.SetHeaderTestTwiceHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.SetHeaderTestTwiceHelper<CharaWithTotal, StageProgress>();
+        }
 
         [TestMethod]
         public void SetClearDataTest()
-            => Th10.AllScoreDataTests.SetClearDataTestHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.SetClearDataTestHelper<CharaWithTotal, StageProgress>();
+        }
 
         [TestMethod]
         public void SetClearDataTestTwice()
-            => Th10.AllScoreDataTests.SetClearDataTestTwiceHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.SetClearDataTestTwiceHelper<CharaWithTotal, StageProgress>();
+        }
 
         [TestMethod]
         public void SetStatusTest()
-            => Th10.AllScoreDataTests.SetStatusTestHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.SetStatusTestHelper<CharaWithTotal, StageProgress>();
+        }
 
         [TestMethod]
         public void SetStatusTestTwice()
-            => Th10.AllScoreDataTests.SetStatusTestTwiceHelper<CharaWithTotal, StageProgress>();
+        {
+            Th10.AllScoreDataTests.SetStatusTestTwiceHelper<CharaWithTotal, StageProgress>();
+        }
     }
 }

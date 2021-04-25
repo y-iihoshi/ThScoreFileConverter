@@ -193,16 +193,20 @@ namespace ThScoreFileConverterTests.UnitTesting
         }
 
         private static IEnumerable<byte> MakeSQByteArrayFromArray<T>(in IEnumerable<T> array)
-            => MakeByteArray((int)SQOT.Array, array.Count())
+        {
+            return MakeByteArray((int)SQOT.Array, array.Count())
                 .Concat(array.SelectMany((element, index) => MakeSQByteArray(index).Concat(MakeSQByteArray(element))))
                 .Concat(MakeByteArray((int)SQOT.Null));
+        }
 
         private static IEnumerable<byte> MakeSQByteArrayFromDictionary<TKey, TValue>(
             in IReadOnlyDictionary<TKey, TValue> dictionary)
             where TKey : notnull
-            => MakeByteArray((int)SQOT.Table)
+        {
+            return MakeByteArray((int)SQOT.Table)
                 .Concat(dictionary.SelectMany(pair => MakeSQByteArray(pair.Key).Concat(MakeSQByteArray(pair.Value))))
                 .Concat(MakeByteArray((int)SQOT.Null));
+        }
 
         public static TResult[] MakeRandomArray<TResult>(int length)
             where TResult : struct

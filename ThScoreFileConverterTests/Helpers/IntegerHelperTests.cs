@@ -18,11 +18,15 @@ namespace ThScoreFileConverterTests.Helpers
 
         [TestMethod]
         public void ToZeroBasedTestNegative()
-            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToZeroBased(-1));
+        {
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToZeroBased(-1));
+        }
 
         [TestMethod]
         public void ToZeroBasedTestExceeded()
-            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToZeroBased(10));
+        {
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToZeroBased(10));
+        }
 
         [TestMethod]
         public void ToOneBasedTest()
@@ -35,11 +39,15 @@ namespace ThScoreFileConverterTests.Helpers
 
         [TestMethod]
         public void ToOneBasedTestNegative()
-            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToOneBased(-1));
+        {
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToOneBased(-1));
+        }
 
         [TestMethod]
         public void ToOneBasedTestExceeded()
-            => _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToOneBased(10));
+        {
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = IntegerHelper.ToOneBased(10));
+        }
 
         [TestMethod]
         public void IntegerHelperTest()

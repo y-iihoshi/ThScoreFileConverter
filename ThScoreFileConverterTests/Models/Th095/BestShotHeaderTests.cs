@@ -37,7 +37,8 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         internal static byte[] MakeByteArray(IBestShotHeader header)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 header.Signature.ToCharArray(),
                 (ushort)0,
                 TestUtils.Cast<short>(header.Level + 1),
@@ -48,6 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th095
                 header.ResultScore,
                 header.SlowRate,
                 header.CardName);
+        }
 
         internal static void Validate(IBestShotHeader expected, in IBestShotHeader actual)
         {

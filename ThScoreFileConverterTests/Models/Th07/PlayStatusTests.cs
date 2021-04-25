@@ -37,7 +37,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         };
 
         internal static byte[] MakeData(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 0u,
                 (int)properties.totalRunningTime.Hours,
                 properties.totalRunningTime.Minutes,
@@ -48,10 +49,13 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.totalPlayTime.Seconds,
                 properties.totalPlayTime.Milliseconds,
                 properties.playCounts.SelectMany(pair => PlayCountTests.MakeByteArray(pair.Value)).ToArray());
+        }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+        }
 
         internal static void Validate(in Properties expected, in PlayStatus actual)
         {

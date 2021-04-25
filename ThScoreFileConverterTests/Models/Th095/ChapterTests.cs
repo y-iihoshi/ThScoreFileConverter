@@ -39,12 +39,14 @@ namespace ThScoreFileConverterTests.Models.Th095
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(),
                 properties.version,
                 properties.size,
                 properties.checksum,
                 properties.data);
+        }
 
         internal static void Validate(in Properties expected, IChapter actual)
         {

@@ -33,13 +33,15 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         internal static byte[] MakeByteArray(IPlayCount playCount)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 playCount.TotalTrial,
                 playCount.Trials.Values.ToArray(),
                 0u,
                 playCount.TotalClear,
                 playCount.TotalContinue,
                 playCount.TotalPractice);
+        }
 
         internal static void Validate(IPlayCount expected, IPlayCount actual)
         {

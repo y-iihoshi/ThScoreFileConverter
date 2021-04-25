@@ -32,7 +32,8 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         internal static byte[] MakeByteArray(IClearData clearData)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 clearData.Signature.ToCharArray(),
                 clearData.Size1,
                 clearData.Size2,
@@ -40,6 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 clearData.StoryFlags.Values.ToArray(),
                 clearData.PracticeFlags.Values.ToArray(),
                 (short)clearData.Chara);
+        }
 
         internal static void Validate(IClearData expected, IClearData actual)
         {

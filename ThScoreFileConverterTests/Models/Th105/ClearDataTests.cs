@@ -50,13 +50,15 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static byte[] MakeByteArray<TChara>(IClearData<TChara> properties)
             where TChara : struct, Enum
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 properties.CardsForDeck.Count,
                 properties.CardsForDeck
                     .SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
                 properties.SpellCardResults.Count,
                 properties.SpellCardResults
                     .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
+        }
 
         internal static void Validate<TChara>(IClearData<TChara> expected, IClearData<TChara> actual)
             where TChara : struct, Enum
@@ -130,18 +132,33 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        public void ClearDataTest() => ClearDataTestHelper<Chara>();
+        public void ClearDataTest()
+        {
+            ClearDataTestHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTest() => ReadFromTestHelper<Chara>();
+        public void ReadFromTest()
+        {
+            ReadFromTestHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara>();
+        public void ReadFromTestShortened()
+        {
+            ReadFromTestShortenedHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTestExceeded() => ReadFromTestExceededHelper<Chara>();
+        public void ReadFromTestExceeded()
+        {
+            ReadFromTestExceededHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTestDuplicated() => ReadFromTestDuplicatedHelper<Chara>();
+        public void ReadFromTestDuplicated()
+        {
+            ReadFromTestDuplicatedHelper<Chara>();
+        }
     }
 }

@@ -29,7 +29,9 @@ namespace ThScoreFileConverterTests.Interactivity
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
-            => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     [TestClass]

@@ -142,7 +142,9 @@ namespace ThScoreFileConverterTests.Squirrel
 
         [TestMethod]
         public void CreateTestShorteneed()
-            => _ = Assert.ThrowsException<EndOfStreamException>(() => _ = CreateTestHelper(new byte[3]));
+        {
+            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = CreateTestHelper(new byte[3]));
+        }
 
         [DataTestMethod]
         [DataRow(SQOT.Class)]

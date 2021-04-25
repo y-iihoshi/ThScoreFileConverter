@@ -30,7 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         internal static byte[] MakeByteArray(IPlayStatus status)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Size1,
                 status.Size2,
@@ -48,6 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 PlayCountTests.MakeByteArray(status.TotalPlayCount),
                 status.BgmFlags,
                 new byte[11]);
+        }
 
         internal static void Validate(IPlayStatus expected, IPlayStatus actual)
         {

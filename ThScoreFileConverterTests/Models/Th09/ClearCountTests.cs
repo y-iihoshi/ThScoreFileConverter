@@ -30,10 +30,14 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         internal static byte[] MakeByteArray(IClearCount clearCount)
-            => TestUtils.MakeByteArray(clearCount.Counts.Values.ToArray(), 0u);
+        {
+            return TestUtils.MakeByteArray(clearCount.Counts.Values.ToArray(), 0u);
+        }
 
         internal static void Validate(IClearCount expected, IClearCount actual)
-            => CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
+        {
+            CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
+        }
 
         [TestMethod]
         public void ClearCountTest()

@@ -21,18 +21,22 @@ namespace ThScoreFileConverterTests.Models.Th07
 
         internal static Properties ValidProperties { get; } = MakeProperties(34, 56);
 
-        internal static Properties MakeProperties(short version, int size) => new()
+        internal static Properties MakeProperties(short version, int size)
         {
-            checksum = 12,
-            version = version,
-            size = size,
-            decodedAllSize = 78 + size,
-            decodedBodySize = 78,
-            encodedBodySize = 90,
-        };
+            return new()
+            {
+                checksum = 12,
+                version = version,
+                size = size,
+                decodedAllSize = 78 + size,
+                decodedBodySize = 78,
+                encodedBodySize = 90,
+            };
+        }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 (ushort)0,
                 properties.checksum,
                 properties.version,
@@ -42,6 +46,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.decodedAllSize,
                 properties.decodedBodySize,
                 properties.encodedBodySize);
+        }
 
         internal static void Validate(in Properties expected, in FileHeaderBase actual)
         {

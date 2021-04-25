@@ -27,13 +27,15 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static byte[] MakeByteArray<TChara>(ISpellCardResult<TChara> properties)
             where TChara : struct, Enum
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 TestUtils.Cast<int>(properties.Enemy),
                 TestUtils.Cast<int>(properties.Level),
                 properties.Id,
                 properties.TrialCount,
                 properties.GotCount,
                 properties.Frames);
+        }
 
         internal static void Validate<TChara>(ISpellCardResult<TChara> expected, ISpellCardResult<TChara> actual)
             where TChara : struct, Enum
@@ -86,15 +88,27 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        public void SpellCardResultTest() => SpellCardResultTestHelper<Chara>();
+        public void SpellCardResultTest()
+        {
+            SpellCardResultTestHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTest() => ReadFromTestHelper<Chara>();
+        public void ReadFromTest()
+        {
+            ReadFromTestHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara>();
+        public void ReadFromTestShortened()
+        {
+            ReadFromTestShortenedHelper<Chara>();
+        }
 
         [TestMethod]
-        public void ReadFromTestExceeded() => ReadFromTestExceededHelper<Chara>();
+        public void ReadFromTestExceeded()
+        {
+            ReadFromTestExceededHelper<Chara>();
+        }
     }
 }

@@ -47,12 +47,14 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         internal static byte[] MakeByteArray(IStatus status)
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Version,
                 status.Checksum,
                 status.Size,
                 MakeData(status));
+        }
 
         internal static void Validate(IStatus expected, IStatus actual)
         {

@@ -78,13 +78,22 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNull() => Assert.IsFalse(new SQString().Equals(null!));
+        public void EqualsTestNull()
+        {
+            Assert.IsFalse(new SQString().Equals(null!));
+        }
 
         [TestMethod]
-        public void EqualsTestNullObject() => Assert.IsFalse(new SQString().Equals((object)null!));
+        public void EqualsTestNullObject()
+        {
+            Assert.IsFalse(new SQString().Equals((object)null!));
+        }
 
         [TestMethod]
-        public void EqualsTestInvalidType() => Assert.IsFalse(new SQString().Equals(SQNull.Instance));
+        public void EqualsTestInvalidType()
+        {
+            Assert.IsFalse(new SQString().Equals(SQNull.Instance));
+        }
 
         [TestMethod]
         public void EqualsTestSelf()
@@ -103,17 +112,27 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestEqual() => Assert.IsTrue(new SQString().Equals(new SQString(string.Empty)));
+        public void EqualsTestEqual()
+        {
+            Assert.IsTrue(new SQString().Equals(new SQString(string.Empty)));
+        }
 
         [TestMethod]
-        public void EqualsTestNotEqual() => Assert.IsFalse(new SQString().Equals(new SQString("博麗 霊夢")));
+        public void EqualsTestNotEqual()
+        {
+            Assert.IsFalse(new SQString().Equals(new SQString("博麗 霊夢")));
+        }
 
         [TestMethod]
         public void GetHashCodeTestEqual()
-            => Assert.AreEqual(new SQString().GetHashCode(), new SQString(string.Empty).GetHashCode());
+        {
+            Assert.AreEqual(new SQString().GetHashCode(), new SQString(string.Empty).GetHashCode());
+        }
 
         [TestMethod]
         public void GetHashCodeTestNotEqual()
-            => Assert.AreNotEqual(new SQString().GetHashCode(), new SQString("博麗 霊夢").GetHashCode());
+        {
+            Assert.AreNotEqual(new SQString().GetHashCode(), new SQString("博麗 霊夢").GetHashCode());
+        }
     }
 }

@@ -30,7 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         internal static byte[] MakeByteArray<TLevel>(ISpellCard<TLevel> spellCard)
             where TLevel : struct, Enum
-            => TestUtils.MakeByteArray(
+        {
+            return TestUtils.MakeByteArray(
                 spellCard.Name,
                 spellCard.ClearCount,
                 spellCard.PracticeClearCount,
@@ -39,6 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 spellCard.Id - 1,
                 TestUtils.Cast<int>(spellCard.Level),
                 spellCard.PracticeScore);
+        }
 
         internal static void Validate<TLevel>(ISpellCard<TLevel> expected, ISpellCard<TLevel> actual)
             where TLevel : struct, Enum
@@ -116,24 +118,34 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th13SpellCardTest()
-            => SpellCardTestHelper<LevelPractice>();
+        {
+            SpellCardTestHelper<LevelPractice>();
+        }
 
         [TestMethod]
         public void Th13ReadFromTest()
-            => ReadFromTestHelper<LevelPractice>();
+        {
+            ReadFromTestHelper<LevelPractice>();
+        }
 
         [TestMethod]
         public void Th13ReadFromTestShortenedName()
-            => ReadFromTestShortenedNameHelper<LevelPractice>();
+        {
+            ReadFromTestShortenedNameHelper<LevelPractice>();
+        }
 
         [TestMethod]
         public void Th13ReadFromTestExceededName()
-            => ReadFromTestExceededNameHelper<LevelPractice>();
+        {
+            ReadFromTestExceededNameHelper<LevelPractice>();
+        }
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidTh13LevelPractices))]
         public void Th13ReadFromTestInvalidLevel(int level)
-            => ReadFromTestInvalidLevelHelper<LevelPractice>(level);
+        {
+            ReadFromTestInvalidLevelHelper<LevelPractice>(level);
+        }
 
         #endregion
 
@@ -141,24 +153,34 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th14SpellCardTest()
-            => SpellCardTestHelper<Level>();
+        {
+            SpellCardTestHelper<Level>();
+        }
 
         [TestMethod]
         public void Th14ReadFromTest()
-            => ReadFromTestHelper<Level>();
+        {
+            ReadFromTestHelper<Level>();
+        }
 
         [TestMethod]
         public void Th14ReadFromTestShortenedName()
-            => ReadFromTestShortenedNameHelper<Level>();
+        {
+            ReadFromTestShortenedNameHelper<Level>();
+        }
 
         [TestMethod]
         public void Th14ReadFromTestExceededName()
-            => ReadFromTestExceededNameHelper<Level>();
+        {
+            ReadFromTestExceededNameHelper<Level>();
+        }
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         public void Th14ReadFromTestInvalidLevel(int level)
-            => ReadFromTestInvalidLevelHelper<Level>(level);
+        {
+            ReadFromTestInvalidLevelHelper<Level>(level);
+        }
 
         #endregion
 
@@ -166,24 +188,34 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th16SpellCardTest()
-            => SpellCardTestHelper<Level>();
+        {
+            SpellCardTestHelper<Level>();
+        }
 
         [TestMethod]
         public void Th16ReadFromTest()
-            => ReadFromTestHelper<Level>();
+        {
+            ReadFromTestHelper<Level>();
+        }
 
         [TestMethod]
         public void Th16ReadFromTestShortenedName()
-            => ReadFromTestShortenedNameHelper<Level>();
+        {
+            ReadFromTestShortenedNameHelper<Level>();
+        }
 
         [TestMethod]
         public void Th16ReadFromTestExceededName()
-            => ReadFromTestExceededNameHelper<Level>();
+        {
+            ReadFromTestExceededNameHelper<Level>();
+        }
 
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         public void Th16ReadFromTestInvalidLevel(int level)
-            => ReadFromTestInvalidLevelHelper<Level>(level);
+        {
+            ReadFromTestInvalidLevelHelper<Level>(level);
+        }
 
         #endregion
     }

@@ -82,7 +82,8 @@ namespace ThScoreFileConverterTests.Models.Th155
         }
 
         internal static IEnumerable<byte> MakeSQByteArray(in AllScoreData.Story story)
-            => TestUtils.MakeByteArray((int)SQOT.Table)
+        {
+            return TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray(
                     "stage", story.Stage,
                     "ed", (int)story.Ed,
@@ -90,6 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     "overdrive", story.OverDrive,
                     "stage_overdrive", story.StageOverDrive))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null));
+        }
 
         internal static byte[] MakeByteArray(in Properties properties)
         {
