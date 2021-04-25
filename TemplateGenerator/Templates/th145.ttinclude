@@ -1,64 +1,22 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th145" #>
-<#@ import namespace="Models = ThScoreFileConverter.Models" #>
+<#@ import namespace="TemplateGenerator.Models.Th145" #>
 <#
-    var title = "東方深秘録";
+    var title = Definitions.Title;
 
-    var levels = EnumHelper<Level>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levels = Definitions.LevelNames;
+    var levelsWithTotal = Definitions.LevelWithTotalNames;
 
-    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
-    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
-    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+    var levelKeyOrderTotalFirst = Definitions.LevelKeysTotalFirst;
+    var levelKeyOrderTotalLast = Definitions.LevelKeysTotalLast;
+    var levelKeyTotal = levelKeyOrderTotalFirst.First();
 
-    var characters = new List<(Chara chara, string name)>
-    {
-        (Chara.ReimuA,       "博麗 霊夢（序）"),
-        (Chara.Marisa,       "霧雨 魔理沙"),
-        (Chara.IchirinUnzan, "雲居 一輪 &amp; 雲山"),
-        (Chara.Byakuren,     "聖 白蓮"),
-        (Chara.Futo,         "物部 布都"),
-        (Chara.Miko,         "豊聡耳 神子"),
-        (Chara.Nitori,       "河城 にとり"),
-        (Chara.Koishi,       "古明地 こいし"),
-        (Chara.Mamizou,      "二ッ岩 マミゾウ"),
-        (Chara.Kokoro,       "秦 こころ"),
-        (Chara.Kasen,        "茨木 華扇"),
-        (Chara.Mokou,        "藤原 妹紅"),
-        (Chara.Shinmyoumaru, "少名 針妙丸"),
-        (Chara.Sumireko,     "宇佐見 菫子"),
-        (Chara.ReimuB,       "博麗 霊夢（終）"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var characters = Definitions.CharacterNames;
+    var charactersWithTotal = Definitions.CharacterWithTotalNames;
 
-    var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
-    {
-        (CharaWithTotal.ReimuA,       "博麗 霊夢（序）"),
-        (CharaWithTotal.Marisa,       "霧雨 魔理沙"),
-        (CharaWithTotal.IchirinUnzan, "雲居 一輪 &amp; 雲山"),
-        (CharaWithTotal.Byakuren,     "聖 白蓮"),
-        (CharaWithTotal.Futo,         "物部 布都"),
-        (CharaWithTotal.Miko,         "豊聡耳 神子"),
-        (CharaWithTotal.Nitori,       "河城 にとり"),
-        (CharaWithTotal.Koishi,       "古明地 こいし"),
-        (CharaWithTotal.Mamizou,      "二ッ岩 マミゾウ"),
-        (CharaWithTotal.Kokoro,       "秦 こころ"),
-        (CharaWithTotal.Kasen,        "茨木 華扇"),
-        (CharaWithTotal.Mokou,        "藤原 妹紅"),
-        (CharaWithTotal.Shinmyoumaru, "少名 針妙丸"),
-        (CharaWithTotal.Sumireko,     "宇佐見 菫子"),
-        (CharaWithTotal.ReimuB,       "博麗 霊夢（終）"),
-        (CharaWithTotal.Total,        "全キャラ合計"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
-
-    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
-    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
-    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+    var charaKeyOrderTotalFirst = Definitions.CharacterKeysTotalFirst;
+    var charaKeyOrderTotalLast = Definitions.CharacterKeysTotalLast;
+    var charaKeyTotal = charaKeyOrderTotalFirst.First();
 #>
