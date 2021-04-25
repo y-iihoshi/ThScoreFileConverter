@@ -1,29 +1,8 @@
-<#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th135" #>
-<#@ import namespace="Models = ThScoreFileConverter.Models" #>
+<#@ import namespace="TemplateGenerator.Models.Th135" #>
 <#
-    var title = "東方心綺楼";
-
-    var levels = EnumHelper<Level>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
-
-    var characters = new List<(Chara chara, string name)>
-    {
-        (Chara.Reimu,        "博麗 霊夢"),
-        (Chara.Marisa,       "霧雨 魔理沙"),
-        (Chara.IchirinUnzan, "雲居 一輪 &amp; 雲山"),
-        (Chara.Byakuren,     "聖 白蓮"),
-        (Chara.Futo,         "物部 布都"),
-        (Chara.Miko,         "豊聡耳 神子"),
-        (Chara.Nitori,       "河城 にとり"),
-        (Chara.Koishi,       "古明地 こいし"),
-        (Chara.Mamizou,      "二ッ岩 マミゾウ"),
-        (Chara.Kokoro,       "秦 こころ"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var title = Definitions.Title;
+    var levels = Definitions.LevelNames;
+    var characters = Definitions.CharacterNames;
 #>
