@@ -1,124 +1,33 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th128" #>
-<#@ import namespace="Models = ThScoreFileConverter.Models" #>
+<#@ import namespace="TemplateGenerator.Models.Th128" #>
 <#
-    var title = "妖精大戦争";
+    var title = Definitions.Title;
 
-    var levels = EnumHelper<Models.Level>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = EnumHelper<Models.LevelWithTotal>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levels = Definitions.LevelNames;
+    var levelsWithTotal = Definitions.LevelWithTotalNames;
 
-    var levelKeyTotal = Models.LevelWithTotal.Total.ToShortName();
-    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
-    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+    var levelKeyOrderTotalFirst = Definitions.LevelKeysTotalFirst;
+    var levelKeyOrderTotalLast = Definitions.LevelKeysTotalLast;
+    var levelKeyTotal = levelKeyOrderTotalFirst.First();
 
-    var routes = new List<(Route route, string name)>
-    {
-        (Route.A1,    "ルート A1"),
-        (Route.A2,    "ルート A2"),
-        (Route.B1,    "ルート B1"),
-        (Route.B2,    "ルート B2"),
-        (Route.C1,    "ルート C1"),
-        (Route.C2,    "ルート C2"),
-        (Route.Extra, "ルート EX"),
-    }.ToDictionary(pair => pair.route.ToShortName(), pair => pair.name);
+    var routes = Definitions.RouteNames;
+    var routesWithTotal = Definitions.RouteWithTotalNames;
 
-    var routesWithTotal = new List<(RouteWithTotal route, string name)>
-    {
-        (RouteWithTotal.A1,    "ルート A1"),
-        (RouteWithTotal.A2,    "ルート A2"),
-        (RouteWithTotal.B1,    "ルート B1"),
-        (RouteWithTotal.B2,    "ルート B2"),
-        (RouteWithTotal.C1,    "ルート C1"),
-        (RouteWithTotal.C2,    "ルート C2"),
-        (RouteWithTotal.Extra, "ルート EX"),
-        (RouteWithTotal.Total, "全ルート合計"),
-    }.ToDictionary(pair => pair.route.ToShortName(), pair => pair.name);
+    var routeKeyOrderTotalFirst = Definitions.RouteKeysTotalFirst;
+    var routeKeyOrderTotalLast = Definitions.RouteKeysTotalLast;
+    var routeKeyTotal = routeKeyOrderTotalFirst.First();
 
-    var routeKeyTotal = RouteWithTotal.Total.ToShortName();
-    var routeKeyOrderTotalFirst = routesWithTotal.Keys.TakeLast(1).Concat(routesWithTotal.Keys.SkipLast(1));
-    var routeKeyOrderTotalLast = routesWithTotal.Keys;
+    var stages = Definitions.StageNames;
+    var stagesWithTotal = Definitions.StageWithTotalNames;
 
-    var stages = new List<(Stage stage, string name)>
-    {
-        (Stage.A_1,   "Stage A-1"),
-        (Stage.A1_2,  "Stage A1-2"),
-        (Stage.A1_3,  "Stage A1-3"),
-        (Stage.A2_2,  "Stage A2-2"),
-        (Stage.A2_3,  "Stage A2-3"),
-        (Stage.B_1,   "Stage B-1"),
-        (Stage.B1_2,  "Stage B1-2"),
-        (Stage.B1_3,  "Stage B1-3"),
-        (Stage.B2_2,  "Stage B2-2"),
-        (Stage.B2_3,  "Stage B2-3"),
-        (Stage.C_1,   "Stage C-1"),
-        (Stage.C1_2,  "Stage C1-2"),
-        (Stage.C1_3,  "Stage C1-3"),
-        (Stage.C2_2,  "Stage C2-2"),
-        (Stage.C2_3,  "Stage C2-3"),
-        (Stage.Extra, "Extra"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
+    var stageKeyOrderTotalFirst = Definitions.StageKeysTotalFirst;
+    var stageKeyOrderTotalLast = Definitions.StageKeysTotalLast;
+    var stageKeyTotal = stageKeyOrderTotalFirst.First();
 
-    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
-    {
-        (StageWithTotal.A_1,   "Stage A-1"),
-        (StageWithTotal.A1_2,  "Stage A1-2"),
-        (StageWithTotal.A1_3,  "Stage A1-3"),
-        (StageWithTotal.A2_2,  "Stage A2-2"),
-        (StageWithTotal.A2_3,  "Stage A2-3"),
-        (StageWithTotal.B_1,   "Stage B-1"),
-        (StageWithTotal.B1_2,  "Stage B1-2"),
-        (StageWithTotal.B1_3,  "Stage B1-3"),
-        (StageWithTotal.B2_2,  "Stage B2-2"),
-        (StageWithTotal.B2_3,  "Stage B2-3"),
-        (StageWithTotal.C_1,   "Stage C-1"),
-        (StageWithTotal.C1_2,  "Stage C1-2"),
-        (StageWithTotal.C1_3,  "Stage C1-3"),
-        (StageWithTotal.C2_2,  "Stage C2-2"),
-        (StageWithTotal.C2_3,  "Stage C2-3"),
-        (StageWithTotal.Extra, "Extra"),
-        (StageWithTotal.Total, "Total"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
-
-    var stageKeyTotal = StageWithTotal.Total.ToShortName();
-    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
-    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
-
-    var cardsPerLevel = new List<(Models.Level level, int numCards)>
-    {
-        (Models.Level.Easy,    60),
-        (Models.Level.Normal,  60),
-        (Models.Level.Hard,    60),
-        (Models.Level.Lunatic, 60),
-        (Models.Level.Extra,   10),
-    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
-
-    var cardsPerStage = new List<(Stage stage, int numCards)>
-    {
-        (Stage.A_1,    8),
-        (Stage.A1_2,  12),
-        (Stage.A1_3,  24),
-        (Stage.A2_2,  12),
-        (Stage.A2_3,  24),
-        (Stage.B_1,    8),
-        (Stage.B1_2,  12),
-        (Stage.B1_3,  24),
-        (Stage.B2_2,  12),
-        (Stage.B2_3,  24),
-        (Stage.C_1,    8),
-        (Stage.C1_2,  12),
-        (Stage.C1_3,  24),
-        (Stage.C2_2,  12),
-        (Stage.C2_3,  24),
-        (Stage.Extra, 10),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
-
+    var cardsPerLevel = Definitions.NumCardsPerLevel;
+    var cardsPerStage = Definitions.NumCardsPerStage;
     var numCards = cardsPerLevel.Values.Sum();
 #>
