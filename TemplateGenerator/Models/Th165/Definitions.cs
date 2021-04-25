@@ -35,8 +35,8 @@ namespace TemplateGenerator.Models.Th165
             (Day.NightmareSaturday,  "悪夢土曜"),
             (Day.NightmareDiary,     "ナイトメアダイアリー"),
         }.ToDictionary(
-            pair => pair.Item1.ToShortName(),
-            pair => (pair.Item1.ToString(), pair.Item2));
+            static pair => pair.Item1.ToShortName(),
+            static pair => (pair.Item1.ToString(), pair.Item2));
 
         public static IReadOnlyDictionary<string, int> NumDreamsPerDay { get; } = new[]
         {

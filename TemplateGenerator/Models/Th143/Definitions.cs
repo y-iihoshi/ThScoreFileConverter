@@ -55,13 +55,13 @@ namespace TemplateGenerator.Models.Th143
 
         public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemWithTotalNames { get; } =
             ItemWithTotalNamesImpl.ToDictionary(
-                pair => pair.Item1.ToShortName(),
-                pair => (pair.Item2, pair.Item1.ToLongName()));
+                static pair => pair.Item1.ToShortName(),
+                static pair => (pair.Item2, pair.Item1.ToLongName()));
 
         public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemNames { get; } =
-            ItemWithTotalNamesImpl.Where(pair => pair.Item1 != ItemWithTotal.Total).ToDictionary(
-                pair => pair.Item1.ToShortName(),
-                pair => (pair.Item2, pair.Item1.ToLongName()));
+            ItemWithTotalNamesImpl.Where(static pair => pair.Item1 != ItemWithTotal.Total).ToDictionary(
+                static pair => pair.Item1.ToShortName(),
+                static pair => (pair.Item2, pair.Item1.ToLongName()));
 
         public static IEnumerable<string> ItemKeysTotalFirst { get; } = ItemWithTotalNames.Keys.RotateRight();
 

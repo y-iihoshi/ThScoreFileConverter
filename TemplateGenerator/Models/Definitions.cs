@@ -37,7 +37,7 @@ namespace TemplateGenerator.Models
             StageNamesImpl.ToStringKeyedDictionary();
 
         public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-            StageNamesImpl.Where(pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
+            StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
 
         public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
         {

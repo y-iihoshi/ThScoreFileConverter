@@ -29,14 +29,14 @@ namespace TemplateGenerator.Models.Th125
             (Level.Eleven,  8),
             (Level.Twelve,  8),
             (Level.Extra,   9),
-            (Level.Spoiler, SpoilerScenesPerCharacterImpl.Sum(pair => pair.Item2.Count())),
+            (Level.Spoiler, SpoilerScenesPerCharacterImpl.Sum(static pair => pair.Item2.Count())),
         };
 
         private static readonly int NumScenesWithSpoiler =
-            NumScenesPerLevelImpl.Sum(pair => pair.Item2);
+            NumScenesPerLevelImpl.Sum(static pair => pair.Item2);
 
         private static readonly int NumScenesWithoutSpoiler =
-            NumScenesPerLevelImpl.Where(pair => pair.Item1 != Level.Spoiler).Sum(pair => pair.Item2);
+            NumScenesPerLevelImpl.Where(static pair => pair.Item1 != Level.Spoiler).Sum(static pair => pair.Item2);
 
         public static string Title { get; } = "ダブルスポイラー";
 
@@ -63,8 +63,8 @@ namespace TemplateGenerator.Models.Th125
             (Chara.Aya,    "文",     "射命丸 文"),
             (Chara.Hatate, "はたて", "姫海棠 はたて"),
         }.ToDictionary(
-            tuple => tuple.Item1.ToShortName(),
-            tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+            static tuple => tuple.Item1.ToShortName(),
+            static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
         public static IReadOnlyDictionary<string, IEnumerable<int>> SpoilerScenesPerCharacter { get; } =
             SpoilerScenesPerCharacterImpl.ToStringKeyedDictionary();
@@ -74,8 +74,8 @@ namespace TemplateGenerator.Models.Th125
 
         public static IReadOnlyDictionary<string, int> NumScenesPerCharacter { get; } =
             SpoilerScenesPerCharacterImpl.ToDictionary(
-                pair => pair.Item1.ToShortName(),
-                pair => pair.Item2.Count() + NumScenesWithoutSpoiler);
+                static pair => pair.Item1.ToShortName(),
+                static pair => pair.Item2.Count() + NumScenesWithoutSpoiler);
 
         public static IReadOnlyDictionary<string, int> NumScenesPerCharacterInGame { get; } = new[]
         {

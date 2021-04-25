@@ -34,8 +34,8 @@ namespace TemplateGenerator.Models.Th075
             (Chara.Yukari,    "紫",         "八雲 紫"),
             (Chara.Suika,     "萃香",       "伊吹 萃香"),
         }.ToDictionary(
-            tuple => tuple.Item1.ToShortName(),
-            tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+            static tuple => tuple.Item1.ToShortName(),
+            static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
         public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
         {

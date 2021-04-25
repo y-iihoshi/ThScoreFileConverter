@@ -13,8 +13,8 @@ namespace TemplateGenerator.Models.Th155
 
         public static IReadOnlyDictionary<string, string> LevelNames { get; } =
             EnumHelper<Level>.Enumerable.ToDictionary(
-                level => level.ToShortName(),
-                level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+                static level => level.ToShortName(),
+                static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 
         public static IReadOnlyDictionary<string, string> StoryCharacterNames { get; } = new[]
         {

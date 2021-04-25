@@ -21,14 +21,14 @@ namespace TemplateGenerator.Extensions
             this IEnumerable<(TKey Key, TValue Value)> source)
             where TKey : struct, Enum
         {
-            return source?.ToDictionary(pair => pair.Key.ToShortName(), pair => pair.Value)
+            return source?.ToDictionary(static pair => pair.Key.ToShortName(), static pair => pair.Value)
                 ?? throw new ArgumentNullException(nameof(source));
         }
 
         public static Dictionary<string, string> ToStringDictionary<TEnum>(this IEnumerable<TEnum> source)
             where TEnum : struct, Enum
         {
-            return source?.ToDictionary(element => element.ToShortName(), element => element.ToString())
+            return source?.ToDictionary(static element => element.ToShortName(), static element => element.ToString())
                 ?? throw new ArgumentNullException(nameof(source));
         }
     }

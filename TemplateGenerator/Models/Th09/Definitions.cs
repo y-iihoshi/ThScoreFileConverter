@@ -26,8 +26,8 @@ namespace TemplateGenerator.Models.Th09
             (Chara.Komachi,   "小町",       "小野塚 小町"),
             (Chara.Shikieiki, "四季映姫",   "四季映姫・ヤマザナドゥ"),
         }.ToDictionary(
-            tuple => tuple.Item1.ToShortName(),
-            tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+            static tuple => tuple.Item1.ToShortName(),
+            static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
         public static IReadOnlyList<string> RankOrdinals { get; } = new[]
         {

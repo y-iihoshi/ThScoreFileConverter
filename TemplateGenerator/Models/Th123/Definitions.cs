@@ -102,13 +102,13 @@ namespace TemplateGenerator.Models.Th123
 
         public static new IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
             CharacterNamesImpl.ToDictionary(
-                tuple => tuple.Item1.ToShortName(),
-                tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+                static tuple => tuple.Item1.ToShortName(),
+                static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
         public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> StoryCharacterNames { get; } =
-            CharacterNamesImpl.Where(tuple => HasStory(tuple.Item1)).ToDictionary(
-                tuple => tuple.Item1.ToShortName(),
-                tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+            CharacterNamesImpl.Where(static tuple => HasStory(tuple.Item1)).ToDictionary(
+                static tuple => tuple.Item1.ToShortName(),
+                static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
         public static new IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } = new[]
         {
@@ -119,13 +119,14 @@ namespace TemplateGenerator.Models.Th123
 
         public static new IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
             NumCardsPerCharacterAndTypeImpl.ToDictionary(
-                tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
-                tuple => tuple.Item3);
+                static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
+                static tuple => tuple.Item3);
 
         public static new IReadOnlyDictionary<string, int> MaxNumCardsPerType { get; } =
             EnumHelper<CardType>.Enumerable.ToDictionary(
-                type => type.ToShortName(),
-                type => NumCardsPerCharacterAndTypeImpl.Where(tuple => tuple.Item2 == type).Max(tuple => tuple.Item3));
+                static type => type.ToShortName(),
+                static type => NumCardsPerCharacterAndTypeImpl
+                    .Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
 
         private static bool HasStory(Chara chara)
         {

@@ -23,8 +23,8 @@ namespace TemplateGenerator.Models.Th13
 
         public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
             EnumHelper<LevelPractice>.Enumerable.ToDictionary(
-                level => level.ToShortName(),
-                level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+                static level => level.ToShortName(),
+                static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 
         public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
         {
@@ -75,9 +75,9 @@ namespace TemplateGenerator.Models.Th13
         }.ToStringKeyedDictionary();
 
         public static int NumCardsWithOverDrive { get; } =
-            NumCardsPerLevelImpl.Sum(pair => pair.Item2);
+            NumCardsPerLevelImpl.Sum(static pair => pair.Item2);
 
         public static int NumCardsWithoutOverDrive { get; } =
-            NumCardsPerLevelImpl.Where(pair => pair.Item1 != LevelPractice.OverDrive).Sum(pair => pair.Item2);
+            NumCardsPerLevelImpl.Where(static pair => pair.Item1 != LevelPractice.OverDrive).Sum(static pair => pair.Item2);
     }
 }

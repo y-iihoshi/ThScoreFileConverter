@@ -88,8 +88,8 @@ namespace TemplateGenerator.Models.Th105
             (Chara.Iku,       "衣玖",       "永江 衣玖"),
             (Chara.Tenshi,    "天子",       "比那名居 天子"),
         }.ToDictionary(
-            tuple => tuple.Item1.ToShortName(),
-            tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+            static tuple => tuple.Item1.ToShortName(),
+            static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
         public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
         {
@@ -123,12 +123,13 @@ namespace TemplateGenerator.Models.Th105
 
         public static IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
             NumCardsPerCharacterAndTypeImpl.ToDictionary(
-                tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
-                tuple => tuple.Item3);
+                static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
+                static tuple => tuple.Item3);
 
         public static IReadOnlyDictionary<string, int> MaxNumCardsPerType { get; } =
             EnumHelper<CardType>.Enumerable.ToDictionary(
-                type => type.ToShortName(),
-                type => NumCardsPerCharacterAndTypeImpl.Where(tuple => tuple.Item2 == type).Max(tuple => tuple.Item3));
+                static type => type.ToShortName(),
+                static type => NumCardsPerCharacterAndTypeImpl
+                    .Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
     }
 }

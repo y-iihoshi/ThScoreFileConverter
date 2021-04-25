@@ -36,8 +36,8 @@ namespace TemplateGenerator.Models.Th08
 
         public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
             EnumHelper<LevelPractice>.Enumerable.ToDictionary(
-                level => level.ToShortName(),
-                level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+                static level => level.ToShortName(),
+                static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 
         public static IReadOnlyDictionary<string, (string ShortName, string LongName)> CharacterNames { get; } = new[]
         {
@@ -80,7 +80,7 @@ namespace TemplateGenerator.Models.Th08
             StageNamesImpl.ToStringKeyedDictionary();
 
         public static new IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-            StageNamesImpl.Where(pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
+            StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
 
         public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } = new[]
         {
@@ -145,13 +145,15 @@ namespace TemplateGenerator.Models.Th08
             (StagePractice.FourPowerful, LevelPractice.Lunatic,  6),
             (StagePractice.FourPowerful, LevelPractice.Extra,    0),
             (StagePractice.FourPowerful, LevelPractice.LastWord, 0),
-        }.ToDictionary(tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()), tuple => tuple.Item3);
+        }.ToDictionary(
+            static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
+            static tuple => tuple.Item3);
 
         public static int NumCardsWithLastWord { get; } =
-            NumCardsPerLevelImpl.Sum(pair => pair.Item2);
+            NumCardsPerLevelImpl.Sum(static pair => pair.Item2);
 
         public static int NumCardsWithoutLastWord { get; } =
-            NumCardsPerLevelImpl.Where(pair => pair.Item1 != LevelPractice.LastWord).Sum(pair => pair.Item2);
+            NumCardsPerLevelImpl.Where(static pair => pair.Item1 != LevelPractice.LastWord).Sum(static pair => pair.Item2);
 
         public static IReadOnlyDictionary<string, string> UnreachableStagesPerCharacter { get; } = new[]
         {
@@ -167,7 +169,7 @@ namespace TemplateGenerator.Models.Th08
             (Chara.Remilia,       Stage.FourPowerful),
             (Chara.Youmu,         Stage.FourUncanny),
             (Chara.Yuyuko,        Stage.FourUncanny),
-        }.ToDictionary(pair => pair.Item1.ToShortName(), pair => pair.Item2.ToShortName());
+        }.ToDictionary(static pair => pair.Item1.ToShortName(), static pair => pair.Item2.ToShortName());
 
         public static bool CanPractice(Stage stage)
         {
