@@ -1,139 +1,26 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th123" #>
-<#@ import namespace="Models = ThScoreFileConverter.Models" #>
-<#@ import namespace="Th105 = ThScoreFileConverter.Models.Th105" #>
+<#@ import namespace="TemplateGenerator.Models.Th123" #>
 <#
-    var title = "東方非想天則";
+    var title = Definitions.Title;
 
-    var levels = EnumHelper<Th105.Level>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = EnumHelper<Th105.LevelWithTotal>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levels = Definitions.LevelNames;
+    var levelsWithTotal = Definitions.LevelWithTotalNames;
 
-    var levelKeyTotal = Th105.LevelWithTotal.Total.ToShortName();
-    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
-    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+    var levelKeyOrderTotalFirst = Definitions.LevelKeysTotalFirst;
+    var levelKeyOrderTotalLast = Definitions.LevelKeysTotalLast;
+    var levelKeyTotal = levelKeyOrderTotalFirst.First();
 
-    var characters = new List<(Chara chara, string givenName, string fullName)>
-    {
-        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
-        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
-        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
-        (Chara.Alice,     "アリス",     "アリス・マーガトロイド"),
-        (Chara.Patchouli, "パチュリー", "パチュリー・ノーレッジ"),
-        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
-        (Chara.Remilia,   "レミリア",   "レミリア・スカーレット"),
-        (Chara.Yuyuko,    "幽々子",     "西行寺 幽々子"),
-        (Chara.Yukari,    "紫",         "八雲 紫"),
-        (Chara.Suika,     "萃香",       "伊吹 萃香"),
-        (Chara.Reisen,    "鈴仙",       "鈴仙・優曇華院・イナバ"),
-        (Chara.Aya,       "文",         "射命丸 文"),
-        (Chara.Komachi,   "小町",       "小野塚 小町"),
-        (Chara.Iku,       "衣玖",       "永江 衣玖"),
-        (Chara.Tenshi,    "天子",       "比那名居 天子"),
-        (Chara.Sanae,     "早苗",       "東風谷 早苗"),
-        (Chara.Cirno,     "チルノ",     "チルノ"),
-        (Chara.Meiling,   "美鈴",       "紅 美鈴"),
-        (Chara.Utsuho,    "空",         "霊烏路 空"),
-        (Chara.Suwako,    "諏訪子",     "洩矢 諏訪子"),
-    }.ToDictionary(
-        tuple => tuple.chara.ToShortName(),
-        tuple => (Id: tuple.chara.ToString(), ShortName: tuple.givenName, LongName: tuple.fullName));
+    var characters = Definitions.CharacterNames;
+    var storyCharacters = Definitions.StoryCharacterNames;
 
-    var storyCharacters = characters.Where(
-        pair => new[] { Chara.Sanae, Chara.Cirno, Chara.Meiling }.Any(chara => chara.ToShortName() == pair.Key));
+    var cardsPerLevel = Definitions.NumCardsPerLevel;
+    var cardsPerChara = Definitions.NumCardsPerCharacter;
 
-    var cardsPerLevel = new List<(Th105.Level level, int numCards)>
-    {
-        (Th105.Level.Easy,    23),
-        (Th105.Level.Normal,  24),
-        (Th105.Level.Hard,    25),
-        (Th105.Level.Lunatic, 25),
-    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
+    var cardTypes = Definitions.CardTypeNames;
 
-    var cardsPerChara = new List<(Chara chara, int numCards)>
-    {
-        (Chara.Sanae,   64),
-        (Chara.Cirno,   64),
-        (Chara.Meiling, 64),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.numCards);
-
-    var cardTypes = EnumHelper<Th105.CardType>.Enumerable
-        .ToDictionary(cardType => cardType.ToShortName(), cardType => cardType.ToString());
-
-    var cardsPerCharaAndType = new List<(Chara chara, Th105.CardType cardType, int numCards)>
-    {
-        (Chara.Reimu,     Th105.CardType.System, 21),
-        (Chara.Reimu,     Th105.CardType.Skill,  12),
-        (Chara.Reimu,     Th105.CardType.Spell,  10),
-        (Chara.Marisa,    Th105.CardType.System, 21),
-        (Chara.Marisa,    Th105.CardType.Skill,  12),
-        (Chara.Marisa,    Th105.CardType.Spell,  14),
-        (Chara.Sakuya,    Th105.CardType.System, 21),
-        (Chara.Sakuya,    Th105.CardType.Skill,  12),
-        (Chara.Sakuya,    Th105.CardType.Spell,  13),
-        (Chara.Alice,     Th105.CardType.System, 21),
-        (Chara.Alice,     Th105.CardType.Skill,  12),
-        (Chara.Alice,     Th105.CardType.Spell,  12),
-        (Chara.Patchouli, Th105.CardType.System, 21),
-        (Chara.Patchouli, Th105.CardType.Skill,  15),
-        (Chara.Patchouli, Th105.CardType.Spell,  12),
-        (Chara.Youmu,     Th105.CardType.System, 21),
-        (Chara.Youmu,     Th105.CardType.Skill,  12),
-        (Chara.Youmu,     Th105.CardType.Spell,  10),
-        (Chara.Remilia,   Th105.CardType.System, 21),
-        (Chara.Remilia,   Th105.CardType.Skill,  12),
-        (Chara.Remilia,   Th105.CardType.Spell,  10),
-        (Chara.Yuyuko,    Th105.CardType.System, 21),
-        (Chara.Yuyuko,    Th105.CardType.Skill,  12),
-        (Chara.Yuyuko,    Th105.CardType.Spell,  11),
-        (Chara.Yukari,    Th105.CardType.System, 21),
-        (Chara.Yukari,    Th105.CardType.Skill,  12),
-        (Chara.Yukari,    Th105.CardType.Spell,  10),
-        (Chara.Suika,     Th105.CardType.System, 21),
-        (Chara.Suika,     Th105.CardType.Skill,  12),
-        (Chara.Suika,     Th105.CardType.Spell,  10),
-        (Chara.Reisen,    Th105.CardType.System, 21),
-        (Chara.Reisen,    Th105.CardType.Skill,  12),
-        (Chara.Reisen,    Th105.CardType.Spell,  11),
-        (Chara.Aya,       Th105.CardType.System, 21),
-        (Chara.Aya,       Th105.CardType.Skill,  12),
-        (Chara.Aya,       Th105.CardType.Spell,  10),
-        (Chara.Komachi,   Th105.CardType.System, 21),
-        (Chara.Komachi,   Th105.CardType.Skill,  12),
-        (Chara.Komachi,   Th105.CardType.Spell,   9),
-        (Chara.Iku,       Th105.CardType.System, 21),
-        (Chara.Iku,       Th105.CardType.Skill,  12),
-        (Chara.Iku,       Th105.CardType.Spell,  10),
-        (Chara.Tenshi,    Th105.CardType.System, 21),
-        (Chara.Tenshi,    Th105.CardType.Skill,  12),
-        (Chara.Tenshi,    Th105.CardType.Spell,  10),
-        (Chara.Sanae,     Th105.CardType.System, 21),
-        (Chara.Sanae,     Th105.CardType.Skill,  12),
-        (Chara.Sanae,     Th105.CardType.Spell,   9),
-        (Chara.Cirno,     Th105.CardType.System, 21),
-        (Chara.Cirno,     Th105.CardType.Skill,  12),
-        (Chara.Cirno,     Th105.CardType.Spell,  11),
-        (Chara.Meiling,   Th105.CardType.System, 21),
-        (Chara.Meiling,   Th105.CardType.Skill,  12),
-        (Chara.Meiling,   Th105.CardType.Spell,  11),
-        (Chara.Utsuho,    Th105.CardType.System, 21),
-        (Chara.Utsuho,    Th105.CardType.Skill,  12),
-        (Chara.Utsuho,    Th105.CardType.Spell,  14),
-        (Chara.Suwako,    Th105.CardType.System, 21),
-        (Chara.Suwako,    Th105.CardType.Skill,  12),
-        (Chara.Suwako,    Th105.CardType.Spell,  11),
-    }.ToDictionary(
-        tuple => (Chara: tuple.chara.ToShortName(), CardType: tuple.cardType.ToShortName()),
-        tuple => tuple.numCards);
-
-    var maxNumCardsPerType = cardTypes.ToDictionary(
-        pair => pair.Key,
-        pair => cardsPerCharaAndType.Where(p => p.Key.CardType == pair.Key).Max(p => p.Value));
+    var cardsPerCharaAndType = Definitions.NumCardsPerCharacterAndType;
+    var maxNumCardsPerType = Definitions.MaxNumCardsPerType;
 #>
