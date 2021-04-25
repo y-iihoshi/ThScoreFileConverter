@@ -1,6 +1,17 @@
 ﻿<Project>
+
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>IIHOSHI Yoshinori</Authors>
+    <Company>None</Company>
+    <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.colorless-sight.jp/thsfc/</PackageProjectUrl>
+    <Product>ThScoreFileConverter</Product>
+    <RepositoryUrl>https://github.com/y-iihoshi/ThScoreFileConverter</RepositoryUrl>
+  </PropertyGroup>
+
 </Project>

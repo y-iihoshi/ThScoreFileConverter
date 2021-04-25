@@ -8,13 +8,12 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
-    <Authors>IIHOSHI Yoshinori</Authors>
-    <Company>None</Company>
-    <Copyright>© 2013-2021 IIHOSHI Yoshinori</Copyright>
-    <Description>Touhou Project's score files converter</Description>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <RepositoryUrl>https://github.com/y-iihoshi/ThScoreFileConverter</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Copyright>© 2013-2021 IIHOSHI Yoshinori</Copyright>
+    <Description>Score file converter for Touhou games</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -42,10 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
