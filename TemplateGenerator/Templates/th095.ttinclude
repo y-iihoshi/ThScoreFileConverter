@@ -1,42 +1,11 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th095" #>
+<#@ import namespace="TemplateGenerator.Models.Th095" #>
 <#
-    var title = "東方文花帖";
-
-    var levels = new List<(Level level, string id, string name)>
-    {
-        (Level.One,   "Level1", "Level 1"),
-        (Level.Two,   "Level2", "Level 2"),
-        (Level.Three, "Level3", "Level 3"),
-        (Level.Four,  "Level4", "Level 4"),
-        (Level.Five,  "Level5", "Level 5"),
-        (Level.Six,   "Level6", "Level 6"),
-        (Level.Seven, "Level7", "Level 7"),
-        (Level.Eight, "Level8", "Level 8"),
-        (Level.Nine,  "Level9", "Level 9"),
-        (Level.Ten,   "Level10", "Level 10"),
-        (Level.Extra, "Extra", "Level Extra"),
-    }.ToDictionary(tuple => tuple.level.ToShortName(), tuple => (Id: tuple.id, Name: tuple.name));
-
-    var scenesPerLevel = new List<(Level level, int numScenes)>
-    {
-        (Level.One,   6),
-        (Level.Two,   6),
-        (Level.Three, 8),
-        (Level.Four,  9),
-        (Level.Five,  8),
-        (Level.Six,   8),
-        (Level.Seven, 8),
-        (Level.Eight, 8),
-        (Level.Nine,  8),
-        (Level.Ten,   8),
-        (Level.Extra, 8),
-    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numScenes);
-
+    var title = Definitions.Title;
+    var levels = Definitions.LevelNames;
+    var scenesPerLevel = Definitions.NumScenesPerLevel;
     var numScenes = scenesPerLevel.Values.Sum();
 #>

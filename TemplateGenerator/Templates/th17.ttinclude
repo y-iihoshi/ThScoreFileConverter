@@ -1,113 +1,39 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th17" #>
+<#@ import namespace="TemplateGenerator.Models.Th17" #>
 <#
-    var title = "東方鬼形獣";
+    var title = Definitions.Title;
 
-    var levels = EnumHelper<Level>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = EnumHelper<LevelWithTotal>.Enumerable
-        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levels = Definitions.LevelNames;
+    var levelsPractice = Definitions.LevelPracticeNames;
+    var levelsWithTotal = Definitions.LevelWithTotalNames;
 
-    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
-    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
-    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+    var levelKeyOrderTotalFirst = Definitions.LevelKeysTotalFirst;
+    var levelKeyOrderTotalLast = Definitions.LevelKeysTotalLast;
+    var levelKeyTotal = levelKeyOrderTotalFirst.First();
 
-    var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
+    var characters = Definitions.CharacterNames;
+    var charactersWithTotal = Definitions.CharacterWithTotalNames;
 
-    var characters = new List<(Chara chara, string name)>
-    {
-        (Chara.ReimuA,  "博麗 霊夢 (狼)"),
-        (Chara.ReimuB,  "博麗 霊夢 (獺)"),
-        (Chara.ReimuC,  "博麗 霊夢 (鷲)"),
-        (Chara.MarisaA, "霧雨 魔理沙 (狼)"),
-        (Chara.MarisaB, "霧雨 魔理沙 (獺)"),
-        (Chara.MarisaC, "霧雨 魔理沙 (鷲)"),
-        (Chara.YoumuA,  "魂魄 妖夢 (狼)"),
-        (Chara.YoumuB,  "魂魄 妖夢 (獺)"),
-        (Chara.YoumuC,  "魂魄 妖夢 (鷲)"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var charaKeyOrderTotalFirst = Definitions.CharacterKeysTotalFirst;
+    var charaKeyOrderTotalLast = Definitions.CharacterKeysTotalLast;
+    var charaKeyTotal = charaKeyOrderTotalFirst.First();
 
-    var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
-    {
-        (CharaWithTotal.ReimuA,  "博麗 霊夢 (狼)"),
-        (CharaWithTotal.ReimuB,  "博麗 霊夢 (獺)"),
-        (CharaWithTotal.ReimuC,  "博麗 霊夢 (鷲)"),
-        (CharaWithTotal.MarisaA, "霧雨 魔理沙 (狼)"),
-        (CharaWithTotal.MarisaB, "霧雨 魔理沙 (獺)"),
-        (CharaWithTotal.MarisaC, "霧雨 魔理沙 (鷲)"),
-        (CharaWithTotal.YoumuA,  "魂魄 妖夢 (狼)"),
-        (CharaWithTotal.YoumuB,  "魂魄 妖夢 (獺)"),
-        (CharaWithTotal.YoumuC,  "魂魄 妖夢 (鷲)"),
-        (CharaWithTotal.Total,   "全主人公合計"),
-    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
+    var stages = Definitions.StageNames;
+    var stagesPractice = Definitions.StagePracticeNames;
+    var stagesWithTotal = Definitions.StageWithTotalNames;
 
-    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
-    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
-    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+    var stageKeyOrderTotalFirst = Definitions.StageKeysTotalFirst;
+    var stageKeyOrderTotalLast = Definitions.StageKeysTotalLast;
+    var stageKeyTotal = stageKeyOrderTotalFirst.First();
 
-    var stages = new List<(Stage stage, string name)>
-    {
-        (Stage.One,   "Stage 1"),
-        (Stage.Two,   "Stage 2"),
-        (Stage.Three, "Stage 3"),
-        (Stage.Four,  "Stage 4"),
-        (Stage.Five,  "Stage 5"),
-        (Stage.Six,   "Stage 6"),
-        (Stage.Extra, "Extra"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
-
-    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
-    {
-        (StageWithTotal.One,   "Stage 1"),
-        (StageWithTotal.Two,   "Stage 2"),
-        (StageWithTotal.Three, "Stage 3"),
-        (StageWithTotal.Four,  "Stage 4"),
-        (StageWithTotal.Five,  "Stage 5"),
-        (StageWithTotal.Six,   "Stage 6"),
-        (StageWithTotal.Extra, "Extra"),
-        (StageWithTotal.Total, "Total"),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
-
-    var stageKeyTotal = StageWithTotal.Total.ToShortName();
-    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
-    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
-
-    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
-
-    var cardsPerLevel = new List<(Level level, int numCards)>
-    {
-        (Level.Easy,    22),
-        (Level.Normal,  22),
-        (Level.Hard,    22),
-        (Level.Lunatic, 22),
-        (Level.Extra,   13),
-    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
-
-    var cardsPerStage = new List<(Stage stage, int numCards)>
-    {
-        (Stage.One,    8),
-        (Stage.Two,   12),
-        (Stage.Three, 12),
-        (Stage.Four,  12),
-        (Stage.Five,  16),
-        (Stage.Six,   28),
-        (Stage.Extra, 13),
-    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
-
+    var cardsPerLevel = Definitions.NumCardsPerLevel;
+    var cardsPerStage = Definitions.NumCardsPerStage;
     var numCards = cardsPerLevel.Values.Sum();
 
-    var careerKinds = new Dictionary<string, string>
-    {
-        { "S", "ゲーム本編" },
-        { "P", "スペルプラクティス" },
-    };
+    var careerKinds = Definitions.CareerKinds;
 
-    var numAchievements = 40;
+    var numAchievements = Definitions.NumAchievements;
 #>

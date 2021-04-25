@@ -67,7 +67,7 @@
 <#
             foreach (var stage in stagesPractice)
             {
-                if ((level.Key == Level.Easy.ToShortName()) && (stage.Key == Stage.Six.ToShortName()))
+                if (!Definitions.CanPractice(level.Key, stage.Key))
                     continue;
 #>
       <tr>

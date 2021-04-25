@@ -1,44 +1,12 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Helpers" #>
-<#@ import namespace="ThScoreFileConverter.Models" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th09" #>
+<#@ import namespace="TemplateGenerator.Models.Th09" #>
 <#
-    var title = "東方花映塚";
-
-    var levels = EnumHelper<Level>.Enumerable.ToDictionary(level => level.ToShortName(), level => level.ToString());
-
-    var characters = new List<(Chara chara, string givenName, string fullName)>
-    {
-        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
-        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
-        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
-        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
-        (Chara.Reisen,    "鈴仙",       "鈴仙・優曇華院・イナバ"),
-        (Chara.Cirno,     "チルノ",     "チルノ"),
-        (Chara.Lyrica,    "リリカ",     "リリカ・プリズムリバー"),
-        (Chara.Mystia,    "ミスティア", "ミスティア・ローレライ"),
-        (Chara.Tewi,      "てゐ",       "因幡 てゐ"),
-        (Chara.Aya,       "文",         "射命丸 文"),
-        (Chara.Medicine,  "メディスン", "メディスン・メランコリー"),
-        (Chara.Yuuka,     "幽香",       "風見 幽香"),
-        (Chara.Komachi,   "小町",       "小野塚 小町"),
-        (Chara.Shikieiki, "四季映姫",   "四季映姫・ヤマザナドゥ"),
-    }.ToDictionary(
-        tuple => tuple.chara.ToShortName(),
-        tuple => (Id: tuple.chara.ToString(), ShortName: tuple.givenName, LongName: tuple.fullName));
-
-    var rankOrdinals = new[]
-    {
-        "0th",  // unused
-        "1st",
-        "2nd",
-        "3rd",
-        "4th",
-        "5th",
-    };
+    var title = Definitions.Title;
+    var levels = Definitions.LevelNames;
+    var characters = Definitions.CharacterNames;
+    var rankOrdinals = Definitions.RankOrdinals;
 #>

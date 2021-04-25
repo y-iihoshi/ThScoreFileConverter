@@ -1,65 +1,22 @@
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="ThScoreFileConverter.Extensions" #>
-<#@ import namespace="ThScoreFileConverter.Models.Th143" #>
+<#@ import namespace="TemplateGenerator.Models.Th143" #>
 <#
-    var title = "弾幕アマノジャク";
+    var title = Definitions.Title;
 
-    var days = new List<(Day day, string id, string name)>
-    {
-        (Day.First,   "Day1",    "一日目"),
-        (Day.Second,  "Day2",    "二日目"),
-        (Day.Third,   "Day3",    "三日目"),
-        (Day.Fourth,  "Day4",    "四日目"),
-        (Day.Fifth,   "Day5",    "五日目"),
-        (Day.Sixth,   "Day6",    "六日目"),
-        (Day.Seventh, "Day7",    "七日目"),
-        (Day.Eighth,  "Day8",    "八日目"),
-        (Day.Ninth,   "Day9",    "九日目"),
-        (Day.Last,    "LastDay", "最終日"),
-    }.ToDictionary(tuple => tuple.day.ToShortName(), tuple => (Id: tuple.id, Name: tuple.name));
+    var days = Definitions.DayNames;
 
-    var scenesPerDay = new List<(Day day, int numScenes)>
-    {
-        (Day.First,    6),
-        (Day.Second,   6),
-        (Day.Third,    7),
-        (Day.Fourth,   7),
-        (Day.Fifth,    8),
-        (Day.Sixth,    8),
-        (Day.Seventh,  8),
-        (Day.Eighth,   7),
-        (Day.Ninth,    8),
-        (Day.Last,    10),
-    }.ToDictionary(pair => pair.day.ToShortName(), pair => pair.numScenes);
-
+    var scenesPerDay = Definitions.NumScenesPerDay;
     var numScenes = scenesPerDay.Values.Sum();
 
-    var itemsWithTotal = new List<(ItemWithTotal item, string shortName)>
-    {
-        (ItemWithTotal.Fablic,   "布"),
-        (ItemWithTotal.Camera,   "カメラ"),
-        (ItemWithTotal.Umbrella, "傘"),
-        (ItemWithTotal.Lantern,  "提灯"),
-        (ItemWithTotal.Orb,      "陰陽玉"),
-        (ItemWithTotal.Bomb,     "ボム"),
-        (ItemWithTotal.Jizou,    "地蔵"),
-        (ItemWithTotal.Doll,     "人形"),
-        (ItemWithTotal.Mallet,   "小槌"),
-        (ItemWithTotal.NoItem,   "未使用"),
-        (ItemWithTotal.Total,    "合計"),
-    }.ToDictionary(
-        pair => pair.item.ToShortName(),
-        pair => (ShortName: pair.shortName, LongName: pair.item.ToLongName()));
+    var items = Definitions.ItemNames;
+    var itemsWithTotal = Definitions.ItemWithTotalNames;
 
-    var items = itemsWithTotal.Where(pair => pair.Key != ItemWithTotal.Total.ToShortName());
+    var itemKeyOrderTotalFirst = Definitions.ItemKeysTotalFirst;
+    var itemKeyOrderTotalLast = Definitions.ItemKeysTotalLast;
+    var itemKeyTotal = itemKeyOrderTotalFirst.First();
 
-    var itemKeyTotal = ItemWithTotal.Total.ToShortName();
-    var itemKeyOrderTotalFirst = itemsWithTotal.Keys.TakeLast(1).Concat(itemsWithTotal.Keys.SkipLast(1));
-    var itemKeyOrderTotalLast = itemsWithTotal.Keys;
-
-    var numNicknames = 70;
+    var numNicknames = Definitions.NumNicknames;
 #>

@@ -1,17 +1,6 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="th075.ttinclude" once="true" #>
 <#@ output extension=".html" encoding="utf-8" #>
-<#
-    var numCards = 100;
-
-    var cardsPerLevel = new Dictionary<string, int>
-    {
-        { "E", 25 },
-        { "N", 25 },
-        { "H", 25 },
-        { "L", 25 },
-    };
-#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
