@@ -8,15 +8,16 @@ namespace ThScoreFileConverterTests.UnitTesting
 {
     public static class SquirrelHelper
     {
+        private static readonly BindingFlags BindingAttribute = BindingFlags.NonPublic | BindingFlags.Static;
+        private static readonly MethodInfo FromArrayMethodInfo =
+            typeof(SquirrelHelper).GetMethod(nameof(MakeByteArrayFromArray), BindingAttribute)!;
+        private static readonly MethodInfo FromDictionaryMethodInfo =
+            typeof(SquirrelHelper).GetMethod(nameof(MakeByteArrayFromDictionary), BindingAttribute)!;
+
         public static IEnumerable<byte> MakeByteArray(params object?[] args)
         {
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
-
-            var currentType = typeof(SquirrelHelper);
-            var bindingAttributes = BindingFlags.NonPublic | BindingFlags.Static;
-            var fromArray = currentType.GetMethod(nameof(MakeByteArrayFromArray), bindingAttributes);
-            var fromDictonary = currentType.GetMethod(nameof(MakeByteArrayFromDictionary), bindingAttributes);
 
             var byteArray = Enumerable.Empty<byte>();
 
@@ -43,28 +44,24 @@ namespace ThScoreFileConverterTests.UnitTesting
                     case Array array:
                         if (array.Rank == 1)
                         {
-                            if (fromArray is not null)
+                            var elementType = array.GetType().GetElementType();
+                            if (elementType is not null)
                             {
-                                var elementType = array.GetType().GetElementType();
-                                if (elementType is not null)
-                                {
-                                    var array2 = fromArray.MakeGenericMethod(elementType)
-                                        .Invoke(null, new object[] { array });
-                                    if (array2 is IEnumerable<byte> enumerable)
-                                        byteArray = byteArray.Concat(enumerable);
-                                }
+                                var array2 = FromArrayMethodInfo.MakeGenericMethod(elementType)
+                                    .Invoke(null, new object[] { array });
+                                if (array2 is IEnumerable<byte> enumerable)
+                                    byteArray = byteArray.Concat(enumerable);
                             }
                         }
                         break;
                     case null:
                         break;
                     default:
-                        if (fromDictonary is not null)
                         {
                             var argType = arg.GetType();
                             if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
                             {
-                                var array = fromDictonary.MakeGenericMethod(argType.GetGenericArguments())
+                                var array = FromDictionaryMethodInfo.MakeGenericMethod(argType.GetGenericArguments())
                                     .Invoke(null, new object[] { arg });
                                 if (array is IEnumerable<byte> enumerable)
                                     byteArray = byteArray.Concat(enumerable);
