@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         internal static IEnumerable<byte> MakeSQByteArray(in AllScoreData.Story story)
         {
             return TestUtils.MakeByteArray((int)SQOT.Table)
-                .Concat(TestUtils.MakeSQByteArray(
+                .Concat(SquirrelHelper.MakeByteArray(
                     "stage", story.Stage,
                     "ed", (int)story.Ed,
                     "available", story.Available,
@@ -100,12 +100,12 @@ namespace ThScoreFileConverterTests.Models.Th155
 
             return Array.Empty<byte>()
                 // .Concat(sqTable)
-                .Concat(TestUtils.MakeSQByteArray("story"))
+                .Concat(SquirrelHelper.MakeByteArray("story"))
                 .Concat(sqTable)
                 .Concat(properties.storyDictionary.SelectMany(
-                    pair => TestUtils.MakeSQByteArray(ToString(pair.Key)).Concat(MakeSQByteArray(pair.Value))))
+                    pair => SquirrelHelper.MakeByteArray(ToString(pair.Key)).Concat(MakeSQByteArray(pair.Value))))
                 .Concat(sqNull)
-                .Concat(TestUtils.MakeSQByteArray(
+                .Concat(SquirrelHelper.MakeByteArray(
                     "character", properties.characterDictionary,
                     "bgm", properties.bgmDictionary,
                     "ed", properties.endingDictionary,
@@ -191,7 +191,7 @@ namespace ThScoreFileConverterTests.Models.Th155
 
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray(
                 // (int)SQOT.Table,
-                TestUtils.MakeSQByteArray("version", version).ToArray(),
+                SquirrelHelper.MakeByteArray("version", version).ToArray(),
                 (int)SQOT.Null));
 
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
@@ -207,7 +207,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("story", 123))
+                .Concat(SquirrelHelper.MakeByteArray("story", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -219,7 +219,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<int, int>() { { 123, 456 } }))
+                .Concat(SquirrelHelper.MakeByteArray("story", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -231,7 +231,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<string, int>() { { "abc", 123 } }))
+                .Concat(SquirrelHelper.MakeByteArray("story", new Dictionary<string, int>() { { "abc", 123 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -243,7 +243,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray(
+                .Concat(SquirrelHelper.MakeByteArray(
                     "story",
                     new Dictionary<string, int>()
                     {
@@ -266,7 +266,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray(
+                .Concat(SquirrelHelper.MakeByteArray(
                     "story",
                     new Dictionary<string, Dictionary<int, int>>()
                     {
@@ -292,7 +292,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray(
+                .Concat(SquirrelHelper.MakeByteArray(
                     "story",
                     new Dictionary<string, Dictionary<string, float>>()
                     {
@@ -325,7 +325,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("character", 123))
+                .Concat(SquirrelHelper.MakeByteArray("character", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -337,7 +337,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<int, int>() { { 123, 456 } }))
+                .Concat(SquirrelHelper.MakeByteArray("character", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -349,7 +349,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<string, string>() { { "abc", "def" } }))
+                .Concat(SquirrelHelper.MakeByteArray("character", new Dictionary<string, string>() { { "abc", "def" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -361,7 +361,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("bgm", 123))
+                .Concat(SquirrelHelper.MakeByteArray("bgm", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -373,7 +373,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<int, int>() { { 123, 456 } }))
+                .Concat(SquirrelHelper.MakeByteArray("bgm", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -385,7 +385,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<bool, bool>() { { true, false } }))
+                .Concat(SquirrelHelper.MakeByteArray("bgm", new Dictionary<bool, bool>() { { true, false } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -397,7 +397,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("ed", 123))
+                .Concat(SquirrelHelper.MakeByteArray("ed", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -409,7 +409,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<int, int>() { { 123, 456 } }))
+                .Concat(SquirrelHelper.MakeByteArray("ed", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -421,7 +421,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<string, string>() { { "abc", "def" } }))
+                .Concat(SquirrelHelper.MakeByteArray("ed", new Dictionary<string, string>() { { "abc", "def" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -433,7 +433,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("stage", 123))
+                .Concat(SquirrelHelper.MakeByteArray("stage", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -445,7 +445,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<string, int>() { { "abc", 123 } }))
+                .Concat(SquirrelHelper.MakeByteArray("stage", new Dictionary<string, int>() { { "abc", 123 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -457,7 +457,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<int, string>() { { 123, "abc" } }))
+                .Concat(SquirrelHelper.MakeByteArray("stage", new Dictionary<int, string>() { { 123, "abc" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
@@ -469,7 +469,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-                .Concat(TestUtils.MakeSQByteArray("version", 123f))
+                .Concat(SquirrelHelper.MakeByteArray("version", 123f))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 

@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
-using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 #if DEFINE_TEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -121,91 +119,6 @@ namespace ThScoreFileConverterTests.UnitTesting
 
             writer.Flush();
             return stream.ToArray();
-        }
-
-        public static IEnumerable<byte> MakeSQByteArray(params object?[] args)
-        {
-            if (args is null)
-                throw new ArgumentNullException(nameof(args));
-
-            var currentType = typeof(TestUtils);
-            var bindingAttributes = BindingFlags.NonPublic | BindingFlags.Static;
-            var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
-            var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
-
-            var byteArray = Enumerable.Empty<byte>();
-
-            foreach (var arg in args)
-            {
-                switch (arg)
-                {
-                    case int intValue:
-                        byteArray = byteArray.Concat(MakeByteArray((int)SQOT.Integer, intValue));
-                        break;
-                    case float floatValue:
-                        byteArray = byteArray.Concat(MakeByteArray((int)SQOT.Float, floatValue));
-                        break;
-                    case bool boolValue:
-                        byteArray = byteArray.Concat(
-                            MakeByteArray((int)SQOT.Bool, (byte)(boolValue ? 0x01 : 0x00)));
-                        break;
-                    case string stringValue:
-                        {
-                            var bytes = CP932Encoding.GetBytes(stringValue);
-                            byteArray = byteArray.Concat(MakeByteArray((int)SQOT.String, bytes.Length, bytes));
-                        }
-                        break;
-                    case Array array:
-                        if (array.Rank == 1)
-                        {
-                            if (fromArray is not null)
-                            {
-                                var elementType = array.GetType().GetElementType();
-                                if (elementType is not null)
-                                {
-                                    var array2 = fromArray.MakeGenericMethod(elementType)
-                                        .Invoke(null, new object[] { array });
-                                    if (array2 is IEnumerable<byte> enumerable)
-                                        byteArray = byteArray.Concat(enumerable);
-                                }
-                            }
-                        }
-                        break;
-                    case null:
-                        break;
-                    default:
-                        if (fromDictonary is not null)
-                        {
-                            var argType = arg.GetType();
-                            if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
-                            {
-                                var array = fromDictonary.MakeGenericMethod(argType.GetGenericArguments())
-                                    .Invoke(null, new object[] { arg });
-                                if (array is IEnumerable<byte> enumerable)
-                                    byteArray = byteArray.Concat(enumerable);
-                            }
-                        }
-                        break;
-                }
-            }
-
-            return byteArray;
-        }
-
-        private static IEnumerable<byte> MakeSQByteArrayFromArray<T>(in IEnumerable<T> array)
-        {
-            return MakeByteArray((int)SQOT.Array, array.Count())
-                .Concat(array.SelectMany((element, index) => MakeSQByteArray(index).Concat(MakeSQByteArray(element))))
-                .Concat(MakeByteArray((int)SQOT.Null));
-        }
-
-        private static IEnumerable<byte> MakeSQByteArrayFromDictionary<TKey, TValue>(
-            in IReadOnlyDictionary<TKey, TValue> dictionary)
-            where TKey : notnull
-        {
-            return MakeByteArray((int)SQOT.Table)
-                .Concat(dictionary.SelectMany(pair => MakeSQByteArray(pair.Key).Concat(MakeSQByteArray(pair.Value))))
-                .Concat(MakeByteArray((int)SQOT.Null));
         }
 
         public static TResult[] MakeRandomArray<TResult>(int length)
