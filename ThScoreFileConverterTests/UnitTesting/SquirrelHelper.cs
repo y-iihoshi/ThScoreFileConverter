@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
@@ -25,40 +26,41 @@ namespace ThScoreFileConverterTests.UnitTesting
                 return argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>));
             }
 
-            var byteArray = Enumerable.Empty<byte>();
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream);
 
             foreach (var arg in args)
             {
                 switch (arg)
                 {
                     case int intValue:
-                        byteArray = byteArray.Concat(TestUtils.MakeByteArray((int)SQOT.Integer, intValue));
+                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Integer, intValue));
                         break;
                     case float floatValue:
-                        byteArray = byteArray.Concat(TestUtils.MakeByteArray((int)SQOT.Float, floatValue));
+                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Float, floatValue));
                         break;
                     case bool boolValue:
-                        byteArray = byteArray.Concat(
-                            TestUtils.MakeByteArray((int)SQOT.Bool, (byte)(boolValue ? 0x01 : 0x00)));
+                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Bool, (byte)(boolValue ? 0x01 : 0x00)));
                         break;
                     case string stringValue:
                         {
                             var bytes = TestUtils.CP932Encoding.GetBytes(stringValue);
-                            byteArray = byteArray.Concat(TestUtils.MakeByteArray((int)SQOT.String, bytes.Length, bytes));
+                            writer.Write(TestUtils.MakeByteArray((int)SQOT.String, bytes.Length, bytes));
                         }
                         break;
                     case Array { Rank: 1 } array:
-                        byteArray = byteArray.Concat(MakeByteArrayFromArrayReflection(array));
+                        writer.Write(MakeByteArrayFromArrayReflection(array).ToArray());
                         break;
                     case { } when IsDictionary(arg):
-                        byteArray = byteArray.Concat(MakeByteArrayFromDictionaryReflection(arg));
+                        writer.Write(MakeByteArrayFromDictionaryReflection(arg).ToArray());
                         break;
                     default:
                         break;
                 }
             }
 
-            return byteArray;
+            writer.Flush();
+            return stream.ToArray();
         }
 
         private static IEnumerable<byte> MakeByteArrayFromArrayReflection(Array array)
@@ -69,9 +71,15 @@ namespace ThScoreFileConverterTests.UnitTesting
 
         private static IEnumerable<byte> MakeByteArrayFromArray<T>(in IEnumerable<T> array)
         {
-            return TestUtils.MakeByteArray((int)SQOT.Array, array.Count())
-                .Concat(array.SelectMany((element, index) => MakeByteArray(index).Concat(MakeByteArray(element))))
-                .Concat(TestUtils.MakeByteArray((int)SQOT.Null));
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream);
+
+            writer.Write(TestUtils.MakeByteArray((int)SQOT.Array, array.Count()));
+            writer.Write(array.SelectMany((element, index) => MakeByteArray(index, element)).ToArray());
+            writer.Write(TestUtils.MakeByteArray((int)SQOT.Null));
+
+            writer.Flush();
+            return stream.ToArray();
         }
 
         private static IEnumerable<byte> MakeByteArrayFromDictionaryReflection(object dictionary)
@@ -84,9 +92,15 @@ namespace ThScoreFileConverterTests.UnitTesting
             in IReadOnlyDictionary<TKey, TValue> dictionary)
             where TKey : notnull
         {
-            return TestUtils.MakeByteArray((int)SQOT.Table)
-                .Concat(dictionary.SelectMany(pair => MakeByteArray(pair.Key).Concat(MakeByteArray(pair.Value))))
-                .Concat(TestUtils.MakeByteArray((int)SQOT.Null));
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream);
+
+            writer.Write(TestUtils.MakeByteArray((int)SQOT.Table));
+            writer.Write(dictionary.SelectMany(pair => MakeByteArray(pair.Key, pair.Value)).ToArray());
+            writer.Write(TestUtils.MakeByteArray((int)SQOT.Null));
+
+            writer.Flush();
+            return stream.ToArray();
         }
     }
 }
