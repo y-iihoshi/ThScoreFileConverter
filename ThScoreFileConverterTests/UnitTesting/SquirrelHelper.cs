@@ -1,12 +1,22 @@
-﻿using System;
+﻿// #define DEFINE_TEST
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
+#if DEFINE_TEST
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
+#endif
+
 namespace ThScoreFileConverterTests.UnitTesting
 {
+#if DEFINE_TEST
+    [TestClass]
+#endif
     public static class SquirrelHelper
     {
         private static readonly BindingFlags BindingAttribute = BindingFlags.NonPublic | BindingFlags.Static;
@@ -14,6 +24,19 @@ namespace ThScoreFileConverterTests.UnitTesting
             typeof(SquirrelHelper).GetMethod(nameof(MakeByteArrayFromArray), BindingAttribute)!;
         private static readonly MethodInfo FromDictionaryMethodInfo =
             typeof(SquirrelHelper).GetMethod(nameof(MakeByteArrayFromDictionary), BindingAttribute)!;
+
+#if DEFINE_TEST
+        private static Dictionary<string, int> Counter { get; } = new();
+
+        [AssemblyCleanup]
+        public static void Cleanup()
+        {
+            foreach (var pair in Counter.OrderByDescending(p => p.Value))
+            {
+                Console.WriteLine(pair);
+            }
+        }
+#endif
 
         public static IEnumerable<byte> MakeByteArray(params object?[] args)
         {
@@ -31,16 +54,15 @@ namespace ThScoreFileConverterTests.UnitTesting
 
             foreach (var arg in args)
             {
+#if DEFINE_TEST
+                var key = arg?.GetType()?.Name ?? "(null)";
+                Counter.TryAdd(key, 0);
+                ++Counter[key];
+#endif
                 switch (arg)
                 {
                     case int intValue:
                         writer.Write(TestUtils.MakeByteArray((int)SQOT.Integer, intValue));
-                        break;
-                    case float floatValue:
-                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Float, floatValue));
-                        break;
-                    case bool boolValue:
-                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Bool, (byte)(boolValue ? 0x01 : 0x00)));
                         break;
                     case string stringValue:
                         {
@@ -48,11 +70,17 @@ namespace ThScoreFileConverterTests.UnitTesting
                             writer.Write(TestUtils.MakeByteArray((int)SQOT.String, bytes.Length, bytes));
                         }
                         break;
-                    case Array { Rank: 1 } array:
-                        writer.Write(MakeByteArrayFromArrayReflection(array).ToArray());
+                    case bool boolValue:
+                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Bool, (byte)(boolValue ? 0x01 : 0x00)));
                         break;
                     case { } when IsDictionary(arg):
                         writer.Write(MakeByteArrayFromDictionaryReflection(arg).ToArray());
+                        break;
+                    case float floatValue:
+                        writer.Write(TestUtils.MakeByteArray((int)SQOT.Float, floatValue));
+                        break;
+                    case Array { Rank: 1 } array:
+                        writer.Write(MakeByteArrayFromArrayReflection(array).ToArray());
                         break;
                     default:
                         break;
