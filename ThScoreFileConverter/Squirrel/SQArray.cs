@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Squirrel
             if (num < 0)
                 throw new InvalidDataException(Resources.InvalidDataExceptionNumElementsMustNotBeNegative);
 
-            var array = new SQArray(new SQObject[num]);
+            var dictionary = new Dictionary<int, SQObject>();
 
             for (var count = 0; count < num; count++)
             {
@@ -58,12 +58,18 @@ namespace ThScoreFileConverter.Squirrel
                 if (i >= num)
                     throw new InvalidDataException(Resources.InvalidDataExceptionIndexIsOutOfRange);
 
-                ((SQObject[])((SQObject)array).Value)[i] = value;
+                dictionary.Add(i, value);
             }
 
             var sentinel = SQObject.Create(reader);
-            return (sentinel is SQNull)
-                ? array : throw new InvalidDataException(Resources.InvalidDataExceptionWrongSentinel);
+            if (sentinel is not SQNull)
+                throw new InvalidDataException(Resources.InvalidDataExceptionWrongSentinel);
+
+            var array = new SQObject[num];
+            foreach (var pair in dictionary)
+                array[pair.Key] = pair.Value;
+
+            return new SQArray(array);
         }
     }
 }
