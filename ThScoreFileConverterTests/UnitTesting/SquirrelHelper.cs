@@ -43,16 +43,7 @@ namespace ThScoreFileConverterTests.UnitTesting
                         break;
                     case Array array:
                         if (array.Rank == 1)
-                        {
-                            var elementType = array.GetType().GetElementType();
-                            if (elementType is not null)
-                            {
-                                var array2 = FromArrayMethodInfo.MakeGenericMethod(elementType)
-                                    .Invoke(null, new object[] { array });
-                                if (array2 is IEnumerable<byte> enumerable)
-                                    byteArray = byteArray.Concat(enumerable);
-                            }
-                        }
+                            byteArray = byteArray.Concat(MakeByteArrayFromArrayReflection(array));
                         break;
                     case null:
                         break;
@@ -60,12 +51,7 @@ namespace ThScoreFileConverterTests.UnitTesting
                         {
                             var argType = arg.GetType();
                             if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
-                            {
-                                var array = FromDictionaryMethodInfo.MakeGenericMethod(argType.GetGenericArguments())
-                                    .Invoke(null, new object[] { arg });
-                                if (array is IEnumerable<byte> enumerable)
-                                    byteArray = byteArray.Concat(enumerable);
-                            }
+                                byteArray = byteArray.Concat(MakeByteArrayFromDictionaryReflection(arg));
                         }
                         break;
                 }
@@ -74,11 +60,23 @@ namespace ThScoreFileConverterTests.UnitTesting
             return byteArray;
         }
 
+        private static IEnumerable<byte> MakeByteArrayFromArrayReflection(Array array)
+        {
+            return (IEnumerable<byte>)FromArrayMethodInfo.MakeGenericMethod(array.GetType().GetElementType()!)
+                .Invoke(null, new object[] { array })!;
+        }
+
         private static IEnumerable<byte> MakeByteArrayFromArray<T>(in IEnumerable<T> array)
         {
             return TestUtils.MakeByteArray((int)SQOT.Array, array.Count())
                 .Concat(array.SelectMany((element, index) => MakeByteArray(index).Concat(MakeByteArray(element))))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null));
+        }
+
+        private static IEnumerable<byte> MakeByteArrayFromDictionaryReflection(object dictionary)
+        {
+            return (IEnumerable<byte>)FromDictionaryMethodInfo.MakeGenericMethod(dictionary.GetType().GetGenericArguments())
+                .Invoke(null, new object[] { dictionary })!;
         }
 
         private static IEnumerable<byte> MakeByteArrayFromDictionary<TKey, TValue>(
