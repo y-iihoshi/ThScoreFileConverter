@@ -19,6 +19,12 @@ namespace ThScoreFileConverterTests.UnitTesting
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
+            static bool IsDictionary(object arg)
+            {
+                var argType = arg.GetType();
+                return argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>));
+            }
+
             var byteArray = Enumerable.Empty<byte>();
 
             foreach (var arg in args)
@@ -41,18 +47,13 @@ namespace ThScoreFileConverterTests.UnitTesting
                             byteArray = byteArray.Concat(TestUtils.MakeByteArray((int)SQOT.String, bytes.Length, bytes));
                         }
                         break;
-                    case Array array:
-                        if (array.Rank == 1)
-                            byteArray = byteArray.Concat(MakeByteArrayFromArrayReflection(array));
+                    case Array { Rank: 1 } array:
+                        byteArray = byteArray.Concat(MakeByteArrayFromArrayReflection(array));
                         break;
-                    case null:
+                    case { } when IsDictionary(arg):
+                        byteArray = byteArray.Concat(MakeByteArrayFromDictionaryReflection(arg));
                         break;
                     default:
-                        {
-                            var argType = arg.GetType();
-                            if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
-                                byteArray = byteArray.Concat(MakeByteArrayFromDictionaryReflection(arg));
-                        }
                         break;
                 }
             }
