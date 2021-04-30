@@ -95,14 +95,13 @@ namespace ThScoreFileConverterTests.Models.Th14
             return TestUtils.MakeByteArray(
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(
-                        scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
-                clearData.ClearCounts.Values.ToArray(),
-                clearData.ClearFlags.Values.ToArray(),
-                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)).ToArray(),
-                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)).ToArray());
+                clearData.ClearCounts.Values,
+                clearData.ClearFlags.Values,
+                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)),
+                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)));
         }
 
         internal static byte[] MakeByteArray(IClearData clearData)

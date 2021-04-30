@@ -38,9 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         internal static byte[] MakeByteArray(ICardAttackCareer career)
         {
             return TestUtils.MakeByteArray(
-                career.MaxBonuses.Values.ToArray(),
-                career.TrialCounts.Values.ToArray(),
-                career.ClearCounts.Values.ToArray());
+                career.MaxBonuses.Values, career.TrialCounts.Values, career.ClearCounts.Values);
         }
 
         internal static void Validate(ICardAttackCareer expected, ICardAttackCareer actual)

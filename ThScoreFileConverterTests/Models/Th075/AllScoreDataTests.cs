@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         internal static byte[] MakeByteArray(in Properties properties)
         {
             return TestUtils.MakeByteArray(
-                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray(),
+                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)),
                 StatusTests.MakeByteArray(properties.status));
         }
 

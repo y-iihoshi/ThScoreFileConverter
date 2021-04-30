@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                 _ = mock.SetupGet(s => s.StageProgress).Returns((StageProgress)index);
                 _ = mock.SetupGet(s => s.ContinueCount).Returns((byte)index);
                 _ = mock.SetupGet(s => s.Name).Returns(
-                    TestUtils.MakeByteArray($"Player{index}\0\0\0").Skip(1).ToArray());  // skip length
+                    TestUtils.MakeByteArray($"Player{index}\0\0\0").Skip(1));   // skip length
                 _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
                 _ = mock.SetupGet(s => s.SlowRate).Returns(1.2f);
                 return mock.Object;
@@ -111,14 +111,14 @@ namespace ThScoreFileConverterTests.Models.Th17
                 clearData.Size,
                 (int)clearData.Chara,
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
-                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,
-                clearData.ClearCounts.Values.ToArray(),
-                clearData.ClearFlags.Values.ToArray(),
-                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)).ToArray(),
+                clearData.ClearCounts.Values,
+                clearData.ClearFlags.Values,
+                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)),
                 new byte[0x40]);
         }
 

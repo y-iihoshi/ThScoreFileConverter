@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th123
         {
             return TestUtils.MakeByteArray(
                 new uint[2],
-                properties.storyClearCounts.Select(pair => pair.Value).ToArray(),
+                properties.storyClearCounts.Select(pair => pair.Value),
                 new byte[0x14 - properties.storyClearCounts.Count],
                 new byte[0x28],
                 3,
@@ -57,9 +57,9 @@ namespace ThScoreFileConverterTests.Models.Th123
                 2,
                 new uint[2],
                 properties.systemCards.Count,
-                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)),
                 properties.clearData.Count,
-                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)).ToArray());
+                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)));
         }
 
         internal static void Validate(in Properties expected, in AllScoreData actual)
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th123
             var properties = MakeValidProperties();
             var array = TestUtils.MakeByteArray(
                 new uint[2],
-                properties.storyClearCounts.Select(pair => pair.Value).ToArray(),
+                properties.storyClearCounts.Select(pair => pair.Value),
                 new byte[0x14 - properties.storyClearCounts.Count],
                 new byte[0x28],
                 3,
@@ -111,10 +111,10 @@ namespace ThScoreFileConverterTests.Models.Th123
                 2,
                 new uint[2],
                 properties.systemCards.Count + 1,
-                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
-                Th105.CardForDeckTests.MakeByteArray(properties.systemCards.First().Value).ToArray(),
+                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)),
+                Th105.CardForDeckTests.MakeByteArray(properties.systemCards.First().Value),
                 properties.clearData.Count,
-                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)).ToArray());
+                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)));
 
             var allScoreData = TestUtils.Create<AllScoreData>(array);
 
@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.Models.Th123
             var properties = MakeValidProperties();
             var array = TestUtils.MakeByteArray(
                 new uint[2],
-                properties.storyClearCounts.Select(pair => pair.Value).ToArray(),
+                properties.storyClearCounts.Select(pair => pair.Value),
                 new byte[0x14 - properties.storyClearCounts.Count],
                 new byte[0x28],
                 3,
@@ -135,9 +135,9 @@ namespace ThScoreFileConverterTests.Models.Th123
                 2,
                 new uint[2],
                 properties.systemCards.Count,
-                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)),
                 properties.clearData.Count + 1,
-                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)).ToArray(),
+                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)),
                 Th105.ClearDataTests.MakeByteArray(properties.clearData.First().Value));
 
             var allScoreData = TestUtils.Create<AllScoreData>(array);

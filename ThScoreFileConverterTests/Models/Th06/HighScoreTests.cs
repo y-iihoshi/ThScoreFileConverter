@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 (byte)highScore.Chara,
                 (byte)highScore.Level,
                 (byte)highScore.StageProgress,
-                highScore.Name.ToArray());
+                highScore.Name);
         }
 
         internal static void Validate(IHighScore expected, IHighScore actual)

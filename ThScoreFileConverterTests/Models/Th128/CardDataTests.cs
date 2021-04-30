@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         internal static byte[] MakeData(ICardData cardData)
         {
             return TestUtils.MakeByteArray(
-                cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray());
+                cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
         }
 
         internal static byte[] MakeByteArray(ICardData cardData)

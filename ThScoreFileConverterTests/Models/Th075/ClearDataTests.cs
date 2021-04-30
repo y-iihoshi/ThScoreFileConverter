@@ -57,16 +57,15 @@ namespace ThScoreFileConverterTests.Models.Th075
                 clearData.ClearCount,
                 clearData.MaxCombo,
                 clearData.MaxDamage,
-                clearData.MaxBonuses.ToArray(),
+                clearData.MaxBonuses,
                 new byte[0xC8],
-                clearData.CardGotCount.ToArray(),
+                clearData.CardGotCount,
                 new byte[0x64],
-                clearData.CardTrialCount.ToArray(),
+                clearData.CardTrialCount,
                 new byte[0x64],
-                clearData.CardTrulyGot.ToArray(),
+                clearData.CardTrulyGot,
                 new byte[0x38],
-                clearData.Ranking.SelectMany(
-                    element => HighScoreTests.MakeByteArray((HighScoreStub)element)).ToArray());
+                clearData.Ranking.SelectMany(element => HighScoreTests.MakeByteArray((HighScoreStub)element)));
         }
 
         internal static void Validate(IClearData expected, IClearData actual)

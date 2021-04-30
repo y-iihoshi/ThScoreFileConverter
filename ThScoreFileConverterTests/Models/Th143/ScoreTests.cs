@@ -33,8 +33,8 @@ namespace ThScoreFileConverterTests.Models.Th143
         {
             return TestUtils.MakeByteArray(
                 score.Number,
-                score.ClearCounts.Values.ToArray(),
-                score.ChallengeCounts.Values.ToArray(),
+                score.ClearCounts.Values,
+                score.ChallengeCounts.Values,
                 score.HighScore,
                 new byte[0x2A8]);
         }

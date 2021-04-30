@@ -52,10 +52,10 @@ namespace ThScoreFileConverterTests.Models.Th09
                 playStatus.TotalPlayTime.Milliseconds,
                 playStatus.BgmFlags,
                 new byte[13],
-                playStatus.MatchFlags.Values.ToArray(),
-                playStatus.StoryFlags.Values.ToArray(),
-                playStatus.ExtraFlags.Values.ToArray(),
-                playStatus.ClearCounts.SelectMany(pair => ClearCountTests.MakeByteArray(pair.Value)).ToArray());
+                playStatus.MatchFlags.Values,
+                playStatus.StoryFlags.Values,
+                playStatus.ExtraFlags.Values,
+                playStatus.ClearCounts.SelectMany(pair => ClearCountTests.MakeByteArray(pair.Value)));
         }
 
         internal static void Validate(IPlayStatus expected, IPlayStatus actual)

@@ -191,7 +191,7 @@ namespace ThScoreFileConverterTests.Models.Th155
 
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray(
                 // (int)SQOT.Table,
-                SquirrelHelper.MakeByteArray("version", version).ToArray(),
+                SquirrelHelper.MakeByteArray("version", version),
                 (int)SQOT.Null));
 
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);

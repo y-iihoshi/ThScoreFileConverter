@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 highScore.PauseCount,
                 highScore.TimePoint,
                 highScore.HumanRate,
-                highScore.CardFlags.Values.ToArray(),
+                highScore.CardFlags.Values,
                 new byte[2]);
         }
 

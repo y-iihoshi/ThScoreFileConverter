@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         internal static byte[] MakeByteArray(in HighScoreStub stub)
         {
             return TestUtils.MakeByteArray(
-                stub.EncodedName.ToArray(),
+                stub.EncodedName,
                 stub.Month,
                 stub.Day,
                 new byte[2],

@@ -112,6 +112,26 @@ namespace ThScoreFileConverterTests.UnitTesting
                         foreach (var val in (ushort[])arrayArg)
                             writer.Write(val);
                         break;
+                    case IEnumerable<byte> enumerable:
+                        foreach (var val in enumerable)
+                            writer.Write(val);
+                        break;
+                    case IEnumerable<int> enumerable:
+                        foreach (var val in enumerable)
+                            writer.Write(val);
+                        break;
+                    case IEnumerable<short> enumerable:
+                        foreach (var val in enumerable)
+                            writer.Write(val);
+                        break;
+                    case IEnumerable<uint> enumerable:
+                        foreach (var val in enumerable)
+                            writer.Write(val);
+                        break;
+                    case IEnumerable<ushort> enumerable:
+                        foreach (var val in enumerable)
+                            writer.Write(val);
+                        break;
                     default:
                         throw new NotImplementedException();
                 }

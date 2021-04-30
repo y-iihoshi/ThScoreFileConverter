@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 new byte[8],
                 (short)(cardAttack.CardId - 1),
                 new byte[6],
-                cardAttack.CardName.ToArray(),
+                cardAttack.CardName,
                 cardAttack.TrialCount,
                 cardAttack.ClearCount);
         }

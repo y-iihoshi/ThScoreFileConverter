@@ -38,8 +38,8 @@ namespace ThScoreFileConverterTests.Models.Th06
                 clearData.Size1,
                 clearData.Size2,
                 0u,
-                clearData.StoryFlags.Values.ToArray(),
-                clearData.PracticeFlags.Values.ToArray(),
+                clearData.StoryFlags.Values,
+                clearData.PracticeFlags.Values,
                 (short)clearData.Chara);
         }
 

@@ -48,10 +48,8 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             return TestUtils.MakeByteArray(
                 (int)clearData.Chara,
-                clearData.GameModeData.Values.SelectMany(
-                    data => ClearDataPerGameModeTests.MakeByteArray(data)).ToArray(),
-                clearData.Practices.Values.SelectMany(
-                    practice => PracticeTests.MakeByteArray(practice)).ToArray(),
+                clearData.GameModeData.Values.SelectMany(data => ClearDataPerGameModeTests.MakeByteArray(data)),
+                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
                 new byte[0x40]);
         }
 

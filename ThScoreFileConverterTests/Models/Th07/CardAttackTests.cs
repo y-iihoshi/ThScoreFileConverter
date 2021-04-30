@@ -42,13 +42,13 @@ namespace ThScoreFileConverterTests.Models.Th07
                 cardAttack.Size1,
                 cardAttack.Size2,
                 0u,
-                cardAttack.MaxBonuses.Values.ToArray(),
+                cardAttack.MaxBonuses.Values,
                 (short)(cardAttack.CardId - 1),
                 (byte)0,
                 cardAttack.CardName,
                 (byte)0,
-                cardAttack.TrialCounts.Values.ToArray(),
-                cardAttack.ClearCounts.Values.ToArray());
+                cardAttack.TrialCounts.Values,
+                cardAttack.ClearCounts.Values);
         }
 
         internal static void Validate(ICardAttack expected, ICardAttack actual)

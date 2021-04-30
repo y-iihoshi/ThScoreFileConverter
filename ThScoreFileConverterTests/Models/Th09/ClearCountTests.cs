@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th09
 
         internal static byte[] MakeByteArray(IClearCount clearCount)
         {
-            return TestUtils.MakeByteArray(clearCount.Counts.Values.ToArray(), 0u);
+            return TestUtils.MakeByteArray(clearCount.Counts.Values, 0u);
         }
 
         internal static void Validate(IClearCount expected, IClearCount actual)

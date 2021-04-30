@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th16
                 scoreData.Score,
                 (byte)scoreData.StageProgress,
                 scoreData.ContinueCount,
-                scoreData.Name.ToArray(),
+                scoreData.Name,
                 scoreData.DateTime,
                 0u,
                 scoreData.SlowRate,

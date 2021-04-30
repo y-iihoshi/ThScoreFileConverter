@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             return TestUtils.MakeByteArray(
                 playCount.TotalTrial,
-                playCount.Trials.Values.ToArray(),
+                playCount.Trials.Values,
                 0u,
                 playCount.TotalClear,
                 playCount.TotalContinue,

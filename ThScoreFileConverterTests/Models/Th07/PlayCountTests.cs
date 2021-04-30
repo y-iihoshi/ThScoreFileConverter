@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             return TestUtils.MakeByteArray(
                 properties.totalTrial,
-                properties.trials.Values.ToArray(),
+                properties.trials.Values,
                 properties.totalRetry,
                 properties.totalClear,
                 properties.totalContinue,

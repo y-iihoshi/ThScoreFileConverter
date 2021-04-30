@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 scoreData.Score,
                 (byte)TestUtils.Cast<int>(scoreData.StageProgress),
                 scoreData.ContinueCount,
-                scoreData.Name.ToArray(),
+                scoreData.Name,
                 scoreData.DateTime,
                 scoreData.SlowRate,
                 new byte[unknownSize]);

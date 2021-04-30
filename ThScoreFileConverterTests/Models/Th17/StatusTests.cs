@@ -33,13 +33,13 @@ namespace ThScoreFileConverterTests.Models.Th17
                 status.Version,
                 status.Checksum,
                 status.Size,
-                status.LastName.ToArray(),
+                status.LastName,
                 TestUtils.MakeRandomArray<byte>(0x10),
-                status.BgmFlags.ToArray(),
+                status.BgmFlags,
                 TestUtils.MakeRandomArray<byte>(0x11),
                 status.TotalPlayTime,
                 TestUtils.MakeRandomArray<byte>(4),
-                status.Achievements.ToArray(),
+                status.Achievements,
                 TestUtils.MakeRandomArray<byte>(0x438));
         }
 

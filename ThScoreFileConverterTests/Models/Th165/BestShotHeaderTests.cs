@@ -83,7 +83,7 @@ namespace ThScoreFileConverterTests.Models.Th165
                 header.Angle,
                 header.Score,
                 0u,
-                header.Fields.Data.ToArray(),
+                header.Fields.Data,
                 TestUtils.MakeRandomArray<byte>(0x28),
                 header.Score2,
                 header.BasePoint,

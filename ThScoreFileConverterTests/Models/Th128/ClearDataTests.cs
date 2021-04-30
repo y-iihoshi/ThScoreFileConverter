@@ -54,11 +54,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             return TestUtils.MakeByteArray(
                 (int)clearData.Route,
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(
-                        scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
-                clearData.ClearCounts.Values.ToArray());
+                clearData.ClearCounts.Values);
         }
 
         internal static byte[] MakeByteArray(IClearData clearData)

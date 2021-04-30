@@ -39,8 +39,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 score.Size1,
                 score.Size2,
                 0u,
-                score.PlayCounts.Values.ToArray(),
-                score.HighScores.Values.ToArray(),
+                score.PlayCounts.Values,
+                score.HighScores.Values,
                 (byte)score.Chara,
                 new byte[3]);
         }

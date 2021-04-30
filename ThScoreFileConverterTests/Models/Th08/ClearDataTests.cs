@@ -37,8 +37,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 clearData.Size1,
                 clearData.Size2,
                 0u,
-                clearData.StoryFlags.Values.Select(value => (ushort)value).ToArray(),
-                clearData.PracticeFlags.Values.Select(value => (ushort)value).ToArray(),
+                clearData.StoryFlags.Values.Select(value => (ushort)value),
+                clearData.PracticeFlags.Values.Select(value => (ushort)value),
                 (byte)0,
                 (byte)clearData.Chara,
                 (ushort)0);

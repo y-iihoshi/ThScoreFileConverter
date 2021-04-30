@@ -39,7 +39,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             return TestUtils.MakeByteArray(
                 properties.encodedLastName,
-                properties.arcadeScores.Values.Select(score => score + 10).ToArray(),
+                properties.arcadeScores.Values.Select(score => score + 10),
                 new byte[0x128]);
         }
 
