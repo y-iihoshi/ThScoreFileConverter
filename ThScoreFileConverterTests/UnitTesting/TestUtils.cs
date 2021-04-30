@@ -41,10 +41,7 @@ namespace ThScoreFileConverterTests.UnitTesting
         [AssemblyCleanup]
         public static void Cleanup()
         {
-            foreach (var pair in Counter.OrderByDescending(p => p.Value))
-            {
-                Console.WriteLine(pair);
-            }
+            Counter.OrderByDescending(static pair => pair.Value).ForEach(static pair => Console.WriteLine(pair));
         }
 #endif
 
@@ -97,40 +94,31 @@ namespace ThScoreFileConverterTests.UnitTesting
                         writer.Write(stringArg);
                         break;
                     case Array arrayArg when IsRankOneArray<int>(arrayArg):
-                        foreach (var val in (int[])arrayArg)
-                            writer.Write(val);
+                        ((int[])arrayArg).ForEach(writer.Write);
                         break;
                     case Array arrayArg when IsRankOneArray<short>(arrayArg):
-                        foreach (var val in (short[])arrayArg)
-                            writer.Write(val);
+                        ((short[])arrayArg).ForEach(writer.Write);
                         break;
                     case Array arrayArg when IsRankOneArray<uint>(arrayArg):
-                        foreach (var val in (uint[])arrayArg)
-                            writer.Write(val);
+                        ((uint[])arrayArg).ForEach(writer.Write);
                         break;
                     case Array arrayArg when IsRankOneArray<ushort>(arrayArg):
-                        foreach (var val in (ushort[])arrayArg)
-                            writer.Write(val);
+                        ((ushort[])arrayArg).ForEach(writer.Write);
                         break;
                     case IEnumerable<byte> enumerable:
-                        foreach (var val in enumerable)
-                            writer.Write(val);
+                        enumerable.ForEach(writer.Write);
                         break;
                     case IEnumerable<int> enumerable:
-                        foreach (var val in enumerable)
-                            writer.Write(val);
+                        enumerable.ForEach(writer.Write);
                         break;
                     case IEnumerable<short> enumerable:
-                        foreach (var val in enumerable)
-                            writer.Write(val);
+                        enumerable.ForEach(writer.Write);
                         break;
                     case IEnumerable<uint> enumerable:
-                        foreach (var val in enumerable)
-                            writer.Write(val);
+                        enumerable.ForEach(writer.Write);
                         break;
                     case IEnumerable<ushort> enumerable:
-                        foreach (var val in enumerable)
-                            writer.Write(val);
+                        enumerable.ForEach(writer.Write);
                         break;
                     default:
                         throw new NotImplementedException();
