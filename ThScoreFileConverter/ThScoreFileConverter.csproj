@@ -64,7 +64,7 @@
     </PackageReference>
     <PackageReference Include="LivetCask.Behaviors" Version="3.2.3.2" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
-    <PackageReference Include="ReactiveProperty" Version="7.9.0" />
+    <PackageReference Include="ReactiveProperty" Version="7.10.0" />
     <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.333">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
