@@ -61,59 +61,26 @@ namespace ThScoreFileConverterTests.UnitTesting
 
             foreach (var arg in args)
             {
-                switch (arg)
+                _ = arg switch
                 {
-                    case int value:
-                        Invoke(writer.Write, "int", value);
-                        break;
-                    case uint value:
-                        Invoke(writer.Write, "uint", value);
-                        break;
-                    case byte[] array:
-                        Invoke(writer.Write, "byte[]", array);
-                        break;
-                    case byte value:
-                        Invoke(writer.Write, "byte", value);
-                        break;
-                    case float value:
-                        Invoke(writer.Write, "float", value);
-                        break;
-                    case ushort value:
-                        Invoke(writer.Write, "ushort", value);
-                        break;
-                    case IEnumerable<byte> enumerable:
-                        Invoke(writer.Write, "IEnumerable<byte>", enumerable);
-                        break;
-                    case short value:
-                        Invoke(writer.Write, "short", value);
-                        break;
-                    case char[] array:
-                        Invoke(writer.Write, "char[]", array);
-                        break;
-                    case string value:
-                        Invoke(writer.Write, "string", value);
-                        break;
-                    case Array array when IsRankOneArray<int>(array):
-                        Invoke(writer.Write, "int[]", (int[])array);
-                        break;
-                    case Array array when IsRankOneArray<uint>(array):
-                        Invoke(writer.Write, "uint[]", (uint[])array);
-                        break;
-                    case IEnumerable<int> enumerable:
-                        Invoke(writer.Write, "IEnumerable<int>", enumerable);
-                        break;
-                    case IEnumerable<short> enumerable:
-                        Invoke(writer.Write, "IEnumerable<short>", enumerable);
-                        break;
-                    case IEnumerable<uint> enumerable:
-                        Invoke(writer.Write, "IEnumerable<uint>", enumerable);
-                        break;
-                    case IEnumerable<ushort> enumerable:
-                        Invoke(writer.Write, "IEnumerable<ushort>", enumerable);
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
+                    int value => Invoke(writer.Write, "int", value),
+                    uint value => Invoke(writer.Write, "uint", value),
+                    byte[] array => Invoke(writer.Write, "byte[]", array),
+                    byte value => Invoke(writer.Write, "byte", value),
+                    float value => Invoke(writer.Write, "float", value),
+                    ushort value => Invoke(writer.Write, "ushort", value),
+                    IEnumerable<byte> enumerable => Invoke(writer.Write, "IEnumerable<byte>", enumerable),
+                    short value => Invoke(writer.Write, "short", value),
+                    char[] array => Invoke(writer.Write, "char[]", array),
+                    string value => Invoke(writer.Write, "string", value),
+                    Array array when IsRankOneArray<int>(array) => Invoke(writer.Write, "int[]", (int[])array),
+                    Array array when IsRankOneArray<uint>(array) => Invoke(writer.Write, "uint[]", (uint[])array),
+                    IEnumerable<int> enumerable => Invoke(writer.Write, "IEnumerable<int>", enumerable),
+                    IEnumerable<short> enumerable => Invoke(writer.Write, "IEnumerable<short>", enumerable),
+                    IEnumerable<uint> enumerable => Invoke(writer.Write, "IEnumerable<uint>", enumerable),
+                    IEnumerable<ushort> enumerable => Invoke(writer.Write, "IEnumerable<ushort>", enumerable),
+                    _ => throw new NotImplementedException(),
+                };
             }
 
             writer.Flush();
@@ -178,16 +145,18 @@ namespace ThScoreFileConverterTests.UnitTesting
             yield return new object[] { values.Max() + 1 };
         }
 
-        private static void Invoke<T>(Action<T> action, string key, T value)
+        private static bool Invoke<T>(Action<T> action, string key, T value)
         {
             Countup(key);
             action(value);
+            return true;
         }
 
-        private static void Invoke<T>(Action<T> action, string key, IEnumerable<T> enumerable)
+        private static bool Invoke<T>(Action<T> action, string key, IEnumerable<T> enumerable)
         {
             Countup(key);
             enumerable.ForEach(action);
+            return true;
         }
 
         [Conditional("DEBUG_TEST")]
