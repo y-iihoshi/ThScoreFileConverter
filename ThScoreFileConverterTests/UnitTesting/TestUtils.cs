@@ -94,15 +94,15 @@ namespace ThScoreFileConverterTests.UnitTesting
 
             Func<object> getNextValue = defaultValue switch
             {
-                byte _ => () => Random.Next(byte.MaxValue + 1),
-                short _ => () => Random.Next(short.MaxValue + 1),
-                ushort _ => () => Random.Next(ushort.MaxValue + 1),
-                int _ => () =>
+                byte => () => Random.Next(byte.MaxValue + 1),
+                short => () => Random.Next(short.MaxValue + 1),
+                ushort => () => Random.Next(ushort.MaxValue + 1),
+                int => () =>
                 {
                     var maxValue = ushort.MaxValue + 1;
                     return (Random.Next(maxValue) << 16) | Random.Next(maxValue);
                 },
-                uint _ => () =>
+                uint => () =>
                 {
                     var maxValue = ushort.MaxValue + 1;
                     return ((uint)Random.Next(maxValue) << 16) | (uint)Random.Next(maxValue);
