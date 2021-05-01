@@ -11,6 +11,8 @@ using System.Linq;
 using System.Windows;
 using Prism.Ioc;
 using Prism.Unity;
+using Reactive.Bindings;
+using Reactive.Bindings.Schedulers;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
@@ -96,6 +98,8 @@ namespace ThScoreFileConverter
                 LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
             else
                 LocalizeDictionary.Instance.Culture = provider.AvailableCultures.First();
+
+            ReactivePropertyScheduler.SetDefault(new ReactivePropertyWpfScheduler(this.Dispatcher));
 
             base.OnStartup(e);
         }
