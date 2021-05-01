@@ -1,4 +1,4 @@
-﻿// #define DEFINE_TEST
+﻿// #define DEBUG_TEST
 
 using System;
 using System.Collections.Generic;
@@ -9,14 +9,14 @@ using System.Linq;
 using System.Text;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 
-#if DEFINE_TEST
+#if DEBUG_TEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 #endif
 
 namespace ThScoreFileConverterTests.UnitTesting
 {
-#if DEFINE_TEST
+#if DEBUG_TEST
     [TestClass]
 #endif
     public static class TestUtils
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.UnitTesting
 
         public static Encoding CP932Encoding { get; }
 
-#if DEFINE_TEST
+#if DEBUG_TEST
         private static Dictionary<string, int> Counter { get; } = new();
 
         [AssemblyCleanup]
@@ -190,10 +190,10 @@ namespace ThScoreFileConverterTests.UnitTesting
             enumerable.ForEach(action);
         }
 
-        [Conditional("DEFINE_TEST")]
+        [Conditional("DEBUG_TEST")]
         private static void Countup(string key)
         {
-#if DEFINE_TEST
+#if DEBUG_TEST
             Counter.TryAdd(key, 0);
             ++Counter[key];
 #endif

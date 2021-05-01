@@ -1,4 +1,4 @@
-﻿// #define DEFINE_TEST
+﻿// #define DEBUG_TEST
 
 using System;
 using System.Collections.Generic;
@@ -7,14 +7,14 @@ using System.Linq;
 using System.Reflection;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
-#if DEFINE_TEST
+#if DEBUG_TEST
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 #endif
 
 namespace ThScoreFileConverterTests.UnitTesting
 {
-#if DEFINE_TEST
+#if DEBUG_TEST
     [TestClass]
 #endif
     public static class SquirrelHelper
@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.UnitTesting
         private static readonly MethodInfo FromDictionaryMethodInfo =
             typeof(SquirrelHelper).GetMethod(nameof(MakeByteArrayFromDictionary), BindingAttribute)!;
 
-#if DEFINE_TEST
+#if DEBUG_TEST
         private static Dictionary<string, int> Counter { get; } = new();
 
         [AssemblyCleanup]
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.UnitTesting
 
             foreach (var arg in args)
             {
-#if DEFINE_TEST
+#if DEBUG_TEST
                 var key = arg?.GetType()?.Name ?? "(null)";
                 Counter.TryAdd(key, 0);
                 ++Counter[key];
