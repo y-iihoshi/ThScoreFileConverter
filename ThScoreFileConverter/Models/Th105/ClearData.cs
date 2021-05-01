@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th105
 {
@@ -37,8 +38,7 @@ namespace ThScoreFileConverter.Models.Th105
             this.cardsForDeck = new Dictionary<int, ICardForDeck>(numCards);
             for (var index = 0; index < numCards; index++)
             {
-                var card = new CardForDeck();
-                card.ReadFrom(reader);
+                var card = BinaryReadableHelper.Create<CardForDeck>(reader);
                 _ = this.cardsForDeck.TryAdd(card.Id, card);
             }
 
@@ -46,8 +46,7 @@ namespace ThScoreFileConverter.Models.Th105
             this.spellCardResults = new Dictionary<(TChara, int), ISpellCardResult<TChara>>(numResults);
             for (var index = 0; index < numResults; index++)
             {
-                var result = new SpellCardResult<TChara>();
-                result.ReadFrom(reader);
+                var result = BinaryReadableHelper.Create<SpellCardResult<TChara>>(reader);
                 var key = (result.Enemy, result.Id);
                 _ = this.spellCardResults.TryAdd(key, result);
             }

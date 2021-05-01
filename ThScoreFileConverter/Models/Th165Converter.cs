@@ -18,6 +18,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverter.Properties;
 
@@ -100,8 +101,7 @@ namespace ThScoreFileConverter.Models
                 throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
 
             using var reader = new BinaryReader(input, Encoding.UTF8, true);
-            var header = new BestShotHeader();
-            header.ReadFrom(reader);
+            var header = BinaryReadableHelper.Create<BestShotHeader>(reader);
 
             var key = (header.Weekday, header.Dream);
             _ = this.bestshots.TryAdd(key, (outputFile.Name, header));

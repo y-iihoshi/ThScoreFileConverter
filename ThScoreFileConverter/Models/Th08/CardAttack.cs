@@ -25,9 +25,6 @@ namespace ThScoreFileConverter.Models.Th08
         public CardAttack(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            this.storyCareer = new CardAttackCareer();
-            this.practiceCareer = new CardAttackCareer();
-
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
 
@@ -38,8 +35,8 @@ namespace ThScoreFileConverter.Models.Th08
             this.CardName = reader.ReadExactBytes(0x30);
             this.EnemyName = reader.ReadExactBytes(0x30);
             this.Comment = reader.ReadExactBytes(0x80);
-            this.storyCareer.ReadFrom(reader);
-            this.practiceCareer.ReadFrom(reader);
+            this.storyCareer = BinaryReadableHelper.Create<CardAttackCareer>(reader);
+            this.practiceCareer = BinaryReadableHelper.Create<CardAttackCareer>(reader);
             _ = reader.ReadUInt32();    // always 0x00000000?
         }
 

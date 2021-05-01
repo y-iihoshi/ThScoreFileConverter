@@ -43,21 +43,14 @@ namespace ThScoreFileConverter.Models.Th15
 
             this.Rankings = levelsWithTotal.ToDictionary(
                 level => level,
-                _ => Enumerable.Range(0, 10).Select(rank =>
-                {
-                    var score = new ScoreData();
-                    score.ReadFrom(reader);
-                    return score;
-                }).ToList() as IReadOnlyList<IScoreData>);
+                _ => Enumerable.Range(0, 10).Select(_ => BinaryReadableHelper.Create<ScoreData>(reader)).ToList()
+                    as IReadOnlyList<IScoreData>);
 
             _ = reader.ReadBytes(0x140);
 
-            this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
-            {
-                var card = new SpellCard();
-                card.ReadFrom(reader);
-                return card as Th13.ISpellCard<Level>;
-            }).ToDictionary(card => card.Id);
+            this.Cards = Enumerable.Range(0, Definitions.CardTable.Count)
+                .Select(_ => BinaryReadableHelper.Create<SpellCard>(reader) as Th13.ISpellCard<Level>)
+                .ToDictionary(card => card.Id);
 
             this.TotalPlayCount = reader.ReadInt32();
             this.PlayTime = reader.ReadInt32();

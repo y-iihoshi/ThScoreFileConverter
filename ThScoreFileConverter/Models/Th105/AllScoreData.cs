@@ -62,16 +62,14 @@ namespace ThScoreFileConverter.Models.Th105
             var numSystemCards = reader.ReadInt32();
             for (var index = 0; index < numSystemCards; index++)
             {
-                var card = new CardForDeck();
-                card.ReadFrom(reader);
+                var card = BinaryReadableHelper.Create<CardForDeck>(reader);
                 _ = this.systemCards.TryAdd(card.Id, card);
             }
 
             var numCharas = reader.ReadInt32();
             for (var index = 0; index < numCharas; index++)
             {
-                var data = new ClearData<Chara>();
-                data.ReadFrom(reader);
+                var data = BinaryReadableHelper.Create<ClearData<Chara>>(reader);
                 if (index < validNumCharas)
                     this.clearData.Add((Chara)index, data);
             }

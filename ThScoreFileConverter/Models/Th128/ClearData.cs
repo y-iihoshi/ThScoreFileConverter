@@ -33,12 +33,8 @@ namespace ThScoreFileConverter.Models.Th128
 
             this.Rankings = levels.ToDictionary(
                 level => level,
-                _ => Enumerable.Range(0, 10).Select(rank =>
-                {
-                    var score = new ScoreData();
-                    score.ReadFrom(reader);
-                    return score;
-                }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
+                _ => Enumerable.Range(0, 10).Select(_ => BinaryReadableHelper.Create<ScoreData>(reader)).ToList()
+                    as IReadOnlyList<Th10.IScoreData<StageProgress>>);
 
             this.TotalPlayCount = reader.ReadInt32();
             this.PlayTime = reader.ReadInt32();

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128
 {
@@ -26,12 +27,9 @@ namespace ThScoreFileConverter.Models.Th128
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);
 
-            this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
-            {
-                var card = new SpellCard();
-                card.ReadFrom(reader);
-                return card as ISpellCard;
-            }).ToDictionary(card => card.Id);
+            this.Cards = Enumerable.Range(0, Definitions.CardTable.Count)
+                .Select(_ => BinaryReadableHelper.Create<SpellCard>(reader) as ISpellCard)
+                .ToDictionary(card => card.Id);
         }
 
         public IReadOnlyDictionary<int, ISpellCard> Cards { get; }

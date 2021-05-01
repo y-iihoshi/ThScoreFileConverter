@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075
 {
@@ -60,12 +61,7 @@ namespace ThScoreFileConverter.Models.Th075
             this.CardTrulyGot = numbers.Select(_ => reader.ReadByte()).ToList();
             _ = reader.ReadExactBytes(0x32);
             _ = reader.ReadExactBytes(6);   // 07 00 00 00 00 00
-            this.Ranking = Enumerable.Range(1, 10).Select(_ =>
-            {
-                var score = new HighScore();
-                score.ReadFrom(reader);
-                return score;
-            }).ToList();
+            this.Ranking = Enumerable.Range(1, 10).Select(_ => BinaryReadableHelper.Create<HighScore>(reader)).ToList();
         }
     }
 }

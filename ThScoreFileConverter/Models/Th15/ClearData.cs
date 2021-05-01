@@ -29,21 +29,12 @@ namespace ThScoreFileConverter.Models.Th15
 
             this.Chara = (CharaWithTotal)reader.ReadInt32();
 
-            this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(mode => mode, _ =>
-            {
-                var data = new ClearDataPerGameMode();
-                data.ReadFrom(reader);
-                return data as IClearDataPerGameMode;
-            });
+            this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(
+                mode => mode, _ => BinaryReadableHelper.Create<ClearDataPerGameMode>(reader) as IClearDataPerGameMode);
 
             this.Practices = EnumHelper<Level>.Enumerable
                 .SelectMany(level => EnumHelper<Th14.StagePractice>.Enumerable.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ =>
-                {
-                    var practice = new Th13.Practice();
-                    practice.ReadFrom(reader);
-                    return practice as Th13.IPractice;
-                });
+                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th13.Practice>(reader) as Th13.IPractice);
         }
 
         public CharaWithTotal Chara { get; }

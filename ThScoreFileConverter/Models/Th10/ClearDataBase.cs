@@ -38,12 +38,8 @@ namespace ThScoreFileConverter.Models.Th10
 
             this.Rankings = levels.ToDictionary(
                 level => level,
-                _ => (IReadOnlyList<IScoreData<TStageProgress>>)Enumerable.Range(0, 10).Select(rank =>
-                {
-                    var score = new TScoreData();
-                    score.ReadFrom(reader);
-                    return score;
-                }).ToList());
+                _ => (IReadOnlyList<IScoreData<TStageProgress>>)Enumerable.Range(0, 10)
+                    .Select(_ => BinaryReadableHelper.Create<TScoreData>(reader)).ToList());
 
             this.TotalPlayCount = reader.ReadInt32();
             this.PlayTime = reader.ReadInt32();
@@ -51,19 +47,11 @@ namespace ThScoreFileConverter.Models.Th10
 
             this.Practices = levelsExceptExtra
                 .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ =>
-                {
-                    var practice = new Practice();
-                    practice.ReadFrom(reader);
-                    return practice as IPractice;
-                });
+                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Practice>(reader) as IPractice);
 
-            this.Cards = Enumerable.Range(0, numCards).Select(_ =>
-            {
-                var card = new SpellCard();
-                card.ReadFrom(reader);
-                return card as ISpellCard<Level>;
-            }).ToDictionary(card => card.Id);
+            this.Cards = Enumerable.Range(0, numCards)
+                .Select(_ => BinaryReadableHelper.Create<SpellCard>(reader) as ISpellCard<Level>)
+                .ToDictionary(card => card.Id);
         }
 
         public TCharaWithTotal Chara { get; }

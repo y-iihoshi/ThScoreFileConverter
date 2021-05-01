@@ -44,12 +44,8 @@ namespace ThScoreFileConverter.Models.Th09
             this.MatchFlags = charas.ToDictionary(chara => chara, _ => reader.ReadByte());
             this.StoryFlags = charas.ToDictionary(chara => chara, _ => reader.ReadByte());
             this.ExtraFlags = charas.ToDictionary(chara => chara, _ => reader.ReadByte());
-            this.ClearCounts = charas.ToDictionary(chara => chara, _ =>
-            {
-                var clearCount = new ClearCount();
-                clearCount.ReadFrom(reader);
-                return clearCount as IClearCount;
-            });
+            this.ClearCounts = charas.ToDictionary(
+                chara => chara, _ => BinaryReadableHelper.Create<ClearCount>(reader) as IClearCount);
         }
 
         public Time TotalRunningTime { get; }

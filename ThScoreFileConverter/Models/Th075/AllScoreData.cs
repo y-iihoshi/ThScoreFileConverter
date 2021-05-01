@@ -31,16 +31,9 @@ namespace ThScoreFileConverter.Models.Th075
         {
             this.ClearData = EnumHelper<CharaWithReserved>.Enumerable
                 .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
-                .ToDictionary(pair => pair, pair =>
-                {
-                    var clearData = new ClearData();
-                    clearData.ReadFrom(reader);
-                    return clearData as IClearData;
-                });
+                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<ClearData>(reader) as IClearData);
 
-            var status = new Status();
-            status.ReadFrom(reader);
-            this.Status = status;
+            this.Status = BinaryReadableHelper.Create<Status>(reader);
         }
     }
 }

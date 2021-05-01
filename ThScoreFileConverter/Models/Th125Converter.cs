@@ -104,8 +104,7 @@ namespace ThScoreFileConverter.Models
                 ? Chara.Hatate : Chara.Aya;
 
             using var reader = new BinaryReader(input, Encoding.UTF8, true);
-            var header = new BestShotHeader();
-            header.ReadFrom(reader);
+            var header = BinaryReadableHelper.Create<BestShotHeader>(reader);
 
             var key = (chara, header.Level, header.Scene);
             _ = this.bestshots.TryAdd(key, (outputFile.Name, header));
