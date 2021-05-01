@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -60,65 +61,55 @@ namespace ThScoreFileConverterTests.UnitTesting
 
             foreach (var arg in args)
             {
-#if DEFINE_TEST
-                Counter.TryAdd(arg.GetType().Name, 0);
-                ++Counter[arg.GetType().Name];
-#endif
                 switch (arg)
                 {
-                    case int intArg:
-                        writer.Write(intArg);
+                    case int value:
+                        Invoke(writer.Write, "int", value);
                         break;
-                    case byte[] bytesArg:
-                        writer.Write(bytesArg);
+                    case uint value:
+                        Invoke(writer.Write, "uint", value);
                         break;
-                    case uint uintArg:
-                        writer.Write(uintArg);
+                    case byte[] array:
+                        Invoke(writer.Write, "byte[]", array);
                         break;
-                    case byte byteArg:
-                        writer.Write(byteArg);
+                    case byte value:
+                        Invoke(writer.Write, "byte", value);
                         break;
-                    case float floatArg:
-                        writer.Write(floatArg);
+                    case float value:
+                        Invoke(writer.Write, "float", value);
                         break;
-                    case ushort ushortArg:
-                        writer.Write(ushortArg);
-                        break;
-                    case short shortArg:
-                        writer.Write(shortArg);
-                        break;
-                    case char[] charsArg:
-                        writer.Write(charsArg);
-                        break;
-                    case string stringArg:
-                        writer.Write(stringArg);
-                        break;
-                    case Array arrayArg when IsRankOneArray<int>(arrayArg):
-                        ((int[])arrayArg).ForEach(writer.Write);
-                        break;
-                    case Array arrayArg when IsRankOneArray<short>(arrayArg):
-                        ((short[])arrayArg).ForEach(writer.Write);
-                        break;
-                    case Array arrayArg when IsRankOneArray<uint>(arrayArg):
-                        ((uint[])arrayArg).ForEach(writer.Write);
-                        break;
-                    case Array arrayArg when IsRankOneArray<ushort>(arrayArg):
-                        ((ushort[])arrayArg).ForEach(writer.Write);
+                    case ushort value:
+                        Invoke(writer.Write, "ushort", value);
                         break;
                     case IEnumerable<byte> enumerable:
-                        enumerable.ForEach(writer.Write);
+                        Invoke(writer.Write, "IEnumerable<byte>", enumerable);
+                        break;
+                    case short value:
+                        Invoke(writer.Write, "short", value);
+                        break;
+                    case char[] array:
+                        Invoke(writer.Write, "char[]", array);
+                        break;
+                    case string value:
+                        Invoke(writer.Write, "string", value);
+                        break;
+                    case Array array when IsRankOneArray<int>(array):
+                        Invoke(writer.Write, "int[]", (int[])array);
+                        break;
+                    case Array array when IsRankOneArray<uint>(array):
+                        Invoke(writer.Write, "uint[]", (uint[])array);
                         break;
                     case IEnumerable<int> enumerable:
-                        enumerable.ForEach(writer.Write);
+                        Invoke(writer.Write, "IEnumerable<int>", enumerable);
                         break;
                     case IEnumerable<short> enumerable:
-                        enumerable.ForEach(writer.Write);
+                        Invoke(writer.Write, "IEnumerable<short>", enumerable);
                         break;
                     case IEnumerable<uint> enumerable:
-                        enumerable.ForEach(writer.Write);
+                        Invoke(writer.Write, "IEnumerable<uint>", enumerable);
                         break;
                     case IEnumerable<ushort> enumerable:
-                        enumerable.ForEach(writer.Write);
+                        Invoke(writer.Write, "IEnumerable<ushort>", enumerable);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -185,6 +176,27 @@ namespace ThScoreFileConverterTests.UnitTesting
             var values = Enum.GetValues(type).Cast<int>();
             yield return new object[] { values.Min() - 1 };
             yield return new object[] { values.Max() + 1 };
+        }
+
+        private static void Invoke<T>(Action<T> action, string key, T value)
+        {
+            Countup(key);
+            action(value);
+        }
+
+        private static void Invoke<T>(Action<T> action, string key, IEnumerable<T> enumerable)
+        {
+            Countup(key);
+            enumerable.ForEach(action);
+        }
+
+        [Conditional("DEFINE_TEST")]
+        private static void Countup(string key)
+        {
+#if DEFINE_TEST
+            Counter.TryAdd(key, 0);
+            ++Counter[key];
+#endif
         }
     }
 }
