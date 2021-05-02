@@ -29,7 +29,8 @@ namespace ThScoreFileConverter.Models
 #endif
     internal class Th095Converter : ThConverter
     {
-        private readonly Dictionary<(Th095.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =
+        private readonly Dictionary<
+            (Th095.Level Level, int Scene), (string Path, Th095.IBestShotHeader Header)> bestshots =
             new(Th095.Definitions.SpellCards.Count);
 
         private AllScoreData? allScoreData;

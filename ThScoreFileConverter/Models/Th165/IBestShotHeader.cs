@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th165
 {
-    internal interface IBestShotHeader
+    internal interface IBestShotHeader : Models.IBestShotHeader
     {
         float Angle { get; }
 
@@ -30,8 +30,6 @@ namespace ThScoreFileConverter.Models.Th165
         short HalfHeight { get; }
 
         short HalfWidth { get; }
-
-        short Height { get; }
 
         short Height2 { get; }
 
@@ -73,13 +71,7 @@ namespace ThScoreFileConverter.Models.Th165
 
         int Score2 { get; }
 
-        string Signature { get; }
-
-        float SlowRate { get; }
-
         Day Weekday { get; }
-
-        short Width { get; }
 
         short Width2 { get; }
     }

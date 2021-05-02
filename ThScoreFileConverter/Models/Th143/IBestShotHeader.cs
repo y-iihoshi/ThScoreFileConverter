@@ -9,20 +9,12 @@
 
 namespace ThScoreFileConverter.Models.Th143
 {
-    internal interface IBestShotHeader
+    internal interface IBestShotHeader : Models.IBestShotHeader
     {
         uint DateTime { get; }
 
         Day Day { get; }
 
-        short Height { get; }
-
         short Scene { get; }
-
-        string Signature { get; }
-
-        float SlowRate { get; }
-
-        short Width { get; }
     }
 }

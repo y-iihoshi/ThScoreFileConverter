@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th125
 {
-    internal interface IBestShotHeader : Th095.IBestShotHeader<Level>
+    internal interface IBestShotHeader : Th095.IBestShotHeader
     {
         float Angle { get; }
 
@@ -32,6 +32,8 @@ namespace ThScoreFileConverter.Models.Th125
         short HalfWidth { get; }
 
         short Height2 { get; }
+
+        new Level Level { get; }
 
         int MacroBonus { get; }
 

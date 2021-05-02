@@ -4,8 +4,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th165;
+using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
 
 namespace ThScoreFileConverterTests.Models.Th165
 {

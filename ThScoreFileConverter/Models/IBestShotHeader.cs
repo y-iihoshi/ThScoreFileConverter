@@ -7,18 +7,16 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
-
-namespace ThScoreFileConverter.Models.Th095
+namespace ThScoreFileConverter.Models
 {
-    internal interface IBestShotHeader : Models.IBestShotHeader
+    internal interface IBestShotHeader
     {
-        IEnumerable<byte> CardName { get; }
+        short Height { get; }
 
-        Level Level { get; }
+        string Signature { get; }
 
-        int ResultScore { get; }
+        float SlowRate { get; }
 
-        short Scene { get; }
+        short Width { get; }
     }
 }

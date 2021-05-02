@@ -69,6 +69,8 @@ namespace ThScoreFileConverter.Models.Th125
 
         public IEnumerable<byte> CardName { get; private set; } = Enumerable.Empty<byte>();
 
+        Th095.Level Th095.IBestShotHeader.Level => throw new NotImplementedException();
+
         public void ReadFrom(BinaryReader reader)
         {
             this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
