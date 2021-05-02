@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models
     {
         private readonly Dictionary<
             (Chara, Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =
-            new(EnumHelper<Chara>.NumValues * Definitions.SpellCards.Count);
+            new(EnumHelper<Chara>.NumValues * Th125.Definitions.SpellCards.Count);
 
         private AllScoreData? allScoreData;
 

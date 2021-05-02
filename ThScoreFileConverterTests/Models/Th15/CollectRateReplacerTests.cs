@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
+using Definitions = ThScoreFileConverter.Models.Th15.Definitions;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 using Level = ThScoreFileConverter.Models.Level;
 

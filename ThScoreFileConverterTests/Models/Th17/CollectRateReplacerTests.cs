@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
+using Definitions = ThScoreFileConverter.Models.Th17.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th17.CharaWithTotal,
     ThScoreFileConverter.Models.Level,

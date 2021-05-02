@@ -8,6 +8,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
+using Definitions = ThScoreFileConverter.Models.Th17.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th17.CharaWithTotal,
     ThScoreFileConverter.Models.Level,

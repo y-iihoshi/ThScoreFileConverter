@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models
     internal class Th095Converter : ThConverter
     {
         private readonly Dictionary<(Th095.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =
-            new(Definitions.SpellCards.Count);
+            new(Th095.Definitions.SpellCards.Count);
 
         private AllScoreData? allScoreData;
 

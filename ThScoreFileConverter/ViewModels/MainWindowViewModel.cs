@@ -38,38 +38,6 @@ namespace ThScoreFileConverter.ViewModels
     internal class MainWindowViewModel : BindableBase, IDisposable
     {
         /// <summary>
-        /// A list of the Touhou works.
-        /// </summary>
-        private static readonly IEnumerable<Work> WorksImpl = new[]
-        {
-            new Work { Number = nameof(Resources.TH06),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH07),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH08),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH09),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH095), IsSupported = true },
-            new Work { Number = nameof(Resources.TH10),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH11),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH12),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH125), IsSupported = true },
-            new Work { Number = nameof(Resources.TH128), IsSupported = true },
-            new Work { Number = nameof(Resources.TH13),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH14),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH143), IsSupported = true },
-            new Work { Number = nameof(Resources.TH15),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH16),  IsSupported = true },
-            new Work { Number = nameof(Resources.TH165), IsSupported = true },
-            new Work { Number = nameof(Resources.TH17),  IsSupported = true },
-            new Work { },
-            new Work { Number = nameof(Resources.TH075), IsSupported = true },
-            new Work { Number = nameof(Resources.TH105), IsSupported = true },
-            new Work { Number = nameof(Resources.TH123), IsSupported = true },
-            new Work { Number = nameof(Resources.TH135), IsSupported = true },
-            new Work { Number = nameof(Resources.TH145), IsSupported = true },
-            new Work { Number = nameof(Resources.TH155), IsSupported = true },
-            new Work { Number = nameof(Resources.TH175), IsSupported = false },
-        };
-
-        /// <summary>
         /// An <see cref="IDialogService"/>.
         /// </summary>
         private readonly IDialogService dialogService;
@@ -127,7 +95,7 @@ namespace ThScoreFileConverter.ViewModels
             var rpMode = ReactivePropertyMode.DistinctUntilChanged;
 
             this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
-            this.Works = WorksImpl;
+            this.Works = Definitions.Works;
             this.IsIdle = new ReactivePropertySlim<bool>(true);
             this.LastWorkNumber = this.settings.ToReactivePropertySlimAsSynchronized(x => x.LastTitle, rpMode);
 
@@ -231,7 +199,7 @@ namespace ThScoreFileConverter.ViewModels
                 this.ImageOutputDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
 
             if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
-                this.LastWorkNumber.Value = WorksImpl.First().Number;
+                this.LastWorkNumber.Value = this.Works.First().Number;
             else
                 this.LastWorkNumber.ForceNotify();
         }

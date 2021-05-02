@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models
     internal class Th143Converter : ThConverter
     {
         private readonly Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots =
-            new(Definitions.SpellCards.Count);
+            new(Th143.Definitions.SpellCards.Count);
 
         private AllScoreData? allScoreData;
 
