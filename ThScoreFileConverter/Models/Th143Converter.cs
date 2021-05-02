@@ -9,16 +9,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverter.Properties;
 
@@ -100,41 +95,10 @@ namespace ThScoreFileConverter.Models
             if (output is not FileStream outputFile)
                 throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
 
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
-            var header = BinaryReadableHelper.Create<BestShotHeader>(reader);
+            var header = BestShotDeveloper.Develop<BestShotHeader>(input, output, PixelFormat.Format32bppArgb);
 
             var key = (header.Day, header.Scene);
             _ = this.bestshots.TryAdd(key, (outputFile.Name, header));
-
-            Lzss.Decompress(input, decoded);
-
-            _ = decoded.Seek(0, SeekOrigin.Begin);
-            using var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
-
-            try
-            {
-#if !NET5_0
-                var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                permission.Demand();
-#endif
-
-                var bitmapData = bitmap.LockBits(
-                    new Rectangle(0, 0, header.Width, header.Height),
-                    ImageLockMode.WriteOnly,
-                    bitmap.PixelFormat);
-                var source = decoded.ToArray();
-                var destination = bitmapData.Scan0;
-                Marshal.Copy(source, 0, destination, source.Length);
-                bitmap.UnlockBits(bitmapData);
-            }
-            catch (SecurityException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            bitmap.Save(output, ImageFormat.Png);
-            output.Flush();
-            output.SetLength(output.Position);
         }
 
         private static bool Decrypt(Stream input, Stream output)
