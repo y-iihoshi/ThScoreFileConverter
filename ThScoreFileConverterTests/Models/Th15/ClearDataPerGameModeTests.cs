@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             var mock = MockClearDataPerGameMode();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<ClearDataPerGameMode>(array));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(array));
         }
 
         [TestMethod]

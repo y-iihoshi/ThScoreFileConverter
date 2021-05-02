@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var array = MakeByteArray(properties);
             array = array.Take(array.Length - 1).ToArray();
 
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<FileHeaderBase>(array));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<FileHeaderBase>(array));
         }
 
         [TestMethod]

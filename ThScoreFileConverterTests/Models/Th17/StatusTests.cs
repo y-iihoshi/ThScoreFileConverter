@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
 
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
 
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
 
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
         }
 
         [DataTestMethod]

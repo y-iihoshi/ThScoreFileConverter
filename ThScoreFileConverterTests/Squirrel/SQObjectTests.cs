@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Squirrel
         [TestMethod]
         public void CreateTestShorteneed()
         {
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = CreateTestHelper(new byte[3]));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => CreateTestHelper(new byte[3]));
         }
 
         [DataTestMethod]
@@ -159,7 +159,7 @@ namespace ThScoreFileConverterTests.Squirrel
         public void CreateTestInvalid(SQOT type)
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)type)));
+                () => CreateTestHelper(TestUtils.MakeByteArray((int)type)));
         }
     }
 }

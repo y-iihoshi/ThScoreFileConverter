@@ -67,14 +67,14 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             var bytes = TestUtils.CP932Encoding.GetBytes(value);
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, bytes.Length + 1, bytes)));
+                () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, bytes.Length + 1, bytes)));
         }
 
         [TestMethod]
         public void CreateTestInvalid()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 3, "abc")));
+                () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 3, "abc")));
         }
 
         [TestMethod]

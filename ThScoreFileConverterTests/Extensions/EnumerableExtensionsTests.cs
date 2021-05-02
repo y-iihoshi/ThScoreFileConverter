@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Extensions
         public void SkipLastTestNull()
         {
             int[] array = null!;
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = array.SkipLast(2));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => array.SkipLast(2));
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Extensions
         public void TakeLastTestNull()
         {
             int[] array = null!;
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = array.TakeLast(2));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => array.TakeLast(2));
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Extensions
         {
             IEnumerable<KeyValuePair<int, string>> pairs = null!;
 
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
+            _ = Assert.ThrowsException<ArgumentNullException>(() => pairs.ToDictionary());
         }
 
         [TestMethod]
@@ -146,7 +146,7 @@ namespace ThScoreFileConverterTests.Extensions
         {
             IEnumerable<(int, string)> pairs = null!;
 
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = pairs.ToDictionary());
+            _ = Assert.ThrowsException<ArgumentNullException>(() => pairs.ToDictionary());
         }
     }
 }

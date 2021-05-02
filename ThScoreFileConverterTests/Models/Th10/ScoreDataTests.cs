@@ -79,7 +79,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize)));
+                () => TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize)));
         }
 
         internal static void ReadFromTestExceededNameHelper<TScoreData, TStageProgress>(int unknownSize)
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<TStageProgress>(stageProgress));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize)));
+                () => TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize)));
         }
 
         internal static int UnknownSize { get; } = 0;

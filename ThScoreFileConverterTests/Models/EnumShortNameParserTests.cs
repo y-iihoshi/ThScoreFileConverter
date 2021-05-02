@@ -47,14 +47,14 @@ namespace ThScoreFileConverterTests.Models
         public void ParseTestEmpty()
         {
             var parser = new EnumShortNameParser<Level>();
-            _ = Assert.ThrowsException<InvalidOperationException>(() => _ = parser.Parse(string.Empty));
+            _ = Assert.ThrowsException<InvalidOperationException>(() => parser.Parse(string.Empty));
         }
 
         [TestMethod]
         public void ParseTestUnknown()
         {
             var parser = new EnumShortNameParser<Level>();
-            _ = Assert.ThrowsException<InvalidOperationException>(() => _ = parser.Parse("A"));
+            _ = Assert.ThrowsException<InvalidOperationException>(() => parser.Parse("A"));
         }
     }
 }

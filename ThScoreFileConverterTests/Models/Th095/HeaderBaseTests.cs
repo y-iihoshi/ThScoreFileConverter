@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             // The actual value of the DecodedBodySize property can not be read.
             // so EndOfStreamException will be thrown.
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
+                () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             // The actual value of the DecodedBodySize property can not be read.
             // so EndOfStreamException will be thrown.
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
+                () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -131,7 +131,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             properties.encodedAllSize = -1;
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
+                () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -177,7 +177,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             properties.encodedBodySize = -1;
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
+                () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -223,7 +223,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             properties.decodedBodySize = -1;
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
+                () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
         }
 
         [TestMethod]

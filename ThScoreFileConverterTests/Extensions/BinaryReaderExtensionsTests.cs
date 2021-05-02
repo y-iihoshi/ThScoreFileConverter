@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Extensions
         {
             BinaryReader reader = null!;
 
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = reader.ReadExactBytes(1));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => reader.ReadExactBytes(1));
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Extensions
             using var stream = new MemoryStream();
             using var reader = new BinaryReader(stream);
 
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = reader.ReadExactBytes(1));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadExactBytes(1));
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Extensions
             using var stream = new MemoryStream(bytes);
             using var reader = new BinaryReader(stream);
 
-            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = reader.ReadExactBytes(-1));
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.ReadExactBytes(-1));
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace ThScoreFileConverterTests.Extensions
             using var stream = new MemoryStream(bytes);
             using var reader = new BinaryReader(stream);
 
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = reader.ReadExactBytes(bytes.Length + 1));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadExactBytes(bytes.Length + 1));
         }
 
         [TestMethod]

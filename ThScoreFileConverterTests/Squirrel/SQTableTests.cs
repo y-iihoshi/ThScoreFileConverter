@@ -87,8 +87,7 @@ namespace ThScoreFileConverterTests.Squirrel
             DisplayName = "empty and missing sentinel")]
         public void CreateTestShortened(int[] array)
         {
-            _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray(array)));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
         }
 
         [DataTestMethod]
@@ -116,8 +115,7 @@ namespace ThScoreFileConverterTests.Squirrel
             DisplayName = "missing value type and sentinel")]
         public void CreateTestInvalid(int[] array)
         {
-            _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray(array)));
+            _ = Assert.ThrowsException<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
         }
     }
 }

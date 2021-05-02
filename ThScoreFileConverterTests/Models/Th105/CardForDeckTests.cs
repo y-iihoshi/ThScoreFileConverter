@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             var mock = MockCardForDeck();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<CardForDeck>(array));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<CardForDeck>(array));
         }
 
         [TestMethod]

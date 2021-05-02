@@ -67,7 +67,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = mock.SetupGet(m => m.Counts).Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<ClearCount>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

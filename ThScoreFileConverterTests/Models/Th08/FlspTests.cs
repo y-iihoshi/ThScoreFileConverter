@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new FLSP(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new FLSP(chapter));
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             --properties.size1;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new FLSP(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new FLSP(chapter));
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Adapters
         [TestMethod]
         public void DispatcherAdapterTestNull()
         {
-            _ = Assert.ThrowsException<NullReferenceException>(() => _ = new DispatcherAdapter());
+            _ = Assert.ThrowsException<NullReferenceException>(() => new DispatcherAdapter());
         }
 
         [TestMethod]

@@ -168,7 +168,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         public void ReadFromTestEmpty()
         {
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<AllScoreData>(Array.Empty<byte>()));
+                () => TestUtils.Create<AllScoreData>(Array.Empty<byte>()));
         }
 
         [TestMethod]

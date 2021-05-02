@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PracticeScore(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PracticeScore(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidCharacters
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new PracticeScore(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
         }
     }
 }

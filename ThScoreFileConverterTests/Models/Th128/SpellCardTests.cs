@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
         }
     }
 }

@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Score(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Score(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Score(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -128,7 +128,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.LevelScene).Returns((TestUtils.Cast<Level>(level), levelScene.Scene));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new Score(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));
         }
 
         public static IEnumerable<object[]> InvalidCharacters
@@ -142,7 +142,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new Score(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));
         }
 
         [DataTestMethod]

@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Header(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             properties.data = properties.data.Concat(new byte[] { default }).ToArray();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Header(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
         }
     }
 }

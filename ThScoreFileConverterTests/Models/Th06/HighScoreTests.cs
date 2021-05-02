@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new HighScore(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
         }
 
         [TestMethod]
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new HighScore(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidCharacters
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new HighScore(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -139,7 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new HighScore(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
         }
 
         public static IEnumerable<object[]> InvalidStageProgresses
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new HighScore(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
         }
     }
 }

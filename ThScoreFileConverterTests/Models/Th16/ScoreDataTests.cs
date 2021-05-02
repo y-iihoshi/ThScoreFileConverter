@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidSeasons
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             _ = mock.SetupGet(m => m.Season).Returns(TestUtils.Cast<Season>(season));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
         }
     }
 }

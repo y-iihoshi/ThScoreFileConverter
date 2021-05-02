@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardData(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
         }
 
         [TestMethod]
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardData(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new CardData(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
         }
 
         [DataTestMethod]

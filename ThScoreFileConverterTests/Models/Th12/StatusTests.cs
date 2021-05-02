@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th12
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th12
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th12
             _ = mock.SetupGet(m => m.Size).Returns(++size);
 
             var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new Status(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
         }
 
         [DataTestMethod]

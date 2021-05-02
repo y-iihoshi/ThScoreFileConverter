@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = mock.SetupGet(m => m.Trials).Returns(trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<PlayCount>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

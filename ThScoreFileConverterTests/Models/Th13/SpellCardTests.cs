@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
         internal static void ReadFromTestExceededNameHelper<TLevel>()
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
         internal static void ReadFromTestInvalidLevelHelper<TLevel>(int level)
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<TLevel>(level));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidTh13LevelPractices

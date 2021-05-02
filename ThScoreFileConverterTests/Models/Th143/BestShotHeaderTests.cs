@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -101,7 +101,7 @@ namespace ThScoreFileConverterTests.Models.Th143
 #endif
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidDays
@@ -126,7 +126,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Day).Returns(TestUtils.Cast<Day>(day));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
     }
 }

@@ -144,7 +144,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -159,7 +159,7 @@ namespace ThScoreFileConverterTests.Models.Th125
 #endif
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -170,7 +170,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -184,7 +184,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
 
             _ = Assert.ThrowsException<InvalidCastException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -195,7 +195,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             _ = mock.SetupGet(m => m.CardName).Returns(cardName.SkipLast(1).ToArray());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
             var mock = new Mock<ISettings>();
 
             var formatter = new NumberFormatter(mock.Object);
-            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = formatter.FormatPercent(12.345, -1));
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => formatter.FormatPercent(12.345, -1));
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
             var mock = new Mock<ISettings>();
 
             var formatter = new NumberFormatter(mock.Object);
-            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = formatter.FormatPercent(12.345, 100));
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => formatter.FormatPercent(12.345, 100));
         }
     }
 }

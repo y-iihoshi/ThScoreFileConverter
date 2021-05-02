@@ -22,8 +22,7 @@ namespace ThScoreFileConverterTests.Interactivity
         [TestMethod]
         public void FontDialogActionResultTestNullFont()
         {
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new FontDialogActionResult(null!, Color.Black));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new FontDialogActionResult(null!, Color.Black));
         }
     }
 }

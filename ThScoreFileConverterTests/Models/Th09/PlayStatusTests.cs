@@ -104,7 +104,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PlayStatus(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
         }
 
         [TestMethod]
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = mock.SetupGet(m => m.Size1).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new PlayStatus(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
         }
     }
 }

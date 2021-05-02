@@ -97,8 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = new ChapterWrapper(
-                    chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size));
+                () => new ChapterWrapper(chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size));
         }
 
         [TestMethod]
@@ -106,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = new ChapterWrapper(chapter, chapter.Signature, (ushort)(chapter.Version - 1), chapter.Size));
+                () => new ChapterWrapper(chapter, chapter.Signature, (ushort)(chapter.Version - 1), chapter.Size));
         }
 
         [TestMethod]
@@ -114,7 +113,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = new ChapterWrapper(chapter, chapter.Signature, chapter.Version, chapter.Size - 1));
+                () => new ChapterWrapper(chapter, chapter.Signature, chapter.Version, chapter.Size - 1));
         }
 
         [TestMethod]
@@ -139,7 +138,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             // The actual value of the Size property becomes too large,
             // so EndOfStreamException will be thrown.
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -159,7 +158,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             // The actual value of the Size property becomes too large,
             // so EndOfStreamException will be thrown.
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -175,7 +174,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             // The actual value of the Size property becomes large,
             // so EndOfStreamException will be thrown.
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -185,7 +184,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             properties.size = -1;
 
             _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -195,7 +194,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             properties.size = 0;
 
             _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -218,7 +217,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             ++properties.size;
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -240,7 +239,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             properties.data = Array.Empty<byte>();
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Chapter>(MakeByteArray(properties)));
+                () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
         }
 
         [TestMethod]

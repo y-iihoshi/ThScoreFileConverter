@@ -72,8 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             var mock = MockSpellCardResult<TChara>();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<SpellCardResult<TChara>>(array));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<SpellCardResult<TChara>>(array));
         }
 
         internal static void ReadFromTestExceededHelper<TChara>()

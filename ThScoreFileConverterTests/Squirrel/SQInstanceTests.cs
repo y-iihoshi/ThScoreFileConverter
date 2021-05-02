@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Squirrel
         public void CreateTestInvalid()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null)));
+                () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null)));
         }
     }
 }

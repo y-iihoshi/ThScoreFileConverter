@@ -26,16 +26,14 @@ namespace ThScoreFileConverterTests.Interactivity
         public void OpenFileDialogActionResultTestNullFilename()
         {
             var filenames = new string[] { "bs01_1.dat", "bs01_2.dat" };
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new OpenFileDialogActionResult(null!, filenames));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new OpenFileDialogActionResult(null!, filenames));
         }
 
         [TestMethod]
         public void OpenFileDialogActionResultTestNullFilenames()
         {
             var filename = "score.dat";
-            _ = Assert.ThrowsException<ArgumentNullException>(
-                () => _ = new OpenFileDialogActionResult(filename, null!));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new OpenFileDialogActionResult(filename, null!));
         }
     }
 }

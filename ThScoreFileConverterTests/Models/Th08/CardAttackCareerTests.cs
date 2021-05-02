@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 maxBonuses.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 trialCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]
@@ -133,7 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 clearCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
+                () => TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object)));
         }
 
         [TestMethod]

@@ -93,7 +93,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = properties.trials.Remove(Chara.SakuyaB);
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<PlayCount>(MakeByteArray(properties)));
+                () => TestUtils.Create<PlayCount>(MakeByteArray(properties)));
         }
 
         [TestMethod]

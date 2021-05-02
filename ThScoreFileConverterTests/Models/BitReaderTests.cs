@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void BitReaderTestNoStream()
         {
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = new BitReader(null!));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => new BitReader(null!));
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
             var stream = new MemoryStream();
             stream.Close();
 
-            _ = Assert.ThrowsException<ArgumentException>(() => _ = new BitReader(stream));
+            _ = Assert.ThrowsException<ArgumentException>(() => new BitReader(stream));
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
             using var stream = new MemoryStream(new byte[] { 0x53 });
             var reader = new BitReader(stream);
 
-            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _ = reader.ReadBits(-1));
+            _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.ReadBits(-1));
         }
 
         [TestMethod]

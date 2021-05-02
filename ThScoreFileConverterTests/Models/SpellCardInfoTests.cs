@@ -27,21 +27,21 @@ namespace ThScoreFileConverterTests.Models
         public void SpellCardInfoTestNegativeId()
         {
             _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => _ = new CardInfo(-1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic));
+                () => new CardInfo(-1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic));
         }
 
         [TestMethod]
         public void SpellCardInfoTestZeroId()
         {
             _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => _ = new CardInfo(0, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic));
+                () => new CardInfo(0, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic));
         }
 
         [TestMethod]
         public void SpellCardInfoTestEmptyName()
         {
             _ = Assert.ThrowsException<ArgumentException>(
-                () => _ = new CardInfo(1, string.Empty, Stage.One, Level.Hard, Level.Lunatic));
+                () => new CardInfo(1, string.Empty, Stage.One, Level.Hard, Level.Lunatic));
         }
 
         public static IEnumerable<object[]> InvalidStages
@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var invalid = TestUtils.Cast<Stage>(stage);
             _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => _ = new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
+                () => new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
         }
 
         public static IEnumerable<object[]> InvalidLevels
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var invalid = TestUtils.Cast<Level>(level);
             _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => _ = new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid));
+                () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid));
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
         public void SpellCardInfoTestZeroLevels()
         {
             _ = Assert.ThrowsException<ArgumentException>(
-                () => _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One));
+                () => new CardInfo(1, "霜符「フロストコラムス」", Stage.One));
         }
     }
 }

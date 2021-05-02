@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 properties.encodedLastName.Take(properties.encodedLastName.Length - 1).ToArray();
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Status>(MakeByteArray(properties)));
+                () => TestUtils.Create<Status>(MakeByteArray(properties)));
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             properties.arcadeScores = scores;
 
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = TestUtils.Create<Status>(MakeByteArray(properties)));
+                () => TestUtils.Create<Status>(MakeByteArray(properties)));
         }
 
         [TestMethod]

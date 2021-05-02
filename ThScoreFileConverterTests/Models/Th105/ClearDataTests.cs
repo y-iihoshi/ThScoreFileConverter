@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             var mock = MockClearData<TChara>();
             var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
 
-            _ = Assert.ThrowsException<EndOfStreamException>(() => _ = TestUtils.Create<ClearData<TChara>>(array));
+            _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
         }
 
         internal static void ReadFromTestExceededHelper<TChara>()

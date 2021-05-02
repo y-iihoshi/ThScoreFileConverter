@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Extensions
         public void TryAddTestNull()
         {
             Dictionary<int, int> dictionary = null!;
-            _ = Assert.ThrowsException<ArgumentNullException>(() => _ = dictionary.TryAdd(1, 2));
+            _ = Assert.ThrowsException<ArgumentNullException>(() => dictionary.TryAdd(1, 2));
         }
 
         [TestMethod]

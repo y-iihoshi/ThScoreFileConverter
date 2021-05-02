@@ -48,14 +48,14 @@ namespace ThScoreFileConverterTests.Squirrel
         public void CreateTestShortened()
         {
             _ = Assert.ThrowsException<EndOfStreamException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Float, new byte[3])));
+                () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Float, new byte[3])));
         }
 
         [TestMethod]
         public void CreateTestInvalid()
         {
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 0f)));
+                () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 0f)));
         }
 
         [TestMethod]

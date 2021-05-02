@@ -63,8 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var stub = new HighScoreStub(ValidStub);
             stub.EncodedName = stub.EncodedName.SkipLast(1).ToArray();
 
-            _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<HighScore>(MakeByteArray(stub)));
+            _ = Assert.ThrowsException<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
         }
 
         [TestMethod]
@@ -73,8 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var stub = new HighScoreStub(ValidStub);
             stub.EncodedName = stub.EncodedName.Concat(new byte[] { default }).ToArray();
 
-            _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<HighScore>(MakeByteArray(stub)));
+            _ = Assert.ThrowsException<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
         }
 
         [DataTestMethod]
@@ -153,7 +151,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             };
 
             _ = Assert.ThrowsException<InvalidDataException>(
-                () => _ = TestUtils.Create<HighScore>(MakeByteArray(properties)));
+                () => TestUtils.Create<HighScore>(MakeByteArray(properties)));
         }
     }
 }

@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ItemStatus(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Version).Returns(++version);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ItemStatus(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
         }
 
         [TestMethod]
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Size).Returns(--size);
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidDataException>(() => _ = new ItemStatus(chapter));
+            _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
         }
 
         public static IEnumerable<object[]> InvalidItems
@@ -124,7 +124,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = mock.SetupGet(m => m.Item).Returns(TestUtils.Cast<ItemWithTotal>(item));
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
-            _ = Assert.ThrowsException<InvalidCastException>(() => _ = new ItemStatus(chapter));
+            _ = Assert.ThrowsException<InvalidCastException>(() => new ItemStatus(chapter));
         }
 
         [DataTestMethod]
