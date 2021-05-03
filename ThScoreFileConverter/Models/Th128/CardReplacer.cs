@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th128
                     {
                         if (hideUntriedCards)
                         {
-                            if (!spellCards.TryGetValue(number, out var card) || !card.HasTried())
+                            if (!spellCards.TryGetValue(number, out var card) || !card.HasTried)
                                 return "??????????";
                         }
 

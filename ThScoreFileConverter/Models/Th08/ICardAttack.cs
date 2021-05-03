@@ -21,12 +21,12 @@ namespace ThScoreFileConverter.Models.Th08
 
         IEnumerable<byte> EnemyName { get; }
 
+        bool HasTried { get; }
+
         LevelPracticeWithTotal Level { get; }
 
         ICardAttackCareer PracticeCareer { get; }
 
         ICardAttackCareer StoryCareer { get; }
-
-        bool HasTried();
     }
 }

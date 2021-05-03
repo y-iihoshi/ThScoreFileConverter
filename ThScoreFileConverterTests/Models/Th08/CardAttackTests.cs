@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var hasPracticeTried =
                 mock.Object.PracticeCareer.TrialCounts.TryGetValue(CharaWithTotal.Total, out var practiceTrialCount)
                 && (practiceTrialCount > 0);
-            _ = mock.Setup(m => m.HasTried()).Returns(hasStoryTried || hasPracticeTried);
+            _ = mock.SetupGet(m => m.HasTried).Returns(hasStoryTried || hasPracticeTried);
         }
 
         internal static byte[] MakeByteArray(ICardAttack attack)
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var cardAttack = new CardAttack(chapter);
 
             Validate(mock.Object, cardAttack);
-            Assert.IsTrue(cardAttack.HasTried());
+            Assert.IsTrue(cardAttack.HasTried);
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var cardAttack = new CardAttack(chapter);
 
             Validate(mock.Object, cardAttack);
-            Assert.IsFalse(cardAttack.HasTried());
+            Assert.IsFalse(cardAttack.HasTried);
         }
     }
 }

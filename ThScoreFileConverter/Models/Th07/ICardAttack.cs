@@ -19,10 +19,10 @@ namespace ThScoreFileConverter.Models.Th07
 
         IReadOnlyDictionary<CharaWithTotal, ushort> ClearCounts { get; }
 
+        bool HasTried { get; }
+
         IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; }
 
         IReadOnlyDictionary<CharaWithTotal, ushort> TrialCounts { get; }
-
-        bool HasTried();
     }
 }

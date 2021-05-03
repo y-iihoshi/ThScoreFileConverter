@@ -19,8 +19,8 @@ namespace ThScoreFileConverter.Models.Th06
 
         ushort ClearCount { get; }
 
-        ushort TrialCount { get; }
+        bool HasTried { get; }
 
-        bool HasTried();
+        ushort TrialCount { get; }
     }
 }

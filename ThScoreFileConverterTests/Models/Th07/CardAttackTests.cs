@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 pairs.ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)));
 
             var hasTried = mock.Object.TrialCounts.TryGetValue(CharaWithTotal.Total, out var count) && (count > 0);
-            _ = mock.Setup(m => m.HasTried()).Returns(hasTried);
+            _ = mock.SetupGet(m => m.HasTried).Returns(hasTried);
 
             return mock;
         }
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var cardAttack = new CardAttack(chapter);
 
             Validate(mock.Object, cardAttack);
-            Assert.IsTrue(cardAttack.HasTried());
+            Assert.IsTrue(cardAttack.HasTried);
         }
 
         [TestMethod]
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var cardAttack = new CardAttack(chapter);
 
             Validate(mock.Object, cardAttack);
-            Assert.IsFalse(cardAttack.HasTried());
+            Assert.IsFalse(cardAttack.HasTried);
         }
     }
 }

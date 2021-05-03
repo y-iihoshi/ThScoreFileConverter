@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
             _ = mock2.SetupGet(m => m.ClearCount).Returns(0);
             _ = mock2.SetupGet(m => m.TrialCount).Returns(0);
-            _ = mock2.Setup(m => m.HasTried()).Returns(false);
+            _ = mock2.SetupGet(m => m.HasTried).Returns(false);
 
             return new[] { mock1.Object, mock2.Object };
         }

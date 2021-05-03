@@ -54,10 +54,7 @@ namespace ThScoreFileConverter.Models.Th08
 
         public ICardAttackCareer PracticeCareer => this.practiceCareer;
 
-        public bool HasTried()
-        {
-            return (this.StoryCareer.TrialCounts[CharaWithTotal.Total] > 0)
-                || (this.PracticeCareer.TrialCounts[CharaWithTotal.Total] > 0);
-        }
+        public bool HasTried => (this.StoryCareer.TrialCounts[CharaWithTotal.Total] > 0)
+            || (this.PracticeCareer.TrialCounts[CharaWithTotal.Total] > 0);
     }
 }

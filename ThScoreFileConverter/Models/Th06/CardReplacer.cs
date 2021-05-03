@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Th06
                 {
                     if (hideUntriedCards)
                     {
-                        if (!cardAttacks.TryGetValue(number, out var attack) || !attack.HasTried())
+                        if (!cardAttacks.TryGetValue(number, out var attack) || !attack.HasTried)
                             return (type == "N") ? "??????????" : "?????";
                     }
 

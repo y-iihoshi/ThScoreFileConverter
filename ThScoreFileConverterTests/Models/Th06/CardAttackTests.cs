@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th06;
@@ -20,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = attack.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
             _ = attack.SetupGet(m => m.TrialCount).Returns(789);
             _ = attack.SetupGet(m => m.ClearCount).Returns(456);
-            _ = attack.Setup(m => m.HasTried()).Returns(true);
+            _ = attack.SetupGet(m => m.HasTried).Returns(true);
             return attack;
         }
 
@@ -58,7 +57,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var cardAttack = new CardAttack(chapter);
 
             Validate(mock.Object, cardAttack);
-            Assert.IsTrue(cardAttack.HasTried());
+            Assert.IsTrue(cardAttack.HasTried);
         }
 
         [TestMethod]
@@ -93,7 +92,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var cardAttack = new CardAttack(chapter);
 
             Validate(mock.Object, cardAttack);
-            Assert.IsFalse(cardAttack.HasTried());
+            Assert.IsFalse(cardAttack.HasTried);
         }
     }
 }

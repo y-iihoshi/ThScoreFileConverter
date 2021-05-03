@@ -29,6 +29,8 @@ namespace ThScoreFileConverter.Models.Th128
 
         public Level Level { get; private set; }
 
+        public bool HasTried => this.TrialCount > 0;
+
         public void ReadFrom(BinaryReader reader)
         {
             this.Name = reader.ReadExactBytes(0x80);
@@ -38,11 +40,6 @@ namespace ThScoreFileConverter.Models.Th128
             this.TrialCount = reader.ReadInt32();
             this.Id = reader.ReadInt32() + 1;
             this.Level = EnumHelper.To<Level>(reader.ReadInt32());
-        }
-
-        public bool HasTried()
-        {
-            return this.TrialCount > 0;
         }
     }
 }

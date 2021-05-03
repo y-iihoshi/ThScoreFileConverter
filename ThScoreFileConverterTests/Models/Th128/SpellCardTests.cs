@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = mock.SetupGet(m => m.TrialCount).Returns(56);
             _ = mock.SetupGet(m => m.Id).Returns(78);
             _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
-            _ = mock.Setup(m => m.HasTried()).Returns(true);
+            _ = mock.SetupGet(m => m.HasTried).Returns(true);
             return mock;
         }
 
@@ -63,7 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             var spellCard = new SpellCard();
 
             Validate(mock.Object, spellCard);
-            Assert.IsFalse(spellCard.HasTried());
+            Assert.IsFalse(spellCard.HasTried);
         }
 
         [TestMethod]
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
 
             Validate(mock.Object, spellCard);
-            Assert.IsTrue(spellCard.HasTried());
+            Assert.IsTrue(spellCard.HasTried);
         }
 
         [TestMethod]

@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
             _ = mock4.SetupGet(m => m.ClearCounts).Returns(
                 mock1.Object.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
-            _ = mock4.Setup(m => m.HasTried()).Returns(false);
+            _ = mock4.SetupGet(m => m.HasTried).Returns(false);
 
             return new[] { mock1.Object, mock2.Object, mock3.Object, mock4.Object };
         }

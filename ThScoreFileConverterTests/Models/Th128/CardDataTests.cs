@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 _ = mock.SetupGet(s => s.TrialCount).Returns(789 + index);
                 _ = mock.SetupGet(s => s.Id).Returns(index);
                 _ = mock.SetupGet(s => s.Level).Returns(Level.Hard);
-                _ = mock.Setup(s => s.HasTried()).Returns(true);
+                _ = mock.SetupGet(s => s.HasTried).Returns(true);
                 return mock.Object;
             }
 

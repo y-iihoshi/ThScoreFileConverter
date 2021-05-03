@@ -40,9 +40,6 @@ namespace ThScoreFileConverter.Models.Th06
 
         public ushort ClearCount { get; }
 
-        public bool HasTried()
-        {
-            return this.TrialCount > 0;
-        }
+        public bool HasTried => this.TrialCount > 0;
     }
 }

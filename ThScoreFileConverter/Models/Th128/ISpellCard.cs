@@ -13,6 +13,8 @@ namespace ThScoreFileConverter.Models.Th128
 {
     internal interface ISpellCard
     {
+        bool HasTried { get; }
+
         int Id { get; }
 
         Level Level { get; }
@@ -24,7 +26,5 @@ namespace ThScoreFileConverter.Models.Th128
         int NoMissCount { get; }
 
         int TrialCount { get; }
-
-        bool HasTried();
     }
 }
