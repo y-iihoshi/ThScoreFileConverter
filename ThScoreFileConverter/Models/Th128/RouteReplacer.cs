@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th128
     internal class RouteReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T128ROUTE({0})([1-3])", Parsers.RouteWithTotalParser.Pattern);
+            @"{0}ROUTE({1})([1-3])", Definitions.FormatPrefix, Parsers.RouteWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

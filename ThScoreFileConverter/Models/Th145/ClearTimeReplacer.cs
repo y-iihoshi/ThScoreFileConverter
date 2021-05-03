@@ -18,7 +18,10 @@ namespace ThScoreFileConverter.Models.Th145
     internal class ClearTimeReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T145TIMECLR({0})({1})", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaWithTotalParser.Pattern);
+            @"{0}TIMECLR({1})({2})",
+            Definitions.FormatPrefix,
+            Parsers.LevelWithTotalParser.Pattern,
+            Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

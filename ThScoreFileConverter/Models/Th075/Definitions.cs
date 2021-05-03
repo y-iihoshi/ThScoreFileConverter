@@ -203,6 +203,8 @@ namespace ThScoreFileConverter.Models.Th075
 
         public static IReadOnlyDictionary<Chara, IEnumerable<int>> CardIdTable { get; } = InitializeCardIdTable();
 
+        public static string FormatPrefix { get; } = "%T75";
+
         private static IReadOnlyDictionary<Chara, IEnumerable<int>> InitializeCardIdTable()
         {
             var charaStageEnemyTable = new Dictionary<Chara, IEnumerable<(Stage Stage, Chara Enemy)>>

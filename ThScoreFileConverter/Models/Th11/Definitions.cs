@@ -197,5 +197,7 @@ namespace ThScoreFileConverter.Models.Th11
             new CardInfo(175, "「サブタレイニアンローズ」",           Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
+
+        public static string FormatPrefix { get; } = "%T11";
     }
 }

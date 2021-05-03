@@ -23,7 +23,8 @@ namespace ThScoreFileConverter.Models.Th14
     internal class PracticeReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T14PRAC({0})({1})({2})",
+            @"{0}PRAC({1})({2})({3})",
+            Definitions.FormatPrefix,
             Parsers.LevelParser.Pattern,
             Parsers.CharaParser.Pattern,
             Parsers.StageParser.Pattern);

@@ -18,7 +18,8 @@ namespace ThScoreFileConverter.Models.Th15
     internal class ClearReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T15CLEAR({0})({1})({2})",
+            @"{0}CLEAR({1})({2})({3})",
+            Definitions.FormatPrefix,
             Parsers.GameModeParser.Pattern,
             Parsers.LevelParser.Pattern,
             Parsers.CharaParser.Pattern);

@@ -17,7 +17,8 @@ namespace ThScoreFileConverter.Models.Th165
     // %T165SHOT[xx][y]
     internal class ShotReplacer : IStringReplaceable
     {
-        private static readonly string Pattern = Utils.Format(@"%T165SHOT({0})([1-7])", Parsers.DayParser.Pattern);
+        private static readonly string Pattern = Utils.Format(
+            @"{0}SHOT({1})([1-7])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

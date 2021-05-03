@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Models.Th07
     // %T07TIME(ALL|PLY)
     internal class TimeReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T07TIME(ALL|PLY)";
+        private static readonly string Pattern = Utils.Format(@"{0}TIME(ALL|PLY)", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 

@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th075
     internal class CareerReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T75C(\d{{3}})({0})([1-4])", Parsers.CharaParser.Pattern);
+            @"{0}C(\d{{3}})({1})([1-4])", Definitions.FormatPrefix, Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

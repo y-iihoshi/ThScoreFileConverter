@@ -167,5 +167,7 @@ namespace ThScoreFileConverter.Models.Th143
             "脳みそ金時",
             "究極反則生命体",
         };
+
+        public static string FormatPrefix { get; } = "%T143";
     }
 }

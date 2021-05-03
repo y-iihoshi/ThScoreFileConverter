@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Models.Th06
     // %T06CARD[xx][y]
     internal class CardReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T06CARD(\d{2})([NR])";
+        private static readonly string Pattern = Utils.Format(@"{0}CARD(\d{{2}})([NR])", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 

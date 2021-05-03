@@ -19,7 +19,8 @@ namespace ThScoreFileConverter.Models.Th128
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T128CRG({0})({1})([1-3])",
+            @"{0}CRG({1})({2})([1-3])",
+            Definitions.FormatPrefix,
             Parsers.LevelWithTotalParser.Pattern,
             Parsers.StageWithTotalParser.Pattern);
 

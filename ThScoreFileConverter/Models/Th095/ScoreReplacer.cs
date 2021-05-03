@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th095
     internal class ScoreReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T95SCR({0})([1-9])([1-4])", Parsers.LevelParser.Pattern);
+            @"{0}SCR({1})([1-9])([1-4])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

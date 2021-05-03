@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th123
     internal class CardReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T123CARD(\d{{2}})({0})([NR])", Parsers.CharaParser.Pattern);
+            @"{0}CARD(\d{{2}})({1})([NR])", Definitions.FormatPrefix, Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

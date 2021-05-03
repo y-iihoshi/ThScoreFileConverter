@@ -26,7 +26,7 @@ namespace ThScoreFileConverter.Models.Th13
     internal class CharaReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T13CHARA({0})([1-3])", Parsers.CharaWithTotalParser.Pattern);
+            @"{0}CHARA({1})([1-3])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

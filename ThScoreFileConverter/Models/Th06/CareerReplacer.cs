@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th06
     // %T06C[xx][y]
     internal class CareerReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T06C(\d{2})([12])";
+        private static readonly string Pattern = Utils.Format(@"{0}C(\d{{2}})([12])", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 

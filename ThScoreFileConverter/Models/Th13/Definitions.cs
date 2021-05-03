@@ -149,5 +149,7 @@ namespace ThScoreFileConverter.Models.Th13
             new CardInfo(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
+
+        public static string FormatPrefix { get; } = "%T13";
     }
 }

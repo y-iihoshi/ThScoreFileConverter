@@ -141,5 +141,7 @@ namespace ThScoreFileConverter.Models.Th15
             new CardInfo(119, "「最初で最後の無名の弾幕」",           Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
+
+        public static string FormatPrefix { get; } = "%T15";
     }
 }

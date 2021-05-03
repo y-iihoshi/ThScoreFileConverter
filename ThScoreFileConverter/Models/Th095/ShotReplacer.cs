@@ -18,7 +18,8 @@ namespace ThScoreFileConverter.Models.Th095
     // %T95SHOT[x][y]
     internal class ShotReplacer : IStringReplaceable
     {
-        private static readonly string Pattern = Utils.Format(@"%T95SHOT({0})([1-9])", Parsers.LevelParser.Pattern);
+        private static readonly string Pattern = Utils.Format(
+            @"{0}SHOT({1})([1-9])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

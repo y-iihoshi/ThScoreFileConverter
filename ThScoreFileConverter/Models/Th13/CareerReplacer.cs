@@ -27,7 +27,7 @@ namespace ThScoreFileConverter.Models.Th13
     internal class CareerReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T13C([SP])(\d{{3}})({0})([12])", Parsers.CharaWithTotalParser.Pattern);
+            @"{0}C([SP])(\d{{3}})({1})([12])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

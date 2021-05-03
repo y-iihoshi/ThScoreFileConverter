@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th09
     internal class ClearReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T09CLEAR({0})({1})([12])", LevelParser.Pattern, CharaParser.Pattern);
+            @"{0}CLEAR({1})({2})([12])", Definitions.FormatPrefix, LevelParser.Pattern, CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

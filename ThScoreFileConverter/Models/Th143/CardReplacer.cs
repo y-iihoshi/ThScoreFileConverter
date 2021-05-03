@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th143
     internal class CardReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T143CARD({0})([0-9])([12])", Parsers.DayParser.Pattern);
+            @"{0}CARD({1})([0-9])([12])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

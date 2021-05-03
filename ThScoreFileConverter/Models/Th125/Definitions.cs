@@ -126,5 +126,7 @@ namespace ThScoreFileConverter.Models.Th125
                 { (Level.Spoiler, 8), (Enemy.Aya,       "速写「ファストショット」") },
                 { (Level.Spoiler, 9), (Enemy.Aya,       "「幻想風靡」") },
             };
+
+        public static string FormatPrefix { get; } = "%T125";
     }
 }

@@ -20,7 +20,10 @@ namespace ThScoreFileConverter.Models.Th125
     internal class ShotExReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T125SHOTEX({0})({1})([1-9])([1-7])", Parsers.CharaParser.Pattern, Parsers.LevelParser.Pattern);
+            @"{0}SHOTEX({1})({2})([1-9])([1-7])",
+            Definitions.FormatPrefix,
+            Parsers.CharaParser.Pattern,
+            Parsers.LevelParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

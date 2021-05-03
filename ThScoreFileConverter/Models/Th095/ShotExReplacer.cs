@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Models.Th095
     internal class ShotExReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T95SHOTEX({0})([1-9])([1-6])", Parsers.LevelParser.Pattern);
+            @"{0}SHOTEX({1})([1-9])([1-6])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

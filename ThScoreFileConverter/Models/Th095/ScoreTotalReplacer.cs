@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Models.Th095
     // %T95SCRTL[x]
     internal class ScoreTotalReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T95SCRTL([1-4])";
+        private static readonly string Pattern = Utils.Format(@"{0}SCRTL([1-4])", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 

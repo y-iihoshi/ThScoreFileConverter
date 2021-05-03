@@ -554,5 +554,7 @@ namespace ThScoreFileConverter.Models.Th105
                 stageInfoPair => stageInfoPair.Key,
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => (stageInfo.Enemy, id))));
+
+        public static string FormatPrefix { get; } = "%T105";
     }
 }

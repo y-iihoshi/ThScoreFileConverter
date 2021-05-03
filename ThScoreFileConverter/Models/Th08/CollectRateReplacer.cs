@@ -20,7 +20,8 @@ namespace ThScoreFileConverter.Models.Th08
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T08CRG([SP])({0})({1})({2})([12])",
+            @"{0}CRG([SP])({1})({2})({3})([12])",
+            Definitions.FormatPrefix,
             LevelPracticeWithTotalParser.Pattern,
             CharaWithTotalParser.Pattern,
             StageWithTotalParser.Pattern);

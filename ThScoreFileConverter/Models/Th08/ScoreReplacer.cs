@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th08
     internal class ScoreReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T08SCR({0})({1})(\d)([\dA-G])", LevelParser.Pattern, CharaParser.Pattern);
+            @"{0}SCR({1})({2})(\d)([\dA-G])", Definitions.FormatPrefix, LevelParser.Pattern, CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

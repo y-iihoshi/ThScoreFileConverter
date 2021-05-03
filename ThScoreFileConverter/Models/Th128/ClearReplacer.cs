@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th128
     internal class ClearReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T128CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.RouteParser.Pattern);
+            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.RouteParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

@@ -18,7 +18,10 @@ namespace ThScoreFileConverter.Models.Th143
     internal class ScoreReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T143SCR({0})([0-9])({1})([1-3])", Parsers.DayParser.Pattern, Parsers.ItemWithTotalParser.Pattern);
+            @"{0}SCR({1})([0-9])({2})([1-3])",
+            Definitions.FormatPrefix,
+            Parsers.DayParser.Pattern,
+            Parsers.ItemWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

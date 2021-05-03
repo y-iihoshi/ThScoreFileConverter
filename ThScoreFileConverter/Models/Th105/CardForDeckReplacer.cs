@@ -18,7 +18,10 @@ namespace ThScoreFileConverter.Models.Th105
     internal class CardForDeckReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T105DC({0})({1})(\d{{2}})([NC])", Parsers.CharaParser.Pattern, Parsers.CardTypeParser.Pattern);
+            @"{0}DC({1})({2})(\d{{2}})([NC])",
+            Definitions.FormatPrefix,
+            Parsers.CharaParser.Pattern,
+            Parsers.CardTypeParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

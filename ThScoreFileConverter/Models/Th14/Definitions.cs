@@ -142,5 +142,7 @@ namespace ThScoreFileConverter.Models.Th14
             new CardInfo(120, "「プリスティンビート」",             Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
+
+        public static string FormatPrefix { get; } = "%T14";
     }
 }

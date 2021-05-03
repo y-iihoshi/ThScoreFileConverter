@@ -103,5 +103,7 @@ namespace ThScoreFileConverter.Models.Th095
                 { (Level.Extra, 7), (Enemy.Suika,     "鬼気「濛々迷霧」") },
                 { (Level.Extra, 8), (Enemy.Suika,     "「百万鬼夜行」") },
             };
+
+        public static string FormatPrefix { get; } = "%T95";
     }
 }

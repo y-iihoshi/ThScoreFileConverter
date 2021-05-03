@@ -251,5 +251,7 @@ namespace ThScoreFileConverter.Models.Th08
 
         public static IReadOnlyList<IHighScore> InitialRanking { get; } =
             Enumerable.Range(1, 10).Reverse().Select(index => new HighScore((uint)index * 10000)).ToList();
+
+        public static string FormatPrefix { get; } = "%T08";
     }
 }

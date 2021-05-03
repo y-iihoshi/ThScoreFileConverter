@@ -132,5 +132,7 @@ namespace ThScoreFileConverter.Models.Th10
             new CardInfo(110, "祟符「ミシャグジさま」",                   Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
+
+        public static string FormatPrefix { get; } = "%T10";
     }
 }

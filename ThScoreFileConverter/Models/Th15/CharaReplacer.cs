@@ -19,7 +19,10 @@ namespace ThScoreFileConverter.Models.Th15
     internal class CharaReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T15CHARA({0})({1})([1-3])", Parsers.GameModeParser.Pattern, Parsers.CharaWithTotalParser.Pattern);
+            @"{0}CHARA({1})({2})([1-3])",
+            Definitions.FormatPrefix,
+            Parsers.GameModeParser.Pattern,
+            Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

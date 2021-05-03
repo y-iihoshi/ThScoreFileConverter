@@ -19,7 +19,10 @@ namespace ThScoreFileConverter.Models.Th125
     internal class ShotReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T125SHOT({0})({1})([1-9])", Parsers.CharaParser.Pattern, Parsers.LevelParser.Pattern);
+            @"{0}SHOT({1})({2})([1-9])",
+            Definitions.FormatPrefix,
+            Parsers.CharaParser.Pattern,
+            Parsers.LevelParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

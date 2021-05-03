@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Models.Th125
     // %T125TIMEPLY
     internal class TimeReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T125TIMEPLY";
+        private static readonly string Pattern = Utils.Format(@"{0}TIMEPLY", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 

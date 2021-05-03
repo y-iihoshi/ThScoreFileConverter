@@ -17,7 +17,10 @@ namespace ThScoreFileConverter.Models.Th075
     internal class CharaReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T75CHR({0})({1})([1-4])", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+            @"{0}CHR({1})({2})([1-4])",
+            Definitions.FormatPrefix,
+            Parsers.LevelParser.Pattern,
+            Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

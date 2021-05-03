@@ -16,7 +16,10 @@ namespace ThScoreFileConverter.Models.Th07
     internal class PlayReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T07PLAY({0})({1}|CL|CN|PR|RT)", LevelWithTotalParser.Pattern, CharaWithTotalParser.Pattern);
+            @"{0}PLAY({1})({2}|CL|CN|PR|RT)",
+            Definitions.FormatPrefix,
+            LevelWithTotalParser.Pattern,
+            CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

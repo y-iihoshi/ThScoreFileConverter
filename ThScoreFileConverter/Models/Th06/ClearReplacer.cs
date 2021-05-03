@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th06
     internal class ClearReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T06CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
+            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, LevelParser.Pattern, CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

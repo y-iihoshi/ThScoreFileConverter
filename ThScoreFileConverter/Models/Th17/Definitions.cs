@@ -168,5 +168,7 @@ namespace ThScoreFileConverter.Models.Th17
             "土の馬",
             "ひよこが三匹",
         };
+
+        public static string FormatPrefix { get; } = "%T17";
     }
 }

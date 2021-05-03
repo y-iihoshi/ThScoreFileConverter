@@ -169,5 +169,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         public static IReadOnlyList<IHighScore> InitialRanking { get; } =
             Enumerable.Range(1, 10).Reverse().Select(index => new HighScore((uint)index * 10000)).ToList();
+
+        public static string FormatPrefix { get; } = "%T07";
     }
 }

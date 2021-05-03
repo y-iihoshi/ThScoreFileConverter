@@ -19,7 +19,10 @@ namespace ThScoreFileConverter.Models.Th075
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T75CRG({0})({1})([1-3])", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaParser.Pattern);
+            @"{0}CRG({1})({2})([1-3])",
+            Definitions.FormatPrefix,
+            Parsers.LevelWithTotalParser.Pattern,
+            Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

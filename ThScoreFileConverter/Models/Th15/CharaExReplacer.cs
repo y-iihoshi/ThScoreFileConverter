@@ -19,7 +19,8 @@ namespace ThScoreFileConverter.Models.Th15
     internal class CharaExReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T15CHARAEX({0})({1})({2})([1-3])",
+            @"{0}CHARAEX({1})({2})({3})([1-3])",
+            Definitions.FormatPrefix,
             Parsers.GameModeParser.Pattern,
             Parsers.LevelWithTotalParser.Pattern,
             Parsers.CharaWithTotalParser.Pattern);

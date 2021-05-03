@@ -175,5 +175,7 @@ namespace ThScoreFileConverter.Models.Th165
             "パーフェクトドリーマー",
             "バイオレットドリーマー",
         };
+
+        public static string FormatPrefix { get; } = "%T165";
     }
 }

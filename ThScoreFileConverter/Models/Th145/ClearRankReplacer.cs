@@ -16,7 +16,7 @@ namespace ThScoreFileConverter.Models.Th145
     internal class ClearRankReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T145CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

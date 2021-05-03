@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Models.Th09
     // %T09TIMEALL
     internal class TimeReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T09TIMEALL";
+        private static readonly string Pattern = Utils.Format(@"{0}TIMEALL", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 
