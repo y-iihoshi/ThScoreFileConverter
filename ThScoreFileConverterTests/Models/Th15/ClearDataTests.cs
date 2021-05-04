@@ -44,15 +44,6 @@ namespace ThScoreFileConverterTests.Models.Th15
             return mock;
         }
 
-        internal static byte[] MakeData(IClearData clearData)
-        {
-            return TestUtils.MakeByteArray(
-                (int)clearData.Chara,
-                clearData.GameModeData.Values.SelectMany(data => ClearDataPerGameModeTests.MakeByteArray(data)),
-                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
-                new byte[0x40]);
-        }
-
         internal static byte[] MakeByteArray(IClearData clearData)
         {
             return TestUtils.MakeByteArray(
@@ -60,7 +51,10 @@ namespace ThScoreFileConverterTests.Models.Th15
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
-                MakeData(clearData));
+                (int)clearData.Chara,
+                clearData.GameModeData.Values.SelectMany(data => ClearDataPerGameModeTests.MakeByteArray(data)),
+                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
+                new byte[0x40]);
         }
 
         internal static void Validate(IClearData expected, IClearData actual)

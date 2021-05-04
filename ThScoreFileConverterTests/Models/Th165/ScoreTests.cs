@@ -25,18 +25,6 @@ namespace ThScoreFileConverterTests.Models.Th165
             return mock;
         }
 
-        internal static byte[] MakeData(IScore score)
-        {
-            return TestUtils.MakeByteArray(
-                score.Number,
-                score.ClearCount,
-                0,
-                score.ChallengeCount,
-                score.NumPhotos,
-                score.HighScore,
-                new byte[0x210]);
-        }
-
         internal static byte[] MakeByteArray(IScore score)
         {
             return TestUtils.MakeByteArray(
@@ -44,7 +32,13 @@ namespace ThScoreFileConverterTests.Models.Th165
                 score.Version,
                 score.Checksum,
                 score.Size,
-                MakeData(score));
+                score.Number,
+                score.ClearCount,
+                0,
+                score.ChallengeCount,
+                score.NumPhotos,
+                score.HighScore,
+                new byte[0x210]);
         }
 
         internal static void Validate(IScore expected, IScore actual)

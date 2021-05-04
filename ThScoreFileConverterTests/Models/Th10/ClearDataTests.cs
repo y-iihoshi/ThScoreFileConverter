@@ -76,23 +76,6 @@ namespace ThScoreFileConverterTests.Models.Th10
             return mock;
         }
 
-        internal static byte[] MakeData<TCharaWithTotal, TStageProgress>(
-            IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-        {
-            return TestUtils.MakeByteArray(
-                TestUtils.Cast<int>(clearData.Chara),
-                clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(
-                        scoreData => ScoreDataTests.MakeByteArray(scoreData, scoreDataUnknownSize))),
-                clearData.TotalPlayCount,
-                clearData.PlayTime,
-                clearData.ClearCounts.Values,
-                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
-                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
-        }
-
         internal static byte[] MakeByteArray<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
             where TCharaWithTotal : struct, Enum
@@ -103,7 +86,15 @@ namespace ThScoreFileConverterTests.Models.Th10
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
-                MakeData(clearData, scoreDataUnknownSize));
+                TestUtils.Cast<int>(clearData.Chara),
+                clearData.Rankings.Values.SelectMany(
+                    ranking => ranking.SelectMany(
+                        scoreData => ScoreDataTests.MakeByteArray(scoreData, scoreDataUnknownSize))),
+                clearData.TotalPlayCount,
+                clearData.PlayTime,
+                clearData.ClearCounts.Values,
+                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
+                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
         }
 
         internal static byte[] MakeByteArray(IClearData<CharaWithTotal, StageProgress> clearData)

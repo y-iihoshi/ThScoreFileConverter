@@ -30,9 +30,13 @@ namespace ThScoreFileConverterTests.Models.Th143
             return mock;
         }
 
-        internal static byte[] MakeData(IStatus status)
+        internal static byte[] MakeByteArray(IStatus status)
         {
             return TestUtils.MakeByteArray(
+                status.Signature.ToCharArray(),
+                status.Version,
+                status.Checksum,
+                status.Size,
                 status.LastName,
                 new byte[0x12],
                 status.BgmFlags,
@@ -44,16 +48,6 @@ namespace ThScoreFileConverterTests.Models.Th143
                 new byte[0x54],
                 status.NicknameFlags,
                 new byte[0x12D]);
-        }
-
-        internal static byte[] MakeByteArray(IStatus status)
-        {
-            return TestUtils.MakeByteArray(
-                status.Signature.ToCharArray(),
-                status.Version,
-                status.Checksum,
-                status.Size,
-                MakeData(status));
         }
 
         internal static void Validate(IStatus expected, IStatus actual)

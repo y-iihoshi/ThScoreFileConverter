@@ -90,9 +90,13 @@ namespace ThScoreFileConverterTests.Models.Th14
             return mock;
         }
 
-        internal static byte[] MakeData(IClearData clearData)
+        internal static byte[] MakeByteArray(IClearData clearData)
         {
             return TestUtils.MakeByteArray(
+                clearData.Signature.ToCharArray(),
+                clearData.Version,
+                clearData.Checksum,
+                clearData.Size,
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))),
@@ -102,16 +106,6 @@ namespace ThScoreFileConverterTests.Models.Th14
                 clearData.ClearFlags.Values,
                 clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)),
                 clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)));
-        }
-
-        internal static byte[] MakeByteArray(IClearData clearData)
-        {
-            return TestUtils.MakeByteArray(
-                clearData.Signature.ToCharArray(),
-                clearData.Version,
-                clearData.Checksum,
-                clearData.Size,
-                MakeData(clearData));
         }
 
         internal static void Validate(IClearData expected, IClearData actual)

@@ -37,12 +37,6 @@ namespace ThScoreFileConverterTests.Models.Th128
             return mock;
         }
 
-        internal static byte[] MakeData(ICardData cardData)
-        {
-            return TestUtils.MakeByteArray(
-                cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
-        }
-
         internal static byte[] MakeByteArray(ICardData cardData)
         {
             return TestUtils.MakeByteArray(
@@ -50,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 cardData.Version,
                 cardData.Checksum,
                 cardData.Size,
-                MakeData(cardData));
+                cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
         }
 
         internal static void Validate(ICardData expected, ICardData actual)

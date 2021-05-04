@@ -29,9 +29,13 @@ namespace ThScoreFileConverterTests.Models.Th143
             return mock;
         }
 
-        internal static byte[] MakeData(IItemStatus itemStatus)
+        internal static byte[] MakeByteArray(IItemStatus itemStatus)
         {
             return TestUtils.MakeByteArray(
+                itemStatus.Signature.ToCharArray(),
+                itemStatus.Version,
+                itemStatus.Checksum,
+                itemStatus.Size,
                 (int)itemStatus.Item,
                 itemStatus.UseCount,
                 itemStatus.ClearedCount,
@@ -41,16 +45,6 @@ namespace ThScoreFileConverterTests.Models.Th143
                 itemStatus.AvailableCount,
                 itemStatus.FramesOrRanges,
                 new int[2]);
-        }
-
-        internal static byte[] MakeByteArray(IItemStatus itemStatus)
-        {
-            return TestUtils.MakeByteArray(
-                itemStatus.Signature.ToCharArray(),
-                itemStatus.Version,
-                itemStatus.Checksum,
-                itemStatus.Size,
-                MakeData(itemStatus));
         }
 
         internal static void Validate(IItemStatus expected, IItemStatus actual)

@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             return mock;
         }
 
-        internal static byte[] MakeData(IStatus status)
+        internal static byte[] MakeByteArray(IStatus status)
         {
             // NOTE: header == (signature, version, size, checksum)
             var headerSize =
@@ -38,22 +38,16 @@ namespace ThScoreFileConverterTests.Models.Th128
                 dataSize - status.LastName.Count() - gap1Size - status.BgmFlags.Count() - gap2Size - sizeof(int);
 
             return TestUtils.MakeByteArray(
+                status.Signature.ToCharArray(),
+                status.Version,
+                status.Checksum,
+                status.Size,
                 status.LastName,
                 new byte[gap1Size],
                 status.BgmFlags,
                 new byte[gap2Size],
                 status.TotalPlayTime,
                 new byte[gap3Size]);
-        }
-
-        internal static byte[] MakeByteArray(IStatus status)
-        {
-            return TestUtils.MakeByteArray(
-                status.Signature.ToCharArray(),
-                status.Version,
-                status.Checksum,
-                status.Size,
-                MakeData(status));
         }
 
         internal static void Validate(IStatus expected, IStatus actual)
