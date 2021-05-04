@@ -55,9 +55,9 @@ namespace ThScoreFileConverterTests.Models.Th105
                 2,
                 new uint[2],
                 properties.systemCards.Count,
-                properties.systemCards.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)),
+                properties.systemCards.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
                 properties.clearData.Count,
-                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)));
+                properties.clearData.Select(pair => ClearDataTests.MakeByteArray(pair.Value)));
         }
 
         internal static void Validate(in Properties expected, in AllScoreData actual)
@@ -109,10 +109,10 @@ namespace ThScoreFileConverterTests.Models.Th105
                 2,
                 new uint[2],
                 properties.systemCards.Count + 1,
-                properties.systemCards.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)),
+                properties.systemCards.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
                 CardForDeckTests.MakeByteArray(properties.systemCards.First().Value),
                 properties.clearData.Count,
-                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)));
+                properties.clearData.Select(pair => ClearDataTests.MakeByteArray(pair.Value)));
 
             var allScoreData = TestUtils.Create<AllScoreData>(array);
 
@@ -133,9 +133,9 @@ namespace ThScoreFileConverterTests.Models.Th105
                 2,
                 new uint[2],
                 properties.systemCards.Count,
-                properties.systemCards.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)),
+                properties.systemCards.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
                 properties.clearData.Count + 1,
-                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)),
+                properties.clearData.Select(pair => ClearDataTests.MakeByteArray(pair.Value)),
                 ClearDataTests.MakeByteArray(properties.clearData.First().Value));
 
             var allScoreData = TestUtils.Create<AllScoreData>(array);

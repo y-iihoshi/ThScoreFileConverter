@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.totalPlayTime.Minutes,
                 properties.totalPlayTime.Seconds,
                 properties.totalPlayTime.Milliseconds,
-                properties.playCounts.SelectMany(pair => PlayCountTests.MakeByteArray(pair.Value)));
+                properties.playCounts.Select(pair => PlayCountTests.MakeByteArray(pair.Value)));
         }
 
         internal static byte[] MakeByteArray(in Properties properties)

@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 cardData.Version,
                 cardData.Checksum,
                 cardData.Size,
-                cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
+                cardData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
         }
 
         internal static void Validate(ICardData expected, ICardData actual)

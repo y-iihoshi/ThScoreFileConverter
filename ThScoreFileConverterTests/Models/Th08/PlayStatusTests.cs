@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 status.TotalPlayTime.Minutes,
                 status.TotalPlayTime.Seconds,
                 status.TotalPlayTime.Milliseconds,
-                status.PlayCounts.SelectMany(pair => PlayCountTests.MakeByteArray(pair.Value)),
+                status.PlayCounts.Select(pair => PlayCountTests.MakeByteArray(pair.Value)),
                 PlayCountTests.MakeByteArray(PlayCountTests.MockPlayCount().Object),
                 PlayCountTests.MakeByteArray(status.TotalPlayCount),
                 status.BgmFlags,

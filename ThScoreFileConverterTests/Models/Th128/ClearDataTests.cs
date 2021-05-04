@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 clearData.Size,
                 (int)clearData.Route,
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+                    ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values);

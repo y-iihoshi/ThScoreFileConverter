@@ -99,13 +99,13 @@ namespace ThScoreFileConverterTests.Models.Th14
                 clearData.Size,
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))),
+                    ranking => ranking.Select(scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values,
                 clearData.ClearFlags.Values,
-                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)),
-                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)));
+                clearData.Practices.Values.Select(practice => Th13.PracticeTests.MakeByteArray(practice)),
+                clearData.Cards.Values.Select(card => Th13.SpellCardTests.MakeByteArray(card)));
         }
 
         internal static void Validate(IClearData expected, IClearData actual)

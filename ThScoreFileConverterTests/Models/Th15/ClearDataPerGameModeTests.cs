@@ -81,9 +81,9 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             return TestUtils.MakeByteArray(
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+                    ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
                 new byte[0x140],
-                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)),
+                clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,

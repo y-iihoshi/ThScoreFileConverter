@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                 playStatus.MatchFlags.Values,
                 playStatus.StoryFlags.Values,
                 playStatus.ExtraFlags.Values,
-                playStatus.ClearCounts.SelectMany(pair => ClearCountTests.MakeByteArray(pair.Value)));
+                playStatus.ClearCounts.Select(pair => ClearCountTests.MakeByteArray(pair.Value)));
         }
 
         internal static void Validate(IPlayStatus expected, IPlayStatus actual)

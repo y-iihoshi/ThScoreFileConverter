@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 new byte[0x64],
                 clearData.CardTrulyGot,
                 new byte[0x38],
-                clearData.Ranking.SelectMany(element => HighScoreTests.MakeByteArray((HighScoreStub)element)));
+                clearData.Ranking.Select(element => HighScoreTests.MakeByteArray((HighScoreStub)element)));
         }
 
         internal static void Validate(IClearData expected, IClearData actual)

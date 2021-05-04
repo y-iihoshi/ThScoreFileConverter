@@ -101,14 +101,14 @@ namespace ThScoreFileConverterTests.Models.Th16
                 clearData.Size,
                 (int)clearData.Chara,
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
-                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)),
+                    ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+                clearData.Cards.Values.Select(card => Th13.SpellCardTests.MakeByteArray(card)),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,
                 clearData.ClearCounts.Values,
                 clearData.ClearFlags.Values,
-                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)),
+                clearData.Practices.Values.Select(practice => Th13.PracticeTests.MakeByteArray(practice)),
                 new byte[0x40]);
         }
 

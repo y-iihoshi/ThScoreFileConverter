@@ -53,9 +53,9 @@ namespace ThScoreFileConverterTests.Models.Th105
         {
             return TestUtils.MakeByteArray(
                 properties.CardsForDeck.Count,
-                properties.CardsForDeck.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)),
+                properties.CardsForDeck.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
                 properties.SpellCardResults.Count,
-                properties.SpellCardResults.SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)));
+                properties.SpellCardResults.Select(pair => SpellCardResultTests.MakeByteArray(pair.Value)));
         }
 
         internal static void Validate<TChara>(IClearData<TChara> expected, IClearData<TChara> actual)
@@ -116,10 +116,10 @@ namespace ThScoreFileConverterTests.Models.Th105
             var mock = MockClearData<TChara>();
             var array = TestUtils.MakeByteArray(
                 mock.Object.CardsForDeck.Count + 1,
-                mock.Object.CardsForDeck.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)),
+                mock.Object.CardsForDeck.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
                 CardForDeckTests.MakeByteArray(mock.Object.CardsForDeck.First().Value),
                 mock.Object.SpellCardResults.Count + 1,
-                mock.Object.SpellCardResults.SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)),
+                mock.Object.SpellCardResults.Select(pair => SpellCardResultTests.MakeByteArray(pair.Value)),
                 SpellCardResultTests.MakeByteArray(mock.Object.SpellCardResults.First().Value));
 
             var clearData = TestUtils.Create<ClearData<TChara>>(array);

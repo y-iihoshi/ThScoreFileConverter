@@ -88,13 +88,13 @@ namespace ThScoreFileConverterTests.Models.Th10
                 clearData.Size,
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(
+                    ranking => ranking.Select(
                         scoreData => ScoreDataTests.MakeByteArray(scoreData, scoreDataUnknownSize))),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values,
-                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
-                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)));
+                clearData.Practices.Values.Select(practice => PracticeTests.MakeByteArray(practice)),
+                clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
         }
 
         internal static byte[] MakeByteArray(IClearData<CharaWithTotal, StageProgress> clearData)

@@ -52,8 +52,8 @@ namespace ThScoreFileConverterTests.Models.Th15
                 clearData.Checksum,
                 clearData.Size,
                 (int)clearData.Chara,
-                clearData.GameModeData.Values.SelectMany(data => ClearDataPerGameModeTests.MakeByteArray(data)),
-                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)),
+                clearData.GameModeData.Values.Select(data => ClearDataPerGameModeTests.MakeByteArray(data)),
+                clearData.Practices.Values.Select(practice => PracticeTests.MakeByteArray(practice)),
                 new byte[0x40]);
         }
 
