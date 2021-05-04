@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.UnitTesting
         }
 #endif
 
-        public static IEnumerable<byte> MakeByteArray(params object?[] args)
+        public static byte[] MakeByteArray(params object?[] args)
         {
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
@@ -74,13 +74,13 @@ namespace ThScoreFileConverterTests.UnitTesting
                         writer.Write(TestUtils.MakeByteArray((int)SQOT.Bool, (byte)(boolValue ? 0x01 : 0x00)));
                         break;
                     case { } when IsDictionary(arg):
-                        writer.Write(MakeByteArrayFromDictionaryReflection(arg).ToArray());
+                        writer.Write(MakeByteArrayFromDictionaryReflection(arg));
                         break;
                     case float floatValue:
                         writer.Write(TestUtils.MakeByteArray((int)SQOT.Float, floatValue));
                         break;
                     case Array { Rank: 1 } array:
-                        writer.Write(MakeByteArrayFromArrayReflection(array).ToArray());
+                        writer.Write(MakeByteArrayFromArrayReflection(array));
                         break;
                     default:
                         break;
@@ -91,32 +91,32 @@ namespace ThScoreFileConverterTests.UnitTesting
             return stream.ToArray();
         }
 
-        private static IEnumerable<byte> MakeByteArrayFromArrayReflection(Array array)
+        private static byte[] MakeByteArrayFromArrayReflection(Array array)
         {
-            return (IEnumerable<byte>)FromArrayMethodInfo.MakeGenericMethod(array.GetType().GetElementType()!)
+            return (byte[])FromArrayMethodInfo.MakeGenericMethod(array.GetType().GetElementType()!)
                 .Invoke(null, new object[] { array })!;
         }
 
-        private static IEnumerable<byte> MakeByteArrayFromArray<T>(in IEnumerable<T> array)
+        private static byte[] MakeByteArrayFromArray<T>(in IEnumerable<T> array)
         {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream);
 
             writer.Write(TestUtils.MakeByteArray((int)SQOT.Array, array.Count()));
-            writer.Write(array.SelectMany((element, index) => MakeByteArray(index, element)).ToArray());
+            array.Select((element, index) => MakeByteArray(index, element)).ForEach(writer.Write);
             writer.Write(TestUtils.MakeByteArray((int)SQOT.Null));
 
             writer.Flush();
             return stream.ToArray();
         }
 
-        private static IEnumerable<byte> MakeByteArrayFromDictionaryReflection(object dictionary)
+        private static byte[] MakeByteArrayFromDictionaryReflection(object dictionary)
         {
-            return (IEnumerable<byte>)FromDictionaryMethodInfo.MakeGenericMethod(dictionary.GetType().GetGenericArguments())
+            return (byte[])FromDictionaryMethodInfo.MakeGenericMethod(dictionary.GetType().GetGenericArguments())
                 .Invoke(null, new object[] { dictionary })!;
         }
 
-        private static IEnumerable<byte> MakeByteArrayFromDictionary<TKey, TValue>(
+        private static byte[] MakeByteArrayFromDictionary<TKey, TValue>(
             in IReadOnlyDictionary<TKey, TValue> dictionary)
             where TKey : notnull
         {
@@ -124,7 +124,7 @@ namespace ThScoreFileConverterTests.UnitTesting
             using var writer = new BinaryWriter(stream);
 
             writer.Write(TestUtils.MakeByteArray((int)SQOT.Table));
-            writer.Write(dictionary.SelectMany(pair => MakeByteArray(pair.Key, pair.Value)).ToArray());
+            dictionary.Select(pair => MakeByteArray(pair.Key, pair.Value)).ForEach(writer.Write);
             writer.Write(TestUtils.MakeByteArray((int)SQOT.Null));
 
             writer.Flush();

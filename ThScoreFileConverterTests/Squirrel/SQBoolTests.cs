@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Squirrel
         [TestMethod]
         public void EqualsTestEqual()
         {
-            var sqtrue = CreateTestHelper(SquirrelHelper.MakeByteArray(true).ToArray());
+            var sqtrue = CreateTestHelper(SquirrelHelper.MakeByteArray(true));
 
             Assert.IsTrue(SQBool.True.Equals(sqtrue));
         }
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Squirrel
         [TestMethod]
         public void GetHashCodeTestEqual()
         {
-            var sqtrue = CreateTestHelper(SquirrelHelper.MakeByteArray(true).ToArray());
+            var sqtrue = CreateTestHelper(SquirrelHelper.MakeByteArray(true));
 
             Assert.AreEqual(SQBool.True.GetHashCode(), sqtrue.GetHashCode());
         }
