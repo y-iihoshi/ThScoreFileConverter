@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SpellCard.cs" company="None">
+// <copyright file="IStatus.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -7,16 +7,14 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
+using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th18
 {
-    internal class SpellCard<TLevel> : SpellCardBase<TLevel>
-        where TLevel : struct, Enum
+    internal interface IStatus : Th17.IStatus
     {
-        public SpellCard()
-            : base(0x80)
-        {
-        }
+        IEnumerable<byte> AbilityCards { get; }
+
+        IEnumerable<byte> InitialHoldAbilityCards { get; }
     }
 }

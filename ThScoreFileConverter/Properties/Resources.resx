@@ -309,6 +309,9 @@ Renamed to "{1}".</value>
   <data name="TH175" xml:space="preserve">
     <value>Touhou Gouyoku Ibun</value>
   </data>
+  <data name="TH18" xml:space="preserve">
+    <value>Unconnected Marketeers</value>
+  </data>
   <data name="TemplateFileFilter" xml:space="preserve">
     <value>All files (*.*)|*.*</value>
   </data>

@@ -584,6 +584,15 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   Unconnected Marketeers に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH18 {
+            get {
+                return ResourceManager.GetString("TH18", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ver. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string VersionPrefix {
