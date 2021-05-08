@@ -80,9 +80,11 @@ jobs:
         xcopy TemplateGenerator\Templates publish\${{ matrix.target-framework }}\template /e /i /q
         del publish\${{ matrix.target-framework }}\template\*.tt* /q
       shell: cmd
+      if: matrix.configuration == 'Release'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2.2.3
       with:
         name: ThScoreFileConverter.${{ matrix.target-framework }}
         path: publish\${{ matrix.target-framework }}
+      if: matrix.configuration == 'Release'
