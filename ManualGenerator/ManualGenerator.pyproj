@@ -23,7 +23,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="make.bat" />
-    <None Include="Makefile" />
     <None Include="requirements.txt" />
     <Compile Include="conf.py" />
     <Content Include="changelog.rst" />
@@ -61,17 +60,16 @@
     <Content Include="format\th18.rst" />
     <Folder Include="_static\" />
     <Content Include="_static\custom.css" />
-    <Content Include="_static\mainwindow.png" />
-    <Content Include="_static\settingwindow.png" />
+    <Content Include="_static\mainwindow.en.png" />
+    <Content Include="_static\mainwindow.ja.png" />
+    <Content Include="_static\settingwindow.en.png" />
+    <Content Include="_static\settingwindow.ja.png" />
     <Folder Include="_templates\" />
     <None Include="_templates\.keep" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- This task seems not necessary for *.pyproj. -->
   <Target Name="_GenerateCompileDependencyCache" />
-  <!-- Uncomment the CoreCompile target to enable the Build command in
-       Visual Studio and specify your pre- and post-build commands in
-       the BeforeBuild and AfterBuild targets below. -->
   <Target Name="CoreCompile">
     <Exec Command="make.bat html" IgnoreExitCode="False" />
   </Target>
