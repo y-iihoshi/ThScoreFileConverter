@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SpellCard.cs" company="None">
+// <copyright file="Header.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -9,14 +9,12 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th18
 {
-    internal class SpellCard<TLevel> : SpellCardBase<TLevel>
-        where TLevel : struct, Enum
+    internal class Header : Th095.HeaderBase
     {
-        public SpellCard()
-            : base(0x80)
-        {
-        }
+        public const string ValidSignature = "TH81";
+
+        public override bool IsValid => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
     }
 }

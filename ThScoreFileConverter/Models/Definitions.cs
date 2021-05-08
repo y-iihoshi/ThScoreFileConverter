@@ -33,6 +33,7 @@ namespace ThScoreFileConverter.Models
             new() { Number = nameof(Resources.TH16),  IsSupported = true },
             new() { Number = nameof(Resources.TH165), IsSupported = true },
             new() { Number = nameof(Resources.TH17),  IsSupported = true },
+            new() { Number = nameof(Resources.TH18),  IsSupported = true },
             new() { },
             new() { Number = nameof(Resources.TH075), IsSupported = true },
             new() { Number = nameof(Resources.TH105), IsSupported = true },

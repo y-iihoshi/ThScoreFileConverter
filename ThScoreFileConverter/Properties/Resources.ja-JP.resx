@@ -229,6 +229,9 @@
   <data name="TH175" xml:space="preserve">
     <value>東方強欲異聞</value>
   </data>
+  <data name="TH18" xml:space="preserve">
+    <value>東方虹龍洞</value>
+  </data>
   <data name="TemplateFileFilter" xml:space="preserve">
     <value>すべてのファイル (*.*)|*.*</value>
   </data>

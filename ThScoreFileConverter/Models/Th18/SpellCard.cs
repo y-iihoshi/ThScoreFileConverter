@@ -7,15 +7,12 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
-
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th18
 {
-    internal class SpellCard<TLevel> : SpellCardBase<TLevel>
-        where TLevel : struct, Enum
+    internal class SpellCard : Th13.SpellCardBase<Level>
     {
         public SpellCard()
-            : base(0x80)
+            : base(0xC0)
         {
         }
     }

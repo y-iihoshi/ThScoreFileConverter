@@ -1,0 +1,59 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="ClearReplacer.cs" company="None">
+// Copyright (c) IIHOSHI Yoshinori.
+// Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable SA1600 // Elements should be documented
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using ThScoreFileConverter.Extensions;
+using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
+    ThScoreFileConverter.Models.Th18.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Stage,
+    ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
+
+namespace ThScoreFileConverter.Models.Th18
+{
+    // %T18CLEAR[x][yy]
+    internal class ClearReplacer : IStringReplaceable
+    {
+        private static readonly string Pattern = Utils.Format(
+            @"%T18CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+
+        private readonly MatchEvaluator evaluator;
+
+        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        {
+            this.evaluator = new MatchEvaluator(match =>
+            {
+                var level = (Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
+                var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
+
+                var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Rankings.TryGetValue(level, out var ranking)
+                    ? ranking.Where(score => score.DateTime > 0)
+                    : new List<Th10.IScoreData<Th13.StageProgress>>();
+                var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : Th13.StageProgress.None;
+
+                if (stageProgress == Th13.StageProgress.Extra)
+                    return "Not Clear";
+                else if (stageProgress == Th13.StageProgress.ExtraClear)
+                    return Th13.StageProgress.Clear.ToShortName();
+                else
+                    return stageProgress.ToShortName();
+            });
+        }
+
+        public string Replace(string input)
+        {
+            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        }
+    }
+}

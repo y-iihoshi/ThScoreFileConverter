@@ -38,6 +38,7 @@ namespace ThScoreFileConverter.Models
             { nameof(Resources.TH16),  typeof(Th16Converter)  },
             { nameof(Resources.TH165), typeof(Th165Converter) },
             { nameof(Resources.TH17),  typeof(Th17Converter)  },
+            { nameof(Resources.TH18),  typeof(Th18Converter)  },
             { nameof(Resources.TH075), typeof(Th075Converter) },
             { nameof(Resources.TH105), typeof(Th105Converter) },
             { nameof(Resources.TH123), typeof(Th123Converter) },

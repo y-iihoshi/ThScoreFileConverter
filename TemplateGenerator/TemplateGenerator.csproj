@@ -801,6 +801,55 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\th18.ttinclude" />
+    <None Update="Templates\th18card1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th18card1.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th18card1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th18card1.html</LastGenOutput>
+    </None>
+    <None Update="Templates\th18card2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th18card2.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th18card2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th18card2.html</LastGenOutput>
+    </None>
+    <None Update="Templates\th18score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th18score1.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th18score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th18score1.html</LastGenOutput>
+    </None>
+    <None Update="Templates\th18score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th18score2.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th18score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th18score2.html</LastGenOutput>
+    </None>
+    <None Update="Templates\th18score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th18score3.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th18score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th18score3.html</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
