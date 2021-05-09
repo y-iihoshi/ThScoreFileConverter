@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ClearReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<RouteWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.IsNotNull(replacer);
         }
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<RouteWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T128CLEARHA2"));
         }
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             {
                 Mock.Of<IClearData>(
                     m => (m.Route == RouteWithTotal.A2)
-                         && (m.Rankings == new Dictionary<Level, IReadOnlyList<IScoreData>>()))
+                         && (m.Rankings == ImmutableDictionary<Level, IReadOnlyList<IScoreData>>.Empty))
             }.ToDictionary(clearData => clearData.Route);
 
             var replacer = new ClearReplacer(dictionary);

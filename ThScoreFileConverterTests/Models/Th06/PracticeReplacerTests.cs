@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -33,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void PracticeReplacerTestEmpty()
         {
-            var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
+            var practiceScores = ImmutableDictionary<(Chara, Level, Stage), IPracticeScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -51,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
+            var practiceScores = ImmutableDictionary<(Chara, Level, Stage), IPracticeScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T06PRACHRB6"));

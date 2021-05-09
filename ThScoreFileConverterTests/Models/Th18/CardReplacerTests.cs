@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         {
             Mock.Of<IClearData>(
                 c => (c.Chara == CharaWithTotal.Total)
-                     && (c.Cards == new Dictionary<int, ISpellCard>()
+                     && (c.Cards == new Dictionary<int, ISpellCard>
                         {
                             { 1, Mock.Of<ISpellCard>(s => s.HasTried == true) },
                             { 2, Mock.Of<ISpellCard>(s => s.HasTried == false) },
@@ -38,7 +39,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void CardReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var replacer = new CardReplacer(dictionary, true);
             Assert.IsNotNull(replacer);
         }
@@ -81,7 +82,7 @@ namespace ThScoreFileConverterTests.Models.Th18
             var dictionary = new[]
             {
                 Mock.Of<IClearData>(
-                    m => (m.Chara == CharaWithTotal.Total) && (m.Cards == new Dictionary<int, ISpellCard>()))
+                    m => (m.Chara == CharaWithTotal.Total) && (m.Cards == ImmutableDictionary<int, ISpellCard>.Empty))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new CardReplacer(dictionary, true);

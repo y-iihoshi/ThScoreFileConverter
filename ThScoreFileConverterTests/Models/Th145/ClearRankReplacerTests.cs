@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th145;
 
@@ -32,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ClearRankReplacerTestEmpty()
         {
-            var clearRanks = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>();
+            var clearRanks = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
             var replacer = new ClearRankReplacer(clearRanks);
             Assert.IsNotNull(replacer);
         }
@@ -42,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         {
             var clearRanks = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>
             {
-                { Level.Hard, new Dictionary<Chara, int>() },
+                { Level.Hard, ImmutableDictionary<Chara, int>.Empty },
             };
 
             var replacer = new ClearRankReplacer(clearRanks);
@@ -76,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var clearRanks = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>();
+            var clearRanks = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
             var replacer = new ClearRankReplacer(clearRanks);
             Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHMR"));
         }
@@ -86,7 +87,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         {
             var clearRanks = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>
             {
-                { Level.Hard, new Dictionary<Chara, int>() },
+                { Level.Hard, ImmutableDictionary<Chara, int>.Empty },
             };
 
             var replacer = new ClearRankReplacer(clearRanks);

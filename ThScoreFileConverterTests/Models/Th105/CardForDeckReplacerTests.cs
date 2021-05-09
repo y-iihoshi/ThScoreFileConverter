@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -51,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void CardForDeckReplacerTestEmptySystemCards()
         {
-            var cards = new Dictionary<int, ICardForDeck>();
+            var cards = ImmutableDictionary<int, ICardForDeck>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CardForDeckReplacer(cards, ClearDataDictionary, formatterMock.Object, false);
             Assert.IsNotNull(replacer);
@@ -60,7 +61,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void CardForDeckReplacerTestEmptyClearDataDictionary()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
+            var dictionary = ImmutableDictionary<Chara, IClearData<Chara>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CardForDeckReplacer(SystemCards, dictionary, formatterMock.Object, false);
             Assert.IsNotNull(replacer);
@@ -177,7 +178,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReplaceTestEmptySystemCards()
         {
-            var cards = new Dictionary<int, ICardForDeck>();
+            var cards = ImmutableDictionary<int, ICardForDeck>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CardForDeckReplacer(cards, ClearDataDictionary, formatterMock.Object, true);
             Assert.AreEqual("??????????", replacer.Replace("%T105DCMRY01N"));
@@ -191,7 +192,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReplaceTestEmptyClearDataDictionary()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
+            var dictionary = ImmutableDictionary<Chara, IClearData<Chara>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CardForDeckReplacer(SystemCards, dictionary, formatterMock.Object, true);
             Assert.AreEqual("「気質発現」", replacer.Replace("%T105DCMRY01N"));

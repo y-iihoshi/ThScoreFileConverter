@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -51,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void RouteExReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<RouteWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new RouteExReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -156,7 +157,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<RouteWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new RouteExReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEEXHA21"));
@@ -170,7 +171,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             var dictionary = new[]
             {
                 Mock.Of<IClearData>(
-                    m => (m.Route == RouteWithTotal.A2) && (m.ClearCounts == new Dictionary<Level, int>()))
+                    m => (m.Route == RouteWithTotal.A2) && (m.ClearCounts == ImmutableDictionary<Level, int>.Empty))
             }.ToDictionary(clearData => clearData.Route);
             var formatterMock = MockNumberFormatter();
 

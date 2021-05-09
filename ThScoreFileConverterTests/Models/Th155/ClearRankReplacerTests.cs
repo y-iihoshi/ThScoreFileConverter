@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th155;
 
@@ -70,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ClearRankReplacerTestEmpty()
         {
-            var storyDictionary = new Dictionary<StoryChara, AllScoreData.Story>();
+            var storyDictionary = ImmutableDictionary<StoryChara, AllScoreData.Story>.Empty;
             var replacer = new ClearRankReplacer(storyDictionary);
             Assert.IsNotNull(replacer);
         }
@@ -116,7 +117,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var storyDictionary = new Dictionary<StoryChara, AllScoreData.Story>();
+            var storyDictionary = ImmutableDictionary<StoryChara, AllScoreData.Story>.Empty;
             var replacer = new ClearRankReplacer(storyDictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T155CLEARHMK"));
         }

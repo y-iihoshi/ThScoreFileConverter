@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ClearReplacerTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
+            var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.IsNotNull(replacer);
         }
@@ -141,7 +141,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
+            var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
             var replacer = new ClearReplacer(rankings, ClearData);
             Assert.AreEqual("-------", replacer.Replace("%T08CLEARHMA"));
         }

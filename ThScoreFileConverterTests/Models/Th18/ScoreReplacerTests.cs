@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -42,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void ScoreReplacerTestEmptyClearData()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -108,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void ReplaceTestEmptyClearData()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T18SCRHMR21"));

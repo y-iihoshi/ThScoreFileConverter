@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ScoreTotalReplacerTestEmptyItemStatuses()
         {
-            var statuses = new Dictionary<ItemWithTotal, IItemStatus>();
+            var statuses = ImmutableDictionary<ItemWithTotal, IItemStatus>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreTotalReplacer(Scores, statuses, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -131,7 +131,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestEmptyItemStatuses()
         {
-            var statuses = new Dictionary<ItemWithTotal, IItemStatus>();
+            var statuses = ImmutableDictionary<ItemWithTotal, IItemStatus>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreTotalReplacer(Scores, statuses, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T143SCRTL12"));

@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ClearReplacerTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
+            var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ClearReplacer(rankings, ClearCounts, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
+            var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock.Object);
             Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));

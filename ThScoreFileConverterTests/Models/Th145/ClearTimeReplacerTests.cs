@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th145;
 
@@ -38,7 +39,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ClearTimeReplacerTestEmpty()
         {
-            var clearTimes = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>();
+            var clearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
             var replacer = new ClearTimeReplacer(clearTimes);
             Assert.IsNotNull(replacer);
         }
@@ -48,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         {
             var clearTimes = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>
             {
-                { Level.Hard, new Dictionary<Chara, int>() },
+                { Level.Hard, ImmutableDictionary<Chara, int>.Empty },
             };
 
             var replacer = new ClearTimeReplacer(clearTimes);
@@ -100,7 +101,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var clearTimes = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>();
+            var clearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
             var replacer = new ClearTimeReplacer(clearTimes);
             Assert.AreEqual("0:00:00", replacer.Replace("%T145TIMECLRHMR"));
         }
@@ -110,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         {
             var clearTimes = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>
             {
-                { Level.Hard, new Dictionary<Chara, int>() },
+                { Level.Hard, ImmutableDictionary<Chara, int>.Empty },
             };
 
             var replacer = new ClearTimeReplacer(clearTimes);

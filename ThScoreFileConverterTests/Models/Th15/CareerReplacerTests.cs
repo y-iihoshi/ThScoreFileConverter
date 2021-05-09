@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -33,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void CareerReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CareerReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -106,7 +107,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CareerReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T15CP003MR1"));
@@ -119,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Marisa)
-                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>()))
+                         && (m.GameModeData == ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty))
             }.ToDictionary(clearData => clearData.Chara);
             var formatterMock = MockNumberFormatter();
 
@@ -138,7 +139,8 @@ namespace ThScoreFileConverterTests.Models.Th15
                             {
                                 {
                                     GameMode.Pointdevice,
-                                    Mock.Of<IClearDataPerGameMode>(c => c.Cards == new Dictionary<int, ISpellCard>())
+                                    Mock.Of<IClearDataPerGameMode>(
+                                        c => c.Cards == ImmutableDictionary<int, ISpellCard>.Empty)
                                 },
                             }))
             }.ToDictionary(clearData => clearData.Chara);

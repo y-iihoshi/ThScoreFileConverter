@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
@@ -46,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void CardReplacerTestEmpty()
         {
-            var cardAttacks = new Dictionary<int, ICardAttack>();
+            var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
             var replacer = new CardReplacer(cardAttacks, true);
             Assert.IsNotNull(replacer);
         }

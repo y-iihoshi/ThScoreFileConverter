@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Th14
         [TestMethod]
         public void ClearReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.IsNotNull(replacer);
         }
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th14
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T14CLEARHRB"));
         }
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models.Th14
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.ReimuB)
-                         && (m.Rankings == new Dictionary<LevelPracticeWithTotal, IReadOnlyList<IScoreData>>()))
+                         && (m.Rankings == ImmutableDictionary<LevelPracticeWithTotal, IReadOnlyList<IScoreData>>.Empty))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ClearReplacer(dictionary);

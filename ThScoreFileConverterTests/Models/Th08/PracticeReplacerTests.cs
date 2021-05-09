@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -34,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void PracticeReplacerTestEmpty()
         {
-            var practiceScores = new Dictionary<Chara, IPracticeScore>();
+            var practiceScores = ImmutableDictionary<Chara, IPracticeScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -59,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var practiceScores = new Dictionary<Chara, IPracticeScore>();
+            var practiceScores = ImmutableDictionary<Chara, IPracticeScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new PracticeReplacer(practiceScores, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACHMA6A1"));
@@ -69,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReplaceTestEmptyHighScores()
         {
             var practiceScoreMock = PracticeScoreTests.MockPracticeScore();
-            _ = practiceScoreMock.SetupGet(m => m.HighScores).Returns(new Dictionary<(Stage, Level), int>());
+            _ = practiceScoreMock.SetupGet(m => m.HighScores).Returns(ImmutableDictionary<(Stage, Level), int>.Empty);
             var practiceScores = new[] { practiceScoreMock.Object }.ToDictionary(score => score.Chara);
             var formatterMock = MockNumberFormatter();
 
@@ -81,7 +82,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReplaceTestEmptyPlayCounts()
         {
             var practiceScoreMock = PracticeScoreTests.MockPracticeScore();
-            _ = practiceScoreMock.SetupGet(m => m.PlayCounts).Returns(new Dictionary<(Stage, Level), int>());
+            _ = practiceScoreMock.SetupGet(m => m.PlayCounts).Returns(ImmutableDictionary<(Stage, Level), int>.Empty);
             var practiceScores = new[] { practiceScoreMock.Object }.ToDictionary(score => score.Chara);
             var formatterMock = MockNumberFormatter();
 

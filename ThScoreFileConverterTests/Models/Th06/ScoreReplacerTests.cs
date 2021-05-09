@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ScoreReplacerTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
+            var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
+            var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(rankings, formatterMock.Object);
             Assert.AreEqual("Nanashi", replacer.Replace("%T06SCRHRB11"));

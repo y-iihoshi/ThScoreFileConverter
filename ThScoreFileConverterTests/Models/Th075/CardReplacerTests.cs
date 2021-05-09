@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -37,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void CardReplacerTestEmpty()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var replacer = new CardReplacer(clearData, true);
             Assert.IsNotNull(replacer);
         }

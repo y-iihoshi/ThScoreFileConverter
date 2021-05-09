@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -42,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void CareerReplacerTestEmpty()
         {
-            var cards = new Dictionary<int, ISpellCard>();
+            var cards = ImmutableDictionary<int, ISpellCard>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CareerReplacer(cards, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -99,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var cards = new Dictionary<int, ISpellCard>();
+            var cards = ImmutableDictionary<int, ISpellCard>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CareerReplacer(cards, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T128C0781"));

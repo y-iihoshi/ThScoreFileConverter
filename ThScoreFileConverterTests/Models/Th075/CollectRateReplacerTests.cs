@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -47,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void CollectRateReplacerTestEmpty()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(clearData, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -104,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestEmptyClearCount()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(clearData, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T75CRGHRM1"));
@@ -113,7 +114,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestEmptyTrialCount()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(clearData, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T75CRGHRM2"));
@@ -122,7 +123,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestEmptyTrulyGot()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(clearData, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T75CRGHRM3"));

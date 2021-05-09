@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Helpers;
@@ -25,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
-            var bestshots = new Dictionary<(Day, int), (string, IBestShotHeader)>();
+            var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
             var replacer = new ShotExReplacer(bestshots, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
         }
@@ -97,7 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestEmptyBestShots()
         {
-            var bestshots = new Dictionary<(Day, int), (string, IBestShotHeader)>();
+            var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
             var replacer = new ShotExReplacer(bestshots, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOTEX231"));
             Assert.AreEqual("0", replacer.Replace("%T143SHOTEX232"));

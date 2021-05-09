@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -47,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void CareerReplacerTestEmpty()
         {
             var formatterMock = MockNumberFormatter();
-            var cardAttacks = new Dictionary<int, ICardAttack>();
+            var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
             var replacer = new CareerReplacer(cardAttacks, formatterMock.Object);
             Assert.IsNotNull(replacer);
         }

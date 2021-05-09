@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         public void ReplaceTestEmptyChallengeCounts()
         {
             var mock = ScoreTests.MockScore();
-            _ = mock.SetupGet(m => m.ChallengeCounts).Returns(new Dictionary<ItemWithTotal, int>());
+            _ = mock.SetupGet(m => m.ChallengeCounts).Returns(ImmutableDictionary<ItemWithTotal, int>.Empty);
             var scores = new[] { mock.Object };
 
             var replacer = new CardReplacer(scores, true);

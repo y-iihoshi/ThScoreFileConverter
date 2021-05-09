@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
-            var bestshots = new Dictionary<(Chara, Level, int), (string, IBestShotHeader)>();
+            var bestshots = ImmutableDictionary<(Chara, Level, int), (string, IBestShotHeader)>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -169,7 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void ReplaceTestEmptyBestShots()
         {
-            var bestshots = new Dictionary<(Chara, Level, int), (string, IBestShotHeader)>();
+            var bestshots = ImmutableDictionary<(Chara, Level, int), (string, IBestShotHeader)>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, Scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTEXH231"));

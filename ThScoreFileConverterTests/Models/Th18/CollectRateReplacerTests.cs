@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -75,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void CollectRateReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -276,7 +277,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void ReplaceTestStoryEmptyClearCount()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T18CRGSHMR31"));
@@ -285,7 +286,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void ReplaceTestStoryEmptyTrialCount()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T18CRGSHMR32"));
@@ -294,7 +295,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void ReplaceTestPracticeEmptyClearCount()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T18CRGPHMR31"));
@@ -303,7 +304,7 @@ namespace ThScoreFileConverterTests.Models.Th18
         [TestMethod]
         public void ReplaceTestPracticeEmptyTrialCount()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T18CRGPHMR32"));

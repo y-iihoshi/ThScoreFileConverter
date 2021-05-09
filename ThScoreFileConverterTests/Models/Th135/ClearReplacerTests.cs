@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th135;
 
@@ -23,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         [TestMethod]
         public void ClearReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, Levels>();
+            var dictionary = ImmutableDictionary<Chara, Levels>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.IsNotNull(replacer);
         }
@@ -41,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, Levels>();
+            var dictionary = ImmutableDictionary<Chara, Levels>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEAREMR"));
             Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARNMR"));

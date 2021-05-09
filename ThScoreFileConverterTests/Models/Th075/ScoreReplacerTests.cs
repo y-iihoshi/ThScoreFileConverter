@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ScoreReplacerTestEmpty()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(clearData, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(clearData, formatterMock.Object);
             Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHRM11"));

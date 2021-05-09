@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -52,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void CollectRateReplacerTestEmpty()
         {
-            var cardAttacks = new Dictionary<int, ICardAttack>();
+            var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(cardAttacks, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -93,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestEmptyClearCount()
         {
-            var cardAttacks = new Dictionary<int, ICardAttack>();
+            var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(cardAttacks, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T06CRG41"));
@@ -102,7 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestEmptyTrialCount()
         {
-            var cardAttacks = new Dictionary<int, ICardAttack>();
+            var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(cardAttacks, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T06CRG42"));

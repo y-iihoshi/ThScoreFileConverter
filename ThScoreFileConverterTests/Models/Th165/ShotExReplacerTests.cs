@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -37,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ShotExReplacerTestEmptyBestShots()
         {
-            var bestshots = new Dictionary<(Day, int), (string, IBestShotHeader)>();
+            var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -154,7 +155,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestEmptyBestShots()
         {
-            var bestshots = new Dictionary<(Day, int), (string, IBestShotHeader)>();
+            var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));

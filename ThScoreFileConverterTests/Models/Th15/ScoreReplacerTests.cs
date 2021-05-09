@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ScoreReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("--------", replacer.Replace("%T15SCRPHMR21"));
@@ -114,7 +114,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Marisa)
-                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>()))
+                         && (m.GameModeData == ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty))
             }.ToDictionary(clearData => clearData.Chara);
             var formatterMock = MockNumberFormatter();
 
@@ -139,7 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 {
                                     GameMode.Pointdevice,
                                     Mock.Of<IClearDataPerGameMode>(
-                                        c => c.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>())
+                                        c => c.Rankings == ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty)
                                 },
                             })
                     )

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -34,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void PracticeReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new PracticeReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -67,7 +68,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new PracticeReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T15PRACHMR3"));
@@ -80,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Marisa)
-                         && (m.Practices == new Dictionary<(Level, StagePractice), IPractice>()))
+                         && (m.Practices == ImmutableDictionary<(Level, StagePractice), IPractice>.Empty))
             }.ToDictionary(clearData => clearData.Chara);
             var formatterMock = MockNumberFormatter();
 

@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ClearReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.IsNotNull(replacer);
         }
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<CharaWithTotal, IClearData>();
+            var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
             var replacer = new ClearReplacer(dictionary);
             Assert.AreEqual("-------", replacer.Replace("%T15CLEARPHMR"));
         }
@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th15
             {
                 Mock.Of<IClearData>(
                     m => (m.Chara == CharaWithTotal.Marisa)
-                         && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>()))
+                         && (m.GameModeData == ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ClearReplacer(dictionary);
@@ -137,7 +137,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                                 {
                                     GameMode.Pointdevice,
                                     Mock.Of<IClearDataPerGameMode>(
-                                        c => c.Rankings == new Dictionary<LevelWithTotal, IReadOnlyList<IScoreData>>())
+                                        c => c.Rankings == ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty)
                                 },
                             })
                     )

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -35,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void CharaReplacerTestEmpty()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaReplacer(clearData, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -80,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var clearData = new Dictionary<(CharaWithReserved, Level), IClearData>();
+            var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CharaReplacer(clearData, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T75CHRHRM1"));

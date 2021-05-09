@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -98,7 +99,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void CollectRateReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
+            var dictionary = ImmutableDictionary<Chara, IClearData<Chara>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -139,7 +140,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
+            var dictionary = ImmutableDictionary<Chara, IClearData<Chara>>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new CollectRateReplacer(dictionary, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T105CRGHMR1"));
@@ -153,7 +154,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 {
                     Chara.Marisa,
                     Mock.Of<IClearData<Chara>>(
-                        m => m.SpellCardResults == new Dictionary<(Chara, int), ISpellCardResult<Chara>>())
+                        m => m.SpellCardResults == ImmutableDictionary<(Chara, int), ISpellCardResult<Chara>>.Empty)
                 },
             };
             var formatterMock = MockNumberFormatter();
