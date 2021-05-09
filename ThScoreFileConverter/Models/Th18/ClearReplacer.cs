@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th18
     internal class ClearReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T18CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 

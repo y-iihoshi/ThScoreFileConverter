@@ -220,5 +220,7 @@ namespace ThScoreFileConverter.Models.Th18
             "スペルカードコレクター",
             "カード売人",
         };
+
+        public static string FormatPrefix { get; } = "%T18";
     }
 }

@@ -16,7 +16,7 @@ namespace ThScoreFileConverter.Models.Th18
     // %T18ACHV[xx]
     internal class AchievementReplacer : IStringReplaceable
     {
-        private const string Pattern = @"%T18ACHV(\d{2})";
+        private static readonly string Pattern = Utils.Format(@"{0}ACHV(\d{{2}})", Definitions.FormatPrefix);
 
         private readonly MatchEvaluator evaluator;
 
