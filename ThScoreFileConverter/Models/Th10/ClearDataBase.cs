@@ -15,11 +15,10 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class ClearDataBase<TCharaWithTotal, TStageProgress, TScoreData>
-        : Chapter, IClearData<TCharaWithTotal, TStageProgress>
+    internal class ClearDataBase<TCharaWithTotal, TScoreData>
+        : Chapter, IClearData<TCharaWithTotal>
         where TCharaWithTotal : struct, Enum
-        where TStageProgress : struct, Enum
-        where TScoreData : IBinaryReadable, IScoreData<TStageProgress>, new()
+        where TScoreData : IBinaryReadable, IScoreData<StageProgress>, new()
     {
         public const string ValidSignature = "CR";
 
@@ -38,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th10
 
             this.Rankings = levels.ToDictionary(
                 level => level,
-                _ => (IReadOnlyList<IScoreData<TStageProgress>>)Enumerable.Range(0, 10)
+                _ => (IReadOnlyList<IScoreData<StageProgress>>)Enumerable.Range(0, 10)
                     .Select(_ => BinaryReadableHelper.Create<TScoreData>(reader)).ToList());
 
             this.TotalPlayCount = reader.ReadInt32();
@@ -56,7 +55,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public TCharaWithTotal Chara { get; }
 
-        public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>> Rankings { get; }
+        public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
 
         public int TotalPlayCount { get; }
 

@@ -6,8 +6,7 @@ using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using Definitions = ThScoreFileConverter.Models.Th10.Definitions;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th10.CharaWithTotal>;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {

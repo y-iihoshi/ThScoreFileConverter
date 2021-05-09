@@ -5,8 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th11;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th11.CharaWithTotal>;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Th11

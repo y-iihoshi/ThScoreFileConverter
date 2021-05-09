@@ -10,8 +10,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th11.CharaWithTotal>;
 
 namespace ThScoreFileConverter.Models.Th11
 {

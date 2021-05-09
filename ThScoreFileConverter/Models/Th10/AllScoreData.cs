@@ -14,21 +14,20 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class AllScoreData<TCharaWithTotal, TStageProgress>
+    internal class AllScoreData<TCharaWithTotal>
         where TCharaWithTotal : struct, Enum
-        where TStageProgress : struct, Enum
     {
-        private readonly Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>> clearData;
+        private readonly Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearData;
 
         public AllScoreData()
         {
-            this.clearData = new Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>>(
+            this.clearData = new Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>>(
                 EnumHelper<TCharaWithTotal>.NumValues);
         }
 
         public Th095.HeaderBase? Header { get; private set; }
 
-        public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>> ClearData
+        public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> ClearData
             => this.clearData;
 
         public IStatus? Status { get; private set; }
@@ -38,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th10
             this.Header = header;
         }
 
-        public void Set(IClearData<TCharaWithTotal, TStageProgress> data)
+        public void Set(IClearData<TCharaWithTotal> data)
         {
             _ = this.clearData.TryAdd(data.Chara, data);
         }

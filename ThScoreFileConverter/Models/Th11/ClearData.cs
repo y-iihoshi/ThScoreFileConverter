@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th11
 {
-    internal class ClearData : Th10.ClearDataBase<CharaWithTotal, Th10.StageProgress, ScoreData>    // per character
+    internal class ClearData : Th10.ClearDataBase<CharaWithTotal, ScoreData>    // per character
     {
         public const ushort ValidVersion = 0x0000;
         public const int ValidSize = 0x000068D4;
@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th11
 
         public static new bool CanInitialize(Th10.Chapter chapter)
         {
-            return Th10.ClearDataBase<CharaWithTotal, Th10.StageProgress, ScoreData>.CanInitialize(chapter)
+            return Th10.ClearDataBase<CharaWithTotal, ScoreData>.CanInitialize(chapter)
                 && (chapter.Version == ValidVersion)
                 && (chapter.Size == ValidSize);
         }

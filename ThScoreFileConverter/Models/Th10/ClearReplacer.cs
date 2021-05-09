@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th10
         private readonly MatchEvaluator evaluator;
 
         public ClearReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
+            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary)
         {
             this.evaluator = new MatchEvaluator(match =>
             {

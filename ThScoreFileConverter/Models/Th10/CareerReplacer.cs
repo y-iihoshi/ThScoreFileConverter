@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th10
         private readonly MatchEvaluator evaluator;
 
         public CareerReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal, StageProgress>> clearDataDictionary,
+            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,
             INumberFormatter formatter)
         {
             this.evaluator = new MatchEvaluator(match =>

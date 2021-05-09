@@ -12,9 +12,8 @@ using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal interface IClearData<TCharaWithTotal, TStageProgress> : Th095.IChapter
+    internal interface IClearData<TCharaWithTotal> : Th095.IChapter
         where TCharaWithTotal : struct, Enum
-        where TStageProgress : struct, Enum
     {
         IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
 
@@ -26,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         IReadOnlyDictionary<(Level Level, Stage Stage), IPractice> Practices { get; }
 
-        IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>> Rankings { get; }
+        IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
 
         int TotalPlayCount { get; }
     }

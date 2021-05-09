@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th10
     [TestClass]
     public class ClearDataTests
     {
-        internal static Mock<IClearData<CharaWithTotal, StageProgress>> MockClearData()
+        internal static Mock<IClearData<CharaWithTotal>> MockClearData()
         {
             static IScoreData<StageProgress> CreateScoreData(int index)
             {
@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             var stages = EnumHelper<Stage>.Enumerable;
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
-            var mock = new Mock<IClearData<CharaWithTotal, StageProgress>>();
+            var mock = new Mock<IClearData<CharaWithTotal>>();
             _ = mock.SetupGet(m => m.Signature).Returns("CR");
             _ = mock.SetupGet(m => m.Version).Returns(0x0000);
             _ = mock.SetupGet(m => m.Checksum).Returns(0u);
@@ -76,10 +76,9 @@ namespace ThScoreFileConverterTests.Models.Th10
             return mock;
         }
 
-        internal static byte[] MakeByteArray<TCharaWithTotal, TStageProgress>(
-            IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
+        internal static byte[] MakeByteArray<TCharaWithTotal>(
+            IClearData<TCharaWithTotal> clearData, int scoreDataUnknownSize)
             where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
         {
             return TestUtils.MakeByteArray(
                 clearData.Signature.ToCharArray(),
@@ -97,15 +96,14 @@ namespace ThScoreFileConverterTests.Models.Th10
                 clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
         }
 
-        internal static byte[] MakeByteArray(IClearData<CharaWithTotal, StageProgress> clearData)
+        internal static byte[] MakeByteArray(IClearData<CharaWithTotal> clearData)
         {
             return MakeByteArray(clearData, 0);
         }
 
-        internal static void Validate<TCharaWithTotal, TStageProgress>(
-            IClearData<TCharaWithTotal, TStageProgress> expected, IClearData<TCharaWithTotal, TStageProgress> actual)
+        internal static void Validate<TCharaWithTotal>(
+            IClearData<TCharaWithTotal> expected, IClearData<TCharaWithTotal> actual)
             where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
         {
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
