@@ -12,10 +12,7 @@ using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Th08
 {
-    internal interface IHighScore<TChara, TLevel, TStageProgress> : Th07.IHighScore<TChara, TLevel, TStageProgress>
-        where TChara : struct, Enum
-        where TLevel : struct, Enum
-        where TStageProgress : struct, Enum
+    internal interface IHighScore : Th07.IHighScore<Chara, Level, StageProgress>
     {
         int BombCount { get; }
 

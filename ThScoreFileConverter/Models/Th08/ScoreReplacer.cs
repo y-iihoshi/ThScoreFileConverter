@@ -14,10 +14,6 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using static ThScoreFileConverter.Models.Th08.Parsers;
-using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08.Chara,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th08
 {

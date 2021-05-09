@@ -3,10 +3,7 @@ using Moq;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
-using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08.Chara,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08.StageProgress>;
+using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;

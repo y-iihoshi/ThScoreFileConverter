@@ -13,10 +13,6 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
-using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08.Chara,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th08
 {

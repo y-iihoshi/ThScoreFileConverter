@@ -6,10 +6,7 @@ using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
-using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08.Chara,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08.StageProgress>;
+using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
