@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -64,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
+                { (mock.Object.Chara, mock.Object.Level), ImmutableList<IHighScore>.Empty },
             };
             var formatterMock = MockNumberFormatter();
             var replacer = new ClearReplacer(rankings, ClearCounts, formatterMock.Object);
@@ -122,7 +123,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
+                { (mock.Object.Chara, mock.Object.Level), ImmutableList<IHighScore>.Empty },
             };
             var formatterMock = MockNumberFormatter();
             var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock.Object);

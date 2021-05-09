@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -46,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
+                { (mock.Object.Chara, mock.Object.Level), ImmutableList<IHighScore>.Empty },
             };
             var replacer = new ClearReplacer(rankings);
             Assert.IsNotNull(replacer);
@@ -85,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var mock = HighScoreTests.MockHighScore();
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                { (mock.Object.Chara, mock.Object.Level), new List<IHighScore>() },
+                { (mock.Object.Chara, mock.Object.Level), ImmutableList<IHighScore>.Empty },
             };
             var replacer = new ClearReplacer(rankings);
             Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T06CLEARHRB"));

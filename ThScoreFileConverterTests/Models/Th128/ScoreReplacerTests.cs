@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -124,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                     m => (m.Route == RouteWithTotal.A2)
                          && (m.Rankings == EnumHelper<Level>.Enumerable.ToDictionary(
                             level => level,
-                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+                            level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Route);
             var formatterMock = MockNumberFormatter();
 

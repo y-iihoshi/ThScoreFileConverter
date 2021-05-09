@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -49,7 +50,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ScoreReplacerTestEmptyRanking()
         {
             var mock = ClearDataTests.MockClearData();
-            _ = mock.SetupGet(m => m.Ranking).Returns(new List<IHighScore>());
+            _ = mock.SetupGet(m => m.Ranking).Returns(ImmutableList<IHighScore>.Empty);
             var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock.Object) }.ToDictionary();
             var formatterMock = MockNumberFormatter();
 
@@ -97,7 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReplaceTestEmptyRanking()
         {
             var mock = ClearDataTests.MockClearData();
-            _ = mock.SetupGet(m => m.Ranking).Returns(new List<IHighScore>());
+            _ = mock.SetupGet(m => m.Ranking).Returns(ImmutableList<IHighScore>.Empty);
             var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock.Object) }.ToDictionary();
             var formatterMock = MockNumberFormatter();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -72,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void ShotExReplacerTestEmptyScores()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(BestShots, scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -195,7 +196,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotExReplacer(BestShots, scores, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T125SHOTEXH236"));

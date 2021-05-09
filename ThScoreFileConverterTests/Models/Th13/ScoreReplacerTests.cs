@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -131,7 +132,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                     m => (m.Chara == CharaWithTotal.Marisa)
                          && (m.Rankings == EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                             level => level,
-                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+                            level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);
             var formatterMock = MockNumberFormatter();
 

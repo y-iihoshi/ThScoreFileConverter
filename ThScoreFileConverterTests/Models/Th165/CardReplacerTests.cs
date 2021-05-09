@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th165;
@@ -27,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void CardReplacerTestEmpty()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var replacer = new CardReplacer(scores, true);
             Assert.IsNotNull(replacer);
         }
@@ -67,7 +68,7 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));
         }

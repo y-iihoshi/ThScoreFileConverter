@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -54,7 +55,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ScoreTotalReplacerTestEmptyScores()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreTotalReplacer(scores, ItemStatuses, formatterMock.Object);
             Assert.IsNotNull(replacer);
@@ -112,7 +113,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ScoreTotalReplacer(scores, ItemStatuses, formatterMock.Object);
             Assert.AreEqual("invoked: 0", replacer.Replace("%T143SCRTL11"));

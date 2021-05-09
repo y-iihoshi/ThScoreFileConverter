@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -124,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                     m => (m.Chara == CharaWithTotal.ReimuB)
                          && (m.Rankings == EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
                             level => level,
-                            level => new List<IScoreData>() as IReadOnlyList<IScoreData>)))
+                            level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>)))
             }.ToDictionary(clearData => clearData.Chara);
 
             var replacer = new ClearReplacer(dictionary);

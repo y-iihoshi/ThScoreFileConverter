@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th143;
@@ -20,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void CardReplacerTestEmpty()
         {
-            var scores = new List<IScore>();
+            var scores = ImmutableList<IScore>.Empty;
             var replacer = new CardReplacer(scores, true);
             Assert.IsNotNull(replacer);
         }

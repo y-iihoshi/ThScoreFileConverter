@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
@@ -39,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th13
                 var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.Rankings.TryGetValue(level, out var ranking)
                     ? ranking.Where(score => score.DateTime > 0)
-                    : new List<Th10.IScoreData<StageProgress>>();
+                    : ImmutableList<Th10.IScoreData<StageProgress>>.Empty;
                 var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
                 if (stageProgress == StageProgress.Extra)

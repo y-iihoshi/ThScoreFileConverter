@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -15,11 +16,11 @@ namespace ThScoreFileConverterTests.Models.Th075
         internal static Mock<IClearData> MockInitialClearData()
         {
             var mock = new Mock<IClearData>();
-            _ = mock.SetupGet(m => m.MaxBonuses).Returns(new List<int>());
-            _ = mock.SetupGet(m => m.CardGotCount).Returns(new List<short>());
-            _ = mock.SetupGet(m => m.CardTrialCount).Returns(new List<short>());
-            _ = mock.SetupGet(m => m.CardTrulyGot).Returns(new List<byte>());
-            _ = mock.SetupGet(m => m.Ranking).Returns(new List<IHighScore>());
+            _ = mock.SetupGet(m => m.MaxBonuses).Returns(ImmutableList<int>.Empty);
+            _ = mock.SetupGet(m => m.CardGotCount).Returns(ImmutableList<short>.Empty);
+            _ = mock.SetupGet(m => m.CardTrialCount).Returns(ImmutableList<short>.Empty);
+            _ = mock.SetupGet(m => m.CardTrulyGot).Returns(ImmutableList<byte>.Empty);
+            _ = mock.SetupGet(m => m.Ranking).Returns(ImmutableList<IHighScore>.Empty);
             return mock;
         }
 
