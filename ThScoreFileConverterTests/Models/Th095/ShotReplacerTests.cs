@@ -12,8 +12,8 @@ namespace ThScoreFileConverterTests.Models.Th095
     [TestClass]
     public class ShotReplacerTests
     {
-        internal static IReadOnlyDictionary<(Level, int), (string, IBestShotHeader)> BestShots { get; } =
-            new List<(string, IBestShotHeader header)>
+        internal static IReadOnlyDictionary<(Level, int), (string, IBestShotHeader<Level>)> BestShots { get; } =
+            new List<(string, IBestShotHeader<Level> header)>
             {
                 (@"C:\path\to\output\bestshots\bs_02_3.png", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
@@ -39,7 +39,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ShotReplacerTestEmptyBestShots()
         {
-            var bestshots = ImmutableDictionary<(Level, int), (string, IBestShotHeader)>.Empty;
+            var bestshots = ImmutableDictionary<(Level, int), (string, IBestShotHeader<Level>)>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
             Assert.IsNotNull(replacer);
@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ShotReplacerTestInvalidBestShotPath()
         {
-            var bestshots = new List<(string, IBestShotHeader header)>
+            var bestshots = new List<(string, IBestShotHeader<Level> header)>
             {
                 ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));
@@ -93,7 +93,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ReplaceTestEmptyBestShots()
         {
-            var bestshots = ImmutableDictionary<(Level, int), (string, IBestShotHeader)>.Empty;
+            var bestshots = ImmutableDictionary<(Level, int), (string, IBestShotHeader<Level>)>.Empty;
             var formatterMock = MockNumberFormatter();
             var replacer = new ShotReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T95SHOT23"));
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ReplaceTestInvalidBestShotPaths()
         {
-            var bestshots = new List<(string, IBestShotHeader header)>
+            var bestshots = new List<(string, IBestShotHeader<Level> header)>
             {
                 ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
             }.ToDictionary(element => (element.header.Level, (int)element.header.Scene));

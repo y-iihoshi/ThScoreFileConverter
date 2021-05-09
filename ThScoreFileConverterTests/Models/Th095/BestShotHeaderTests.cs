@@ -13,17 +13,17 @@ namespace ThScoreFileConverterTests.Models.Th095
     [TestClass]
     public class BestShotHeaderTests
     {
-        internal static Mock<IBestShotHeader> MockInitialBestShotHeader()
+        internal static Mock<IBestShotHeader<Level>> MockInitialBestShotHeader()
         {
-            var mock = new Mock<IBestShotHeader>();
+            var mock = new Mock<IBestShotHeader<Level>>();
             _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
             _ = mock.SetupGet(m => m.CardName).Returns(Enumerable.Empty<byte>());
             return mock;
         }
 
-        internal static Mock<IBestShotHeader> MockBestShotHeader()
+        internal static Mock<IBestShotHeader<Level>> MockBestShotHeader()
         {
-            var mock = new Mock<IBestShotHeader>();
+            var mock = new Mock<IBestShotHeader<Level>>();
             _ = mock.SetupGet(m => m.Signature).Returns("BSTS");
             _ = mock.SetupGet(m => m.Level).Returns(Level.Two);
             _ = mock.SetupGet(m => m.Scene).Returns(3);
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             return mock;
         }
 
-        internal static byte[] MakeByteArray(IBestShotHeader header)
+        internal static byte[] MakeByteArray(IBestShotHeader<Level> header)
         {
             return TestUtils.MakeByteArray(
                 header.Signature.ToCharArray(),
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Th095
                 header.CardName);
         }
 
-        internal static void Validate(IBestShotHeader expected, in IBestShotHeader actual)
+        internal static void Validate(IBestShotHeader<Level> expected, in IBestShotHeader<Level> actual)
         {
             if (actual is null)
                 throw new ArgumentNullException(nameof(actual));
