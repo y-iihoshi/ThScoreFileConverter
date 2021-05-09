@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Models.Th18
     internal static class Definitions
     {
         // Thanks to wikiwiki.jp/thk and en.touhouwiki.net
-        public static IReadOnlyDictionary<int, CardInfo> CardTable { get; } = new List<CardInfo>
+        public static IReadOnlyDictionary<int, CardInfo> CardTable { get; } = new CardInfo[]
         {
 #pragma warning disable SA1008 // Opening parenthesis should be spaced correctly
             new( 1, "招符「弾幕万来」",                       Stage.One,   Level.Easy),
