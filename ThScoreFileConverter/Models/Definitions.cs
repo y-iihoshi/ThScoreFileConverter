@@ -43,5 +43,15 @@ namespace ThScoreFileConverter.Models
             new() { Number = nameof(Resources.TH155), IsSupported = true },
             new() { Number = nameof(Resources.TH175), IsSupported = false },
         };
+
+        public static bool CanPractice(Level level)
+        {
+            return level != Level.Extra;
+        }
+
+        public static bool CanPractice(Stage stage)
+        {
+            return stage != Stage.Extra;
+        }
     }
 }

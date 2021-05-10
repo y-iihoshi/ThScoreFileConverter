@@ -8,48 +8,32 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverter.Models.Th15
 {
     // %T15PRAC[x][yy][z]
-    internal class PracticeReplacer : IStringReplaceable
+    internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}PRAC({1})({2})({3})",
-            Definitions.FormatPrefix,
-            Parsers.LevelParser.Pattern,
-            Parsers.CharaParser.Pattern,
-            Parsers.StageParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
         public PracticeReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+            : base(
+                  Definitions.FormatPrefix,
+                  Parsers.LevelParser,
+                  Parsers.CharaParser,
+                  Parsers.StageParser,
+                  Models.Definitions.CanPractice,
+                  Models.Definitions.CanPractice,
+                  (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
+                  formatter)
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
-
-                if (level == Level.Extra)
-                    return match.ToString();
-                if (stage == Stage.Extra)
-                    return match.ToString();
-
-                var key = (level, (StagePractice)stage);
-                return formatter.FormatNumber(
-                    clearDataDictionary.TryGetValue(chara, out var clearData)
-                    && clearData.Practices.TryGetValue(key, out var practice)
-                    ? (practice.Score * 10) : default);
-            });
         }
 
-        public string Replace(string input)
+        private static Th10.IPractice? GetPractice(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, Level level, Chara chara, Stage stage)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return clearDataDictionary.TryGetValue((CharaWithTotal)chara, out var clearData)
+                && clearData.Practices.TryGetValue((level, (Th14.StagePractice)stage), out var practice)
+                ? practice : null;
         }
     }
 }
