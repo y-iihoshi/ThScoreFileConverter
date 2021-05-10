@@ -11,9 +11,9 @@ namespace ThScoreFileConverter.Models.Th13
 {
     internal interface IPractice
     {
-        byte ClearFlag { get; }
+        byte Cleared { get; }
 
-        byte EnableFlag { get; }
+        byte Unlocked { get; }
 
         uint Score { get; }
     }

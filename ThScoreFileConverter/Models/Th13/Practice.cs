@@ -13,17 +13,17 @@ namespace ThScoreFileConverter.Models.Th13
 {
     internal class Practice : IBinaryReadable, IPractice
     {
-        public uint Score { get; private set; }         // Divided by 10
+        public uint Score { get; private set; }     // Divided by 10
 
-        public byte ClearFlag { get; private set; }     // 0x00: Not clear, 0x01: Cleared
+        public byte Cleared { get; private set; }   // 0x00: Not clear, 0x01: Cleared
 
-        public byte EnableFlag { get; private set; }    // 0x00: Disable, 0x01: Enable
+        public byte Unlocked { get; private set; }  // 0x00: Locked, 0x01: Unlocked
 
         public void ReadFrom(BinaryReader reader)
         {
             this.Score = reader.ReadUInt32();
-            this.ClearFlag = reader.ReadByte();
-            this.EnableFlag = reader.ReadByte();
+            this.Cleared = reader.ReadByte();
+            this.Unlocked = reader.ReadByte();
             _ = reader.ReadUInt16();    // always 0x0000?
         }
     }

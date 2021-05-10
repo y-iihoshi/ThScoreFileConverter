@@ -12,21 +12,21 @@ namespace ThScoreFileConverterTests.Models.Th13
         {
             var mock = new Mock<IPractice>();
             _ = mock.SetupGet(m => m.Score).Returns(123456u);
-            _ = mock.SetupGet(m => m.ClearFlag).Returns(7);
-            _ = mock.SetupGet(m => m.EnableFlag).Returns(8);
+            _ = mock.SetupGet(m => m.Cleared).Returns(7);
+            _ = mock.SetupGet(m => m.Unlocked).Returns(8);
             return mock;
         }
 
         internal static byte[] MakeByteArray(IPractice practice)
         {
-            return TestUtils.MakeByteArray(practice.Score, practice.ClearFlag, practice.EnableFlag, (ushort)0);
+            return TestUtils.MakeByteArray(practice.Score, practice.Cleared, practice.Unlocked, (ushort)0);
         }
 
         internal static void Validate(IPractice expected, IPractice actual)
         {
             Assert.AreEqual(expected.Score, actual.Score);
-            Assert.AreEqual(expected.ClearFlag, actual.ClearFlag);
-            Assert.AreEqual(expected.EnableFlag, actual.EnableFlag);
+            Assert.AreEqual(expected.Cleared, actual.Cleared);
+            Assert.AreEqual(expected.Unlocked, actual.Unlocked);
         }
 
         [TestMethod]
