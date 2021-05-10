@@ -56,7 +56,7 @@ namespace ThScoreFileConverter.Models.Th13
 
             this.Practices = EnumHelper<TLevelPractice>.Enumerable
                 .SelectMany(level => EnumHelper<TStagePractice>.Enumerable.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Practice>(reader) as IPractice);
+                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
 
             this.Cards = Enumerable.Range(0, numCards)
                 .Select(_ => BinaryReadableHelper.Create<SpellCard<TLevel>>(reader) as ISpellCard<TLevel>)
@@ -75,7 +75,7 @@ namespace ThScoreFileConverter.Models.Th13
 
         public IReadOnlyDictionary<TLevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
-        public IReadOnlyDictionary<(TLevelPractice Level, TStagePractice Stage), IPractice> Practices { get; }
+        public IReadOnlyDictionary<(TLevelPractice Level, TStagePractice Stage), Th10.IPractice> Practices { get; }
 
         public IReadOnlyDictionary<int, ISpellCard<TLevel>> Cards { get; }
 

@@ -14,6 +14,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th13.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
+using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th13
@@ -100,7 +101,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 clearData.PlayTime,
                 clearData.ClearCounts.Values,
                 clearData.ClearFlags.Values,
-                clearData.Practices.Values.Select(practice => PracticeTests.MakeByteArray(practice)),
+                clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
                 clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
         }
 
@@ -127,7 +128,7 @@ namespace ThScoreFileConverterTests.Models.Th13
 
             foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
+                Th10.PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
 
             foreach (var pair in expected.Cards)

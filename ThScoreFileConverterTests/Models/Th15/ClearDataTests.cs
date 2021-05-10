@@ -5,10 +5,9 @@ using Moq;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
-using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverterTests.Models.Th15
@@ -53,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 clearData.Size,
                 (int)clearData.Chara,
                 clearData.GameModeData.Values.Select(data => ClearDataPerGameModeTests.MakeByteArray(data)),
-                clearData.Practices.Values.Select(practice => PracticeTests.MakeByteArray(practice)),
+                clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
                 new byte[0x40]);
         }
 
@@ -72,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th15
 
             foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
+                Th10.PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
         }
 

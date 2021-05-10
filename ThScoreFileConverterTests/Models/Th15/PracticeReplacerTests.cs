@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
-using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverterTests.Models.Th15

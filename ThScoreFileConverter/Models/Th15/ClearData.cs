@@ -34,14 +34,14 @@ namespace ThScoreFileConverter.Models.Th15
 
             this.Practices = EnumHelper<Level>.Enumerable
                 .SelectMany(level => EnumHelper<Th14.StagePractice>.Enumerable.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th13.Practice>(reader) as Th13.IPractice);
+                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
         }
 
         public CharaWithTotal Chara { get; }
 
         public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-        public IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th13.IPractice> Practices { get; }
+        public IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
 
         public static bool CanInitialize(Th10.Chapter chapter)
         {

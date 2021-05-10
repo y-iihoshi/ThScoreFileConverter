@@ -11,8 +11,10 @@ namespace ThScoreFileConverter.Models.Th10
 {
     internal interface IPractice
     {
+        byte Cleared { get; }
+
         uint Score { get; }
 
-        uint StageFlag { get; }
+        byte Unlocked { get; }
     }
 }

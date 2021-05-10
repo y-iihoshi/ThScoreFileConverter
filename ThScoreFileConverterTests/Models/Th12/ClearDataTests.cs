@@ -37,7 +37,8 @@ namespace ThScoreFileConverterTests.Models.Th12
             {
                 var mock = new Mock<IPractice>();
                 _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
-                _ = mock.SetupGet(p => p.StageFlag).Returns((uint)pair.Item2 % 2u);
+                _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
+                _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
                 return mock.Object;
             }
 

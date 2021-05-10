@@ -12,6 +12,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th13.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
+using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Th13
 {

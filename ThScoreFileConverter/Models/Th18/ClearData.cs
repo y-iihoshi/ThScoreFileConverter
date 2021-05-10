@@ -64,7 +64,7 @@ namespace ThScoreFileConverter.Models.Th18
 
             this.Practices = levelsExceptExtra
                 .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th13.Practice>(reader) as Th13.IPractice);
+                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
 
             _ = reader.ReadExactBytes(0x120);
         }
@@ -81,7 +81,7 @@ namespace ThScoreFileConverter.Models.Th18
 
         public IReadOnlyDictionary<Th14.LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
-        public IReadOnlyDictionary<(Level Level, Stage Stage), Th13.IPractice> Practices { get; }
+        public IReadOnlyDictionary<(Level Level, Stage Stage), Th10.IPractice> Practices { get; }
 
         public IReadOnlyDictionary<int, Th13.ISpellCard<Level>> Cards { get; }
 
