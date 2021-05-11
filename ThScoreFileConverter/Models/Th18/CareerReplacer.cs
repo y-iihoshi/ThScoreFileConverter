@@ -13,7 +13,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
-using static ThScoreFileConverter.Models.Th18.Parsers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th18.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
@@ -28,7 +27,7 @@ namespace ThScoreFileConverter.Models.Th18
     internal class CareerReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}C([SP])(\d{{2}})({1})([12])", Definitions.FormatPrefix, CharaWithTotalParser.Pattern);
+            @"{0}C([SP])(\d{{2}})({1})([12])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -39,7 +38,7 @@ namespace ThScoreFileConverter.Models.Th18
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var number = IntegerHelper.Parse(match.Groups[2].Value);
-                var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
+                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
 
                 Func<Th13.ISpellCard<Level>, int> getCount = (kind, type) switch

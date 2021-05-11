@@ -8,7 +8,6 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Text.RegularExpressions;
-using static ThScoreFileConverter.Models.Th07.Parsers;
 
 namespace ThScoreFileConverter.Models.Th07
 {
@@ -18,8 +17,8 @@ namespace ThScoreFileConverter.Models.Th07
         private static readonly string Pattern = Utils.Format(
             @"{0}PLAY({1})({2}|CL|CN|PR|RT)",
             Definitions.FormatPrefix,
-            LevelWithTotalParser.Pattern,
-            CharaWithTotalParser.Pattern);
+            Parsers.LevelWithTotalParser.Pattern,
+            Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -27,7 +26,7 @@ namespace ThScoreFileConverter.Models.Th07
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
                 var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
                 var playCount = playStatus.PlayCounts[level];
@@ -43,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th07
                         return formatter.FormatNumber(playCount.TotalRetry);
                     default:
                         {
-                            var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
+                            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
                             return formatter.FormatNumber((chara == CharaWithTotal.Total)
                                 ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                         }

@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
-using static ThScoreFileConverter.Models.Th18.Parsers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th18.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
@@ -29,9 +28,9 @@ namespace ThScoreFileConverter.Models.Th18
         private static readonly string Pattern = Utils.Format(
             @"{0}CRG([SP])({1})({2})({3})([12])",
             Definitions.FormatPrefix,
-            LevelWithTotalParser.Pattern,
-            CharaWithTotalParser.Pattern,
-            StageWithTotalParser.Pattern);
+            Parsers.LevelWithTotalParser.Pattern,
+            Parsers.CharaWithTotalParser.Pattern,
+            Parsers.StageWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -46,9 +45,9 @@ namespace ThScoreFileConverter.Models.Th18
                 INumberFormatter formatter)
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
-                var level = LevelWithTotalParser.Parse(match.Groups[2].Value);
-                var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
+                var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2].Value);
+                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
+                var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
                 var type = IntegerHelper.Parse(match.Groups[5].Value);
 
                 if (stage == StageWithTotal.Extra)

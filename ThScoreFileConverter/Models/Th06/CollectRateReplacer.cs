@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
-using static ThScoreFileConverter.Models.Th06.Parsers;
 
 namespace ThScoreFileConverter.Models.Th06
 {
@@ -20,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th06
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}CRG({1})([12])", Definitions.FormatPrefix, StageWithTotalParser.Pattern);
+            @"{0}CRG({1})([12])", Definitions.FormatPrefix, Parsers.StageWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -28,7 +27,7 @@ namespace ThScoreFileConverter.Models.Th06
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
+                var stage = Parsers.StageWithTotalParser.Parse(match.Groups[1].Value);
                 var type = IntegerHelper.Parse(match.Groups[2].Value);
 
                 Func<ICardAttack, bool> findByStage = stage switch

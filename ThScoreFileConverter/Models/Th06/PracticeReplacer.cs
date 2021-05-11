@@ -9,7 +9,6 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using static ThScoreFileConverter.Models.Th06.Parsers;
 
 namespace ThScoreFileConverter.Models.Th06
 {
@@ -19,9 +18,9 @@ namespace ThScoreFileConverter.Models.Th06
         private static readonly string Pattern = Utils.Format(
             @"{0}PRAC({1})({2})({3})",
             Definitions.FormatPrefix,
-            LevelParser.Pattern,
-            CharaParser.Pattern,
-            StageParser.Pattern);
+            Parsers.LevelParser.Pattern,
+            Parsers.CharaParser.Pattern,
+            Parsers.StageParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -31,9 +30,9 @@ namespace ThScoreFileConverter.Models.Th06
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var stage = StageParser.Parse(match.Groups[3].Value);
+                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+                var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
 
                 return Models.Definitions.CanPractice(level) && Models.Definitions.CanPractice(stage)
                     ? formatter.FormatNumber(

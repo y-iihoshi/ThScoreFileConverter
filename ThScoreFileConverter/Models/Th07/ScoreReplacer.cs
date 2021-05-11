@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
-using static ThScoreFileConverter.Models.Th07.Parsers;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Models.Th07.Chara,
     ThScoreFileConverter.Models.Th07.Level,
@@ -24,7 +23,10 @@ namespace ThScoreFileConverter.Models.Th07
     internal class ScoreReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}SCR({1})({2})(\d)([1-5])", Definitions.FormatPrefix, LevelParser.Pattern, CharaParser.Pattern);
+            @"{0}SCR({1})({2})(\d)([1-5])",
+            Definitions.FormatPrefix,
+            Parsers.LevelParser.Pattern,
+            Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -34,8 +36,8 @@ namespace ThScoreFileConverter.Models.Th07
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
+                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                 var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
 

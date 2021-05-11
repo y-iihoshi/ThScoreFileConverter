@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
-using static ThScoreFileConverter.Models.Th08.Parsers;
 
 namespace ThScoreFileConverter.Models.Th08
 {
@@ -20,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th08
     internal class CareerReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}C([SP])(\d{{3}})({1})([1-3])", Definitions.FormatPrefix, CharaWithTotalParser.Pattern);
+            @"{0}C([SP])(\d{{3}})({1})([1-3])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -30,7 +29,7 @@ namespace ThScoreFileConverter.Models.Th08
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var number = IntegerHelper.Parse(match.Groups[2].Value);
-                var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
+                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
 
                 Func<ICardAttack, bool> isValidLevel = kind switch

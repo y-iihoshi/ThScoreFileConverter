@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
-using static ThScoreFileConverter.Models.Th09.Parsers;
 
 namespace ThScoreFileConverter.Models.Th09
 {
@@ -19,7 +18,10 @@ namespace ThScoreFileConverter.Models.Th09
     internal class ClearReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}CLEAR({1})({2})([12])", Definitions.FormatPrefix, LevelParser.Pattern, CharaParser.Pattern);
+            @"{0}CLEAR({1})({2})([12])",
+            Definitions.FormatPrefix,
+            Parsers.LevelParser.Pattern,
+            Parsers.CharaParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -30,8 +32,8 @@ namespace ThScoreFileConverter.Models.Th09
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
+                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                 var type = IntegerHelper.Parse(match.Groups[3].Value);
 
                 var count = clearCounts.TryGetValue(chara, out var clearCount)
