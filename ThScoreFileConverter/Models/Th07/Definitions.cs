@@ -171,5 +171,15 @@ namespace ThScoreFileConverter.Models.Th07
             Enumerable.Range(1, 10).Reverse().Select(index => new HighScore((uint)index * 10000)).ToList();
 
         public static string FormatPrefix { get; } = "%T07";
+
+        public static bool CanPractice(Level level)
+        {
+            return (level != Level.Extra) && (level != Level.Phantasm);
+        }
+
+        public static bool CanPractice(Stage stage)
+        {
+            return (stage != Stage.Extra) && (stage != Stage.Phantasm);
+        }
     }
 }

@@ -35,29 +35,18 @@ namespace ThScoreFileConverter.Models.Th08
                 var stage = StageParser.Parse(match.Groups[3].Value);
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
 
-                if (level == Level.Extra)
-                    return match.ToString();
-                if (stage == Stage.Extra)
-                    return match.ToString();
-
-                if (practiceScores.TryGetValue(chara, out var practiceScore))
+                int GetValue(IPracticeScore score)
                 {
                     var key = (stage, level);
-                    if (type == 1)
-                    {
-                        return formatter.FormatNumber(
-                            practiceScore.HighScores.TryGetValue(key, out var highScore) ? (highScore * 10) : default);
-                    }
-                    else
-                    {
-                        return formatter.FormatNumber(
-                            practiceScore.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
-                    }
+                    return (type == 1)
+                        ? (score.HighScores.TryGetValue(key, out var highScore) ? (highScore * 10) : default)
+                        : (score.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
                 }
-                else
-                {
-                    return formatter.FormatNumber(default(int));
-                }
+
+                return Models.Definitions.CanPractice(level) && Definitions.CanPractice(stage)
+                    ? formatter.FormatNumber(
+                        practiceScores.TryGetValue(chara, out var score) ? GetValue(score) : default)
+                    : match.ToString();
             });
         }
 

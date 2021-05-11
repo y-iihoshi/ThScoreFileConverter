@@ -35,13 +35,10 @@ namespace ThScoreFileConverter.Models.Th06
                 var chara = CharaParser.Parse(match.Groups[2].Value);
                 var stage = StageParser.Parse(match.Groups[3].Value);
 
-                if (level == Level.Extra)
-                    return match.ToString();
-                if (stage == Stage.Extra)
-                    return match.ToString();
-
-                return formatter.FormatNumber(
-                    practiceScores.TryGetValue((chara, level, stage), out var score) ? score.HighScore : default);
+                return Models.Definitions.CanPractice(level) && Models.Definitions.CanPractice(stage)
+                    ? formatter.FormatNumber(
+                        practiceScores.TryGetValue((chara, level, stage), out var score) ? score.HighScore : default)
+                    : match.ToString();
             });
         }
 

@@ -37,22 +37,15 @@ namespace ThScoreFileConverter.Models.Th07
                 var stage = StageParser.Parse(match.Groups[3].Value);
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
 
-                if ((level == Level.Extra) || (level == Level.Phantasm))
-                    return match.ToString();
-                if ((stage == Stage.Extra) || (stage == Stage.Phantasm))
-                    return match.ToString();
+                int GetValue(IPracticeScore score)
+                {
+                    return (type == 1) ? score.HighScore * 10 : score.TrialCount;
+                }
 
-                var key = (chara, level, stage);
-                if (type == 1)
-                {
-                    return formatter.FormatNumber(
-                        practiceScores.TryGetValue(key, out var score) ? (score.HighScore * 10) : default);
-                }
-                else
-                {
-                    return formatter.FormatNumber(
-                        practiceScores.TryGetValue(key, out var score) ? score.TrialCount : default);
-                }
+                return Definitions.CanPractice(level) && Definitions.CanPractice(stage)
+                    ? formatter.FormatNumber(
+                        practiceScores.TryGetValue((chara, level, stage), out var score) ? GetValue(score) : default)
+                    : match.ToString();
             });
         }
 
