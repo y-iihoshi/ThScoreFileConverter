@@ -41,15 +41,15 @@ namespace ThScoreFileConverter.Models.Th15
                 {
                     (_, 1) => clearData => clearData.TotalPlayCount,
                     (_, 2) => clearData => clearData.PlayTime,
-                    (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts
-                        .Where(pair => pair.Key != LevelWithTotal.Total).Sum(pair => pair.Value),
+                    _ when Models.Definitions.IsTotal(level) => clearData => clearData.ClearCounts
+                        .Where(pair => !Models.Definitions.IsTotal(pair.Key)).Sum(pair => pair.Value),
                     _ => clearData => clearData.ClearCounts.TryGetValue(level, out var count) ? count : default,
                 };
 
                 Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
                 {
-                    CharaWithTotal.Total => dictionary => dictionary.Values
-                        .Where(clearData => clearData.Chara != chara)
+                    _ when Definitions.IsTotal(chara) => dictionary => dictionary.Values
+                        .Where(clearData => !Definitions.IsTotal(clearData.Chara))
                         .Sum(clearData => clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
                             ? getValueByType(clearDataPerGameMode) : default),
                     _ => dictionary => dictionary.TryGetValue(chara, out var clearData)
