@@ -144,5 +144,15 @@ namespace ThScoreFileConverter.Models.Th14
         }.ToDictionary(card => card.Id);
 
         public static string FormatPrefix { get; } = "%T14";
+
+        public static bool IsTotal(CharaWithTotal chara)
+        {
+            return chara is CharaWithTotal.Total;
+        }
+
+        public static bool IsToBeSummed(LevelPracticeWithTotal level)
+        {
+            return level is not (LevelPracticeWithTotal.Total or LevelPracticeWithTotal.NotUsed);
+        }
     }
 }

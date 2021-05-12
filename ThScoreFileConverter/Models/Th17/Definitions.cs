@@ -170,5 +170,10 @@ namespace ThScoreFileConverter.Models.Th17
         };
 
         public static string FormatPrefix { get; } = "%T17";
+
+        public static bool IsTotal(CharaWithTotal chara)
+        {
+            return chara is CharaWithTotal.Total;
+        }
     }
 }

@@ -134,5 +134,10 @@ namespace ThScoreFileConverter.Models.Th10
         }.ToDictionary(card => card.Id);
 
         public static string FormatPrefix { get; } = "%T10";
+
+        public static bool IsTotal(CharaWithTotal chara)
+        {
+            return chara is CharaWithTotal.Total;
+        }
     }
 }
