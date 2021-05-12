@@ -53,5 +53,10 @@ namespace ThScoreFileConverter.Models
         {
             return stage != Stage.Extra;
         }
+
+        public static bool IsTotal(LevelWithTotal level)
+        {
+            return level == LevelWithTotal.Total;
+        }
     }
 }
