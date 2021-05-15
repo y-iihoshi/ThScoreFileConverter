@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th06
         private readonly string pattern;
         private readonly MatchEvaluator evaluator;
 
-        public ClearReplacerBase(
+        protected ClearReplacerBase(
             string formatPrefix,
             EnumShortNameParser<TLevel> levelParser,
             EnumShortNameParser<TChara> charaParser,
