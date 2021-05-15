@@ -8,42 +8,15 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th11.CharaWithTotal>;
 
 namespace ThScoreFileConverter.Models.Th11
 {
     // %T11CLEAR[x][yy]
-    internal class ClearReplacer : IStringReplaceable
+    internal class ClearReplacer : Th10.ClearReplacerBase<Chara, CharaWithTotal>
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary)
+            : base(Definitions.FormatPrefix, Parsers.LevelParser, Parsers.CharaParser, clearDataDictionary)
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-
-                var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    && clearData.Rankings.TryGetValue(level, out var ranking)
-                    ? ranking.Where(score => score.DateTime > 0)
-                    : ImmutableList<Th10.IScoreData<Th10.StageProgress>>.Empty;
-                var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : Th10.StageProgress.None;
-
-                return (stageProgress == Th10.StageProgress.Extra) ? "Not Clear" : stageProgress.ToShortName();
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
         }
     }
 }

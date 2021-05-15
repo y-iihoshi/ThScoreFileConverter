@@ -8,53 +8,18 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
-using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th14.CharaWithTotal,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPractice,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14.StagePractice,
-    ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th14
 {
     // %T14CLEAR[x][yy]
-    internal class ClearReplacer : IStringReplaceable
+    internal class ClearReplacer : Th13.ClearReplacerBase<
+        Chara, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+            CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>> clearDataDictionary)
+            : base(Definitions.FormatPrefix, Parsers.LevelParser, Parsers.CharaParser, clearDataDictionary)
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = (LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-
-                var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    && clearData.Rankings.TryGetValue(level, out var ranking)
-                    ? ranking.Where(score => score.DateTime > 0)
-                    : ImmutableList<Th10.IScoreData<Th13.StageProgress>>.Empty;
-                var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : Th13.StageProgress.None;
-
-                if (stageProgress == Th13.StageProgress.Extra)
-                    return "Not Clear";
-                else if (stageProgress == Th13.StageProgress.ExtraClear)
-                    return Th13.StageProgress.Clear.ToShortName();
-                else
-                    return stageProgress.ToShortName();
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
         }
     }
 }

@@ -8,9 +8,6 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Models.Th07.Chara,
     ThScoreFileConverter.Models.Th07.Level,
@@ -19,39 +16,25 @@ using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
 namespace ThScoreFileConverter.Models.Th07
 {
     // %T07CLEAR[x][yy]
-    internal class ClearReplacer : IStringReplaceable
+    internal class ClearReplacer : Th06.ClearReplacerBase<Level, Chara, StageProgress>
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ClearReplacer(IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings)
+        public ClearReplacer(
+            IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings)
+            : base(
+                  Definitions.FormatPrefix,
+                  Parsers.LevelParser,
+                  Parsers.CharaParser,
+                  (level, chara) => GetRanking(rankings, level, chara),
+                  static stageProgress => stageProgress is StageProgress.Extra or StageProgress.Phantasm)
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-
-                var key = (chara, level);
-                if (rankings.TryGetValue(key, out var ranking))
-                {
-                    var stageProgress = ranking.Select(rank => rank.StageProgress).DefaultIfEmpty().Max();
-                    if ((stageProgress == StageProgress.Extra) || (stageProgress == StageProgress.Phantasm))
-                        return "Not Clear";
-                    else
-                        return stageProgress.ToShortName();
-                }
-                else
-                {
-                    return StageProgress.None.ToShortName();
-                }
-            });
         }
 
-        public string Replace(string input)
+        private static IReadOnlyList<IHighScore>? GetRanking(
+            IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
+            Level level,
+            Chara chara)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return rankings.TryGetValue((chara, level), out var ranking) ? ranking : null;
         }
     }
 }
