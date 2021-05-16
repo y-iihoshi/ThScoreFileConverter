@@ -50,12 +50,33 @@ namespace ThScoreFileConverterTests.Helpers
         }
 
         [TestMethod]
-        public void IntegerHelperTest()
+        public void ParseTest()
         {
             Assert.AreEqual(123, IntegerHelper.Parse("123"));
             _ = Assert.ThrowsException<ArgumentNullException>(() => IntegerHelper.Parse(null!));
             _ = Assert.ThrowsException<FormatException>(() => IntegerHelper.Parse(string.Empty));
             _ = Assert.ThrowsException<FormatException>(() => IntegerHelper.Parse("abc"));
+        }
+
+        [DataTestMethod]
+        [DataRow(0, 1)]
+        [DataRow(1, 1)]
+        [DataRow(9, 1)]
+        [DataRow(10, 2)]
+        [DataRow(11, 2)]
+        [DataRow(99, 2)]
+        [DataRow(100, 3)]
+        [DataRow(101, 3)]
+        [DataRow(-1, 1)]
+        [DataRow(-9, 1)]
+        [DataRow(-10, 2)]
+        [DataRow(-11, 2)]
+        [DataRow(-99, 2)]
+        [DataRow(-100, 3)]
+        [DataRow(-101, 3)]
+        public void GetNumDigitsTest(int value, int numDigits)
+        {
+            Assert.AreEqual(numDigits, IntegerHelper.GetNumDigits(value));
         }
     }
 }

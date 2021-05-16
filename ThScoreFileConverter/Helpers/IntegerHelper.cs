@@ -50,5 +50,15 @@ namespace ThScoreFileConverter.Helpers
         {
             return int.Parse(s, CultureInfo.InvariantCulture);
         }
+
+        /// <summary>
+        /// Gets the number of decimal digits.
+        /// </summary>
+        /// <param name="value">A decimal value.</param>
+        /// <returns>The number of digits.</returns>
+        public static int GetNumDigits(int value)
+        {
+            return value == 0 ? 1 : (int)Math.Floor(Math.Log10(Math.Abs(value)) + 1);
+        }
     }
 }
