@@ -9,76 +9,83 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+using System.Collections.Immutable;
 using ThScoreFileConverter.Helpers;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverter.Models.Th15
 {
     // %T15CRG[v][w][xx][y][z]
-    internal class CollectRateReplacer : IStringReplaceable
+    internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
+        GameMode,
+        CharaWithTotal,
+        Level,
+        LevelWithTotal,
+        Th14.LevelPractice,
+        Th14.LevelPracticeWithTotal,
+        Th14.StagePractice,
+        IScoreData>
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CRG({1})({2})({3})({4})([12])",
-            Definitions.FormatPrefix,
-            Parsers.GameModeParser.Pattern,
-            Parsers.LevelWithTotalParser.Pattern,
-            Parsers.CharaWithTotalParser.Pattern,
-            Parsers.StageWithTotalParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
         public CollectRateReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+            : base(
+                  Definitions.FormatPrefix,
+                  Parsers.GameModeParser,
+                  Parsers.LevelWithTotalParser,
+                  Parsers.CharaWithTotalParser,
+                  Parsers.StageWithTotalParser,
+                  CanReplace,
+                  FindCardByModeType,
+                  FindCardByLevel,
+                  FindCardByLevelStage,
+                  (mode, chara) => GetSpellCards(clearDataDictionary, mode, chara),
+                  formatter)
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
-                var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2].Value);
-                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
-                var type = IntegerHelper.Parse(match.Groups[5].Value);
-
-                if (stage == StageWithTotal.Extra)
-                    return match.ToString();
-
-#if false   // FIXME
-                if (level == LevelWithTotal.Extra)
-                    mode = GameMode.Pointdevice;
-#endif
-
-                Func<Th13.ISpellCard<Level>, bool> findByType = type switch
-                {
-                    1 => card => card.ClearCount > 0,
-                    _ => card => card.TrialCount > 0,
-                };
-
-                Func<Th13.ISpellCard<Level>, bool> findByLevel = level switch
-                {
-                    LevelWithTotal.Total => FuncHelper.True,
-                    LevelWithTotal.Extra => FuncHelper.True,
-                    _ => card => card.Level == (Level)level,
-                };
-
-                Func<Th13.ISpellCard<Level>, bool> findByStage = (level, stage) switch
-                {
-                    (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
-                    (_, StageWithTotal.Total) => FuncHelper.True,
-                    _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
-                };
-
-                return formatter.FormatNumber(
-                    clearDataDictionary.TryGetValue(chara, out var clearData)
-                    && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
-                    ? clearDataPerGameMode.Cards.Values
-                        .Count(FuncHelper.MakeAndPredicate(findByType, findByLevel, findByStage))
-                    : default);
-            });
         }
 
-        public string Replace(string input)
+        private static bool CanReplace(
+            GameMode mode, LevelWithTotal level, CharaWithTotal chara, StageWithTotal stage)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return stage != StageWithTotal.Extra;
+        }
+
+        private static Func<ISpellCard, bool> FindCardByModeType(GameMode mode, int type)
+        {
+            return type switch
+            {
+                1 => card => card.ClearCount > 0,
+                _ => card => card.TrialCount > 0,
+            };
+        }
+
+        private static Func<ISpellCard, bool> FindCardByLevel(LevelWithTotal level)
+        {
+            return level switch
+            {
+                LevelWithTotal.Total => FuncHelper.True,
+                LevelWithTotal.Extra => FuncHelper.True,
+                _ => card => card.Level == (Level)level,
+            };
+        }
+
+        private static Func<ISpellCard, bool> FindCardByLevelStage(LevelWithTotal level, StageWithTotal stage)
+        {
+            return (level, stage) switch
+            {
+                (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
+                (_, StageWithTotal.Total) => FuncHelper.True,
+                _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
+            };
+        }
+
+        private static IEnumerable<ISpellCard> GetSpellCards(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary,
+            GameMode mode,
+            CharaWithTotal chara)
+        {
+            return clearDataDictionary.TryGetValue(chara, out var clearData)
+                && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
+                ? clearDataPerGameMode.Cards.Values : ImmutableList<ISpellCard>.Empty;
         }
     }
 }
