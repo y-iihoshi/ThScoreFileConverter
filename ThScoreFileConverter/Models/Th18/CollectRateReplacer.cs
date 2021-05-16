@@ -26,8 +26,9 @@ namespace ThScoreFileConverter.Models.Th18
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}CRG([SP])({1})({2})({3})([12])",
+            @"{0}CRG({1})({2})({3})({4})([12])",
             Definitions.FormatPrefix,
+            Parsers.GameModeParser.Pattern,
             Parsers.LevelWithTotalParser.Pattern,
             Parsers.CharaWithTotalParser.Pattern,
             Parsers.StageWithTotalParser.Pattern);
@@ -44,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th18
                 IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary,
                 INumberFormatter formatter)
             {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
+                var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
@@ -53,10 +54,10 @@ namespace ThScoreFileConverter.Models.Th18
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
 
-                Func<Th13.ISpellCard<Level>, bool> findByKindType = (kind, type) switch
+                Func<Th13.ISpellCard<Level>, bool> findByModeType = (mode, type) switch
                 {
-                    ("S", 1) => card => card.ClearCount > 0,
-                    ("S", _) => card => card.TrialCount > 0,
+                    (GameMode.Story, 1) => card => card.ClearCount > 0,
+                    (GameMode.Story, _) => card => card.TrialCount > 0,
                     (_, 1) => card => card.PracticeClearCount > 0,
                     _ => card => card.PracticeTrialCount > 0,
                 };
@@ -78,7 +79,7 @@ namespace ThScoreFileConverter.Models.Th18
                 return formatter.FormatNumber(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.Cards.Values
-                        .Count(FuncHelper.MakeAndPredicate(findByKindType, findByLevel, findByStage))
+                        .Count(FuncHelper.MakeAndPredicate(findByModeType, findByLevel, findByStage))
                     : default);
             }
         }

@@ -6,8 +6,8 @@ using Moq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using Definitions = ThScoreFileConverter.Models.Th15.Definitions;
+using GameMode = ThScoreFileConverter.Models.Th15.GameMode;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
-using Level = ThScoreFileConverter.Models.Level;
 
 namespace ThScoreFileConverterTests.Models.Th15
 {

@@ -67,8 +67,8 @@ namespace TemplateGenerator.Models
 
         public static IReadOnlyDictionary<string, string> CareerKinds { get; } = new[]
         {
-            ("S", "ゲーム本編"),
-            ("P", "スペルプラクティス"),
-        }.ToDictionary();
+            (GameMode.Story,         "ゲーム本編"),
+            (GameMode.SpellPractice, "スペルプラクティス"),
+        }.ToStringKeyedDictionary();
     }
 }

@@ -13,6 +13,12 @@ namespace ThScoreFileConverter.Models.Th17
     internal static class Parsers
     {
         /// <summary>
+        /// Gets the parser of <see cref="GameMode"/>.
+        /// </summary>
+        public static EnumShortNameParser<GameMode> GameModeParser { get; } =
+            new EnumShortNameParser<GameMode>();
+
+        /// <summary>
         /// Gets the parser of <see cref="Level"/>.
         /// </summary>
         public static EnumShortNameParser<Level> LevelParser { get; }

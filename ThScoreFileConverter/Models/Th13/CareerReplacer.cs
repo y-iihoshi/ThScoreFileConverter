@@ -27,7 +27,10 @@ namespace ThScoreFileConverter.Models.Th13
     internal class CareerReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}C([SP])(\d{{3}})({1})([12])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
+            @"{0}C({1})(\d{{3}})({2})([12])",
+            Definitions.FormatPrefix,
+            Parsers.GameModeParser.Pattern,
+            Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
@@ -36,21 +39,21 @@ namespace ThScoreFileConverter.Models.Th13
         {
             this.evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
+                var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var number = IntegerHelper.Parse(match.Groups[2].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = IntegerHelper.Parse(match.Groups[4].Value);
 
-                Func<ISpellCard<LevelPractice>, bool> isValidLevel = kind switch
+                Func<ISpellCard<LevelPractice>, bool> isValidLevel = mode switch
                 {
-                    "S" => card => card.Level != LevelPractice.OverDrive,
+                    GameMode.Story => card => card.Level != LevelPractice.OverDrive,
                     _ => FuncHelper.True,
                 };
 
-                Func<ISpellCard<LevelPractice>, int> getCount = (kind, type) switch
+                Func<ISpellCard<LevelPractice>, int> getCount = (mode, type) switch
                 {
-                    ("S", 1) => card => card.ClearCount,
-                    ("S", _) => card => card.TrialCount,
+                    (GameMode.Story, 1) => card => card.ClearCount,
+                    (GameMode.Story, _) => card => card.TrialCount,
                     (_, 1) => card => card.PracticeClearCount,
                     _ => card => card.PracticeTrialCount,
                 };

@@ -2,6 +2,7 @@
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
+using GameMode = ThScoreFileConverter.Models.Th15.GameMode;
 
 namespace TemplateGenerator.Models.Th15
 {

@@ -26,8 +26,9 @@ namespace ThScoreFileConverter.Models.Th13
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}CRG([SP])({1})({2})({3})([12])",
+            @"{0}CRG({1})({2})({3})({4})([12])",
             Definitions.FormatPrefix,
+            Parsers.GameModeParser.Pattern,
             Parsers.LevelPracticeWithTotalParser.Pattern,
             Parsers.CharaWithTotalParser.Pattern,
             Parsers.StageWithTotalParser.Pattern);
@@ -44,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th13
                 IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary,
                 INumberFormatter formatter)
             {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
+                var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
@@ -52,13 +53,13 @@ namespace ThScoreFileConverter.Models.Th13
 
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
-                if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
+                if ((mode == GameMode.Story) && (level == LevelPracticeWithTotal.OverDrive))
                     return match.ToString();
 
-                Func<ISpellCard<LevelPractice>, bool> findByKindType = (kind, type) switch
+                Func<ISpellCard<LevelPractice>, bool> findByModeType = (mode, type) switch
                 {
-                    ("S", 1) => card => (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0),
-                    ("S", _) => card => (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0),
+                    (GameMode.Story, 1) => card => (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0),
+                    (GameMode.Story, _) => card => (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0),
                     (_, 1) => card => card.PracticeClearCount > 0,
                     _ => card => card.PracticeTrialCount > 0,
                 };
@@ -84,7 +85,7 @@ namespace ThScoreFileConverter.Models.Th13
                 return formatter.FormatNumber(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.Cards.Values
-                        .Count(FuncHelper.MakeAndPredicate(findByKindType, findByLevel, findByStage))
+                        .Count(FuncHelper.MakeAndPredicate(findByModeType, findByLevel, findByStage))
                     : default);
             }
         }

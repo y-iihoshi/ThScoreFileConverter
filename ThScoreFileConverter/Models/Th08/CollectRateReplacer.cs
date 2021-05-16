@@ -19,8 +19,9 @@ namespace ThScoreFileConverter.Models.Th08
     internal class CollectRateReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"{0}CRG([SP])({1})({2})({3})([12])",
+            @"{0}CRG({1})({2})({3})({4})([12])",
             Definitions.FormatPrefix,
+            Parsers.GameModeParser.Pattern,
             Parsers.LevelPracticeWithTotalParser.Pattern,
             Parsers.CharaWithTotalParser.Pattern,
             Parsers.StageWithTotalParser.Pattern);
@@ -34,7 +35,7 @@ namespace ThScoreFileConverter.Models.Th08
             static string EvaluatorImpl(
                 Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
             {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
+                var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
@@ -42,7 +43,7 @@ namespace ThScoreFileConverter.Models.Th08
 
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
-                if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
+                if ((mode == GameMode.Story) && (level == LevelPracticeWithTotal.LastWord))
                     return match.ToString();
 
                 Func<ICardAttackCareer, bool> findByType = type switch
@@ -51,9 +52,9 @@ namespace ThScoreFileConverter.Models.Th08
                     _ => career => career.TrialCounts[chara] > 0,
                 };
 
-                Func<ICardAttack, bool> findByKind = kind switch
+                Func<ICardAttack, bool> findByMode = mode switch
                 {
-                    "S" => attack => Definitions.CardTable.Any(
+                    GameMode.Story => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Level != LevelPractice.LastWord))
                         && findByType(attack.StoryCareer),
                     _ => attack => findByType(attack.PracticeCareer),
@@ -79,7 +80,7 @@ namespace ThScoreFileConverter.Models.Th08
                 };
 
                 return formatter.FormatNumber(
-                    cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByKind, findByLevel, findByStage)));
+                    cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByMode, findByLevel, findByStage)));
             }
         }
 
