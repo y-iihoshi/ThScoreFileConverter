@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<ThScoreFileConverter.Models.Th105.Chara>;
@@ -556,5 +557,10 @@ namespace ThScoreFileConverter.Models.Th105
                     stageInfo => stageInfo.CardIds.Select(id => (stageInfo.Enemy, id))));
 
         public static string FormatPrefix { get; } = "%T105";
+
+        public static bool HasStory(Chara chara)
+        {
+            return Enum.IsDefined(typeof(Chara), chara);
+        }
     }
 }

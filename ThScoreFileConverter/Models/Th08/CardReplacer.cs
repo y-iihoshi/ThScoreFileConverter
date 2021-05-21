@@ -8,54 +8,32 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08
 {
     // %T08CARD[xxx][y]
-    internal class CardReplacer : IStringReplaceable
+    internal class CardReplacer : Th06.CardReplacerBase<StagePractice, LevelPractice>
     {
-        private static readonly string Pattern = Utils.Format(@"{0}CARD(\d{{3}})([NR])", Definitions.FormatPrefix);
-
-        private readonly MatchEvaluator evaluator;
-
         public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
+            : base(
+                  Definitions.FormatPrefix,
+                  Definitions.CardTable,
+                  hideUntriedCards,
+                  cardNumber => CardHasTried(cardAttacks, cardNumber),
+                  static cardInfo => CardLevelToString(cardInfo))
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var type = match.Groups[2].Value.ToUpperInvariant();
-
-                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
-                {
-                    if (hideUntriedCards)
-                    {
-                        if (!cardAttacks.TryGetValue(number, out var attack) || !attack.HasTried)
-                            return (type == "N") ? "??????????" : "?????";
-                    }
-
-                    if (type == "N")
-                    {
-                        return cardInfo.Name;
-                    }
-                    else
-                    {
-                        var levelName = cardInfo.Level.ToLongName();
-                        return (levelName.Length > 0) ? levelName : cardInfo.Level.ToString();
-                    }
-                }
-                else
-                {
-                    return match.ToString();
-                }
-            });
         }
 
-        public string Replace(string input)
+        private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;
+        }
+
+        private static string CardLevelToString(SpellCardInfo<StagePractice, LevelPractice> cardInfo)
+        {
+            var levelName = cardInfo.Level.ToLongName();
+            return (levelName.Length > 0) ? levelName : cardInfo.Level.ToString();
         }
     }
 }

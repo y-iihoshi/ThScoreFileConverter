@@ -8,55 +8,28 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th11.CharaWithTotal>;
 
 namespace ThScoreFileConverter.Models.Th11
 {
     // %T11CARD[xxx][y]
-    internal class CardReplacer : IStringReplaceable
+    internal class CardReplacer : Th10.CardReplacerBase<Stage, Level>
     {
-        private static readonly string Pattern = Utils.Format(@"{0}CARD(\d{{3}})([NR])", Definitions.FormatPrefix);
-
-        private readonly MatchEvaluator evaluator;
-
         public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
+            : base(
+                  Definitions.FormatPrefix,
+                  Definitions.CardTable,
+                  hideUntriedCards,
+                  cardNumber => CardHasTried(clearDataDictionary, cardNumber))
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var type = match.Groups[2].Value.ToUpperInvariant();
-
-                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
-                {
-                    if (type == "N")
-                    {
-                        if (hideUntriedCards)
-                        {
-                            if (!clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
-                                || !clearData.Cards.TryGetValue(number, out var card)
-                                || !card.HasTried)
-                                return "??????????";
-                        }
-
-                        return cardInfo.Name;
-                    }
-                    else
-                    {
-                        return cardInfo.Level.ToString();
-                    }
-                }
-                else
-                {
-                    return match.ToString();
-                }
-            });
         }
 
-        public string Replace(string input)
+        private static bool CardHasTried(
+            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+                && clearData.Cards.TryGetValue(cardNumber, out var card)
+                && card.HasTried;
         }
     }
 }

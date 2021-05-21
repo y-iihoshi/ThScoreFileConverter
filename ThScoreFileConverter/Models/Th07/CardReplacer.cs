@@ -8,45 +8,24 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th07
 {
     // %T07CARD[xxx][y]
-    internal class CardReplacer : IStringReplaceable
+    internal class CardReplacer : Th06.CardReplacerBase<Stage, Level>
     {
-        private static readonly string Pattern = Utils.Format(@"{0}CARD(\d{{3}})([NR])", Definitions.FormatPrefix);
-
-        private readonly MatchEvaluator evaluator;
-
         public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
+            : base(
+                  Definitions.FormatPrefix,
+                  Definitions.CardTable,
+                  hideUntriedCards,
+                  cardNumber => CardHasTried(cardAttacks, cardNumber))
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var type = match.Groups[2].Value.ToUpperInvariant();
-
-                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
-                {
-                    if (hideUntriedCards)
-                    {
-                        if (!cardAttacks.TryGetValue(number, out var attack) || !attack.HasTried)
-                            return (type == "N") ? "??????????" : "?????";
-                    }
-
-                    return (type == "N") ? cardInfo.Name : cardInfo.Level.ToString();
-                }
-                else
-                {
-                    return match.ToString();
-                }
-            });
         }
 
-        public string Replace(string input)
+        private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;
         }
     }
 }

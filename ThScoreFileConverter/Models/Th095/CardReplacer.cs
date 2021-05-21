@@ -9,46 +9,26 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th095
 {
     // %T95CARD[x][y][z]
-    internal class CardReplacer : IStringReplaceable
+    internal class CardReplacer : CardReplacerBase<Level, Enemy>
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CARD({1})([1-9])([12])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
         public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
+            : base(
+                  Definitions.FormatPrefix,
+                  Parsers.LevelParser,
+                  Definitions.SpellCards,
+                  hideUntriedCards,
+                  (level, scene) => HasTried(scores, level, scene))
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var scene = IntegerHelper.Parse(match.Groups[2].Value);
-                var type = IntegerHelper.Parse(match.Groups[3].Value);
-
-                var key = (level, scene);
-                if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
-                    return match.ToString();
-
-                if (hideUntriedCards)
-                {
-                    var score = scores.FirstOrDefault(elem => (elem is not null) && elem.LevelScene.Equals(key));
-                    if (score is null)
-                        return "??????????";
-                }
-
-                return (type == 1) ? enemyCardPair.Enemy.ToLongName() : enemyCardPair.Card;
-            });
         }
 
-        public string Replace(string input)
+        private static bool HasTried(IReadOnlyList<IScore> scores, Level level, int scene)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return scores.FirstOrDefault(
+                elem => (elem is not null) && elem.LevelScene.Equals((level, scene))) is not null;
         }
     }
 }
