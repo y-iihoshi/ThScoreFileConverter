@@ -25,11 +25,17 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+for %%l in (en ja) do (
+	echo %%l
+	%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR%/%%l %SPHINXOPTS% -Dlanguage=%%l
+)
 goto end
 
 :help
-%SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+for %%l in (en ja) do (
+	echo %%l
+	%SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR%/%%l %SPHINXOPTS% -Dlanguage=%%l
+)
 
 :end
 popd
