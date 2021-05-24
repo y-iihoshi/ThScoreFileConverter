@@ -71,10 +71,10 @@
   <!-- This task seems not necessary for *.pyproj. -->
   <Target Name="_GenerateCompileDependencyCache" />
   <Target Name="CoreCompile">
-    <Exec Command="make.bat html" IgnoreExitCode="False" />
+    <Exec Command="make.bat html-langs" IgnoreExitCode="False" />
   </Target>
   <Target Name="CoreClean">
-    <Exec Command="make.bat clean" IgnoreExitCode="False" />
+    <Exec Command="make.bat clean-langs" IgnoreExitCode="False" />
   </Target>
   <Target Name="BeforeBuild">
   </Target>
