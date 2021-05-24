@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8332C86B-BB85-41F4-A6C8-F72AF538ECB2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		CollectArtifacts.bat = CollectArtifacts.bat
 		CustomDictionary.xml = CustomDictionary.xml
 		Directory.Build.props = Directory.Build.props
 		LICENSE.txt = LICENSE.txt
@@ -18,7 +19,7 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ManualGenerator", "ManualGe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverterTests", "ThScoreFileConverterTests\ThScoreFileConverterTests.csproj", "{48809CD9-31FA-46FA-867B-5E8BCC2DED45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator", "TemplateGenerator\TemplateGenerator.csproj", "{828BB6E0-33A8-418B-AB46-0260377DCD95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGenerator", "TemplateGenerator\TemplateGenerator.csproj", "{828BB6E0-33A8-418B-AB46-0260377DCD95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
