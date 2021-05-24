@@ -74,11 +74,7 @@ jobs:
       if: matrix.configuration == 'Debug'
 
     - name: Collect artifacts
-      run: |
-        xcopy ThScoreFileConverter\bin\${{ matrix.configuration }}\${{ matrix.target-framework }} publish\${{ matrix.target-framework }} /e /i /q
-        xcopy ManualGenerator\_build\html publish\${{ matrix.target-framework }}\doc /e /i /q
-        xcopy TemplateGenerator\Templates publish\${{ matrix.target-framework }}\template /e /i /q
-        del publish\${{ matrix.target-framework }}\template\*.tt* /q
+      run: CollectArtifacts.bat ${{ matrix.configuration }} ${{ matrix.target-framework }}
       shell: cmd
       if: matrix.configuration == 'Release'
 
