@@ -50,6 +50,12 @@ language = 'ja'
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# i18n related settings
+gettext_compact = False
+gettext_location = False
+gettext_last_translator = author
+gettext_language_team = ''
+
 
 # -- Options for HTML output -------------------------------------------------
 

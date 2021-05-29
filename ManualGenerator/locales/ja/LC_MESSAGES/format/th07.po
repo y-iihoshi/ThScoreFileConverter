@@ -1,0 +1,411 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方妖々夢用テンプレート書式"
+msgstr ""
+
+msgid "スコアランキング"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T07SCR[w][xx][y][z]``"
+msgstr ""
+
+msgid "``[w]``"
+msgstr ""
+
+msgid "難易度"
+msgstr ""
+
+msgid "``[E]``"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "``[N]``"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "Lunatic"
+msgstr ""
+
+msgid "``[X]``"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
+msgid "``[P]``"
+msgstr ""
+
+msgid "Phantasm"
+msgstr ""
+
+msgid "``[xx]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[RA]``"
+msgstr ""
+
+msgid "霊夢（霊）"
+msgstr ""
+
+msgid "``[RB]``"
+msgstr ""
+
+msgid "霊夢（夢）"
+msgstr ""
+
+msgid "``[MA]``"
+msgstr ""
+
+msgid "魔理沙（魔）"
+msgstr ""
+
+msgid "``[MB]``"
+msgstr ""
+
+msgid "魔理沙（恋）"
+msgstr ""
+
+msgid "``[SA]``"
+msgstr ""
+
+msgid "咲夜（幻）"
+msgstr ""
+
+msgid "``[SB]``"
+msgstr ""
+
+msgid "咲夜（時）"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "順位"
+msgstr ""
+
+msgid "``[1～9]``"
+msgstr ""
+
+msgid "1～9 位"
+msgstr ""
+
+msgid "``[0]``"
+msgstr ""
+
+msgid "10 位"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "登録名"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "スコア"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "到達ステージ"
+msgstr ""
+
+msgid "``[4]``"
+msgstr ""
+
+msgid "日付"
+msgstr ""
+
+msgid "``[5]``"
+msgstr ""
+
+msgid "処理落ち率"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T07SCRNSB12`` ... Normal 咲夜（時）の 1 位のスコア"
+msgstr ""
+
+msgid "``%T07SCRXRA44`` ... Extra 霊夢（霊）の 4 位の日付"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "日付は月日だけが ``mm/dd`` の形式で出力されます。 年や時分秒はそもそもスコアファイルに保存されていません。"
+msgstr ""
+
+msgid "相違点"
+msgstr ""
+
+msgid "スコアの 1 の位には、 原作と同様にコンティニュー回数が出力されます。"
+msgstr ""
+
+msgid "処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。 今後、 この桁数を設定可能にするかも知れません。"
+msgstr ""
+
+msgid "御札戦歴"
+msgstr ""
+
+msgid "``%T07C[xxx][yy][z]``"
+msgstr ""
+
+msgid "``[xxx]``"
+msgstr ""
+
+msgid "スペルカードの番号など"
+msgstr ""
+
+msgid "``[000]``"
+msgstr ""
+
+msgid "全スペルカードの合計値"
+msgstr ""
+
+msgid "``[001～141]``"
+msgstr ""
+
+msgid "スペルカードの番号"
+msgstr ""
+
+msgid "``[yy]``"
+msgstr ""
+
+msgid "キャラの名前など"
+msgstr ""
+
+msgid "``[TL]``"
+msgstr ""
+
+msgid "全主人公合計"
+msgstr ""
+
+msgid "MaxBonus"
+msgstr ""
+
+msgid "取得回数（勝率の分子）"
+msgstr ""
+
+msgid "挑戦回数（勝率の分母）"
+msgstr ""
+
+msgid "``%T07C001TL1`` ... 全主人公合計の霜符「フロストコラムス」の MaxBonus"
+msgstr ""
+
+msgid "``%T07C002SB3`` ... 咲夜（時）の霜符「フロストコラムス -Lunatic-」の挑戦回数"
+msgstr ""
+
+msgid "スペルカード基本情報"
+msgstr ""
+
+msgid "``%T07CARD[xxx][y]``"
+msgstr ""
+
+msgid "スペルカードの名前"
+msgstr ""
+
+msgid "``[R]``"
+msgstr ""
+
+msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra, Phantasm)"
+msgstr ""
+
+msgid "``%T07CARD001N`` ... 霜符「フロストコラムス」"
+msgstr ""
+
+msgid "``%T07CARD001R`` ... Hard"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????``"
+" のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid "スペルカード蒐集率"
+msgstr ""
+
+msgid "``%T07CRG[w][xx][y][z]``"
+msgstr ""
+
+msgid "難易度など"
+msgstr ""
+
+msgid "``[T]``"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "ステージ"
+msgstr ""
+
+msgid "全ステージ合計"
+msgstr ""
+
+msgid "``[1～6]``"
+msgstr ""
+
+msgid "Stage 1～6"
+msgstr ""
+
+msgid "（Extra, Phantasm ではこの指定は無視され、 Total ではそのステージの Easy～Lunatic の合計が出力されます。）"
+msgstr ""
+
+msgid "取得数（勝率の分子）"
+msgstr ""
+
+msgid "挑戦数（勝率の分母）"
+msgstr ""
+
+msgid "``%T07CRGERA01`` ... Easy 霊夢（霊）の全ステージ合計の取得数"
+msgstr ""
+
+msgid "``%T07CRGTSB41`` ... 咲夜（時）の Stage 4 の全難易度合計の取得数"
+msgstr ""
+
+msgid "``%T07CRGTTL02`` ... 全難易度・全キャラ・全ステージ合計の挑戦数"
+msgstr ""
+
+msgid "クリア達成度"
+msgstr ""
+
+msgid "``%T07CLEAR[x][yy]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "``%T07CLEARXMA`` ... Extra 魔理沙（魔）のクリア達成度"
+msgstr ""
+
+msgid "``%T07CLEARNSB`` ... Normal 咲夜（時）のクリア達成度"
+msgstr ""
+
+msgid ""
+"クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, "
+"``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All "
+"Clear``, ``Not Clear`` （Extra, Phantasm 未クリア）"
+msgstr ""
+
+msgid ""
+"本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 "
+"ランキング上に存在していなければ未クリア扱いになってしまいます。"
+msgstr ""
+
+msgid "プレイ回数"
+msgstr ""
+
+msgid "``%T07PLAY[x][yy]``"
+msgstr ""
+
+msgid "``[CL]``"
+msgstr ""
+
+msgid "クリア回数"
+msgstr ""
+
+msgid "``[CN]``"
+msgstr ""
+
+msgid "コンティニュー回数"
+msgstr ""
+
+msgid "``[PR]``"
+msgstr ""
+
+msgid "プラクティスプレイ回数"
+msgstr ""
+
+msgid "``[RT]``"
+msgstr ""
+
+msgid "リトライ回数"
+msgstr ""
+
+msgid "``%T07PLAYHRB`` ... Hard 霊夢（夢）のプレイ回数"
+msgstr ""
+
+msgid "``%T07PLAYLCL`` ... Lunatic のクリア回数"
+msgstr ""
+
+msgid "総起動時間"
+msgstr ""
+
+msgid "``%T07TIMEALL``"
+msgstr ""
+
+msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
+msgstr ""
+
+msgid "秒とミリ秒の間は ``:`` ではなく ``.`` で出力されます。"
+msgstr ""
+
+msgid "総プレイ時間"
+msgstr ""
+
+msgid "``%T07TIMEPLY``"
+msgstr ""
+
+msgid "プラクティススコア"
+msgstr ""
+
+msgid "``%T07PRAC[w][xx][y][z]``"
+msgstr ""
+
+msgid "``%T07PRACESB11`` ... Easy 咲夜（時）の Stage 1 のプラクティススコア"
+msgstr ""
+
+msgid "``%T07PRACNRA42`` ... Normal 霊夢（霊）の Stage 4 のプラクティスプレイ回数"
+msgstr ""
+
+msgid "このテンプレート書式は本ツール独自のものです。"
+msgstr ""
+

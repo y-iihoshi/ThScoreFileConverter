@@ -1,0 +1,293 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "ダブルスポイラー用テンプレート書式"
+msgstr ""
+
+msgid "スコア一覧"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T125SCR[w][x][y][z]``"
+msgstr ""
+
+msgid "``[w]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[A]``"
+msgstr ""
+
+msgid "文"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "はたて"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "レベル"
+msgstr ""
+
+msgid "``[1～9]``"
+msgstr ""
+
+msgid "Level 1～9"
+msgstr ""
+
+msgid "``[A～C]``"
+msgstr ""
+
+msgid "Level 10～12"
+msgstr ""
+
+msgid "``[X]``"
+msgstr ""
+
+msgid "Level EX"
+msgstr ""
+
+msgid "``[S]``"
+msgstr ""
+
+msgid "SPOILER"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "シーン"
+msgstr ""
+
+msgid "1～9"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "得点"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "登録してあるベストショットの得点"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "撮影枚数"
+msgstr ""
+
+msgid "``[4]``"
+msgstr ""
+
+msgid "初成功時枚数"
+msgstr ""
+
+msgid "``[5]``"
+msgstr ""
+
+msgid "日時"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T125SCRA111`` ... 文の 1-1 の得点"
+msgstr ""
+
+msgid "``%T125SCRH233`` ... はたての 2-3 の撮影枚数"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。"
+msgstr ""
+
+msgid "スコア合計"
+msgstr ""
+
+msgid "``%T125SCRTL[x][y][z]``"
+msgstr ""
+
+msgid "集計方法"
+msgstr ""
+
+msgid "ゲーム内表示準拠"
+msgstr ""
+
+msgid "自機準拠"
+msgstr ""
+
+msgid "総撮影得点"
+msgstr ""
+
+msgid "登録してあるベストショットの得点の合計"
+msgstr ""
+
+msgid "総撮影枚数"
+msgstr ""
+
+msgid "初成功時枚数の合計"
+msgstr ""
+
+msgid "クリアシーン数"
+msgstr ""
+
+msgid "``%T125SCRTLA11`` ... 文の総撮影得点（ゲーム内表示準拠）"
+msgstr ""
+
+msgid "``%T125SCRTLH23`` ... はたての総撮影枚数（自機準拠）"
+msgstr ""
+
+msgid ""
+"集計方法を変えると、 SPOILER の ??-5～??-9 の得点などが、 文とはたてのどちらの集計結果に含まれるかが変わります。 "
+"「ゲーム内表示準拠」 では文の方に、 「自機準拠」 でははたての方に含まれます。"
+msgstr ""
+
+msgid "被写体 & スペルカード情報"
+msgstr ""
+
+msgid "``%T125CARD[x][y][z]``"
+msgstr ""
+
+msgid "被写体の名前"
+msgstr ""
+
+msgid "スペルカード名"
+msgstr ""
+
+msgid "``%T125CARD111`` ... 1-1 の被写体の名前"
+msgstr ""
+
+msgid "``%T125CARD232`` ... 2-3 のスペルカード名"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは被写体の名前・スペルカード名ともに "
+"``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid "総プレイ時間"
+msgstr ""
+
+msgid "``%T125TIMEPLY``"
+msgstr ""
+
+msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
+msgstr ""
+
+msgid "ベストショット出力"
+msgstr ""
+
+msgid "``%T125SHOT[x][y][z]``"
+msgstr ""
+
+msgid "``%T125SHOTA12`` ... 文の 1-2 のベストショット"
+msgstr ""
+
+msgid ""
+"このテンプレート書式は ``<img src=\"./bestshot/bs_01_1.png\" alt=\"～\" title=\"～\" "
+"border=0>`` のような HTML の IMG タグに置換されます。"
+msgstr ""
+
+msgid ""
+"同時に、 対象となるベストショットファイル (bs\\_??\\_?.dat や bs2\\_??\\_?.dat) を PNG "
+"形式に変換した画像ファイルが出力されます。"
+msgstr ""
+
+msgid "IMG タグの alt 属性と title 属性には、 ベストショット撮影時の得点と処理落ち率、 及びスペルカード名が出力されます。"
+msgstr ""
+
+msgid ""
+"画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` "
+"欄で指定されたフォルダに出力されます。"
+msgstr ""
+
+msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
+msgstr ""
+
+msgid "ベストショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
+msgstr ""
+
+msgid "ベストショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
+msgstr ""
+
+msgid "ベストショット出力（詳細版）"
+msgstr ""
+
+msgid "``%T125SHOTEX[w][x][y][z]``"
+msgstr ""
+
+msgid "画像ファイルへの相対パス"
+msgstr ""
+
+msgid "画像ファイルの幅 (px)"
+msgstr ""
+
+msgid "画像ファイルの高さ (px)"
+msgstr ""
+
+msgid "ベストショット撮影時の得点"
+msgstr ""
+
+msgid "ベストショット撮影時の処理落ち率"
+msgstr ""
+
+msgid "``[6]``"
+msgstr ""
+
+msgid "ベストショット撮影日時"
+msgstr ""
+
+msgid "``[7]``"
+msgstr ""
+
+msgid "詳細情報（獲得ボーナスなど）"
+msgstr ""
+
+msgid "``%T125SHOTEXA121`` ... 文の 1-2 の画像ファイルへの相対パス"
+msgstr ""
+
+msgid "``%T125SHOTEXH236`` ... はたての 2-3 のベストショット撮影日時"
+msgstr ""
+
+msgid ""
+"このテンプレート書式を使って、 例えば ``%T125SHOTA12`` と同等の出力結果を得るには、 "
+"テンプレートファイルに以下の通りに記載します: ::"
+msgstr ""
+

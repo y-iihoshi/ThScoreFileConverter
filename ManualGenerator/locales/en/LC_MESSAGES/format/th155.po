@@ -1,0 +1,155 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方憑依華用テンプレート書式"
+msgstr ""
+
+msgid "クリア達成度"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T155CLEAR[x][yy]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "難易度"
+msgstr ""
+
+msgid "``[E]``"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "``[N]``"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "Lunatic"
+msgstr ""
+
+msgid "``[D]``"
+msgstr ""
+
+msgid "OverDrive"
+msgstr ""
+
+msgid "``[yy]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[RK]``"
+msgstr ""
+
+msgid "霊夢 & 華扇"
+msgstr ""
+
+msgid "``[MK]``"
+msgstr ""
+
+msgid "魔理沙 & こいし"
+msgstr ""
+
+msgid "``[NK]``"
+msgstr ""
+
+msgid "にとり & こころ"
+msgstr ""
+
+msgid "``[MM]``"
+msgstr ""
+
+msgid "マミゾウ & 妹紅"
+msgstr ""
+
+msgid "``[MB]``"
+msgstr ""
+
+msgid "神子 & 白蓮"
+msgstr ""
+
+msgid "``[FI]``"
+msgstr ""
+
+msgid "布都 & 一輪"
+msgstr ""
+
+msgid "``[RD]``"
+msgstr ""
+
+msgid "鈴仙 & ドレミー"
+msgstr ""
+
+msgid "``[SD]``"
+msgstr ""
+
+msgid "菫子 & ドレミー"
+msgstr ""
+
+msgid "``[TS]``"
+msgstr ""
+
+msgid "天子 & 針妙丸"
+msgstr ""
+
+msgid "``[YR]``"
+msgstr ""
+
+msgid "紫 & 霊夢"
+msgstr ""
+
+msgid "``[JS]``"
+msgstr ""
+
+msgid "女苑 & 紫苑"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T155CLEAREMK`` ... Easy 魔理沙 & こいしのクリア達成度"
+msgstr ""
+
+msgid "``%T155CLEARNRK`` ... Normal 霊夢 & 華扇のクリア達成度"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "ストーリーモードのクリア達成度 （ゲームの進行状況） に応じて次の文字列が出力されます: ``Not Clear``, ``Clear``"
+msgstr ""
+

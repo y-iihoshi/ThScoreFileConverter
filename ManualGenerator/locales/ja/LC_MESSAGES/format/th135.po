@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方心綺楼用テンプレート書式"
+msgstr ""
+
+msgid "クリア達成度"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T135CLEAR[x][yy]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "難易度"
+msgstr ""
+
+msgid "``[E]``"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "``[N]``"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "Lunatic"
+msgstr ""
+
+msgid "``[yy]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[RM]``"
+msgstr ""
+
+msgid "霊夢"
+msgstr ""
+
+msgid "``[MR]``"
+msgstr ""
+
+msgid "魔理沙"
+msgstr ""
+
+msgid "``[IU]``"
+msgstr ""
+
+msgid "一輪 & 雲山"
+msgstr ""
+
+msgid "``[BY]``"
+msgstr ""
+
+msgid "白蓮"
+msgstr ""
+
+msgid "``[FT]``"
+msgstr ""
+
+msgid "布都"
+msgstr ""
+
+msgid "``[MK]``"
+msgstr ""
+
+msgid "神子"
+msgstr ""
+
+msgid "``[NT]``"
+msgstr ""
+
+msgid "にとり"
+msgstr ""
+
+msgid "``[KO]``"
+msgstr ""
+
+msgid "こいし"
+msgstr ""
+
+msgid "``[MM]``"
+msgstr ""
+
+msgid "マミゾウ"
+msgstr ""
+
+msgid "``[KK]``"
+msgstr ""
+
+msgid "こころ"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T135CLEAREMR`` ... Easy 魔理沙のクリア達成度"
+msgstr ""
+
+msgid "``%T135CLEARNRM`` ... Normal 霊夢のクリア達成度"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "ストーリーモードのクリア達成度 （ゲームの進行状況） に応じて次の文字列が出力されます: ``Not Clear``, ``Clear``"
+msgstr ""
+

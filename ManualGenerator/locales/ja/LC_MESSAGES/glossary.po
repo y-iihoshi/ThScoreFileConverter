@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "用語集"
+msgstr ""
+
+msgid "ThScoreFileConverter"
+msgstr ""
+
+msgid "本ツールの正式名称です。 長いので時々 :term:`ThSFC` と略記します。"
+msgstr ""
+
+msgid "ThSFC"
+msgstr ""
+
+msgid ":term:`ThScoreFileConverter` の略称です。"
+msgstr ""
+
+msgid "テンプレートファイル"
+msgstr ""
+
+msgid ":term:`テンプレート書式` を含んだ任意のテキストファイルです。 拡張子は何であっても構いません。"
+msgstr ""
+
+msgid "テンプレート書式"
+msgstr ""
+
+msgid "``%`` から始まる半角英数字の文字列です。 英字の大小は区別されません。"
+msgstr ""
+
+msgid "作品名コンボボックスで選択された作品用のテンプレート書式のみが、 実際に変換されます。 それ以外の作品用のテンプレート書式はそのまま出力されます。"
+msgstr ""
+
+msgid ""
+"本ツールが扱うテンプレート書式は、 基本的に :term:`東方メモリマネージャー` と同じです。 ただし、 "
+"書式は同じでも変換結果は全く同一とは限りません。 詳細は、 作品別テンプレート書式の解説ページの各表に記載されている 「相違点」 "
+"の欄を参照して下さい。"
+msgstr ""
+
+msgid "東方メモリマネージャー"
+msgstr ""
+
+msgid ""
+":term:`ThSFC` を作成するきっかけとなったツールです。 詳細は "
+"http://www.sue445.net/downloads/ThMemoryManager.html を参照してください。"
+msgstr ""
+

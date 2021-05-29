@@ -1,0 +1,392 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方星蓮船用テンプレート書式"
+msgstr ""
+
+msgid "スコアランキング"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T12SCR[w][xx][y][z]``"
+msgstr ""
+
+msgid "``[w]``"
+msgstr ""
+
+msgid "難易度"
+msgstr ""
+
+msgid "``[E]``"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "``[N]``"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "Lunatic"
+msgstr ""
+
+msgid "``[X]``"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
+msgid "``[xx]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[RA]``"
+msgstr ""
+
+msgid "霊夢（夢）"
+msgstr ""
+
+msgid "``[RB]``"
+msgstr ""
+
+msgid "霊夢（霊）"
+msgstr ""
+
+msgid "``[MA]``"
+msgstr ""
+
+msgid "魔理沙（恋）"
+msgstr ""
+
+msgid "``[MB]``"
+msgstr ""
+
+msgid "魔理沙（魔）"
+msgstr ""
+
+msgid "``[SA]``"
+msgstr ""
+
+msgid "早苗（蛇）"
+msgstr ""
+
+msgid "``[SB]``"
+msgstr ""
+
+msgid "早苗（蛙）"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "順位"
+msgstr ""
+
+msgid "``[1～9]``"
+msgstr ""
+
+msgid "1～9 位"
+msgstr ""
+
+msgid "``[0]``"
+msgstr ""
+
+msgid "10 位"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "登録名"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "スコア"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "到達ステージ"
+msgstr ""
+
+msgid "``[4]``"
+msgstr ""
+
+msgid "日時"
+msgstr ""
+
+msgid "``[5]``"
+msgstr ""
+
+msgid "処理落ち率"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T12SCRNSB12`` ... Normal 早苗（蛙）の 1 位のスコア"
+msgstr ""
+
+msgid "``%T12SCRXRA44`` ... Extra 霊夢（夢）の 4 位の日時"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "スコアの 1 の位には、 原作と同様にコンティニュー回数が出力されます。"
+msgstr ""
+
+msgid "日時は年月日及び時分秒が ``yyyy/mm/dd hh:mm:ss`` の形式で出力されます。"
+msgstr ""
+
+msgid "処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。 今後、 この桁数を設定可能にするかも知れません。"
+msgstr ""
+
+msgid "御札戦歴"
+msgstr ""
+
+msgid "``%T12C[xxx][yy][z]``"
+msgstr ""
+
+msgid "``[xxx]``"
+msgstr ""
+
+msgid "スペルカードの番号など"
+msgstr ""
+
+msgid "``[000]``"
+msgstr ""
+
+msgid "全スペルカードの合計値"
+msgstr ""
+
+msgid "``[001～113]``"
+msgstr ""
+
+msgid "スペルカードの番号"
+msgstr ""
+
+msgid "``[yy]``"
+msgstr ""
+
+msgid "キャラの名前など"
+msgstr ""
+
+msgid "``[TL]``"
+msgstr ""
+
+msgid "全主人公合計"
+msgstr ""
+
+msgid "取得回数（勝率の分子）"
+msgstr ""
+
+msgid "挑戦回数（勝率の分母）"
+msgstr ""
+
+msgid "``%T12C003TL1`` ... 全主人公合計の捜符「レアメタルディテクター」(Easy) の取得回数"
+msgstr ""
+
+msgid "``%T12C003SB2`` ... 早苗（蛙）の捜符「レアメタルディテクター」(Easy) の挑戦回数"
+msgstr ""
+
+msgid "スペルカード基本情報"
+msgstr ""
+
+msgid "``%T12CARD[xxx][y]``"
+msgstr ""
+
+msgid "スペルカードの名前"
+msgstr ""
+
+msgid "``[R]``"
+msgstr ""
+
+msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)"
+msgstr ""
+
+msgid "``%T12CARD003N`` ... 捜符「レアメタルディテクター」"
+msgstr ""
+
+msgid "``%T12CARD003R`` ... Easy"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前が ``?????`` "
+"のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid ""
+"一方、 スペルカードの難易度は、 未挑戦かどうかにかかわらず常に出力されます。 原作でも Result 画面を見れば難易度はバレるので、 "
+"このような仕様にしています。"
+msgstr ""
+
+msgid "スペルカード蒐集率"
+msgstr ""
+
+msgid "``%T12CRG[w][xx][y][z]``"
+msgstr ""
+
+msgid "難易度など"
+msgstr ""
+
+msgid "``[T]``"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "ステージ"
+msgstr ""
+
+msgid "全ステージ合計"
+msgstr ""
+
+msgid "``[1～6]``"
+msgstr ""
+
+msgid "Stage 1～6"
+msgstr ""
+
+msgid "（Extra ではこの指定は無視され、 Total ではそのステージの Easy～Lunatic の合計が出力されます。）"
+msgstr ""
+
+msgid "取得数（勝率の分子）"
+msgstr ""
+
+msgid "挑戦数（勝率の分母）"
+msgstr ""
+
+msgid "``%T12CRGERA01`` ... Easy 霊夢（夢）の全ステージ合計の取得数"
+msgstr ""
+
+msgid "``%T12CRGTSB41`` ... 早苗（蛙）の Stage 4 の全難易度合計の取得数"
+msgstr ""
+
+msgid "``%T12CRGTTL02`` ... 全難易度・全キャラ・全ステージ合計の挑戦数"
+msgstr ""
+
+msgid "クリア達成度"
+msgstr ""
+
+msgid "``%T12CLEAR[x][yy]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "``%T12CLEARXMB`` ... Extra 魔理沙（魔）のクリア達成度"
+msgstr ""
+
+msgid "``%T12CLEARNRB`` ... Normal 霊夢（霊）のクリア達成度"
+msgstr ""
+
+msgid ""
+"クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, "
+"``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All "
+"Clear``, ``Not Clear`` （Extra 未クリア）"
+msgstr ""
+
+msgid ""
+"本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 "
+"ランキング上に存在していなければ未クリア扱いになってしまいます。"
+msgstr ""
+
+msgid "キャラごとの個別データ"
+msgstr ""
+
+msgid "``%T12CHARA[xx][y]``"
+msgstr ""
+
+msgid "総プレイ回数"
+msgstr ""
+
+msgid "プレイ時間"
+msgstr ""
+
+msgid "クリア回数"
+msgstr ""
+
+msgid "``%T12CHARATL2`` ... 全主人公合計のプレイ時間"
+msgstr ""
+
+msgid "``%T12CHARARA1`` ... 霊夢（夢）の総プレイ回数"
+msgstr ""
+
+msgid "プレイ時間は時分秒が ``h:mm:ss`` の形式で出力されます。"
+msgstr ""
+
+msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
+msgstr ""
+
+msgid "キャラごとの個別データ（詳細版）"
+msgstr ""
+
+msgid "``%T12CHARAEX[x][yy][z]``"
+msgstr ""
+
+msgid "（総プレイ回数とプレイ時間ではこの指定は無視されます。）"
+msgstr ""
+
+msgid "``%T12CHARAEXETL2`` ... 全主人公合計のプレイ時間"
+msgstr ""
+
+msgid "``%T12CHARAEXERA1`` ... 霊夢（夢）の総プレイ回数"
+msgstr ""
+
+msgid "``%T12CHARAEXTSB3`` ... 早苗（蛙）の全難易度合計のクリア回数"
+msgstr ""
+
+msgid "プラクティススコア"
+msgstr ""
+
+msgid "``%T12PRAC[x][yy][z]``"
+msgstr ""
+
+msgid "``%T12PRACESB1`` ... Easy 早苗（蛙）の Stage 1 のプラクティススコア"
+msgstr ""
+
+msgid "``%T12PRACNRA4`` ... Normal 霊夢（夢）の Stage 4 のプラクティススコア"
+msgstr ""
+

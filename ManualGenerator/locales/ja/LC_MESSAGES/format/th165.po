@@ -1,0 +1,295 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "秘封ナイトメアダイアリー用テンプレート書式"
+msgstr ""
+
+msgid "スコア一覧"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T165SCR[xx][y][z]``"
+msgstr ""
+
+msgid "``[xx]``"
+msgstr ""
+
+msgid "曜日"
+msgstr ""
+
+msgid "``[01～07]``"
+msgstr ""
+
+msgid "日曜日～土曜日"
+msgstr ""
+
+msgid "``[W1～W7]``"
+msgstr ""
+
+msgid "裏・日曜日～裏・土曜日"
+msgstr ""
+
+msgid "``[N1～N7]``"
+msgstr ""
+
+msgid "悪夢日曜～悪夢土曜"
+msgstr ""
+
+msgid "``[ND]``"
+msgstr ""
+
+msgid "ナイトメアダイアリー"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "弾幕夢"
+msgstr ""
+
+msgid "``[1～7]``"
+msgstr ""
+
+msgid "1～7"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "写真評価点"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "挑戦回数"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "撃破回数"
+msgstr ""
+
+msgid "``[4]``"
+msgstr ""
+
+msgid "撮影枚数"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T165SCR0111`` ... 日曜日 弾幕夢 1 の写真評価点"
+msgstr ""
+
+msgid "``%T165SCRW233`` ... 裏・月曜日 弾幕夢 3 の撃破回数"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "存在しない曜日と弾幕夢の組み合わせ（日曜日 弾幕夢 3 など）は無視されます。"
+msgstr ""
+
+msgid "スコア合計"
+msgstr ""
+
+msgid "``%T165SCRTL[x]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "総合評価点"
+msgstr ""
+
+msgid "挑戦回数の合計"
+msgstr ""
+
+msgid "撃破回数の合計"
+msgstr ""
+
+msgid "夢日記取得数"
+msgstr ""
+
+msgid "``[5]``"
+msgstr ""
+
+msgid "総撮影枚数"
+msgstr ""
+
+msgid "``[6]``"
+msgstr ""
+
+msgid "異名取得数"
+msgstr ""
+
+msgid "``%T165SCRTL1`` ... 総合評価点"
+msgstr ""
+
+msgid "``%T165SCRTL4`` ... 夢日記取得数"
+msgstr ""
+
+msgid "スペルカード情報"
+msgstr ""
+
+msgid "``%T165CARD[xx][y][z]``"
+msgstr ""
+
+msgid "敵の名前"
+msgstr ""
+
+msgid "スペルカード名"
+msgstr ""
+
+msgid "``%T165CARD0111`` ... 日曜日 弾幕夢 1 の敵の名前"
+msgstr ""
+
+msgid "``%T165CARDW232`` ... 裏・月曜日 弾幕夢 3 のスペルカード名"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは敵の名前・スペルカード名ともに "
+"``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid "異名情報"
+msgstr ""
+
+msgid "``%T165NICK[xx]``"
+msgstr ""
+
+msgid "番号"
+msgstr ""
+
+msgid "``[01～50]``"
+msgstr ""
+
+msgid "1～50"
+msgstr ""
+
+msgid "``%T165NICK13`` ... 初めての弾幕写真"
+msgstr ""
+
+msgid "未取得の異名は ``?????`` のように出力されます。"
+msgstr ""
+
+msgid "総プレイ時間"
+msgstr ""
+
+msgid "``%T165TIMEPLY``"
+msgstr ""
+
+msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
+msgstr ""
+
+msgid "ベストショット出力"
+msgstr ""
+
+msgid "``%T165SHOT[xx][y]``"
+msgstr ""
+
+msgid "``%T165SHOT012`` ... 日曜日 弾幕夢 2 のベストショット"
+msgstr ""
+
+msgid ""
+"このテンプレート書式は ``<img src=\"./bestshot/bs01_01.png\" alt=\"～\" title=\"～\" "
+"border=0>`` のような HTML の IMG タグに置換されます。"
+msgstr ""
+
+msgid "同時に、 対象となるベストショットファイル (bs??\\_??.dat) を PNG 形式に変換した画像ファイルが出力されます。"
+msgstr ""
+
+msgid "IMG タグの alt 属性と title 属性には日時が出力されます。"
+msgstr ""
+
+msgid ""
+"画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` "
+"欄で指定されたフォルダに出力されます。"
+msgstr ""
+
+msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
+msgstr ""
+
+msgid "ベストショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
+msgstr ""
+
+msgid "ベストショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
+msgstr ""
+
+msgid "ベストショット出力（詳細版）"
+msgstr ""
+
+msgid "``%T165SHOTEX[xx][y][z]``"
+msgstr ""
+
+msgid "画像ファイルへの相対パス"
+msgstr ""
+
+msgid "画像ファイルの幅 (px)"
+msgstr ""
+
+msgid "画像ファイルの高さ (px)"
+msgstr ""
+
+msgid "ベストショット撮影日時"
+msgstr ""
+
+msgid "ハッシュタグ"
+msgstr ""
+
+msgid "この写真を見た回数"
+msgstr ""
+
+msgid "``[7]``"
+msgstr ""
+
+msgid "イイッすね！"
+msgstr ""
+
+msgid "``[8]``"
+msgstr ""
+
+msgid "お気に入り！"
+msgstr ""
+
+msgid "``[9]``"
+msgstr ""
+
+msgid "``%T165SHOTEX0121`` ... 日曜日 弾幕夢 2 の画像ファイルへの相対パス"
+msgstr ""
+
+msgid "``%T165SHOTEXW234`` ... 裏・月曜日 弾幕夢 3 のベストショット撮影日時"
+msgstr ""
+
+msgid ""
+"このテンプレート書式を使って、 例えば ``%T165SHOT012`` と同等の出力結果を得るには、 "
+"テンプレートファイルに以下の通りに記載します: ::"
+msgstr ""
+

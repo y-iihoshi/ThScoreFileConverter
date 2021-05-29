@@ -1,2 +1,6 @@
 # Sphinx build folder
 _build/
+# gettext message catalog templates
+**/*.pot
+# gettext binary catalogs
+**/*.mo

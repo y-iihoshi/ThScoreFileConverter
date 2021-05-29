@@ -23,8 +23,12 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
+set SPHINXINTL=sphinx-intl
+set SPHINXINTL_LANGUAGE=en,ja
+
 set BUILDER=%1
 if "%BUILDER%" == "" goto help
+if "%BUILDER%" == "catalog" goto catalog
 if "%BUILDER:~-6%" == "-langs" goto multilangs
 
 %SPHINXBUILD% -M %BUILDER% %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
@@ -32,10 +36,15 @@ goto end
 
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+goto end
+
+:catalog
+%SPHINXINTL% update -p %BUILDDIR%\gettext
+goto end
 
 :multilangs
-for %%l in (en ja) do (
-	%SPHINXBUILD% -M %BUILDER:~0,-6% %SOURCEDIR% %BUILDDIR%/%%l %SPHINXOPTS% %O% -Dlanguage=%%l
+for %%l in (%SPHINXINTL_LANGUAGE%) do (
+	%SPHINXBUILD% -M %BUILDER:~0,-6% %SOURCEDIR% %BUILDDIR%\%%l %SPHINXOPTS% %O% -Dlanguage=%%l
 )
 
 :end

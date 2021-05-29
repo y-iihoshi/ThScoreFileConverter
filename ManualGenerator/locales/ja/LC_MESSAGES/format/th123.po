@@ -1,0 +1,369 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方非想天則用テンプレート書式"
+msgstr ""
+
+msgid "御札戦歴"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T123C[xx][yy][z]``"
+msgstr ""
+
+msgid "``[xx]``"
+msgstr ""
+
+msgid "スペルカードの番号など"
+msgstr ""
+
+msgid "``[00]``"
+msgstr ""
+
+msgid "全スペルカードの合計値"
+msgstr ""
+
+msgid "``[01～64]``"
+msgstr ""
+
+msgid "スペルカードの番号"
+msgstr ""
+
+msgid "``[yy]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[SN]``"
+msgstr ""
+
+msgid "早苗"
+msgstr ""
+
+msgid "``[CI]``"
+msgstr ""
+
+msgid "チルノ"
+msgstr ""
+
+msgid "``[ML]``"
+msgstr ""
+
+msgid "美鈴"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "取得回数（勝率の分子）"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "挑戦回数（勝率の分母）"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "残り時間"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T123C01SN1`` ... 早苗の氷符「アイシクルフォール」(Easy) の取得回数"
+msgstr ""
+
+msgid "``%T123C08CI2`` ... チルノの奇跡「ファフロッキーズの奇跡」(Lunatic) の挑戦回数"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "キャラが異なると、 スペルカードの番号が同じでもその中身は異なります。"
+msgstr ""
+
+msgid "残り時間は分秒およびミリ秒が ``mm:ss.ddd`` の形式で出力されます。"
+msgstr ""
+
+msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
+msgstr ""
+
+msgid "スペルカード基本情報"
+msgstr ""
+
+msgid "``%T123CARD[xx][yy][z]``"
+msgstr ""
+
+msgid "``[N]``"
+msgstr ""
+
+msgid "スペルカードの名前"
+msgstr ""
+
+msgid "``[R]``"
+msgstr ""
+
+msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic)"
+msgstr ""
+
+msgid "``%T123CARD01SNN`` ... 氷符「アイシクルフォール」"
+msgstr ""
+
+msgid "``%T123CARD01SNR`` ... Easy"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????``"
+" のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid "スペルカード蒐集率"
+msgstr ""
+
+msgid "``%T123CRG[x][yy][z]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "難易度など"
+msgstr ""
+
+msgid "``[E]``"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "Lunatic"
+msgstr ""
+
+msgid "``[T]``"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "取得数（勝率の分子）"
+msgstr ""
+
+msgid "挑戦数（勝率の分母）"
+msgstr ""
+
+msgid "``%T123CRGESN1`` ... Easy 早苗の取得数"
+msgstr ""
+
+msgid "``%T123CRGHCI2`` ... Hard チルノの挑戦数"
+msgstr ""
+
+msgid "デッキ用カード蒐集歴"
+msgstr ""
+
+msgid "``%T123DC[ww][x][yy][z]``"
+msgstr ""
+
+msgid "``[ww]``"
+msgstr ""
+
+msgid "``[RM]``"
+msgstr ""
+
+msgid "霊夢"
+msgstr ""
+
+msgid "``[MR]``"
+msgstr ""
+
+msgid "魔理沙"
+msgstr ""
+
+msgid "``[SK]``"
+msgstr ""
+
+msgid "咲夜"
+msgstr ""
+
+msgid "``[AL]``"
+msgstr ""
+
+msgid "アリス"
+msgstr ""
+
+msgid "``[PC]``"
+msgstr ""
+
+msgid "パチュリー"
+msgstr ""
+
+msgid "``[YM]``"
+msgstr ""
+
+msgid "妖夢"
+msgstr ""
+
+msgid "``[RL]``"
+msgstr ""
+
+msgid "レミリア"
+msgstr ""
+
+msgid "``[YU]``"
+msgstr ""
+
+msgid "幽々子"
+msgstr ""
+
+msgid "``[YK]``"
+msgstr ""
+
+msgid "紫"
+msgstr ""
+
+msgid "``[SU]``"
+msgstr ""
+
+msgid "萃香"
+msgstr ""
+
+msgid "``[RS]``"
+msgstr ""
+
+msgid "鈴仙"
+msgstr ""
+
+msgid "``[AY]``"
+msgstr ""
+
+msgid "文"
+msgstr ""
+
+msgid "``[KM]``"
+msgstr ""
+
+msgid "小町"
+msgstr ""
+
+msgid "``[IK]``"
+msgstr ""
+
+msgid "衣玖"
+msgstr ""
+
+msgid "``[TN]``"
+msgstr ""
+
+msgid "天子"
+msgstr ""
+
+msgid "``[UT]``"
+msgstr ""
+
+msgid "空"
+msgstr ""
+
+msgid "``[SW]``"
+msgstr ""
+
+msgid "諏訪子"
+msgstr ""
+
+msgid "（System ではこの指定は無視されます。）"
+msgstr ""
+
+msgid "カードの種類"
+msgstr ""
+
+msgid "``[Y]``"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "``[K]``"
+msgstr ""
+
+msgid "Skill"
+msgstr ""
+
+msgid "``[P]``"
+msgstr ""
+
+msgid "Spell"
+msgstr ""
+
+msgid "カードの番号"
+msgstr ""
+
+msgid "``[01～21]``"
+msgstr ""
+
+msgid "カードの名前"
+msgstr ""
+
+msgid "``[C]``"
+msgstr ""
+
+msgid "蒐集枚数"
+msgstr ""
+
+msgid "``%T123DCRMY01N`` ... 「霊撃札」"
+msgstr ""
+
+msgid "``%T123DCMRK02N`` ... ナロースパーク"
+msgstr ""
+
+msgid "``%T123DCSKP03C`` ... 奇術「エターナルミーク」の蒐集枚数"
+msgstr ""
+
+msgid "キャラが異なると、 カードの番号が同じでもその中身は異なります。 （System は除く。）"
+msgstr ""
+
+msgid "存在しないカードの指定（霊夢の Spell No.11 など）は無視されます。"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 未入手のカードの名前が ``?????`` "
+"のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
