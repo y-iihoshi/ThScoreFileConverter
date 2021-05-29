@@ -10,11 +10,6 @@ if "%SPHINXBUILD%" == "" (
 set SOURCEDIR=.
 set BUILDDIR=_build
 
-set BUILDERNAME=%1
-
-if "%BUILDERNAME%" == "" goto help
-if "%BUILDERNAME:~-6%" == "-langs" goto multilangs
-
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
 	echo.
@@ -28,7 +23,11 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+set BUILDER=%1
+if "%BUILDER%" == "" goto help
+if "%BUILDER:~-6%" == "-langs" goto multilangs
+
+%SPHINXBUILD% -M %BUILDER% %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 goto end
 
 :help
@@ -36,7 +35,7 @@ goto end
 
 :multilangs
 for %%l in (en ja) do (
-	%SPHINXBUILD% -M %BUILDERNAME:~0,-6% %SOURCEDIR% %BUILDDIR%/%%l %SPHINXOPTS% %O% -Dlanguage=%%l
+	%SPHINXBUILD% -M %BUILDER:~0,-6% %SOURCEDIR% %BUILDDIR%/%%l %SPHINXOPTS% %O% -Dlanguage=%%l
 )
 
 :end
