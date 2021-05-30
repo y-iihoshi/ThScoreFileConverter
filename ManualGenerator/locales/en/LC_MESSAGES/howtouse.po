@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# How to use ThScoreFileConverter.
 # Copyright (C) 2013-2021, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-29 16:57+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-05-30 13:33+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,138 +17,189 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 msgid "使い方"
-msgstr ""
+msgstr "How to use"
 
 msgid "メイン画面"
-msgstr ""
+msgstr "Main window"
 
 msgid ":file:`ThScoreFileConverter.exe` を起動すると表示されます。"
-msgstr ""
+msgstr "Displayed when you start :file:`ThScoreFileConverter.exe`."
 
 msgid "メイン画面のスクリーンショット"
-msgstr ""
+msgstr "Screenshot of the main window"
 
 msgid "左上のコンボボックスから作品名を選択してください。"
-msgstr ""
+msgstr "Select a game title from the combo box on the upper left."
 
 msgid ""
 "選択した作品について初めて実行する場合、 以下の手順を実施してください。 以前に一度でも実行したことがある場合は、 その時の選択状況が設定ファイル"
 " (:file:`settings.xml`) から読み込まれるので、 以下の手順を省略できます。"
 msgstr ""
+"If this is your first time doing the selected game, please follow the steps "
+"below. If you have run it even once before, you can skip the following steps "
+"because the selection status at that time is loaded from the configuration "
+"file (:file:`settings.xml`)."
 
 msgid "以下のどちらかの方法で、 スコアファイル (:file:`score.dat` など) を選択してください。"
 msgstr ""
+"Select a score file (such as :file:`score.dat`) using one of the following "
+"ways:"
 
 msgid ":guilabel:`スコア(&S)`  欄右側の :guilabel:`開く(&O)` ボタンを押し、 ファイル選択ダイアログを使って選択する。"
 msgstr ""
+"Press the :guilabel:`&Open...` button on the right side of the "
+":guilabel:`&Score` field and select it using the file selection dialog."
 
 msgid ":guilabel:`スコア(&S)` 欄にスコアファイルを Drag & Drop する。"
-msgstr ""
+msgstr "Drag and drop the score file to the :guilabel:`&Score` field."
 
 msgid ""
 "以下のどちらかの方法で、 ベストショット (:file:`bs\\_01\\_1.dat` など) またはスクリーンショット "
 "(:file:`sc\\_01\\_01.dat` など) が保存されているフォルダーを選択してください。 (文花帖形式の場合のみ有効)"
 msgstr ""
+"Select the folder where the best shots (:file:`bs\\_01\\_1.dat` etc.) or "
+"screenshots (:file:`sc\\_01\\_01.dat` etc.) are stored in one of the "
+"following ways (available only for Shoot the Bullet like games):"
 
 msgid ""
 ":guilabel:`ベストショット(&B)` 欄右側の :guilabel:`開く(&O)` ボタンを押し、 "
 "フォルダー選択ダイアログから選択する。"
 msgstr ""
+"Press the :guilabel:`&Open...` button on the right side of the "
+":guilabel:`&Best shot` field and select it using the folder selection dialog."
 
 msgid ":guilabel:`ベストショット(&B)` 欄にそのフォルダーを Drag & Drop する。"
-msgstr ""
+msgstr "Drag and drop the folder to the :guilabel:`&Best shot` field."
 
 msgid "以下のどちらかの方法で、 :term:`テンプレートファイル` を選択してください。 (複数選択可)"
 msgstr ""
+"Select :term:`template file(s) <template file>` in one of the following ways "
+"(allowed multiple selections):"
 
 msgid ""
 ":guilabel:`テンプレート(&T)` 欄右側の :guilabel:`追加(&A)` :guilabel:`削除(&C)` "
 ":guilabel:`全て削除(&L)` ボタンを使って選択する。"
 msgstr ""
+"Use the :guilabel:`&Add...`, :guilabel:`&Remove`, and :guilabel:`R&emove All` "
+"buttons on the right side of the :guilabel:`&Templates` field to select files."
 
 msgid ":guilabel:`テンプレート(&T)` 欄にテンプレートファイルを Drag & Drop する。 (複数可)"
-msgstr ""
+msgstr "Drag and drop the template files to the :guilabel:`&Templates` field."
 
 msgid "以下のどちらかの方法で、 変換後のファイルの出力先フォルダーを選択してください。"
 msgstr ""
+"Select the output destination folder for the converted files in one of the "
+"following ways:"
 
 msgid ":guilabel:`出力先(&O)` 欄右側の :guilabel:`開く(&O)` ボタンを押し、 フォルダー選択ダイアログから選択する。"
 msgstr ""
+"Press the :guilabel:`&Open...` button on the right side of the "
+":guilabel:`&Output` field and select it using the folder selection dialog."
 
 msgid ":guilabel:`出力先(&O)` 欄にそのフォルダーを Drag & Drop する。"
-msgstr ""
+msgstr "Drag and drop the folder to the :guilabel:`&Output` field."
 
 msgid ""
 "ベストショットやスクリーンショットの変換後の画像ファイル (:file:`*.png`) の出力先フォルダー名を、 "
 ":guilabel:`画像出力先(&I)` 欄に入力してください。 (文花帖形式の場合のみ有効)"
 msgstr ""
+"Enter the output destination folder name of the image files (:file:`*.png`) "
+"converted from the best shots or screenshots in the :guilabel:`I&mage output` "
+"field (available only for Shoot the Bullet like games)."
 
 msgid "未挑戦のスペルカード名も出力する場合はチェックを外してください。 (東方花映塚以外の場合のみ有効)"
 msgstr ""
+"If you want to output the name of untried spell card, uncheck the check box "
+"(available except for Phantasmagoria of Flower View)."
 
 msgid ":guilabel:`変換(&V)` ボタンを押してください。"
-msgstr ""
+msgstr "Press the :guilabel:`Con&vert` button."
 
 msgid "設定画面"
-msgstr ""
+msgstr "Setting window"
 
 msgid ":ref:`mainwindow` の :guilabel:`設定(&S)` ボタンを押すと表示されます。"
 msgstr ""
+"Displayed when you press the :guilabel:`&Setting...` button in the "
+":ref:`mainwindow`."
 
 msgid "設定画面のスクリーンショット"
-msgstr ""
+msgstr "Screenshot of the setting window"
 
 msgid "言語設定"
-msgstr ""
+msgstr "Language"
 
 msgid ""
 "GUI の表示言語を変更するには、 コンボボックスから選択してください。 選択した言語が即座に反映されます。 なお、 "
 "この設定は変換結果には影響しません。"
 msgstr ""
+"To change the displaying language in the GUI, select from the combo box. The "
+"selection will be applied immediately. Note that this setting does not affect "
+"the conversion result."
 
 msgid "フォント設定"
-msgstr ""
+msgstr "Font"
 
 msgid ""
 "GUI のフォントを変更するには、 :guilabel:`変更(&C)` ボタンを押し、 "
 "フォント選択ダイアログを使って好みのフォントとサイズを選択してください。 フォント選択ダイアログの各ボタンを押すと、 "
 "それぞれ以下の通り動作します。"
 msgstr ""
+"To change the font in the GUI, press the :guilabel:`&Change...` button and "
+"use the font selection dialog to select the font and size you prefer. "
+"When you press each button in the font selection dialog, it acts as follows:"
 
 msgid ":guilabel:`OK` ボタン ... 選択した内容が即座に反映され、 フォント選択ダイアログが閉じます。"
 msgstr ""
+":guilabel:`OK` button ... The selection will be applied immediately and the "
+"font selection dialog closes."
 
 msgid ":guilabel:`キャンセル` ボタン ... 選択した内容は破棄され、 フォント選択ダイアログが閉じます。"
 msgstr ""
+":guilabel:`Cancel` button ... The selection will be discarded and the font "
+"selection dialog closes."
 
 msgid ":guilabel:`適用(&A)` ボタン ... 選択した内容が即座に反映されます。 フォント選択ダイアログは表示されたままとなります。"
 msgstr ""
+":guilabel:`&Apply` button ... The selection will be applied immediately. The "
+"font selection dialog remains displayed."
 
 msgid "GUI のフォントをシステム既定値に戻すには、 :guilabel:`リセット(&R)` ボタンを押してください。"
 msgstr ""
+"Press the :guilabel:`&Reset` button to reset the GUI font to the system "
+"default."
 
 msgid "出力書式設定"
-msgstr ""
+msgstr "Output formatting"
 
 msgid ""
 ":guilabel:`数値を桁区切り形式で出力する(&S)` チェックボックスのチェックの有無により、 "
 "変換後のファイルに含まれる数値の出力が以下の通り変化します。"
 msgstr ""
+"Depending on whether the "
+":guilabel:`Outputs numeric values with number group &separators` check box is "
+"checked, the output of numbers contained in the converted files changes as "
+"follows:"
 
 msgid "チェックあり ... ``1,234,567`` のように出力されます (ただし西暦年を除く)。"
-msgstr ""
+msgstr "Checked ... Outputs as ``1,234,567`` (except year)."
 
 msgid "チェックなし ... ``1234567`` のように出力されます。"
-msgstr ""
+msgstr "Unchecked ... Outputs as ``1234567``."
 
 msgid "文字エンコーディング設定"
-msgstr ""
+msgstr "Character encoding"
 
 msgid ""
 ":guilabel:`入力ファイル(&I)` コンボボックスから、 テンプレートファイルに使われている文字コードを選択してください。 "
 "選択を間違えると文字化けの原因になります。"
 msgstr ""
+"Select the character encoding actually used in template files from the "
+":guilabel:`For &input file` combo box. Incorrect selection may cause garbled "
+"text."
 
 msgid ":guilabel:`出力ファイル(&O)` コンボボックスから、 変換後のファイルに使う文字コードを選択してください。"
 msgstr ""
+"Select the character encoding used for the converted files from the "
+":guilabel:`For &output file` combo box."
 

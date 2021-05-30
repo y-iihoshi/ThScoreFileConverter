@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Introduction of ThScoreFileConverter.
 # Copyright (C) 2013-2021, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-29 16:57+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-05-30 13:34+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,32 +17,45 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 msgid "イントロダクション"
-msgstr ""
+msgstr "Introduction"
 
 msgid "これは何？"
-msgstr ""
+msgstr "What's this?"
 
 msgid ""
 ":term:`ThScoreFileConverter` (以下、 :term:`ThSFC`) は、 東方 Project "
 "の各作品のスコアファイルからランキングや御札戦歴などのデータを読み込み、 任意のテキストファイルに書き出すことのできるツールです。 "
 "文花帖形式のベストショットの現像 (PNG 画像出力) も可能です。"
 msgstr ""
+":term:`ThScoreFileConverter` (:term:`ThSFC` for short) is a tool that can "
+"read data, such as rankings and combat experience, from the score file of "
+"Touhou Project games and write it out to any text file."
+"ThSFC can also develop image files in PNG format from best shot files."
 
 msgid ""
 ":term:`東方メモリマネージャー` の代替ツールとなることを目指して開発中です。 特に、 風神録までの :term:`テンプレート書式` "
 "については互換性を維持しています。"
 msgstr ""
+"It is under development with the aim of becoming an alternative tool for "
+":term:`Touhou Memory Manager`. "
+"In particular, :term:`template formats <template format>` are compatible "
+"up to Mountain of Faith."
 
 msgid "前提条件"
-msgstr ""
+msgstr "Prerequisites"
 
 msgid "ThSFC を利用するには、 .NET Framework 4.8, .NET Core 3.1 または .NET 5 が必要です。"
 msgstr ""
+"To use ThSFC, one of the following runtimes is required: "
+".NET Framework 4.8, .NET Core 3.1, or .NET 5."
 
 msgid ""
 "2021 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 "
 "下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
 msgstr ""
+"As of May 2021, ThSFC is developing and testing only in the following "
+"environments. I may not be able to respond even if I receive a report that "
+"it does not work in an environments other than the following:"
 
 msgid "Windows 10 Pro Version 20H2 (64 bit)"
 msgstr ""
@@ -65,35 +76,51 @@ msgid "Python 3.9.4"
 msgstr ""
 
 msgid "免責事項"
-msgstr ""
+msgstr "Disclaimer"
 
 msgid "**ThSFC の利用は自己責任の下で実施して下さい。**"
-msgstr ""
+msgstr "**Please use ThSFC at your own risk.**"
 
 msgid "ThSFC の免責事項などの詳細は以下の通りです。 (つまり BSD 2-Clause License です。)"
-msgstr ""
+msgstr "Details such as ThSFC disclaimers are as follows. "
+"(That is, ThSFC is licensed under the BSD 2-Clause License.)"
 
 msgid "著作権"
-msgstr ""
+msgstr "Copyright"
 
 msgid ""
 "東方 Project の各作品の著作権は `上海アリス幻樂団 <https://www16.big.or.jp/~zun/>`_ 様にあります。 "
 "ThSFC 作者とは一切関係がありません。"
 msgstr ""
+"The copyrights of official Touhou Project games are belong to "
+"`Team Shanghai Alice <https://www16.big.or.jp/~zun/>`_. "
+"It has nothing to do with the ThSFC author."
 
 msgid ""
 "東方萃夢想、 東方緋想天、 東方非想天則、 東方心綺楼、 東方深秘録、 東方憑依華の著作権は `黄昏フロンティア "
 "<https://www.tasofro.net/>`_ 様及び `上海アリス幻樂団 "
 "<https://www16.big.or.jp/~zun/>`_ 様にあります。 ThSFC 作者とは一切関係がありません。"
 msgstr ""
+"The copyrights of Immaterial and Missing Power, Scarlet Weather Rhapsody, "
+"Touhou Hisoutensoku, Hopeless Masquerade, Urban Legend in Limbo, and "
+"Antinomy of Common Flowers are owned by "
+"`Twilight Frontier <https://www.tasofro.net/>`_ and "
+"`Team Shanghai Alice <https://www16.big.or.jp/~zun/>`_. "
+"It has nothing to do with the ThSFC author."
 
 msgid ""
 "東方メモリマネージャーの著作権は `sue445 <http://www.sue445.net/>`_ 様にあります。 ThSFC "
 "作者とは一切関係がありません。"
 msgstr ""
+"The copyright of Touhou Memory Manager belongs to "
+"`sue445 <http://www.sue445.net/>`_. "
+"It has nothing to do with the ThSFC author."
 
 msgid ""
 "ThSFC の著作権は IIHOSHI Yoshinori (`Web サイト <https://www.colorless-"
 "sight.jp/>`_, `Twitter <https://twitter.com/iihoshi>`_) にあります。"
 msgstr ""
+"ThSFC is copyrighted by IIHOSHI Yoshinori "
+"(`Website <https://www.colorless-sight.jp/>`_, "
+"`Twitter <https://twitter.com/iihoshi>`_)."
 
