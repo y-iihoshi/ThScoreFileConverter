@@ -1,0 +1,26 @@
+# Refer to the following for details:
+# https://github.com/fossas/fossa-cli/blob/master/docs/config-file.md#fossayml
+
+version: 2
+cli:
+  server: https://app.fossa.com
+  fetcher: custom
+  project: ThScoreFileConverter
+analyze:
+  modules:
+  - name: TemplateGenerator
+    type: nuget
+    target: TemplateGenerator\TemplateGenerator.csproj
+    path: TemplateGenerator
+  - name: ThScoreFileConverter
+    type: nuget
+    target: ThScoreFileConverter\ThScoreFileConverter.csproj
+    path: ThScoreFileConverter
+  - name: ThScoreFileConverterTests
+    type: nuget
+    target: ThScoreFileConverterTests\ThScoreFileConverterTests.csproj
+    path: ThScoreFileConverterTests
+  - name: ManualGenerator
+    type: pip
+    target: ManualGenerator
+    path: ManualGenerator
