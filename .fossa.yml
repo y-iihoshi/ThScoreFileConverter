@@ -4,8 +4,8 @@
 version: 2
 cli:
   server: https://app.fossa.com
-  fetcher: custom
-  project: ThScoreFileConverter
+  fetcher: git
+  locator: git+github.com/y-iihoshi/ThScoreFileConverter$revision
 analyze:
   modules:
   - name: TemplateGenerator
