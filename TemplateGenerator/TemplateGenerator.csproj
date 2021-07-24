@@ -28,8 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Templates\jcanvas.min.js" />
-    <Content Include="Templates\jquery-1.11.1.min.js" />
     <Content Include="Templates\style.css" />
   </ItemGroup>
 
