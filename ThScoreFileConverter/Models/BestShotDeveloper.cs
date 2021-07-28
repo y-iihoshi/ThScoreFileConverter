@@ -44,6 +44,7 @@ namespace ThScoreFileConverter.Models
 
             _ = decoded.Seek(0, SeekOrigin.Begin);
             using var bitmap = new Bitmap(header.Width, header.Height, pixelFormat);
+            bitmap.SetResolution(96, 96);
 
             try
             {
