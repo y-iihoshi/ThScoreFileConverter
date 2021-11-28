@@ -57,7 +57,7 @@ jobs:
         /p:TargetFrameworks=${{ matrix.target-framework }}
 
     - name: Run FOSSA scan and upload build data
-      uses: fossa-contrib/fossa-action@v1.1.4
+      uses: fossa-contrib/fossa-action@v1.2.0
       with:
         fossa-api-key: 546ea14e5b1c4a901201f2d1cfc44a83   # Push only API token
         skip-test: false
