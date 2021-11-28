@@ -1,15 +1,15 @@
-name: CI
+name: FOSSA
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  fossa-scan:
 
     runs-on: windows-latest
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Debug]
         target-framework: [net48, netcoreapp3.1, net5.0-windows]
 
     steps:
@@ -56,31 +56,9 @@ jobs:
         /p:Configuration=${{ matrix.configuration }}
         /p:TargetFrameworks=${{ matrix.target-framework }}
 
-    - name: Generate coverage report
-      run: >
-        dotnet test ThScoreFileConverterTests
-        /p:Configuration=${{ matrix.configuration }}
-        /p:TargetFrameworks=${{ matrix.target-framework }}
-        /p:CollectCoverage=true
-        /p:CoverletOutputFormat=opencover
-        /p:CoverletOutput=coverage.xml
-      if: matrix.configuration == 'Debug'
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2.1.0
+    - name: Run FOSSA scan and upload build data
+      uses: fossa-contrib/fossa-action@v1.1.4
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ThScoreFileConverterTests/coverage.${{ matrix.target-framework }}.xml
+        fossa-api-key: 546ea14e5b1c4a901201f2d1cfc44a83   # Push only API token
+        skip-test: false
       if: matrix.configuration == 'Debug'
-
-    - name: Collect artifacts
-      run: CollectArtifacts.bat ${{ matrix.configuration }} ${{ matrix.target-framework }}
-      shell: cmd
-      if: matrix.configuration == 'Release'
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: ThScoreFileConverter.${{ matrix.target-framework }}
-        path: publish\${{ matrix.target-framework }}
-      if: matrix.configuration == 'Release'
