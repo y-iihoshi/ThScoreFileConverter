@@ -28,7 +28,7 @@ jobs:
           ${{ runner.os }}-pip-
 
     - name: Setup Python environment
-      uses: actions/setup-python@v2.2.2
+      uses: actions/setup-python@v2.3.0
 
     - name: Restore Python packages
       run: |
