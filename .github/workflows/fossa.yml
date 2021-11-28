@@ -57,8 +57,11 @@ jobs:
         /p:TargetFrameworks=${{ matrix.target-framework }}
 
     - name: Run FOSSA scan and upload build data
-      uses: fossa-contrib/fossa-action@v1.1.4
-      with:
-        fossa-api-key: 546ea14e5b1c4a901201f2d1cfc44a83   # Push only API token
-        skip-test: false
+      env:
+        FOSSA_API_KEY: 546ea14e5b1c4a901201f2d1cfc44a83   # Push only API token
+      run: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force
+        iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.ps1'))
+        fossa analyze
+        fossa test
       if: matrix.configuration == 'Debug'
