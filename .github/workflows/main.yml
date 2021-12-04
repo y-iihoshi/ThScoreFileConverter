@@ -14,9 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Fetch all history for all tags and branches
-      run: git fetch --prune --unshallow
+      with:
+        fetch-depth: 0
 
     - name: Setup Python environment
       uses: actions/setup-python@v2.3.1
