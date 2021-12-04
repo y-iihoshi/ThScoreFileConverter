@@ -13,27 +13,20 @@ jobs:
         target-framework: [net48, netcoreapp3.1, net5.0-windows]
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Fetch all history for all tags and branches
-      run: git fetch --prune --unshallow
-
-    - name: Cache Python packages
-      uses: actions/cache@v2.1.7
-      if: startsWith(runner.os, 'Windows')
+    - uses: actions/checkout@v2.4.0
       with:
-        path: ~\AppData\Local\pip\Cache
-        key: ${{ runner.os }}-pip-${{ hashFiles('ManualGenerator/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        fetch-depth: 0
 
     - name: Setup Python environment
       uses: actions/setup-python@v2.3.1
+      with:
+        cache: 'pip'
+        cache-dependency-path: 'ManualGenerator/requirements.txt'
 
     - name: Restore Python packages
       run: |
         python -m pip install -U pip
-        python -m pip install -r ManualGenerator\requirements.txt
+        python -m pip install -r ManualGenerator/requirements.txt
 
     - name: Cache NuGet packages
       uses: actions/cache@v2.1.7
