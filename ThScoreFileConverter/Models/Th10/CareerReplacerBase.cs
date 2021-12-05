@@ -16,8 +16,10 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class CareerReplacerBase<TCharaWithTotal> : IStringReplaceable
+    internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringReplaceable
         where TCharaWithTotal : struct, Enum
+        where TStage : struct, Enum
+        where TLevel : struct, Enum
     {
         private readonly string pattern;
         private readonly MatchEvaluator evaluator;
@@ -26,6 +28,7 @@ namespace ThScoreFileConverter.Models.Th10
             string formatPrefix,
             EnumShortNameParser<TCharaWithTotal> charaWithTotalParser,
             IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
+            IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
             INumberFormatter formatter)
         {
             this.pattern = Utils.Format(@"{0}C(\d{{3}})({1})([12])", formatPrefix, charaWithTotalParser.Pattern);
@@ -47,7 +50,7 @@ namespace ThScoreFileConverter.Models.Th10
                 {
                     return formatter.FormatNumber(cards.Values.Sum(getCount));
                 }
-                else if (Definitions.CardTable.ContainsKey(number))
+                else if (cardTable.ContainsKey(number))
                 {
                     return formatter.FormatNumber(cards.TryGetValue(number, out var card) ? getCount(card) : default);
                 }

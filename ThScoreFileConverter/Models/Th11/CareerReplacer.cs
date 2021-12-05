@@ -12,12 +12,17 @@ using System.Collections.Generic;
 namespace ThScoreFileConverter.Models.Th11
 {
     // %T11C[xxx][yy][z]
-    internal class CareerReplacer : Th10.CareerReplacerBase<CharaWithTotal>
+    internal class CareerReplacer : Th10.CareerReplacerBase<CharaWithTotal, Stage, Level>
     {
         public CareerReplacer(
             IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
             INumberFormatter formatter)
-            : base(Definitions.FormatPrefix, Parsers.CharaWithTotalParser, clearDataDictionary, formatter)
+            : base(
+                  Definitions.FormatPrefix,
+                  Parsers.CharaWithTotalParser,
+                  clearDataDictionary,
+                  Definitions.CardTable,
+                  formatter)
         {
         }
     }
