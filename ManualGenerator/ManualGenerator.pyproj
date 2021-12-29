@@ -12,6 +12,7 @@
     <RootNamespace>ManualGenerator</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
+    <TargetRuntime>None</TargetRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
