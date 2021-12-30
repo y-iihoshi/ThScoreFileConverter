@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Helpers
         /// Gets the <see cref="IEnumerable{T}"/> instance to enumerate values of the <typeparamref name="T"/> type.
         /// </summary>
         public static IEnumerable<T> Enumerable { get; } =
-#if NET5_0
+#if NET5_0_OR_GREATER
             Enum.GetValues<T>();
 #else
             Values.Cast<T>();
