@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Commands
         /// </summary>
         /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
-#if NET5_0
+#if NET5_0_OR_GREATER
         public bool CanExecute([NotNullWhen(true)] object? parameter)
 #else
         public bool CanExecute(object parameter)
@@ -54,7 +54,7 @@ namespace ThScoreFileConverter.Commands
         /// Called when the command is invoked.
         /// </summary>
         /// <param name="parameter">A <see cref="Window"/> instance which is closed.</param>
-#if NET5_0
+#if NET5_0_OR_GREATER
         public void Execute(object? parameter)
 #else
         public void Execute(object parameter)

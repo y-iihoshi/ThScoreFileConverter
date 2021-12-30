@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Interactivity
         public event EventHandler? CanExecuteChanged;
 #pragma warning restore CS0067
 
-#if NET5_0
+#if NET5_0_OR_GREATER
         public bool CanExecute([NotNullWhen(true)] object? parameter)
 #else
         public bool CanExecute(object parameter)
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Interactivity
             return true;
         }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
         public void Execute(object? parameter)
 #else
         public void Execute(object parameter)
