@@ -55,5 +55,10 @@ namespace ThScoreFileConverter.Squirrel
 
             return (this.Type == other.Type) && (this.Value == other.Value);
         }
+
+        public override string? ToString()
+        {
+            return nameof(SQObjectType.Null);
+        }
     }
 }

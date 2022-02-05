@@ -84,5 +84,11 @@ namespace ThScoreFileConverterTests.Squirrel
 
             Assert.AreEqual(SQNull.Instance.GetHashCode(), created.GetHashCode());
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            Assert.AreEqual("Null", SQNull.Instance.ToString());
+        }
     }
 }

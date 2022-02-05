@@ -115,5 +115,11 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             Assert.AreNotEqual(new SQFloat().GetHashCode(), new SQFloat(1f).GetHashCode());
         }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            Assert.AreEqual("1.2", new SQFloat(1.2f).ToString());
+        }
     }
 }

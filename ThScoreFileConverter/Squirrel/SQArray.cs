@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Squirrel
@@ -70,6 +71,11 @@ namespace ThScoreFileConverter.Squirrel
                 array[pair.Key] = pair.Value;
 
             return new SQArray(array);
+        }
+
+        public override string? ToString()
+        {
+            return "[ " + string.Join(", ", this.Value.Select(element => element.ToNonNullString())) + " ]";
         }
     }
 }

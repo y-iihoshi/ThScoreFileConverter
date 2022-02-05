@@ -112,5 +112,11 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             Assert.AreNotEqual(new SQInteger().GetHashCode(), new SQInteger(1).GetHashCode());
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            Assert.AreEqual("12", new SQInteger(12).ToString());
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -58,6 +59,11 @@ namespace ThScoreFileConverter.Squirrel
             }
 
             return table;
+        }
+
+        public override string? ToString()
+        {
+            return "{ " + string.Join(", ", this.Value.Select(pair => pair.Key.ToNonNullString() + ": " + pair.Value.ToNonNullString())) + " }";
         }
     }
 }

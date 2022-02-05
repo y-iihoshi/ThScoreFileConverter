@@ -134,5 +134,17 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             Assert.AreNotEqual(new SQString().GetHashCode(), new SQString("博麗 霊夢").GetHashCode());
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            Assert.AreEqual("博麗 霊夢", new SQString("博麗 霊夢").ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTestEmpty()
+        {
+            Assert.AreEqual(string.Empty, new SQString().ToString());
+        }
     }
 }

@@ -48,5 +48,10 @@ namespace ThScoreFileConverter.Squirrel
                 ? objectReader(reader)
                 : throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
         }
+
+        public override string? ToString()
+        {
+            return this.Value.ToString();
+        }
     }
 }

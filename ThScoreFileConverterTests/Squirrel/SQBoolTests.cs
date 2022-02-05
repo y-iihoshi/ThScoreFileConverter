@@ -121,5 +121,12 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             Assert.AreNotEqual(SQBool.True.GetHashCode(), SQBool.False.GetHashCode());
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            Assert.AreEqual("True", SQBool.True.ToString());
+            Assert.AreEqual("False", SQBool.False.ToString());
+        }
     }
 }

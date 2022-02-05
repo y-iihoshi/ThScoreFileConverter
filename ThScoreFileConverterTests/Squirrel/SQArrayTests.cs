@@ -131,5 +131,31 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             _ = Assert.ThrowsException<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
         }
+
+        [DataTestMethod]
+        [DataRow(
+            new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+            "[ 123 ]",
+            DisplayName = "one element")]
+        [DataRow(
+            new[] {
+                (int)SQOT.Array, 2,
+                (int)SQOT.Integer, 0, (int)SQOT.Integer, 123,
+                (int)SQOT.Integer, 1, (int)SQOT.Integer, 456,
+                (int)SQOT.Null },
+            "[ 123, 456 ]",
+            DisplayName = "two elements")]
+        public void ToStringTest(int[] array, string expected)
+        {
+            var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));
+
+            Assert.AreEqual(expected, sqarray.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTestEmpty()
+        {
+            Assert.AreEqual("[  ]", new SQArray().ToString());
+        }
     }
 }
