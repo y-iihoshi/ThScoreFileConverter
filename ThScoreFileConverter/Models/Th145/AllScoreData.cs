@@ -28,27 +28,27 @@ namespace ThScoreFileConverter.Models.Th145
             this.ClearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
         }
 
-        public int StoryProgress => this.GetValue<int>("story_progress");
+        public int StoryProgress => this.allData.GetValueOrDefault<int>("story_progress");
 
         public IReadOnlyDictionary<Chara, Levels> StoryClearFlags { get; private set; }
 
-        public int EndingCount => this.GetValue<int>("ed_count");
+        public int EndingCount => this.allData.GetValueOrDefault<int>("ed_count");
 
-        public int Ending2Count => this.GetValue<int>("ed2_count");
+        public int Ending2Count => this.allData.GetValueOrDefault<int>("ed2_count");
 
-        public bool IsEnabledStageTanuki1 => this.GetValue<bool>("enable_stage_tanuki1");
+        public bool IsEnabledStageTanuki1 => this.allData.GetValueOrDefault<bool>("enable_stage_tanuki1");
 
-        public bool IsEnabledStageTanuki2 => this.GetValue<bool>("enable_stage_tanuki2");
+        public bool IsEnabledStageTanuki2 => this.allData.GetValueOrDefault<bool>("enable_stage_tanuki2");
 
-        public bool IsEnabledStageKokoro => this.GetValue<bool>("enable_stage_kokoro");
+        public bool IsEnabledStageKokoro => this.allData.GetValueOrDefault<bool>("enable_stage_kokoro");
 
-        public bool IsEnabledSt27 => this.GetValue<bool>("enable_st27");
+        public bool IsEnabledSt27 => this.allData.GetValueOrDefault<bool>("enable_st27");
 
-        public bool IsEnabledSt28 => this.GetValue<bool>("enable_st28");
+        public bool IsEnabledSt28 => this.allData.GetValueOrDefault<bool>("enable_st28");
 
-        public bool IsPlayableMamizou => this.GetValue<bool>("enable_mamizou");
+        public bool IsPlayableMamizou => this.allData.GetValueOrDefault<bool>("enable_mamizou");
 
-        public bool IsPlayableKokoro => this.GetValue<bool>("enable_kokoro");
+        public bool IsPlayableKokoro => this.allData.GetValueOrDefault<bool>("enable_kokoro");
 
         public IReadOnlyDictionary<int, bool> BgmFlags { get; private set; }
 
@@ -135,29 +135,6 @@ namespace ThScoreFileConverter.Models.Th145
                                 as IReadOnlyDictionary<Chara, int>);
                 }
             }
-        }
-
-        private T GetValue<T>(string key)
-            where T : struct
-        {
-            T result = default;
-
-            if (this.allData.Value.TryGetValue(new SQString(key), out var value))
-            {
-                switch (value)
-                {
-                    case SQBool sqbool:
-                        if (result is bool)
-                            result = (T)(object)(bool)sqbool;
-                        break;
-                    case SQInteger sqinteger:
-                        if (result is int)
-                            result = (T)(object)(int)sqinteger;
-                        break;
-                }
-            }
-
-            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Squirrel;
@@ -142,6 +143,46 @@ namespace ThScoreFileConverterTests.Squirrel
         public void ToStringTestEmpty()
         {
             Assert.AreEqual("{  }", new SQTable().ToString());
+        }
+
+        [TestMethod]
+        public void GetValueOrDefaultTest()
+        {
+            var sqtable = new SQTable(new Dictionary<SQObject, SQObject>
+            {
+                { new SQString("boolKey"), SQBool.True },
+                { new SQString("intKey"), new SQInteger(123) },
+                { new SQString("floatKey"), new SQFloat(456f) },
+            });
+
+            Assert.AreEqual(true, sqtable.GetValueOrDefault<bool>("boolKey"));
+            Assert.AreEqual(123, sqtable.GetValueOrDefault<int>("intKey"));
+            Assert.AreEqual(456f, sqtable.GetValueOrDefault<float>("floatKey"));
+        }
+
+        [TestMethod]
+        public void GetValueOrDefaultTestEmpty()
+        {
+            var sqtable = new SQTable();
+
+            Assert.AreEqual(default, sqtable.GetValueOrDefault<bool>("boolKey"));
+            Assert.AreEqual(default, sqtable.GetValueOrDefault<int>("intKey"));
+            Assert.AreEqual(default, sqtable.GetValueOrDefault<float>("floatKey"));
+        }
+
+        [TestMethod]
+        public void GetValueOrDefaultTestWrongType()
+        {
+            var sqtable = new SQTable(new Dictionary<SQObject, SQObject>
+            {
+                { new SQString("boolKey"), SQBool.True },
+                { new SQString("intKey"), new SQInteger(123) },
+                { new SQString("floatKey"), new SQFloat(456f) },
+            });
+
+            Assert.AreEqual(default, sqtable.GetValueOrDefault<int>("boolKey"));
+            Assert.AreEqual(default, sqtable.GetValueOrDefault<float>("intKey"));
+            Assert.AreEqual(default, sqtable.GetValueOrDefault<bool>("floatKey"));
         }
     }
 }

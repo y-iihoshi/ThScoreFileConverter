@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -64,6 +63,33 @@ namespace ThScoreFileConverter.Squirrel
         public override string? ToString()
         {
             return "{ " + string.Join(", ", this.Value.Select(pair => pair.Key.ToNonNullString() + ": " + pair.Value.ToNonNullString())) + " }";
+        }
+
+        public T GetValueOrDefault<T>(string key)
+            where T : struct
+        {
+            T result = default;
+
+            if (this.Value.TryGetValue(new SQString(key), out var value))
+            {
+                switch (value)
+                {
+                    case SQBool sqbool:
+                        if (result is bool)
+                            result = (T)(object)(bool)sqbool;
+                        break;
+                    case SQInteger sqinteger:
+                        if (result is int)
+                            result = (T)(object)(int)sqinteger;
+                        break;
+                    case SQFloat sqfloat:
+                        if (result is float)
+                            result = (T)(object)(float)sqfloat;
+                        break;
+                }
+            }
+
+            return result;
         }
     }
 }

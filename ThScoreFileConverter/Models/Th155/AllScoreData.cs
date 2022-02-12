@@ -82,29 +82,16 @@ namespace ThScoreFileConverter.Models.Th155
 
         private static Story ParseStory(SQObject obj)
         {
-            var story = default(Story);
-
-            if (obj is SQTable dict)
-            {
-                foreach (var pair in dict.Value)
+            return obj is SQTable dict
+                ? new Story
                 {
-                    if (pair.Key is SQString key)
-                    {
-                        if ((key == "stage") && (pair.Value is SQInteger stage))
-                            story.Stage = stage;
-                        if ((key == "ed") && (pair.Value is SQInteger ed))
-                            story.Ed = (Levels)(int)ed;
-                        if ((key == "available") && (pair.Value is SQBool available))
-                            story.Available = available;
-                        if ((key == "overdrive") && (pair.Value is SQInteger overDrive))
-                            story.OverDrive = overDrive;
-                        if ((key == "stage_overdrive") && (pair.Value is SQInteger stageOverDrive))
-                            story.StageOverDrive = stageOverDrive;
-                    }
+                    Stage = dict.GetValueOrDefault<int>("stage"),
+                    Ed = (Levels)dict.GetValueOrDefault<int>("ed"),
+                    Available = dict.GetValueOrDefault<bool>("available"),
+                    OverDrive = dict.GetValueOrDefault<int>("overdrive"),
+                    StageOverDrive = dict.GetValueOrDefault<int>("stage_overdrive"),
                 }
-            }
-
-            return story;
+                : default;
         }
 
         private void ParseStoryDictionary()
@@ -174,30 +161,7 @@ namespace ThScoreFileConverter.Models.Th155
 
         private void ParseVersion()
         {
-            this.Version = this.GetValue<int>("version");
-        }
-
-        private T GetValue<T>(string key)
-            where T : struct
-        {
-            T result = default;
-
-            if (this.allData.Value.TryGetValue(new SQString(key), out var value))
-            {
-                switch (value)
-                {
-                    case SQBool sqbool:
-                        if (result is bool)
-                            result = (T)(object)(bool)sqbool;
-                        break;
-                    case SQInteger sqinteger:
-                        if (result is int)
-                            result = (T)(object)(int)sqinteger;
-                        break;
-                }
-            }
-
-            return result;
+            this.Version = this.allData.GetValueOrDefault<int>("version");
         }
 
         public struct Story
