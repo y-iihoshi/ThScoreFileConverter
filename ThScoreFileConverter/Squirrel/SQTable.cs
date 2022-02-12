@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -63,6 +64,18 @@ namespace ThScoreFileConverter.Squirrel
         public override string? ToString()
         {
             return "{ " + string.Join(", ", this.Value.Select(pair => pair.Key.ToNonNullString() + ": " + pair.Value.ToNonNullString())) + " }";
+        }
+
+        public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            Func<SQObject, bool> keyPredicate,
+            Func<SQObject, bool> valuePredicate,
+            Func<SQObject, TKey> keyConverter,
+            Func<SQObject, TValue> valueConverter)
+            where TKey : notnull
+        {
+            return this.Value
+                .Where(pair => keyPredicate(pair.Key) && valuePredicate(pair.Value))
+                .ToDictionary(pair => keyConverter(pair.Key), pair => valueConverter(pair.Value));
         }
 
         public T GetValueOrDefault<T>(string key)

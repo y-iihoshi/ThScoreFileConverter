@@ -7,10 +7,10 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models.Th155
@@ -51,6 +51,20 @@ namespace ThScoreFileConverter.Models.Th155
             this.ParseEndingDictionary();
             this.ParseStageDictionary();
             this.ParseVersion();
+        }
+
+        private static Dictionary<TKey, TValue> GetDictionary<TKey, TValue>(
+            SQTable table,
+            string key,
+            Func<SQObject, bool> keyPredicate,
+            Func<SQObject, bool> valuePredicate,
+            Func<SQObject, TKey> keyConverter,
+            Func<SQObject, TValue> valueConverter)
+            where TKey : notnull
+        {
+            return table.Value.TryGetValue(new SQString(key), out var value) && (value is SQTable valueTable)
+                ? valueTable.ToDictionary(keyPredicate, valuePredicate, keyConverter, valueConverter)
+                : new Dictionary<TKey, TValue>();
         }
 
         private static StoryChara? ParseStoryChara(SQObject obj)
@@ -96,67 +110,57 @@ namespace ThScoreFileConverter.Models.Th155
 
         private void ParseStoryDictionary()
         {
-            if (this.allData.Value.TryGetValue(new SQString("story"), out var story))
-            {
-                if (story is SQTable table)
-                {
-                    this.StoryDictionary = table.Value
-                        .Where(pair => ParseStoryChara(pair.Key) is not null)
-                        .ToDictionary(pair => ParseStoryChara(pair.Key)!.Value, pair => ParseStory(pair.Value));
-                }
-            }
+            this.StoryDictionary = GetDictionary(
+                this.allData,
+                "story",
+                key => ParseStoryChara(key) is not null,
+                value => true,
+                key => ParseStoryChara(key)!.Value,
+                value => ParseStory(value));
         }
 
         private void ParseCharacterDictionary()
         {
-            if (this.allData.Value.TryGetValue(new SQString("character"), out var character))
-            {
-                if (character is SQTable table)
-                {
-                    this.CharacterDictionary = table.Value
-                        .Where(pair => (pair.Key is SQString) && (pair.Value is SQInteger))
-                        .ToDictionary(pair => (string)(SQString)pair.Key, pair => (int)(SQInteger)pair.Value);
-                }
-            }
+            this.CharacterDictionary = GetDictionary(
+                this.allData,
+                "character",
+                key => key is SQString,
+                value => value is SQInteger,
+                key => (string)(SQString)key,
+                value => (int)(SQInteger)value);
         }
 
         private void ParseBgmDictionary()
         {
-            if (this.allData.Value.TryGetValue(new SQString("bgm"), out var bgm))
-            {
-                if (bgm is SQTable table)
-                {
-                    this.BgmDictionary = table.Value
-                        .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
-                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (bool)(SQBool)pair.Value);
-                }
-            }
+            this.BgmDictionary = GetDictionary(
+                this.allData,
+                "bgm",
+                key => key is SQInteger,
+                value => value is SQBool,
+                key => (int)(SQInteger)key,
+                value => (bool)(SQBool)value);
         }
 
         private void ParseEndingDictionary()
         {
-            if (this.allData.Value.TryGetValue(new SQString("ed"), out var ed))
-            {
-                if (ed is SQTable table)
-                {
-                    this.EndingDictionary = table.Value
-                        .Where(pair => (pair.Key is SQString) && (pair.Value is SQInteger))
-                        .ToDictionary(pair => (string)(SQString)pair.Key, pair => (int)(SQInteger)pair.Value);
-                }
-            }
+            this.EndingDictionary = GetDictionary(
+                this.allData,
+                "ed",
+                key => key is SQString,
+                value => value is SQInteger,
+                key => (string)(SQString)key,
+                value => (int)(SQInteger)value);
         }
 
         private void ParseStageDictionary()
         {
-            if (this.allData.Value.TryGetValue(new SQString("stage"), out var stage))
-            {
-                if (stage is SQTable table)
-                {
-                    this.StageDictionary = table.Value
-                        .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQInteger))
-                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (int)(SQInteger)pair.Value);
-                }
-            }
+            this.StageDictionary = GetDictionary(
+                this.allData,
+                "stage",
+                key => key is SQInteger,
+                value => value is SQInteger,
+                key => (int)(SQInteger)key,
+                value => (int)(SQInteger)value);
         }
 
         private void ParseVersion()

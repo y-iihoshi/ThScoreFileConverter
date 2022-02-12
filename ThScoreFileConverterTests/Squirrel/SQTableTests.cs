@@ -146,6 +146,41 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
+        public void ToDictionaryTest()
+        {
+            var sqtable = new SQTable(new Dictionary<SQObject, SQObject>
+            {
+                { new SQInteger(12), new SQInteger(34) },
+                { new SQString("intKey"), new SQInteger(56) },
+                { new SQString("floatKey"), new SQFloat(78f) },
+            });
+
+            var table = sqtable.ToDictionary(
+                key => key is SQString,
+                value => value is SQInteger,
+                key => (string)(SQString)key,
+                value => (int)(SQInteger)value);
+
+            Assert.AreEqual(1, table.Count);
+            Assert.AreEqual("intKey", table.Keys.First());
+            Assert.AreEqual(56, table["intKey"]);
+        }
+
+        [TestMethod]
+        public void ToDictionaryTestEmpty()
+        {
+            var sqtable = new SQTable();
+
+            var table = sqtable.ToDictionary(
+                key => key is SQString,
+                value => value is SQInteger,
+                key => (string)(SQString)key,
+                value => (int)(SQInteger)value);
+
+            Assert.AreEqual(0, table.Count);
+        }
+
+        [TestMethod]
         public void GetValueOrDefaultTest()
         {
             var sqtable = new SQTable(new Dictionary<SQObject, SQObject>

@@ -74,9 +74,11 @@ namespace ThScoreFileConverter.Models.Th135
             {
                 if (flags is SQTable bgmFlags)
                 {
-                    this.BgmFlags = bgmFlags.Value
-                        .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
-                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (bool)(SQBool)pair.Value);
+                    this.BgmFlags = bgmFlags.ToDictionary(
+                        key => key is SQInteger,
+                        value => value is SQBool,
+                        key => (int)(SQInteger)key,
+                        value => (bool)(SQBool)value);
                 }
             }
         }
