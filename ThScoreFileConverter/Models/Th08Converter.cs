@@ -102,8 +102,8 @@ namespace ThScoreFileConverter.Models
 
         private static bool Extract(Stream input, Stream output)
         {
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8, true);
-            using var writer = new BinaryWriter(output, EncodingHelper.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+            using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
             var header = new FileHeader();
 
             header.ReadFrom(reader);
@@ -123,7 +123,7 @@ namespace ThScoreFileConverter.Models
 
         private static bool Validate(Stream input)
         {
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
             var header = new FileHeader();
             var chapter = new Th06.Chapter();
 
@@ -181,7 +181,7 @@ namespace ThScoreFileConverter.Models
                 { Th07.VersionInfo.ValidSignature, (data, ch) => data.Set(new Th07.VersionInfo(ch)) },
             };
 
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
             var allScoreData = new AllScoreData();
             var chapter = new Th06.Chapter();
 

@@ -22,8 +22,8 @@ namespace ThScoreFileConverterTests.Helpers
         [TestMethod]
         public void UTF8Test()
         {
-            Assert.AreNotEqual(System.Text.Encoding.UTF8, EncodingHelper.UTF8);
-            Assert.AreEqual(new System.Text.UTF8Encoding(false), EncodingHelper.UTF8);
+            Assert.AreNotEqual(System.Text.Encoding.UTF8, EncodingHelper.UTF8NoBOM);
+            Assert.AreEqual(new System.Text.UTF8Encoding(false), EncodingHelper.UTF8NoBOM);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Helpers
             Assert.AreNotEqual(System.Text.Encoding.GetEncoding(65001), utf8);
             Assert.AreNotEqual(System.Text.Encoding.UTF8, utf8);
             Assert.AreEqual(new System.Text.UTF8Encoding(false), utf8);
-            Assert.AreEqual(EncodingHelper.UTF8, utf8);
+            Assert.AreEqual(EncodingHelper.UTF8NoBOM, utf8);
         }
 
         [TestMethod]

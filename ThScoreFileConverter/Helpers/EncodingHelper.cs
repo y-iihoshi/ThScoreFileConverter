@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Helpers
 
             CP932 = System.Text.Encoding.GetEncoding(932);
             Default = System.Text.Encoding.Default;
-            UTF8 = new System.Text.UTF8Encoding(false);
+            UTF8NoBOM = new System.Text.UTF8Encoding(false);
             Encodings = new Dictionary<int, System.Text.Encoding>();
         }
 
@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Helpers
         /// <summary>
         /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
         /// </summary>
-        public static System.Text.Encoding UTF8 { get; }
+        public static System.Text.Encoding UTF8NoBOM { get; }
 
         /// <summary>
         /// Gets the dictionary caching <see cref="System.Text.Encoding"/> instances.
@@ -55,7 +55,7 @@ namespace ThScoreFileConverter.Helpers
                 return encoding;
 
             // To prevent BOM output for UTF-8
-            encoding = (codePage == 65001) ? UTF8 : System.Text.Encoding.GetEncoding(codePage);
+            encoding = (codePage == 65001) ? UTF8NoBOM : System.Text.Encoding.GetEncoding(codePage);
             Encodings.Add(codePage, encoding);
             return encoding;
         }
