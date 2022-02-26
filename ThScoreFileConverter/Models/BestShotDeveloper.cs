@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models
 
             using var decoded = new MemoryStream();
 
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8, true);
             var header = BinaryReadableHelper.Create<THeader>(reader);
 
             Lzss.Decompress(input, decoded);

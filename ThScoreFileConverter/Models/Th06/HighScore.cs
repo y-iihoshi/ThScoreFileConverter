@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th06
             : base()
         {
             this.Score = score;
-            this.Name = Encoding.Default.GetBytes("Nanashi\0\0");
+            this.Name = EncodingHelper.Default.GetBytes("Nanashi\0\0");
         }
 
         public uint Score { get; }

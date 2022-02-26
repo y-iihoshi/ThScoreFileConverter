@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th155;
 using ThScoreFileConverter.Properties;
 
@@ -103,7 +104,7 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData? Read(Stream input)
         {
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8, true);
             var allScoreData = new AllScoreData();
 
             try

@@ -46,17 +46,17 @@ namespace ThScoreFileConverter.Models.Th08
                 switch (type)
                 {
                     case "1":   // name
-                        return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
+                        return EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0];
                     case "2":   // score
                         return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
                     case "3":   // stage
                         if ((level == Level.Extra) &&
-                            (Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0') == "--/--"))
+                            (EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0') == "--/--"))
                             return StageProgress.Extra.ToShortName();
                         else
                             return score.StageProgress.ToShortName();
                     case "4":   // date
-                        return Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
+                        return EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
                     case "5":   // slow rate
                         return formatter.FormatPercent(score.SlowRate, 3);
                     case "6":   // play time

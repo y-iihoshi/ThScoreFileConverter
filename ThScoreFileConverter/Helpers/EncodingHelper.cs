@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Encoding.cs" company="None">
+// <copyright file="EncodingHelper.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -7,14 +7,14 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Helpers
 {
     /// <summary>
     /// Contains read-only instances of <see cref="System.Text.Encoding"/> class for convenience.
     /// </summary>
-    public static class Encoding
+    public static class EncodingHelper
     {
-        static Encoding()
+        static EncodingHelper()
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
