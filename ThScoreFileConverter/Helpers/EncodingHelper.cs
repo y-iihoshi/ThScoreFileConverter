@@ -20,6 +20,7 @@ namespace ThScoreFileConverter.Helpers
 
             CP932 = System.Text.Encoding.GetEncoding(932);
             Default = System.Text.Encoding.Default;
+            UTF8 = System.Text.Encoding.UTF8;
             UTF8NoBOM = new System.Text.UTF8Encoding(false);
             Encodings = new Dictionary<int, System.Text.Encoding>();
         }
@@ -33,6 +34,11 @@ namespace ThScoreFileConverter.Helpers
         /// Gets the default encoding.
         /// </summary>
         public static System.Text.Encoding Default { get; }
+
+        /// <summary>
+        /// Gets the UTF-8 encoding. The Unicode byte order mark is emitted.
+        /// </summary>
+        public static System.Text.Encoding UTF8 { get; }
 
         /// <summary>
         /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
