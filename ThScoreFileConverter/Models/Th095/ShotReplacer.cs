@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Models.Th095
                         "ClearData: {0}{3}Slow: {1}{3}SpellName: {2}",
                         formatter.FormatNumber(bestshot.Header.ResultScore),
                         formatter.FormatPercent(bestshot.Header.SlowRate, 6),
-                        Encoding.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
+                        EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
                         Environment.NewLine);
                     return Utils.Format(
                         "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);

@@ -47,10 +47,10 @@ namespace ThScoreFileConverter.Models.Th07
 
                 return type switch
                 {
-                    1 => Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0],
+                    1 => EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0],
                     2 => formatter.FormatNumber((score.Score * 10) + score.ContinueCount),
                     3 => score.StageProgress.ToShortName(),
-                    4 => Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0'),
+                    4 => EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0'),
                     5 => formatter.FormatPercent(score.SlowRate, 3),
                     _ => match.ToString(),  // unreachable
                 };

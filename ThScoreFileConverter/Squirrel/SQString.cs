@@ -10,7 +10,7 @@
 using System;
 using System.IO;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Squirrel
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Squirrel
 
             var size = reader.ReadInt32();
             return new SQString(
-                (size > 0) ? Encoding.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty);
+                (size > 0) ? EncodingHelper.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty);
         }
 
         public override bool Equals(object? obj)

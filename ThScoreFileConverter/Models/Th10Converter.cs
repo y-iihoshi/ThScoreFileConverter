@@ -76,8 +76,8 @@ namespace ThScoreFileConverter.Models
 
         private static bool Decrypt(Stream input, Stream output)
         {
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
-            using var writer = new BinaryWriter(output, Encoding.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+            using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
             var header = new Header();
 
             header.ReadFrom(reader);
@@ -94,8 +94,8 @@ namespace ThScoreFileConverter.Models
 
         private static bool Extract(Stream input, Stream output)
         {
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
-            using var writer = new BinaryWriter(output, Encoding.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+            using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
 
             var header = new Header();
             header.ReadFrom(reader);
@@ -111,7 +111,7 @@ namespace ThScoreFileConverter.Models
 
         private static bool Validate(Stream input)
         {
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
 
             var header = new Header();
             header.ReadFrom(reader);
@@ -147,7 +147,7 @@ namespace ThScoreFileConverter.Models
                 { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 

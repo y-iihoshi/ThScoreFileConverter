@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
@@ -230,8 +231,8 @@ namespace ThScoreFileConverter.Models
             }
 
             const int DefaultBufferSize = 1024;
-            var inputEncoding = Encoding.GetEncoding(inputCodePageId);
-            var outputEncoding = Encoding.GetEncoding(outputCodePageId);
+            var inputEncoding = EncodingHelper.GetEncoding(inputCodePageId);
+            var outputEncoding = EncodingHelper.GetEncoding(outputCodePageId);
             var numFiles = settings.TemplateFiles.Count();
             for (var index = 0; index < numFiles; index++)
             {

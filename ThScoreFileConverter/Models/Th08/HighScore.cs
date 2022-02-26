@@ -65,8 +65,8 @@ namespace ThScoreFileConverter.Models.Th08
             : base()
         {
             this.Score = score;
-            this.Name = Encoding.Default.GetBytes("--------\0");
-            this.Date = Encoding.Default.GetBytes("--/--\0");
+            this.Name = EncodingHelper.Default.GetBytes("--------\0");
+            this.Date = EncodingHelper.Default.GetBytes("--/--\0");
             this.CardFlags = ImmutableDictionary<int, byte>.Empty;
         }
 

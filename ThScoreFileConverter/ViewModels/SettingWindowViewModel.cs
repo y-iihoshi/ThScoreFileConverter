@@ -17,6 +17,7 @@ using Prism.Services.Dialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -70,7 +71,7 @@ namespace ThScoreFileConverter.ViewModels
                 x => x.OutputCodePageId, value => (int)value!, value => value);
 
             var encodings = Settings.ValidCodePageIds
-                .ToDictionary(id => id, id => Encoding.GetEncoding(id).EncodingName);
+                .ToDictionary(id => id, id => EncodingHelper.GetEncoding(id).EncodingName);
             this.InputEncodings = encodings;
             this.OutputEncodings = encodings;
 

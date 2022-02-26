@@ -43,7 +43,7 @@ namespace ThScoreFileConverter.Models.Th13
                 {
                     case 1:     // name
                         return score.Name.Any()
-                            ? Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
+                            ? EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
                         return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
                     case 3:     // stage

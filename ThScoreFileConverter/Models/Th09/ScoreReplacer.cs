@@ -44,13 +44,13 @@ namespace ThScoreFileConverter.Models.Th09
                 {
                     case 1:     // name
                         return (score is not null)
-                            ? Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
+                            ? EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
                         return formatter.FormatNumber(
                             (score is not null) ? ((score.Score * 10) + score.ContinueCount) : default);
                     case 3:     // date
                         date = (score is not null)
-                            ? Encoding.Default.GetString(score.Date.ToArray()).Split('\0')[0] : "--/--";
+                            ? EncodingHelper.Default.GetString(score.Date.ToArray()).Split('\0')[0] : "--/--";
                         return (date != "--/--") ? date : "--/--/--";
                     default:    // unreachable
                         return match.ToString();

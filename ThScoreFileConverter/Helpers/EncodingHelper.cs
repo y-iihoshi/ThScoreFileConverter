@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Encoding.cs" company="None">
+// <copyright file="EncodingHelper.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -7,20 +7,21 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Helpers
 {
     /// <summary>
     /// Contains read-only instances of <see cref="System.Text.Encoding"/> class for convenience.
     /// </summary>
-    public static class Encoding
+    public static class EncodingHelper
     {
-        static Encoding()
+        static EncodingHelper()
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             CP932 = System.Text.Encoding.GetEncoding(932);
             Default = System.Text.Encoding.Default;
-            UTF8 = new System.Text.UTF8Encoding(false);
+            UTF8 = System.Text.Encoding.UTF8;
+            UTF8NoBOM = new System.Text.UTF8Encoding(false);
             Encodings = new Dictionary<int, System.Text.Encoding>();
         }
 
@@ -35,9 +36,14 @@ namespace ThScoreFileConverter.Models
         public static System.Text.Encoding Default { get; }
 
         /// <summary>
-        /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
+        /// Gets the UTF-8 encoding. The Unicode byte order mark is emitted.
         /// </summary>
         public static System.Text.Encoding UTF8 { get; }
+
+        /// <summary>
+        /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
+        /// </summary>
+        public static System.Text.Encoding UTF8NoBOM { get; }
 
         /// <summary>
         /// Gets the dictionary caching <see cref="System.Text.Encoding"/> instances.
@@ -55,7 +61,7 @@ namespace ThScoreFileConverter.Models
                 return encoding;
 
             // To prevent BOM output for UTF-8
-            encoding = (codePage == 65001) ? UTF8 : System.Text.Encoding.GetEncoding(codePage);
+            encoding = (codePage == 65001) ? UTF8NoBOM : System.Text.Encoding.GetEncoding(codePage);
             Encodings.Add(codePage, encoding);
             return encoding;
         }

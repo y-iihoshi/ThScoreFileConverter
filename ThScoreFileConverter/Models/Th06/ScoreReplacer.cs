@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Models.Th06
 
                 return type switch
                 {
-                    1 => Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0],
+                    1 => EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0],
                     2 => formatter.FormatNumber(score.Score),
                     3 => score.StageProgress.ToShortName(),
                     _ => match.ToString(),  // unreachable

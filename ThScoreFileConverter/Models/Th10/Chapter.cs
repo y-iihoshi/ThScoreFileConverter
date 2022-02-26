@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th10
@@ -81,7 +82,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public void ReadFrom(BinaryReader reader)
         {
-            this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
+            this.Signature = EncodingHelper.Default.GetString(reader.ReadExactBytes(SignatureSize));
             this.Version = reader.ReadUInt16();
             this.Checksum = reader.ReadUInt32();
             this.Size = reader.ReadInt32();

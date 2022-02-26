@@ -9,6 +9,7 @@
 
 using System.IO;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th095
@@ -41,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th095
 
         public void ReadFrom(BinaryReader reader)
         {
-            this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
+            this.Signature = EncodingHelper.Default.GetString(reader.ReadExactBytes(SignatureSize));
 
             this.EncodedAllSize = reader.ReadInt32();
             if (this.EncodedAllSize < 0)
@@ -70,7 +71,7 @@ namespace ThScoreFileConverter.Models.Th095
 
         public void WriteTo(BinaryWriter writer)
         {
-            writer.Write(Encoding.Default.GetBytes(this.Signature));
+            writer.Write(EncodingHelper.Default.GetBytes(this.Signature));
             writer.Write(this.EncodedAllSize);
             writer.Write(this.unknown1);
             writer.Write(this.unknown2);
