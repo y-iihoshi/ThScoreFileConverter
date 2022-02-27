@@ -388,8 +388,4 @@ Renamed to "{1}".</value>
   <data name="ViewsSettingWindowLabelOutputEncoding" xml:space="preserve">
     <value>For _output file:</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ApplicationIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ApplicationIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

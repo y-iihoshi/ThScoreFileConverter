@@ -70,16 +70,6 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-        /// </summary>
-        public static System.Drawing.Icon ApplicationIcon {
-            get {
-                object obj = ResourceManager.GetObject("ApplicationIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Must not be empty. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ArgumentExceptionMustNotBeEmpty {
