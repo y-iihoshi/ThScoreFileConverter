@@ -1,4 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.IO.Packaging;
+using System.Threading;
+using System.Windows;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -9,6 +13,21 @@ namespace ThScoreFileConverterTests.ViewModels
     [TestClass]
     public class AboutWindowViewModelTests
     {
+        // A workaround to enable accessing resources by pack URIs.
+        // See: https://stackoverflow.com/questions/3710776
+        [ClassInitialize]
+        public static void Setup(TestContext testContext)
+        {
+            // No URI scheme except "example" should be used here, I think.
+            _ = PackUriHelper.Create(new Uri("example://0"));
+
+            // An UI element must be created by an STA thread.
+            var thread = new Thread(() => _ = new FrameworkElement());
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+        }
+
         [TestMethod]
         public void TitleTest()
         {

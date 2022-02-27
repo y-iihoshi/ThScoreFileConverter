@@ -6,10 +6,8 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Drawing;
+using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Prism.Mvvm;
@@ -34,9 +32,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             this.Title = Utils.GetLocalizedValues<string>(nameof(Resources.AboutWindowTitle));
 
-            this.Icon = Imaging.CreateBitmapSourceFromHIcon(
-                SystemIcons.Application.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-
             var thisAsm = Assembly.GetExecutingAssembly();
             var asmName = thisAsm.GetName();
             var gitVerInfoType = thisAsm.GetType("GitVersionInformation");
@@ -48,6 +43,11 @@ namespace ThScoreFileConverter.ViewModels
                 + (verField?.GetValue(null) ?? string.Empty);
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = Resources.ProjectUrl;
+
+            var uriString = "pack://application:,,,/" + this.Name + ";component/Resources/ApplicationIcon.ico";
+            var decoder = BitmapDecoder.Create(new Uri(uriString), BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);
+
+            this.Icon = decoder.Frames.OrderByDescending(frame => frame.Width).First();
         }
 
         /// <inheritdoc/>

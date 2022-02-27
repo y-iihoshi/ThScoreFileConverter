@@ -321,7 +321,6 @@ Renamed to "{1}".</value>
   </data>
   <data name="ViewsMainWindowButtonAbout" xml:space="preserve">
     <value>_About...</value>
-    
   </data>
   <data name="ViewsMainWindowButtonAdd" xml:space="preserve">
     <value>_Add...</value>
