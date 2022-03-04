@@ -82,7 +82,7 @@ jobs:
       if: matrix.configuration == 'Release'
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v3
       with:
         name: ThScoreFileConverter.${{ matrix.target-framework }}
         path: publish\${{ matrix.target-framework }}
