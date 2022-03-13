@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ObjectExtensions.cs" company="None">
+// <copyright file="StringExtensions.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,11 @@ namespace ThScoreFileConverter.Extensions
     /// <summary>
     /// Provides some extension methods for <see cref="object"/>.
     /// </summary>
-    public static class ObjectExtensions
+    /// <remarks>
+    /// It would be better to name this class <c>ObjectExtensions</c>, but it could not because of the CA1724 warning;
+    /// it conflicts with the namespace name <see cref="Reactive.Bindings.ObjectExtensions"/> defined in ReactiveProperty.
+    /// </remarks>
+    public static class StringExtensions
     {
         /// <summary>
         /// Returns a non-null string that represents the specified object.

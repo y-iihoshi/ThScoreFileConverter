@@ -5,7 +5,7 @@ using ThScoreFileConverter.Extensions;
 namespace ThScoreFileConverterTests.Extensions
 {
     [TestClass]
-    public class ObjectExtensionsTests
+    public class StringExtensionsTests
     {
         [TestMethod]
         public void ToNonNullStringTest()
