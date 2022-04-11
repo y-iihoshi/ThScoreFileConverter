@@ -70,7 +70,7 @@ jobs:
       if: matrix.configuration == 'Debug'
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2.1.0
+      uses: codecov/codecov-action@v3.0.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: ThScoreFileConverterTests/coverage.${{ matrix.target-framework }}.xml
