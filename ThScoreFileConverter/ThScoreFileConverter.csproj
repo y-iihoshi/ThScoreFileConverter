@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Copyright>© 2013-2021 IIHOSHI Yoshinori</Copyright>
+    <Copyright>© 2013-2022 IIHOSHI Yoshinori</Copyright>
     <Description>Score file converter for Touhou games</Description>
     <ApplicationIcon>Resources\ApplicationIcon.ico</ApplicationIcon>
   </PropertyGroup>

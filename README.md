@@ -48,13 +48,13 @@ format from best shot files.
 ## Environments
 
 ### Development environment
-* Windows 10 Pro Version 21H2 (64 bit)
+* Windows 11 Pro Version 21H2
 * .NET Framework 4.8
 * .NET Core 3.1
 * .NET 5
 * .NET 6
-* Visual Studio Community 2022 17.0.4
-* Python 3.10.1
+* Visual Studio Community 2022 17.1.6
+* Python 3.10.4
 
 ### Tested environment
 * Same as above.
