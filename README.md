@@ -51,7 +51,6 @@ format from best shot files.
 * Windows 11 Pro Version 21H2
 * .NET Framework 4.8
 * .NET Core 3.1
-* .NET 5
 * .NET 6
 * Visual Studio Community 2022 17.1.6
 * Python 3.10.4
