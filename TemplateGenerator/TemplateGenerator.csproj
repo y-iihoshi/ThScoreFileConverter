@@ -799,6 +799,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\th175.ttinclude" />
+    <None Update="Templates\th175score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th175score1.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th175score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th175score1.html</LastGenOutput>
+    </None>
+    <None Update="Templates\th175score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th175score2.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th175score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th175score2.html</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Templates\th18.ttinclude" />
     <None Update="Templates\th18card1.html">
       <AutoGen>True</AutoGen>

@@ -27,7 +27,7 @@ ThSFC を利用するには、 .NET Framework 4.8, .NET Core 3.1 または .NET 
 * .NET Framework 4.8
 * .NET Core 3.1
 * .NET 6
-* Visual Studio Community 2022 Version 17.1.6
+* Visual Studio Community 2022 Version 17.2.0
 * Python 3.10.4
 
 免責事項

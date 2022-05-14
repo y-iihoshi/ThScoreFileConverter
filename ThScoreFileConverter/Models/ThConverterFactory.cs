@@ -45,6 +45,7 @@ namespace ThScoreFileConverter.Models
             { nameof(Resources.TH135), typeof(Th135Converter) },
             { nameof(Resources.TH145), typeof(Th145Converter) },
             { nameof(Resources.TH155), typeof(Th155Converter) },
+            { nameof(Resources.TH175), typeof(Th175Converter) },
         };
 
         /// <summary>

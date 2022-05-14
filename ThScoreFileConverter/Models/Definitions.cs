@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models
             new() { Number = nameof(Resources.TH135), IsSupported = true },
             new() { Number = nameof(Resources.TH145), IsSupported = true },
             new() { Number = nameof(Resources.TH155), IsSupported = true },
-            new() { Number = nameof(Resources.TH175), IsSupported = false },
+            new() { Number = nameof(Resources.TH175), IsSupported = true },
         };
 
         public static bool CanPractice(Level level)
