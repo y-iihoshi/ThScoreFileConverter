@@ -42,8 +42,9 @@ format from best shot files.
 * TH17 東方鬼形獣　～ Wily Beast and Weakest Creature.
 * TH18 東方虹龍洞　～ Unconnected Marketeers.
 
-### Will be supported
+### Supported experimentally
 * TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)
+  Because I'm not good at playing action games well...
 
 ## Environments
 
@@ -52,7 +53,7 @@ format from best shot files.
 * .NET Framework 4.8
 * .NET Core 3.1
 * .NET 6
-* Visual Studio Community 2022 17.1.6
+* Visual Studio Community 2022 17.2.0
 * Python 3.10.4
 
 ### Tested environment
