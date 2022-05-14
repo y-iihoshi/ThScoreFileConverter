@@ -37,15 +37,12 @@ jobs:
           ${{ runner.os }}-nuget-${{ matrix.target-framework }}-
           ${{ runner.os }}-nuget-
 
-    - name: Restore NuGet packages
-      run: nuget restore ThScoreFileConverter.sln
-
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Build
       run: >
-        msbuild ThScoreFileConverter.sln /m /verbosity:minimal
+        msbuild ThScoreFileConverter.sln /m /restore /verbosity:minimal
         /p:Configuration=${{ matrix.configuration }}
         /p:TargetFrameworks=${{ matrix.target-framework }}
 
