@@ -5,35 +5,34 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th18
+namespace ThScoreFileConverter.Models.Th18;
+
+/// <summary>
+/// Represents player characters of UM.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents player characters of UM.
+    /// Hakurei Reimu.
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu.
-        /// </summary>
-        [EnumAltName("RM")]
-        Reimu,
+    [EnumAltName("RM")]
+    Reimu,
 
-        /// <summary>
-        /// Kirisame Marisa.
-        /// </summary>
-        [EnumAltName("MR")]
-        Marisa,
+    /// <summary>
+    /// Kirisame Marisa.
+    /// </summary>
+    [EnumAltName("MR")]
+    Marisa,
 
-        /// <summary>
-        /// Izayoi Sakuya.
-        /// </summary>
-        [EnumAltName("SK")]
-        Sakuya,
+    /// <summary>
+    /// Izayoi Sakuya.
+    /// </summary>
+    [EnumAltName("SK")]
+    Sakuya,
 
-        /// <summary>
-        /// Kochiya Sanae.
-        /// </summary>
-        [EnumAltName("SN")]
-        Sanae,
-    }
+    /// <summary>
+    /// Kochiya Sanae.
+    /// </summary>
+    [EnumAltName("SN")]
+    Sanae,
 }

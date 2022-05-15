@@ -7,21 +7,20 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal class Status : StatusBase
 {
-    internal class Status : StatusBase
+    public const ushort ValidVersion = 0x0000;
+    public const int NumBgms = 18;
+
+    public Status(Chapter chapter)
+        : base(chapter, ValidVersion, NumBgms)
     {
-        public const ushort ValidVersion = 0x0000;
-        public const int NumBgms = 18;
+    }
 
-        public Status(Chapter chapter)
-            : base(chapter, ValidVersion, NumBgms)
-        {
-        }
-
-        public static new bool CanInitialize(Chapter chapter)
-        {
-            return StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
-        }
+    public static new bool CanInitialize(Chapter chapter)
+    {
+        return StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
     }
 }

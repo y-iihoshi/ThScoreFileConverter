@@ -5,53 +5,52 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th12
+namespace ThScoreFileConverter.Models.Th12;
+
+/// <summary>
+/// Represents playable characters of UFO and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of UFO and total.
+    /// Hakurei Reimu (Dream Sign).
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu (Dream Sign).
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu (Spirit Sign).
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu (Spirit Sign).
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Kirisame Marisa (Love Sign).
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Marisa (Love Sign).
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa (Magic Sign).
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
+    /// <summary>
+    /// Kirisame Marisa (Magic Sign).
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 
-        /// <summary>
-        /// Kochiya Sanae (Snake Sign).
-        /// </summary>
-        [EnumAltName("SA")]
-        SanaeA,
+    /// <summary>
+    /// Kochiya Sanae (Snake Sign).
+    /// </summary>
+    [EnumAltName("SA")]
+    SanaeA,
 
-        /// <summary>
-        /// Kochiya Sanae (Frog Sign).
-        /// </summary>
-        [EnumAltName("SB")]
-        SanaeB,
+    /// <summary>
+    /// Kochiya Sanae (Frog Sign).
+    /// </summary>
+    [EnumAltName("SB")]
+    SanaeB,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

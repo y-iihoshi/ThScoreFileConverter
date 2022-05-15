@@ -14,70 +14,69 @@ using ThScoreFileConverter.Helpers;
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+internal class CardReplacerBase<TChara> : IStringReplaceable
+    where TChara : struct, Enum
 {
-    internal class CardReplacerBase<TChara> : IStringReplaceable
-        where TChara : struct, Enum
+    private readonly string pattern;
+    private readonly MatchEvaluator evaluator;
+
+    protected CardReplacerBase(
+        string formatPrefix,
+        EnumShortNameParser<TChara> charaParser,
+        Func<TChara, bool> charaHasStory,
+        IReadOnlyDictionary<TChara, IEnumerable<(TChara Enemy, int CardId)>> enemyCardIdTable,
+        IReadOnlyDictionary<(TChara Chara, int CardId), string> cardNameTable,
+        IReadOnlyDictionary<TChara, IClearData<TChara>> clearDataDictionary,
+        bool hideUntriedCards)
     {
-        private readonly string pattern;
-        private readonly MatchEvaluator evaluator;
+        var numLevels = EnumHelper<Level>.NumValues;
 
-        protected CardReplacerBase(
-            string formatPrefix,
-            EnumShortNameParser<TChara> charaParser,
-            Func<TChara, bool> charaHasStory,
-            IReadOnlyDictionary<TChara, IEnumerable<(TChara Enemy, int CardId)>> enemyCardIdTable,
-            IReadOnlyDictionary<(TChara Chara, int CardId), string> cardNameTable,
-            IReadOnlyDictionary<TChara, IClearData<TChara>> clearDataDictionary,
-            bool hideUntriedCards)
+        this.pattern = Utils.Format(
+            @"{0}CARD(\d{{{1}}})({2})([NR])",
+            formatPrefix,
+            IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
+            charaParser.Pattern);
+
+        this.evaluator = new MatchEvaluator(match =>
         {
-            var numLevels = EnumHelper<Level>.NumValues;
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var chara = charaParser.Parse(match.Groups[2].Value);
+            var type = match.Groups[3].Value.ToUpperInvariant();
 
-            this.pattern = Utils.Format(
-                @"{0}CARD(\d{{{1}}})({2})([NR])",
-                formatPrefix,
-                IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
-                charaParser.Pattern);
+            if (number <= 0)
+                return match.ToString();
+            if (!charaHasStory(chara))
+                return match.ToString();
 
-            this.evaluator = new MatchEvaluator(match =>
+            var index = (number - 1) / numLevels;
+            if (enemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
+                && (index < enemyCardIdPairs.Count()))
             {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var chara = charaParser.Parse(match.Groups[2].Value);
-                var type = match.Groups[3].Value.ToUpperInvariant();
-
-                if (number <= 0)
-                    return match.ToString();
-                if (!charaHasStory(chara))
-                    return match.ToString();
-
-                var index = (number - 1) / numLevels;
-                if (enemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
-                    && (index < enemyCardIdPairs.Count()))
+                var level = (Level)((number - 1) % numLevels);
+                var enemyCardIdPair = enemyCardIdPairs.ElementAt(index);
+                if (hideUntriedCards)
                 {
-                    var level = (Level)((number - 1) % numLevels);
-                    var enemyCardIdPair = enemyCardIdPairs.ElementAt(index);
-                    if (hideUntriedCards)
-                    {
-                        var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                            ? clearData.SpellCardResults
-                            : ImmutableDictionary<(TChara, int), ISpellCardResult<TChara>>.Empty;
-                        var key = (enemyCardIdPair.Enemy, (enemyCardIdPair.CardId * numLevels) + (int)level);
-                        if (!spellCardResults.TryGetValue(key, out var result) || (result.TrialCount <= 0))
-                            return (type == "N") ? "??????????" : "?????";
-                    }
-
-                    return (type == "N") ? cardNameTable[enemyCardIdPair] : level.ToString();
+                    var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
+                        ? clearData.SpellCardResults
+                        : ImmutableDictionary<(TChara, int), ISpellCardResult<TChara>>.Empty;
+                    var key = (enemyCardIdPair.Enemy, (enemyCardIdPair.CardId * numLevels) + (int)level);
+                    if (!spellCardResults.TryGetValue(key, out var result) || (result.TrialCount <= 0))
+                        return (type == "N") ? "??????????" : "?????";
                 }
-                else
-                {
-                    return match.ToString();
-                }
-            });
-        }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+                return (type == "N") ? cardNameTable[enemyCardIdPair] : level.ToString();
+            }
+            else
+            {
+                return match.ToString();
+            }
+        });
+    }
+
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

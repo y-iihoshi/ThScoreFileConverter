@@ -5,107 +5,106 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th145
+namespace ThScoreFileConverter.Models.Th145;
+
+/// <summary>
+/// Represents playable characters of ULiL and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of ULiL and total.
+    /// Hakurei Reimu (Prologue).
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu (Prologue).
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Kirisame Marisa.
-        /// </summary>
-        [EnumAltName("MR")]
-        Marisa,
+    /// <summary>
+    /// Kirisame Marisa.
+    /// </summary>
+    [EnumAltName("MR")]
+    Marisa,
 
-        /// <summary>
-        /// Kumoi Ichirin and Unzan.
-        /// </summary>
-        [EnumAltName("IU")]
-        IchirinUnzan,
+    /// <summary>
+    /// Kumoi Ichirin and Unzan.
+    /// </summary>
+    [EnumAltName("IU")]
+    IchirinUnzan,
 
-        /// <summary>
-        /// Hijiri Byakuren.
-        /// </summary>
-        [EnumAltName("BY")]
-        Byakuren,
+    /// <summary>
+    /// Hijiri Byakuren.
+    /// </summary>
+    [EnumAltName("BY")]
+    Byakuren,
 
-        /// <summary>
-        /// Mononobe no Futo.
-        /// </summary>
-        [EnumAltName("FT")]
-        Futo,
+    /// <summary>
+    /// Mononobe no Futo.
+    /// </summary>
+    [EnumAltName("FT")]
+    Futo,
 
-        /// <summary>
-        /// Toyosatomimi no Miko.
-        /// </summary>
-        [EnumAltName("MK")]
-        Miko,
+    /// <summary>
+    /// Toyosatomimi no Miko.
+    /// </summary>
+    [EnumAltName("MK")]
+    Miko,
 
-        /// <summary>
-        /// Kawashiro Nitori.
-        /// </summary>
-        [EnumAltName("NT")]
-        Nitori,
+    /// <summary>
+    /// Kawashiro Nitori.
+    /// </summary>
+    [EnumAltName("NT")]
+    Nitori,
 
-        /// <summary>
-        /// Komeiji Koishi.
-        /// </summary>
-        [EnumAltName("KO")]
-        Koishi,
+    /// <summary>
+    /// Komeiji Koishi.
+    /// </summary>
+    [EnumAltName("KO")]
+    Koishi,
 
-        /// <summary>
-        /// Futatsuiwa Mamizou.
-        /// </summary>
-        [EnumAltName("MM")]
-        Mamizou,
+    /// <summary>
+    /// Futatsuiwa Mamizou.
+    /// </summary>
+    [EnumAltName("MM")]
+    Mamizou,
 
-        /// <summary>
-        /// Hata no Kokoro.
-        /// </summary>
-        [EnumAltName("KK")]
-        Kokoro,
+    /// <summary>
+    /// Hata no Kokoro.
+    /// </summary>
+    [EnumAltName("KK")]
+    Kokoro,
 
-        /// <summary>
-        /// Ibaraki Kasen.
-        /// </summary>
-        [EnumAltName("KS")]
-        Kasen,
+    /// <summary>
+    /// Ibaraki Kasen.
+    /// </summary>
+    [EnumAltName("KS")]
+    Kasen,
 
-        /// <summary>
-        /// Fujiwara no Mokou.
-        /// </summary>
-        [EnumAltName("MO")]
-        Mokou,
+    /// <summary>
+    /// Fujiwara no Mokou.
+    /// </summary>
+    [EnumAltName("MO")]
+    Mokou,
 
-        /// <summary>
-        /// Sukuna Shinmyoumaru.
-        /// </summary>
-        [EnumAltName("SN")]
-        Shinmyoumaru,
+    /// <summary>
+    /// Sukuna Shinmyoumaru.
+    /// </summary>
+    [EnumAltName("SN")]
+    Shinmyoumaru,
 
-        /// <summary>
-        /// Usami Sumireko.
-        /// </summary>
-        [EnumAltName("SM")]
-        Sumireko,
+    /// <summary>
+    /// Usami Sumireko.
+    /// </summary>
+    [EnumAltName("SM")]
+    Sumireko,
 
-        /// <summary>
-        /// Hakurei Reimu (Final).
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu (Final).
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

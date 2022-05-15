@@ -5,53 +5,52 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+/// <summary>
+/// Represents routes of FW.
+/// </summary>
+public enum Route
 {
     /// <summary>
-    /// Represents routes of FW.
+    /// Route A1.
     /// </summary>
-    public enum Route
-    {
-        /// <summary>
-        /// Route A1.
-        /// </summary>
-        [EnumAltName("A1")]
-        A1,
+    [EnumAltName("A1")]
+    A1,
 
-        /// <summary>
-        /// Route A2.
-        /// </summary>
-        [EnumAltName("A2")]
-        A2,
+    /// <summary>
+    /// Route A2.
+    /// </summary>
+    [EnumAltName("A2")]
+    A2,
 
-        /// <summary>
-        /// Route B1.
-        /// </summary>
-        [EnumAltName("B1")]
-        B1,
+    /// <summary>
+    /// Route B1.
+    /// </summary>
+    [EnumAltName("B1")]
+    B1,
 
-        /// <summary>
-        /// Route B2.
-        /// </summary>
-        [EnumAltName("B2")]
-        B2,
+    /// <summary>
+    /// Route B2.
+    /// </summary>
+    [EnumAltName("B2")]
+    B2,
 
-        /// <summary>
-        /// Route C1.
-        /// </summary>
-        [EnumAltName("C1")]
-        C1,
+    /// <summary>
+    /// Route C1.
+    /// </summary>
+    [EnumAltName("C1")]
+    C1,
 
-        /// <summary>
-        /// Route C2.
-        /// </summary>
-        [EnumAltName("C2")]
-        C2,
+    /// <summary>
+    /// Route C2.
+    /// </summary>
+    [EnumAltName("C2")]
+    C2,
 
-        /// <summary>
-        /// Route EX.
-        /// </summary>
-        [EnumAltName("EX")]
-        Extra,
-    }
+    /// <summary>
+    /// Route EX.
+    /// </summary>
+    [EnumAltName("EX")]
+    Extra,
 }

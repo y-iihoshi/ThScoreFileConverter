@@ -5,29 +5,28 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th123
+namespace ThScoreFileConverter.Models.Th123;
+
+/// <summary>
+/// Provides the parsers used for Hisoutensoku.
+/// </summary>
+internal static class Parsers
 {
     /// <summary>
-    /// Provides the parsers used for Hisoutensoku.
+    /// Gets the parser of <see cref="Th105.LevelWithTotal"/>.
     /// </summary>
-    internal static class Parsers
-    {
-        /// <summary>
-        /// Gets the parser of <see cref="Th105.LevelWithTotal"/>.
-        /// </summary>
-        public static EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser { get; } =
-            new EnumShortNameParser<Th105.LevelWithTotal>();
+    public static EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser { get; } =
+        new EnumShortNameParser<Th105.LevelWithTotal>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="Chara"/>.
-        /// </summary>
-        public static EnumShortNameParser<Chara> CharaParser { get; } =
-            new EnumShortNameParser<Chara>();
+    /// <summary>
+    /// Gets the parser of <see cref="Chara"/>.
+    /// </summary>
+    public static EnumShortNameParser<Chara> CharaParser { get; } =
+        new EnumShortNameParser<Chara>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="Th105.CardType"/>.
-        /// </summary>
-        public static EnumShortNameParser<Th105.CardType> CardTypeParser { get; } =
-            new EnumShortNameParser<Th105.CardType>();
-    }
+    /// <summary>
+    /// Gets the parser of <see cref="Th105.CardType"/>.
+    /// </summary>
+    public static EnumShortNameParser<Th105.CardType> CardTypeParser { get; } =
+        new EnumShortNameParser<Th105.CardType>();
 }

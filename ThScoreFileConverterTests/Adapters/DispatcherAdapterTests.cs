@@ -5,65 +5,64 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Adapters;
 
-namespace ThScoreFileConverterTests.Adapters
+namespace ThScoreFileConverterTests.Adapters;
+
+[TestClass]
+public class DispatcherAdapterTests
 {
-    [TestClass]
-    public class DispatcherAdapterTests
+    private static App SetupApp()
     {
-        private static App SetupApp()
+        if (Application.Current is not App app)
         {
-            if (Application.Current is not App app)
-            {
-                app = new App() { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-                app.InitializeComponent();
-            }
-
-            return app;
+            app = new App() { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+            app.InitializeComponent();
         }
 
-        [TestMethod]
-        public void DispatcherAdapter()
+        return app;
+    }
+
+    [TestMethod]
+    public void DispatcherAdapter()
+    {
+        var adapter = new DispatcherAdapter(Dispatcher.CurrentDispatcher);
+        Assert.IsNotNull(adapter);
+    }
+
+    [TestMethod]
+    public void DispatcherAdapterTestNull()
+    {
+        _ = Assert.ThrowsException<NullReferenceException>(() => new DispatcherAdapter());
+    }
+
+    [TestMethod]
+    public void WithAppDispatcherAdapterTestNull()
+    {
+        var app = SetupApp();
+        try
         {
-            var adapter = new DispatcherAdapter(Dispatcher.CurrentDispatcher);
+            var adapter = new DispatcherAdapter();
             Assert.IsNotNull(adapter);
         }
-
-        [TestMethod]
-        public void DispatcherAdapterTestNull()
+        finally
         {
-            _ = Assert.ThrowsException<NullReferenceException>(() => new DispatcherAdapter());
+            app.Shutdown();
         }
+    }
 
-        [TestMethod]
-        public void WithAppDispatcherAdapterTestNull()
+    [TestMethod]
+    public void InvokeTest()
+    {
+        var dispatcher = Dispatcher.CurrentDispatcher;
+        var adapter = new DispatcherAdapter(dispatcher);
+        Assert.IsNotNull(adapter);
+
+        var numInvoked = 0;
+        adapter.Invoke(() =>
         {
-            var app = SetupApp();
-            try
-            {
-                var adapter = new DispatcherAdapter();
-                Assert.IsNotNull(adapter);
-            }
-            finally
-            {
-                app.Shutdown();
-            }
-        }
+            ++numInvoked;
+            Assert.AreSame(dispatcher, Dispatcher.CurrentDispatcher);
+        });
 
-        [TestMethod]
-        public void InvokeTest()
-        {
-            var dispatcher = Dispatcher.CurrentDispatcher;
-            var adapter = new DispatcherAdapter(dispatcher);
-            Assert.IsNotNull(adapter);
-
-            var numInvoked = 0;
-            adapter.Invoke(() =>
-            {
-                ++numInvoked;
-                Assert.AreSame(dispatcher, Dispatcher.CurrentDispatcher);
-            });
-
-            Assert.AreEqual(1, numInvoked);
-        }
+        Assert.AreEqual(1, numInvoked);
     }
 }

@@ -9,16 +9,15 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th143
+namespace ThScoreFileConverter.Models.Th143;
+
+internal interface IScore : Th095.IChapter
 {
-    internal interface IScore : Th095.IChapter
-    {
-        IReadOnlyDictionary<ItemWithTotal, int> ChallengeCounts { get; }
+    IReadOnlyDictionary<ItemWithTotal, int> ChallengeCounts { get; }
 
-        IReadOnlyDictionary<ItemWithTotal, int> ClearCounts { get; }
+    IReadOnlyDictionary<ItemWithTotal, int> ClearCounts { get; }
 
-        int HighScore { get; }
+    int HighScore { get; }
 
-        int Number { get; }
-    }
+    int Number { get; }
 }

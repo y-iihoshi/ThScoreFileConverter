@@ -9,14 +9,13 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+internal class SpellCard<TLevel> : SpellCardBase<TLevel>
+    where TLevel : struct, Enum
 {
-    internal class SpellCard<TLevel> : SpellCardBase<TLevel>
-        where TLevel : struct, Enum
+    public SpellCard()
+        : base(0x80)
     {
-        public SpellCard()
-            : base(0x80)
-        {
-        }
     }
 }

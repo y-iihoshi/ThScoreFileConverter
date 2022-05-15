@@ -13,83 +13,82 @@ using ThScoreFileConverter.Helpers;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Th13.LevelPractice>;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+// %T13CRG[v][w][xx][y][z]
+internal class CollectRateReplacer : CollectRateReplacerBase<
+    GameMode,
+    CharaWithTotal,
+    LevelPractice,
+    LevelPracticeWithTotal,
+    LevelPractice,
+    LevelPracticeWithTotal,
+    StagePractice,
+    IScoreData>
 {
-    // %T13CRG[v][w][xx][y][z]
-    internal class CollectRateReplacer : CollectRateReplacerBase<
-        GameMode,
-        CharaWithTotal,
-        LevelPractice,
-        LevelPracticeWithTotal,
-        LevelPractice,
-        LevelPracticeWithTotal,
-        StagePractice,
-        IScoreData>
+    public CollectRateReplacer(
+        IReadOnlyDictionary<CharaWithTotal, IClearData<
+            CharaWithTotal,
+            LevelPractice,
+            LevelPractice,
+            LevelPracticeWithTotal,
+            StagePractice,
+            IScoreData>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.GameModeParser,
+              Parsers.LevelPracticeWithTotalParser,
+              Parsers.CharaWithTotalParser,
+              Parsers.StageWithTotalParser,
+              CanReplace,
+              FindCardByModeType,
+              FindCardByLevel,
+              FindCardByLevelStage,
+              clearDataDictionary,
+              formatter)
     {
-        public CollectRateReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData<
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice,
-                IScoreData>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.GameModeParser,
-                  Parsers.LevelPracticeWithTotalParser,
-                  Parsers.CharaWithTotalParser,
-                  Parsers.StageWithTotalParser,
-                  CanReplace,
-                  FindCardByModeType,
-                  FindCardByLevel,
-                  FindCardByLevelStage,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
+    }
 
-        private static bool CanReplace(
-            GameMode mode, LevelPracticeWithTotal level, CharaWithTotal chara, StageWithTotal stage)
-        {
-            return (stage != StageWithTotal.Extra)
-                && !((mode == GameMode.Story) && (level == LevelPracticeWithTotal.OverDrive));
-        }
+    private static bool CanReplace(
+        GameMode mode, LevelPracticeWithTotal level, CharaWithTotal chara, StageWithTotal stage)
+    {
+        return (stage != StageWithTotal.Extra)
+            && !((mode == GameMode.Story) && (level == LevelPracticeWithTotal.OverDrive));
+    }
 
-        private static Func<ISpellCard, bool> FindCardByModeType(GameMode mode, int type)
+    private static Func<ISpellCard, bool> FindCardByModeType(GameMode mode, int type)
+    {
+        return (mode, type) switch
         {
-            return (mode, type) switch
-            {
-                (GameMode.Story, 1) => card => (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0),
-                (GameMode.Story, _) => card => (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0),
-                (_, 1) => card => card.PracticeClearCount > 0,
-                _ => card => card.PracticeTrialCount > 0,
-            };
-        }
+            (GameMode.Story, 1) => card => (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0),
+            (GameMode.Story, _) => card => (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0),
+            (_, 1) => card => card.PracticeClearCount > 0,
+            _ => card => card.PracticeTrialCount > 0,
+        };
+    }
 
-        private static Func<ISpellCard, bool> FindCardByLevel(LevelPracticeWithTotal level)
+    private static Func<ISpellCard, bool> FindCardByLevel(LevelPracticeWithTotal level)
+    {
+        return level switch
         {
-            return level switch
-            {
-                LevelPracticeWithTotal.Total => FuncHelper.True,
-                LevelPracticeWithTotal.Extra => FuncHelper.True,
-                LevelPracticeWithTotal.OverDrive => FuncHelper.True,
-                _ => card => card.Level == (LevelPractice)level,
-            };
-        }
+            LevelPracticeWithTotal.Total => FuncHelper.True,
+            LevelPracticeWithTotal.Extra => FuncHelper.True,
+            LevelPracticeWithTotal.OverDrive => FuncHelper.True,
+            _ => card => card.Level == (LevelPractice)level,
+        };
+    }
 
-        private static Func<ISpellCard, bool> FindCardByLevelStage(LevelPracticeWithTotal level, StageWithTotal stage)
+    private static Func<ISpellCard, bool> FindCardByLevelStage(LevelPracticeWithTotal level, StageWithTotal stage)
+    {
+        return (level, stage) switch
         {
-            return (level, stage) switch
-            {
-                (LevelPracticeWithTotal.Extra, _) =>
-                    card => Definitions.CardTable[card.Id].Stage == StagePractice.Extra,
-                (LevelPracticeWithTotal.OverDrive, _) =>
-                    card => Definitions.CardTable[card.Id].Stage == StagePractice.OverDrive,
-                (_, StageWithTotal.Total) => FuncHelper.True,
-                _ => card => Definitions.CardTable[card.Id].Stage == (StagePractice)stage,
-            };
-        }
+            (LevelPracticeWithTotal.Extra, _) =>
+                card => Definitions.CardTable[card.Id].Stage == StagePractice.Extra,
+            (LevelPracticeWithTotal.OverDrive, _) =>
+                card => Definitions.CardTable[card.Id].Stage == StagePractice.OverDrive,
+            (_, StageWithTotal.Total) => FuncHelper.True,
+            _ => card => Definitions.CardTable[card.Id].Stage == (StagePractice)stage,
+        };
     }
 }

@@ -9,15 +9,14 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models.Th17
+namespace ThScoreFileConverter.Models.Th17;
+
+internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>
 {
-    internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>
+    public override void ReadFrom(BinaryReader reader)
     {
-        public override void ReadFrom(BinaryReader reader)
-        {
-            base.ReadFrom(reader);
-            this.SlowRate = reader.ReadSingle();
-            _ = reader.ReadUInt32();
-        }
+        base.ReadFrom(reader);
+        this.SlowRate = reader.ReadSingle();
+        _ = reader.ReadUInt32();
     }
 }

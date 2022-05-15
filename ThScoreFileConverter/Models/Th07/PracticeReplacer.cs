@@ -11,46 +11,45 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th07
+namespace ThScoreFileConverter.Models.Th07;
+
+// %T07PRAC[w][xx][y][z]
+internal class PracticeReplacer : IStringReplaceable
 {
-    // %T07PRAC[w][xx][y][z]
-    internal class PracticeReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}PRAC({1})({2})({3})([12])",
+        Definitions.FormatPrefix,
+        Parsers.LevelParser.Pattern,
+        Parsers.CharaParser.Pattern,
+        Parsers.StageParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public PracticeReplacer(
+        IReadOnlyDictionary<(Chara Chara, Level Level, Stage Stage), IPracticeScore> practiceScores,
+        INumberFormatter formatter)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}PRAC({1})({2})({3})([12])",
-            Definitions.FormatPrefix,
-            Parsers.LevelParser.Pattern,
-            Parsers.CharaParser.Pattern,
-            Parsers.StageParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public PracticeReplacer(
-            IReadOnlyDictionary<(Chara Chara, Level Level, Stage Stage), IPracticeScore> practiceScores,
-            INumberFormatter formatter)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+            var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
+            var type = IntegerHelper.Parse(match.Groups[4].Value);
+
+            int GetValue(IPracticeScore score)
             {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
-                var type = IntegerHelper.Parse(match.Groups[4].Value);
+                return (type == 1) ? score.HighScore * 10 : score.TrialCount;
+            }
 
-                int GetValue(IPracticeScore score)
-                {
-                    return (type == 1) ? score.HighScore * 10 : score.TrialCount;
-                }
+            return Definitions.CanPractice(level) && Definitions.CanPractice(stage)
+                ? formatter.FormatNumber(
+                    practiceScores.TryGetValue((chara, level, stage), out var score) ? GetValue(score) : default)
+                : match.ToString();
+        });
+    }
 
-                return Definitions.CanPractice(level) && Definitions.CanPractice(stage)
-                    ? formatter.FormatNumber(
-                        practiceScores.TryGetValue((chara, level, stage), out var score) ? GetValue(score) : default)
-                    : match.ToString();
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

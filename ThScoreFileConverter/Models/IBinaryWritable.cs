@@ -7,17 +7,16 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+/// <summary>
+/// Defines a method to write to a binary stream.
+/// </summary>
+public interface IBinaryWritable
 {
     /// <summary>
-    /// Defines a method to write to a binary stream.
+    /// Writes to a stream by using the specified <see cref="BinaryWriter"/> instance.
     /// </summary>
-    public interface IBinaryWritable
-    {
-        /// <summary>
-        /// Writes to a stream by using the specified <see cref="BinaryWriter"/> instance.
-        /// </summary>
-        /// <param name="writer">The instance to use.</param>
-        void WriteTo(BinaryWriter writer);
-    }
+    /// <param name="writer">The instance to use.</param>
+    void WriteTo(BinaryWriter writer);
 }

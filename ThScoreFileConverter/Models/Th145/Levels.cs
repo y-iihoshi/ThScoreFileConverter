@@ -7,37 +7,36 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th145
+namespace ThScoreFileConverter.Models.Th145;
+
+/// <summary>
+/// Represents bit flags of levels.
+/// </summary>
+[Flags]
+public enum Levels
 {
     /// <summary>
-    /// Represents bit flags of levels.
+    /// Represents that any level is not related.
     /// </summary>
-    [Flags]
-    public enum Levels
-    {
-        /// <summary>
-        /// Represents that any level is not related.
-        /// </summary>
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        Easy = 1,
+    /// <summary>
+    /// Represents level Easy.
+    /// </summary>
+    Easy = 1,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        Normal = 2,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    Normal = 2,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        Hard = 4,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    Hard = 4,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        Lunatic = 8,
-    }
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    Lunatic = 8,
 }

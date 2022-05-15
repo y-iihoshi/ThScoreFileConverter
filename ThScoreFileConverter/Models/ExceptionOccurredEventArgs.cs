@@ -7,25 +7,24 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+/// <summary>
+/// Represents the event data that indicates occurring of an exception.
+/// </summary>
+internal class ExceptionOccurredEventArgs : EventArgs
 {
     /// <summary>
-    /// Represents the event data that indicates occurring of an exception.
+    /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
     /// </summary>
-    internal class ExceptionOccurredEventArgs : EventArgs
+    /// <param name="ex">The exception data.</param>
+    public ExceptionOccurredEventArgs(Exception ex)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
-        /// </summary>
-        /// <param name="ex">The exception data.</param>
-        public ExceptionOccurredEventArgs(Exception ex)
-        {
-            this.Exception = ex;
-        }
-
-        /// <summary>
-        /// Gets the exception data.
-        /// </summary>
-        public Exception Exception { get; }
+        this.Exception = ex;
     }
+
+    /// <summary>
+    /// Gets the exception data.
+    /// </summary>
+    public Exception Exception { get; }
 }

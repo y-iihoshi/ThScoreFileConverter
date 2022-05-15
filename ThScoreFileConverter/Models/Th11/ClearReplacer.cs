@@ -9,14 +9,13 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th11
+namespace ThScoreFileConverter.Models.Th11;
+
+// %T11CLEAR[x][yy]
+internal class ClearReplacer : Th10.ClearReplacerBase<Chara, CharaWithTotal>
 {
-    // %T11CLEAR[x][yy]
-    internal class ClearReplacer : Th10.ClearReplacerBase<Chara, CharaWithTotal>
+    public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary)
+        : base(Definitions.FormatPrefix, Parsers.LevelParser, Parsers.CharaParser, clearDataDictionary)
     {
-        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary)
-            : base(Definitions.FormatPrefix, Parsers.LevelParser, Parsers.CharaParser, clearDataDictionary)
-        {
-        }
     }
 }

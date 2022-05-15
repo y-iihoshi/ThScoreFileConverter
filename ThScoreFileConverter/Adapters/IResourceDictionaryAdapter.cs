@@ -8,35 +8,34 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace ThScoreFileConverter.Adapters
+namespace ThScoreFileConverter.Adapters;
+
+/// <summary>
+/// Defines the interface of an adapter for <see cref="ResourceDictionary"/>.
+/// </summary>
+public interface IResourceDictionaryAdapter
 {
     /// <summary>
-    /// Defines the interface of an adapter for <see cref="ResourceDictionary"/>.
+    /// Gets the font family.
     /// </summary>
-    public interface IResourceDictionaryAdapter
-    {
-        /// <summary>
-        /// Gets the font family.
-        /// </summary>
-        FontFamily FontFamily { get; }
+    FontFamily FontFamily { get; }
 
-        /// <summary>
-        /// Gets the font size.
-        /// </summary>
-        double FontSize { get; }
+    /// <summary>
+    /// Gets the font size.
+    /// </summary>
+    double FontSize { get; }
 
-        /// <summary>
-        /// Updates the resources.
-        /// </summary>
-        /// <param name="fontFamily">A new font family.</param>
-        /// <param name="fontSize">A new font size.</param>
-        void UpdateResources(FontFamily fontFamily, double? fontSize);
+    /// <summary>
+    /// Updates the resources.
+    /// </summary>
+    /// <param name="fontFamily">A new font family.</param>
+    /// <param name="fontSize">A new font size.</param>
+    void UpdateResources(FontFamily fontFamily, double? fontSize);
 
-        /// <summary>
-        /// Updates the resources.
-        /// </summary>
-        /// <param name="fontFamilyName">The name of a new font family.</param>
-        /// <param name="fontSize">A new font size.</param>
-        void UpdateResources(string fontFamilyName, double? fontSize);
-    }
+    /// <summary>
+    /// Updates the resources.
+    /// </summary>
+    /// <param name="fontFamilyName">The name of a new font family.</param>
+    /// <param name="fontSize">A new font size.</param>
+    void UpdateResources(string fontFamilyName, double? fontSize);
 }

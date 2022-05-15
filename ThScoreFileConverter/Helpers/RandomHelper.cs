@@ -5,29 +5,28 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Helpers
+namespace ThScoreFileConverter.Helpers;
+
+/// <summary>
+/// Provides helper functions related to pseudo-random numbers.
+/// </summary>
+public static class RandomHelper
 {
     /// <summary>
-    /// Provides helper functions related to pseudo-random numbers.
+    /// Park-Miller RNG, using Schrage's method.
+    /// Refer to https://en.wikipedia.org/wiki/Lehmer_random_number_generator for more details.
     /// </summary>
-    public static class RandomHelper
+    /// <param name="state">The current state.</param>
+    /// <returns>The next state.</returns>
+    public static int ParkMillerRNG(int state)
     {
-        /// <summary>
-        /// Park-Miller RNG, using Schrage's method.
-        /// Refer to https://en.wikipedia.org/wiki/Lehmer_random_number_generator for more details.
-        /// </summary>
-        /// <param name="state">The current state.</param>
-        /// <returns>The next state.</returns>
-        public static int ParkMillerRNG(int state)
-        {
-            const int M = int.MaxValue;
-            const int A = 48271;   // 0xBC8F
-            const int Q = M / A;   // 0xADC8
-            const int R = M % A;   // 0x0D47
+        const int M = int.MaxValue;
+        const int A = 48271;   // 0xBC8F
+        const int Q = M / A;   // 0xADC8
+        const int R = M % A;   // 0x0D47
 
-            var (div, rem) = MathHelper.DivRem(state, Q);
-            var diff = (rem * A) - (div * R);
-            return diff < 0 ? diff + M : diff;
-        }
+        var (div, rem) = MathHelper.DivRem(state, Q);
+        var diff = (rem * A) - (div * R);
+        return diff < 0 ? diff + M : diff;
     }
 }

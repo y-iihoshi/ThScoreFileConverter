@@ -11,51 +11,50 @@ using System;
 using System.IO;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th143
+namespace ThScoreFileConverter.Models.Th143;
+
+internal class ItemStatus : Th10.Chapter, IItemStatus
 {
-    internal class ItemStatus : Th10.Chapter, IItemStatus
+    public const string ValidSignature = "TI";
+    public const ushort ValidVersion = 0x0001;
+    public const int ValidSize = 0x00000034;
+
+    public ItemStatus(Th10.Chapter chapter)
+        : base(chapter, ValidSignature, ValidVersion, ValidSize)
     {
-        public const string ValidSignature = "TI";
-        public const ushort ValidVersion = 0x0001;
-        public const int ValidSize = 0x00000034;
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-        public ItemStatus(Th10.Chapter chapter)
-            : base(chapter, ValidSignature, ValidVersion, ValidSize)
-        {
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
+        this.Item = EnumHelper.To<ItemWithTotal>(reader.ReadInt32());
+        this.UseCount = reader.ReadInt32();
+        this.ClearedCount = reader.ReadInt32();
+        this.ClearedScenes = reader.ReadInt32();
+        this.ItemLevel = reader.ReadInt32();
+        _ = reader.ReadInt32();
+        this.AvailableCount = reader.ReadInt32();
+        this.FramesOrRanges = reader.ReadInt32();
+        _ = reader.ReadInt32(); // always 0?
+        _ = reader.ReadInt32(); // always 0?
+    }
 
-            this.Item = EnumHelper.To<ItemWithTotal>(reader.ReadInt32());
-            this.UseCount = reader.ReadInt32();
-            this.ClearedCount = reader.ReadInt32();
-            this.ClearedScenes = reader.ReadInt32();
-            this.ItemLevel = reader.ReadInt32();
-            _ = reader.ReadInt32();
-            this.AvailableCount = reader.ReadInt32();
-            this.FramesOrRanges = reader.ReadInt32();
-            _ = reader.ReadInt32(); // always 0?
-            _ = reader.ReadInt32(); // always 0?
-        }
+    public ItemWithTotal Item { get; }
 
-        public ItemWithTotal Item { get; }
+    public int UseCount { get; }
 
-        public int UseCount { get; }
+    public int ClearedCount { get; }
 
-        public int ClearedCount { get; }
+    public int ClearedScenes { get; }
 
-        public int ClearedScenes { get; }
+    public int ItemLevel { get; }
 
-        public int ItemLevel { get; }
+    public int AvailableCount { get; }
 
-        public int AvailableCount { get; }
+    public int FramesOrRanges { get; }
 
-        public int FramesOrRanges { get; }
-
-        public static bool CanInitialize(Th10.Chapter chapter)
-        {
-            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
-                && (chapter.Version == ValidVersion)
-                && (chapter.Size == ValidSize);
-        }
+    public static bool CanInitialize(Th10.Chapter chapter)
+    {
+        return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+            && (chapter.Version == ValidVersion)
+            && (chapter.Size == ValidSize);
     }
 }

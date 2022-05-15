@@ -7,27 +7,26 @@
 
 using System;
 
-namespace ThScoreFileConverter.Helpers
+namespace ThScoreFileConverter.Helpers;
+
+/// <summary>
+/// Provides helper methods for mathematical functions.
+/// </summary>
+public static class MathHelper
 {
     /// <summary>
-    /// Provides helper methods for mathematical functions.
+    /// Produces the quotient and the remainder of two signed 32-bit numbers.
     /// </summary>
-    public static class MathHelper
+    /// <param name="left">The dividend.</param>
+    /// <param name="right">The divisor.</param>
+    /// <returns>The quotient and the remainder of the specified numbers.</returns>
+    public static (int Quotient, int Remainder) DivRem(int left, int right)
     {
-        /// <summary>
-        /// Produces the quotient and the remainder of two signed 32-bit numbers.
-        /// </summary>
-        /// <param name="left">The dividend.</param>
-        /// <param name="right">The divisor.</param>
-        /// <returns>The quotient and the remainder of the specified numbers.</returns>
-        public static (int Quotient, int Remainder) DivRem(int left, int right)
-        {
 #if NET6_0_OR_GREATER
-            return Math.DivRem(left, right);
+        return Math.DivRem(left, right);
 #else
-            var div = Math.DivRem(left, right, out var rem);
-            return (div, rem);
+        var div = Math.DivRem(left, right, out var rem);
+        return (div, rem);
 #endif
-        }
     }
 }

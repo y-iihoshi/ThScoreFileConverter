@@ -10,106 +10,105 @@ using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverterTests.UnitTesting;
 
-namespace ThScoreFileConverterTests.Interactivity
+namespace ThScoreFileConverterTests.Interactivity;
+
+internal class Logger : INotifyPropertyChanged
 {
-    internal class Logger : INotifyPropertyChanged
+    private string log = string.Empty;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public string Log
     {
-        private string log = string.Empty;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public string Log
+        get => this.log;
+        set
         {
-            get => this.log;
-            set
-            {
-                this.log = value;
-                this.RaisePropertyChanged();
-            }
-        }
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.log = value;
+            this.RaisePropertyChanged();
         }
     }
 
-    [TestClass]
-    public class TextBoxBaseScrollBehaviorTests
+    private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
     {
-        [STATestMethod]
-        public void AutoScrollToEndTest()
+        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
+
+[TestClass]
+public class TextBoxBaseScrollBehaviorTests
+{
+    [STATestMethod]
+    public void AutoScrollToEndTest()
+    {
+        var logger = new Logger();
+        var binding = new Binding(nameof(logger.Log))
         {
-            var logger = new Logger();
-            var binding = new Binding(nameof(logger.Log))
-            {
-                NotifyOnTargetUpdated = true,
-                Source = logger,
-            };
-            var textbox = new TextBox();
-            var window = new Window
-            {
-                Content = textbox,
-            };
-            var behavior = new TextBoxBaseScrollBehavior
-            {
-                AutoScrollToEnd = true,
-            };
-            var behaviors = Interaction.GetBehaviors(textbox);
+            NotifyOnTargetUpdated = true,
+            Source = logger,
+        };
+        var textbox = new TextBox();
+        var window = new Window
+        {
+            Content = textbox,
+        };
+        var behavior = new TextBoxBaseScrollBehavior
+        {
+            AutoScrollToEnd = true,
+        };
+        var behaviors = Interaction.GetBehaviors(textbox);
 
-            static void onLayoutUpdated(object? sender, EventArgs eventArgs)
-            {
-                Assert.IsTrue(Environment.StackTrace.Contains(
-                    $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated"));
-                Assert.IsTrue(Environment.StackTrace.Contains(
-                    $"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}"));
-            }
-
-            BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
-            behaviors.Add(behavior);
-            textbox.LayoutUpdated += onLayoutUpdated;
-
-            logger.Log = "abc";
-
-            textbox.LayoutUpdated -= onLayoutUpdated;
-            _ = behaviors.Remove(behavior);
-            BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
+        static void onLayoutUpdated(object? sender, EventArgs eventArgs)
+        {
+            Assert.IsTrue(Environment.StackTrace.Contains(
+                $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated"));
+            Assert.IsTrue(Environment.StackTrace.Contains(
+                $"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}"));
         }
 
-        [STATestMethod]
-        public void NotAutoScrollToEndTest()
+        BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
+        behaviors.Add(behavior);
+        textbox.LayoutUpdated += onLayoutUpdated;
+
+        logger.Log = "abc";
+
+        textbox.LayoutUpdated -= onLayoutUpdated;
+        _ = behaviors.Remove(behavior);
+        BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
+    }
+
+    [STATestMethod]
+    public void NotAutoScrollToEndTest()
+    {
+        var logger = new Logger();
+        var binding = new Binding(nameof(logger.Log))
         {
-            var logger = new Logger();
-            var binding = new Binding(nameof(logger.Log))
-            {
-                NotifyOnTargetUpdated = true,
-                Source = logger,
-            };
-            var textbox = new TextBox();
-            var window = new Window
-            {
-                Content = textbox,
-            };
-            var behavior = new TextBoxBaseScrollBehavior
-            {
-                AutoScrollToEnd = false,
-            };
-            var behaviors = Interaction.GetBehaviors(textbox);
+            NotifyOnTargetUpdated = true,
+            Source = logger,
+        };
+        var textbox = new TextBox();
+        var window = new Window
+        {
+            Content = textbox,
+        };
+        var behavior = new TextBoxBaseScrollBehavior
+        {
+            AutoScrollToEnd = false,
+        };
+        var behaviors = Interaction.GetBehaviors(textbox);
 
-            static void onLayoutUpdated(object? sender, EventArgs eventArgs)
-            {
-                Assert.Fail(TestUtils.Unreachable);
-            }
-
-            BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
-            behaviors.Add(behavior);
-            textbox.LayoutUpdated += onLayoutUpdated;
-
-            logger.Log = "abc";
-
-            textbox.LayoutUpdated -= onLayoutUpdated;
-            _ = behaviors.Remove(behavior);
-            BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
+        static void onLayoutUpdated(object? sender, EventArgs eventArgs)
+        {
+            Assert.Fail(TestUtils.Unreachable);
         }
+
+        BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
+        behaviors.Add(behavior);
+        textbox.LayoutUpdated += onLayoutUpdated;
+
+        logger.Log = "abc";
+
+        textbox.LayoutUpdated -= onLayoutUpdated;
+        _ = behaviors.Remove(behavior);
+        BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
     }
 }

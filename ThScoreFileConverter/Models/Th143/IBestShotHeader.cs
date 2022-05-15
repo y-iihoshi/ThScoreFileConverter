@@ -7,14 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th143
+namespace ThScoreFileConverter.Models.Th143;
+
+internal interface IBestShotHeader : Models.IBestShotHeader
 {
-    internal interface IBestShotHeader : Models.IBestShotHeader
-    {
-        uint DateTime { get; }
+    uint DateTime { get; }
 
-        Day Day { get; }
+    Day Day { get; }
 
-        short Scene { get; }
-    }
+    short Scene { get; }
 }

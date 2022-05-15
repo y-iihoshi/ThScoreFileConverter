@@ -10,25 +10,24 @@
 using System.IO;
 using ThScoreFileConverter.Properties;
 
-namespace ThScoreFileConverter.Squirrel
+namespace ThScoreFileConverter.Squirrel;
+
+internal sealed class SQInstance : SQObject
 {
-    internal sealed class SQInstance : SQObject
+    public SQInstance()
+        : base(SQObjectType.Instance)
     {
-        public SQInstance()
-            : base(SQObjectType.Instance)
+    }
+
+    public static SQInstance Create(BinaryReader reader, bool skipType = false)
+    {
+        if (!skipType)
         {
+            var type = reader.ReadInt32();
+            if (type != (int)SQObjectType.Instance)
+                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
         }
 
-        public static SQInstance Create(BinaryReader reader, bool skipType = false)
-        {
-            if (!skipType)
-            {
-                var type = reader.ReadInt32();
-                if (type != (int)SQObjectType.Instance)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
-            }
-
-            return new SQInstance();
-        }
+        return new SQInstance();
     }
 }

@@ -5,29 +5,28 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+/// <summary>
+/// Represents card types of SWR.
+/// </summary>
+public enum CardType
 {
     /// <summary>
-    /// Represents card types of SWR.
+    /// System Card.
     /// </summary>
-    public enum CardType
-    {
-        /// <summary>
-        /// System Card.
-        /// </summary>
-        [EnumAltName("Y")]
-        System,
+    [EnumAltName("Y")]
+    System,
 
-        /// <summary>
-        /// Skill Card.
-        /// </summary>
-        [EnumAltName("K")]
-        Skill,
+    /// <summary>
+    /// Skill Card.
+    /// </summary>
+    [EnumAltName("K")]
+    Skill,
 
-        /// <summary>
-        /// Spell Card.
-        /// </summary>
-        [EnumAltName("P")]
-        Spell,
-    }
+    /// <summary>
+    /// Spell Card.
+    /// </summary>
+    [EnumAltName("P")]
+    Spell,
 }

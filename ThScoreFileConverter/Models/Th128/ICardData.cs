@@ -9,10 +9,9 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+internal interface ICardData : Th095.IChapter
 {
-    internal interface ICardData : Th095.IChapter
-    {
-        IReadOnlyDictionary<int, ISpellCard> Cards { get; }
-    }
+    IReadOnlyDictionary<int, ISpellCard> Cards { get; }
 }

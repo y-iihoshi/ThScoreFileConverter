@@ -18,36 +18,35 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Stage,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
-namespace ThScoreFileConverter.Models.Th18
+namespace ThScoreFileConverter.Models.Th18;
+
+internal class AllScoreData
 {
-    internal class AllScoreData
+    private readonly Dictionary<CharaWithTotal, IClearData> clearData;
+
+    public AllScoreData()
     {
-        private readonly Dictionary<CharaWithTotal, IClearData> clearData;
+        this.clearData = new Dictionary<CharaWithTotal, IClearData>(EnumHelper<CharaWithTotal>.NumValues);
+    }
 
-        public AllScoreData()
-        {
-            this.clearData = new Dictionary<CharaWithTotal, IClearData>(EnumHelper<CharaWithTotal>.NumValues);
-        }
+    public Th095.HeaderBase? Header { get; private set; }
 
-        public Th095.HeaderBase? Header { get; private set; }
+    public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
-        public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
+    public IStatus? Status { get; private set; }
 
-        public IStatus? Status { get; private set; }
+    public void Set(Th095.HeaderBase header)
+    {
+        this.Header = header;
+    }
 
-        public void Set(Th095.HeaderBase header)
-        {
-            this.Header = header;
-        }
+    public void Set(IClearData data)
+    {
+        _ = this.clearData.TryAdd(data.Chara, data);
+    }
 
-        public void Set(IClearData data)
-        {
-            _ = this.clearData.TryAdd(data.Chara, data);
-        }
-
-        public void Set(IStatus status)
-        {
-            this.Status = status;
-        }
+    public void Set(IStatus status)
+    {
+        this.Status = status;
     }
 }

@@ -8,25 +8,24 @@
 using System.IO;
 using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Helpers
+namespace ThScoreFileConverter.Helpers;
+
+/// <summary>
+/// Helper functions for <see cref="IBinaryReadable"/>.
+/// </summary>
+public static class BinaryReadableHelper
 {
     /// <summary>
-    /// Helper functions for <see cref="IBinaryReadable"/>.
+    /// Creates an instance by using <see cref="BinaryReader"/>.
     /// </summary>
-    public static class BinaryReadableHelper
+    /// <typeparam name="T">The type to be instantiated.</typeparam>
+    /// <param name="reader">A <see cref="BinaryReader"/>.</param>
+    /// <returns>The created instance.</returns>
+    public static T Create<T>(BinaryReader reader)
+        where T : IBinaryReadable, new()
     {
-        /// <summary>
-        /// Creates an instance by using <see cref="BinaryReader"/>.
-        /// </summary>
-        /// <typeparam name="T">The type to be instantiated.</typeparam>
-        /// <param name="reader">A <see cref="BinaryReader"/>.</param>
-        /// <returns>The created instance.</returns>
-        public static T Create<T>(BinaryReader reader)
-            where T : IBinaryReadable, new()
-        {
-            var instance = new T();
-            instance.ReadFrom(reader);
-            return instance;
-        }
+        var instance = new T();
+        instance.ReadFrom(reader);
+        return instance;
     }
 }

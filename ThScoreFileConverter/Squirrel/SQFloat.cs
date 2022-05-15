@@ -11,59 +11,58 @@ using System;
 using System.IO;
 using ThScoreFileConverter.Properties;
 
-namespace ThScoreFileConverter.Squirrel
+namespace ThScoreFileConverter.Squirrel;
+
+internal sealed class SQFloat : SQObject, IEquatable<SQFloat>
 {
-    internal sealed class SQFloat : SQObject, IEquatable<SQFloat>
+    public SQFloat(float value = default)
+        : base(SQObjectType.Float)
     {
-        public SQFloat(float value = default)
-            : base(SQObjectType.Float)
+        this.Value = value;
+    }
+
+    public new float Value
+    {
+        get => (float)base.Value;
+        private set => base.Value = value;
+    }
+
+    public static implicit operator float(SQFloat sq)
+    {
+        return sq.Value;
+    }
+
+    public static SQFloat Create(BinaryReader reader, bool skipType = false)
+    {
+        if (!skipType)
         {
-            this.Value = value;
+            var type = reader.ReadInt32();
+            if (type != (int)SQObjectType.Float)
+                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
         }
 
-        public new float Value
-        {
-            get => (float)base.Value;
-            private set => base.Value = value;
-        }
+        return new SQFloat(reader.ReadSingle());
+    }
 
-        public static implicit operator float(SQFloat sq)
-        {
-            return sq.Value;
-        }
+    public override bool Equals(object? obj)
+    {
+        return (obj is SQFloat value) && this.Equals(value);
+    }
 
-        public static SQFloat Create(BinaryReader reader, bool skipType = false)
-        {
-            if (!skipType)
-            {
-                var type = reader.ReadInt32();
-                if (type != (int)SQObjectType.Float)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
-            }
-
-            return new SQFloat(reader.ReadSingle());
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return (obj is SQFloat value) && this.Equals(value);
-        }
-
-        public override int GetHashCode()
-        {
+    public override int GetHashCode()
+    {
 #if NETFRAMEWORK
-            return this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        return this.Type.GetHashCode() ^ this.Value.GetHashCode();
 #else
-            return HashCode.Combine(this.Type, this.Value);
+        return HashCode.Combine(this.Type, this.Value);
 #endif
-        }
+    }
 
-        public bool Equals(SQFloat? other)
-        {
-            if (other is null)
-                return false;
+    public bool Equals(SQFloat? other)
+    {
+        if (other is null)
+            return false;
 
-            return (this.Type == other.Type) && (this.Value == other.Value);
-        }
+        return (this.Type == other.Type) && (this.Value == other.Value);
     }
 }

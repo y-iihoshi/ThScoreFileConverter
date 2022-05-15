@@ -10,21 +10,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal interface ISpellCard<TLevel>
+    where TLevel : struct, Enum
 {
-    internal interface ISpellCard<TLevel>
-        where TLevel : struct, Enum
-    {
-        int ClearCount { get; }
+    int ClearCount { get; }
 
-        bool HasTried { get; }
+    bool HasTried { get; }
 
-        int Id { get; }
+    int Id { get; }
 
-        TLevel Level { get; }
+    TLevel Level { get; }
 
-        IEnumerable<byte> Name { get; }
+    IEnumerable<byte> Name { get; }
 
-        int TrialCount { get; }
-    }
+    int TrialCount { get; }
 }

@@ -10,17 +10,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th095
+namespace ThScoreFileConverter.Models.Th095;
+
+internal interface IBestShotHeader<TLevel> : IBestShotHeader
+    where TLevel : struct, Enum
 {
-    internal interface IBestShotHeader<TLevel> : IBestShotHeader
-        where TLevel : struct, Enum
-    {
-        IEnumerable<byte> CardName { get; }
+    IEnumerable<byte> CardName { get; }
 
-        TLevel Level { get; }
+    TLevel Level { get; }
 
-        int ResultScore { get; }
+    int ResultScore { get; }
 
-        short Scene { get; }
-    }
+    short Scene { get; }
 }

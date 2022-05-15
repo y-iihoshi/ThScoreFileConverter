@@ -9,17 +9,16 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models.Th15
-{
-    internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
-    {
-        public uint RetryCount { get; private set; }
+namespace ThScoreFileConverter.Models.Th15;
 
-        public override void ReadFrom(BinaryReader reader)
-        {
-            base.ReadFrom(reader);
-            this.SlowRate = reader.ReadSingle();
-            this.RetryCount = reader.ReadUInt32();
-        }
+internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
+{
+    public uint RetryCount { get; private set; }
+
+    public override void ReadFrom(BinaryReader reader)
+    {
+        base.ReadFrom(reader);
+        this.SlowRate = reader.ReadSingle();
+        this.RetryCount = reader.ReadUInt32();
     }
 }

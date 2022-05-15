@@ -13,57 +13,56 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th125
+namespace ThScoreFileConverter.Models.Th125;
+
+// %T125SHOT[x][y][z]
+internal class ShotReplacer : IStringReplaceable
 {
-    // %T125SHOT[x][y][z]
-    internal class ShotReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}SHOT({1})({2})([1-9])",
+        Definitions.FormatPrefix,
+        Parsers.CharaParser.Pattern,
+        Parsers.LevelParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public ShotReplacer(
+        IReadOnlyDictionary<(Chara Chara, Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots,
+        INumberFormatter formatter,
+        string outputFilePath)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}SHOT({1})({2})([1-9])",
-            Definitions.FormatPrefix,
-            Parsers.CharaParser.Pattern,
-            Parsers.LevelParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ShotReplacer(
-            IReadOnlyDictionary<(Chara Chara, Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots,
-            INumberFormatter formatter,
-            string outputFilePath)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
+            var level = Parsers.LevelParser.Parse(match.Groups[2].Value);
+            var scene = IntegerHelper.Parse(match.Groups[3].Value);
+
+            if (!Definitions.SpellCards.ContainsKey((level, scene)))
+                return match.ToString();
+
+            if (bestshots.TryGetValue((chara, level, scene), out var bestshot) &&
+                Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
             {
-                var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
-                var level = Parsers.LevelParser.Parse(match.Groups[2].Value);
-                var scene = IntegerHelper.Parse(match.Groups[3].Value);
+                var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
+                var alternativeString = Utils.Format(
+                    "ClearData: {0}{3}Slow: {1}{3}SpellName: {2}",
+                    formatter.FormatNumber(bestshot.Header.ResultScore),
+                    formatter.FormatPercent(bestshot.Header.SlowRate, 6),
+                    EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
+                    Environment.NewLine);
+                return Utils.Format(
+                    "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        });
+    }
 
-                if (!Definitions.SpellCards.ContainsKey((level, scene)))
-                    return match.ToString();
-
-                if (bestshots.TryGetValue((chara, level, scene), out var bestshot) &&
-                    Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                    Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
-                {
-                    var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                    var alternativeString = Utils.Format(
-                        "ClearData: {0}{3}Slow: {1}{3}SpellName: {2}",
-                        formatter.FormatNumber(bestshot.Header.ResultScore),
-                        formatter.FormatPercent(bestshot.Header.SlowRate, 6),
-                        EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
-                        Environment.NewLine);
-                    return Utils.Format(
-                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

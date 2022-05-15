@@ -13,41 +13,40 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th15
+namespace ThScoreFileConverter.Models.Th15;
+
+internal class ClearData : Th10.Chapter, IClearData // per character
 {
-    internal class ClearData : Th10.Chapter, IClearData // per character
+    public const string ValidSignature = "CR";
+    public const ushort ValidVersion = 0x0001;
+    public const int ValidSize = 0x0000A4A0;
+
+    public ClearData(Th10.Chapter chapter)
+        : base(chapter, ValidSignature, ValidVersion, ValidSize)
     {
-        public const string ValidSignature = "CR";
-        public const ushort ValidVersion = 0x0001;
-        public const int ValidSize = 0x0000A4A0;
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-        public ClearData(Th10.Chapter chapter)
-            : base(chapter, ValidSignature, ValidVersion, ValidSize)
-        {
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
+        this.Chara = (CharaWithTotal)reader.ReadInt32();
 
-            this.Chara = (CharaWithTotal)reader.ReadInt32();
+        this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(
+            mode => mode, _ => BinaryReadableHelper.Create<ClearDataPerGameMode>(reader) as IClearDataPerGameMode);
 
-            this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(
-                mode => mode, _ => BinaryReadableHelper.Create<ClearDataPerGameMode>(reader) as IClearDataPerGameMode);
+        this.Practices = EnumHelper<Level>.Enumerable
+            .SelectMany(level => EnumHelper<Th14.StagePractice>.Enumerable.Select(stage => (level, stage)))
+            .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
+    }
 
-            this.Practices = EnumHelper<Level>.Enumerable
-                .SelectMany(level => EnumHelper<Th14.StagePractice>.Enumerable.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
-        }
+    public CharaWithTotal Chara { get; }
 
-        public CharaWithTotal Chara { get; }
+    public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-        public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
+    public IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
 
-        public IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
-
-        public static bool CanInitialize(Th10.Chapter chapter)
-        {
-            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
-                && (chapter.Version == ValidVersion)
-                && (chapter.Size == ValidSize);
-        }
+    public static bool CanInitialize(Th10.Chapter chapter)
+    {
+        return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+            && (chapter.Version == ValidVersion)
+            && (chapter.Size == ValidSize);
     }
 }

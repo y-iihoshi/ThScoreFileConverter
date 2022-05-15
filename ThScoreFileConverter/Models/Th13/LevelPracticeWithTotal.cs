@@ -5,53 +5,52 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+/// <summary>
+/// Represents levels of TD spell practice and total.
+/// </summary>
+public enum LevelPracticeWithTotal
 {
     /// <summary>
-    /// Represents levels of TD spell practice and total.
+    /// Represents level Easy.
     /// </summary>
-    public enum LevelPracticeWithTotal
-    {
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        [EnumAltName("L")]
-        Lunatic,
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    [EnumAltName("L")]
+    Lunatic,
 
-        /// <summary>
-        /// Represents level Extra.
-        /// </summary>
-        [EnumAltName("X")]
-        Extra,
+    /// <summary>
+    /// Represents level Extra.
+    /// </summary>
+    [EnumAltName("X")]
+    Extra,
 
-        /// <summary>
-        /// Represents Over Drive.
-        /// </summary>
-        [EnumAltName("D", LongName = "Over Drive")]
-        OverDrive,
+    /// <summary>
+    /// Represents Over Drive.
+    /// </summary>
+    [EnumAltName("D", LongName = "Over Drive")]
+    OverDrive,
 
-        /// <summary>
-        /// Represents total across levels.
-        /// </summary>
-        [EnumAltName("T")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across levels.
+    /// </summary>
+    [EnumAltName("T")]
+    Total,
 }

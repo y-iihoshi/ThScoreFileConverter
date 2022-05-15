@@ -11,23 +11,22 @@ using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Models.Th07
+namespace ThScoreFileConverter.Models.Th07;
+
+internal class LastName : Th06.Chapter
 {
-    internal class LastName : Th06.Chapter
+    public const string ValidSignature = "LSNM";
+    public const short ValidSize = 0x0018;
+
+    public LastName(Th06.Chapter chapter)
+        : base(chapter, ValidSignature, ValidSize)
     {
-        public const string ValidSignature = "LSNM";
-        public const short ValidSize = 0x0018;
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-        public LastName(Th06.Chapter chapter)
-            : base(chapter, ValidSignature, ValidSize)
-        {
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
-
-            _ = reader.ReadUInt32();    // always 0x00000001?
-            this.Name = reader.ReadExactBytes(12);
-        }
-
-        public IEnumerable<byte> Name { get; }  // Null-terminated
+        _ = reader.ReadUInt32();    // always 0x00000001?
+        this.Name = reader.ReadExactBytes(12);
     }
+
+    public IEnumerable<byte> Name { get; }  // Null-terminated
 }

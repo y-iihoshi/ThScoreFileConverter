@@ -5,47 +5,46 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th11
+namespace ThScoreFileConverter.Models.Th11;
+
+/// <summary>
+/// Represents playable characters of SA.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents playable characters of SA.
+    /// Hakurei Reimu with Yakumo Yukari.
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu with Yakumo Yukari.
-        /// </summary>
-        [EnumAltName("RY")]
-        ReimuYukari,
+    [EnumAltName("RY")]
+    ReimuYukari,
 
-        /// <summary>
-        /// Hakurei Reimu with Ibuki Suika.
-        /// </summary>
-        [EnumAltName("RS")]
-        ReimuSuika,
+    /// <summary>
+    /// Hakurei Reimu with Ibuki Suika.
+    /// </summary>
+    [EnumAltName("RS")]
+    ReimuSuika,
 
-        /// <summary>
-        /// Hakurei Reimu with Shameimaru Aya.
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuAya,
+    /// <summary>
+    /// Hakurei Reimu with Shameimaru Aya.
+    /// </summary>
+    [EnumAltName("RA")]
+    ReimuAya,
 
-        /// <summary>
-        /// Kirisame Marisa with Alice Margatroid.
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaAlice,
+    /// <summary>
+    /// Kirisame Marisa with Alice Margatroid.
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaAlice,
 
-        /// <summary>
-        /// Kirisame Marisa with Patchouli Knowledge.
-        /// </summary>
-        [EnumAltName("MP")]
-        MarisaPatchouli,
+    /// <summary>
+    /// Kirisame Marisa with Patchouli Knowledge.
+    /// </summary>
+    [EnumAltName("MP")]
+    MarisaPatchouli,
 
-        /// <summary>
-        /// Kirisame Marisa with Kawashiro Nitori.
-        /// </summary>
-        [EnumAltName("MN")]
-        MarisaNitori,
-    }
+    /// <summary>
+    /// Kirisame Marisa with Kawashiro Nitori.
+    /// </summary>
+    [EnumAltName("MN")]
+    MarisaNitori,
 }

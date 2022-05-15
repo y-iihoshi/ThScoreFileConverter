@@ -5,47 +5,46 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th155
+namespace ThScoreFileConverter.Models.Th155;
+
+/// <summary>
+/// Represents levels of AoCF and total.
+/// </summary>
+public enum LevelWithTotal
 {
     /// <summary>
-    /// Represents levels of AoCF and total.
+    /// Represents level Easy.
     /// </summary>
-    public enum LevelWithTotal
-    {
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        [EnumAltName("L")]
-        Lunatic,
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    [EnumAltName("L")]
+    Lunatic,
 
-        /// <summary>
-        /// Represents level OverDrive.
-        /// </summary>
-        [EnumAltName("D")]
-        OverDrive,
+    /// <summary>
+    /// Represents level OverDrive.
+    /// </summary>
+    [EnumAltName("D")]
+    OverDrive,
 
-        /// <summary>
-        /// Represents total across levels.
-        /// </summary>
-        [EnumAltName("T")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across levels.
+    /// </summary>
+    [EnumAltName("T")]
+    Total,
 }

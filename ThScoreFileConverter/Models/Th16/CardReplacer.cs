@@ -16,26 +16,25 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 
-namespace ThScoreFileConverter.Models.Th16
-{
-    // %T16CARD[xxx][y]
-    internal class CardReplacer : Th10.CardReplacerBase<Stage, Level>
-    {
-        public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
-            : base(
-                  Definitions.FormatPrefix,
-                  Definitions.CardTable,
-                  hideUntriedCards,
-                  cardNumber => CardHasTried(clearDataDictionary, cardNumber))
-        {
-        }
+namespace ThScoreFileConverter.Models.Th16;
 
-        private static bool CardHasTried(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
-        {
-            return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
-                && clearData.Cards.TryGetValue(cardNumber, out var card)
-                && card.HasTried;
-        }
+// %T16CARD[xxx][y]
+internal class CardReplacer : Th10.CardReplacerBase<Stage, Level>
+{
+    public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
+        : base(
+              Definitions.FormatPrefix,
+              Definitions.CardTable,
+              hideUntriedCards,
+              cardNumber => CardHasTried(clearDataDictionary, cardNumber))
+    {
+    }
+
+    private static bool CardHasTried(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
+    {
+        return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+            && clearData.Cards.TryGetValue(cardNumber, out var card)
+            && card.HasTried;
     }
 }

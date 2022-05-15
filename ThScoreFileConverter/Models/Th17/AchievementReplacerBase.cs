@@ -12,30 +12,29 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th17
+namespace ThScoreFileConverter.Models.Th17;
+
+internal class AchievementReplacerBase : IStringReplaceable
 {
-    internal class AchievementReplacerBase : IStringReplaceable
+    private readonly string pattern;
+    private readonly MatchEvaluator evaluator;
+
+    protected AchievementReplacerBase(string formatPrefix, IReadOnlyList<string> achievementNames, IStatus status)
     {
-        private readonly string pattern;
-        private readonly MatchEvaluator evaluator;
-
-        protected AchievementReplacerBase(string formatPrefix, IReadOnlyList<string> achievementNames, IStatus status)
+        this.pattern = Utils.Format(@"{0}ACHV(\d{{2}})", formatPrefix);
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.pattern = Utils.Format(@"{0}ACHV(\d{{2}})", formatPrefix);
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
 
-                if (number <= 0 || number > achievementNames.Count)
-                    return match.ToString();
+            if (number <= 0 || number > achievementNames.Count)
+                return match.ToString();
 
-                return (status.Achievements.ElementAt(number - 1) > 0) ? achievementNames[number - 1] : "??????????";
-            });
-        }
+            return (status.Achievements.ElementAt(number - 1) > 0) ? achievementNames[number - 1] : "??????????";
+        });
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

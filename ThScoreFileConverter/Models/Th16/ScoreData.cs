@@ -10,17 +10,16 @@
 using System.IO;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th16
-{
-    internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
-    {
-        public Season Season { get; private set; }
+namespace ThScoreFileConverter.Models.Th16;
 
-        public override void ReadFrom(BinaryReader reader)
-        {
-            base.ReadFrom(reader);
-            this.SlowRate = reader.ReadSingle();
-            this.Season = EnumHelper.To<Season>(reader.ReadInt32());
-        }
+internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
+{
+    public Season Season { get; private set; }
+
+    public override void ReadFrom(BinaryReader reader)
+    {
+        base.ReadFrom(reader);
+        this.SlowRate = reader.ReadSingle();
+        this.Season = EnumHelper.To<Season>(reader.ReadInt32());
     }
 }

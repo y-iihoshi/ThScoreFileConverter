@@ -10,14 +10,13 @@
 using System.IO;
 using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+internal class ScoreData : Th10.ScoreDataBase<StageProgress>
 {
-    internal class ScoreData : Th10.ScoreDataBase<StageProgress>
+    public override void ReadFrom(BinaryReader reader)
     {
-        public override void ReadFrom(BinaryReader reader)
-        {
-            base.ReadFrom(reader);
-            _ = reader.ReadExactBytes(0x08);
-        }
+        base.ReadFrom(reader);
+        _ = reader.ReadExactBytes(0x08);
     }
 }

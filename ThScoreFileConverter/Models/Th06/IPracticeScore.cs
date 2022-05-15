@@ -7,16 +7,15 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal interface IPracticeScore : IChapter
 {
-    internal interface IPracticeScore : IChapter
-    {
-        Chara Chara { get; }
+    Chara Chara { get; }
 
-        int HighScore { get; }
+    int HighScore { get; }
 
-        Level Level { get; }
+    Level Level { get; }
 
-        Stage Stage { get; }
-    }
+    Stage Stage { get; }
 }

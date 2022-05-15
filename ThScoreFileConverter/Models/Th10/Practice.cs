@@ -9,22 +9,21 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal class Practice : IBinaryReadable, IPractice
 {
-    internal class Practice : IBinaryReadable, IPractice
+    public uint Score { get; private set; }     // Divided by 10
+
+    public byte Cleared { get; private set; }   // 0x00: Not clear, 0x01: Cleared
+
+    public byte Unlocked { get; private set; }  // 0x00: Locked, 0x01: Unlocked
+
+    public void ReadFrom(BinaryReader reader)
     {
-        public uint Score { get; private set; }     // Divided by 10
-
-        public byte Cleared { get; private set; }   // 0x00: Not clear, 0x01: Cleared
-
-        public byte Unlocked { get; private set; }  // 0x00: Locked, 0x01: Unlocked
-
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.Score = reader.ReadUInt32();
-            this.Cleared = reader.ReadByte();
-            this.Unlocked = reader.ReadByte();
-            _ = reader.ReadUInt16();    // always 0x0000?
-        }
+        this.Score = reader.ReadUInt32();
+        this.Cleared = reader.ReadByte();
+        this.Unlocked = reader.ReadByte();
+        _ = reader.ReadUInt16();    // always 0x0000?
     }
 }

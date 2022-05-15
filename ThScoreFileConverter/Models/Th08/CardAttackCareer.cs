@@ -13,29 +13,28 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal class CardAttackCareer : IBinaryReadable, ICardAttackCareer    // per story or practice
 {
-    internal class CardAttackCareer : IBinaryReadable, ICardAttackCareer    // per story or practice
+    public CardAttackCareer()
     {
-        public CardAttackCareer()
-        {
-            this.MaxBonuses = ImmutableDictionary<CharaWithTotal, uint>.Empty;
-            this.TrialCounts = ImmutableDictionary<CharaWithTotal, int>.Empty;
-            this.ClearCounts = ImmutableDictionary<CharaWithTotal, int>.Empty;
-        }
+        this.MaxBonuses = ImmutableDictionary<CharaWithTotal, uint>.Empty;
+        this.TrialCounts = ImmutableDictionary<CharaWithTotal, int>.Empty;
+        this.ClearCounts = ImmutableDictionary<CharaWithTotal, int>.Empty;
+    }
 
-        public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
+    public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
 
-        public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; private set; }
+    public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; private set; }
 
-        public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; private set; }
+    public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; private set; }
 
-        public void ReadFrom(BinaryReader reader)
-        {
-            var charas = EnumHelper<CharaWithTotal>.Enumerable;
-            this.MaxBonuses = charas.ToDictionary(chara => chara, _ => reader.ReadUInt32());
-            this.TrialCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
-            this.ClearCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
-        }
+    public void ReadFrom(BinaryReader reader)
+    {
+        var charas = EnumHelper<CharaWithTotal>.Enumerable;
+        this.MaxBonuses = charas.ToDictionary(chara => chara, _ => reader.ReadUInt32());
+        this.TrialCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
+        this.ClearCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
     }
 }

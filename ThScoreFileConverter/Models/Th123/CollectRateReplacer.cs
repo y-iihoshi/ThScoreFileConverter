@@ -9,21 +9,20 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th123
+namespace ThScoreFileConverter.Models.Th123;
+
+// %T123CRG[x][yy][z]
+internal class CollectRateReplacer : Th105.CollectRateReplacerBase<Chara>
 {
-    // %T123CRG[x][yy][z]
-    internal class CollectRateReplacer : Th105.CollectRateReplacerBase<Chara>
+    public CollectRateReplacer(
+        IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.LevelWithTotalParser,
+              Parsers.CharaParser,
+              static (level, chara, type) => Definitions.HasStory(chara),
+              clearDataDictionary,
+              formatter)
     {
-        public CollectRateReplacer(
-            IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.LevelWithTotalParser,
-                  Parsers.CharaParser,
-                  static (level, chara, type) => Definitions.HasStory(chara),
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

@@ -9,37 +9,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ThScoreFileConverter.Interactivity
+namespace ThScoreFileConverter.Interactivity;
+
+/// <summary>
+/// Represents a result of <see cref="OpenFileDialogAction"/>.
+/// </summary>
+public sealed class OpenFileDialogActionResult
 {
     /// <summary>
-    /// Represents a result of <see cref="OpenFileDialogAction"/>.
+    /// Initializes a new instance of the <see cref="OpenFileDialogActionResult"/> class.
     /// </summary>
-    public sealed class OpenFileDialogActionResult
+    /// <param name="fileName">A file name selected in the file dialog box.</param>
+    /// <param name="fileNames">The file names of all selected files in the dialog box.</param>
+    public OpenFileDialogActionResult(string fileName, IEnumerable<string> fileNames)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenFileDialogActionResult"/> class.
-        /// </summary>
-        /// <param name="fileName">A file name selected in the file dialog box.</param>
-        /// <param name="fileNames">The file names of all selected files in the dialog box.</param>
-        public OpenFileDialogActionResult(string fileName, IEnumerable<string> fileNames)
-        {
-            if (fileName is null)
-                throw new ArgumentNullException(nameof(fileName));
-            if (fileNames is null)
-                throw new ArgumentNullException(nameof(fileNames));
+        if (fileName is null)
+            throw new ArgumentNullException(nameof(fileName));
+        if (fileNames is null)
+            throw new ArgumentNullException(nameof(fileNames));
 
-            this.FileName = fileName;
-            this.FileNames = fileNames.ToArray();
-        }
-
-        /// <summary>
-        /// Gets a string containing the file name selected in the file dialog box.
-        /// </summary>
-        public string FileName { get; }
-
-        /// <summary>
-        /// Gets the file names of all selected files in the dialog box.
-        /// </summary>
-        public IEnumerable<string> FileNames { get; }
+        this.FileName = fileName;
+        this.FileNames = fileNames.ToArray();
     }
+
+    /// <summary>
+    /// Gets a string containing the file name selected in the file dialog box.
+    /// </summary>
+    public string FileName { get; }
+
+    /// <summary>
+    /// Gets the file names of all selected files in the dialog box.
+    /// </summary>
+    public IEnumerable<string> FileNames { get; }
 }

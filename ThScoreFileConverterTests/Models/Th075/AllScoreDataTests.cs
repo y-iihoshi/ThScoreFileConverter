@@ -5,60 +5,59 @@ using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.UnitTesting;
 
-namespace ThScoreFileConverterTests.Models.Th075
+namespace ThScoreFileConverterTests.Models.Th075;
+
+[TestClass]
+public class AllScoreDataTests
 {
-    [TestClass]
-    public class AllScoreDataTests
+    internal struct Properties
     {
-        internal struct Properties
+        public Dictionary<(CharaWithReserved, Level), IClearData> clearData;
+        public StatusTests.Properties status;
+    }
+
+    internal static Properties ValidProperties { get; } = new Properties()
+    {
+        clearData = EnumHelper<CharaWithReserved>.Enumerable
+            .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
+            .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
+        status = StatusTests.ValidProperties,
+    };
+
+    internal static byte[] MakeByteArray(in Properties properties)
+    {
+        return TestUtils.MakeByteArray(
+            properties.clearData.Select(pair => ClearDataTests.MakeByteArray(pair.Value)),
+            StatusTests.MakeByteArray(properties.status));
+    }
+
+    internal static void Validate(in Properties properties, in AllScoreData allScoreData)
+    {
+        foreach (var pair in properties.clearData)
         {
-            public Dictionary<(CharaWithReserved, Level), IClearData> clearData;
-            public StatusTests.Properties status;
+            ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
         }
 
-        internal static Properties ValidProperties { get; } = new Properties()
-        {
-            clearData = EnumHelper<CharaWithReserved>.Enumerable
-                .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
-                .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
-            status = StatusTests.ValidProperties,
-        };
+        Assert.IsNotNull(allScoreData.Status);
+        StatusTests.Validate(properties.status, allScoreData.Status!);
+    }
 
-        internal static byte[] MakeByteArray(in Properties properties)
-        {
-            return TestUtils.MakeByteArray(
-                properties.clearData.Select(pair => ClearDataTests.MakeByteArray(pair.Value)),
-                StatusTests.MakeByteArray(properties.status));
-        }
+    [TestMethod]
+    public void AllScoreDataTest()
+    {
+        var allScoreData = new AllScoreData();
 
-        internal static void Validate(in Properties properties, in AllScoreData allScoreData)
-        {
-            foreach (var pair in properties.clearData)
-            {
-                ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
-            }
+        Assert.AreEqual(0, allScoreData.ClearData.Count);
+        Assert.IsNull(allScoreData.Status);
+    }
 
-            Assert.IsNotNull(allScoreData.Status);
-            StatusTests.Validate(properties.status, allScoreData.Status!);
-        }
+    [TestMethod]
+    public void ReadFromTest()
+    {
+        var properties = ValidProperties;
 
-        [TestMethod]
-        public void AllScoreDataTest()
-        {
-            var allScoreData = new AllScoreData();
+        var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-            Assert.AreEqual(0, allScoreData.ClearData.Count);
-            Assert.IsNull(allScoreData.Status);
-        }
-
-        [TestMethod]
-        public void ReadFromTest()
-        {
-            var properties = ValidProperties;
-
-            var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
-
-            Validate(properties, allScoreData);
-        }
+        Validate(properties, allScoreData);
     }
 }

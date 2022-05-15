@@ -12,28 +12,27 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+internal class AllScoreData : IBinaryReadable
 {
-    internal class AllScoreData : IBinaryReadable
+    public AllScoreData()
     {
-        public AllScoreData()
-        {
-            var numCharas = EnumHelper<CharaWithReserved>.NumValues;
-            var numLevels = EnumHelper<Level>.NumValues;
-            this.ClearData = new Dictionary<(CharaWithReserved, Level), IClearData>(numCharas * numLevels);
-        }
+        var numCharas = EnumHelper<CharaWithReserved>.NumValues;
+        var numLevels = EnumHelper<Level>.NumValues;
+        this.ClearData = new Dictionary<(CharaWithReserved, Level), IClearData>(numCharas * numLevels);
+    }
 
-        public IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> ClearData { get; private set; }
+    public IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> ClearData { get; private set; }
 
-        public Status? Status { get; private set; }
+    public Status? Status { get; private set; }
 
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.ClearData = EnumHelper<CharaWithReserved>.Enumerable
-                .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
-                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<ClearData>(reader) as IClearData);
+    public void ReadFrom(BinaryReader reader)
+    {
+        this.ClearData = EnumHelper<CharaWithReserved>.Enumerable
+            .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
+            .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<ClearData>(reader) as IClearData);
 
-            this.Status = BinaryReadableHelper.Create<Status>(reader);
-        }
+        this.Status = BinaryReadableHelper.Create<Status>(reader);
     }
 }

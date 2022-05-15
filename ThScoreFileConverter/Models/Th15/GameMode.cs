@@ -5,23 +5,22 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th15
+namespace ThScoreFileConverter.Models.Th15;
+
+/// <summary>
+/// Represents game modes of LoLK.
+/// </summary>
+public enum GameMode
 {
     /// <summary>
-    /// Represents game modes of LoLK.
+    /// Represents the Pointdevice Mode.
     /// </summary>
-    public enum GameMode
-    {
-        /// <summary>
-        /// Represents the Pointdevice Mode.
-        /// </summary>
-        [EnumAltName("P")]
-        Pointdevice,
+    [EnumAltName("P")]
+    Pointdevice,
 
-        /// <summary>
-        /// Represents the Legacy Mode.
-        /// </summary>
-        [EnumAltName("L")]
-        Legacy,
-    }
+    /// <summary>
+    /// Represents the Legacy Mode.
+    /// </summary>
+    [EnumAltName("L")]
+    Legacy,
 }

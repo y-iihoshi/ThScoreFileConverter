@@ -10,16 +10,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal interface IClearData<TChara, TLevel> : IChapter
+    where TChara : struct, Enum
+    where TLevel : struct, Enum
 {
-    internal interface IClearData<TChara, TLevel> : IChapter
-        where TChara : struct, Enum
-        where TLevel : struct, Enum
-    {
-        TChara Chara { get; }
+    TChara Chara { get; }
 
-        IReadOnlyDictionary<TLevel, byte> PracticeFlags { get; }
+    IReadOnlyDictionary<TLevel, byte> PracticeFlags { get; }
 
-        IReadOnlyDictionary<TLevel, byte> StoryFlags { get; }
-    }
+    IReadOnlyDictionary<TLevel, byte> StoryFlags { get; }
 }

@@ -9,18 +9,17 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal interface IPlayCount
 {
-    internal interface IPlayCount
-    {
-        int TotalClear { get; }
+    int TotalClear { get; }
 
-        int TotalContinue { get; }
+    int TotalContinue { get; }
 
-        int TotalPractice { get; }
+    int TotalPractice { get; }
 
-        int TotalTrial { get; }
+    int TotalTrial { get; }
 
-        IReadOnlyDictionary<Chara, int> Trials { get; }
-    }
+    IReadOnlyDictionary<Chara, int> Trials { get; }
 }

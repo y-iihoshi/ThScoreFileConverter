@@ -9,21 +9,20 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th123
+namespace ThScoreFileConverter.Models.Th123;
+
+// %T123C[xx][yy][z]
+internal class CareerReplacer : Th105.CareerReplacerBase<Chara>
 {
-    // %T123C[xx][yy][z]
-    internal class CareerReplacer : Th105.CareerReplacerBase<Chara>
+    public CareerReplacer(
+        IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaParser,
+              static (number, chara, type) => Definitions.HasStory(chara),
+              Definitions.EnemyCardIdTable,
+              clearDataDictionary,
+              formatter)
     {
-        public CareerReplacer(
-            IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.CharaParser,
-                  static (number, chara, type) => Definitions.HasStory(chara),
-                  Definitions.EnemyCardIdTable,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

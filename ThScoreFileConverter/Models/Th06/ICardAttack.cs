@@ -9,18 +9,17 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal interface ICardAttack : IChapter
 {
-    internal interface ICardAttack : IChapter
-    {
-        short CardId { get; }
+    short CardId { get; }
 
-        IEnumerable<byte> CardName { get; }
+    IEnumerable<byte> CardName { get; }
 
-        ushort ClearCount { get; }
+    ushort ClearCount { get; }
 
-        bool HasTried { get; }
+    bool HasTried { get; }
 
-        ushort TrialCount { get; }
-    }
+    ushort TrialCount { get; }
 }

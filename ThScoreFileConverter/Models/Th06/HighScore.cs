@@ -16,42 +16,41 @@ using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal class HighScore : Chapter, IHighScore  // per character, level, rank
 {
-    internal class HighScore : Chapter, IHighScore  // per character, level, rank
+    public const string ValidSignature = "HSCR";
+    public const short ValidSize = 0x001C;
+
+    public HighScore(Chapter chapter)
+        : base(chapter, ValidSignature, ValidSize)
     {
-        public const string ValidSignature = "HSCR";
-        public const short ValidSize = 0x001C;
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-        public HighScore(Chapter chapter)
-            : base(chapter, ValidSignature, ValidSize)
-        {
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
-
-            _ = reader.ReadUInt32();    // always 0x00000001?
-            this.Score = reader.ReadUInt32();
-            this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
-            this.Level = EnumHelper.To<Level>(reader.ReadByte());
-            this.StageProgress = EnumHelper.To<StageProgress>(reader.ReadByte());
-            this.Name = reader.ReadExactBytes(9);
-        }
-
-        public HighScore(uint score)    // for InitialRanking only
-            : base()
-        {
-            this.Score = score;
-            this.Name = EncodingHelper.Default.GetBytes("Nanashi\0\0");
-        }
-
-        public uint Score { get; }
-
-        public Chara Chara { get; }
-
-        public Level Level { get; }
-
-        public StageProgress StageProgress { get; }
-
-        public IEnumerable<byte> Name { get; }  // Null-terminated
+        _ = reader.ReadUInt32();    // always 0x00000001?
+        this.Score = reader.ReadUInt32();
+        this.Chara = EnumHelper.To<Chara>(reader.ReadByte());
+        this.Level = EnumHelper.To<Level>(reader.ReadByte());
+        this.StageProgress = EnumHelper.To<StageProgress>(reader.ReadByte());
+        this.Name = reader.ReadExactBytes(9);
     }
+
+    public HighScore(uint score)    // for InitialRanking only
+        : base()
+    {
+        this.Score = score;
+        this.Name = EncodingHelper.Default.GetBytes("Nanashi\0\0");
+    }
+
+    public uint Score { get; }
+
+    public Chara Chara { get; }
+
+    public Level Level { get; }
+
+    public StageProgress StageProgress { get; }
+
+    public IEnumerable<byte> Name { get; }  // Null-terminated
 }

@@ -11,35 +11,34 @@ using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal class CardAttack : Chapter, ICardAttack    // per card
 {
-    internal class CardAttack : Chapter, ICardAttack    // per card
+    public const string ValidSignature = "CATK";
+    public const short ValidSize = 0x0040;
+
+    public CardAttack(Chapter chapter)
+        : base(chapter, ValidSignature, ValidSize)
     {
-        public const string ValidSignature = "CATK";
-        public const short ValidSize = 0x0040;
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-        public CardAttack(Chapter chapter)
-            : base(chapter, ValidSignature, ValidSize)
-        {
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
-
-            _ = reader.ReadExactBytes(8);
-            this.CardId = (short)(reader.ReadInt16() + 1);
-            _ = reader.ReadExactBytes(6);
-            this.CardName = reader.ReadExactBytes(0x24);
-            this.TrialCount = reader.ReadUInt16();
-            this.ClearCount = reader.ReadUInt16();
-        }
-
-        public short CardId { get; }    // 1-based
-
-        public IEnumerable<byte> CardName { get; }  // Null-terminated
-
-        public ushort TrialCount { get; }
-
-        public ushort ClearCount { get; }
-
-        public bool HasTried => this.TrialCount > 0;
+        _ = reader.ReadExactBytes(8);
+        this.CardId = (short)(reader.ReadInt16() + 1);
+        _ = reader.ReadExactBytes(6);
+        this.CardName = reader.ReadExactBytes(0x24);
+        this.TrialCount = reader.ReadUInt16();
+        this.ClearCount = reader.ReadUInt16();
     }
+
+    public short CardId { get; }    // 1-based
+
+    public IEnumerable<byte> CardName { get; }  // Null-terminated
+
+    public ushort TrialCount { get; }
+
+    public ushort ClearCount { get; }
+
+    public bool HasTried => this.TrialCount > 0;
 }

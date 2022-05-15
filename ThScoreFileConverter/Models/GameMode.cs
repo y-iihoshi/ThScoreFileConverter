@@ -5,23 +5,22 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+/// <summary>
+/// Represents game modes.
+/// </summary>
+public enum GameMode
 {
     /// <summary>
-    /// Represents game modes.
+    /// Story Mode.
     /// </summary>
-    public enum GameMode
-    {
-        /// <summary>
-        /// Story Mode.
-        /// </summary>
-        [EnumAltName("S")]
-        Story,
+    [EnumAltName("S")]
+    Story,
 
-        /// <summary>
-        /// Spell Practice Mode.
-        /// </summary>
-        [EnumAltName("P")]
-        SpellPractice,
-    }
+    /// <summary>
+    /// Spell Practice Mode.
+    /// </summary>
+    [EnumAltName("P")]
+    SpellPractice,
 }
