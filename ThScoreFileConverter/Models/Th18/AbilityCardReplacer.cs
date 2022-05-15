@@ -11,31 +11,30 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th18
+namespace ThScoreFileConverter.Models.Th18;
+
+// %T18ABIL[xx]
+internal class AbilityCardReplacer : IStringReplaceable
 {
-    // %T18ABIL[xx]
-    internal class AbilityCardReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(@"{0}ABIL(\d{{2}})", Definitions.FormatPrefix);
+
+    private readonly MatchEvaluator evaluator;
+
+    public AbilityCardReplacer(IStatus status)
     {
-        private static readonly string Pattern = Utils.Format(@"{0}ABIL(\d{{2}})", Definitions.FormatPrefix);
-
-        private readonly MatchEvaluator evaluator;
-
-        public AbilityCardReplacer(IStatus status)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
 
-                if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
-                    return match.ToString();
+            if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
+                return match.ToString();
 
-                return (status.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
-            });
-        }
+            return (status.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
+        });
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

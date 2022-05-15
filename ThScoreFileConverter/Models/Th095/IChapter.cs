@@ -7,18 +7,17 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th095
+namespace ThScoreFileConverter.Models.Th095;
+
+internal interface IChapter
 {
-    internal interface IChapter
-    {
-        uint Checksum { get; }
+    uint Checksum { get; }
 
-        bool IsValid { get; }
+    bool IsValid { get; }
 
-        string Signature { get; }
+    string Signature { get; }
 
-        int Size { get; }
+    int Size { get; }
 
-        ushort Version { get; }
-    }
+    ushort Version { get; }
 }

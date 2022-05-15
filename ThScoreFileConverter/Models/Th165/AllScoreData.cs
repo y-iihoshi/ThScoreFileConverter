@@ -7,14 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th165
+namespace ThScoreFileConverter.Models.Th165;
+
+internal class AllScoreData
+    : Th095.AllScoreDataBase<IScore, IStatus>
 {
-    internal class AllScoreData
-        : Th095.AllScoreDataBase<IScore, IStatus>
+    public AllScoreData()
+        : base(Definitions.SpellCards.Count)
     {
-        public AllScoreData()
-            : base(Definitions.SpellCards.Count)
-        {
-        }
     }
 }

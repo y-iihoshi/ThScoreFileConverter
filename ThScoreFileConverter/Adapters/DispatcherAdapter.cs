@@ -9,34 +9,33 @@ using System;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace ThScoreFileConverter.Adapters
-{
-    /// <summary>
-    /// Wrapper of <see cref="Dispatcher"/>.
-    /// </summary>
+namespace ThScoreFileConverter.Adapters;
+
+/// <summary>
+/// Wrapper of <see cref="Dispatcher"/>.
+/// </summary>
 #if !DEBUG
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-    internal class DispatcherAdapter : IDispatcherAdapter
+internal class DispatcherAdapter : IDispatcherAdapter
+{
+    private readonly Dispatcher dispatcher;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DispatcherAdapter"/> class.
+    /// </summary>
+    /// <param name="dispatcher">
+    /// <see cref="Dispatcher"/> to be wrapped;
+    /// if <c>null</c>, <see cref="Application.Current"/>.Dispatcher is used.
+    /// </param>
+    public DispatcherAdapter(Dispatcher? dispatcher = null)
     {
-        private readonly Dispatcher dispatcher;
+        this.dispatcher = dispatcher ?? Application.Current.Dispatcher;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DispatcherAdapter"/> class.
-        /// </summary>
-        /// <param name="dispatcher">
-        /// <see cref="Dispatcher"/> to be wrapped;
-        /// if <c>null</c>, <see cref="Application.Current"/>.Dispatcher is used.
-        /// </param>
-        public DispatcherAdapter(Dispatcher? dispatcher = null)
-        {
-            this.dispatcher = dispatcher ?? Application.Current.Dispatcher;
-        }
-
-        /// <inheritdoc/>
-        public void Invoke(Action callback)
-        {
-            this.dispatcher.Invoke(callback);
-        }
+    /// <inheritdoc/>
+    public void Invoke(Action callback)
+    {
+        this.dispatcher.Invoke(callback);
     }
 }

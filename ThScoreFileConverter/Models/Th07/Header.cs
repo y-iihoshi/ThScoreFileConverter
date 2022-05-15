@@ -9,19 +9,18 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models.Th07
-{
-    internal class Header : Th06.Chapter
-    {
-        public const string ValidSignature = "TH7K";
-        public const short ValidSize = 0x000C;
+namespace ThScoreFileConverter.Models.Th07;
 
-        public Header(Th06.Chapter chapter)
-            : base(chapter, ValidSignature, ValidSize)
-        {
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
-            _ = reader.ReadUInt32();    // always 0x00000001?
-        }
+internal class Header : Th06.Chapter
+{
+    public const string ValidSignature = "TH7K";
+    public const short ValidSize = 0x000C;
+
+    public Header(Th06.Chapter chapter)
+        : base(chapter, ValidSignature, ValidSize)
+    {
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
+        _ = reader.ReadUInt32();    // always 0x00000001?
     }
 }

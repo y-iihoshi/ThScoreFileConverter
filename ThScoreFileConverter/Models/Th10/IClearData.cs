@@ -10,23 +10,22 @@
 using System;
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal interface IClearData<TCharaWithTotal> : Th095.IChapter
+    where TCharaWithTotal : struct, Enum
 {
-    internal interface IClearData<TCharaWithTotal> : Th095.IChapter
-        where TCharaWithTotal : struct, Enum
-    {
-        IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
+    IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
 
-        TCharaWithTotal Chara { get; }
+    TCharaWithTotal Chara { get; }
 
-        IReadOnlyDictionary<Level, int> ClearCounts { get; }
+    IReadOnlyDictionary<Level, int> ClearCounts { get; }
 
-        int PlayTime { get; }
+    int PlayTime { get; }
 
-        IReadOnlyDictionary<(Level Level, Stage Stage), IPractice> Practices { get; }
+    IReadOnlyDictionary<(Level Level, Stage Stage), IPractice> Practices { get; }
 
-        IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
+    IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
 
-        int TotalPlayCount { get; }
-    }
+    int TotalPlayCount { get; }
 }

@@ -7,21 +7,20 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+internal class SpellCardInfo
 {
-    internal class SpellCardInfo
+    public SpellCardInfo(string name, Chara enemy, Level level)
     {
-        public SpellCardInfo(string name, Chara enemy, Level level)
-        {
-            this.Name = name;
-            this.Enemy = enemy;
-            this.Level = level;
-        }
-
-        public string Name { get; }
-
-        public Chara Enemy { get; }
-
-        public Level Level { get; }
+        this.Name = name;
+        this.Enemy = enemy;
+        this.Level = level;
     }
+
+    public string Name { get; }
+
+    public Chara Enemy { get; }
+
+    public Level Level { get; }
 }

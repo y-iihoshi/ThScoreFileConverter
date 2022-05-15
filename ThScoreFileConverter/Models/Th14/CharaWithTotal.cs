@@ -5,53 +5,52 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th14
+namespace ThScoreFileConverter.Models.Th14;
+
+/// <summary>
+/// Represents playable characters of DDC and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of DDC and total.
+    /// Hakurei Reimu with the bewitched weapon.
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu with the bewitched weapon.
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu without the bewitched weapon.
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu without the bewitched weapon.
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Kirisame Marisa with the bewitched weapon.
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Marisa with the bewitched weapon.
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa without the bewitched weapon.
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
+    /// <summary>
+    /// Kirisame Marisa without the bewitched weapon.
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 
-        /// <summary>
-        /// Izayoi Sakuya with the bewitched weapon.
-        /// </summary>
-        [EnumAltName("SA")]
-        SakuyaA,
+    /// <summary>
+    /// Izayoi Sakuya with the bewitched weapon.
+    /// </summary>
+    [EnumAltName("SA")]
+    SakuyaA,
 
-        /// <summary>
-        /// Izayoi Sakuya without the bewitched weapon.
-        /// </summary>
-        [EnumAltName("SB")]
-        SakuyaB,
+    /// <summary>
+    /// Izayoi Sakuya without the bewitched weapon.
+    /// </summary>
+    [EnumAltName("SB")]
+    SakuyaB,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

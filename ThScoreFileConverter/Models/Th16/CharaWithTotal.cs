@@ -5,41 +5,40 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th16
+namespace ThScoreFileConverter.Models.Th16;
+
+/// <summary>
+/// Represents playable characters of HSiFS and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of HSiFS and total.
+    /// Hakurei Reimu.
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu.
-        /// </summary>
-        [EnumAltName("RM")]
-        Reimu,
+    [EnumAltName("RM")]
+    Reimu,
 
-        /// <summary>
-        /// Cirno.
-        /// </summary>
-        [EnumAltName("CI")]
-        Cirno,
+    /// <summary>
+    /// Cirno.
+    /// </summary>
+    [EnumAltName("CI")]
+    Cirno,
 
-        /// <summary>
-        /// SHameimaru Aya.
-        /// </summary>
-        [EnumAltName("AY")]
-        Aya,
+    /// <summary>
+    /// SHameimaru Aya.
+    /// </summary>
+    [EnumAltName("AY")]
+    Aya,
 
-        /// <summary>
-        /// Kirisame Marisa.
-        /// </summary>
-        [EnumAltName("MR")]
-        Marisa,
+    /// <summary>
+    /// Kirisame Marisa.
+    /// </summary>
+    [EnumAltName("MR")]
+    Marisa,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

@@ -5,53 +5,52 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+/// <summary>
+/// Represents playable characters of MoF and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of MoF and total.
+    /// Hakurei Reimu (Homing type).
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu (Homing type).
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu (Forward focus type).
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu (Forward focus type).
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Hakurei Reimu (Sealing type).
-        /// </summary>
-        [EnumAltName("RC")]
-        ReimuC,
+    /// <summary>
+    /// Hakurei Reimu (Sealing type).
+    /// </summary>
+    [EnumAltName("RC")]
+    ReimuC,
 
-        /// <summary>
-        /// Kirisame Marisa (High-power type).
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Marisa (High-power type).
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa (Piercing type).
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
+    /// <summary>
+    /// Kirisame Marisa (Piercing type).
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 
-        /// <summary>
-        /// Kirisame Marisa (Magic-user type).
-        /// </summary>
-        [EnumAltName("MC")]
-        MarisaC,
+    /// <summary>
+    /// Kirisame Marisa (Magic-user type).
+    /// </summary>
+    [EnumAltName("MC")]
+    MarisaC,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

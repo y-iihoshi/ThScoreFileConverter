@@ -5,35 +5,34 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th175
+namespace ThScoreFileConverter.Models.Th175;
+
+/// <summary>
+/// Represents levels of Gouyoku Ibun and total.
+/// </summary>
+public enum LevelWithTotal
 {
     /// <summary>
-    /// Represents levels of Gouyoku Ibun and total.
+    /// Represents level Easy (may be reserved).
     /// </summary>
-    public enum LevelWithTotal
-    {
-        /// <summary>
-        /// Represents level Easy (may be reserved).
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Rush (may be reserved).
-        /// </summary>
-        [EnumAltName("R")]
-        Rush,
-    }
+    /// <summary>
+    /// Represents level Rush (may be reserved).
+    /// </summary>
+    [EnumAltName("R")]
+    Rush,
 }

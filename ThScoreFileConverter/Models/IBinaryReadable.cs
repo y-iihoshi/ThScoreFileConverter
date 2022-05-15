@@ -7,17 +7,16 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+/// <summary>
+/// Defines a method to read from a binary stream.
+/// </summary>
+public interface IBinaryReadable
 {
     /// <summary>
-    /// Defines a method to read from a binary stream.
+    /// Reads from a stream by using the specified <see cref="BinaryReader"/> instance.
     /// </summary>
-    public interface IBinaryReadable
-    {
-        /// <summary>
-        /// Reads from a stream by using the specified <see cref="BinaryReader"/> instance.
-        /// </summary>
-        /// <param name="reader">The instance to use.</param>
-        void ReadFrom(BinaryReader reader);
-    }
+    /// <param name="reader">The instance to use.</param>
+    void ReadFrom(BinaryReader reader);
 }

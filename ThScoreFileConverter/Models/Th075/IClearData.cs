@@ -9,26 +9,25 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+internal interface IClearData
 {
-    internal interface IClearData
-    {
-        IReadOnlyList<short> CardGotCount { get; }
+    IReadOnlyList<short> CardGotCount { get; }
 
-        IReadOnlyList<short> CardTrialCount { get; }
+    IReadOnlyList<short> CardTrialCount { get; }
 
-        IReadOnlyList<byte> CardTrulyGot { get; }
+    IReadOnlyList<byte> CardTrulyGot { get; }
 
-        int ClearCount { get; }
+    int ClearCount { get; }
 
-        IReadOnlyList<int> MaxBonuses { get; }
+    IReadOnlyList<int> MaxBonuses { get; }
 
-        int MaxCombo { get; }
+    int MaxCombo { get; }
 
-        int MaxDamage { get; }
+    int MaxDamage { get; }
 
-        IReadOnlyList<IHighScore> Ranking { get; }
+    IReadOnlyList<IHighScore> Ranking { get; }
 
-        int UseCount { get; }
-    }
+    int UseCount { get; }
 }

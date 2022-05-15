@@ -9,22 +9,21 @@
 
 using System.IO;
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+internal class CardForDeck : IBinaryReadable, ICardForDeck
 {
-    internal class CardForDeck : IBinaryReadable, ICardForDeck
+    public CardForDeck()
     {
-        public CardForDeck()
-        {
-        }
+    }
 
-        public int Id { get; private set; } // 0-based
+    public int Id { get; private set; } // 0-based
 
-        public int MaxNumber { get; private set; }
+    public int MaxNumber { get; private set; }
 
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.Id = reader.ReadInt32();
-            this.MaxNumber = reader.ReadInt32();
-        }
+    public void ReadFrom(BinaryReader reader)
+    {
+        this.Id = reader.ReadInt32();
+        this.MaxNumber = reader.ReadInt32();
     }
 }

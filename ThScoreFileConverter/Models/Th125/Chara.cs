@@ -5,23 +5,22 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th125
+namespace ThScoreFileConverter.Models.Th125;
+
+/// <summary>
+/// Represents playable characters of DS.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents playable characters of DS.
+    /// Shameimaru Aya.
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Shameimaru Aya.
-        /// </summary>
-        [EnumAltName("A")]
-        Aya,
+    [EnumAltName("A")]
+    Aya,
 
-        /// <summary>
-        /// Himekaidou Hatate.
-        /// </summary>
-        [EnumAltName("H")]
-        Hatate,
-    }
+    /// <summary>
+    /// Himekaidou Hatate.
+    /// </summary>
+    [EnumAltName("H")]
+    Hatate,
 }

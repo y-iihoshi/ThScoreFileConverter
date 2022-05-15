@@ -12,19 +12,31 @@ using System.Collections.Generic;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+internal class AllScoreData<
+    TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TScoreData, TStatus>
+    where TCharaWithTotal : struct, Enum
+    where TLevel : struct, Enum
+    where TLevelPractice : struct, Enum
+    where TLevelPracticeWithTotal : struct, Enum
+    where TStagePractice : struct, Enum
+    where TScoreData : Th10.IScoreData<StageProgress>
+    where TStatus : Th125.IStatus
 {
-    internal class AllScoreData<
-        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TScoreData, TStatus>
-        where TCharaWithTotal : struct, Enum
-        where TLevel : struct, Enum
-        where TLevelPractice : struct, Enum
-        where TLevelPracticeWithTotal : struct, Enum
-        where TStagePractice : struct, Enum
-        where TScoreData : Th10.IScoreData<StageProgress>
-        where TStatus : Th125.IStatus
+    private readonly Dictionary<
+        TCharaWithTotal,
+        IClearData<
+            TCharaWithTotal,
+            TLevel,
+            TLevelPractice,
+            TLevelPracticeWithTotal,
+            TStagePractice,
+            TScoreData>> clearData;
+
+    public AllScoreData()
     {
-        private readonly Dictionary<
+        this.clearData = new Dictionary<
             TCharaWithTotal,
             IClearData<
                 TCharaWithTotal,
@@ -32,55 +44,42 @@ namespace ThScoreFileConverter.Models.Th13
                 TLevelPractice,
                 TLevelPracticeWithTotal,
                 TStagePractice,
-                TScoreData>> clearData;
+                TScoreData>>(EnumHelper<TCharaWithTotal>.NumValues);
+    }
 
-        public AllScoreData()
-        {
-            this.clearData = new Dictionary<
-                TCharaWithTotal,
-                IClearData<
-                    TCharaWithTotal,
-                    TLevel,
-                    TLevelPractice,
-                    TLevelPracticeWithTotal,
-                    TStagePractice,
-                    TScoreData>>(EnumHelper<TCharaWithTotal>.NumValues);
-        }
+    public Th095.HeaderBase? Header { get; private set; }
 
-        public Th095.HeaderBase? Header { get; private set; }
-
-        public IReadOnlyDictionary<
+    public IReadOnlyDictionary<
+        TCharaWithTotal,
+        IClearData<
             TCharaWithTotal,
-            IClearData<
-                TCharaWithTotal,
-                TLevel,
-                TLevelPractice,
-                TLevelPracticeWithTotal,
-                TStagePractice,
-                TScoreData>> ClearData => this.clearData;
+            TLevel,
+            TLevelPractice,
+            TLevelPracticeWithTotal,
+            TStagePractice,
+            TScoreData>> ClearData => this.clearData;
 
-        public TStatus? Status { get; private set; }
+    public TStatus? Status { get; private set; }
 
-        public void Set(Th095.HeaderBase header)
-        {
-            this.Header = header;
-        }
+    public void Set(Th095.HeaderBase header)
+    {
+        this.Header = header;
+    }
 
-        public void Set(
-            IClearData<
-                TCharaWithTotal,
-                TLevel,
-                TLevelPractice,
-                TLevelPracticeWithTotal,
-                TStagePractice,
-                TScoreData> data)
-        {
-            _ = this.clearData.TryAdd(data.Chara, data);
-        }
+    public void Set(
+        IClearData<
+            TCharaWithTotal,
+            TLevel,
+            TLevelPractice,
+            TLevelPracticeWithTotal,
+            TStagePractice,
+            TScoreData> data)
+    {
+        _ = this.clearData.TryAdd(data.Chara, data);
+    }
 
-        public void Set(TStatus status)
-        {
-            this.Status = status;
-        }
+    public void Set(TStatus status)
+    {
+        this.Status = status;
     }
 }

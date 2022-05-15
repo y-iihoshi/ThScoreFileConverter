@@ -5,35 +5,34 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+/// <summary>
+/// Represents levels of SWR.
+/// </summary>
+public enum Level
 {
     /// <summary>
-    /// Represents levels of SWR.
+    /// Represents level Easy.
     /// </summary>
-    public enum Level
-    {
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        [EnumAltName("L")]
-        Lunatic,
-    }
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    [EnumAltName("L")]
+    Lunatic,
 }

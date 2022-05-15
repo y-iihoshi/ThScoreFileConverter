@@ -4,85 +4,84 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Commands;
 using ThScoreFileConverterTests.UnitTesting;
 
-namespace ThScoreFileConverterTests.Commands
+namespace ThScoreFileConverterTests.Commands;
+
+[TestClass]
+public class CloseWindowCommandTests
 {
-    [TestClass]
-    public class CloseWindowCommandTests
+    [TestMethod]
+    public void InstanceTest()
     {
-        [TestMethod]
-        public void InstanceTest()
+        var instance = CloseWindowCommand.Instance;
+        Assert.IsNotNull(instance);
+    }
+
+    [STATestMethod]
+    public void CanExecuteTest()
+    {
+        var instance = CloseWindowCommand.Instance;
+        var window = new Window();
+        Assert.IsTrue(instance.CanExecute(window));
+    }
+
+    [TestMethod]
+    public void CanExecuteTestNull()
+    {
+        var instance = CloseWindowCommand.Instance;
+        Assert.IsFalse(instance.CanExecute(null));
+    }
+
+    [TestMethod]
+    public void CanExecuteTestInvalid()
+    {
+        var instance = CloseWindowCommand.Instance;
+        Assert.IsFalse(instance.CanExecute(5));
+    }
+
+    [STATestMethod]
+    public void ExecuteTest()
+    {
+        var instance = CloseWindowCommand.Instance;
+        var window = new Window();
+        var invoked = false;
+
+        void OnClosed(object? sender, EventArgs e)
         {
-            var instance = CloseWindowCommand.Instance;
-            Assert.IsNotNull(instance);
+            invoked = true;
         }
 
-        [STATestMethod]
-        public void CanExecuteTest()
-        {
-            var instance = CloseWindowCommand.Instance;
-            var window = new Window();
-            Assert.IsTrue(instance.CanExecute(window));
-        }
+        window.Closed += OnClosed;
+        instance.Execute(window);
+        Assert.IsTrue(invoked);
 
-        [TestMethod]
-        public void CanExecuteTestNull()
-        {
-            var instance = CloseWindowCommand.Instance;
-            Assert.IsFalse(instance.CanExecute(null));
-        }
+        invoked = false;
+        window.Closed -= OnClosed;
+        instance.Execute(window);
+        Assert.IsFalse(invoked);
+    }
 
-        [TestMethod]
-        public void CanExecuteTestInvalid()
-        {
-            var instance = CloseWindowCommand.Instance;
-            Assert.IsFalse(instance.CanExecute(5));
-        }
+    [TestMethod]
+    public void ExecuteTestNull()
+    {
+        var instance = CloseWindowCommand.Instance;
+        instance.Execute(null);
+    }
 
-        [STATestMethod]
-        public void ExecuteTest()
-        {
-            var instance = CloseWindowCommand.Instance;
-            var window = new Window();
-            var invoked = false;
+    [TestMethod]
+    public void ExecuteTestInvalid()
+    {
+        var instance = CloseWindowCommand.Instance;
+        instance.Execute(5);
+    }
 
-            void OnClosed(object? sender, EventArgs e)
-            {
-                invoked = true;
-            }
+    [STATestMethod]
+    public void CanExecuteChangedTest()
+    {
+        var instance = CloseWindowCommand.Instance;
+        instance.CanExecuteChanged += (sender, e) => Assert.Fail(TestUtils.Unreachable);
 
-            window.Closed += OnClosed;
-            instance.Execute(window);
-            Assert.IsTrue(invoked);
-
-            invoked = false;
-            window.Closed -= OnClosed;
-            instance.Execute(window);
-            Assert.IsFalse(invoked);
-        }
-
-        [TestMethod]
-        public void ExecuteTestNull()
-        {
-            var instance = CloseWindowCommand.Instance;
-            instance.Execute(null);
-        }
-
-        [TestMethod]
-        public void ExecuteTestInvalid()
-        {
-            var instance = CloseWindowCommand.Instance;
-            instance.Execute(5);
-        }
-
-        [STATestMethod]
-        public void CanExecuteChangedTest()
-        {
-            var instance = CloseWindowCommand.Instance;
-            instance.CanExecuteChanged += (sender, e) => Assert.Fail(TestUtils.Unreachable);
-
-            instance.Execute(null);
-            instance.Execute(new Window());
-            instance.Execute(5);
-        }
+        instance.Execute(null);
+        instance.Execute(new Window());
+        instance.Execute(5);
     }
 }

@@ -7,10 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th16
+namespace ThScoreFileConverter.Models.Th16;
+
+internal interface IScoreData : Th10.IScoreData<Th13.StageProgress>
 {
-    internal interface IScoreData : Th10.IScoreData<Th13.StageProgress>
-    {
-        Season Season { get; }
-    }
+    Season Season { get; }
 }

@@ -9,14 +9,13 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th15
+namespace ThScoreFileConverter.Models.Th15;
+
+internal interface IClearData : Th095.IChapter
 {
-    internal interface IClearData : Th095.IChapter
-    {
-        CharaWithTotal Chara { get; }
+    CharaWithTotal Chara { get; }
 
-        IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
+    IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-        IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
-    }
+    IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
 }

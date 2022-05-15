@@ -5,35 +5,34 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th145
+namespace ThScoreFileConverter.Models.Th145;
+
+/// <summary>
+/// Represents levels of ULiL.
+/// </summary>
+public enum Level
 {
     /// <summary>
-    /// Represents levels of ULiL.
+    /// Represents level Easy.
     /// </summary>
-    public enum Level
-    {
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        [EnumAltName("L")]
-        Lunatic,
-    }
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    [EnumAltName("L")]
+    Lunatic,
 }

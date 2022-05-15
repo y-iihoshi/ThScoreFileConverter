@@ -16,23 +16,22 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 
-namespace ThScoreFileConverter.Models.Th16
+namespace ThScoreFileConverter.Models.Th16;
+
+// %T16CHARA[xx][y]
+internal class CharaReplacer : Th13.CharaReplacerBase<
+    CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
 {
-    // %T16CHARA[xx][y]
-    internal class CharaReplacer : Th13.CharaReplacerBase<
-        CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    public CharaReplacer(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaWithTotalParser,
+              Definitions.IsTotal,
+              Th14.Definitions.IsToBeSummed,
+              static centiseconds => new Time(centiseconds * 10, false),
+              clearDataDictionary,
+              formatter)
     {
-        public CharaReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.CharaWithTotalParser,
-                  Definitions.IsTotal,
-                  Th14.Definitions.IsToBeSummed,
-                  static centiseconds => new Time(centiseconds * 10, false),
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

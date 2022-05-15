@@ -13,168 +13,167 @@ using System.Collections.Immutable;
 using System.IO;
 using ThScoreFileConverter.Squirrel;
 
-namespace ThScoreFileConverter.Models.Th155
+namespace ThScoreFileConverter.Models.Th155;
+
+internal class AllScoreData : IBinaryReadable
 {
-    internal class AllScoreData : IBinaryReadable
+    private SQTable allData;
+
+    public AllScoreData()
     {
-        private SQTable allData;
+        this.allData = new SQTable();
+        this.StoryDictionary = ImmutableDictionary<StoryChara, Story>.Empty;
+        this.CharacterDictionary = ImmutableDictionary<string, int>.Empty;
+        this.BgmDictionary = ImmutableDictionary<int, bool>.Empty;
+        this.EndingDictionary = ImmutableDictionary<string, int>.Empty;
+        this.StageDictionary = ImmutableDictionary<int, int>.Empty;
+    }
 
-        public AllScoreData()
+    public IReadOnlyDictionary<StoryChara, Story> StoryDictionary { get; private set; }
+
+    public IReadOnlyDictionary<string, int> CharacterDictionary { get; private set; }
+
+    public IReadOnlyDictionary<int, bool> BgmDictionary { get; private set; }
+
+    public IReadOnlyDictionary<string, int> EndingDictionary { get; private set; }
+
+    public IReadOnlyDictionary<int, int> StageDictionary { get; private set; }
+
+    public int Version { get; private set; }
+
+    public void ReadFrom(BinaryReader reader)
+    {
+        this.allData = SQTable.Create(reader, true);
+
+        this.ParseStoryDictionary();
+        this.ParseCharacterDictionary();
+        this.ParseBgmDictionary();
+        this.ParseEndingDictionary();
+        this.ParseStageDictionary();
+        this.ParseVersion();
+    }
+
+    private static Dictionary<TKey, TValue> GetDictionary<TKey, TValue>(
+        SQTable table,
+        string key,
+        Func<SQObject, bool> keyPredicate,
+        Func<SQObject, bool> valuePredicate,
+        Func<SQObject, TKey> keyConverter,
+        Func<SQObject, TValue> valueConverter)
+        where TKey : notnull
+    {
+        return table.Value.TryGetValue(new SQString(key), out var value) && (value is SQTable valueTable)
+            ? valueTable.ToDictionary(keyPredicate, valuePredicate, keyConverter, valueConverter)
+            : new Dictionary<TKey, TValue>();
+    }
+
+    private static StoryChara? ParseStoryChara(SQObject obj)
+    {
+        if (obj is SQString str)
         {
-            this.allData = new SQTable();
-            this.StoryDictionary = ImmutableDictionary<StoryChara, Story>.Empty;
-            this.CharacterDictionary = ImmutableDictionary<string, int>.Empty;
-            this.BgmDictionary = ImmutableDictionary<int, bool>.Empty;
-            this.EndingDictionary = ImmutableDictionary<string, int>.Empty;
-            this.StageDictionary = ImmutableDictionary<int, int>.Empty;
-        }
-
-        public IReadOnlyDictionary<StoryChara, Story> StoryDictionary { get; private set; }
-
-        public IReadOnlyDictionary<string, int> CharacterDictionary { get; private set; }
-
-        public IReadOnlyDictionary<int, bool> BgmDictionary { get; private set; }
-
-        public IReadOnlyDictionary<string, int> EndingDictionary { get; private set; }
-
-        public IReadOnlyDictionary<int, int> StageDictionary { get; private set; }
-
-        public int Version { get; private set; }
-
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.allData = SQTable.Create(reader, true);
-
-            this.ParseStoryDictionary();
-            this.ParseCharacterDictionary();
-            this.ParseBgmDictionary();
-            this.ParseEndingDictionary();
-            this.ParseStageDictionary();
-            this.ParseVersion();
-        }
-
-        private static Dictionary<TKey, TValue> GetDictionary<TKey, TValue>(
-            SQTable table,
-            string key,
-            Func<SQObject, bool> keyPredicate,
-            Func<SQObject, bool> valuePredicate,
-            Func<SQObject, TKey> keyConverter,
-            Func<SQObject, TValue> valueConverter)
-            where TKey : notnull
-        {
-            return table.Value.TryGetValue(new SQString(key), out var value) && (value is SQTable valueTable)
-                ? valueTable.ToDictionary(keyPredicate, valuePredicate, keyConverter, valueConverter)
-                : new Dictionary<TKey, TValue>();
-        }
-
-        private static StoryChara? ParseStoryChara(SQObject obj)
-        {
-            if (obj is SQString str)
+            var chara = str.Value switch
             {
-                var chara = str.Value switch
-                {
-                    "reimu"   => StoryChara.ReimuKasen,
-                    "marisa"  => StoryChara.MarisaKoishi,
-                    "nitori"  => StoryChara.NitoriKokoro,
-                    "usami"   => StoryChara.SumirekoDoremy,
-                    "tenshi"  => StoryChara.TenshiShinmyoumaru,
-                    "miko"    => StoryChara.MikoByakuren,
-                    "yukari"  => StoryChara.YukariReimu,
-                    "mamizou" => StoryChara.MamizouMokou,
-                    "udonge"  => StoryChara.ReisenDoremy,
-                    "futo"    => StoryChara.FutoIchirin,
-                    "jyoon"   => StoryChara.JoonShion,
-                    _         => (StoryChara?)null,
-                };
-                return chara;
-            }
-            else
+                "reimu"   => StoryChara.ReimuKasen,
+                "marisa"  => StoryChara.MarisaKoishi,
+                "nitori"  => StoryChara.NitoriKokoro,
+                "usami"   => StoryChara.SumirekoDoremy,
+                "tenshi"  => StoryChara.TenshiShinmyoumaru,
+                "miko"    => StoryChara.MikoByakuren,
+                "yukari"  => StoryChara.YukariReimu,
+                "mamizou" => StoryChara.MamizouMokou,
+                "udonge"  => StoryChara.ReisenDoremy,
+                "futo"    => StoryChara.FutoIchirin,
+                "jyoon"   => StoryChara.JoonShion,
+                _         => (StoryChara?)null,
+            };
+            return chara;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private static Story ParseStory(SQObject obj)
+    {
+        return obj is SQTable dict
+            ? new Story
             {
-                return null;
+                Stage = dict.GetValueOrDefault<int>("stage"),
+                Ed = (Levels)dict.GetValueOrDefault<int>("ed"),
+                Available = dict.GetValueOrDefault<bool>("available"),
+                OverDrive = dict.GetValueOrDefault<int>("overdrive"),
+                StageOverDrive = dict.GetValueOrDefault<int>("stage_overdrive"),
             }
-        }
+            : default;
+    }
 
-        private static Story ParseStory(SQObject obj)
-        {
-            return obj is SQTable dict
-                ? new Story
-                {
-                    Stage = dict.GetValueOrDefault<int>("stage"),
-                    Ed = (Levels)dict.GetValueOrDefault<int>("ed"),
-                    Available = dict.GetValueOrDefault<bool>("available"),
-                    OverDrive = dict.GetValueOrDefault<int>("overdrive"),
-                    StageOverDrive = dict.GetValueOrDefault<int>("stage_overdrive"),
-                }
-                : default;
-        }
+    private void ParseStoryDictionary()
+    {
+        this.StoryDictionary = GetDictionary(
+            this.allData,
+            "story",
+            key => ParseStoryChara(key) is not null,
+            value => true,
+            key => ParseStoryChara(key)!.Value,
+            value => ParseStory(value));
+    }
 
-        private void ParseStoryDictionary()
-        {
-            this.StoryDictionary = GetDictionary(
-                this.allData,
-                "story",
-                key => ParseStoryChara(key) is not null,
-                value => true,
-                key => ParseStoryChara(key)!.Value,
-                value => ParseStory(value));
-        }
+    private void ParseCharacterDictionary()
+    {
+        this.CharacterDictionary = GetDictionary(
+            this.allData,
+            "character",
+            key => key is SQString,
+            value => value is SQInteger,
+            key => (string)(SQString)key,
+            value => (int)(SQInteger)value);
+    }
 
-        private void ParseCharacterDictionary()
-        {
-            this.CharacterDictionary = GetDictionary(
-                this.allData,
-                "character",
-                key => key is SQString,
-                value => value is SQInteger,
-                key => (string)(SQString)key,
-                value => (int)(SQInteger)value);
-        }
+    private void ParseBgmDictionary()
+    {
+        this.BgmDictionary = GetDictionary(
+            this.allData,
+            "bgm",
+            key => key is SQInteger,
+            value => value is SQBool,
+            key => (int)(SQInteger)key,
+            value => (bool)(SQBool)value);
+    }
 
-        private void ParseBgmDictionary()
-        {
-            this.BgmDictionary = GetDictionary(
-                this.allData,
-                "bgm",
-                key => key is SQInteger,
-                value => value is SQBool,
-                key => (int)(SQInteger)key,
-                value => (bool)(SQBool)value);
-        }
+    private void ParseEndingDictionary()
+    {
+        this.EndingDictionary = GetDictionary(
+            this.allData,
+            "ed",
+            key => key is SQString,
+            value => value is SQInteger,
+            key => (string)(SQString)key,
+            value => (int)(SQInteger)value);
+    }
 
-        private void ParseEndingDictionary()
-        {
-            this.EndingDictionary = GetDictionary(
-                this.allData,
-                "ed",
-                key => key is SQString,
-                value => value is SQInteger,
-                key => (string)(SQString)key,
-                value => (int)(SQInteger)value);
-        }
+    private void ParseStageDictionary()
+    {
+        this.StageDictionary = GetDictionary(
+            this.allData,
+            "stage",
+            key => key is SQInteger,
+            value => value is SQInteger,
+            key => (int)(SQInteger)key,
+            value => (int)(SQInteger)value);
+    }
 
-        private void ParseStageDictionary()
-        {
-            this.StageDictionary = GetDictionary(
-                this.allData,
-                "stage",
-                key => key is SQInteger,
-                value => value is SQInteger,
-                key => (int)(SQInteger)key,
-                value => (int)(SQInteger)value);
-        }
+    private void ParseVersion()
+    {
+        this.Version = this.allData.GetValueOrDefault<int>("version");
+    }
 
-        private void ParseVersion()
-        {
-            this.Version = this.allData.GetValueOrDefault<int>("version");
-        }
-
-        public struct Story
-        {
-            public int Stage;
-            public Levels Ed;
-            public bool Available;
-            public int OverDrive;
-            public int StageOverDrive;
-        }
+    public struct Story
+    {
+        public int Stage;
+        public Levels Ed;
+        public bool Available;
+        public int OverDrive;
+        public int StageOverDrive;
     }
 }

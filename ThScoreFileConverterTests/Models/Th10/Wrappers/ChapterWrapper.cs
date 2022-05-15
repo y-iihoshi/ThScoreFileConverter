@@ -1,28 +1,27 @@
 ﻿using System.Collections.Generic;
 using ThScoreFileConverter.Models.Th10;
 
-namespace ThScoreFileConverterTests.Models.Th10.Wrappers
+namespace ThScoreFileConverterTests.Models.Th10.Wrappers;
+
+/// <summary>
+/// To test protected members of <see cref="Chapter"/>.
+/// </summary>
+internal sealed class ChapterWrapper : Chapter
 {
-    /// <summary>
-    /// To test protected members of <see cref="Chapter"/>.
-    /// </summary>
-    internal sealed class ChapterWrapper : Chapter
+    public ChapterWrapper()
+        : base()
     {
-        public ChapterWrapper()
-            : base()
-        {
-        }
-
-        public ChapterWrapper(Chapter chapter)
-            : base(chapter)
-        {
-        }
-
-        public ChapterWrapper(Chapter chapter, string expectedSignature, ushort expectedVersion, int expectedSize)
-            : base(chapter, expectedSignature, expectedVersion, expectedSize)
-        {
-        }
-
-        public new IReadOnlyCollection<byte> Data => base.Data;
     }
+
+    public ChapterWrapper(Chapter chapter)
+        : base(chapter)
+    {
+    }
+
+    public ChapterWrapper(Chapter chapter, string expectedSignature, ushort expectedVersion, int expectedSize)
+        : base(chapter, expectedSignature, expectedVersion, expectedSize)
+    {
+    }
+
+    public new IReadOnlyCollection<byte> Data => base.Data;
 }

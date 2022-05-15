@@ -13,63 +13,62 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal class ClearDataBase<TCharaWithTotal, TScoreData>
+    : Chapter, IClearData<TCharaWithTotal>
+    where TCharaWithTotal : struct, Enum
+    where TScoreData : IBinaryReadable, IScoreData<StageProgress>, new()
 {
-    internal class ClearDataBase<TCharaWithTotal, TScoreData>
-        : Chapter, IClearData<TCharaWithTotal>
-        where TCharaWithTotal : struct, Enum
-        where TScoreData : IBinaryReadable, IScoreData<StageProgress>, new()
+    public const string ValidSignature = "CR";
+
+    protected ClearDataBase(Chapter chapter, ushort validVersion, int validSize, int numCards)
+        : base(chapter, ValidSignature, validVersion, validSize)
     {
-        public const string ValidSignature = "CR";
+        var levels = EnumHelper<Level>.Enumerable;
+        var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
+        var stages = EnumHelper<Stage>.Enumerable;
+        var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
 
-        protected ClearDataBase(Chapter chapter, ushort validVersion, int validSize, int numCards)
-            : base(chapter, ValidSignature, validVersion, validSize)
-        {
-            var levels = EnumHelper<Level>.Enumerable;
-            var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
-            var stages = EnumHelper<Stage>.Enumerable;
-            var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
+        this.Chara = EnumHelper.To<TCharaWithTotal>(reader.ReadInt32());
 
-            this.Chara = EnumHelper.To<TCharaWithTotal>(reader.ReadInt32());
+        this.Rankings = levels.ToDictionary(
+            level => level,
+            _ => (IReadOnlyList<IScoreData<StageProgress>>)Enumerable.Range(0, 10)
+                .Select(_ => BinaryReadableHelper.Create<TScoreData>(reader)).ToList());
 
-            this.Rankings = levels.ToDictionary(
-                level => level,
-                _ => (IReadOnlyList<IScoreData<StageProgress>>)Enumerable.Range(0, 10)
-                    .Select(_ => BinaryReadableHelper.Create<TScoreData>(reader)).ToList());
+        this.TotalPlayCount = reader.ReadInt32();
+        this.PlayTime = reader.ReadInt32();
+        this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
 
-            this.TotalPlayCount = reader.ReadInt32();
-            this.PlayTime = reader.ReadInt32();
-            this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
+        this.Practices = levelsExceptExtra
+            .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
+            .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Practice>(reader) as IPractice);
 
-            this.Practices = levelsExceptExtra
-                .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Practice>(reader) as IPractice);
+        this.Cards = Enumerable.Range(0, numCards)
+            .Select(_ => BinaryReadableHelper.Create<SpellCard>(reader) as ISpellCard<Level>)
+            .ToDictionary(card => card.Id);
+    }
 
-            this.Cards = Enumerable.Range(0, numCards)
-                .Select(_ => BinaryReadableHelper.Create<SpellCard>(reader) as ISpellCard<Level>)
-                .ToDictionary(card => card.Id);
-        }
+    public TCharaWithTotal Chara { get; }
 
-        public TCharaWithTotal Chara { get; }
+    public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
 
-        public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
+    public int TotalPlayCount { get; }
 
-        public int TotalPlayCount { get; }
+    public int PlayTime { get; }    // = seconds * 60fps
 
-        public int PlayTime { get; }    // = seconds * 60fps
+    public IReadOnlyDictionary<Level, int> ClearCounts { get; }
 
-        public IReadOnlyDictionary<Level, int> ClearCounts { get; }
+    public IReadOnlyDictionary<(Level Level, Stage Stage), IPractice> Practices { get; }
 
-        public IReadOnlyDictionary<(Level Level, Stage Stage), IPractice> Practices { get; }
+    public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
 
-        public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
-
-        protected static bool CanInitialize(Chapter chapter)
-        {
-            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal);
-        }
+    protected static bool CanInitialize(Chapter chapter)
+    {
+        return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal);
     }
 }

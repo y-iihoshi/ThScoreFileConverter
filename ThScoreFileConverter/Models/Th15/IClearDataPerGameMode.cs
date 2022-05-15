@@ -9,20 +9,19 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th15
+namespace ThScoreFileConverter.Models.Th15;
+
+internal interface IClearDataPerGameMode
 {
-    internal interface IClearDataPerGameMode
-    {
-        IReadOnlyDictionary<int, Th13.ISpellCard<Level>> Cards { get; }
+    IReadOnlyDictionary<int, Th13.ISpellCard<Level>> Cards { get; }
 
-        IReadOnlyDictionary<LevelWithTotal, int> ClearCounts { get; }
+    IReadOnlyDictionary<LevelWithTotal, int> ClearCounts { get; }
 
-        IReadOnlyDictionary<LevelWithTotal, int> ClearFlags { get; }
+    IReadOnlyDictionary<LevelWithTotal, int> ClearFlags { get; }
 
-        int PlayTime { get; }
+    int PlayTime { get; }
 
-        IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
+    IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
 
-        int TotalPlayCount { get; }
-    }
+    int TotalPlayCount { get; }
 }

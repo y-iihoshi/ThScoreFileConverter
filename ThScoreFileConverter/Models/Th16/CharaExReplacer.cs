@@ -9,32 +9,31 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th16
+namespace ThScoreFileConverter.Models.Th16;
+
+// %T16CHARAEX[x][yy][z]
+internal class CharaExReplacer : Th13.CharaExReplacerBase<
+    CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
 {
-    // %T16CHARAEX[x][yy][z]
-    internal class CharaExReplacer : Th13.CharaExReplacerBase<
-        CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    public CharaExReplacer(
+        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+            CharaWithTotal,
+            Level,
+            Level,
+            Th14.LevelPracticeWithTotal,
+            Th14.StagePractice,
+            IScoreData>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.LevelWithTotalParser,
+              Parsers.CharaWithTotalParser,
+              Models.Definitions.IsTotal,
+              Definitions.IsTotal,
+              Th14.Definitions.IsToBeSummed,
+              static centiseconds => new Time(centiseconds * 10, false),
+              clearDataDictionary,
+              formatter)
     {
-        public CharaExReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-                CharaWithTotal,
-                Level,
-                Level,
-                Th14.LevelPracticeWithTotal,
-                Th14.StagePractice,
-                IScoreData>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.LevelWithTotalParser,
-                  Parsers.CharaWithTotalParser,
-                  Models.Definitions.IsTotal,
-                  Definitions.IsTotal,
-                  Th14.Definitions.IsToBeSummed,
-                  static centiseconds => new Time(centiseconds * 10, false),
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

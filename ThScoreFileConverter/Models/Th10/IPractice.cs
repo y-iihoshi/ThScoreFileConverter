@@ -7,14 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal interface IPractice
 {
-    internal interface IPractice
-    {
-        byte Cleared { get; }
+    byte Cleared { get; }
 
-        uint Score { get; }
+    uint Score { get; }
 
-        byte Unlocked { get; }
-    }
+    byte Unlocked { get; }
 }

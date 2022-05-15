@@ -12,61 +12,60 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+// %T08CLEAR[x][yy]
+internal class ClearReplacer : IStringReplaceable
 {
-    // %T08CLEAR[x][yy]
-    internal class ClearReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public ClearReplacer(
+        IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearData)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ClearReplacer(
-            IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearData)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
-                var key = (chara, level);
-                if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
+            var key = (chara, level);
+            if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
+            {
+                var stageProgress = ranking.Max(rank => rank.StageProgress);
+                if ((stageProgress == StageProgress.FourUncanny) || (stageProgress == StageProgress.FourPowerful))
                 {
-                    var stageProgress = ranking.Max(rank => rank.StageProgress);
-                    if ((stageProgress == StageProgress.FourUncanny) || (stageProgress == StageProgress.FourPowerful))
-                    {
-                        return "Stage 4";
-                    }
-                    else if (stageProgress == StageProgress.Extra)
-                    {
-                        return "Not Clear";
-                    }
-                    else if (stageProgress == StageProgress.Clear)
-                    {
-                        if ((level != Level.Extra) &&
-                            ((clearData[(CharaWithTotal)chara].StoryFlags[level]
-                                & PlayableStages.Stage6B) != PlayableStages.Stage6B))
-                            return "FinalA Clear";
-                        else
-                            return stageProgress.ToShortName();
-                    }
+                    return "Stage 4";
+                }
+                else if (stageProgress == StageProgress.Extra)
+                {
+                    return "Not Clear";
+                }
+                else if (stageProgress == StageProgress.Clear)
+                {
+                    if ((level != Level.Extra) &&
+                        ((clearData[(CharaWithTotal)chara].StoryFlags[level]
+                            & PlayableStages.Stage6B) != PlayableStages.Stage6B))
+                        return "FinalA Clear";
                     else
-                    {
                         return stageProgress.ToShortName();
-                    }
                 }
                 else
                 {
-                    return "-------";
+                    return stageProgress.ToShortName();
                 }
-            });
-        }
+            }
+            else
+            {
+                return "-------";
+            }
+        });
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

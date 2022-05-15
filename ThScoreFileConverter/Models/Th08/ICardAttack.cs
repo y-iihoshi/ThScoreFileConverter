@@ -9,24 +9,23 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal interface ICardAttack : Th06.IChapter
 {
-    internal interface ICardAttack : Th06.IChapter
-    {
-        short CardId { get; }
+    short CardId { get; }
 
-        IEnumerable<byte> CardName { get; }
+    IEnumerable<byte> CardName { get; }
 
-        IEnumerable<byte> Comment { get; }
+    IEnumerable<byte> Comment { get; }
 
-        IEnumerable<byte> EnemyName { get; }
+    IEnumerable<byte> EnemyName { get; }
 
-        bool HasTried { get; }
+    bool HasTried { get; }
 
-        LevelPracticeWithTotal Level { get; }
+    LevelPracticeWithTotal Level { get; }
 
-        ICardAttackCareer PracticeCareer { get; }
+    ICardAttackCareer PracticeCareer { get; }
 
-        ICardAttackCareer StoryCareer { get; }
-    }
+    ICardAttackCareer StoryCareer { get; }
 }

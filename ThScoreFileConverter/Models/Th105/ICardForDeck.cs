@@ -7,12 +7,11 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th105
-{
-    internal interface ICardForDeck
-    {
-        int Id { get; }
+namespace ThScoreFileConverter.Models.Th105;
 
-        int MaxNumber { get; }
-    }
+internal interface ICardForDeck
+{
+    int Id { get; }
+
+    int MaxNumber { get; }
 }

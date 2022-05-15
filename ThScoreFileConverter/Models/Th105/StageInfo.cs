@@ -11,22 +11,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+internal class StageInfo<TChara>
+    where TChara : struct, Enum
 {
-    internal class StageInfo<TChara>
-        where TChara : struct, Enum
+    public StageInfo(Stage stage, TChara enemy, IEnumerable<int> cardIds)
     {
-        public StageInfo(Stage stage, TChara enemy, IEnumerable<int> cardIds)
-        {
-            this.Stage = stage;
-            this.Enemy = enemy;
-            this.CardIds = cardIds.ToList();
-        }
-
-        public Stage Stage { get; }
-
-        public TChara Enemy { get; }
-
-        public IEnumerable<int> CardIds { get; }    // 0-based
+        this.Stage = stage;
+        this.Enemy = enemy;
+        this.CardIds = cardIds.ToList();
     }
+
+    public Stage Stage { get; }
+
+    public TChara Enemy { get; }
+
+    public IEnumerable<int> CardIds { get; }    // 0-based
 }

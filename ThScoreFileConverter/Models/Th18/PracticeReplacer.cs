@@ -16,31 +16,30 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Stage,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
-namespace ThScoreFileConverter.Models.Th18
-{
-    // %T18PRAC[x][yy][z]
-    internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
-    {
-        public PracticeReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.LevelParser,
-                  Parsers.CharaParser,
-                  Parsers.StageParser,
-                  Models.Definitions.CanPractice,
-                  Models.Definitions.CanPractice,
-                  (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
-                  formatter)
-        {
-        }
+namespace ThScoreFileConverter.Models.Th18;
 
-        private static Th10.IPractice? GetPractice(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, Level level, Chara chara, Stage stage)
-        {
-            return clearDataDictionary.TryGetValue((CharaWithTotal)chara, out var clearData)
-                && clearData.Practices.TryGetValue((level, stage), out var practice)
-                ? practice : null;
-        }
+// %T18PRAC[x][yy][z]
+internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
+{
+    public PracticeReplacer(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.LevelParser,
+              Parsers.CharaParser,
+              Parsers.StageParser,
+              Models.Definitions.CanPractice,
+              Models.Definitions.CanPractice,
+              (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
+              formatter)
+    {
+    }
+
+    private static Th10.IPractice? GetPractice(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, Level level, Chara chara, Stage stage)
+    {
+        return clearDataDictionary.TryGetValue((CharaWithTotal)chara, out var clearData)
+            && clearData.Practices.TryGetValue((level, stage), out var practice)
+            ? practice : null;
     }
 }

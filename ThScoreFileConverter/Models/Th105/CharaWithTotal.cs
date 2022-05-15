@@ -5,107 +5,106 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+/// <summary>
+/// Represents playable characters of SWR and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of SWR and total.
+    /// Hakurei Reimu.
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu.
-        /// </summary>
-        [EnumAltName("RM")]
-        Reimu,
+    [EnumAltName("RM")]
+    Reimu,
 
-        /// <summary>
-        /// Kirisame Marisa.
-        /// </summary>
-        [EnumAltName("MR")]
-        Marisa,
+    /// <summary>
+    /// Kirisame Marisa.
+    /// </summary>
+    [EnumAltName("MR")]
+    Marisa,
 
-        /// <summary>
-        /// Izayoi Sakuya.
-        /// </summary>
-        [EnumAltName("SK")]
-        Sakuya,
+    /// <summary>
+    /// Izayoi Sakuya.
+    /// </summary>
+    [EnumAltName("SK")]
+    Sakuya,
 
-        /// <summary>
-        /// Alice Margatroid.
-        /// </summary>
-        [EnumAltName("AL")]
-        Alice,
+    /// <summary>
+    /// Alice Margatroid.
+    /// </summary>
+    [EnumAltName("AL")]
+    Alice,
 
-        /// <summary>
-        /// Patchouli Knowledge.
-        /// </summary>
-        [EnumAltName("PC")]
-        Patchouli,
+    /// <summary>
+    /// Patchouli Knowledge.
+    /// </summary>
+    [EnumAltName("PC")]
+    Patchouli,
 
-        /// <summary>
-        /// Konpaku Youmu.
-        /// </summary>
-        [EnumAltName("YM")]
-        Youmu,
+    /// <summary>
+    /// Konpaku Youmu.
+    /// </summary>
+    [EnumAltName("YM")]
+    Youmu,
 
-        /// <summary>
-        /// Remilia Scarlet.
-        /// </summary>
-        [EnumAltName("RL")]
-        Remilia,
+    /// <summary>
+    /// Remilia Scarlet.
+    /// </summary>
+    [EnumAltName("RL")]
+    Remilia,
 
-        /// <summary>
-        /// Saigyouji Yuyuko.
-        /// </summary>
-        [EnumAltName("YU")]
-        Yuyuko,
+    /// <summary>
+    /// Saigyouji Yuyuko.
+    /// </summary>
+    [EnumAltName("YU")]
+    Yuyuko,
 
-        /// <summary>
-        /// Yakumo Yukari.
-        /// </summary>
-        [EnumAltName("YK")]
-        Yukari,
+    /// <summary>
+    /// Yakumo Yukari.
+    /// </summary>
+    [EnumAltName("YK")]
+    Yukari,
 
-        /// <summary>
-        /// Ibuki Suika.
-        /// </summary>
-        [EnumAltName("SU")]
-        Suika,
+    /// <summary>
+    /// Ibuki Suika.
+    /// </summary>
+    [EnumAltName("SU")]
+    Suika,
 
-        /// <summary>
-        /// Reisen Udongein Inaba.
-        /// </summary>
-        [EnumAltName("RS")]
-        Reisen,
+    /// <summary>
+    /// Reisen Udongein Inaba.
+    /// </summary>
+    [EnumAltName("RS")]
+    Reisen,
 
-        /// <summary>
-        /// Shameimaru Aya.
-        /// </summary>
-        [EnumAltName("AY")]
-        Aya,
+    /// <summary>
+    /// Shameimaru Aya.
+    /// </summary>
+    [EnumAltName("AY")]
+    Aya,
 
-        /// <summary>
-        /// Onozuka Komachi.
-        /// </summary>
-        [EnumAltName("KM")]
-        Komachi,
+    /// <summary>
+    /// Onozuka Komachi.
+    /// </summary>
+    [EnumAltName("KM")]
+    Komachi,
 
-        /// <summary>
-        /// Nagae Iku.
-        /// </summary>
-        [EnumAltName("IK")]
-        Iku,
+    /// <summary>
+    /// Nagae Iku.
+    /// </summary>
+    [EnumAltName("IK")]
+    Iku,
 
-        /// <summary>
-        /// Hinanawi Tenshi.
-        /// </summary>
-        [EnumAltName("TN")]
-        Tenshi,
+    /// <summary>
+    /// Hinanawi Tenshi.
+    /// </summary>
+    [EnumAltName("TN")]
+    Tenshi,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

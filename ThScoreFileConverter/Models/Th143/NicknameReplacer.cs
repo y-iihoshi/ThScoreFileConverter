@@ -11,36 +11,35 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th143
+namespace ThScoreFileConverter.Models.Th143;
+
+// %T143NICK[xx]
+internal class NicknameReplacer : IStringReplaceable
 {
-    // %T143NICK[xx]
-    internal class NicknameReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(@"{0}NICK(\d{{2}})", Definitions.FormatPrefix);
+
+    private readonly MatchEvaluator evaluator;
+
+    public NicknameReplacer(IStatus status)
     {
-        private static readonly string Pattern = Utils.Format(@"{0}NICK(\d{{2}})", Definitions.FormatPrefix);
-
-        private readonly MatchEvaluator evaluator;
-
-        public NicknameReplacer(IStatus status)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
+
+            if ((number > 0) && (number <= Definitions.Nicknames.Count))
             {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
+                return (status.NicknameFlags.ElementAt(number) > 0)
+                    ? Definitions.Nicknames[number - 1] : "??????????";
+            }
+            else
+            {
+                return match.ToString();
+            }
+        });
+    }
 
-                if ((number > 0) && (number <= Definitions.Nicknames.Count))
-                {
-                    return (status.NicknameFlags.ElementAt(number) > 0)
-                        ? Definitions.Nicknames[number - 1] : "??????????";
-                }
-                else
-                {
-                    return match.ToString();
-                }
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

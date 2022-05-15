@@ -7,19 +7,18 @@
 
 using System.Windows.Controls;
 
-namespace ThScoreFileConverter.Views
+namespace ThScoreFileConverter.Views;
+
+/// <summary>
+/// Interaction logic for AboutWindow.xaml.
+/// </summary>
+public partial class AboutWindow : UserControl
 {
     /// <summary>
-    /// Interaction logic for AboutWindow.xaml.
+    /// Initializes a new instance of the <see cref="AboutWindow"/> class.
     /// </summary>
-    public partial class AboutWindow : UserControl
+    public AboutWindow()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AboutWindow"/> class.
-        /// </summary>
-        public AboutWindow()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

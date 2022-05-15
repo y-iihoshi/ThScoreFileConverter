@@ -9,14 +9,13 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th143
+namespace ThScoreFileConverter.Models.Th143;
+
+internal interface IStatus : Th125.IStatus
 {
-    internal interface IStatus : Th125.IStatus
-    {
-        ItemWithTotal LastMainItem { get; }
+    ItemWithTotal LastMainItem { get; }
 
-        ItemWithTotal LastSubItem { get; }
+    ItemWithTotal LastSubItem { get; }
 
-        IEnumerable<byte> NicknameFlags { get; }
-    }
+    IEnumerable<byte> NicknameFlags { get; }
 }

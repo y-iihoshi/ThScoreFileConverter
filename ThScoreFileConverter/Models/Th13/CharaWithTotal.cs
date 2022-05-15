@@ -5,41 +5,40 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+/// <summary>
+/// Represents playable characters of TD and total.
+/// </summary>
+public enum CharaWithTotal
 {
     /// <summary>
-    /// Represents playable characters of TD and total.
+    /// Hakurei Reimu.
     /// </summary>
-    public enum CharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu.
-        /// </summary>
-        [EnumAltName("RM")]
-        Reimu,
+    [EnumAltName("RM")]
+    Reimu,
 
-        /// <summary>
-        /// Kirisame Marisa.
-        /// </summary>
-        [EnumAltName("MR")]
-        Marisa,
+    /// <summary>
+    /// Kirisame Marisa.
+    /// </summary>
+    [EnumAltName("MR")]
+    Marisa,
 
-        /// <summary>
-        /// Kochiya Sanae.
-        /// </summary>
-        [EnumAltName("SN")]
-        Sanae,
+    /// <summary>
+    /// Kochiya Sanae.
+    /// </summary>
+    [EnumAltName("SN")]
+    Sanae,
 
-        /// <summary>
-        /// Konpaku Youmu.
-        /// </summary>
-        [EnumAltName("YM")]
-        Youmu,
+    /// <summary>
+    /// Konpaku Youmu.
+    /// </summary>
+    [EnumAltName("YM")]
+    Youmu,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

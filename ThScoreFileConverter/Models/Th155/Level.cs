@@ -5,41 +5,40 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th155
+namespace ThScoreFileConverter.Models.Th155;
+
+/// <summary>
+/// Represents levels of AoCF.
+/// </summary>
+public enum Level
 {
     /// <summary>
-    /// Represents levels of AoCF.
+    /// Represents level Easy.
     /// </summary>
-    public enum Level
-    {
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        [EnumAltName("L")]
-        Lunatic,
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    [EnumAltName("L")]
+    Lunatic,
 
-        /// <summary>
-        /// Represents level OverDrive.
-        /// </summary>
-        [EnumAltName("D", LongName = "Over Drive")]
-        OverDrive,
-    }
+    /// <summary>
+    /// Represents level OverDrive.
+    /// </summary>
+    [EnumAltName("D", LongName = "Over Drive")]
+    OverDrive,
 }

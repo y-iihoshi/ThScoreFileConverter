@@ -9,15 +9,14 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+internal interface ISpellCard<TLevel> : Th10.ISpellCard<TLevel>
+    where TLevel : struct, Enum
 {
-    internal interface ISpellCard<TLevel> : Th10.ISpellCard<TLevel>
-        where TLevel : struct, Enum
-    {
-        int PracticeClearCount { get; }
+    int PracticeClearCount { get; }
 
-        int PracticeScore { get; }
+    int PracticeScore { get; }
 
-        int PracticeTrialCount { get; }
-    }
+    int PracticeTrialCount { get; }
 }

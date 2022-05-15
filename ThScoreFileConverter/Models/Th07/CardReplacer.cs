@@ -9,23 +9,22 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th07
-{
-    // %T07CARD[xxx][y]
-    internal class CardReplacer : Th06.CardReplacerBase<Stage, Level>
-    {
-        public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
-            : base(
-                  Definitions.FormatPrefix,
-                  Definitions.CardTable,
-                  hideUntriedCards,
-                  cardNumber => CardHasTried(cardAttacks, cardNumber))
-        {
-        }
+namespace ThScoreFileConverter.Models.Th07;
 
-        private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
-        {
-            return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;
-        }
+// %T07CARD[xxx][y]
+internal class CardReplacer : Th06.CardReplacerBase<Stage, Level>
+{
+    public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
+        : base(
+              Definitions.FormatPrefix,
+              Definitions.CardTable,
+              hideUntriedCards,
+              cardNumber => CardHasTried(cardAttacks, cardNumber))
+    {
+    }
+
+    private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
+    {
+        return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;
     }
 }

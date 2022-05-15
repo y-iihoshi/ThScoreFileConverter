@@ -24,264 +24,263 @@ using ThScoreFileConverter.Properties;
 using WPFLocalizeExtension.Engine;
 using SysDraw = System.Drawing;
 
-namespace ThScoreFileConverter.ViewModels
-{
-    /// <summary>
-    /// The view model class for <see cref="Views.SettingWindow"/>.
-    /// </summary>
+namespace ThScoreFileConverter.ViewModels;
+
+/// <summary>
+/// The view model class for <see cref="Views.SettingWindow"/>.
+/// </summary>
 #if !DEBUG
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-    internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
+internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
+{
+    private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
+    private readonly CompositeDisposable disposables;
+    private bool disposed;
+    private SysDraw.Font? font;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
+    /// </summary>
+    /// <param name="settings">The settings of this application.</param>
+    /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
+    public SettingWindowViewModel(Settings settings, IResourceDictionaryAdapter adapter)
     {
-        private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
-        private readonly CompositeDisposable disposables;
-        private bool disposed;
-        private SysDraw.Font? font;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
-        /// </summary>
-        /// <param name="settings">The settings of this application.</param>
-        /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
-        public SettingWindowViewModel(Settings settings, IResourceDictionaryAdapter adapter)
+        if (!settings.OutputNumberGroupSeparator.HasValue)
         {
-            if (!settings.OutputNumberGroupSeparator.HasValue)
-            {
-                throw new ArgumentException(
-                    $"{nameof(settings.OutputNumberGroupSeparator)} has no value", nameof(settings));
-            }
-
-            if (!settings.InputCodePageId.HasValue)
-                throw new ArgumentException($"{nameof(settings.InputCodePageId)} has no value", nameof(settings));
-
-            if (!settings.OutputCodePageId.HasValue)
-                throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
-
-            this.resourceDictionaryAdapter = adapter;
-            this.disposables = new CompositeDisposable();
-            this.disposed = false;
-            this.font = null;
-
-            this.OutputNumberGroupSeparator = settings.ToReactivePropertyAsSynchronized(
-                x => x.OutputNumberGroupSeparator, value => (bool)value!, value => value);
-            this.InputCodePageId = settings.ToReactivePropertyAsSynchronized(
-                x => x.InputCodePageId, value => (int)value!, value => value);
-            this.OutputCodePageId = settings.ToReactivePropertyAsSynchronized(
-                x => x.OutputCodePageId, value => (int)value!, value => value);
-
-            var encodings = Settings.ValidCodePageIds
-                .ToDictionary(id => id, id => EncodingHelper.GetEncoding(id).EncodingName);
-            this.InputEncodings = encodings;
-            this.OutputEncodings = encodings;
-
-            this.FontDialogOkCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
-            this.FontDialogApplyCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
-            this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
-            this.ResetFontCommand = new DelegateCommand(this.ResetFont);
-
-            this.disposables.Add(
-                LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
-                    .Subscribe(_ => this.RaisePropertyChanged(nameof(this.Title))));
+            throw new ArgumentException(
+                $"{nameof(settings.OutputNumberGroupSeparator)} has no value", nameof(settings));
         }
 
-        /// <summary>
-        /// Finalizes an instance of the <see cref="SettingWindowViewModel"/> class.
-        /// </summary>
-        ~SettingWindowViewModel()
-        {
-            this.Dispose(false);
-        }
+        if (!settings.InputCodePageId.HasValue)
+            throw new ArgumentException($"{nameof(settings.InputCodePageId)} has no value", nameof(settings));
 
-        /// <inheritdoc/>
+        if (!settings.OutputCodePageId.HasValue)
+            throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
+
+        this.resourceDictionaryAdapter = adapter;
+        this.disposables = new CompositeDisposable();
+        this.disposed = false;
+        this.font = null;
+
+        this.OutputNumberGroupSeparator = settings.ToReactivePropertyAsSynchronized(
+            x => x.OutputNumberGroupSeparator, value => (bool)value!, value => value);
+        this.InputCodePageId = settings.ToReactivePropertyAsSynchronized(
+            x => x.InputCodePageId, value => (int)value!, value => value);
+        this.OutputCodePageId = settings.ToReactivePropertyAsSynchronized(
+            x => x.OutputCodePageId, value => (int)value!, value => value);
+
+        var encodings = Settings.ValidCodePageIds
+            .ToDictionary(id => id, id => EncodingHelper.GetEncoding(id).EncodingName);
+        this.InputEncodings = encodings;
+        this.OutputEncodings = encodings;
+
+        this.FontDialogOkCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
+        this.FontDialogApplyCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
+        this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
+        this.ResetFontCommand = new DelegateCommand(this.ResetFont);
+
+        this.disposables.Add(
+            LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
+                .Subscribe(_ => this.RaisePropertyChanged(nameof(this.Title))));
+    }
+
+    /// <summary>
+    /// Finalizes an instance of the <see cref="SettingWindowViewModel"/> class.
+    /// </summary>
+    ~SettingWindowViewModel()
+    {
+        this.Dispose(false);
+    }
+
+    /// <inheritdoc/>
 #pragma warning disable CS0067
-        public event Action<IDialogResult>? RequestClose;
+    public event Action<IDialogResult>? RequestClose;
 #pragma warning restore CS0067
 
-        #region Properties to bind a view
+    #region Properties to bind a view
 
-        /// <summary>
-        /// Gets a title of the Settings window.
-        /// </summary>
-        public string Title => Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
+    /// <summary>
+    /// Gets a title of the Settings window.
+    /// </summary>
+    public string Title => Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
 
-        /// <summary>
-        /// Gets the current font.
-        /// </summary>
-        public SysDraw.Font Font
+    /// <summary>
+    /// Gets the current font.
+    /// </summary>
+    public SysDraw.Font Font
+    {
+        get
         {
-            get
-            {
-                this.font?.Dispose();
-                this.font = new SysDraw.Font(
-                    this.resourceDictionaryAdapter.FontFamily.ToString(),
-                    (float)this.resourceDictionaryAdapter.FontSize);
-                return this.font;
-            }
+            this.font?.Dispose();
+            this.font = new SysDraw.Font(
+                this.resourceDictionaryAdapter.FontFamily.ToString(),
+                (float)this.resourceDictionaryAdapter.FontSize);
+            return this.font;
         }
+    }
 
-        /// <summary>
-        /// Gets the maximum font size.
-        /// </summary>
+    /// <summary>
+    /// Gets the maximum font size.
+    /// </summary>
 #pragma warning disable CA1822 // Mark members as static
-        public int MaxFontSize => (int)Settings.MaxFontSize;
+    public int MaxFontSize => (int)Settings.MaxFontSize;
 #pragma warning restore CA1822 // Mark members as static
 
-        /// <summary>
-        /// Gets a value indicating whether numeric values is output with thousand separator
-        /// characters.
-        /// </summary>
-        public ReactiveProperty<bool> OutputNumberGroupSeparator { get; }
+    /// <summary>
+    /// Gets a value indicating whether numeric values is output with thousand separator
+    /// characters.
+    /// </summary>
+    public ReactiveProperty<bool> OutputNumberGroupSeparator { get; }
 
-        /// <summary>
-        /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
-        /// input files.
-        /// </summary>
-        public IReadOnlyDictionary<int, string> InputEncodings { get; }
+    /// <summary>
+    /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
+    /// input files.
+    /// </summary>
+    public IReadOnlyDictionary<int, string> InputEncodings { get; }
 
-        /// <summary>
-        /// Gets the code page identifier for input files.
-        /// </summary>
-        public ReactiveProperty<int> InputCodePageId { get; }
+    /// <summary>
+    /// Gets the code page identifier for input files.
+    /// </summary>
+    public ReactiveProperty<int> InputCodePageId { get; }
 
-        /// <summary>
-        /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
-        /// output files.
-        /// </summary>
-        public IReadOnlyDictionary<int, string> OutputEncodings { get; }
+    /// <summary>
+    /// Gets a dictionary, which key is a code page identifier and the value is the correspond name, for
+    /// output files.
+    /// </summary>
+    public IReadOnlyDictionary<int, string> OutputEncodings { get; }
 
-        /// <summary>
-        /// Gets the code page identifier for output files.
-        /// </summary>
-        public ReactiveProperty<int> OutputCodePageId { get; }
+    /// <summary>
+    /// Gets the code page identifier for output files.
+    /// </summary>
+    public ReactiveProperty<int> OutputCodePageId { get; }
 
-        /// <summary>
-        /// Gets or sets the culture.
-        /// </summary>
-        public CultureInfo Culture
+    /// <summary>
+    /// Gets or sets the culture.
+    /// </summary>
+    public CultureInfo Culture
+    {
+        get => LocalizeDictionary.Instance.Culture;
+
+        set
         {
-            get => LocalizeDictionary.Instance.Culture;
-
-            set
+            if (!LocalizeDictionary.Instance.Culture.Equals(value))
             {
-                if (!LocalizeDictionary.Instance.Culture.Equals(value))
-                {
-                    LocalizeDictionary.Instance.Culture = value;
-                    this.RaisePropertyChanged(nameof(this.Culture));
-                }
+                LocalizeDictionary.Instance.Culture = value;
+                this.RaisePropertyChanged(nameof(this.Culture));
             }
         }
-
-        #region Commands
-
-        /// <summary>
-        /// Gets the command invoked when the user clicks an <c>OK</c> button of the font dialog box.
-        /// </summary>
-        public DelegateCommand<FontDialogActionResult> FontDialogOkCommand { get; }
-
-        /// <summary>
-        /// Gets the command invoked when the user clicks an <c>Apply</c> button of the font dialog box.
-        /// </summary>
-        public DelegateCommand<FontDialogActionResult> FontDialogApplyCommand { get; }
-
-        /// <summary>
-        /// Gets the command invoked when the user cancels the font choice.
-        /// </summary>
-        public DelegateCommand<FontDialogActionResult> FontDialogCancelCommand { get; }
-
-        /// <summary>
-        /// Gets the command to reset the UI font.
-        /// </summary>
-        public DelegateCommand ResetFontCommand { get; }
-
-        #endregion
-
-        #endregion
-
-        /// <inheritdoc/>
-        public bool CanCloseDialog()
-        {
-            return true;
-        }
-
-        /// <inheritdoc/>
-        public void OnDialogClosed()
-        {
-            this.Dispose();
-        }
-
-        /// <inheritdoc/>
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Disposes the resources of the current instance.
-        /// </summary>
-        /// <param name="disposing">
-        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                this.OutputCodePageId.Dispose();
-                this.InputCodePageId.Dispose();
-                this.OutputNumberGroupSeparator.Dispose();
-
-                this.font?.Dispose();
-                this.disposables.Dispose();
-            }
-
-            this.disposed = true;
-        }
-
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the current instance has already been disposed.
-        /// </summary>
-        protected virtual void ThrowIfDisposed()
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException(this.GetType().FullName);
-            }
-        }
-
-        #region Methods for command implementation
-
-        /// <summary>
-        /// Applies the UI font change.
-        /// </summary>
-        /// <param name="result">A result of <see cref="FontDialogAction"/>.</param>
-        private void ApplyFont(FontDialogActionResult result)
-        {
-            this.ThrowIfDisposed();
-            this.resourceDictionaryAdapter.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
-            this.RaisePropertyChanged(nameof(this.Font));
-        }
-
-        /// <summary>
-        /// Resets the UI font.
-        /// </summary>
-        private void ResetFont()
-        {
-            this.ThrowIfDisposed();
-            this.resourceDictionaryAdapter.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-            this.RaisePropertyChanged(nameof(this.Font));
-        }
-
-        #endregion
     }
+
+    #region Commands
+
+    /// <summary>
+    /// Gets the command invoked when the user clicks an <c>OK</c> button of the font dialog box.
+    /// </summary>
+    public DelegateCommand<FontDialogActionResult> FontDialogOkCommand { get; }
+
+    /// <summary>
+    /// Gets the command invoked when the user clicks an <c>Apply</c> button of the font dialog box.
+    /// </summary>
+    public DelegateCommand<FontDialogActionResult> FontDialogApplyCommand { get; }
+
+    /// <summary>
+    /// Gets the command invoked when the user cancels the font choice.
+    /// </summary>
+    public DelegateCommand<FontDialogActionResult> FontDialogCancelCommand { get; }
+
+    /// <summary>
+    /// Gets the command to reset the UI font.
+    /// </summary>
+    public DelegateCommand ResetFontCommand { get; }
+
+    #endregion
+
+    #endregion
+
+    /// <inheritdoc/>
+    public bool CanCloseDialog()
+    {
+        return true;
+    }
+
+    /// <inheritdoc/>
+    public void OnDialogClosed()
+    {
+        this.Dispose();
+    }
+
+    /// <inheritdoc/>
+    public void OnDialogOpened(IDialogParameters parameters)
+    {
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Disposes the resources of the current instance.
+    /// </summary>
+    /// <param name="disposing">
+    /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (this.disposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            this.OutputCodePageId.Dispose();
+            this.InputCodePageId.Dispose();
+            this.OutputNumberGroupSeparator.Dispose();
+
+            this.font?.Dispose();
+            this.disposables.Dispose();
+        }
+
+        this.disposed = true;
+    }
+
+    /// <summary>
+    /// Throws <see cref="ObjectDisposedException"/> if the current instance has already been disposed.
+    /// </summary>
+    protected virtual void ThrowIfDisposed()
+    {
+        if (this.disposed)
+        {
+            throw new ObjectDisposedException(this.GetType().FullName);
+        }
+    }
+
+    #region Methods for command implementation
+
+    /// <summary>
+    /// Applies the UI font change.
+    /// </summary>
+    /// <param name="result">A result of <see cref="FontDialogAction"/>.</param>
+    private void ApplyFont(FontDialogActionResult result)
+    {
+        this.ThrowIfDisposed();
+        this.resourceDictionaryAdapter.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
+        this.RaisePropertyChanged(nameof(this.Font));
+    }
+
+    /// <summary>
+    /// Resets the UI font.
+    /// </summary>
+    private void ResetFont()
+    {
+        this.ThrowIfDisposed();
+        this.resourceDictionaryAdapter.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
+        this.RaisePropertyChanged(nameof(this.Font));
+    }
+
+    #endregion
 }

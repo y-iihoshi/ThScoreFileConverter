@@ -5,83 +5,82 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th155
+namespace ThScoreFileConverter.Models.Th155;
+
+/// <summary>
+/// Represents story characters of AoCF.
+/// </summary>
+public enum StoryCharaWithTotal
 {
     /// <summary>
-    /// Represents story characters of AoCF.
+    /// Hakurei Reimu and Ibaraki Kasen.
     /// </summary>
-    public enum StoryCharaWithTotal
-    {
-        /// <summary>
-        /// Hakurei Reimu and Ibaraki Kasen.
-        /// </summary>
-        [EnumAltName("RK")]
-        ReimuKasen,
+    [EnumAltName("RK")]
+    ReimuKasen,
 
-        /// <summary>
-        /// Kirisame Marisa and Komeiji Koishi.
-        /// </summary>
-        [EnumAltName("MK")]
-        MarisaKoishi,
+    /// <summary>
+    /// Kirisame Marisa and Komeiji Koishi.
+    /// </summary>
+    [EnumAltName("MK")]
+    MarisaKoishi,
 
-        /// <summary>
-        /// Kawashiro Nitori and Hata no Kokoro.
-        /// </summary>
-        [EnumAltName("NK")]
-        NitoriKokoro,
+    /// <summary>
+    /// Kawashiro Nitori and Hata no Kokoro.
+    /// </summary>
+    [EnumAltName("NK")]
+    NitoriKokoro,
 
-        /// <summary>
-        /// Futatsuiwa Mamizou and Fujiwara no Mokou.
-        /// </summary>
-        [EnumAltName("MM")]
-        MamizouMokou,
+    /// <summary>
+    /// Futatsuiwa Mamizou and Fujiwara no Mokou.
+    /// </summary>
+    [EnumAltName("MM")]
+    MamizouMokou,
 
-        /// <summary>
-        /// Toyosatomimi no Miko and Hijiri Byakuren.
-        /// </summary>
-        [EnumAltName("MB")]
-        MikoByakuren,
+    /// <summary>
+    /// Toyosatomimi no Miko and Hijiri Byakuren.
+    /// </summary>
+    [EnumAltName("MB")]
+    MikoByakuren,
 
-        /// <summary>
-        /// Mononobe no Futo and Kumoi Ichirin.
-        /// </summary>
-        [EnumAltName("FI")]
-        FutoIchirin,
+    /// <summary>
+    /// Mononobe no Futo and Kumoi Ichirin.
+    /// </summary>
+    [EnumAltName("FI")]
+    FutoIchirin,
 
-        /// <summary>
-        /// Reisen Udongein Inaba and Doremy Sweet.
-        /// </summary>
-        [EnumAltName("RD")]
-        ReisenDoremy,
+    /// <summary>
+    /// Reisen Udongein Inaba and Doremy Sweet.
+    /// </summary>
+    [EnumAltName("RD")]
+    ReisenDoremy,
 
-        /// <summary>
-        /// Usami Sumireko and Doremy Sweet.
-        /// </summary>
-        [EnumAltName("SD")]
-        SumirekoDoremy,
+    /// <summary>
+    /// Usami Sumireko and Doremy Sweet.
+    /// </summary>
+    [EnumAltName("SD")]
+    SumirekoDoremy,
 
-        /// <summary>
-        /// Hinanawi Tenshi and Sukuna Shinmyoumaru.
-        /// </summary>
-        [EnumAltName("TS")]
-        TenshiShinmyoumaru,
+    /// <summary>
+    /// Hinanawi Tenshi and Sukuna Shinmyoumaru.
+    /// </summary>
+    [EnumAltName("TS")]
+    TenshiShinmyoumaru,
 
-        /// <summary>
-        /// Yakumo Yukari and Hakurei Reimu.
-        /// </summary>
-        [EnumAltName("YR")]
-        YukariReimu,
+    /// <summary>
+    /// Yakumo Yukari and Hakurei Reimu.
+    /// </summary>
+    [EnumAltName("YR")]
+    YukariReimu,
 
-        /// <summary>
-        /// Yorigami Joon and Yorigami Shion.
-        /// </summary>
-        [EnumAltName("JS")]
-        JoonShion,
+    /// <summary>
+    /// Yorigami Joon and Yorigami Shion.
+    /// </summary>
+    [EnumAltName("JS")]
+    JoonShion,
 
-        /// <summary>
-        /// Represents total across characters.
-        /// </summary>
-        [EnumAltName("TL")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

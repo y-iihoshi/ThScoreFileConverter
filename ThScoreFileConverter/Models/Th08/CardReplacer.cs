@@ -10,30 +10,29 @@
 using System.Collections.Generic;
 using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+// %T08CARD[xxx][y]
+internal class CardReplacer : Th06.CardReplacerBase<StagePractice, LevelPractice>
 {
-    // %T08CARD[xxx][y]
-    internal class CardReplacer : Th06.CardReplacerBase<StagePractice, LevelPractice>
+    public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
+        : base(
+              Definitions.FormatPrefix,
+              Definitions.CardTable,
+              hideUntriedCards,
+              cardNumber => CardHasTried(cardAttacks, cardNumber),
+              static cardInfo => CardLevelToString(cardInfo))
     {
-        public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
-            : base(
-                  Definitions.FormatPrefix,
-                  Definitions.CardTable,
-                  hideUntriedCards,
-                  cardNumber => CardHasTried(cardAttacks, cardNumber),
-                  static cardInfo => CardLevelToString(cardInfo))
-        {
-        }
+    }
 
-        private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
-        {
-            return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;
-        }
+    private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
+    {
+        return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;
+    }
 
-        private static string CardLevelToString(SpellCardInfo<StagePractice, LevelPractice> cardInfo)
-        {
-            var levelName = cardInfo.Level.ToLongName();
-            return (levelName.Length > 0) ? levelName : cardInfo.Level.ToString();
-        }
+    private static string CardLevelToString(SpellCardInfo<StagePractice, LevelPractice> cardInfo)
+    {
+        var levelName = cardInfo.Level.ToLongName();
+        return (levelName.Length > 0) ? levelName : cardInfo.Level.ToString();
     }
 }

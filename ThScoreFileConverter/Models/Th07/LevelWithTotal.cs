@@ -5,53 +5,52 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th07
+namespace ThScoreFileConverter.Models.Th07;
+
+/// <summary>
+/// Represents level of PCB and total.
+/// </summary>
+public enum LevelWithTotal
 {
     /// <summary>
-    /// Represents level of PCB and total.
+    /// Represents level Easy.
     /// </summary>
-    public enum LevelWithTotal
-    {
-        /// <summary>
-        /// Represents level Easy.
-        /// </summary>
-        [EnumAltName("E")]
-        Easy,
+    [EnumAltName("E")]
+    Easy,
 
-        /// <summary>
-        /// Represents level Normal.
-        /// </summary>
-        [EnumAltName("N")]
-        Normal,
+    /// <summary>
+    /// Represents level Normal.
+    /// </summary>
+    [EnumAltName("N")]
+    Normal,
 
-        /// <summary>
-        /// Represents level Hard.
-        /// </summary>
-        [EnumAltName("H")]
-        Hard,
+    /// <summary>
+    /// Represents level Hard.
+    /// </summary>
+    [EnumAltName("H")]
+    Hard,
 
-        /// <summary>
-        /// Represents level Lunatic.
-        /// </summary>
-        [EnumAltName("L")]
-        Lunatic,
+    /// <summary>
+    /// Represents level Lunatic.
+    /// </summary>
+    [EnumAltName("L")]
+    Lunatic,
 
-        /// <summary>
-        /// Represents level Extra.
-        /// </summary>
-        [EnumAltName("X")]
-        Extra,
+    /// <summary>
+    /// Represents level Extra.
+    /// </summary>
+    [EnumAltName("X")]
+    Extra,
 
-        /// <summary>
-        /// Represents level Phantasm.
-        /// </summary>
-        [EnumAltName("P")]
-        Phantasm,
+    /// <summary>
+    /// Represents level Phantasm.
+    /// </summary>
+    [EnumAltName("P")]
+    Phantasm,
 
-        /// <summary>
-        /// Represents total across levels.
-        /// </summary>
-        [EnumAltName("T")]
-        Total,
-    }
+    /// <summary>
+    /// Represents total across levels.
+    /// </summary>
+    [EnumAltName("T")]
+    Total,
 }

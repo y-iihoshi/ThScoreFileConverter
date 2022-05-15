@@ -9,10 +9,9 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th09
+namespace ThScoreFileConverter.Models.Th09;
+
+internal interface IClearCount
 {
-    internal interface IClearCount
-    {
-        IReadOnlyDictionary<Level, int> Counts { get; }
-    }
+    IReadOnlyDictionary<Level, int> Counts { get; }
 }

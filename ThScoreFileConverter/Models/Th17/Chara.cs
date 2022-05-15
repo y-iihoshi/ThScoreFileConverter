@@ -5,65 +5,64 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th17
+namespace ThScoreFileConverter.Models.Th17;
+
+/// <summary>
+/// Represents player characters of WBWC.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents player characters of WBWC.
+    /// Hakurei Reimu (Wolf spirit).
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu (Wolf spirit).
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu (Otter spirit).
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu (Otter spirit).
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Hakurei Reimu (Eagle spirit).
-        /// </summary>
-        [EnumAltName("RC")]
-        ReimuC,
+    /// <summary>
+    /// Hakurei Reimu (Eagle spirit).
+    /// </summary>
+    [EnumAltName("RC")]
+    ReimuC,
 
-        /// <summary>
-        /// Kirisame Reimu (Wolf spirit).
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Reimu (Wolf spirit).
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa (Otter spirit).
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
+    /// <summary>
+    /// Kirisame Marisa (Otter spirit).
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 
-        /// <summary>
-        /// Kirisame Marisa (Eagle spirit).
-        /// </summary>
-        [EnumAltName("MC")]
-        MarisaC,
+    /// <summary>
+    /// Kirisame Marisa (Eagle spirit).
+    /// </summary>
+    [EnumAltName("MC")]
+    MarisaC,
 
-        /// <summary>
-        /// Konpaku Youmu (Wolf spirit).
-        /// </summary>
-        [EnumAltName("YA")]
-        YoumuA,
+    /// <summary>
+    /// Konpaku Youmu (Wolf spirit).
+    /// </summary>
+    [EnumAltName("YA")]
+    YoumuA,
 
-        /// <summary>
-        /// Konpaku Youmu (Otter spirit).
-        /// </summary>
-        [EnumAltName("YB")]
-        YoumuB,
+    /// <summary>
+    /// Konpaku Youmu (Otter spirit).
+    /// </summary>
+    [EnumAltName("YB")]
+    YoumuB,
 
-        /// <summary>
-        /// Konpaku Youmu (Eagle spirit).
-        /// </summary>
-        [EnumAltName("YC")]
-        YoumuC,
-    }
+    /// <summary>
+    /// Konpaku Youmu (Eagle spirit).
+    /// </summary>
+    [EnumAltName("YC")]
+    YoumuC,
 }

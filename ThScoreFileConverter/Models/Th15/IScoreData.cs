@@ -7,10 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th15
+namespace ThScoreFileConverter.Models.Th15;
+
+internal interface IScoreData : Th10.IScoreData<Th13.StageProgress>
 {
-    internal interface IScoreData : Th10.IScoreData<Th13.StageProgress>
-    {
-        uint RetryCount { get; }
-    }
+    uint RetryCount { get; }
 }

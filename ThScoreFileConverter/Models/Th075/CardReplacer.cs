@@ -12,52 +12,51 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+// %T75CARD[xxx][yy][z]
+internal class CardReplacer : IStringReplaceable
 {
-    // %T75CARD[xxx][yy][z]
-    internal class CardReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}CARD(\d{{3}})({1})([NR])", Definitions.FormatPrefix, Parsers.CharaParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public CardReplacer(
+        IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData, bool hideUntriedCards)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CARD(\d{{3}})({1})([NR])", Definitions.FormatPrefix, Parsers.CharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public CardReplacer(
-            IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData, bool hideUntriedCards)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+            var type = match.Groups[3].Value.ToUpperInvariant();
+
+            if (chara == Chara.Meiling)
+                return match.ToString();
+
+            if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
             {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var type = match.Groups[3].Value.ToUpperInvariant();
-
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
+                if (hideUntriedCards)
                 {
-                    if (hideUntriedCards)
-                    {
-                        var dataList = clearData
-                            .Where(pair => pair.Key.Chara == (CharaWithReserved)chara).Select(pair => pair.Value);
-                        if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
-                            return (type == "N") ? "??????????" : "?????";
-                    }
-
-                    var cardId = Definitions.CardIdTable[chara].ElementAt(number - 1);
-                    return (type == "N")
-                        ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToString();
+                    var dataList = clearData
+                        .Where(pair => pair.Key.Chara == (CharaWithReserved)chara).Select(pair => pair.Value);
+                    if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
+                        return (type == "N") ? "??????????" : "?????";
                 }
-                else
-                {
-                    return match.ToString();
-                }
-            });
-        }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+                var cardId = Definitions.CardIdTable[chara].ElementAt(number - 1);
+                return (type == "N")
+                    ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToString();
+            }
+            else
+            {
+                return match.ToString();
+            }
+        });
+    }
+
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

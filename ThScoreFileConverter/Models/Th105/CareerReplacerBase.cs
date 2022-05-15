@@ -14,86 +14,85 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+internal class CareerReplacerBase<TChara> : IStringReplaceable
+    where TChara : struct, Enum
 {
-    internal class CareerReplacerBase<TChara> : IStringReplaceable
-        where TChara : struct, Enum
+    private readonly string pattern;
+    private readonly MatchEvaluator evaluator;
+
+    protected CareerReplacerBase(
+        string formatPrefix,
+        EnumShortNameParser<TChara> charaParser,
+        Func<int, TChara, int, bool> canReplace,
+        IReadOnlyDictionary<TChara, IEnumerable<(TChara Enemy, int CardId)>> enemyCardIdTable,
+        IReadOnlyDictionary<TChara, IClearData<TChara>> clearDataDictionary,
+        INumberFormatter formatter)
     {
-        private readonly string pattern;
-        private readonly MatchEvaluator evaluator;
+        var numLevels = EnumHelper<Level>.NumValues;
 
-        protected CareerReplacerBase(
-            string formatPrefix,
-            EnumShortNameParser<TChara> charaParser,
-            Func<int, TChara, int, bool> canReplace,
-            IReadOnlyDictionary<TChara, IEnumerable<(TChara Enemy, int CardId)>> enemyCardIdTable,
-            IReadOnlyDictionary<TChara, IClearData<TChara>> clearDataDictionary,
-            INumberFormatter formatter)
+        this.pattern = Utils.Format(
+            @"{0}C(\d{{{1}}})({2})([1-3])",
+            formatPrefix,
+            IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
+            charaParser.Pattern);
+        this.evaluator = new MatchEvaluator(match =>
         {
-            var numLevels = EnumHelper<Level>.NumValues;
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var chara = charaParser.Parse(match.Groups[2].Value);
+            var type = IntegerHelper.Parse(match.Groups[3].Value);
 
-            this.pattern = Utils.Format(
-                @"{0}C(\d{{{1}}})({2})([1-3])",
-                formatPrefix,
-                IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
-                charaParser.Pattern);
-            this.evaluator = new MatchEvaluator(match =>
+            if (!canReplace(number, chara, type))
+                return match.ToString();
+
+            Func<ISpellCardResult<TChara>, long> getValue = type switch
             {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var chara = charaParser.Parse(match.Groups[2].Value);
-                var type = IntegerHelper.Parse(match.Groups[3].Value);
+                1 => result => result.GotCount,
+                2 => result => result.TrialCount,
+                _ => result => result.Frames,
+            };
 
-                if (!canReplace(number, chara, type))
-                    return match.ToString();
-
-                Func<ISpellCardResult<TChara>, long> getValue = type switch
+            Func<long, string> toString = type switch
+            {
+                3 => value =>
                 {
-                    1 => result => result.GotCount,
-                    2 => result => result.TrialCount,
-                    _ => result => result.Frames,
-                };
+                    var time = new Time(value);
+                    return Utils.Format(
+                        "{0:D2}:{1:D2}.{2:D3}",
+                        (time.Hours * 60) + time.Minutes,
+                        time.Seconds,
+                        time.Frames * 1000 / 60);
+                },
+                _ => formatter.FormatNumber,
+            };
 
-                Func<long, string> toString = type switch
+            var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
+                ? clearData.SpellCardResults : ImmutableDictionary<(TChara, int), ISpellCardResult<TChara>>.Empty;
+            if (number == 0)
+            {
+                return toString(spellCardResults.Values.Sum(getValue));
+            }
+            else
+            {
+                var index = (number - 1) / numLevels;
+                if (enemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
+                    && (index < enemyCardIdPairs.Count()))
                 {
-                    3 => value =>
-                    {
-                        var time = new Time(value);
-                        return Utils.Format(
-                            "{0:D2}:{1:D2}.{2:D3}",
-                            (time.Hours * 60) + time.Minutes,
-                            time.Seconds,
-                            time.Frames * 1000 / 60);
-                    },
-                    _ => formatter.FormatNumber,
-                };
-
-                var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.SpellCardResults : ImmutableDictionary<(TChara, int), ISpellCardResult<TChara>>.Empty;
-                if (number == 0)
-                {
-                    return toString(spellCardResults.Values.Sum(getValue));
+                    var (enemy, cardId) = enemyCardIdPairs.ElementAt(index);
+                    var key = (enemy, (cardId * numLevels) + ((number - 1) % numLevels));
+                    return toString(spellCardResults.TryGetValue(key, out var result) ? getValue(result) : default);
                 }
                 else
                 {
-                    var index = (number - 1) / numLevels;
-                    if (enemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
-                        && (index < enemyCardIdPairs.Count()))
-                    {
-                        var (enemy, cardId) = enemyCardIdPairs.ElementAt(index);
-                        var key = (enemy, (cardId * numLevels) + ((number - 1) % numLevels));
-                        return toString(spellCardResults.TryGetValue(key, out var result) ? getValue(result) : default);
-                    }
-                    else
-                    {
-                        return match.ToString();
-                    }
+                    return match.ToString();
                 }
-            });
-        }
+            }
+        });
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

@@ -8,18 +8,17 @@
 using System;
 using System.Windows.Threading;
 
-namespace ThScoreFileConverter.Adapters
+namespace ThScoreFileConverter.Adapters;
+
+/// <summary>
+/// Defines the interface of a wrapper of <see cref="Dispatcher"/>.
+/// </summary>
+internal interface IDispatcherAdapter
 {
     /// <summary>
-    /// Defines the interface of a wrapper of <see cref="Dispatcher"/>.
+    /// Executes the specified <see cref="Action"/> synchronously on the thread the underlying
+    /// <see cref="Dispatcher"/> is associated with.
     /// </summary>
-    internal interface IDispatcherAdapter
-    {
-        /// <summary>
-        /// Executes the specified <see cref="Action"/> synchronously on the thread the underlying
-        /// <see cref="Dispatcher"/> is associated with.
-        /// </summary>
-        /// <param name="callback">A delegate to invoke through the dispatcher.</param>
-        public void Invoke(Action callback);
-    }
+    /// <param name="callback">A delegate to invoke through the dispatcher.</param>
+    public void Invoke(Action callback);
 }

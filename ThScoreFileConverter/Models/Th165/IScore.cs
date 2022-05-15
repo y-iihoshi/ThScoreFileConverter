@@ -7,18 +7,17 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th165
+namespace ThScoreFileConverter.Models.Th165;
+
+internal interface IScore : Th095.IChapter
 {
-    internal interface IScore : Th095.IChapter
-    {
-        int ChallengeCount { get; }
+    int ChallengeCount { get; }
 
-        int ClearCount { get; }
+    int ClearCount { get; }
 
-        int HighScore { get; }
+    int HighScore { get; }
 
-        int Number { get; }
+    int Number { get; }
 
-        int NumPhotos { get; }
-    }
+    int NumPhotos { get; }
 }

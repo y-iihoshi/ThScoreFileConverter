@@ -5,47 +5,46 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th07
+namespace ThScoreFileConverter.Models.Th07;
+
+/// <summary>
+/// Represents player characters of PCB.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents player characters of PCB.
+    /// Hakurei Reimu (Spirit Sign).
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu (Spirit Sign).
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu (Dream Sign).
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu (Dream Sign).
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Kirisame Marisa (Magic Sign).
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Marisa (Magic Sign).
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa (Love Sign).
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
+    /// <summary>
+    /// Kirisame Marisa (Love Sign).
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 
-        /// <summary>
-        /// Izayoi Sakuya (Illusion Sign).
-        /// </summary>
-        [EnumAltName("SA")]
-        SakuyaA,
+    /// <summary>
+    /// Izayoi Sakuya (Illusion Sign).
+    /// </summary>
+    [EnumAltName("SA")]
+    SakuyaA,
 
-        /// <summary>
-        /// Izayoi Sakuya (Time Sign).
-        /// </summary>
-        [EnumAltName("SB")]
-        SakuyaB,
-    }
+    /// <summary>
+    /// Izayoi Sakuya (Time Sign).
+    /// </summary>
+    [EnumAltName("SB")]
+    SakuyaB,
 }

@@ -7,25 +7,24 @@
 
 using System;
 
-namespace ThScoreFileConverter.Interactivity
+namespace ThScoreFileConverter.Interactivity;
+
+/// <summary>
+/// Represents a result of <see cref="FolderBrowserDialogAction"/>.
+/// </summary>
+public sealed class FolderBrowserDialogActionResult
 {
     /// <summary>
-    /// Represents a result of <see cref="FolderBrowserDialogAction"/>.
+    /// Initializes a new instance of the <see cref="FolderBrowserDialogActionResult"/> class.
     /// </summary>
-    public sealed class FolderBrowserDialogActionResult
+    /// <param name="selectedPath">A path string.</param>
+    public FolderBrowserDialogActionResult(string selectedPath)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FolderBrowserDialogActionResult"/> class.
-        /// </summary>
-        /// <param name="selectedPath">A path string.</param>
-        public FolderBrowserDialogActionResult(string selectedPath)
-        {
-            this.SelectedPath = selectedPath ?? throw new ArgumentNullException(nameof(selectedPath));
-        }
-
-        /// <summary>
-        /// Gets the path selected by <see cref="FolderBrowserDialogAction"/>.
-        /// </summary>
-        public string SelectedPath { get; }
+        this.SelectedPath = selectedPath ?? throw new ArgumentNullException(nameof(selectedPath));
     }
+
+    /// <summary>
+    /// Gets the path selected by <see cref="FolderBrowserDialogAction"/>.
+    /// </summary>
+    public string SelectedPath { get; }
 }

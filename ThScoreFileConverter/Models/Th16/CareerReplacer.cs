@@ -9,29 +9,28 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th16
+namespace ThScoreFileConverter.Models.Th16;
+
+// %T16C[w][xxx][yy][z]
+internal class CareerReplacer : Th14.CareerReplacerBase<
+    GameMode, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
 {
-    // %T16C[w][xxx][yy][z]
-    internal class CareerReplacer : Th14.CareerReplacerBase<
-        GameMode, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    public CareerReplacer(
+        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+            CharaWithTotal,
+            Level,
+            Level,
+            Th14.LevelPracticeWithTotal,
+            Th14.StagePractice,
+            IScoreData>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.GameModeParser,
+              Parsers.CharaWithTotalParser,
+              Definitions.CardTable.Keys,
+              clearDataDictionary,
+              formatter)
     {
-        public CareerReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-                CharaWithTotal,
-                Level,
-                Level,
-                Th14.LevelPracticeWithTotal,
-                Th14.StagePractice,
-                IScoreData>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.GameModeParser,
-                  Parsers.CharaWithTotalParser,
-                  Definitions.CardTable.Keys,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

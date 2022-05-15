@@ -5,35 +5,34 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th15
+namespace ThScoreFileConverter.Models.Th15;
+
+/// <summary>
+/// Represents playable characters of LoLK.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents playable characters of LoLK.
+    /// Hakurei Reimu.
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu.
-        /// </summary>
-        [EnumAltName("RM")]
-        Reimu,
+    [EnumAltName("RM")]
+    Reimu,
 
-        /// <summary>
-        /// Kirisame Marisa.
-        /// </summary>
-        [EnumAltName("MR")]
-        Marisa,
+    /// <summary>
+    /// Kirisame Marisa.
+    /// </summary>
+    [EnumAltName("MR")]
+    Marisa,
 
-        /// <summary>
-        /// Kochiya Sanae.
-        /// </summary>
-        [EnumAltName("SN")]
-        Sanae,
+    /// <summary>
+    /// Kochiya Sanae.
+    /// </summary>
+    [EnumAltName("SN")]
+    Sanae,
 
-        /// <summary>
-        /// Reisen Udongein Inaba.
-        /// </summary>
-        [EnumAltName("RS")]
-        Reisen,
-    }
+    /// <summary>
+    /// Reisen Udongein Inaba.
+    /// </summary>
+    [EnumAltName("RS")]
+    Reisen,
 }

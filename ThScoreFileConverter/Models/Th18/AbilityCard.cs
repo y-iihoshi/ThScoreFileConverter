@@ -7,46 +7,45 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th18
+namespace ThScoreFileConverter.Models.Th18;
+
+/// <summary>
+/// Represents an ability card of UM.
+/// </summary>
+internal class AbilityCard
 {
     /// <summary>
-    /// Represents an ability card of UM.
+    /// Initializes a new instance of the <see cref="AbilityCard"/> class.
     /// </summary>
-    internal class AbilityCard
+    /// <param name="id">Identifier of the card.</param>
+    /// <param name="name">Name of the card.</param>
+    /// <param name="type">Type of the card.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is negative.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
+    public AbilityCard(int id, string name, AbilityCardType type)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbilityCard"/> class.
-        /// </summary>
-        /// <param name="id">Identifier of the card.</param>
-        /// <param name="name">Name of the card.</param>
-        /// <param name="type">Type of the card.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is negative.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
-        public AbilityCard(int id, string name, AbilityCardType type)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
+        if (id < 0)
+            throw new ArgumentOutOfRangeException(nameof(id));
+        if (name is null)
+            throw new ArgumentNullException(nameof(name));
 
-            this.Id = id;
-            this.Name = name;
-            this.Type = type;
-        }
-
-        /// <summary>
-        /// Gets the 0-based identifier.
-        /// </summary>
-        public int Id { get; }
-
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets the type.
-        /// </summary>
-        public AbilityCardType Type { get; }
+        this.Id = id;
+        this.Name = name;
+        this.Type = type;
     }
+
+    /// <summary>
+    /// Gets the 0-based identifier.
+    /// </summary>
+    public int Id { get; }
+
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    /// Gets the type.
+    /// </summary>
+    public AbilityCardType Type { get; }
 }

@@ -9,79 +9,78 @@ using System;
 using System.IO;
 using ThScoreFileConverter.Properties;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+/// <summary>
+/// Represents a reader that reads data by bitwise from a stream.
+/// </summary>
+public class BitReader
 {
     /// <summary>
-    /// Represents a reader that reads data by bitwise from a stream.
+    /// The stream to read.
     /// </summary>
-    public class BitReader
+    private readonly Stream stream;
+
+    /// <summary>
+    /// The byte that is currently reading.
+    /// </summary>
+    private int current;
+
+    /// <summary>
+    /// The mask value that represents the reading bit position.
+    /// </summary>
+    private byte mask;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BitReader"/> class.
+    /// </summary>
+    /// <param name="stream">
+    /// The stream to read. Since a <see cref="BitReader"/> instance does not own <paramref name="stream"/>,
+    /// it is responsible for the caller to close <paramref name="stream"/>.
+    /// </param>
+    /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
+    public BitReader(Stream stream)
     {
-        /// <summary>
-        /// The stream to read.
-        /// </summary>
-        private readonly Stream stream;
+        if (stream is null)
+            throw new ArgumentNullException(nameof(stream));
+        if (!stream.CanRead)
+            throw new ArgumentException(Resources.ArgumentExceptionStreamMustBeReadable, nameof(stream));
 
-        /// <summary>
-        /// The byte that is currently reading.
-        /// </summary>
-        private int current;
+        this.stream = stream;
+        this.current = 0;
+        this.mask = 0x80;
+    }
 
-        /// <summary>
-        /// The mask value that represents the reading bit position.
-        /// </summary>
-        private byte mask;
+    /// <summary>
+    /// Reads the specified number of bits from the stream.
+    /// </summary>
+    /// <param name="num">The number of reading bits.</param>
+    /// <returns>The value that is read from the stream.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="num"/> is negative.</exception>
+    public int ReadBits(int num)
+    {
+        if (num < 0)
+            throw new ArgumentOutOfRangeException(nameof(num));
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitReader"/> class.
-        /// </summary>
-        /// <param name="stream">
-        /// The stream to read. Since a <see cref="BitReader"/> instance does not own <paramref name="stream"/>,
-        /// it is responsible for the caller to close <paramref name="stream"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
-        public BitReader(Stream stream)
+        var value = 0;
+        for (var i = 0; i < num; i++)
         {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
-            if (!stream.CanRead)
-                throw new ArgumentException(Resources.ArgumentExceptionStreamMustBeReadable, nameof(stream));
-
-            this.stream = stream;
-            this.current = 0;
-            this.mask = 0x80;
-        }
-
-        /// <summary>
-        /// Reads the specified number of bits from the stream.
-        /// </summary>
-        /// <param name="num">The number of reading bits.</param>
-        /// <returns>The value that is read from the stream.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="num"/> is negative.</exception>
-        public int ReadBits(int num)
-        {
-            if (num < 0)
-                throw new ArgumentOutOfRangeException(nameof(num));
-
-            var value = 0;
-            for (var i = 0; i < num; i++)
+            if (this.mask == 0x80)
             {
-                if (this.mask == 0x80)
-                {
-                    this.current = this.stream.ReadByte();
-                    if (this.current < 0)   // EOF
-                        this.current = 0;
-                }
-
-                value <<= 1;
-                if (((byte)this.current & this.mask) != 0)
-                    value |= 1;
-                this.mask >>= 1;
-                if (this.mask == 0)
-                    this.mask = 0x80;
+                this.current = this.stream.ReadByte();
+                if (this.current < 0)   // EOF
+                    this.current = 0;
             }
 
-            return value;
+            value <<= 1;
+            if (((byte)this.current & this.mask) != 0)
+                value |= 1;
+            this.mask >>= 1;
+            if (this.mask == 0)
+                this.mask = 0x80;
         }
+
+        return value;
     }
 }

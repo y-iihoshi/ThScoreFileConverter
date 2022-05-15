@@ -12,39 +12,38 @@ using System.Collections.Generic;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal class AllScoreData<TCharaWithTotal>
+    where TCharaWithTotal : struct, Enum
 {
-    internal class AllScoreData<TCharaWithTotal>
-        where TCharaWithTotal : struct, Enum
+    private readonly Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearData;
+
+    public AllScoreData()
     {
-        private readonly Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearData;
+        this.clearData = new Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>>(
+            EnumHelper<TCharaWithTotal>.NumValues);
+    }
 
-        public AllScoreData()
-        {
-            this.clearData = new Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>>(
-                EnumHelper<TCharaWithTotal>.NumValues);
-        }
+    public Th095.HeaderBase? Header { get; private set; }
 
-        public Th095.HeaderBase? Header { get; private set; }
+    public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> ClearData
+        => this.clearData;
 
-        public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> ClearData
-            => this.clearData;
+    public IStatus? Status { get; private set; }
 
-        public IStatus? Status { get; private set; }
+    public void Set(Th095.HeaderBase header)
+    {
+        this.Header = header;
+    }
 
-        public void Set(Th095.HeaderBase header)
-        {
-            this.Header = header;
-        }
+    public void Set(IClearData<TCharaWithTotal> data)
+    {
+        _ = this.clearData.TryAdd(data.Chara, data);
+    }
 
-        public void Set(IClearData<TCharaWithTotal> data)
-        {
-            _ = this.clearData.TryAdd(data.Chara, data);
-        }
-
-        public void Set(IStatus status)
-        {
-            this.Status = status;
-        }
+    public void Set(IStatus status)
+    {
+        this.Status = status;
     }
 }

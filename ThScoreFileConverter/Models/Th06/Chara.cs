@@ -5,35 +5,34 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+/// <summary>
+/// Represents playable characters of EoSD.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents playable characters of EoSD.
+    /// Hakurei Reimu (Spirit Sign).
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu (Spirit Sign).
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu (Dream Sign).
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu (Dream Sign).
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Kirisame Marisa (Magic Sign).
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Marisa (Magic Sign).
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa (Love Sign).
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
-    }
+    /// <summary>
+    /// Kirisame Marisa (Love Sign).
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 }

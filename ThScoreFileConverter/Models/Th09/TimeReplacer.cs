@@ -9,23 +9,22 @@
 
 using System.Text.RegularExpressions;
 
-namespace ThScoreFileConverter.Models.Th09
+namespace ThScoreFileConverter.Models.Th09;
+
+// %T09TIMEALL
+internal class TimeReplacer : IStringReplaceable
 {
-    // %T09TIMEALL
-    internal class TimeReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(@"{0}TIMEALL", Definitions.FormatPrefix);
+
+    private readonly MatchEvaluator evaluator;
+
+    public TimeReplacer(IPlayStatus playStatus)
     {
-        private static readonly string Pattern = Utils.Format(@"{0}TIMEALL", Definitions.FormatPrefix);
+        this.evaluator = new MatchEvaluator(match => playStatus.TotalRunningTime.ToLongString());
+    }
 
-        private readonly MatchEvaluator evaluator;
-
-        public TimeReplacer(IPlayStatus playStatus)
-        {
-            this.evaluator = new MatchEvaluator(match => playStatus.TotalRunningTime.ToLongString());
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

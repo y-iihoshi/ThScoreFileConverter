@@ -15,166 +15,165 @@ using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverter.Properties;
 using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Models.Th11.CharaWithTotal>;
 
-namespace ThScoreFileConverter.Models
-{
+namespace ThScoreFileConverter.Models;
+
 #if !DEBUG
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-    internal class Th11Converter : ThConverter
+internal class Th11Converter : ThConverter
+{
+    private AllScoreData? allScoreData;
+
+    public override string SupportedVersions { get; } = "1.00a";
+
+    protected override bool ReadScoreFile(Stream input)
     {
-        private AllScoreData? allScoreData;
-
-        public override string SupportedVersions { get; } = "1.00a";
-
-        protected override bool ReadScoreFile(Stream input)
-        {
-            using var decrypted = new MemoryStream();
+        using var decrypted = new MemoryStream();
 #if DEBUG
-            using var decoded = new FileStream("th11decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th11decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
-            using var decoded = new MemoryStream();
+        using var decoded = new MemoryStream();
 #endif
 
-            if (!Decrypt(input, decrypted))
-                return false;
+        if (!Decrypt(input, decrypted))
+            return false;
 
-            decrypted.Seek(0, SeekOrigin.Begin);
-            if (!Extract(decrypted, decoded))
-                return false;
+        decrypted.Seek(0, SeekOrigin.Begin);
+        if (!Extract(decrypted, decoded))
+            return false;
 
-            decoded.Seek(0, SeekOrigin.Begin);
-            if (!Validate(decoded))
-                return false;
+        decoded.Seek(0, SeekOrigin.Begin);
+        if (!Validate(decoded))
+            return false;
 
-            decoded.Seek(0, SeekOrigin.Begin);
-            this.allScoreData = Read(decoded);
+        decoded.Seek(0, SeekOrigin.Begin);
+        this.allScoreData = Read(decoded);
 
-            return this.allScoreData is not null;
-        }
+        return this.allScoreData is not null;
+    }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
+    protected override IEnumerable<IStringReplaceable> CreateReplacers(
+        INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
+    {
+        if (this.allScoreData is null)
         {
-            if (this.allScoreData is null)
-            {
-                throw new InvalidDataException(
-                    Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
-            }
-
-            return new List<IStringReplaceable>
-            {
-                new ScoreReplacer(this.allScoreData.ClearData, formatter),
-                new CareerReplacer(this.allScoreData.ClearData, formatter),
-                new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
-                new CollectRateReplacer(this.allScoreData.ClearData, formatter),
-                new ClearReplacer(this.allScoreData.ClearData),
-                new CharaReplacer(this.allScoreData.ClearData, formatter),
-                new CharaExReplacer(this.allScoreData.ClearData, formatter),
-                new PracticeReplacer(this.allScoreData.ClearData, formatter),
-            };
+            throw new InvalidDataException(
+                Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        private static bool Decrypt(Stream input, Stream output)
+        return new List<IStringReplaceable>
         {
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
-            using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
-            var header = new Header();
+            new ScoreReplacer(this.allScoreData.ClearData, formatter),
+            new CareerReplacer(this.allScoreData.ClearData, formatter),
+            new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
+            new CollectRateReplacer(this.allScoreData.ClearData, formatter),
+            new ClearReplacer(this.allScoreData.ClearData),
+            new CharaReplacer(this.allScoreData.ClearData, formatter),
+            new CharaExReplacer(this.allScoreData.ClearData, formatter),
+            new PracticeReplacer(this.allScoreData.ClearData, formatter),
+        };
+    }
 
-            header.ReadFrom(reader);
-            if (!header.IsValid)
-                return false;
-            if (header.EncodedAllSize != reader.BaseStream.Length)
-                return false;
+    private static bool Decrypt(Stream input, Stream output)
+    {
+        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+        using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
+        var header = new Header();
 
-            header.WriteTo(writer);
-            ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
+        header.ReadFrom(reader);
+        if (!header.IsValid)
+            return false;
+        if (header.EncodedAllSize != reader.BaseStream.Length)
+            return false;
 
-            return true;
-        }
+        header.WriteTo(writer);
+        ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
 
-        private static bool Extract(Stream input, Stream output)
+        return true;
+    }
+
+    private static bool Extract(Stream input, Stream output)
+    {
+        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+        using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
+
+        var header = new Header();
+        header.ReadFrom(reader);
+        header.WriteTo(writer);
+
+        var bodyBeginPos = output.Position;
+        Lzss.Decompress(input, output);
+        output.Flush();
+        output.SetLength(output.Position);
+
+        return header.DecodedBodySize == (output.Position - bodyBeginPos);
+    }
+
+    private static bool Validate(Stream input)
+    {
+        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+
+        var header = new Header();
+        header.ReadFrom(reader);
+        var remainSize = header.DecodedBodySize;
+        var chapter = new Th10.Chapter();
+
+        try
         {
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
-            using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
+            while (remainSize > 0)
+            {
+                chapter.ReadFrom(reader);
+                if (!chapter.IsValid)
+                    return false;
+                if (!ClearData.CanInitialize(chapter) && !Status.CanInitialize(chapter))
+                    return false;
 
-            var header = new Header();
-            header.ReadFrom(reader);
-            header.WriteTo(writer);
-
-            var bodyBeginPos = output.Position;
-            Lzss.Decompress(input, output);
-            output.Flush();
-            output.SetLength(output.Position);
-
-            return header.DecodedBodySize == (output.Position - bodyBeginPos);
+                remainSize -= chapter.Size;
+            }
         }
-
-        private static bool Validate(Stream input)
+        catch (EndOfStreamException)
         {
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
-
-            var header = new Header();
-            header.ReadFrom(reader);
-            var remainSize = header.DecodedBodySize;
-            var chapter = new Th10.Chapter();
-
-            try
-            {
-                while (remainSize > 0)
-                {
-                    chapter.ReadFrom(reader);
-                    if (!chapter.IsValid)
-                        return false;
-                    if (!ClearData.CanInitialize(chapter) && !Status.CanInitialize(chapter))
-                        return false;
-
-                    remainSize -= chapter.Size;
-                }
-            }
-            catch (EndOfStreamException)
-            {
-                // It's OK, do nothing.
-            }
-
-            return remainSize == 0;
+            // It's OK, do nothing.
         }
 
-        private static AllScoreData? Read(Stream input)
+        return remainSize == 0;
+    }
+
+    private static AllScoreData? Read(Stream input)
+    {
+        var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
         {
-            var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
+            { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
+            { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
+        };
+
+        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+        var allScoreData = new AllScoreData();
+        var chapter = new Th10.Chapter();
+
+        var header = new Header();
+        header.ReadFrom(reader);
+        allScoreData.Set(header);
+
+        try
+        {
+            while (true)
             {
-                { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
-            };
-
-            using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
-            var allScoreData = new AllScoreData();
-            var chapter = new Th10.Chapter();
-
-            var header = new Header();
-            header.ReadFrom(reader);
-            allScoreData.Set(header);
-
-            try
-            {
-                while (true)
-                {
-                    chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
-                        setChapter(allScoreData, chapter);
-                }
+                chapter.ReadFrom(reader);
+                if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
+                    setChapter(allScoreData, chapter);
             }
-            catch (EndOfStreamException)
-            {
-                // It's OK, do nothing.
-            }
-
-            if ((allScoreData.Header is not null) &&
-                (allScoreData.ClearData.Count == EnumHelper<CharaWithTotal>.NumValues) &&
-                (allScoreData.Status is not null))
-                return allScoreData;
-            else
-                return null;
         }
+        catch (EndOfStreamException)
+        {
+            // It's OK, do nothing.
+        }
+
+        if ((allScoreData.Header is not null) &&
+            (allScoreData.ClearData.Count == EnumHelper<CharaWithTotal>.NumValues) &&
+            (allScoreData.Status is not null))
+            return allScoreData;
+        else
+            return null;
     }
 }

@@ -10,21 +10,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal interface IHighScore<TChara, TLevel, TStageProgress> : IChapter
+    where TChara : struct, Enum
+    where TLevel : struct, Enum
+    where TStageProgress : struct, Enum
 {
-    internal interface IHighScore<TChara, TLevel, TStageProgress> : IChapter
-        where TChara : struct, Enum
-        where TLevel : struct, Enum
-        where TStageProgress : struct, Enum
-    {
-        TChara Chara { get; }
+    TChara Chara { get; }
 
-        TLevel Level { get; }
+    TLevel Level { get; }
 
-        IEnumerable<byte> Name { get; }
+    IEnumerable<byte> Name { get; }
 
-        uint Score { get; }
+    uint Score { get; }
 
-        TStageProgress StageProgress { get; }
-    }
+    TStageProgress StageProgress { get; }
 }

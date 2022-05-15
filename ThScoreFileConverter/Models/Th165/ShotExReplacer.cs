@@ -14,165 +14,164 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th165
+namespace ThScoreFileConverter.Models.Th165;
+
+// %T165SHOTEX[xx][y][z]
+internal class ShotExReplacer : IStringReplaceable
 {
-    // %T165SHOTEX[xx][y][z]
-    internal class ShotExReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}SHOTEX({1})([1-7])([1-9])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+
+    private static readonly Func<IBestShotHeader, IReadOnlyList<Hashtag>> HashtagList =
+        header => new List<Hashtag>
+        {
+            new(header.Fields.IsSelfie, "＃自撮り！"),
+            new(header.Fields.IsTwoShot, "＃ツーショット！"),
+            new(header.Fields.IsThreeShot, "＃スリーショット！"),
+            new(header.Fields.TwoEnemiesTogether, "＃二人まとめて撮影した！"),
+            new(header.Fields.EnemyIsPartlyInFrame, "＃敵が見切れてる"),
+            new(header.Fields.WholeEnemyIsInFrame, "＃敵を収めたよ"),
+            new(header.Fields.EnemyIsInMiddle, "＃敵がど真ん中"),
+            new(header.Fields.PeaceSignAlongside, "＃並んでピース"),
+            new(header.Fields.EnemiesAreTooClose, "＃二人が近すぎるｗ"),
+            new(header.Fields.EnemiesAreOverlapping, "＃二人が重なってるｗｗ"),
+            new(header.Fields.Closeup, "＃接写！"),
+            new(header.Fields.QuiteCloseup, "＃かなりの接写！"),
+            new(header.Fields.TooClose, "＃近すぎてぶつかるー！"),
+            new(header.Fields.TooManyBullets, "＃弾多すぎｗ"),
+            new(header.Fields.TooPlayfulBarrage, "＃弾幕ふざけすぎｗｗ"),
+            new(header.Fields.TooDense, "＃ちょっ、密度濃すぎｗｗｗ"),
+            new(header.Fields.BitDangerous, "＃ちょっと危なかった"),
+            new(header.Fields.SeriouslyDangerous, "＃マジで危なかった"),
+            new(header.Fields.ThoughtGonnaDie, "＃死ぬかと思った"),
+            new(header.Fields.EnemyIsInFullView, "＃敵が丸見えｗ"),
+            new(header.Fields.ManyReds, "＃赤色多いな"),
+            new(header.Fields.ManyPurples, "＃紫色多いね"),
+            new(header.Fields.ManyBlues, "＃青色多いよ"),
+            new(header.Fields.ManyCyans, "＃水色多いし"),
+            new(header.Fields.ManyGreens, "＃緑色多いねぇ"),
+            new(header.Fields.ManyYellows, "＃黄色多いなぁ"),
+            new(header.Fields.ManyOranges, "＃橙色多いお"),
+            new(header.Fields.TooColorful, "＃カラフル過ぎｗ"),
+            new(header.Fields.SevenColors, "＃七色全部揃った！"),
+            new(header.Fields.Dazzling, "＃うおっ、まぶし！"),
+            new(header.Fields.MoreDazzling, "＃ぐあ、眩しすぎるー！"),
+            new(header.Fields.MostDazzling, "＃うあー、目が、目がー！"),
+            new(header.Fields.EnemyIsUndamaged, "＃敵は無傷だ"),
+            new(header.Fields.EnemyCanAfford, "＃敵はまだ余裕がある"),
+            new(header.Fields.EnemyIsWeakened, "＃敵がだいぶ弱ってる"),
+            new(header.Fields.EnemyIsDying, "＃敵が瀕死だ"),
+            new(header.Fields.Finished, "＃トドメをさしたよ！"),
+            new(header.Fields.FinishedTogether, "＃二人まとめてトドメ！"),
+            new(header.Fields.Chased, "＃追い打ちしたよ！"),
+            new(header.Fields.IsSuppository, "＃座薬ｗｗｗ"),
+            new(header.Fields.IsButterflyLikeMoth, "＃蛾みたいな蝶だ！"),
+            new(header.Fields.Scorching, "＃アチチ、焦げちゃうよ"),
+            new(header.Fields.TooBigBullet, "＃弾、大きすぎでしょｗ"),
+            new(header.Fields.ThrowingEdgedTools, "＃刃物投げんな (و｀ω´)6"),
+            new(header.Fields.IsThunder, "＃ぎゃー、雷はスマホがー"),
+            new(header.Fields.Snaky, "＃うねうねだー！"),
+            new(header.Fields.LightLooksStopped, "＃光が止まって見える！"),
+            new(header.Fields.IsSuperMoon, "＃スーパームーン！"),
+            new(header.Fields.IsRockyBarrage, "＃岩の弾幕とかｗｗ"),
+            new(header.Fields.IsStickDestroyingBarrage, "＃弾幕を破壊する棒……？"),
+            new(header.Fields.IsLovelyHeart, "＃ラブリーハート！"),
+            new(header.Fields.IsDrum, "＃ドンドコドンドコ"),
+            new(header.Fields.Fluffy, "＃もふもふもふー"),
+            new(header.Fields.IsDoggiePhoto, "＃わんわん写真"),
+            new(header.Fields.IsAnimalPhoto, "＃アニマルフォト"),
+            new(header.Fields.IsZoo, "＃動物園！"),
+            new(header.Fields.IsMisty, "＃身体が霧状に！？"),
+            new(header.Fields.WasScolded, "＃怒られちゃった……"),
+            new(header.Fields.IsLandscapePhoto, "＃風景写真"),
+            new(header.Fields.IsBoringPhoto, "＃何ともつまらない写真"),
+            new(header.Fields.IsSumireko, "＃私こそが宇佐見菫子だ！"),
+        };
+
+    private readonly MatchEvaluator evaluator;
+
+    public ShotExReplacer(
+        IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
+        INumberFormatter formatter,
+        string outputFilePath)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}SHOTEX({1})([1-7])([1-9])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
-
-        private static readonly Func<IBestShotHeader, IReadOnlyList<Hashtag>> HashtagList =
-            header => new List<Hashtag>
-            {
-                new(header.Fields.IsSelfie, "＃自撮り！"),
-                new(header.Fields.IsTwoShot, "＃ツーショット！"),
-                new(header.Fields.IsThreeShot, "＃スリーショット！"),
-                new(header.Fields.TwoEnemiesTogether, "＃二人まとめて撮影した！"),
-                new(header.Fields.EnemyIsPartlyInFrame, "＃敵が見切れてる"),
-                new(header.Fields.WholeEnemyIsInFrame, "＃敵を収めたよ"),
-                new(header.Fields.EnemyIsInMiddle, "＃敵がど真ん中"),
-                new(header.Fields.PeaceSignAlongside, "＃並んでピース"),
-                new(header.Fields.EnemiesAreTooClose, "＃二人が近すぎるｗ"),
-                new(header.Fields.EnemiesAreOverlapping, "＃二人が重なってるｗｗ"),
-                new(header.Fields.Closeup, "＃接写！"),
-                new(header.Fields.QuiteCloseup, "＃かなりの接写！"),
-                new(header.Fields.TooClose, "＃近すぎてぶつかるー！"),
-                new(header.Fields.TooManyBullets, "＃弾多すぎｗ"),
-                new(header.Fields.TooPlayfulBarrage, "＃弾幕ふざけすぎｗｗ"),
-                new(header.Fields.TooDense, "＃ちょっ、密度濃すぎｗｗｗ"),
-                new(header.Fields.BitDangerous, "＃ちょっと危なかった"),
-                new(header.Fields.SeriouslyDangerous, "＃マジで危なかった"),
-                new(header.Fields.ThoughtGonnaDie, "＃死ぬかと思った"),
-                new(header.Fields.EnemyIsInFullView, "＃敵が丸見えｗ"),
-                new(header.Fields.ManyReds, "＃赤色多いな"),
-                new(header.Fields.ManyPurples, "＃紫色多いね"),
-                new(header.Fields.ManyBlues, "＃青色多いよ"),
-                new(header.Fields.ManyCyans, "＃水色多いし"),
-                new(header.Fields.ManyGreens, "＃緑色多いねぇ"),
-                new(header.Fields.ManyYellows, "＃黄色多いなぁ"),
-                new(header.Fields.ManyOranges, "＃橙色多いお"),
-                new(header.Fields.TooColorful, "＃カラフル過ぎｗ"),
-                new(header.Fields.SevenColors, "＃七色全部揃った！"),
-                new(header.Fields.Dazzling, "＃うおっ、まぶし！"),
-                new(header.Fields.MoreDazzling, "＃ぐあ、眩しすぎるー！"),
-                new(header.Fields.MostDazzling, "＃うあー、目が、目がー！"),
-                new(header.Fields.EnemyIsUndamaged, "＃敵は無傷だ"),
-                new(header.Fields.EnemyCanAfford, "＃敵はまだ余裕がある"),
-                new(header.Fields.EnemyIsWeakened, "＃敵がだいぶ弱ってる"),
-                new(header.Fields.EnemyIsDying, "＃敵が瀕死だ"),
-                new(header.Fields.Finished, "＃トドメをさしたよ！"),
-                new(header.Fields.FinishedTogether, "＃二人まとめてトドメ！"),
-                new(header.Fields.Chased, "＃追い打ちしたよ！"),
-                new(header.Fields.IsSuppository, "＃座薬ｗｗｗ"),
-                new(header.Fields.IsButterflyLikeMoth, "＃蛾みたいな蝶だ！"),
-                new(header.Fields.Scorching, "＃アチチ、焦げちゃうよ"),
-                new(header.Fields.TooBigBullet, "＃弾、大きすぎでしょｗ"),
-                new(header.Fields.ThrowingEdgedTools, "＃刃物投げんな (و｀ω´)6"),
-                new(header.Fields.IsThunder, "＃ぎゃー、雷はスマホがー"),
-                new(header.Fields.Snaky, "＃うねうねだー！"),
-                new(header.Fields.LightLooksStopped, "＃光が止まって見える！"),
-                new(header.Fields.IsSuperMoon, "＃スーパームーン！"),
-                new(header.Fields.IsRockyBarrage, "＃岩の弾幕とかｗｗ"),
-                new(header.Fields.IsStickDestroyingBarrage, "＃弾幕を破壊する棒……？"),
-                new(header.Fields.IsLovelyHeart, "＃ラブリーハート！"),
-                new(header.Fields.IsDrum, "＃ドンドコドンドコ"),
-                new(header.Fields.Fluffy, "＃もふもふもふー"),
-                new(header.Fields.IsDoggiePhoto, "＃わんわん写真"),
-                new(header.Fields.IsAnimalPhoto, "＃アニマルフォト"),
-                new(header.Fields.IsZoo, "＃動物園！"),
-                new(header.Fields.IsMisty, "＃身体が霧状に！？"),
-                new(header.Fields.WasScolded, "＃怒られちゃった……"),
-                new(header.Fields.IsLandscapePhoto, "＃風景写真"),
-                new(header.Fields.IsBoringPhoto, "＃何ともつまらない写真"),
-                new(header.Fields.IsSumireko, "＃私こそが宇佐見菫子だ！"),
-            };
-
-        private readonly MatchEvaluator evaluator;
-
-        public ShotExReplacer(
-            IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
-            INumberFormatter formatter,
-            string outputFilePath)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+            var scene = IntegerHelper.Parse(match.Groups[2].Value);
+            var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+            var key = (day, scene);
+            if (!Definitions.SpellCards.ContainsKey(key))
+                return match.ToString();
+
+            if (bestshots.TryGetValue(key, out var bestshot))
             {
-                var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-                var scene = IntegerHelper.Parse(match.Groups[2].Value);
-                var type = IntegerHelper.Parse(match.Groups[3].Value);
-
-                var key = (day, scene);
-                if (!Definitions.SpellCards.ContainsKey(key))
-                    return match.ToString();
-
-                if (bestshots.TryGetValue(key, out var bestshot))
+                switch (type)
                 {
-                    switch (type)
-                    {
-                        case 1:     // relative path to the bestshot file
-                            if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
-                                return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                            else
-                                return string.Empty;
-                        case 2:     // width
-                            return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                        case 3:     // height
-                            return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                        case 4:     // date & time
-                            return DateTimeHelper.GetString(bestshot.Header.DateTime);
-                        case 5:     // hashtags
-                            var hashtags = HashtagList(bestshot.Header)
-                                .Where(hashtag => hashtag.Outputs)
-                                .Select(hashtag => hashtag.Name);
-                            return string.Join(Environment.NewLine, hashtags.ToArray());
-                        case 6:     // number of views
-                            return formatter.FormatNumber(bestshot.Header.NumViewed);
-                        case 7:     // number of likes
-                            return formatter.FormatNumber(bestshot.Header.NumLikes);
-                        case 8:     // number of favs
-                            return formatter.FormatNumber(bestshot.Header.NumFavs);
-                        case 9:     // score
-                            return formatter.FormatNumber(bestshot.Header.Score);
-                        default:    // unreachable
-                            return match.ToString();
-                    }
+                    case 1:     // relative path to the bestshot file
+                        if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                            Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                            return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
+                        else
+                            return string.Empty;
+                    case 2:     // width
+                        return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
+                    case 3:     // height
+                        return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
+                    case 4:     // date & time
+                        return DateTimeHelper.GetString(bestshot.Header.DateTime);
+                    case 5:     // hashtags
+                        var hashtags = HashtagList(bestshot.Header)
+                            .Where(hashtag => hashtag.Outputs)
+                            .Select(hashtag => hashtag.Name);
+                        return string.Join(Environment.NewLine, hashtags.ToArray());
+                    case 6:     // number of views
+                        return formatter.FormatNumber(bestshot.Header.NumViewed);
+                    case 7:     // number of likes
+                        return formatter.FormatNumber(bestshot.Header.NumLikes);
+                    case 8:     // number of favs
+                        return formatter.FormatNumber(bestshot.Header.NumFavs);
+                    case 9:     // score
+                        return formatter.FormatNumber(bestshot.Header.Score);
+                    default:    // unreachable
+                        return match.ToString();
                 }
-                else
-                {
-                    return type switch
-                    {
-                        1 => string.Empty,
-                        2 => "0",
-                        3 => "0",
-                        4 => DateTimeHelper.GetString(null),
-                        5 => string.Empty,
-                        6 => formatter.FormatNumber(0),
-                        7 => formatter.FormatNumber(0),
-                        8 => formatter.FormatNumber(0),
-                        9 => formatter.FormatNumber(0),
-                        _ => match.ToString(),
-                    };
-                }
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
-
-        private class Hashtag
-        {
-            public Hashtag(bool outputs, string name)
-            {
-                this.Outputs = outputs;
-                this.Name = name;
             }
+            else
+            {
+                return type switch
+                {
+                    1 => string.Empty,
+                    2 => "0",
+                    3 => "0",
+                    4 => DateTimeHelper.GetString(null),
+                    5 => string.Empty,
+                    6 => formatter.FormatNumber(0),
+                    7 => formatter.FormatNumber(0),
+                    8 => formatter.FormatNumber(0),
+                    9 => formatter.FormatNumber(0),
+                    _ => match.ToString(),
+                };
+            }
+        });
+    }
 
-            public bool Outputs { get; }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+    }
 
-            public string Name { get; }
+    private class Hashtag
+    {
+        public Hashtag(bool outputs, string name)
+        {
+            this.Outputs = outputs;
+            this.Name = name;
         }
+
+        public bool Outputs { get; }
+
+        public string Name { get; }
     }
 }

@@ -9,12 +9,11 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models.Th14
-{
-    internal class Header : Th095.HeaderBase
-    {
-        public const string ValidSignature = "TH41";
+namespace ThScoreFileConverter.Models.Th14;
 
-        public override bool IsValid => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
-    }
+internal class Header : Th095.HeaderBase
+{
+    public const string ValidSignature = "TH41";
+
+    public override bool IsValid => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
 }

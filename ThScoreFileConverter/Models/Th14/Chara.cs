@@ -5,47 +5,46 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th14
+namespace ThScoreFileConverter.Models.Th14;
+
+/// <summary>
+/// Represents playable characters of DDC.
+/// </summary>
+public enum Chara
 {
     /// <summary>
-    /// Represents playable characters of DDC.
+    /// Hakurei Reimu with the bewitched weapon.
     /// </summary>
-    public enum Chara
-    {
-        /// <summary>
-        /// Hakurei Reimu with the bewitched weapon.
-        /// </summary>
-        [EnumAltName("RA")]
-        ReimuA,
+    [EnumAltName("RA")]
+    ReimuA,
 
-        /// <summary>
-        /// Hakurei Reimu without the bewitched weapon.
-        /// </summary>
-        [EnumAltName("RB")]
-        ReimuB,
+    /// <summary>
+    /// Hakurei Reimu without the bewitched weapon.
+    /// </summary>
+    [EnumAltName("RB")]
+    ReimuB,
 
-        /// <summary>
-        /// Kirisame Marisa with the bewitched weapon.
-        /// </summary>
-        [EnumAltName("MA")]
-        MarisaA,
+    /// <summary>
+    /// Kirisame Marisa with the bewitched weapon.
+    /// </summary>
+    [EnumAltName("MA")]
+    MarisaA,
 
-        /// <summary>
-        /// Kirisame Marisa without the bewitched weapon.
-        /// </summary>
-        [EnumAltName("MB")]
-        MarisaB,
+    /// <summary>
+    /// Kirisame Marisa without the bewitched weapon.
+    /// </summary>
+    [EnumAltName("MB")]
+    MarisaB,
 
-        /// <summary>
-        /// Izayoi Sakuya with the bewitched weapon.
-        /// </summary>
-        [EnumAltName("SA")]
-        SakuyaA,
+    /// <summary>
+    /// Izayoi Sakuya with the bewitched weapon.
+    /// </summary>
+    [EnumAltName("SA")]
+    SakuyaA,
 
-        /// <summary>
-        /// Izayoi Sakuya without the bewitched weapon.
-        /// </summary>
-        [EnumAltName("SB")]
-        SakuyaB,
-    }
+    /// <summary>
+    /// Izayoi Sakuya without the bewitched weapon.
+    /// </summary>
+    [EnumAltName("SB")]
+    SakuyaB,
 }

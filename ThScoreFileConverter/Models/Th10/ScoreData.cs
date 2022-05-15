@@ -7,9 +7,8 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal class ScoreData : ScoreDataBase<StageProgress>
 {
-    internal class ScoreData : ScoreDataBase<StageProgress>
-    {
-    }
 }

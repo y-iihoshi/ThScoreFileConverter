@@ -14,20 +14,19 @@ using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice>;
 
-namespace ThScoreFileConverter.Models.Th14
+namespace ThScoreFileConverter.Models.Th14;
+
+internal class ClearData : ClearDataBase    // per character
 {
-    internal class ClearData : ClearDataBase    // per character
+    public const int ValidSize = 0x00005298;
+
+    public ClearData(Th10.Chapter chapter)
+        : base(chapter, ValidSize, Definitions.CardTable.Count)
     {
-        public const int ValidSize = 0x00005298;
+    }
 
-        public ClearData(Th10.Chapter chapter)
-            : base(chapter, ValidSize, Definitions.CardTable.Count)
-        {
-        }
-
-        public static new bool CanInitialize(Th10.Chapter chapter)
-        {
-            return ClearDataBase.CanInitialize(chapter) && (chapter.Size == ValidSize);
-        }
+    public static new bool CanInitialize(Th10.Chapter chapter)
+    {
+        return ClearDataBase.CanInitialize(chapter) && (chapter.Size == ValidSize);
     }
 }

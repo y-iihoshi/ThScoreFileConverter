@@ -9,21 +9,20 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+// %T10CHARA[xx][y]
+internal class CharaReplacer : CharaReplacerBase<CharaWithTotal>
 {
-    // %T10CHARA[xx][y]
-    internal class CharaReplacer : CharaReplacerBase<CharaWithTotal>
+    public CharaReplacer(
+        IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaWithTotalParser,
+              Definitions.IsTotal,
+              clearDataDictionary,
+              formatter)
     {
-        public CharaReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.CharaWithTotalParser,
-                  Definitions.IsTotal,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }
