@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ThScoreFileConverter.Helpers;
+namespace ThScoreFileConverter.Core.Helpers;
 
 /// <summary>
 /// Provides helper functions for <typeparamref name="T"/>.

@@ -2,8 +2,8 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore;

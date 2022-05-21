@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<

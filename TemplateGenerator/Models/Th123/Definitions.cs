@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th123;
 using CardType = ThScoreFileConverter.Models.Th105.CardType;
 

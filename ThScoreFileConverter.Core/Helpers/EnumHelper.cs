@@ -8,7 +8,7 @@
 using System;
 using System.Globalization;
 
-namespace ThScoreFileConverter.Helpers;
+namespace ThScoreFileConverter.Core.Helpers;
 
 /// <summary>
 /// Provides helper functions for enum.

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th08;
 
 namespace TemplateGenerator.Models.Th08;

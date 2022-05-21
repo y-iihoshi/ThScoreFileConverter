@@ -1,8 +1,7 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Helpers;
 
-namespace ThScoreFileConverter.Tests.Helpers;
+namespace ThScoreFileConverter.Core.Tests.Helpers;
 
 [TestClass]
 public class EnumHelperTests

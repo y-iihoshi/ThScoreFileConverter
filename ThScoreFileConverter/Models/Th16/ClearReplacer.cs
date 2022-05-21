@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
