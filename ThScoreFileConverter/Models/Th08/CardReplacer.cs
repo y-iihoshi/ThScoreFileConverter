@@ -8,7 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Core.Extensions;
 
 namespace ThScoreFileConverter.Models.Th08;
 

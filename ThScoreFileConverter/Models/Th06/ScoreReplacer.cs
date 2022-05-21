@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Helpers;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
     ThScoreFileConverter.Models.Th06.Chara,

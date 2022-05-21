@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th07;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<

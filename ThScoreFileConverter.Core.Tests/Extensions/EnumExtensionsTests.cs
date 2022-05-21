@@ -1,9 +1,8 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
-using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Tests.Extensions;
+namespace ThScoreFileConverter.Core.Tests.Extensions;
 
 public enum Protagonist
 {

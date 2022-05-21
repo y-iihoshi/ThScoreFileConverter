@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using ThScoreFileConverter.Core.Models;
 
-namespace ThScoreFileConverter.Extensions;
+namespace ThScoreFileConverter.Core.Extensions;
 
 /// <summary>
 /// Provides some extension methods for enumeration types.
