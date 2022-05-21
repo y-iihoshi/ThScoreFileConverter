@@ -7,7 +7,7 @@
 
 using System;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Core.Models;
 
 /// <summary>
 /// Provides alternative names of enumeration fields.

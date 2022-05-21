@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverter.Tests.Extensions;
 

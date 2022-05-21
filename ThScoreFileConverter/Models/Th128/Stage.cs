@@ -7,6 +7,8 @@
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
+using ThScoreFileConverter.Core.Models;
+
 namespace ThScoreFileConverter.Models.Th128;
 
 /// <summary>
