@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverter", "ThS
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ManualGenerator", "ManualGenerator\ManualGenerator.pyproj", "{3FDE820F-B99D-4936-AC8E-11A36697F9D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverterTests", "ThScoreFileConverterTests\ThScoreFileConverterTests.csproj", "{48809CD9-31FA-46FA-867B-5E8BCC2DED45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverter.Tests", "ThScoreFileConverter.Tests\ThScoreFileConverter.Tests.csproj", "{48809CD9-31FA-46FA-867B-5E8BCC2DED45}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGenerator", "TemplateGenerator\TemplateGenerator.csproj", "{828BB6E0-33A8-418B-AB46-0260377DCD95}"
 EndProject
