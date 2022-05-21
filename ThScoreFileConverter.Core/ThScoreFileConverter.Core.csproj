@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;netcoreapp3.1;net6.0-windows</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Copyright>© 2022 IIHOSHI Yoshinori</Copyright>
+    <Description>Core library of ThScoreFileConverter.</Description>
+  </PropertyGroup>
+
+</Project>
