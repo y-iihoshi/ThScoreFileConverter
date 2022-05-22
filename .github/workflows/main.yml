@@ -58,7 +58,7 @@ jobs:
 
     - name: Generate coverage report
       run: >
-        dotnet test
+        dotnet test ThScoreFileConverter.Core.Tests ThScoreFileConverter.Tests
         /p:Configuration=${{ matrix.configuration }}
         /p:TargetFrameworks=${{ matrix.target-framework }}
         /p:CollectCoverage=true
