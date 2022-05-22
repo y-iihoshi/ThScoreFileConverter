@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
@@ -19,7 +20,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Stage,
+    ThScoreFileConverter.Core.Models.Stage,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 

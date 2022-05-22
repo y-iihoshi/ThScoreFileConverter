@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 
