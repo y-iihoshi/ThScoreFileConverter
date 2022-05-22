@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="CharaWithReserved.cs" company="None">
+// <copyright file="Chara.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th075;
+namespace ThScoreFileConverter.Core.Models.Th075;
 
 /// <summary>
-/// Represents playable characters of IMP including reserved.
+/// Represents playable characters of IMP.
 /// </summary>
-public enum CharaWithReserved
+public enum Chara
 {
     /// <summary>
     /// Hakurei Reimu.
@@ -79,30 +77,4 @@ public enum CharaWithReserved
     /// </summary>
     [EnumAltName("ML")]
     Meiling,
-
-#pragma warning disable CA1700 // Do not name enum values 'Reserved'
-    /// <summary>
-    /// Reserved character #12.
-    /// </summary>
-    [EnumAltName("12")]
-    Reserved12,
-
-    /// <summary>
-    /// Reserved character #13.
-    /// </summary>
-    [EnumAltName("13")]
-    Reserved13,
-
-    /// <summary>
-    /// Reserved character #14.
-    /// </summary>
-    [EnumAltName("14")]
-    Reserved14,
-
-    /// <summary>
-    /// Reserved character #15.
-    /// </summary>
-    [EnumAltName("15")]
-    Reserved15,
-#pragma warning restore CA1700 // Do not name enum values 'Reserved'
 }
