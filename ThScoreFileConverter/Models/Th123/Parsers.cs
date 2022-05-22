@@ -15,10 +15,19 @@ namespace ThScoreFileConverter.Models.Th123;
 internal static class Parsers
 {
     /// <summary>
-    /// Gets the parser of <see cref="Th105.LevelWithTotal"/>.
+    /// Gets the parser of <see cref="Core.Models.Th105.LevelWithTotal"/>.
     /// </summary>
+
+/* プロジェクト 'ThScoreFileConverter (net6.0-windows)' からのマージされていない変更
+前:
     public static EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser { get; } =
         new EnumShortNameParser<Th105.LevelWithTotal>();
+後:
+    public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
+        new EnumShortNameParser<LevelWithTotal>();
+*/
+    public static EnumShortNameParser<Core.Models.Th105.LevelWithTotal> LevelWithTotalParser { get; } =
+        new EnumShortNameParser<Core.Models.Th105.LevelWithTotal>();
 
     /// <summary>
     /// Gets the parser of <see cref="Chara"/>.

@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th105;

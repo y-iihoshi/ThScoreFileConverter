@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th123;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Models.Th123.Chara>;
 using ISpellCardResult = ThScoreFileConverter.Models.Th105.ISpellCardResult<ThScoreFileConverter.Models.Th123.Chara>;
-using Level = ThScoreFileConverter.Models.Th105.Level;
+using Level = ThScoreFileConverter.Core.Models.Th105.Level;
 
 namespace ThScoreFileConverter.Tests.Models.Th123;
 

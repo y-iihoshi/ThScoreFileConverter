@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th105;
+namespace ThScoreFileConverter.Core.Models.Th105;
 
 /// <summary>
 /// Represents levels of SWR and total.
