@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models.Th08;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore;
 

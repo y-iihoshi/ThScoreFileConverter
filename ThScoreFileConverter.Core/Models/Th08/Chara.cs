@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="CharaWithTotal.cs" company="None">
+// <copyright file="Chara.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th08;
+namespace ThScoreFileConverter.Core.Models.Th08;
 
 /// <summary>
-/// Represents player characters of IN and total.
+/// Represents player characters of IN.
 /// </summary>
-public enum CharaWithTotal
+public enum Chara
 {
     /// <summary>
     /// Illusionary Barrier Team.
@@ -85,10 +83,4 @@ public enum CharaWithTotal
     /// </summary>
     [EnumAltName("YU")]
     Yuyuko,
-
-    /// <summary>
-    /// Represents total across characters.
-    /// </summary>
-    [EnumAltName("TL")]
-    Total,
 }
