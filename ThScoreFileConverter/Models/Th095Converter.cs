@@ -13,6 +13,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th095;
@@ -25,15 +26,7 @@ namespace ThScoreFileConverter.Models;
 #endif
 internal class Th095Converter : ThConverter
 {
-    private readonly Dictionary<
-
-/* プロジェクト 'ThScoreFileConverter (netcoreapp3.1)' からのマージされていない変更
-前:
-        (Th095.Level Level, int Scene), (string Path, IBestShotHeader<Th095.Level> Header)> bestshots =
-後:
-        (Level Level, int Scene), (string Path, IBestShotHeader<Level> Header)> bestshots =
-*/
-        (Core.Models.Th095.Level Level, int Scene), (string Path, IBestShotHeader<Core.Models.Th095.Level> Header)> bestshots =
+    private readonly Dictionary<(Level Level, int Scene), (string Path, IBestShotHeader<Level> Header)> bestshots =
         new(Th095.Definitions.SpellCards.Count);
 
     private AllScoreData? allScoreData;
