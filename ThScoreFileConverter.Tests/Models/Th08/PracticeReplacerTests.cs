@@ -8,7 +8,7 @@ using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
-using Stage = ThScoreFileConverter.Models.Th08.Stage;
+using Stage = ThScoreFileConverter.Core.Models.Th08.Stage;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 

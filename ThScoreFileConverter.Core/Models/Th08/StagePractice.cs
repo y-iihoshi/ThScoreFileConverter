@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Stage.cs" company="None">
+// <copyright file="StagePractice.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th08;
+namespace ThScoreFileConverter.Core.Models.Th08;
 
 /// <summary>
-/// Represents stages of IN.
+/// Represents stages of IN spell card practice.
 /// </summary>
-public enum Stage
+public enum StagePractice
 {
     /// <summary>
     /// Represents stage 1.
@@ -67,4 +65,10 @@ public enum Stage
     /// </summary>
     [EnumAltName("EX")]
     Extra,
+
+    /// <summary>
+    /// Represents Last Word stage.
+    /// </summary>
+    [EnumAltName("LW", LongName = "Last Word")]
+    LastWord,
 }

@@ -11,7 +11,7 @@ using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
-using Stage = ThScoreFileConverter.Models.Th08.Stage;
+using Stage = ThScoreFileConverter.Core.Models.Th08.Stage;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 

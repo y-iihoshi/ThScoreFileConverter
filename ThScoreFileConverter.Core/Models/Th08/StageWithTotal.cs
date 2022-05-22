@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th08;
+namespace ThScoreFileConverter.Core.Models.Th08;
 
 /// <summary>
 /// Represents stages of IN and total.
