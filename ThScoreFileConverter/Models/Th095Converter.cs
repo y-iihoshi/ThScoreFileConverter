@@ -26,7 +26,14 @@ namespace ThScoreFileConverter.Models;
 internal class Th095Converter : ThConverter
 {
     private readonly Dictionary<
+
+/* プロジェクト 'ThScoreFileConverter (netcoreapp3.1)' からのマージされていない変更
+前:
         (Th095.Level Level, int Scene), (string Path, IBestShotHeader<Th095.Level> Header)> bestshots =
+後:
+        (Level Level, int Scene), (string Path, IBestShotHeader<Level> Header)> bestshots =
+*/
+        (Core.Models.Th095.Level Level, int Scene), (string Path, IBestShotHeader<Core.Models.Th095.Level> Header)> bestshots =
         new(Th095.Definitions.SpellCards.Count);
 
     private AllScoreData? allScoreData;

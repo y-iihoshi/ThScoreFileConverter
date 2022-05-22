@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Core.Models.Th095;
 
 namespace TemplateGenerator.Models.Th095;
 

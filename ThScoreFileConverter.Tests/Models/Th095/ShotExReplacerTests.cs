@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th095;
 using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;

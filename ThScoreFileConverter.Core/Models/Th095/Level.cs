@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th095;
+namespace ThScoreFileConverter.Core.Models.Th095;
 
 /// <summary>
 /// Represents levels of StB.
