@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th09;
 
 namespace ThScoreFileConverter.Models.Th09;
 

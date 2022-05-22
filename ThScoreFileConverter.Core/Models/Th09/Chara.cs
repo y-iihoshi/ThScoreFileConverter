@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th09;
+namespace ThScoreFileConverter.Core.Models.Th09;
 
 /// <summary>
 /// Represents playable characters of PoFV.
