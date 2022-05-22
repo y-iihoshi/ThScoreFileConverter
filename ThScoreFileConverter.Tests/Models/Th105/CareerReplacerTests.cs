@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 

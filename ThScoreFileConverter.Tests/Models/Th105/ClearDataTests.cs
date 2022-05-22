@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverter.Tests.UnitTesting;
 
