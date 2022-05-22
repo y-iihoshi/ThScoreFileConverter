@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Chara.cs" company="None">
+// <copyright file="CharaWithTotal.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th07;
+namespace ThScoreFileConverter.Core.Models.Th07;
 
 /// <summary>
-/// Represents player characters of PCB.
+/// Represents player characters of PCB and total.
 /// </summary>
-public enum Chara
+public enum CharaWithTotal
 {
     /// <summary>
     /// Hakurei Reimu (Spirit Sign).
@@ -49,4 +47,10 @@ public enum Chara
     /// </summary>
     [EnumAltName("SB")]
     SakuyaB,
+
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }

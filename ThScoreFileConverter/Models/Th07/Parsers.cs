@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using ThScoreFileConverter.Core.Models.Th07;
+
 namespace ThScoreFileConverter.Models.Th07;
 
 /// <summary>

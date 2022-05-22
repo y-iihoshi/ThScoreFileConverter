@@ -5,12 +5,13 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
-    ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
+    ThScoreFileConverter.Core.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 

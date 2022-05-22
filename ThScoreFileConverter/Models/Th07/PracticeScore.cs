@@ -9,6 +9,7 @@
 
 using System.IO;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th07;
 
 namespace ThScoreFileConverter.Models.Th07;
 
