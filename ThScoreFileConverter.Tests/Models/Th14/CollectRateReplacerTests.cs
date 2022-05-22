@@ -3,17 +3,18 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th14;
 using Definitions = ThScoreFileConverter.Models.Th14.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
-    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th14.LevelPractice,
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
-using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Tests.Models.Th14;
 

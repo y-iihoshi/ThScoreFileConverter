@@ -14,10 +14,10 @@ using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Extensions;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th06.Chara,
-    ThScoreFileConverter.Models.Level>;
+    ThScoreFileConverter.Core.Models.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
     ThScoreFileConverter.Models.Th06.Chara,
-    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th06;

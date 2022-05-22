@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th128;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;

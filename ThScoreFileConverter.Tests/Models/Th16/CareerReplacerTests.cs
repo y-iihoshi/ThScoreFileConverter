@@ -7,12 +7,12 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th16.CharaWithTotal,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Core.Models.Level,
+    ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
-using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Tests.Models.Th16;
 

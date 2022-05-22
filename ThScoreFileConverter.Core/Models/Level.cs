@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Core.Models;
 
 /// <summary>
 /// Represents level.

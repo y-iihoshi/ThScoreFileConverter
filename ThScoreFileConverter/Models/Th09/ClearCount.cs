@@ -12,6 +12,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
 
 namespace ThScoreFileConverter.Models.Th09;
 

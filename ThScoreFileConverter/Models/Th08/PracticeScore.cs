@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th08;

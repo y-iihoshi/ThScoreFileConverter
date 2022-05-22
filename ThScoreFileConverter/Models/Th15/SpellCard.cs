@@ -7,6 +7,8 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using ThScoreFileConverter.Core.Models;
+
 namespace ThScoreFileConverter.Models.Th15;
 
 internal class SpellCard : Th13.SpellCard<Level>
