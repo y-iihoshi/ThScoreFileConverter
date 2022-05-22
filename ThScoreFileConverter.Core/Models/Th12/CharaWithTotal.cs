@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th12;
+namespace ThScoreFileConverter.Core.Models.Th12;
 
 /// <summary>
 /// Represents playable characters of UFO and total.
