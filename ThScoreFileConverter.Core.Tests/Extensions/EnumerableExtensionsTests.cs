@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
-using ThScoreFileConverter.Extensions;
 
-namespace ThScoreFileConverter.Tests.Extensions;
+namespace ThScoreFileConverter.Core.Tests.Extensions;
 
 [TestClass]
 public class EnumerableExtensionsTests

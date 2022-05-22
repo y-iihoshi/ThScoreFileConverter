@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ThScoreFileConverter.Extensions;
+namespace ThScoreFileConverter.Core.Extensions;
 
 /// <summary>
 /// Provides some extension methods for <see cref="IEnumerable{T}"/> types.
