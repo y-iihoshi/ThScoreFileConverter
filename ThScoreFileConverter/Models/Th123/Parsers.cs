@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using ThScoreFileConverter.Core.Models.Th105;
+
 namespace ThScoreFileConverter.Models.Th123;
 
 /// <summary>
@@ -25,8 +27,8 @@ internal static class Parsers
         new EnumShortNameParser<Chara>();
 
     /// <summary>
-    /// Gets the parser of <see cref="Th105.CardType"/>.
+    /// Gets the parser of <see cref="Core.Models.Th105.CardType"/>.
     /// </summary>
-    public static EnumShortNameParser<Th105.CardType> CardTypeParser { get; } =
-        new EnumShortNameParser<Th105.CardType>();
+    public static EnumShortNameParser<CardType> CardTypeParser { get; } =
+        new EnumShortNameParser<CardType>();
 }

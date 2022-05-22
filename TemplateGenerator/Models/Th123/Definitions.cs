@@ -4,7 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Models.Th123;
-using CardType = ThScoreFileConverter.Models.Th105.CardType;
+using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 
 namespace TemplateGenerator.Models.Th123;
 

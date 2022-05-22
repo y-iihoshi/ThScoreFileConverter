@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using CardType = ThScoreFileConverter.Models.Th105.CardType;
+using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<ThScoreFileConverter.Models.Th123.Chara>;
 
 namespace ThScoreFileConverter.Models.Th123;
