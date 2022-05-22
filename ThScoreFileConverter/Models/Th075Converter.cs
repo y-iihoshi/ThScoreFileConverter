@@ -79,7 +79,14 @@ internal class Th075Converter : ThConverter
         }
 
         var numCharas = EnumHelper<CharaWithReserved>.NumValues;
+
+/* プロジェクト 'ThScoreFileConverter (net6.0-windows)' からのマージされていない変更
+前:
         var numLevels = EnumHelper<Th075.Level>.NumValues;
+後:
+        var numLevels = EnumHelper<Level>.NumValues;
+*/
+        var numLevels = EnumHelper<Core.Models.Th075.Level>.NumValues;
         if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
             (allScoreData.Status is not null))
             return allScoreData;
