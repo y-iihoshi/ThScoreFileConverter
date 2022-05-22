@@ -11,10 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th10;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Properties;
-using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Models.Th10.CharaWithTotal>;
+using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Core.Models.Th10.CharaWithTotal>;
 
 namespace ThScoreFileConverter.Models;
 

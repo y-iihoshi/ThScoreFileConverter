@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th10;
+namespace ThScoreFileConverter.Core.Models.Th10;
 
 /// <summary>
 /// Represents playable characters of MoF and total.
