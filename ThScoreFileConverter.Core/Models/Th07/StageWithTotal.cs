@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th07;
+namespace ThScoreFileConverter.Core.Models.Th07;
 
 /// <summary>
 /// Represents stages of PCB and total.
