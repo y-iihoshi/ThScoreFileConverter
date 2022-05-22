@@ -1,13 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
-    ThScoreFileConverter.Core.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
+    ThScoreFileConverter.Core.Models.Th07.Chara, ThScoreFileConverter.Core.Models.Th07.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Core.Models.Th07.Chara,
-    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Core.Models.Th07.Level,
     ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;

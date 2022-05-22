@@ -10,7 +10,7 @@ using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Core.Models.Th07.Chara,
-    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Core.Models.Th07.Level,
     ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
