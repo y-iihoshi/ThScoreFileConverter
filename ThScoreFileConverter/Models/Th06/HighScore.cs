@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th06;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
-    ThScoreFileConverter.Models.Th06.Chara,
+    ThScoreFileConverter.Core.Models.Th06.Chara,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 

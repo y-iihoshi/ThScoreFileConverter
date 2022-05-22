@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th06;
+namespace ThScoreFileConverter.Core.Models.Th06;
 
 /// <summary>
 /// Represents playable characters of EoSD.

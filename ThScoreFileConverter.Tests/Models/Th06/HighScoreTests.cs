@@ -4,11 +4,12 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th06;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
-    ThScoreFileConverter.Models.Th06.Chara,
+    ThScoreFileConverter.Core.Models.Th06.Chara,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 

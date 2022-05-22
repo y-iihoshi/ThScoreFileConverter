@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th06;
 
 namespace ThScoreFileConverter.Models.Th06;
 

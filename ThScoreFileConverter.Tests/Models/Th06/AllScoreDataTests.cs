@@ -4,9 +4,9 @@ using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
-    ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Core.Models.Level>;
+    ThScoreFileConverter.Core.Models.Th06.Chara, ThScoreFileConverter.Core.Models.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
-    ThScoreFileConverter.Models.Th06.Chara,
+    ThScoreFileConverter.Core.Models.Th06.Chara,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 
