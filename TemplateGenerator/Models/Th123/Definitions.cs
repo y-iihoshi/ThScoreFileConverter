@@ -3,7 +3,7 @@ using System.Linq;
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Models.Th123;
+using ThScoreFileConverter.Core.Models.Th123;
 using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 
 namespace TemplateGenerator.Models.Th123;

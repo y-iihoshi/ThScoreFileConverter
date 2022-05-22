@@ -5,7 +5,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models.Th105;
+using ThScoreFileConverter.Core.Models.Th123;
+using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
+using LevelWithTotal = ThScoreFileConverter.Core.Models.Th105.LevelWithTotal;
 
 namespace ThScoreFileConverter.Models.Th123;
 

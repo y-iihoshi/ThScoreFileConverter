@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th123;
+namespace ThScoreFileConverter.Core.Models.Th123;
 
 /// <summary>
 /// Represents characters of Hisoutensoku and total.

@@ -3,10 +3,11 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th123;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
-using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Models.Th123.Chara>;
+using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Core.Models.Th123.Chara>;
 
 namespace ThScoreFileConverter.Tests.Models.Th123;
 

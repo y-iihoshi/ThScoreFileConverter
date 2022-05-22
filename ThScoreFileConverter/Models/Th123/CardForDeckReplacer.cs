@@ -9,8 +9,9 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Core.Models.Th105;
+using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Helpers;
+using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 
 namespace ThScoreFileConverter.Models.Th123;
 
