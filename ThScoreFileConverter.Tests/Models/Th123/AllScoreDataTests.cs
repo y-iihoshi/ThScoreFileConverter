@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverter.Tests.UnitTesting;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;

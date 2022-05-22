@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ThScoreFileConverter.Core.Tests\ThScoreFileConverter.Core.Tests.csproj" />
     <ProjectReference Include="..\ThScoreFileConverter\ThScoreFileConverter.csproj" />
   </ItemGroup>
 

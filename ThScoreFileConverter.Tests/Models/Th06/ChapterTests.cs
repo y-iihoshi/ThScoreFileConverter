@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.Models.Th06.Wrappers;
 using ThScoreFileConverter.Tests.UnitTesting;

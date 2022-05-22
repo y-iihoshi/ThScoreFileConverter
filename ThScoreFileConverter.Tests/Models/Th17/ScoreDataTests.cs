@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverter.Tests.UnitTesting;

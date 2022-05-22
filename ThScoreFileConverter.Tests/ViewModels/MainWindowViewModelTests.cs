@@ -9,11 +9,11 @@ using Moq;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
-using ThScoreFileConverter.Tests.UnitTesting;
 using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
 
