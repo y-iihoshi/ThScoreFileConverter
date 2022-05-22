@@ -7,6 +7,8 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using ThScoreFileConverter.Core.Models.Th11;
+
 namespace ThScoreFileConverter.Models.Th11;
 
 internal class ClearData : Th10.ClearDataBase<CharaWithTotal, ScoreData>    // per character

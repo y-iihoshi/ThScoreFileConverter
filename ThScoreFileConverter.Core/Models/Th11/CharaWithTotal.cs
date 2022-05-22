@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th11;
+namespace ThScoreFileConverter.Core.Models.Th11;
 
 /// <summary>
 /// Represents playable characters of SA and total.
