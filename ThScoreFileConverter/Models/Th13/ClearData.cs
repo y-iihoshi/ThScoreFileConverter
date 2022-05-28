@@ -8,7 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
     ThScoreFileConverter.Models.Th13.LevelPractice,
     ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,

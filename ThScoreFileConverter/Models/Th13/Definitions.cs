@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Models.Th13;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th13.StagePractice, ThScoreFileConverter.Models.Th13.LevelPractice>;
 

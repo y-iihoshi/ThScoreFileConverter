@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th13;
+namespace ThScoreFileConverter.Core.Models.Th13;
 
 /// <summary>
 /// Represents playable characters of TD and total.

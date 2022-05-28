@@ -13,9 +13,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th13;
 using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
     ThScoreFileConverter.Models.Th13.LevelPractice,
     ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
