@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th135;
 
 namespace ThScoreFileConverter.Models.Th135;
 
