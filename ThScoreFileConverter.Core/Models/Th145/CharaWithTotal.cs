@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Chara.cs" company="None">
+// <copyright file="CharaWithTotal.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th145;
+namespace ThScoreFileConverter.Core.Models.Th145;
 
 /// <summary>
-/// Represents playable characters of ULiL.
+/// Represents playable characters of ULiL and total.
 /// </summary>
-public enum Chara
+public enum CharaWithTotal
 {
     /// <summary>
     /// Hakurei Reimu (Prologue).
@@ -103,4 +101,10 @@ public enum Chara
     /// </summary>
     [EnumAltName("RB")]
     ReimuB,
+
+    /// <summary>
+    /// Represents total across characters.
+    /// </summary>
+    [EnumAltName("TL")]
+    Total,
 }
