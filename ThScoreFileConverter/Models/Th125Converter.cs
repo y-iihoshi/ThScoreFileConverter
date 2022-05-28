@@ -27,15 +27,7 @@ namespace ThScoreFileConverter.Models;
 #endif
 internal class Th125Converter : ThConverter
 {
-    private readonly Dictionary<
-
-/* プロジェクト 'ThScoreFileConverter (net6.0-windows)' からのマージされていない変更
-前:
-        (Chara, Th125.Level Level, int Scene), (string Path, Th125.IBestShotHeader Header)> bestshots =
-後:
-        (Chara, Level Level, int Scene), (string Path, Th125.IBestShotHeader Header)> bestshots =
-*/
-        (Chara, Core.Models.Th125.Level Level, int Scene), (string Path, Th125.IBestShotHeader Header)> bestshots =
+    private readonly Dictionary<(Chara, Level Level, int Scene), (string Path, Th125.IBestShotHeader Header)> bestshots =
         new(EnumHelper<Chara>.NumValues * Th125.Definitions.SpellCards.Count);
 
     private AllScoreData? allScoreData;
