@@ -7,6 +7,8 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using ThScoreFileConverter.Core.Models.Th143;
+
 namespace ThScoreFileConverter.Models.Th143;
 
 internal interface IItemStatus : Th095.IChapter

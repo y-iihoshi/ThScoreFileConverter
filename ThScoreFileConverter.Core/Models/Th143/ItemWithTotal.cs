@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th143;
+namespace ThScoreFileConverter.Core.Models.Th143;
 
 /// <summary>
 /// Represents items of ISC and total.
