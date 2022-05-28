@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th125;
+namespace ThScoreFileConverter.Core.Models.Th125;
 
 /// <summary>
 /// Represents playable characters of DS.
