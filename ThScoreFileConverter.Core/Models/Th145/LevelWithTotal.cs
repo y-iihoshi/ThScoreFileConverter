@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Level.cs" company="None">
+// <copyright file="LevelWithTotal.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th145;
+namespace ThScoreFileConverter.Core.Models.Th145;
 
 /// <summary>
-/// Represents levels of ULiL.
+/// Represents levels of ULiL and total.
 /// </summary>
-public enum Level
+public enum LevelWithTotal
 {
     /// <summary>
     /// Represents level Easy.
@@ -37,4 +35,10 @@ public enum Level
     /// </summary>
     [EnumAltName("L")]
     Lunatic,
+
+    /// <summary>
+    /// Represents total across levels.
+    /// </summary>
+    [EnumAltName("T")]
+    Total,
 }
