@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8332C86B-BB85-41F4-A6C8-F72AF538ECB2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.stylecop.json = .stylecop.json
 		CollectArtifacts.bat = CollectArtifacts.bat
 		CustomDictionary.xml = CustomDictionary.xml
 		Directory.Build.props = Directory.Build.props
@@ -23,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemplateGenerator", "Templa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverter.Core", "ThScoreFileConverter.Core\ThScoreFileConverter.Core.csproj", "{C9A3D33A-007B-459D-9011-F86DB74A30F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThScoreFileConverter.Core.Tests", "ThScoreFileConverter.Core.Tests\ThScoreFileConverter.Core.Tests.csproj", "{FC93A59E-4B58-4E7C-9A9E-044A882F984F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverter.Core.Tests", "ThScoreFileConverter.Core.Tests\ThScoreFileConverter.Core.Tests.csproj", "{FC93A59E-4B58-4E7C-9A9E-044A882F984F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,8 +60,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ResXSortingComparison = Ordinal
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {F9FF4036-8B11-4183-A109-25508475052A}
+		RESX_SortFileContentOnSave = True
+		RESX_ResXSortingComparison = Ordinal
 	EndGlobalSection
 EndGlobal
