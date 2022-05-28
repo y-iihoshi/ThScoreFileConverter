@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th16;
+namespace ThScoreFileConverter.Core.Models.Th16;
 
 /// <summary>
 /// Represents playable characters of HSiFS.
