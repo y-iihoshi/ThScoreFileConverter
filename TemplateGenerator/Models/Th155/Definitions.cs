@@ -4,7 +4,6 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th155;
-using ThScoreFileConverter.Models.Th155;
 
 namespace TemplateGenerator.Models.Th155;
 
