@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th165;
+namespace ThScoreFileConverter.Core.Models.Th165;
 
 /// <summary>
 /// Represents days of VD.
