@@ -23,8 +23,8 @@ internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
               Parsers.LevelParser,
               Parsers.CharaParser,
               Parsers.StageParser,
-              Models.Definitions.CanPractice,
-              Models.Definitions.CanPractice,
+              Core.Models.Definitions.CanPractice,
+              Core.Models.Definitions.CanPractice,
               (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
               formatter)
     {

@@ -43,7 +43,7 @@ internal class PracticeReplacer : IStringReplaceable
                     : (score.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
             }
 
-            return Models.Definitions.CanPractice(level) && Definitions.CanPractice(stage)
+            return Core.Models.Definitions.CanPractice(level) && Definitions.CanPractice(stage)
                 ? formatter.FormatNumber(
                     practiceScores.TryGetValue(chara, out var score) ? GetValue(score) : default)
                 : match.ToString();

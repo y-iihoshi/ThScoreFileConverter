@@ -45,16 +45,6 @@ internal static class Definitions
         new() { Number = nameof(Resources.TH175), IsSupported = true },
     };
 
-    public static bool CanPractice(Level level)
-    {
-        return level != Level.Extra;
-    }
-
-    public static bool CanPractice(Stage stage)
-    {
-        return stage != Stage.Extra;
-    }
-
     public static bool IsTotal(LevelWithTotal level)
     {
         return level == LevelWithTotal.Total;
