@@ -6,6 +6,7 @@ using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;

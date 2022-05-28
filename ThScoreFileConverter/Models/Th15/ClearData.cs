@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th15;

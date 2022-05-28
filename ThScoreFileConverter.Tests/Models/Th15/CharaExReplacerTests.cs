@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using GameMode = ThScoreFileConverter.Models.Th15.GameMode;

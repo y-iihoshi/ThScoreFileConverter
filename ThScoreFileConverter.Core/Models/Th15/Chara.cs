@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th15;
+namespace ThScoreFileConverter.Core.Models.Th15;
 
 /// <summary>
 /// Represents playable characters of LoLK.
