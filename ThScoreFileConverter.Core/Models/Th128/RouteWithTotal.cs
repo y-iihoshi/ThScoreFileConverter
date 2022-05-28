@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th128;
+namespace ThScoreFileConverter.Core.Models.Th128;
 
 /// <summary>
 /// Represents routes of FW and total.

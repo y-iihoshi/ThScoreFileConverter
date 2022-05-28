@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th128;

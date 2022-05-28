@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TemplateGenerator.Extensions;
+using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
 using Level = ThScoreFileConverter.Core.Models.Level;
 
