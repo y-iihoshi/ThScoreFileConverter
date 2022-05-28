@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 
@@ -42,7 +43,7 @@ internal class AboutWindowViewModel : BindableBase, IDialogAware
         this.Version = Utils.GetLocalizedValues<string>(nameof(Resources.VersionPrefix))
             + (verField?.GetValue(null) ?? string.Empty);
         this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
-        this.Uri = Resources.ProjectUrl;
+        this.Uri = StringResources.ProjectUrl;
 
         var uriString = "pack://application:,,,/" + this.Name + ";component/Resources/ApplicationIcon.ico";
         var decoder = BitmapDecoder.Create(new Uri(uriString), BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);

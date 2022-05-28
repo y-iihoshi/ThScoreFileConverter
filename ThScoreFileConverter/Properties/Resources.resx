@@ -220,10 +220,6 @@ Renamed to "{1}".</value>
     <value>Should not reach here.</value>
     <comment>@Invariant</comment>
   </data>
-  <data name="ProjectUrl" xml:space="preserve">
-    <value>https://www.colorless-sight.jp/thsfc/</value>
-    <comment>@Invariant</comment>
-  </data>
   <data name="ScoreFileFilter" xml:space="preserve">
     <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
   </data>

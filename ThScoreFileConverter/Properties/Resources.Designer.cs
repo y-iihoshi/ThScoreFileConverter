@@ -314,15 +314,6 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   https://www.colorless-sight.jp/thsfc/ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ProjectUrl {
-            get {
-                return ResourceManager.GetString("ProjectUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Touhou score files (*.dat)|*.dat|All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ScoreFileFilter {

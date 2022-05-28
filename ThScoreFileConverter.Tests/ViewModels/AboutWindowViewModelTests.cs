@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Services.Dialogs;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using ThScoreFileConverter.ViewModels;
@@ -67,7 +68,7 @@ public class AboutWindowViewModelTests
     public void UriTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.AreEqual(Resources.ProjectUrl, window.Uri);
+        Assert.AreEqual(StringResources.ProjectUrl, window.Uri);
     }
 
     [TestMethod]
