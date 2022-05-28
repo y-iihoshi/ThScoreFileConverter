@@ -5,7 +5,7 @@ using Moq;
 using ThScoreFileConverter.Core.Models.Th175;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th175;
-using Level = ThScoreFileConverter.Models.Th175.Level;
+using Level = ThScoreFileConverter.Core.Models.Th175.Level;
 
 namespace ThScoreFileConverter.Tests.Models.Th175;
 

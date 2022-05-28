@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th175;
+namespace ThScoreFileConverter.Core.Models.Th175;
 
 /// <summary>
 /// Represents levels of Gouyoku Ibun and total.
