@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="CharaWithTotal.cs" company="None">
+// <copyright file="Chara.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th17;
+namespace ThScoreFileConverter.Core.Models.Th17;
 
 /// <summary>
-/// Represents player characters of WBWC and total.
+/// Represents player characters of WBWC.
 /// </summary>
-public enum CharaWithTotal
+public enum Chara
 {
     /// <summary>
     /// Hakurei Reimu (Wolf spirit).
@@ -67,10 +65,4 @@ public enum CharaWithTotal
     /// </summary>
     [EnumAltName("YC")]
     YoumuC,
-
-    /// <summary>
-    /// Represents total across characters.
-    /// </summary>
-    [EnumAltName("TL")]
-    Total,
 }
