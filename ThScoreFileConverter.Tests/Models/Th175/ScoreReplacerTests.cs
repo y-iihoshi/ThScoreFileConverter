@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Models.Th175;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th175;
 using Level = ThScoreFileConverter.Models.Th175.Level;
