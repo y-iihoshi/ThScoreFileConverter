@@ -69,7 +69,7 @@ jobs:
         /p:TargetFrameworks=${{ matrix.target-framework }}
         /p:CollectCoverage=true
         /p:CoverletOutput="../CoverageResults/"
-        /p:MergeWith="../CoverageResults/coverage.json"
+        /p:MergeWith="../CoverageResults/coverage.${{ matrix.target-framework }}.json"
         /p:CoverletOutputFormat=opencover
       if: matrix.configuration == 'Debug'
 
