@@ -8,7 +8,7 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models.Th15;
-using GameMode = ThScoreFileConverter.Models.Th15.GameMode;
+using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;

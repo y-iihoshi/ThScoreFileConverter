@@ -7,6 +7,7 @@
 
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
+using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 
 namespace ThScoreFileConverter.Models.Th15;
 

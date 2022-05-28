@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Helpers;
+using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Models.Th15;
