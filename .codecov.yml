@@ -1,0 +1,3 @@
+ignore:
+  - "ThScoreFileConverter.Core.Tests"
+  - "ThScoreFileConverter.Tests"
