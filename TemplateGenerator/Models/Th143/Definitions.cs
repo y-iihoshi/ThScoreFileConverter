@@ -2,6 +2,7 @@
 using System.Linq;
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
 
 namespace TemplateGenerator.Models.Th143;

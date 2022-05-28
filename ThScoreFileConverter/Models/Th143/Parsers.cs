@@ -8,6 +8,7 @@
 using System.Linq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th143;
 
 namespace ThScoreFileConverter.Models.Th143;
 
