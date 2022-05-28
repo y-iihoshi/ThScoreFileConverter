@@ -3,9 +3,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Models.Th18;
 using ThScoreFileConverter.Models.Th18;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th18.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Th18.CharaWithTotal,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
