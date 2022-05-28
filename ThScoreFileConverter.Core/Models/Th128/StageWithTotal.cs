@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Stage.cs" company="None">
+// <copyright file="StageWithTotal.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -7,14 +7,12 @@
 
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th128;
+namespace ThScoreFileConverter.Core.Models.Th128;
 
 /// <summary>
-/// Represents stages of FW.
+/// Represents stages of FW and total.
 /// </summary>
-public enum Stage
+public enum StageWithTotal
 {
     /// <summary>
     /// Stage A-1.
@@ -111,4 +109,10 @@ public enum Stage
     /// </summary>
     [EnumAltName("EXT")]
     Extra,
+
+    /// <summary>
+    /// Represents total across stages.
+    /// </summary>
+    [EnumAltName("TTL")]
+    Total,
 }

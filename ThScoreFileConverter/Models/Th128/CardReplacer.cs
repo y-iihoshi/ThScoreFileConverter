@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using ThScoreFileConverter.Core.Models;
+using Stage = ThScoreFileConverter.Core.Models.Th128.Stage;
 
 namespace ThScoreFileConverter.Models.Th128;
 

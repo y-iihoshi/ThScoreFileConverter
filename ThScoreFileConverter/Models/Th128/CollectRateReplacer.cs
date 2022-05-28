@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
+using Stage = ThScoreFileConverter.Core.Models.Th128.Stage;
+using StageWithTotal = ThScoreFileConverter.Core.Models.Th128.StageWithTotal;
 
 namespace ThScoreFileConverter.Models.Th128;
 
