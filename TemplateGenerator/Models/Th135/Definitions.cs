@@ -2,7 +2,6 @@
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th135;
-using ThScoreFileConverter.Models.Th135;
 
 namespace TemplateGenerator.Models.Th135;
 
