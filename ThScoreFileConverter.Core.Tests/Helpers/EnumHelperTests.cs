@@ -50,6 +50,20 @@ public class EnumHelperTests
     }
 
     [TestMethod]
+    public void ToEnumTest()
+    {
+        var value = 0;
+        Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.To<DayOfWeek>(value));
+    }
+
+    [TestMethod]
+    public void ToEnumTestInvalidValue()
+    {
+        var value = 7;
+        _ = Assert.ThrowsException<InvalidCastException>(() => EnumHelper.To<DayOfWeek>(value));
+    }
+
+    [TestMethod]
     public void EnumerableTest()
     {
         var i = (int)DayOfWeek.Sunday;
