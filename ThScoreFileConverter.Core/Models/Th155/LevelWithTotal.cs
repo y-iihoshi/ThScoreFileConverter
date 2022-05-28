@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th155;
+namespace ThScoreFileConverter.Core.Models.Th155;
 
 /// <summary>
 /// Represents levels of AoCF and total.
