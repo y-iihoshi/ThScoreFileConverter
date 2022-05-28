@@ -17,9 +17,9 @@ using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Properties;
 using AllScoreData = ThScoreFileConverter.Models.Th13.AllScoreData<
     ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th13.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>,
     ThScoreFileConverter.Models.Th125.IStatus>;

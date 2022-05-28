@@ -9,9 +9,9 @@
 
 using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
     ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th13.StagePractice>;
 
 namespace ThScoreFileConverter.Models.Th13;

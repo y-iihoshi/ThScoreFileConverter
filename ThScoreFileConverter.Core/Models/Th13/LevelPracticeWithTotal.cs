@@ -1,18 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="LevelPractice.cs" company="None">
+// <copyright file="LevelPracticeWithTotal.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th13;
+namespace ThScoreFileConverter.Core.Models.Th13;
 
 /// <summary>
-/// Represents levels of TD spell practice.
+/// Represents levels of TD spell practice and total.
 /// </summary>
-public enum LevelPractice
+public enum LevelPracticeWithTotal
 {
     /// <summary>
     /// Represents level Easy.
@@ -49,4 +47,10 @@ public enum LevelPractice
     /// </summary>
     [EnumAltName("D", LongName = "Over Drive")]
     OverDrive,
+
+    /// <summary>
+    /// Represents total across levels.
+    /// </summary>
+    [EnumAltName("T")]
+    Total,
 }
