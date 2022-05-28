@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th14;
 using ThScoreFileConverter.Models.Th14;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
