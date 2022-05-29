@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
-using ThScoreFileConverter.Tests.UnitTesting;
 
-namespace ThScoreFileConverter.Tests.Models;
+namespace ThScoreFileConverter.Core.Tests.Models;
 
 using CardInfo = SpellCardInfo<Stage, Level>;
 
@@ -46,25 +44,25 @@ public class SpellCardInfoTests
     }
 
     public static IEnumerable<object[]> InvalidStages
-        => TestUtils.GetInvalidEnumerators(typeof(Stage));
+        => TestHelper.GetInvalidEnumerators(typeof(Stage));
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void SpellCardInfoTestInvalidStage(int stage)
     {
-        var invalid = TestUtils.Cast<Stage>(stage);
+        var invalid = TestHelper.Cast<Stage>(stage);
         _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
             () => new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
     }
 
     public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+        => TestHelper.GetInvalidEnumerators(typeof(Level));
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void SpellCardInfoTestInvalidLevel(int level)
     {
-        var invalid = TestUtils.Cast<Level>(level);
+        var invalid = TestHelper.Cast<Level>(level);
         _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
             () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid));
     }

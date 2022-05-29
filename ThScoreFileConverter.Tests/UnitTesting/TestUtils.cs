@@ -132,18 +132,12 @@ public static class TestUtils
     public static TResult Cast<TResult>(object value)
         where TResult : struct
     {
-        var type = typeof(TResult);
-        if (type.IsEnum)
-            return (TResult)Enum.ToObject(type, value);
-
-        return (TResult)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
+        return Core.Tests.UnitTesting.TestHelper.Cast<TResult>(value);
     }
 
     public static IEnumerable<object[]> GetInvalidEnumerators(Type type)
     {
-        var values = Enum.GetValues(type).Cast<int>();
-        yield return new object[] { values.Min() - 1 };
-        yield return new object[] { values.Max() + 1 };
+        return Core.Tests.UnitTesting.TestHelper.GetInvalidEnumerators(type);
     }
 
     private static bool Invoke<T>(Action<T> action, string key, T value)
