@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Core.Models;
-using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
+using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
     ThScoreFileConverter.Core.Models.Th128.Stage, ThScoreFileConverter.Core.Models.Level>;
 using Stage = ThScoreFileConverter.Core.Models.Th128.Stage;
 

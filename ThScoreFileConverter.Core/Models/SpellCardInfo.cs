@@ -8,16 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Core.Models;
 
 /// <summary>
 /// Indicates information of a spell card.
 /// </summary>
 /// <typeparam name="TStage">An enumeration type of the stage.</typeparam>
 /// <typeparam name="TLevel">An enumeration type of the level.</typeparam>
-internal class SpellCardInfo<TStage, TLevel>
+public class SpellCardInfo<TStage, TLevel>
     where TStage : struct, Enum
     where TLevel : struct, Enum
 {
@@ -43,11 +43,11 @@ internal class SpellCardInfo<TStage, TLevel>
         if (id <= 0)
             throw new ArgumentOutOfRangeException(nameof(id));
         if (string.IsNullOrEmpty(name))
-            throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(name));
+            throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(name));
         if (!Enum.IsDefined(typeof(TStage), stage))
             throw new ArgumentOutOfRangeException(nameof(stage));
         if (levels.Length <= 0)
-            throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(levels));
+            throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(levels));
         if (levels.Any(level => !Enum.IsDefined(typeof(TLevel), level)))
             throw new ArgumentOutOfRangeException(nameof(levels));
 
