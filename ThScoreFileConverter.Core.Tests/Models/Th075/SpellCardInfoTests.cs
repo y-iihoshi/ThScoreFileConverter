@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Core.Models.Th075;
-using ThScoreFileConverter.Models.Th075;
+﻿using ThScoreFileConverter.Core.Models.Th075;
 
-namespace ThScoreFileConverter.Tests.Models.Th075;
+namespace ThScoreFileConverter.Core.Tests.Models.Th075;
 
 [TestClass]
 public class SpellCardInfoTests
