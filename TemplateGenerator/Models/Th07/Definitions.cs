@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th07;
+using static ThScoreFileConverter.Core.Models.Th07.Definitions;
 
 namespace TemplateGenerator.Models.Th07;
 
@@ -83,27 +85,15 @@ public class Definitions
 
     public static IEnumerable<string> StageKeysTotalLast { get; } = StageWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
-    {
-        (Level.Easy,     28),
-        (Level.Normal,   28),
-        (Level.Hard,     30),
-        (Level.Lunatic,  30),
-        (Level.Extra,    12),
-        (Level.Phantasm, 13),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            level => level.ToShortName(),
+            level => CardTable.Count(pair => pair.Value.Level == level));
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } = new[]
-    {
-        (Stage.One,      10),
-        (Stage.Two,      16),
-        (Stage.Three,    18),
-        (Stage.Four,     24),
-        (Stage.Five,     20),
-        (Stage.Six,      28),
-        (Stage.Extra,    12),
-        (Stage.Phantasm, 13),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            stage => stage.ToShortName(),
+            stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static bool CanPractice(Level level)
     {
