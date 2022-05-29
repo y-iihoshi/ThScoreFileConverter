@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th06;
+using static ThScoreFileConverter.Core.Models.Th06.Definitions;
 
 namespace TemplateGenerator.Models.Th06;
 
@@ -18,16 +21,10 @@ public class Definitions : Models.Definitions
         (Chara.MarisaB, "霧雨 魔理沙（恋）"),
     }.ToStringKeyedDictionary();
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } = new[]
-    {
-        (Stage.One,    3),
-        (Stage.Two,    4),
-        (Stage.Three,  7),
-        (Stage.Four,  18),
-        (Stage.Five,   8),
-        (Stage.Six,   11),
-        (Stage.Extra, 13),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            stage => stage.ToShortName(),
+            stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static bool CanPractice(string levelKey, string stageKey)
     {
