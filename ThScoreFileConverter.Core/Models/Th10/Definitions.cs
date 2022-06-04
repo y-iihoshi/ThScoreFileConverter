@@ -135,5 +135,5 @@ public static class Definitions
         new(109, "「諏訪大戦　～ 土着神話 vs 中央神話」",    Stage.Extra, Level.Extra),
         new(110, "祟符「ミシャグジさま」",                   Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }

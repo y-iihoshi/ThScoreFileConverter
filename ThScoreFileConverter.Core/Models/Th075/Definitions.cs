@@ -340,10 +340,10 @@ public static class Definitions
             },
         };
 
-        var cardNumberTable = CardTable.ToLookup(pair => pair.Value.Enemy, pair => pair.Key);
+        var cardNumberTable = CardTable.ToLookup(static pair => pair.Value.Enemy, static pair => pair.Key);
 
         return charaStageEnemyTable.ToDictionary(
-            charaStageEnemyPair => charaStageEnemyPair.Key,
+            static charaStageEnemyPair => charaStageEnemyPair.Key,
             charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(
                 stageEnemyPair => cardNumberTable[stageEnemyPair.Enemy].Take(
                     stageEnemyPair.Stage switch

@@ -247,5 +247,5 @@ public static class Definitions
         new(221, "「西行寺無余涅槃」",                       StagePractice.LastWord,     LevelPractice.LastWord),
         new(222, "「深弾幕結界　-夢幻泡影-」",               StagePractice.LastWord,     LevelPractice.LastWord),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }

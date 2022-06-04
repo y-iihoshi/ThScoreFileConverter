@@ -275,5 +275,5 @@ public static class Definitions
         new(249, "「ブレイジングスターのような鬼ごっこ」",   Stage.Extra, Level.Extra),
         new(250, "「妖精尽滅光」",                           Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }

@@ -88,5 +88,5 @@ public static class Definitions
         new(63, "秘弾「そして誰もいなくなるか？」", Stage.Extra, Level.Extra),
         new(64, "ＱＥＤ「４９５年の波紋」",         Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }

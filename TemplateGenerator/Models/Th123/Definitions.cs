@@ -36,7 +36,7 @@ public class Definitions : Th105.Definitions
     };
 
     private static readonly IEnumerable<(Chara, CardType, int)> NumCardsPerCharacterAndTypeImpl =
-        EnumHelper<Chara>.Enumerable.SelectMany(chara =>
+        EnumHelper<Chara>.Enumerable.SelectMany(static chara =>
             EnumHelper<CardType>.Enumerable.Select(cardType =>
                 (chara, cardType, cardType == CardType.System
                     ? SystemCardNameTable.Count
@@ -56,8 +56,8 @@ public class Definitions : Th105.Definitions
 
     public static new IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } =
         StageInfoTable.ToDictionary(
-            pair => pair.Key.ToShortName(),
-            pair => pair.Value.Sum(stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
+            static pair => pair.Key.ToShortName(),
+            static pair => pair.Value.Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
 
     public static new IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
         NumCardsPerCharacterAndTypeImpl.ToDictionary(

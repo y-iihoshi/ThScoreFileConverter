@@ -88,11 +88,11 @@ public static class EnumExtensions
 
             return type.GetFields()
                 .Where(field => field.FieldType == type)
-                .Select(field =>
+                .Select(static field =>
                     (enumValue: field.GetValue(null) is TEnum value ? value : default,
                         attr: GetAttribute<TAttribute>(field, false)))
-                .Where(pair => pair.attr is not null)
-                .ToDictionary(pair => pair.enumValue, pair => pair.attr!);
+                .Where(static pair => pair.attr is not null)
+                .ToDictionary(static pair => pair.enumValue, static pair => pair.attr!);
         }
     }
 }

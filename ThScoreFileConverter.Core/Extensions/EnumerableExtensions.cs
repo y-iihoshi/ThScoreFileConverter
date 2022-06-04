@@ -74,7 +74,7 @@ public static class EnumerableExtensions
         if (source is null)
             throw new ArgumentNullException(nameof(source));
 
-        return source.ToDictionary(pair => pair.Key, pair => pair.Value);
+        return source.ToDictionary(static pair => pair.Key, static pair => pair.Value);
     }
 
     /// <summary>
@@ -97,6 +97,6 @@ public static class EnumerableExtensions
         if (source is null)
             throw new ArgumentNullException(nameof(source));
 
-        return source.ToDictionary(pair => pair.Key, pair => pair.Value);
+        return source.ToDictionary(static pair => pair.Key, static pair => pair.Value);
     }
 }

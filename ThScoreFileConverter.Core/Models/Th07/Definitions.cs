@@ -165,5 +165,5 @@ public static class Definitions
         new(140, "結界「生と死の境界」",                       Stage.Phantasm, Level.Phantasm),
         new(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }

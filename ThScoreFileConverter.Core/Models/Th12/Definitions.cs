@@ -138,5 +138,5 @@ public static class Definitions
         new(112, "「平安京の悪夢」",                     Stage.Extra, Level.Extra),
         new(113, "恨弓「源三位頼政の弓」",               Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }

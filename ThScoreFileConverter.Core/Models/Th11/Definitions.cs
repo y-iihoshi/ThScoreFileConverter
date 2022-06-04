@@ -200,5 +200,5 @@ public static class Definitions
         new(174, "「嫌われ者のフィロソフィ」",           Stage.Extra, Level.Extra),
         new(175, "「サブタレイニアンローズ」",           Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }
