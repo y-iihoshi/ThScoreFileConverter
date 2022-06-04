@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Core.Models.Th105;
-using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<ThScoreFileConverter.Core.Models.Th105.Chara>;
+using StageInfo = ThScoreFileConverter.Core.Models.Th105.StageInfo<ThScoreFileConverter.Core.Models.Th105.Chara>;
 
 namespace ThScoreFileConverter.Models.Th105;
 

@@ -10,11 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Core.Models.Th105;
 
-namespace ThScoreFileConverter.Models.Th105;
+namespace ThScoreFileConverter.Core.Models.Th105;
 
-internal class StageInfo<TChara>
+public class StageInfo<TChara>
     where TChara : struct, Enum
 {
     public StageInfo(Stage stage, TChara enemy, IEnumerable<int> cardIds)
