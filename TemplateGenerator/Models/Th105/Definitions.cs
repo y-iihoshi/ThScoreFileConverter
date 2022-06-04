@@ -50,14 +50,6 @@ public class Definitions
         static tuple => tuple.Item1.ToShortName(),
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
-    {
-        (Level.Easy,    23),
-        (Level.Normal,  24),
-        (Level.Hard,    25),
-        (Level.Lunatic, 25),
-    }.ToStringKeyedDictionary();
-
     public static IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } =
         EnumHelper<Chara>.Enumerable.ToDictionary(
             static chara => chara.ToShortName(),
