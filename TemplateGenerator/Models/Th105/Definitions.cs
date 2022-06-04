@@ -51,9 +51,9 @@ public class Definitions
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } =
-        EnumHelper<Chara>.Enumerable.ToDictionary(
-            static chara => chara.ToShortName(),
-            static chara => StageInfoTable[chara].Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
+        StageInfoTable.ToDictionary(
+            static pair => pair.Key.ToShortName(),
+            static pair => pair.Value.Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
 
     public static IReadOnlyDictionary<string, string> CardTypeNames { get; } =
         EnumHelper<CardType>.Enumerable.ToStringDictionary();
