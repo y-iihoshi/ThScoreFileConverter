@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
+using static ThScoreFileConverter.Core.Models.Th075.Definitions;
 
 namespace TemplateGenerator.Models.Th075;
 
@@ -37,11 +38,8 @@ public class Definitions
         static tuple => tuple.Item1.ToShortName(),
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
-    {
-        (Level.Easy,    25),
-        (Level.Normal,  25),
-        (Level.Hard,    25),
-        (Level.Lunatic, 25),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            level => level.ToShortName(),
+            level => CardTable.Count(pair => CardIdTable[Chara.Reimu].Any(id => id == pair.Key) && (pair.Value.Level == level)));
 }

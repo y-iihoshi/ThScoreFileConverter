@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th075;
+namespace ThScoreFileConverter.Core.Models.Th075;
 
 /// <summary>
 /// Represents stages of IMP.
