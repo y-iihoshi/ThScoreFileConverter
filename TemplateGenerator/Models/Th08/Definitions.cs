@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th08;
+using static ThScoreFileConverter.Core.Models.Th08.Definitions;
 
 namespace TemplateGenerator.Models.Th08;
 
@@ -22,15 +23,9 @@ public class Definitions : Models.Definitions
         (Stage.Extra,        "Extra"),
     };
 
-    private static readonly IEnumerable<(LevelPractice, int)> NumCardsPerLevelImpl = new[]
-    {
-        (LevelPractice.Easy,     42),
-        (LevelPractice.Normal,   49),
-        (LevelPractice.Hard,     50),
-        (LevelPractice.Lunatic,  50),
-        (LevelPractice.Extra,    14),
-        (LevelPractice.LastWord, 17),
-    };
+    private static readonly IEnumerable<(LevelPractice, int)> NumCardsPerLevelImpl =
+        EnumHelper<LevelPractice>.Enumerable.Select(
+            static level => (level, CardTable.Count(pair => pair.Value.Level == level)));
 
     public static string Title { get; } = "東方永夜抄";
 
@@ -117,37 +112,17 @@ public class Definitions : Models.Definitions
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         NumCardsPerLevelImpl.ToStringKeyedDictionary();
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } = new[]
-    {
-        (StagePractice.One,          13),
-        (StagePractice.Two,          19),
-        (StagePractice.Three,        22),
-        (StagePractice.FourUncanny,  23),
-        (StagePractice.FourPowerful, 23),
-        (StagePractice.Five,         19),
-        (StagePractice.FinalA,       28),
-        (StagePractice.FinalB,       44),
-        (StagePractice.Extra,        14),
-        (StagePractice.LastWord,     17),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
+        EnumHelper<StagePractice>.Enumerable.ToDictionary(
+            static stage => stage.ToShortName(),
+            static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
-    public static IReadOnlyDictionary<(string, string), int> NumCardsPerStage4Level { get; } = new[]
-    {
-        (StagePractice.FourUncanny,  LevelPractice.Easy,     5),
-        (StagePractice.FourUncanny,  LevelPractice.Normal,   6),
-        (StagePractice.FourUncanny,  LevelPractice.Hard,     6),
-        (StagePractice.FourUncanny,  LevelPractice.Lunatic,  6),
-        (StagePractice.FourUncanny,  LevelPractice.Extra,    0),
-        (StagePractice.FourUncanny,  LevelPractice.LastWord, 0),
-        (StagePractice.FourPowerful, LevelPractice.Easy,     5),
-        (StagePractice.FourPowerful, LevelPractice.Normal,   6),
-        (StagePractice.FourPowerful, LevelPractice.Hard,     6),
-        (StagePractice.FourPowerful, LevelPractice.Lunatic,  6),
-        (StagePractice.FourPowerful, LevelPractice.Extra,    0),
-        (StagePractice.FourPowerful, LevelPractice.LastWord, 0),
-    }.ToDictionary(
-        static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
-        static tuple => tuple.Item3);
+    public static IReadOnlyDictionary<(string, string), int> NumCardsPerStage4Level { get; } =
+        new[] { StagePractice.FourUncanny, StagePractice.FourPowerful }
+            .SelectMany(static stage => EnumHelper<LevelPractice>.Enumerable.Select(level => (stage, level)))
+            .ToDictionary(
+                static pair => (pair.stage.ToShortName(), pair.level.ToShortName()),
+                static pair => CardTable.Values.Count(card => card.Stage == pair.stage && card.Level == pair.level));
 
     public static int NumCardsWithLastWord { get; } =
         NumCardsPerLevelImpl.Sum(static pair => pair.Item2);
