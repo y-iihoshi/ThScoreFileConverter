@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Core.Models.Th123;
 using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
+using Stage = ThScoreFileConverter.Core.Models.Th105.Stage;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<ThScoreFileConverter.Core.Models.Th123.Chara>;
 
 namespace ThScoreFileConverter.Models.Th123;
@@ -882,33 +883,33 @@ internal static class Definitions
                 Chara.Sanae,
                 new StageInfo[]
                 {
-                    new(Th105.Stage.One,   Chara.Cirno,   Enumerable.Range(0, 2)),
-                    new(Th105.Stage.Two,   Chara.Meiling, Enumerable.Range(0, 2)),
-                    new(Th105.Stage.Three, Chara.Reimu,   Enumerable.Range(0, 3)),
-                    new(Th105.Stage.Four,  Chara.Utsuho,  Enumerable.Range(0, 4)),
-                    new(Th105.Stage.Five,  Chara.Suwako,  Enumerable.Range(0, 5)),
+                    new(Stage.One,   Chara.Cirno,   Enumerable.Range(0, 2)),
+                    new(Stage.Two,   Chara.Meiling, Enumerable.Range(0, 2)),
+                    new(Stage.Three, Chara.Reimu,   Enumerable.Range(0, 3)),
+                    new(Stage.Four,  Chara.Utsuho,  Enumerable.Range(0, 4)),
+                    new(Stage.Five,  Chara.Suwako,  Enumerable.Range(0, 5)),
                 }
             },
             {
                 Chara.Cirno,
                 new StageInfo[]
                 {
-                    new(Th105.Stage.One,   Chara.Sanae,   Enumerable.Range(0, 2)),
-                    new(Th105.Stage.Two,   Chara.Meiling, Enumerable.Range(0, 2)),
-                    new(Th105.Stage.Three, Chara.Marisa,  Enumerable.Range(0, 3)),
-                    new(Th105.Stage.Four,  Chara.Utsuho,  Enumerable.Range(0, 4)),
-                    new(Th105.Stage.Five,  Chara.Alice,   Enumerable.Range(0, 5)),
+                    new(Stage.One,   Chara.Sanae,   Enumerable.Range(0, 2)),
+                    new(Stage.Two,   Chara.Meiling, Enumerable.Range(0, 2)),
+                    new(Stage.Three, Chara.Marisa,  Enumerable.Range(0, 3)),
+                    new(Stage.Four,  Chara.Utsuho,  Enumerable.Range(0, 4)),
+                    new(Stage.Five,  Chara.Alice,   Enumerable.Range(0, 5)),
                 }
             },
             {
                 Chara.Meiling,
                 new StageInfo[]
                 {
-                    new(Th105.Stage.One,   Chara.Patchouli, Enumerable.Range(0, 2)),
-                    new(Th105.Stage.Two,   Chara.Alice,     Enumerable.Range(0, 2)),
-                    new(Th105.Stage.Three, Chara.Marisa,    Enumerable.Range(0, 3)),
-                    new(Th105.Stage.Four,  Chara.Reimu,     Enumerable.Range(0, 4)),
-                    new(Th105.Stage.Five,  Chara.Oonamazu,  Enumerable.Range(0, 5)),
+                    new(Stage.One,   Chara.Patchouli, Enumerable.Range(0, 2)),
+                    new(Stage.Two,   Chara.Alice,     Enumerable.Range(0, 2)),
+                    new(Stage.Three, Chara.Marisa,    Enumerable.Range(0, 3)),
+                    new(Stage.Four,  Chara.Reimu,     Enumerable.Range(0, 4)),
+                    new(Stage.Five,  Chara.Oonamazu,  Enumerable.Range(0, 5)),
                 }
             },
         };
