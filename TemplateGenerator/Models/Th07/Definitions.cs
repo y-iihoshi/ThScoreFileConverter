@@ -87,13 +87,13 @@ public class Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            level => level.ToShortName(),
-            level => CardTable.Count(pair => pair.Value.Level == level));
+            static level => level.ToShortName(),
+            static level => CardTable.Count(pair => pair.Value.Level == level));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            stage => stage.ToShortName(),
-            stage => CardTable.Count(pair => pair.Value.Stage == stage));
+            static stage => stage.ToShortName(),
+            static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static bool CanPractice(Level level)
     {

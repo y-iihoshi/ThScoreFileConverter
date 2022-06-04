@@ -40,6 +40,6 @@ public class Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            level => level.ToShortName(),
-            level => CardTable.Count(pair => CardIdTable[Chara.Reimu].Any(id => id == pair.Key) && (pair.Value.Level == level)));
+            static level => level.ToShortName(),
+            static level => CardTable.Count(pair => CardIdTable[Chara.Reimu].Any(id => id == pair.Key) && (pair.Value.Level == level)));
 }
