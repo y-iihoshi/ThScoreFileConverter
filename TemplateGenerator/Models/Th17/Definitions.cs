@@ -54,5 +54,5 @@ public class Definitions : Models.Definitions
             static stage => stage.ToShortName(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
-    public static int NumAchievements { get; } = 40;
+    public static int NumAchievements { get; } = Achievements.Count;
 }

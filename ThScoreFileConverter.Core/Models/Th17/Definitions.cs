@@ -127,4 +127,52 @@ public static class Definitions
         new(101, "「鬼畜生の所業」",                     Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
     }.ToDictionary(static card => card.Id);
+
+    /// <summary>
+    /// Gets the list of achievements.
+    /// Thanks to en.touhouwiki.net.
+    /// </summary>
+    public static IReadOnlyList<string> Achievements { get; } = new List<string>
+    {
+        "霊夢（オオカミ霊）クリア",
+        "霊夢（カワウソ霊）クリア",
+        "霊夢（オオワシ霊）クリア",
+        "魔理沙（オオカミ霊）クリア",
+        "魔理沙（カワウソ霊）クリア",
+        "魔理沙（オオワシ霊）クリア",
+        "妖夢（オオカミ霊）クリア",
+        "妖夢（カワウソ霊）クリア",
+        "妖夢（オオワシ霊）クリア",
+        "霊夢バッドエンド",
+        "魔理沙BADクリア",
+        "妖夢BADクリア",
+        "霊夢（オオカミ霊）EXクリア",
+        "霊夢（カワウソ霊）EXクリア",
+        "霊夢（オオワシ霊）EXクリア",
+        "魔理沙（オオカミ霊）EXクリア",
+        "魔理沙（カワウソ霊）EXクリア",
+        "魔理沙（オオワシ霊）EXクリア",
+        "妖夢（オオカミ霊）EXクリア",
+        "妖夢（カワウソ霊）EXクリア",
+        "妖夢（オオワシ霊）EXクリア",
+        "イージークリア",
+        "ノーマルクリア",
+        "ハードクリア",
+        "ルナティッククリア",
+        "イージーノーコンクリア",
+        "ノーマルノーコンクリア",
+        "ハードNCクリア",
+        "ルナティックNCクリア",
+        "パーフェクトクリア",
+        "畜生界の破壊神",
+        "畜生を蹂躙する者",
+        "スペルカードコレクター",
+        "クラゲ大好き",
+        "そうだ牛乳を飲もう",
+        "生まれたてのピヨちゃん",
+        "のんびりコツコツと",
+        "おーいハニマルさん",
+        "土の馬",
+        "ひよこが三匹",
+    };
 }
