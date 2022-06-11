@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th165;
+using static ThScoreFileConverter.Core.Models.Th165.Definitions;
 
 namespace TemplateGenerator.Models.Th165;
 
@@ -38,31 +39,10 @@ public class Definitions
         static pair => pair.Item1.ToShortName(),
         static pair => (pair.Item1.ToString(), pair.Item2));
 
-    public static IReadOnlyDictionary<string, int> NumDreamsPerDay { get; } = new[]
-    {
-        (Day.Sunday,             2),
-        (Day.Monday,             4),
-        (Day.Tuesday,            3),
-        (Day.Wednesday,          4),
-        (Day.Thursday,           3),
-        (Day.Friday,             3),
-        (Day.Saturday,           1),
-        (Day.WrongSunday,        7),
-        (Day.WrongMonday,        4),
-        (Day.WrongTuesday,       4),
-        (Day.WrongWednesday,     6),
-        (Day.WrongThursday,      5),
-        (Day.WrongFriday,        5),
-        (Day.WrongSaturday,      6),
-        (Day.NightmareSunday,    6),
-        (Day.NightmareMonday,    6),
-        (Day.NightmareTuesday,   6),
-        (Day.NightmareWednesday, 6),
-        (Day.NightmareThursday,  6),
-        (Day.NightmareFriday,    6),
-        (Day.NightmareSaturday,  6),
-        (Day.NightmareDiary,     4),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumDreamsPerDay { get; } =
+        EnumHelper<Day>.Enumerable.ToDictionary(
+            static day => day.ToShortName(),
+            static day => SpellCards.Count(pair => pair.Key.Day == day));
 
     public static int NumNicknames { get; } = 50;
 }
