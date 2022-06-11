@@ -2,7 +2,9 @@
 using System.Linq;
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th143;
+using static ThScoreFileConverter.Core.Models.Th143.Definitions;
 
 namespace TemplateGenerator.Models.Th143;
 
@@ -39,19 +41,10 @@ public class Definitions
         (Day.Last,    ("LastDay", "最終日")),
     }.ToStringKeyedDictionary();
 
-    public static IReadOnlyDictionary<string, int> NumScenesPerDay { get; } = new[]
-    {
-        (Day.First,    6),
-        (Day.Second,   6),
-        (Day.Third,    7),
-        (Day.Fourth,   7),
-        (Day.Fifth,    8),
-        (Day.Sixth,    8),
-        (Day.Seventh,  8),
-        (Day.Eighth,   7),
-        (Day.Ninth,    8),
-        (Day.Last,    10),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumScenesPerDay { get; } =
+        EnumHelper<Day>.Enumerable.ToDictionary(
+            static day => day.ToShortName(),
+            static day => SpellCards.Count(pair => pair.Key.Day == day));
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemWithTotalNames { get; } =
         ItemWithTotalNamesImpl.ToDictionary(
