@@ -1,3 +1,4 @@
 ignore:
   - "ThScoreFileConverter.Core.Tests"
   - "ThScoreFileConverter.Tests"
+  - "**/*.Designer.cs"
