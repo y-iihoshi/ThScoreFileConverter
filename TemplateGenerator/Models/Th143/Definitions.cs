@@ -60,5 +60,5 @@ public class Definitions
 
     public static IEnumerable<string> ItemKeysTotalLast { get; } = ItemWithTotalNames.Keys;
 
-    public static int NumNicknames { get; } = 70;
+    public static int NumNicknames { get; } = Nicknames.Count;
 }
