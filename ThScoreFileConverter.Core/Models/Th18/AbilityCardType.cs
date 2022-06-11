@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th18;
+namespace ThScoreFileConverter.Core.Models.Th18;
 
 /// <summary>
 /// Represents ability card types of UM.
