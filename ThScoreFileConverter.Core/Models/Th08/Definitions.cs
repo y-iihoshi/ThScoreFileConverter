@@ -248,4 +248,14 @@ public static class Definitions
         new(222, "「深弾幕結界　-夢幻泡影-」",               StagePractice.LastWord,     LevelPractice.LastWord),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
     }.ToDictionary(static card => card.Id);
+
+    /// <summary>
+    /// Gets wheter you can practice the specified stage or not.
+    /// </summary>
+    /// <param name="stage">A stage.</param>
+    /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
+    public static bool CanPractice(Stage stage)
+    {
+        return stage != Stage.Extra;
+    }
 }

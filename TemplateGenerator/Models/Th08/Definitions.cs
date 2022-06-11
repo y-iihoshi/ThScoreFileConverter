@@ -145,9 +145,4 @@ public class Definitions : Models.Definitions
         (Chara.Youmu,         Stage.FourUncanny),
         (Chara.Yuyuko,        Stage.FourUncanny),
     }.ToDictionary(static pair => pair.Item1.ToShortName(), static pair => pair.Item2.ToShortName());
-
-    public static bool CanPractice(Stage stage)
-    {
-        return stage != Stage.Extra;
-    }
 }
