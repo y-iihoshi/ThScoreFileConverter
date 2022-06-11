@@ -123,4 +123,42 @@ public static class Definitions
         new(97, "「蟲姫さまの輝かしく落ち着かない毎日」", Stage.Extra, Level.Extra),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
     }.ToDictionary(static card => card.Id);
+
+    /// <summary>
+    /// Gets the list of achievements.
+    /// Thanks to en.touhouwiki.net.
+    /// </summary>
+    public static IReadOnlyList<string> Achievements { get; } = new List<string>
+    {
+        "霊夢アナザークリア",
+        "霊夢でクリア",
+        "魔理沙アナザークリア",
+        "魔理沙でクリア",
+        "咲夜アナザークリア",
+        "咲夜でクリア",
+        "早苗アナザークリア",
+        "早苗でクリア",
+        "霊夢バッドエンド",
+        "魔理沙BADクリア",
+        "咲夜BADクリア",
+        "早苗BADクリア",
+        "霊夢EXクリア",
+        "魔理沙EXクリア",
+        "咲夜EXクリア",
+        "早苗EXクリア",
+        "イージークリア",
+        "ノーマルクリア",
+        "ハードクリア",
+        "ルナティッククリア",
+        "イージーノーコンクリア",
+        "ノーマルノーコンクリア",
+        "ハードNCクリア",
+        "ルナティックNCクリア",
+        "売り物のない市場",
+        "パーフェクトクリア",
+        "無主の存在",
+        "蠱毒王",
+        "スペルカードコレクター",
+        "カード売人",
+    };
 }

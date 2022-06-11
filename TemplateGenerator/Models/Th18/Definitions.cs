@@ -46,5 +46,5 @@ public class Definitions : Models.Definitions
 
     public static int NumAbilityCards { get; } = 56;
 
-    public static int NumAchievements { get; } = 30;
+    public static int NumAchievements { get; } = Achievements.Count;
 }
