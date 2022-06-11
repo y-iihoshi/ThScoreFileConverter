@@ -152,5 +152,5 @@ public static class Definitions
         new(126, "「神霊大宇宙」",                       StagePractice.OverDrive, LevelPractice.OverDrive),
         new(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
-    }.ToDictionary(card => card.Id);
+    }.ToDictionary(static card => card.Id);
 }
