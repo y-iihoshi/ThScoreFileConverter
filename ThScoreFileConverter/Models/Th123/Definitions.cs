@@ -318,9 +318,4 @@ internal static class Definitions
                 stageInfo => stageInfo.CardIds.Select(id => (stageInfo.Enemy, id))));
 
     public static string FormatPrefix { get; } = "%T123";
-
-    public static bool HasStory(Chara chara)
-    {
-        return chara is Chara.Sanae or Chara.Cirno or Chara.Meiling;
-    }
 }

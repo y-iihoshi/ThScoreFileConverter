@@ -19,7 +19,7 @@ internal class CardReplacer : CardReplacerBase<Chara>
         : base(
               Definitions.FormatPrefix,
               Parsers.CharaParser,
-              Definitions.HasStory,
+              Core.Models.Th105.Definitions.HasStory,
               Definitions.EnemyCardIdTable,
               Definitions.CardNameTable,
               clearDataDictionary,

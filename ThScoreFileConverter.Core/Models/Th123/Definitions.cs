@@ -635,4 +635,14 @@ public static class Definitions
                 }
             },
         };
+
+    /// <summary>
+    /// Gets whether the specified character has the story mode or not.
+    /// </summary>
+    /// <param name="chara">A character.</param>
+    /// <returns><c>true</c> if <paramref name="chara"/> has the story mode; otherwise <c>false</c>.</returns>
+    public static bool HasStory(Chara chara)
+    {
+        return chara is Chara.Sanae or Chara.Cirno or Chara.Meiling;
+    }
 }

@@ -20,7 +20,7 @@ internal class CareerReplacer : Th105.CareerReplacerBase<Chara>
         : base(
               Definitions.FormatPrefix,
               Parsers.CharaParser,
-              static (number, chara, type) => Definitions.HasStory(chara),
+              static (number, chara, type) => Core.Models.Th123.Definitions.HasStory(chara),
               Definitions.EnemyCardIdTable,
               clearDataDictionary,
               formatter)

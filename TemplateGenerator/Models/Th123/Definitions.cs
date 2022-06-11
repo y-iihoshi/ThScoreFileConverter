@@ -69,9 +69,4 @@ public class Definitions : Th105.Definitions
             static type => type.ToShortName(),
             static type => NumCardsPerCharacterAndTypeImpl
                 .Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
-
-    private static bool HasStory(Chara chara)
-    {
-        return chara is Chara.Sanae or Chara.Cirno or Chara.Meiling;
-    }
 }
