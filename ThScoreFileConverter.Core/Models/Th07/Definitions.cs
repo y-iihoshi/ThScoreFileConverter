@@ -166,4 +166,24 @@ public static class Definitions
         new(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
     }.ToDictionary(static card => card.Id);
+
+    /// <summary>
+    /// Gets wheter you can practice the specified level or not.
+    /// </summary>
+    /// <param name="level">A level.</param>
+    /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
+    public static bool CanPractice(Level level)
+    {
+        return (level != Level.Extra) && (level != Level.Phantasm);
+    }
+
+    /// <summary>
+    /// Gets wheter you can practice the specified stage or not.
+    /// </summary>
+    /// <param name="stage">A stage.</param>
+    /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
+    public static bool CanPractice(Stage stage)
+    {
+        return (stage != Stage.Extra) && (stage != Stage.Phantasm);
+    }
 }

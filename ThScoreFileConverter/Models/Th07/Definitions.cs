@@ -9,7 +9,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Core.Models.Th07;
 using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
     ThScoreFileConverter.Core.Models.Th07.Stage, ThScoreFileConverter.Core.Models.Th07.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
@@ -27,14 +26,4 @@ internal static class Definitions
         Enumerable.Range(1, 10).Reverse().Select(index => new HighScore((uint)index * 10000)).ToList();
 
     public static string FormatPrefix { get; } = "%T07";
-
-    public static bool CanPractice(Level level)
-    {
-        return (level != Level.Extra) && (level != Level.Phantasm);
-    }
-
-    public static bool CanPractice(Stage stage)
-    {
-        return (stage != Stage.Extra) && (stage != Stage.Phantasm);
-    }
 }

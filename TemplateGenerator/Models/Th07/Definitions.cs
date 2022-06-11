@@ -94,14 +94,4 @@ public class Definitions
         EnumHelper<Stage>.Enumerable.ToDictionary(
             static stage => stage.ToShortName(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
-
-    public static bool CanPractice(Level level)
-    {
-        return (level != Level.Extra) && (level != Level.Phantasm);
-    }
-
-    public static bool CanPractice(Stage stage)
-    {
-        return (stage != Stage.Extra) && (stage != Stage.Phantasm);
-    }
 }
