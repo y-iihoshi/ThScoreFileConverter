@@ -44,5 +44,5 @@ public class Definitions
             static day => day.ToShortName(),
             static day => SpellCards.Count(pair => pair.Key.Day == day));
 
-    public static int NumNicknames { get; } = 50;
+    public static int NumNicknames { get; } = Nicknames.Count;
 }
