@@ -6,14 +6,13 @@
 //-----------------------------------------------------------------------
 
 using System;
-using ThScoreFileConverter.Core.Models.Th18;
 
-namespace ThScoreFileConverter.Models.Th18;
+namespace ThScoreFileConverter.Core.Models.Th18;
 
 /// <summary>
 /// Represents an ability card of UM.
 /// </summary>
-internal class AbilityCard
+public class AbilityCard
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AbilityCard"/> class.
