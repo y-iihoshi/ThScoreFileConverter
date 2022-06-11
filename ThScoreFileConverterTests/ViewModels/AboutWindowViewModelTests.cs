@@ -16,7 +16,7 @@ public class AboutWindowViewModelTests
     // A workaround to enable accessing resources by pack URIs.
     // See: https://stackoverflow.com/questions/3710776
     [ClassInitialize]
-    public static void Setup(TestContext testContext)
+    public static void Setup(TestContext _1)
     {
         // No URI scheme except "example" should be used here, I think.
         _ = PackUriHelper.Create(new Uri("example://0"));
