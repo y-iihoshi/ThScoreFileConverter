@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Models;
 
@@ -38,7 +38,7 @@ internal class ThConverterEventArgs : EventArgs
     public ThConverterEventArgs(string path, int current, int total)
     {
         if (string.IsNullOrEmpty(path))
-            throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(path));
+            throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(path));
         if (current <= 0)
             throw new ArgumentOutOfRangeException(nameof(current));
         if (total < current)

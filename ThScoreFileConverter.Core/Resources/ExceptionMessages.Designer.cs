@@ -68,5 +68,131 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("ArgumentExceptionMustNotBeEmpty", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Stream must be readable. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ArgumentExceptionStreamMustBeReadable {
+            get {
+                return ResourceManager.GetString("ArgumentExceptionStreamMustBeReadable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wrong type. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ArgumentExceptionWrongType {
+            get {
+                return ResourceManager.GetString("ArgumentExceptionWrongType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} may be broken. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFileMayBeBroken {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFileMayBeBroken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Index is out of range. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionIndexIsOutOfRange {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionIndexIsOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Index must be an integer. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionIndexMustBeAnInteger {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionIndexMustBeAnInteger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The number of elements must not be negative. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionNumElementsMustNotBeNegative {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionNumElementsMustNotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Property {0} is invalid. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionPropertyIsInvalid {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionPropertyIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Property {0} is out of range. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionPropertyIsOutOfRange {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionPropertyIsOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sentinel is wrong. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionWrongSentinel {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionWrongSentinel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wrong type. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionWrongType {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionWrongType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Must be Invoked after {0}. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidOperationExceptionMustBeInvokedAfter {
+            get {
+                return ResourceManager.GetString("InvalidOperationExceptionMustBeInvokedAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Encryption is not supported. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotImplementedExceptionEncryptionIsNotSupported {
+            get {
+                return ResourceManager.GetString("NotImplementedExceptionEncryptionIsNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   LZSS compression is not supported. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotImplementedExceptionLzssCompressionIsNotSupported {
+            get {
+                return ResourceManager.GetString("NotImplementedExceptionLzssCompressionIsNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Should not reach here. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotImplementedExceptionShouldNotReachHere {
+            get {
+                return ResourceManager.GetString("NotImplementedExceptionShouldNotReachHere", resourceCulture);
+            }
+        }
     }
 }

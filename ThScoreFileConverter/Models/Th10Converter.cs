@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th10;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverter.Properties;
 using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Core.Models.Th10.CharaWithTotal>;
 
 namespace ThScoreFileConverter.Models;
@@ -60,7 +60,7 @@ internal class Th10Converter : ThConverter
         if (this.allScoreData is null)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>

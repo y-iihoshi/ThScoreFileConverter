@@ -15,9 +15,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter;
 
@@ -241,7 +241,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
     {
         return new InvalidDataException(
-            Utils.Format(Resources.InvalidDataExceptionFileMayBeBroken, file), innerException);
+            Utils.Format(ExceptionMessages.InvalidDataExceptionFileMayBeBroken, file), innerException);
     }
 
     /// <summary>

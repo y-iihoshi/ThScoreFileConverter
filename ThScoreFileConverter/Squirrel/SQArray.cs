@@ -10,8 +10,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Squirrel;
 
@@ -40,12 +40,12 @@ internal sealed class SQArray : SQObject
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Array)
-                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         var num = reader.ReadInt32();
         if (num < 0)
-            throw new InvalidDataException(Resources.InvalidDataExceptionNumElementsMustNotBeNegative);
+            throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionNumElementsMustNotBeNegative);
 
         var dictionary = new Dictionary<int, SQObject>();
 
@@ -55,16 +55,16 @@ internal sealed class SQArray : SQObject
             var value = SQObject.Create(reader);
 
             if (index is not SQInteger i)
-                throw new InvalidDataException(Resources.InvalidDataExceptionIndexMustBeAnInteger);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionIndexMustBeAnInteger);
             if (i >= num)
-                throw new InvalidDataException(Resources.InvalidDataExceptionIndexIsOutOfRange);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionIndexIsOutOfRange);
 
             dictionary.Add(i, value);
         }
 
         var sentinel = SQObject.Create(reader);
         if (sentinel is not SQNull)
-            throw new InvalidDataException(Resources.InvalidDataExceptionWrongSentinel);
+            throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongSentinel);
 
         var array = new SQObject[num];
         foreach (var pair in dictionary)

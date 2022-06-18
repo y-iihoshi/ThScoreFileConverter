@@ -9,7 +9,7 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Squirrel;
 
@@ -42,7 +42,7 @@ internal sealed class SQBool : SQObject, IEquatable<SQBool>
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Bool)
-                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         return (reader.ReadByte() != 0x00) ? True : False;

@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Models;
 
@@ -28,7 +28,7 @@ internal static class Lzss
     /// <param name="output">The stream that is output the compressed data.</param>
     public static void Compress(Stream input, Stream output)
     {
-        throw new NotImplementedException(Resources.NotImplementedExceptionLzssCompressionIsNotSupported);
+        throw new NotImplementedException(ExceptionMessages.NotImplementedExceptionLzssCompressionIsNotSupported);
     }
 
     /// <summary>

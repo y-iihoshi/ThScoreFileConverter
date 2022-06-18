@@ -8,7 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Squirrel;
 
@@ -25,7 +25,7 @@ internal sealed class SQInstance : SQObject
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Instance)
-                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         return new SQInstance();

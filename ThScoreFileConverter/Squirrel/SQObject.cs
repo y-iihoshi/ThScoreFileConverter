@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Squirrel;
 
@@ -46,7 +46,7 @@ internal class SQObject
 
         return SQObjectReaders.TryGetValue(type, out var objectReader)
             ? objectReader(reader)
-            : throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
+            : throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
     }
 
     public override string? ToString()

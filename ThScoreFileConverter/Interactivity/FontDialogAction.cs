@@ -10,7 +10,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Input;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 using SysDraw = System.Drawing;
 using WinForms = System.Windows.Forms;
 
@@ -326,7 +326,7 @@ public class FontDialogAction : CommonDialogAction
                 break;
 
             default:
-                throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
+                throw new NotImplementedException(ExceptionMessages.NotImplementedExceptionShouldNotReachHere);
         }
     }
 }

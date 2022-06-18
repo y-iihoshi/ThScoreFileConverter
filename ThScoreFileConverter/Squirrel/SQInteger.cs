@@ -9,7 +9,7 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Squirrel;
 
@@ -38,7 +38,7 @@ internal sealed class SQInteger : SQObject, IEquatable<SQInteger>
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Integer)
-                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         return new SQInteger(reader.ReadInt32());
