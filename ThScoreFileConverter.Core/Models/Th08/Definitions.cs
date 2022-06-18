@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
@@ -256,6 +257,6 @@ public static class Definitions
     /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
     public static bool CanPractice(Stage stage)
     {
-        return stage != Stage.Extra;
+        return Enum.IsDefined(typeof(Stage), stage) && (stage != Stage.Extra);
     }
 }
