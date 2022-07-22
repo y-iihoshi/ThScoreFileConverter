@@ -3,6 +3,7 @@ using System.Linq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th123;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th123.Definitions;
 using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 using Level = ThScoreFileConverter.Core.Models.Th105.Level;
@@ -42,7 +43,7 @@ public class Definitions : Th105.Definitions
                     ? SystemCardNameTable.Count
                     : CardNameTable.Keys.Count(key => key.Chara == chara && key.CardId / 100 == (int)cardType))));
 
-    public static new string Title { get; } = "東方非想天則";
+    public static new string Title { get; } = StringResources.TH123;
 
     public static new IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
         CharacterNamesImpl.ToDictionary(

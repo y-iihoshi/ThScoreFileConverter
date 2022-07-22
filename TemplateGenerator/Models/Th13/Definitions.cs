@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th13;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th13.Definitions;
 
 namespace TemplateGenerator.Models.Th13;
@@ -14,7 +15,7 @@ public class Definitions : Models.Definitions
         EnumHelper<LevelPractice>.Enumerable.Select(
             static level => (level, CardTable.Count(pair => pair.Value.Level == level)));
 
-    public static string Title { get; } = "東方神霊廟";
+    public static string Title { get; } = StringResources.TH13;
 
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(

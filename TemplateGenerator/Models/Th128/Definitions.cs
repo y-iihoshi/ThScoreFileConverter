@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th128;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th128.Definitions;
 using Level = ThScoreFileConverter.Core.Models.Level;
 
@@ -11,7 +12,7 @@ namespace TemplateGenerator.Models.Th128;
 
 public class Definitions : Models.Definitions
 {
-    public static string Title { get; } = "妖精大戦争";
+    public static string Title { get; } = StringResources.TH128;
 
     public static IReadOnlyDictionary<string, string> RouteNames { get; } = new[]
     {

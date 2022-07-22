@@ -4,12 +4,13 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th175;
+using ThScoreFileConverter.Core.Resources;
 
 namespace TemplateGenerator.Models.Th175;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方剛欲異聞";
+    public static string Title { get; } = StringResources.TH175;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.Where(level => level is Level.Normal or Level.Hard).ToDictionary(

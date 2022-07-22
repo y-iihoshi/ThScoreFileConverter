@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th07;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th07.Definitions;
 
 namespace TemplateGenerator.Models.Th07;
@@ -22,7 +23,7 @@ public class Definitions
         (Stage.Phantasm, "Phantasm"),
     };
 
-    public static string Title { get; } = "東方妖々夢";
+    public static string Title { get; } = StringResources.TH07;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToStringDictionary();

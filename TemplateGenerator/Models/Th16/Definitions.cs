@@ -5,13 +5,14 @@ using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th16;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th16.Definitions;
 
 namespace TemplateGenerator.Models.Th16;
 
 public class Definitions : Models.Definitions
 {
-    public static string Title { get; } = "東方天空璋";
+    public static string Title { get; } = StringResources.TH16;
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
     {

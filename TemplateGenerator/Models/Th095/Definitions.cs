@@ -4,13 +4,14 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th095;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th095.Definitions;
 
 namespace TemplateGenerator.Models.Th095;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方文花帖";
+    public static string Title { get; } = StringResources.TH095;
 
     public static IReadOnlyDictionary<string, (string Id, string Name)> LevelNames { get; } = new[]
     {

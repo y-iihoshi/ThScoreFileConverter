@@ -3,8 +3,8 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
 using WPFLocalizeExtension.Providers;
 
 namespace ThScoreFileConverter.Tests.Models;
@@ -71,7 +71,7 @@ public class LocalizationProviderTests
         var key = "TH06";
         var obj = LocalizationProvider.Instance.GetLocalizedObject(
             key, new DependencyObject(), CultureInfo.GetCultureInfo("de"));
-        Assert.AreEqual(Resources.ResourceManager.GetObject(key, CultureInfo.InvariantCulture), obj);
+        Assert.AreEqual(StringResources.ResourceManager.GetObject(key, CultureInfo.InvariantCulture), obj);
     }
 
     [TestMethod]

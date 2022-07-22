@@ -77,5 +77,230 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("ProjectUrl", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   the Embodiment of Scarlet Devil に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH06 {
+            get {
+                return ResourceManager.GetString("TH06", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Perfect Cherry Blossom に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH07 {
+            get {
+                return ResourceManager.GetString("TH07", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Immaterial and Missing Power に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH075 {
+            get {
+                return ResourceManager.GetString("TH075", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Imperishable Night に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH08 {
+            get {
+                return ResourceManager.GetString("TH08", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Phantasmagoria of Flower View に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH09 {
+            get {
+                return ResourceManager.GetString("TH09", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shoot the Bullet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH095 {
+            get {
+                return ResourceManager.GetString("TH095", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Mountain of Faith に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH10 {
+            get {
+                return ResourceManager.GetString("TH10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Scarlet Weather Rhapsody に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH105 {
+            get {
+                return ResourceManager.GetString("TH105", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Subterranean Animism に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH11 {
+            get {
+                return ResourceManager.GetString("TH11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Undefined Fantastic Object に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH12 {
+            get {
+                return ResourceManager.GetString("TH12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Touhou Hisoutensoku に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH123 {
+            get {
+                return ResourceManager.GetString("TH123", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Double Spoiler に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH125 {
+            get {
+                return ResourceManager.GetString("TH125", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Fairy Wars に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH128 {
+            get {
+                return ResourceManager.GetString("TH128", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ten Desires に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH13 {
+            get {
+                return ResourceManager.GetString("TH13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hopeless Masquerade に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH135 {
+            get {
+                return ResourceManager.GetString("TH135", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Double Dealing Character に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH14 {
+            get {
+                return ResourceManager.GetString("TH14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Impossible Spell Card に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH143 {
+            get {
+                return ResourceManager.GetString("TH143", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Urban Legend in Limbo に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH145 {
+            get {
+                return ResourceManager.GetString("TH145", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Legacy of Lunatic Kingdom に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH15 {
+            get {
+                return ResourceManager.GetString("TH15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Antinomy of Common Flowers に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH155 {
+            get {
+                return ResourceManager.GetString("TH155", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hidden Star in Four Seasons に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH16 {
+            get {
+                return ResourceManager.GetString("TH16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Violet Detector に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH165 {
+            get {
+                return ResourceManager.GetString("TH165", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wily Beast and Weakest Creature に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH17 {
+            get {
+                return ResourceManager.GetString("TH17", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Touhou Gouyoku Ibun に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH175 {
+            get {
+                return ResourceManager.GetString("TH175", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Unconnected Marketeers に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH18 {
+            get {
+                return ResourceManager.GetString("TH18", resourceCulture);
+            }
+        }
     }
 }

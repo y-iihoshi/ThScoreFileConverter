@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th143;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th143.Definitions;
 
 namespace TemplateGenerator.Models.Th143;
@@ -25,7 +26,7 @@ public class Definitions
         (ItemWithTotal.Total,    "合計"),
     };
 
-    public static string Title { get; } = "弾幕アマノジャク";
+    public static string Title { get; } = StringResources.TH143;
 
     public static IReadOnlyDictionary<string, (string Id, string Name)> DayNames { get; } = new[]
     {

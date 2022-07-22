@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th08;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th08.Definitions;
 
 namespace TemplateGenerator.Models.Th08;
@@ -27,7 +28,7 @@ public class Definitions : Models.Definitions
         EnumHelper<LevelPractice>.Enumerable.Select(
             static level => (level, CardTable.Count(pair => pair.Value.Level == level)));
 
-    public static string Title { get; } = "東方永夜抄";
+    public static string Title { get; } = StringResources.TH08;
 
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(

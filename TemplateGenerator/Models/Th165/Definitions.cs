@@ -3,13 +3,14 @@ using System.Linq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th165;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th165.Definitions;
 
 namespace TemplateGenerator.Models.Th165;
 
 public class Definitions
 {
-    public static string Title { get; } = "秘封ナイトメアダイアリー";
+    public static string Title { get; } = StringResources.TH165;
 
     public static IReadOnlyDictionary<string, (string Id, string Name)> DayNames { get; } = new[]
     {

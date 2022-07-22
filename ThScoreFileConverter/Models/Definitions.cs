@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 using ThScoreFileConverter.Core.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Models;
 
@@ -17,32 +17,32 @@ internal static class Definitions
 {
     public static IEnumerable<Work> Works { get; } = new Work[]
     {
-        new() { Number = nameof(Resources.TH06),  IsSupported = true },
-        new() { Number = nameof(Resources.TH07),  IsSupported = true },
-        new() { Number = nameof(Resources.TH08),  IsSupported = true },
-        new() { Number = nameof(Resources.TH09),  IsSupported = true },
-        new() { Number = nameof(Resources.TH095), IsSupported = true },
-        new() { Number = nameof(Resources.TH10),  IsSupported = true },
-        new() { Number = nameof(Resources.TH11),  IsSupported = true },
-        new() { Number = nameof(Resources.TH12),  IsSupported = true },
-        new() { Number = nameof(Resources.TH125), IsSupported = true },
-        new() { Number = nameof(Resources.TH128), IsSupported = true },
-        new() { Number = nameof(Resources.TH13),  IsSupported = true },
-        new() { Number = nameof(Resources.TH14),  IsSupported = true },
-        new() { Number = nameof(Resources.TH143), IsSupported = true },
-        new() { Number = nameof(Resources.TH15),  IsSupported = true },
-        new() { Number = nameof(Resources.TH16),  IsSupported = true },
-        new() { Number = nameof(Resources.TH165), IsSupported = true },
-        new() { Number = nameof(Resources.TH17),  IsSupported = true },
-        new() { Number = nameof(Resources.TH18),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH06),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH07),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH08),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH09),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH095), IsSupported = true },
+        new() { Number = nameof(StringResources.TH10),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH11),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH12),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH125), IsSupported = true },
+        new() { Number = nameof(StringResources.TH128), IsSupported = true },
+        new() { Number = nameof(StringResources.TH13),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH14),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH143), IsSupported = true },
+        new() { Number = nameof(StringResources.TH15),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH16),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH165), IsSupported = true },
+        new() { Number = nameof(StringResources.TH17),  IsSupported = true },
+        new() { Number = nameof(StringResources.TH18),  IsSupported = true },
         new() { },
-        new() { Number = nameof(Resources.TH075), IsSupported = true },
-        new() { Number = nameof(Resources.TH105), IsSupported = true },
-        new() { Number = nameof(Resources.TH123), IsSupported = true },
-        new() { Number = nameof(Resources.TH135), IsSupported = true },
-        new() { Number = nameof(Resources.TH145), IsSupported = true },
-        new() { Number = nameof(Resources.TH155), IsSupported = true },
-        new() { Number = nameof(Resources.TH175), IsSupported = true },
+        new() { Number = nameof(StringResources.TH075), IsSupported = true },
+        new() { Number = nameof(StringResources.TH105), IsSupported = true },
+        new() { Number = nameof(StringResources.TH123), IsSupported = true },
+        new() { Number = nameof(StringResources.TH135), IsSupported = true },
+        new() { Number = nameof(StringResources.TH145), IsSupported = true },
+        new() { Number = nameof(StringResources.TH155), IsSupported = true },
+        new() { Number = nameof(StringResources.TH175), IsSupported = true },
     };
 
     public static bool IsTotal(LevelWithTotal level)

@@ -2,12 +2,13 @@
 using System.Linq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th09;
+using ThScoreFileConverter.Core.Resources;
 
 namespace TemplateGenerator.Models.Th09;
 
 public class Definitions : Models.Definitions
 {
-    public static string Title { get; } = "東方花映塚";
+    public static string Title { get; } = StringResources.TH09;
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } = new[]
     {

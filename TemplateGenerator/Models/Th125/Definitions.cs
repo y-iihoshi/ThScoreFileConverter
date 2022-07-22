@@ -4,6 +4,7 @@ using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
+using ThScoreFileConverter.Core.Resources;
 using static ThScoreFileConverter.Core.Models.Th125.Definitions;
 
 namespace TemplateGenerator.Models.Th125;
@@ -27,7 +28,7 @@ public class Definitions
     private static readonly int NumScenesWithoutSpoiler =
         NumScenesPerLevelImpl.Where(static pair => pair.Item1 != Level.Spoiler).Sum(static pair => pair.Item2);
 
-    public static string Title { get; } = "ダブルスポイラー";
+    public static string Title { get; } = StringResources.TH125;
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> LevelNames { get; } = new[]
     {

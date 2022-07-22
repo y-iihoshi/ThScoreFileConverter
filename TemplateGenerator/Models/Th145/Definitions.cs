@@ -2,12 +2,13 @@
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th145;
+using ThScoreFileConverter.Core.Resources;
 
 namespace TemplateGenerator.Models.Th145;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方深秘録";
+    public static string Title { get; } = StringResources.TH145;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToStringDictionary();
