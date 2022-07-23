@@ -53,8 +53,8 @@ format from best shot files.
 * .NET Framework 4.8
 * .NET Core 3.1
 * .NET 6
-* Visual Studio Community 2022 17.2.0
-* Python 3.10.4
+* Visual Studio Community 2022 17.2
+* Python 3.10
 
 ### Tested environment
 * Same as above.
