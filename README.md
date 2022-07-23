@@ -46,6 +46,9 @@ format from best shot files.
 * TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)<br>
   Because I'm not good at playing action games well...
 
+### Will be supported
+* TH18.5 バレットフィリア達の闇市場　～ 100th Black Market.
+
 ## Environments
 
 ### Development environment

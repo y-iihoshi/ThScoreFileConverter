@@ -302,5 +302,14 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("TH18", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   100th Black Market に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH185 {
+            get {
+                return ResourceManager.GetString("TH185", resourceCulture);
+            }
+        }
     }
 }
