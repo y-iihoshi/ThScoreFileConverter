@@ -7,6 +7,8 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using ThScoreFileConverter.Core.Models.Th125;
+
 namespace ThScoreFileConverter.Models.Th125;
 
 internal interface IBestShotHeader : Th095.IBestShotHeader<Level>

@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Models;
 
@@ -30,7 +30,7 @@ internal static class ThCrypt
     public static void Encrypt(
         Stream input, Stream output, int size, byte key, byte step, int block, int limit)
     {
-        throw new NotImplementedException(Resources.NotImplementedExceptionEncryptionIsNotSupported);
+        throw new NotImplementedException(ExceptionMessages.NotImplementedExceptionEncryptionIsNotSupported);
     }
 
     /// <summary>

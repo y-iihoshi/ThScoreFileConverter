@@ -13,10 +13,12 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th125;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th125;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models;
 
@@ -25,8 +27,7 @@ namespace ThScoreFileConverter.Models;
 #endif
 internal class Th125Converter : ThConverter
 {
-    private readonly Dictionary<
-        (Chara, Th125.Level Level, int Scene), (string Path, Th125.IBestShotHeader Header)> bestshots =
+    private readonly Dictionary<(Chara, Level Level, int Scene), (string Path, Th125.IBestShotHeader Header)> bestshots =
         new(EnumHelper<Chara>.NumValues * Th125.Definitions.SpellCards.Count);
 
     private AllScoreData? allScoreData;
@@ -67,7 +68,7 @@ internal class Th125Converter : ThConverter
         if ((this.allScoreData is null) || (this.allScoreData.Status is null))
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>
@@ -94,7 +95,7 @@ internal class Th125Converter : ThConverter
         using var decoded = new MemoryStream();
 
         if (output is not FileStream outputFile)
-            throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
+            throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(output));
         var chara = Path.GetFileName(outputFile.Name)
             .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
             ? Chara.Hatate : Chara.Aya;

@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th07;
@@ -41,7 +42,7 @@ internal class PracticeReplacer : IStringReplaceable
                 return (type == 1) ? score.HighScore * 10 : score.TrialCount;
             }
 
-            return Definitions.CanPractice(level) && Definitions.CanPractice(stage)
+            return Core.Models.Th07.Definitions.CanPractice(level) && Core.Models.Th07.Definitions.CanPractice(stage)
                 ? formatter.FormatNumber(
                     practiceScores.TryGetValue((chara, level, stage), out var score) ? GetValue(score) : default)
                 : match.ToString();

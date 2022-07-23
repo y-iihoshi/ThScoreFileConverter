@@ -8,6 +8,8 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th12;
 
 namespace ThScoreFileConverter.Models.Th12;
 
@@ -22,8 +24,8 @@ internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
               Parsers.LevelParser,
               Parsers.CharaParser,
               Parsers.StageParser,
-              Models.Definitions.CanPractice,
-              Models.Definitions.CanPractice,
+              Core.Models.Definitions.CanPractice,
+              Core.Models.Definitions.CanPractice,
               (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
               formatter)
     {

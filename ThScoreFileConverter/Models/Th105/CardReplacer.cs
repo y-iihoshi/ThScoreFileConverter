@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th105;
 
 namespace ThScoreFileConverter.Models.Th105;
 
@@ -18,7 +19,7 @@ internal class CardReplacer : CardReplacerBase<Chara>
         : base(
               Definitions.FormatPrefix,
               Parsers.CharaParser,
-              Definitions.HasStory,
+              Core.Models.Th105.Definitions.HasStory,
               Definitions.EnemyCardIdTable,
               Definitions.CardNameTable,
               clearDataDictionary,

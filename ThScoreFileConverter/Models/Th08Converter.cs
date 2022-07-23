@@ -10,10 +10,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th08;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models;
 
@@ -58,7 +60,7 @@ internal class Th08Converter : ThConverter
         if ((this.allScoreData is null) || (this.allScoreData.PlayStatus is null))
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>

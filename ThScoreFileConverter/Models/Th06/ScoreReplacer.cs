@@ -10,11 +10,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th06;
 using ThScoreFileConverter.Helpers;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
-    ThScoreFileConverter.Models.Th06.Chara,
-    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Core.Models.Th06.Chara,
+    ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th06;

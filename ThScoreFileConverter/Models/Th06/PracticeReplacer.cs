@@ -9,6 +9,8 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th06;
 
 namespace ThScoreFileConverter.Models.Th06;
 
@@ -34,7 +36,7 @@ internal class PracticeReplacer : IStringReplaceable
             var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
             var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
 
-            return Models.Definitions.CanPractice(level) && Models.Definitions.CanPractice(stage)
+            return Core.Models.Definitions.CanPractice(level) && Core.Models.Definitions.CanPractice(stage)
                 ? formatter.FormatNumber(
                     practiceScores.TryGetValue((chara, level, stage), out var score) ? score.HighScore : default)
                 : match.ToString();

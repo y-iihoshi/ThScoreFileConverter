@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models.Th125;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th125;
+using ThScoreFileConverter.Core.Resources;
+using static ThScoreFileConverter.Core.Models.Th125.Definitions;
 
 namespace TemplateGenerator.Models.Th125;
 
@@ -10,27 +13,14 @@ public class Definitions
 {
     private static readonly IEnumerable<(Chara, IEnumerable<int>)> SpoilerScenesPerCharacterImpl = new[]
     {
-        (Chara.Aya,    Enumerable.Range(start: 1, count: 4)),
-        (Chara.Hatate, Enumerable.Range(start: 5, count: 5)),
-    };
+        (Chara.Aya, Enemy.Hatate),
+        (Chara.Hatate, Enemy.Aya),
+    }.Select(static pair => (
+        pair.Item1,
+        SpellCards.Where(card => card.Key is (Level.Spoiler, _) && card.Value.Enemy == pair.Item2).Select(static card => card.Key.Scene)));
 
-    private static readonly IEnumerable<(Level, int)> NumScenesPerLevelImpl = new[]
-    {
-        (Level.One,     6),
-        (Level.Two,     6),
-        (Level.Three,   8),
-        (Level.Four,    7),
-        (Level.Five,    8),
-        (Level.Six,     8),
-        (Level.Seven,   7),
-        (Level.Eight,   8),
-        (Level.Nine,    8),
-        (Level.Ten,     8),
-        (Level.Eleven,  8),
-        (Level.Twelve,  8),
-        (Level.Extra,   9),
-        (Level.Spoiler, SpoilerScenesPerCharacterImpl.Sum(static pair => pair.Item2.Count())),
-    };
+    private static readonly IEnumerable<(Level, int)> NumScenesPerLevelImpl =
+        EnumHelper<Level>.Enumerable.Select(static level => (level, SpellCards.Count(pair => pair.Key.Level == level)));
 
     private static readonly int NumScenesWithSpoiler =
         NumScenesPerLevelImpl.Sum(static pair => pair.Item2);
@@ -38,7 +28,7 @@ public class Definitions
     private static readonly int NumScenesWithoutSpoiler =
         NumScenesPerLevelImpl.Where(static pair => pair.Item1 != Level.Spoiler).Sum(static pair => pair.Item2);
 
-    public static string Title { get; } = "ダブルスポイラー";
+    public static string Title { get; } = StringResources.TH125;
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> LevelNames { get; } = new[]
     {

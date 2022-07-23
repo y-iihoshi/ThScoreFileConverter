@@ -120,18 +120,6 @@
   <data name="AboutWindowTitle" xml:space="preserve">
     <value>About this tool</value>
   </data>
-  <data name="ArgumentExceptionMustNotBeEmpty" xml:space="preserve">
-    <value>Must not be empty.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ArgumentExceptionStreamMustBeReadable" xml:space="preserve">
-    <value>Stream must be readable.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ArgumentExceptionWrongType" xml:space="preserve">
-    <value>Wrong type.</value>
-    <comment>@Invariant</comment>
-  </data>
   <data name="BackupFileExtension" xml:space="preserve">
     <value>.bak</value>
     <comment>@Invariant</comment>
@@ -142,42 +130,6 @@
   </data>
   <data name="ConvertedBestShotFileExtension" xml:space="preserve">
     <value>.png</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionFileMayBeBroken" xml:space="preserve">
-    <value>{0} may be broken.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
-    <value>Index is out of range.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionIndexMustBeAnInteger" xml:space="preserve">
-    <value>Index must be an integer.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionNumElementsMustNotBeNegative" xml:space="preserve">
-    <value>The number of elements must not be negative.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionPropertyIsInvalid" xml:space="preserve">
-    <value>Property {0} is invalid.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionPropertyIsOutOfRange" xml:space="preserve">
-    <value>Property {0} is out of range.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionWrongSentinel" xml:space="preserve">
-    <value>Sentinel is wrong.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionWrongType" xml:space="preserve">
-    <value>Wrong type.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidOperationExceptionMustBeInvokedAfter" xml:space="preserve">
-    <value>Must be Invoked after {0}.</value>
     <comment>@Invariant</comment>
   </data>
   <data name="MessageConversionFinished" xml:space="preserve">
@@ -208,22 +160,6 @@ Renamed to "{1}".</value>
   <data name="MessageUnhandledExceptionOccurred" xml:space="preserve">
     <value>An unhandled exception occurred.</value>
   </data>
-  <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
-    <value>Encryption is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionLzssCompressionIsNotSupported" xml:space="preserve">
-    <value>LZSS compression is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
-    <value>Should not reach here.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ProjectUrl" xml:space="preserve">
-    <value>https://www.colorless-sight.jp/thsfc/</value>
-    <comment>@Invariant</comment>
-  </data>
   <data name="ScoreFileFilter" xml:space="preserve">
     <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
   </data>
@@ -236,81 +172,6 @@ Renamed to "{1}".</value>
   </data>
   <data name="SupportedVersion" xml:space="preserve">
     <value>Supported version: </value>
-  </data>
-  <data name="TH06" xml:space="preserve">
-    <value>the Embodiment of Scarlet Devil</value>
-  </data>
-  <data name="TH07" xml:space="preserve">
-    <value>Perfect Cherry Blossom</value>
-  </data>
-  <data name="TH075" xml:space="preserve">
-    <value>Immaterial and Missing Power</value>
-  </data>
-  <data name="TH08" xml:space="preserve">
-    <value>Imperishable Night</value>
-  </data>
-  <data name="TH09" xml:space="preserve">
-    <value>Phantasmagoria of Flower View</value>
-  </data>
-  <data name="TH095" xml:space="preserve">
-    <value>Shoot the Bullet</value>
-  </data>
-  <data name="TH10" xml:space="preserve">
-    <value>Mountain of Faith</value>
-  </data>
-  <data name="TH105" xml:space="preserve">
-    <value>Scarlet Weather Rhapsody</value>
-  </data>
-  <data name="TH11" xml:space="preserve">
-    <value>Subterranean Animism</value>
-  </data>
-  <data name="TH12" xml:space="preserve">
-    <value>Undefined Fantastic Object</value>
-  </data>
-  <data name="TH123" xml:space="preserve">
-    <value>Touhou Hisoutensoku</value>
-  </data>
-  <data name="TH125" xml:space="preserve">
-    <value>Double Spoiler</value>
-  </data>
-  <data name="TH128" xml:space="preserve">
-    <value>Fairy Wars</value>
-  </data>
-  <data name="TH13" xml:space="preserve">
-    <value>Ten Desires</value>
-  </data>
-  <data name="TH135" xml:space="preserve">
-    <value>Hopeless Masquerade</value>
-  </data>
-  <data name="TH14" xml:space="preserve">
-    <value>Double Dealing Character</value>
-  </data>
-  <data name="TH143" xml:space="preserve">
-    <value>Impossible Spell Card</value>
-  </data>
-  <data name="TH145" xml:space="preserve">
-    <value>Urban Legend in Limbo</value>
-  </data>
-  <data name="TH15" xml:space="preserve">
-    <value>Legacy of Lunatic Kingdom</value>
-  </data>
-  <data name="TH155" xml:space="preserve">
-    <value>Antinomy of Common Flowers</value>
-  </data>
-  <data name="TH16" xml:space="preserve">
-    <value>Hidden Star in Four Seasons</value>
-  </data>
-  <data name="TH165" xml:space="preserve">
-    <value>Violet Detector</value>
-  </data>
-  <data name="TH17" xml:space="preserve">
-    <value>Wily Beast and Weakest Creature</value>
-  </data>
-  <data name="TH175" xml:space="preserve">
-    <value>Touhou Gouyoku Ibun</value>
-  </data>
-  <data name="TH18" xml:space="preserve">
-    <value>Unconnected Marketeers</value>
   </data>
   <data name="TemplateFileFilter" xml:space="preserve">
     <value>All files (*.*)|*.*</value>

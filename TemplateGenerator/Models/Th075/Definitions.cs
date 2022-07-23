@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th075;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th075;
+using ThScoreFileConverter.Core.Resources;
+using static ThScoreFileConverter.Core.Models.Th075.Definitions;
 
 namespace TemplateGenerator.Models.Th075;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方萃夢想";
+    public static string Title { get; } = StringResources.TH075;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToStringDictionary();
@@ -37,11 +39,8 @@ public class Definitions
         static tuple => tuple.Item1.ToShortName(),
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
-    {
-        (Level.Easy,    25),
-        (Level.Normal,  25),
-        (Level.Hard,    25),
-        (Level.Lunatic, 25),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            static level => level.ToShortName(),
+            static level => CardTable.Count(pair => CardIdTable[Chara.Reimu].Any(id => id == pair.Key) && (pair.Value.Level == level)));
 }

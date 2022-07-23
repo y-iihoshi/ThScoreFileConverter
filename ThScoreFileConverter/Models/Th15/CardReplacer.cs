@@ -9,6 +9,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th15;
 
 namespace ThScoreFileConverter.Models.Th15;
 

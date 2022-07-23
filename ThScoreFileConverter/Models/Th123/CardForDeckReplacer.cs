@@ -9,7 +9,9 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Helpers;
+using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 
 namespace ThScoreFileConverter.Models.Th123;
 
@@ -43,7 +45,7 @@ internal class CardForDeckReplacer : IStringReplaceable
             Th105.ICardForDeck cardForDeck;
             string cardName;
 
-            if (cardType == Th105.CardType.System)
+            if (cardType == CardType.System)
             {
                 if (Definitions.SystemCardNameTable.TryGetValue(number - 1, out var name))
                 {
@@ -90,7 +92,7 @@ internal class CardForDeckReplacer : IStringReplaceable
 
         // serialNumber : 0-based
         static bool TryGetCharaCardIdPair(
-            Chara chara, Th105.CardType cardType, int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
+            Chara chara, CardType cardType, int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
         {
             if (Definitions.CardOrderTable.TryGetValue(chara, out var cardTypeIdDict)
                 && cardTypeIdDict.TryGetValue(cardType, out var cardIds)

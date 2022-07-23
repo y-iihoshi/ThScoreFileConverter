@@ -59,19 +59,26 @@ jobs:
 
     - name: Generate coverage report
       run: >
-        dotnet test ThScoreFileConverterTests
+        dotnet test ThScoreFileConverter.Core.Tests
         /p:Configuration=${{ matrix.configuration }}
         /p:TargetFrameworks=${{ matrix.target-framework }}
         /p:CollectCoverage=true
+        /p:CoverletOutput="../CoverageResults/"
+
+        dotnet test ThScoreFileConverter.Tests
+        /p:Configuration=${{ matrix.configuration }}
+        /p:TargetFrameworks=${{ matrix.target-framework }}
+        /p:CollectCoverage=true
+        /p:CoverletOutput="../CoverageResults/"
+        /p:MergeWith="../CoverageResults/coverage.${{ matrix.target-framework }}.json"
         /p:CoverletOutputFormat=opencover
-        /p:CoverletOutput=coverage.xml
       if: matrix.configuration == 'Debug'
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3.1.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ThScoreFileConverterTests/coverage.${{ matrix.target-framework }}.xml
+        file: CoverageResults/coverage.${{ matrix.target-framework }}.opencover.xml
       if: matrix.configuration == 'Debug'
 
     - name: Collect artifacts

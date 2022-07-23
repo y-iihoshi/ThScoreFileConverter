@@ -8,9 +8,10 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th07;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
-    ThScoreFileConverter.Models.Th07.Chara,
-    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Core.Models.Th07.Chara,
+    ThScoreFileConverter.Core.Models.Th07.Level,
     ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th07;

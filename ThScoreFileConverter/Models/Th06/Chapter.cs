@@ -10,9 +10,9 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th06;
 
@@ -41,13 +41,13 @@ internal class Chapter : IBinaryReadable, IChapter
         if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
         }
 
         if (this.Size1 != expectedSize)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
         }
     }
 

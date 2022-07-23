@@ -1,6 +1,6 @@
-<#@ assembly name="$(TargetPath)" #>
-<#@ import namespace="TemplateGenerator.Properties" #>
+<#@ assembly name="$(TargetDir)\ThScoreFileConverter.Core.dll" #>
+<#@ import namespace="ThScoreFileConverter.Core.Resources" #>
 <#
-    var projectName = Resources.ProductName;
-    var projectUrl = Resources.ProjectUrl;
+    var projectName = StringResources.ProductName;
+    var projectUrl = StringResources.ProjectUrl;
 #>

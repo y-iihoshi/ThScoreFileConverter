@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th123;
 
 namespace ThScoreFileConverter.Models.Th123;
 
@@ -20,7 +21,7 @@ internal class CollectRateReplacer : Th105.CollectRateReplacerBase<Chara>
               Definitions.FormatPrefix,
               Parsers.LevelWithTotalParser,
               Parsers.CharaParser,
-              static (level, chara, type) => Definitions.HasStory(chara),
+              static (level, chara, type) => Core.Models.Th123.Definitions.HasStory(chara),
               clearDataDictionary,
               formatter)
     {

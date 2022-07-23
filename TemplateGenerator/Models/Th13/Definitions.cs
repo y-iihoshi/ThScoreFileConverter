@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th13;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th13;
+using ThScoreFileConverter.Core.Resources;
+using static ThScoreFileConverter.Core.Models.Th13.Definitions;
 
 namespace TemplateGenerator.Models.Th13;
 
 public class Definitions : Models.Definitions
 {
-    private static readonly IEnumerable<(LevelPractice, int)> NumCardsPerLevelImpl = new[]
-    {
-        (LevelPractice.Easy,      24),
-        (LevelPractice.Normal,    26),
-        (LevelPractice.Hard,      28),
-        (LevelPractice.Lunatic,   28),
-        (LevelPractice.Extra,     13),
-        (LevelPractice.OverDrive,  8),
-    };
+    private static readonly IEnumerable<(LevelPractice, int)> NumCardsPerLevelImpl =
+        EnumHelper<LevelPractice>.Enumerable.Select(
+            static level => (level, CardTable.Count(pair => pair.Value.Level == level)));
 
-    public static string Title { get; } = "東方神霊廟";
+    public static string Title { get; } = StringResources.TH13;
 
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(
@@ -62,17 +58,10 @@ public class Definitions : Models.Definitions
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         NumCardsPerLevelImpl.ToStringKeyedDictionary();
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } = new[]
-    {
-        (StagePractice.One,       14),
-        (StagePractice.Two,       16),
-        (StagePractice.Three,     14),
-        (StagePractice.Four,      15),
-        (StagePractice.Five,      19),
-        (StagePractice.Six,       28),
-        (StagePractice.Extra,     13),
-        (StagePractice.OverDrive,  8),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
+        EnumHelper<StagePractice>.Enumerable.ToDictionary(
+            static stage => stage.ToShortName(),
+            static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static int NumCardsWithOverDrive { get; } =
         NumCardsPerLevelImpl.Sum(static pair => pair.Item2);

@@ -1,64 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th105;
+using ThScoreFileConverter.Core.Resources;
+using static ThScoreFileConverter.Core.Models.Th105.Definitions;
 
 namespace TemplateGenerator.Models.Th105;
 
 public class Definitions
 {
-    private static readonly IEnumerable<(Chara, CardType, int)> NumCardsPerCharacterAndTypeImpl = new[]
-    {
-        (Chara.Reimu,     CardType.System,  6),
-        (Chara.Reimu,     CardType.Skill,  11),
-        (Chara.Reimu,     CardType.Spell,   8),
-        (Chara.Marisa,    CardType.System,  6),
-        (Chara.Marisa,    CardType.Skill,  11),
-        (Chara.Marisa,    CardType.Spell,  10),
-        (Chara.Sakuya,    CardType.System,  6),
-        (Chara.Sakuya,    CardType.Skill,   8),
-        (Chara.Sakuya,    CardType.Spell,  10),
-        (Chara.Alice,     CardType.System,  6),
-        (Chara.Alice,     CardType.Skill,  10),
-        (Chara.Alice,     CardType.Spell,  10),
-        (Chara.Patchouli, CardType.System,  6),
-        (Chara.Patchouli, CardType.Skill,  10),
-        (Chara.Patchouli, CardType.Spell,   9),
-        (Chara.Youmu,     CardType.System,  6),
-        (Chara.Youmu,     CardType.Skill,  10),
-        (Chara.Youmu,     CardType.Spell,   8),
-        (Chara.Remilia,   CardType.System,  6),
-        (Chara.Remilia,   CardType.Skill,   9),
-        (Chara.Remilia,   CardType.Spell,   8),
-        (Chara.Yuyuko,    CardType.System,  6),
-        (Chara.Yuyuko,    CardType.Skill,   9),
-        (Chara.Yuyuko,    CardType.Spell,   9),
-        (Chara.Yukari,    CardType.System,  6),
-        (Chara.Yukari,    CardType.Skill,   9),
-        (Chara.Yukari,    CardType.Spell,   9),
-        (Chara.Suika,     CardType.System,  6),
-        (Chara.Suika,     CardType.Skill,   9),
-        (Chara.Suika,     CardType.Spell,   9),
-        (Chara.Reisen,    CardType.System,  6),
-        (Chara.Reisen,    CardType.Skill,  11),
-        (Chara.Reisen,    CardType.Spell,   8),
-        (Chara.Aya,       CardType.System,  6),
-        (Chara.Aya,       CardType.Skill,  10),
-        (Chara.Aya,       CardType.Spell,   8),
-        (Chara.Komachi,   CardType.System,  6),
-        (Chara.Komachi,   CardType.Skill,  10),
-        (Chara.Komachi,   CardType.Spell,   8),
-        (Chara.Iku,       CardType.System,  6),
-        (Chara.Iku,       CardType.Skill,   9),
-        (Chara.Iku,       CardType.Spell,   8),
-        (Chara.Tenshi,    CardType.System,  6),
-        (Chara.Tenshi,    CardType.Skill,   8),
-        (Chara.Tenshi,    CardType.Spell,   8),
-    };
+    private static readonly IEnumerable<(Chara, CardType, int)> NumCardsPerCharacterAndTypeImpl =
+        EnumHelper<Chara>.Enumerable.SelectMany(static chara =>
+            EnumHelper<CardType>.Enumerable.Select(cardType =>
+                (chara, cardType, cardType == CardType.System
+                    ? SystemCardNameTable.Count
+                    : CardNameTable.Keys.Count(key => key.Chara == chara && key.CardId / 100 == (int)cardType))));
 
-    public static string Title { get; } = "東方緋想天";
+    public static string Title { get; } = StringResources.TH105;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToStringDictionary();
@@ -91,32 +51,10 @@ public class Definitions
         static tuple => tuple.Item1.ToShortName(),
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
-    {
-        (Level.Easy,    23),
-        (Level.Normal,  24),
-        (Level.Hard,    25),
-        (Level.Lunatic, 25),
-    }.ToStringKeyedDictionary();
-
-    public static IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } = new[]
-    {
-        (Chara.Reimu,      76),
-        (Chara.Marisa,     76),
-        (Chara.Sakuya,     76),
-        (Chara.Alice,      76),
-        (Chara.Patchouli,  76),
-        (Chara.Youmu,      76),
-        (Chara.Remilia,    96),
-        (Chara.Yuyuko,     76),
-        (Chara.Yukari,     76),
-        (Chara.Suika,      52),
-        (Chara.Reisen,     60),
-        (Chara.Aya,        60),
-        (Chara.Komachi,    76),
-        (Chara.Iku,        76),
-        (Chara.Tenshi,    100),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } =
+        StageInfoTable.ToDictionary(
+            static pair => pair.Key.ToShortName(),
+            static pair => pair.Value.Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
 
     public static IReadOnlyDictionary<string, string> CardTypeNames { get; } =
         EnumHelper<CardType>.Enumerable.ToStringDictionary();
@@ -129,6 +67,5 @@ public class Definitions
     public static IReadOnlyDictionary<string, int> MaxNumCardsPerType { get; } =
         EnumHelper<CardType>.Enumerable.ToDictionary(
             static type => type.ToShortName(),
-            static type => NumCardsPerCharacterAndTypeImpl
-                .Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
+            static type => NumCardsPerCharacterAndTypeImpl.Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
 }

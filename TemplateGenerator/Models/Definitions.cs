@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
+using static ThScoreFileConverter.Core.Models.Definitions;
 
 namespace TemplateGenerator.Models;
 
@@ -54,16 +54,6 @@ public class Definitions
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 
     public static IEnumerable<string> StageKeysTotalLast { get; } = StageWithTotalNames.Keys;
-
-    public static bool CanPractice(Level level)
-    {
-        return level != Level.Extra;
-    }
-
-    public static bool CanPractice(Stage stage)
-    {
-        return stage != Stage.Extra;
-    }
 
     public static IReadOnlyDictionary<string, string> CareerKinds { get; } = new[]
     {

@@ -5,6 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using ThScoreFileConverter.Core.Models.Th123;
+using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
+using LevelWithTotal = ThScoreFileConverter.Core.Models.Th105.LevelWithTotal;
+
 namespace ThScoreFileConverter.Models.Th123;
 
 /// <summary>
@@ -13,10 +17,10 @@ namespace ThScoreFileConverter.Models.Th123;
 internal static class Parsers
 {
     /// <summary>
-    /// Gets the parser of <see cref="Th105.LevelWithTotal"/>.
+    /// Gets the parser of <see cref="LevelWithTotal"/>.
     /// </summary>
-    public static EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser { get; } =
-        new EnumShortNameParser<Th105.LevelWithTotal>();
+    public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
+        new EnumShortNameParser<LevelWithTotal>();
 
     /// <summary>
     /// Gets the parser of <see cref="Chara"/>.
@@ -25,8 +29,8 @@ internal static class Parsers
         new EnumShortNameParser<Chara>();
 
     /// <summary>
-    /// Gets the parser of <see cref="Th105.CardType"/>.
+    /// Gets the parser of <see cref="CardType"/>.
     /// </summary>
-    public static EnumShortNameParser<Th105.CardType> CardTypeParser { get; } =
-        new EnumShortNameParser<Th105.CardType>();
+    public static EnumShortNameParser<CardType> CardTypeParser { get; } =
+        new EnumShortNameParser<CardType>();
 }

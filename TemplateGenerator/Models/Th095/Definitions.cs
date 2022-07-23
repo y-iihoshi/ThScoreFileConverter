@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th095;
+using ThScoreFileConverter.Core.Resources;
+using static ThScoreFileConverter.Core.Models.Th095.Definitions;
 
 namespace TemplateGenerator.Models.Th095;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方文花帖";
+    public static string Title { get; } = StringResources.TH095;
 
     public static IReadOnlyDictionary<string, (string Id, string Name)> LevelNames { get; } = new[]
     {
@@ -23,18 +28,8 @@ public class Definitions
         (Level.Extra, ("Extra",   "Level Extra")),
     }.ToStringKeyedDictionary();
 
-    public static IReadOnlyDictionary<string, int> NumScenesPerLevel { get; } = new[]
-    {
-        (Level.One,   6),
-        (Level.Two,   6),
-        (Level.Three, 8),
-        (Level.Four,  9),
-        (Level.Five,  8),
-        (Level.Six,   8),
-        (Level.Seven, 8),
-        (Level.Eight, 8),
-        (Level.Nine,  8),
-        (Level.Ten,   8),
-        (Level.Extra, 8),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumScenesPerLevel { get; } =
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            static level => level.ToShortName(),
+            static level => SpellCards.Keys.Count(key => key.Level == level));
 }

@@ -12,8 +12,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Squirrel;
 
@@ -42,7 +43,7 @@ internal sealed class SQTable : SQObject
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Table)
-                throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         var table = new SQTable();

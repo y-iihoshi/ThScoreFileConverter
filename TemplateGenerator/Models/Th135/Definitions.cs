@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th135;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th135;
+using ThScoreFileConverter.Core.Resources;
 
 namespace TemplateGenerator.Models.Th135;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方心綺楼";
+    public static string Title { get; } = StringResources.TH135;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToStringDictionary();

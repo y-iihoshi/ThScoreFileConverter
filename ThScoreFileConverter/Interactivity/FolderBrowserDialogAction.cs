@@ -7,7 +7,7 @@
 
 using System;
 using System.Windows;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 using WinForms = System.Windows.Forms;
 
 namespace ThScoreFileConverter.Interactivity;
@@ -142,7 +142,7 @@ public class FolderBrowserDialogAction : CommonDialogAction
                 break;
 
             default:
-                throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
+                throw new NotImplementedException(ExceptionMessages.NotImplementedExceptionShouldNotReachHere);
         }
     }
 }

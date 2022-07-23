@@ -9,9 +9,11 @@
 
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th075;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models;
 
@@ -50,7 +52,7 @@ internal class Th075Converter : ThConverter
         if (this.allScoreData is null)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>
@@ -77,7 +79,8 @@ internal class Th075Converter : ThConverter
         }
 
         var numCharas = EnumHelper<CharaWithReserved>.NumValues;
-        var numLevels = EnumHelper<Th075.Level>.NumValues;
+
+        var numLevels = EnumHelper<Level>.NumValues;
         if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
             (allScoreData.Status is not null))
             return allScoreData;

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th155;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th155;
+using ThScoreFileConverter.Core.Resources;
 
 namespace TemplateGenerator.Models.Th155;
 
 public class Definitions
 {
-    public static string Title { get; } = "東方憑依華";
+    public static string Title { get; } = StringResources.TH155;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(

@@ -9,7 +9,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Interactivity;
 
@@ -192,7 +192,7 @@ public class UIElementDropBehavior : Behavior<UIElement>
         if (command is not null)
         {
             if (sender is not UIElement)
-                throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(sender));
+                throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(sender));
 
             if (e is null)
                 throw new ArgumentNullException(nameof(e));

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Properties;
 
@@ -84,7 +85,7 @@ internal class ThConverter
                 case null:
                     throw new ArgumentNullException(nameof(threadArg));
                 default:
-                    throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(threadArg));
+                    throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(threadArg));
             }
         }
         catch (Exception e)

@@ -51,7 +51,7 @@ using System.Windows;
 [assembly: CLSCompliant(true)]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("ThScoreFileConverterTests")]
+[assembly: InternalsVisibleTo("ThScoreFileConverter.Tests")]
 // To enable mocking internal interfaces by Moq.
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 #endif

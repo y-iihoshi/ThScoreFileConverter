@@ -8,7 +8,9 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th12.CharaWithTotal>;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th12;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Core.Models.Th12.CharaWithTotal>;
 
 namespace ThScoreFileConverter.Models.Th12;
 

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using ThScoreFileConverter.Core.Models.Th155;
 using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models.Th155;

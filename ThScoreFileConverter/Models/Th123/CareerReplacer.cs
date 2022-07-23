@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th123;
 
 namespace ThScoreFileConverter.Models.Th123;
 
@@ -19,7 +20,7 @@ internal class CareerReplacer : Th105.CareerReplacerBase<Chara>
         : base(
               Definitions.FormatPrefix,
               Parsers.CharaParser,
-              static (number, chara, type) => Definitions.HasStory(chara),
+              static (number, chara, type) => Core.Models.Th123.Definitions.HasStory(chara),
               Definitions.EnemyCardIdTable,
               clearDataDictionary,
               formatter)

@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th11;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th11;
+using ThScoreFileConverter.Core.Resources;
+using static ThScoreFileConverter.Core.Models.Th11.Definitions;
 
 namespace TemplateGenerator.Models.Th11;
 
 public class Definitions : Models.Definitions
 {
-    public static string Title { get; } = "東方地霊殿";
+    public static string Title { get; } = StringResources.TH11;
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
     {
@@ -34,23 +39,13 @@ public class Definitions : Models.Definitions
 
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } = new[]
-    {
-        (Level.Easy,    40),
-        (Level.Normal,  40),
-        (Level.Hard,    41),
-        (Level.Lunatic, 41),
-        (Level.Extra,   13),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            static level => level.ToShortName(),
+            static level => CardTable.Count(pair => pair.Value.Level == level));
 
-    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } = new[]
-    {
-        (Stage.One,   10),
-        (Stage.Two,   16),
-        (Stage.Three, 16),
-        (Stage.Four,  76),
-        (Stage.Five,  20),
-        (Stage.Six,   24),
-        (Stage.Extra, 13),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            static stage => stage.ToShortName(),
+            static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 }

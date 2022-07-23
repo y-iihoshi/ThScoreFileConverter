@@ -11,7 +11,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th15;
 
 namespace ThScoreFileConverter.Models.Th15;
 

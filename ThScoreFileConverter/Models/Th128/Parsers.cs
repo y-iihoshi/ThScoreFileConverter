@@ -5,6 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using ThScoreFileConverter.Core.Models.Th128;
+using Level = ThScoreFileConverter.Core.Models.Level;
+using LevelWithTotal = ThScoreFileConverter.Core.Models.LevelWithTotal;
+
 namespace ThScoreFileConverter.Models.Th128;
 
 /// <summary>

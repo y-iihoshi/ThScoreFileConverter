@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Models;
 
@@ -45,7 +45,7 @@ public class BitReader
         if (stream is null)
             throw new ArgumentNullException(nameof(stream));
         if (!stream.CanRead)
-            throw new ArgumentException(Resources.ArgumentExceptionStreamMustBeReadable, nameof(stream));
+            throw new ArgumentException(ExceptionMessages.ArgumentExceptionStreamMustBeReadable, nameof(stream));
 
         this.stream = stream;
         this.current = 0;

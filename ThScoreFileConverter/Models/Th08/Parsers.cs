@@ -5,6 +5,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using ThScoreFileConverter.Core.Models.Th08;
+using GameMode = ThScoreFileConverter.Core.Models.GameMode;
+using Level = ThScoreFileConverter.Core.Models.Level;
+using LevelWithTotal = ThScoreFileConverter.Core.Models.LevelWithTotal;
+
 namespace ThScoreFileConverter.Models.Th08;
 
 /// <summary>

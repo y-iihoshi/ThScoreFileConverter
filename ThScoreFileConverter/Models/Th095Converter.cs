@@ -13,10 +13,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th095;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models;
 
@@ -25,8 +26,7 @@ namespace ThScoreFileConverter.Models;
 #endif
 internal class Th095Converter : ThConverter
 {
-    private readonly Dictionary<
-        (Th095.Level Level, int Scene), (string Path, IBestShotHeader<Th095.Level> Header)> bestshots =
+    private readonly Dictionary<(Level Level, int Scene), (string Path, IBestShotHeader<Level> Header)> bestshots =
         new(Th095.Definitions.SpellCards.Count);
 
     private AllScoreData? allScoreData;
@@ -67,7 +67,7 @@ internal class Th095Converter : ThConverter
         if (this.allScoreData is null)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>
@@ -93,7 +93,7 @@ internal class Th095Converter : ThConverter
         using var decoded = new MemoryStream();
 
         if (output is not FileStream outputFile)
-            throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
+            throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(output));
 
         var header = BestShotDeveloper.Develop<BestShotHeader>(input, output, PixelFormat.Format24bppRgb);
 

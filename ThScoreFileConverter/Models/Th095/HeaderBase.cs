@@ -8,9 +8,9 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th095;
 
@@ -48,7 +48,7 @@ internal class HeaderBase : IBinaryReadable, IBinaryWritable
         if (this.EncodedAllSize < 0)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
         }
 
         this.unknown1 = reader.ReadUInt32();
@@ -58,14 +58,14 @@ internal class HeaderBase : IBinaryReadable, IBinaryWritable
         if (this.EncodedBodySize < 0)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
         }
 
         this.DecodedBodySize = reader.ReadInt32();
         if (this.DecodedBodySize < 0)
         {
             throw new InvalidDataException(
-                Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
         }
     }
 
