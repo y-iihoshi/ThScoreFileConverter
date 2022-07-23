@@ -4,7 +4,7 @@ Score file converter for Touhou games
 
 [![GitHub release](https://img.shields.io/github/release/y-iihoshi/ThScoreFileConverter.svg)](https://github.com/y-iihoshi/ThScoreFileConverter/releases)
 [![License](https://img.shields.io/github/license/y-iihoshi/ThScoreFileConverter.svg)](/LICENSE.txt)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B14712%2Fgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=shield)](https://app.fossa.com/projects/custom%2B14712%2Fgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_shield)
 [![GitHub Actions CI](https://github.com/y-iihoshi/ThScoreFileConverter/workflows/CI/badge.svg)](https://github.com/y-iihoshi/ThScoreFileConverter/actions?query=workflow%3ACI)
 [![Codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master)
 
@@ -42,18 +42,22 @@ format from best shot files.
 * TH17 東方鬼形獣　～ Wily Beast and Weakest Creature.
 * TH18 東方虹龍洞　～ Unconnected Marketeers.
 
+### Supported experimentally
+* TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)<br>
+  Because I'm not good at playing action games well...
+
 ### Will be supported
-* TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)
+* TH18.5 バレットフィリア達の闇市場　～ 100th Black Market.
 
 ## Environments
 
 ### Development environment
-* Windows 10 Pro Version 20H2 (64 bit)
+* Windows 11 Pro Version 21H2
 * .NET Framework 4.8
 * .NET Core 3.1
-* .NET 5
-* Visual Studio Community 2019 16.9.4
-* Python 3.9.4
+* .NET 6
+* Visual Studio Community 2022 17.2
+* Python 3.10
 
 ### Tested environment
 * Same as above.
@@ -62,7 +66,7 @@ format from best shot files.
 
 See: [LICENSE.txt](/LICENSE.txt)
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_large)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B14712%2Fgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=large)](https://app.fossa.com/projects/custom%2B14712%2Fgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_large)
 
 ## Installation
 

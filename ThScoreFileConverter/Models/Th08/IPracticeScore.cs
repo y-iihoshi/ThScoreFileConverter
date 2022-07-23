@@ -8,15 +8,16 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th08;
+using Level = ThScoreFileConverter.Core.Models.Level;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal interface IPracticeScore : Th06.IChapter
 {
-    internal interface IPracticeScore : Th06.IChapter
-    {
-        Chara Chara { get; }
+    Chara Chara { get; }
 
-        IReadOnlyDictionary<(Stage Stage, Level Level), int> HighScores { get; }
+    IReadOnlyDictionary<(Stage Stage, Level Level), int> HighScores { get; }
 
-        IReadOnlyDictionary<(Stage Stage, Level Level), int> PlayCounts { get; }
-    }
+    IReadOnlyDictionary<(Stage Stage, Level Level), int> PlayCounts { get; }
 }

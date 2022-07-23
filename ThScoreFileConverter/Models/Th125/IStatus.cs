@@ -7,10 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th125
+namespace ThScoreFileConverter.Models.Th125;
+
+internal interface IStatus : Th10.IStatus
 {
-    internal interface IStatus : Th10.IStatus
-    {
-        int TotalPlayTime { get; }
-    }
+    int TotalPlayTime { get; }
 }

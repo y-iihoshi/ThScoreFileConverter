@@ -8,22 +8,22 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th105;
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+// %T105C[xxx][yy][z]
+internal class CareerReplacer : CareerReplacerBase<Chara>
 {
-    // %T105C[xxx][yy][z]
-    internal class CareerReplacer : CareerReplacerBase<Chara>
+    public CareerReplacer(
+        IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaParser,
+              static (number, chara, type) => true,
+              Definitions.EnemyCardIdTable,
+              clearDataDictionary,
+              formatter)
     {
-        public CareerReplacer(
-            IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.CharaParser,
-                  static (number, chara, type) => true,
-                  Definitions.EnemyCardIdTable,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

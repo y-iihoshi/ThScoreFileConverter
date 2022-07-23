@@ -8,32 +8,31 @@
 using System;
 using System.Drawing;
 
-namespace ThScoreFileConverter.Interactivity
+namespace ThScoreFileConverter.Interactivity;
+
+/// <summary>
+/// Represents a result of <see cref="FontDialogAction"/>.
+/// </summary>
+public sealed class FontDialogActionResult
 {
     /// <summary>
-    /// Represents a result of <see cref="FontDialogAction"/>.
+    /// Initializes a new instance of the <see cref="FontDialogActionResult"/> class.
     /// </summary>
-    public sealed class FontDialogActionResult
+    /// <param name="font">A font.</param>
+    /// <param name="color">A color.</param>
+    public FontDialogActionResult(Font font, Color color)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FontDialogActionResult"/> class.
-        /// </summary>
-        /// <param name="font">A font.</param>
-        /// <param name="color">A color.</param>
-        public FontDialogActionResult(Font font, Color color)
-        {
-            this.Font = font ?? throw new ArgumentNullException(nameof(font));
-            this.Color = color;
-        }
-
-        /// <summary>
-        /// Gets the font selected by <see cref="FontDialogAction"/>.
-        /// </summary>
-        public Font Font { get; }
-
-        /// <summary>
-        /// Gets the color selected by <see cref="FontDialogAction"/>.
-        /// </summary>
-        public Color Color { get; }
+        this.Font = font ?? throw new ArgumentNullException(nameof(font));
+        this.Color = color;
     }
+
+    /// <summary>
+    /// Gets the font selected by <see cref="FontDialogAction"/>.
+    /// </summary>
+    public Font Font { get; }
+
+    /// <summary>
+    /// Gets the color selected by <see cref="FontDialogAction"/>.
+    /// </summary>
+    public Color Color { get; }
 }

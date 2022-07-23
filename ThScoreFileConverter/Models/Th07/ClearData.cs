@@ -10,33 +10,33 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th07;
 
-namespace ThScoreFileConverter.Models.Th07
+namespace ThScoreFileConverter.Models.Th07;
+
+internal class ClearData : Th06.Chapter, Th06.IClearData<Chara, Level>  // per character
 {
-    internal class ClearData : Th06.Chapter, Th06.IClearData<Chara, Level>  // per character
+    public const string ValidSignature = "CLRD";
+    public const short ValidSize = 0x001C;
+
+    public ClearData(Th06.Chapter chapter)
+        : base(chapter, ValidSignature, ValidSize)
     {
-        public const string ValidSignature = "CLRD";
-        public const short ValidSize = 0x001C;
+        var levels = EnumHelper<Level>.Enumerable;
 
-        public ClearData(Th06.Chapter chapter)
-            : base(chapter, ValidSignature, ValidSize)
-        {
-            var levels = EnumHelper<Level>.Enumerable;
+        using var stream = new MemoryStream(this.Data, false);
+        using var reader = new BinaryReader(stream);
 
-            using var stream = new MemoryStream(this.Data, false);
-            using var reader = new BinaryReader(stream);
-
-            _ = reader.ReadUInt32();    // always 0x00000001?
-            this.StoryFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
-            this.PracticeFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
-            this.Chara = EnumHelper.To<Chara>(reader.ReadInt32());
-        }
-
-        public IReadOnlyDictionary<Level, byte> StoryFlags { get; }     // really...?
-
-        public IReadOnlyDictionary<Level, byte> PracticeFlags { get; }  // really...?
-
-        public Chara Chara { get; }
+        _ = reader.ReadUInt32();    // always 0x00000001?
+        this.StoryFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
+        this.PracticeFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
+        this.Chara = EnumHelper.To<Chara>(reader.ReadInt32());
     }
+
+    public IReadOnlyDictionary<Level, byte> StoryFlags { get; }     // really...?
+
+    public IReadOnlyDictionary<Level, byte> PracticeFlags { get; }  // really...?
+
+    public Chara Chara { get; }
 }

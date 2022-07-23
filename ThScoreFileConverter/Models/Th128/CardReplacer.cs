@@ -8,24 +8,25 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
+using Stage = ThScoreFileConverter.Core.Models.Th128.Stage;
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+// %T128CARD[xxx][y]
+internal class CardReplacer : Th10.CardReplacerBase<Stage, Level>
 {
-    // %T128CARD[xxx][y]
-    internal class CardReplacer : Th10.CardReplacerBase<Stage, Level>
+    public CardReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, bool hideUntriedCards)
+        : base(
+              Definitions.FormatPrefix,
+              Definitions.CardTable,
+              hideUntriedCards,
+              cardNumber => CardHasTried(spellCards, cardNumber))
     {
-        public CardReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, bool hideUntriedCards)
-            : base(
-                  Definitions.FormatPrefix,
-                  Definitions.CardTable,
-                  hideUntriedCards,
-                  cardNumber => CardHasTried(spellCards, cardNumber))
-        {
-        }
+    }
 
-        private static bool CardHasTried(IReadOnlyDictionary<int, ISpellCard> spellCards, int cardNumber)
-        {
-            return spellCards.TryGetValue(cardNumber, out var card) && card.HasTried;
-        }
+    private static bool CardHasTried(IReadOnlyDictionary<int, ISpellCard> spellCards, int cardNumber)
+    {
+        return spellCards.TryGetValue(cardNumber, out var card) && card.HasTried;
     }
 }

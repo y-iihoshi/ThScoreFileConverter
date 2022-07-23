@@ -7,22 +7,23 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th143
+using ThScoreFileConverter.Core.Models.Th143;
+
+namespace ThScoreFileConverter.Models.Th143;
+
+internal interface IItemStatus : Th095.IChapter
 {
-    internal interface IItemStatus : Th095.IChapter
-    {
-        int AvailableCount { get; }
+    int AvailableCount { get; }
 
-        int ClearedCount { get; }
+    int ClearedCount { get; }
 
-        int ClearedScenes { get; }
+    int ClearedScenes { get; }
 
-        int FramesOrRanges { get; }
+    int FramesOrRanges { get; }
 
-        ItemWithTotal Item { get; }
+    ItemWithTotal Item { get; }
 
-        int ItemLevel { get; }
+    int ItemLevel { get; }
 
-        int UseCount { get; }
-    }
+    int UseCount { get; }
 }

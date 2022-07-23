@@ -8,17 +8,23 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th12;
 
-namespace ThScoreFileConverter.Models.Th12
+namespace ThScoreFileConverter.Models.Th12;
+
+// %T12C[xxx][yy][z]
+internal class CareerReplacer : Th10.CareerReplacerBase<CharaWithTotal, Stage, Level>
 {
-    // %T12C[xxx][yy][z]
-    internal class CareerReplacer : Th10.CareerReplacerBase<CharaWithTotal>
+    public CareerReplacer(
+        IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaWithTotalParser,
+              clearDataDictionary,
+              Definitions.CardTable,
+              formatter)
     {
-        public CareerReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(Definitions.FormatPrefix, Parsers.CharaWithTotalParser, clearDataDictionary, formatter)
-        {
-        }
     }
 }

@@ -10,36 +10,36 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+internal class SpellCard : IBinaryReadable, ISpellCard
 {
-    internal class SpellCard : IBinaryReadable, ISpellCard
+    public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
+
+    public int NoMissCount { get; private set; }
+
+    public int NoIceCount { get; private set; }
+
+    public int TrialCount { get; private set; }
+
+    public int Id { get; private set; } // 1-based
+
+    public Level Level { get; private set; }
+
+    public bool HasTried => this.TrialCount > 0;
+
+    public void ReadFrom(BinaryReader reader)
     {
-        public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
-
-        public int NoMissCount { get; private set; }
-
-        public int NoIceCount { get; private set; }
-
-        public int TrialCount { get; private set; }
-
-        public int Id { get; private set; } // 1-based
-
-        public Level Level { get; private set; }
-
-        public bool HasTried => this.TrialCount > 0;
-
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.Name = reader.ReadExactBytes(0x80);
-            this.NoMissCount = reader.ReadInt32();
-            this.NoIceCount = reader.ReadInt32();
-            _ = reader.ReadUInt32();
-            this.TrialCount = reader.ReadInt32();
-            this.Id = reader.ReadInt32() + 1;
-            this.Level = EnumHelper.To<Level>(reader.ReadInt32());
-        }
+        this.Name = reader.ReadExactBytes(0x80);
+        this.NoMissCount = reader.ReadInt32();
+        this.NoIceCount = reader.ReadInt32();
+        _ = reader.ReadUInt32();
+        this.TrialCount = reader.ReadInt32();
+        this.Id = reader.ReadInt32() + 1;
+        this.Level = EnumHelper.To<Level>(reader.ReadInt32());
     }
 }

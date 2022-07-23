@@ -12,6 +12,7 @@
     <RootNamespace>ManualGenerator</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
+    <TargetRuntime>None</TargetRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +58,7 @@
     <Content Include="format\th16.rst" />
     <Content Include="format\th165.rst" />
     <Content Include="format\th17.rst" />
+    <Content Include="format\th175.rst" />
     <Content Include="format\th18.rst" />
     <Folder Include="_static\" />
     <Content Include="_static\custom.css" />

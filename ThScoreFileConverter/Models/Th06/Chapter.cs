@@ -10,62 +10,62 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th06
+namespace ThScoreFileConverter.Models.Th06;
+
+internal class Chapter : IBinaryReadable, IChapter
 {
-    internal class Chapter : IBinaryReadable, IChapter
+    public Chapter()
     {
-        public Chapter()
+        this.Signature = string.Empty;
+        this.Size1 = 0;
+        this.Size2 = 0;
+        this.Data = Array.Empty<byte>();
+    }
+
+    protected Chapter(Chapter chapter)
+    {
+        this.Signature = chapter.Signature;
+        this.Size1 = chapter.Size1;
+        this.Size2 = chapter.Size2;
+        this.Data = new byte[chapter.Data.Length];
+        chapter.Data.CopyTo(this.Data, 0);
+    }
+
+    protected Chapter(Chapter chapter, string expectedSignature, short expectedSize)
+        : this(chapter)
+    {
+        if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
         {
-            this.Signature = string.Empty;
-            this.Size1 = 0;
-            this.Size2 = 0;
-            this.Data = Array.Empty<byte>();
+            throw new InvalidDataException(
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
         }
 
-        protected Chapter(Chapter chapter)
+        if (this.Size1 != expectedSize)
         {
-            this.Signature = chapter.Signature;
-            this.Size1 = chapter.Size1;
-            this.Size2 = chapter.Size2;
-            this.Data = new byte[chapter.Data.Length];
-            chapter.Data.CopyTo(this.Data, 0);
+            throw new InvalidDataException(
+                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
         }
+    }
 
-        protected Chapter(Chapter chapter, string expectedSignature, short expectedSize)
-            : this(chapter)
-        {
-            if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
-            {
-                throw new InvalidDataException(
-                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-            }
+    public string Signature { get; private set; }
 
-            if (this.Size1 != expectedSize)
-            {
-                throw new InvalidDataException(
-                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
-            }
-        }
+    public short Size1 { get; private set; }
 
-        public string Signature { get; private set; }
+    public short Size2 { get; private set; }    // always equal to size1?
 
-        public short Size1 { get; private set; }
+    public byte FirstByteOfData => this.Data.FirstOrDefault();
 
-        public short Size2 { get; private set; }    // always equal to size1?
+    protected byte[] Data { get; private set; }
 
-        public byte FirstByteOfData => this.Data.FirstOrDefault();
-
-        protected byte[] Data { get; private set; }
-
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(4));
-            this.Size1 = reader.ReadInt16();
-            this.Size2 = reader.ReadInt16();
-            this.Data = reader.ReadExactBytes(this.Size1 - this.Signature.Length - (sizeof(short) * 2));
-        }
+    public void ReadFrom(BinaryReader reader)
+    {
+        this.Signature = EncodingHelper.Default.GetString(reader.ReadExactBytes(4));
+        this.Size1 = reader.ReadInt16();
+        this.Size2 = reader.ReadInt16();
+        this.Data = reader.ReadExactBytes(this.Size1 - this.Signature.Length - (sizeof(short) * 2));
     }
 }

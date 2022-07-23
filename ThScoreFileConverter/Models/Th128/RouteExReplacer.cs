@@ -11,66 +11,67 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+// %T128ROUTEEX[x][yy][z]
+internal class RouteExReplacer : IStringReplaceable
 {
-    // %T128ROUTEEX[x][yy][z]
-    internal class RouteExReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}ROUTEEX({1})({2})([1-3])",
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser.Pattern,
+        Parsers.RouteWithTotalParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public RouteExReplacer(
+        IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}ROUTEEX({1})({2})([1-3])",
-            Definitions.FormatPrefix,
-            Parsers.LevelWithTotalParser.Pattern,
-            Parsers.RouteWithTotalParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public RouteExReplacer(
-            IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+            var route = Parsers.RouteWithTotalParser.Parse(match.Groups[2].Value);
+            var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+            if ((level == LevelWithTotal.Extra) &&
+                (route != RouteWithTotal.Extra) && (route != RouteWithTotal.Total))
+                return match.ToString();
+            if ((route == RouteWithTotal.Extra) &&
+                (level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total))
+                return match.ToString();
+
+            Func<IClearData, long> getValueByType = (level, type) switch
             {
-                var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var route = Parsers.RouteWithTotalParser.Parse(match.Groups[2].Value);
-                var type = IntegerHelper.Parse(match.Groups[3].Value);
+                (_, 1) => clearData => clearData.TotalPlayCount,
+                (_, 2) => clearData => clearData.PlayTime,
+                (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts.Values.Sum(),
+                _ => clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count) ? count : default,
+            };
 
-                if ((level == LevelWithTotal.Extra) &&
-                    (route != RouteWithTotal.Extra) && (route != RouteWithTotal.Total))
-                    return match.ToString();
-                if ((route == RouteWithTotal.Extra) &&
-                    (level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total))
-                    return match.ToString();
+            Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute = route switch
+            {
+                RouteWithTotal.Total => dictionary => dictionary.Values
+                    .Where(clearData => clearData.Route != route).Sum(getValueByType),
+                _ => dictionary => dictionary.TryGetValue(route, out var clearData)
+                    ? getValueByType(clearData) : default,
+            };
 
-                Func<IClearData, long> getValueByType = (level, type) switch
-                {
-                    (_, 1) => clearData => clearData.TotalPlayCount,
-                    (_, 2) => clearData => clearData.PlayTime,
-                    (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts.Values.Sum(),
-                    _ => clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count) ? count : default,
-                };
+            Func<long, string> toString = type switch
+            {
+                2 => value => new Time(value).ToString(),
+                _ => formatter.FormatNumber,
+            };
 
-                Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute = route switch
-                {
-                    RouteWithTotal.Total => dictionary => dictionary.Values
-                        .Where(clearData => clearData.Route != route).Sum(getValueByType),
-                    _ => dictionary => dictionary.TryGetValue(route, out var clearData)
-                        ? getValueByType(clearData) : default,
-                };
+            return toString(getValueByRoute(clearDataDictionary));
+        });
+    }
 
-                Func<long, string> toString = type switch
-                {
-                    2 => value => new Time(value).ToString(),
-                    _ => formatter.FormatNumber,
-                };
-
-                return toString(getValueByRoute(clearDataDictionary));
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

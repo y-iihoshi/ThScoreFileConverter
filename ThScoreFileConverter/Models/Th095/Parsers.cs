@@ -6,26 +6,26 @@
 //-----------------------------------------------------------------------
 
 using System.Linq;
-using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th095;
 
-namespace ThScoreFileConverter.Models.Th095
+namespace ThScoreFileConverter.Models.Th095;
+
+/// <summary>
+/// Provides the parsers used for StB.
+/// </summary>
+internal static class Parsers
 {
     /// <summary>
-    /// Provides the parsers used for StB.
+    /// Gets the parser of <see cref="Level"/>.
     /// </summary>
-    internal static class Parsers
-    {
-        /// <summary>
-        /// Gets the parser of <see cref="Level"/>.
-        /// </summary>
-        public static EnumShortNameParser<Level> LevelParser { get; } =
-            new EnumShortNameParser<Level>();
+    public static EnumShortNameParser<Level> LevelParser { get; } =
+        new EnumShortNameParser<Level>();
 
-        /// <summary>
-        /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
-        /// </summary>
-        public static string LevelLongPattern { get; } =
-            string.Join("|", EnumHelper<Level>.Enumerable.Select(level => level.ToLongName()).ToArray());
-    }
+    /// <summary>
+    /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
+    /// </summary>
+    public static string LevelLongPattern { get; } =
+        string.Join("|", EnumHelper<Level>.Enumerable.Select(level => level.ToLongName()).ToArray());
 }

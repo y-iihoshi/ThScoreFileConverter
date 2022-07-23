@@ -7,40 +7,41 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th125
+using ThScoreFileConverter.Core.Models.Th125;
+
+namespace ThScoreFileConverter.Models.Th125;
+
+internal interface IBestShotHeader : Th095.IBestShotHeader<Level>
 {
-    internal interface IBestShotHeader : Th095.IBestShotHeader<Level>
-    {
-        float Angle { get; }
+    float Angle { get; }
 
-        float AngleBonus { get; }
+    float AngleBonus { get; }
 
-        int BasePoint { get; }
+    int BasePoint { get; }
 
-        float BossShot { get; }
+    float BossShot { get; }
 
-        int ClearShot { get; }
+    int ClearShot { get; }
 
-        uint DateTime { get; }
+    uint DateTime { get; }
 
-        BonusFields Fields { get; }
+    BonusFields Fields { get; }
 
-        int FrontSideBackShot { get; }
+    int FrontSideBackShot { get; }
 
-        short HalfHeight { get; }
+    short HalfHeight { get; }
 
-        short HalfWidth { get; }
+    short HalfWidth { get; }
 
-        short Height2 { get; }
+    short Height2 { get; }
 
-        int MacroBonus { get; }
+    int MacroBonus { get; }
 
-        float NiceShot { get; }
+    float NiceShot { get; }
 
-        int ResultScore2 { get; }
+    int ResultScore2 { get; }
 
-        int RiskBonus { get; }
+    int RiskBonus { get; }
 
-        short Width2 { get; }
-    }
+    short Width2 { get; }
 }

@@ -11,82 +11,82 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+// %T75CRG[x][yy][z]
+internal class CollectRateReplacer : IStringReplaceable
 {
-    // %T75CRG[x][yy][z]
-    internal class CollectRateReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}CRG({1})({2})([1-3])",
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser.Pattern,
+        Parsers.CharaParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public CollectRateReplacer(
+        IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
+        INumberFormatter formatter)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CRG({1})({2})([1-3])",
-            Definitions.FormatPrefix,
-            Parsers.LevelWithTotalParser.Pattern,
-            Parsers.CharaParser.Pattern);
+        this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearData, formatter));
 
-        private readonly MatchEvaluator evaluator;
-
-        public CollectRateReplacer(
+        static string EvaluatorImpl(
+            Match match,
             IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
             INumberFormatter formatter)
         {
-            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearData, formatter));
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+            var type = IntegerHelper.Parse(match.Groups[3].Value);
 
-            static string EvaluatorImpl(
-                Match match,
-                IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
-                INumberFormatter formatter)
+            if (chara == Chara.Meiling)
+                return match.ToString();
+
+            Func<IClearData, IEnumerable<short>> getValues = type switch
             {
-                var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var type = IntegerHelper.Parse(match.Groups[3].Value);
+                1 => data => data.CardGotCount,
+                2 => data => data.CardTrialCount,
+                _ => data => data.CardTrulyGot.Select(got => (short)got),
+            };
 
-                if (chara == Chara.Meiling)
-                    return match.ToString();
+            IEnumerable<(int CardId, int CardIndex)> MakeCardIdIndexPairs(Level lv)
+            {
+                return Definitions.CardIdTable[chara]
+                    .Select((id, index) => (id, index))
+                    .Where(pair => Definitions.CardTable[pair.id].Level == lv);
+            }
 
-                Func<IClearData, IEnumerable<short>> getValues = type switch
-                {
-                    1 => data => data.CardGotCount,
-                    2 => data => data.CardTrialCount,
-                    _ => data => data.CardTrulyGot.Select(got => (short)got),
-                };
+            static bool IsPositive(short value)
+            {
+                return value > 0;
+            }
 
-                IEnumerable<(int CardId, int CardIndex)> MakeCardIdIndexPairs(Level lv)
-                {
-                    return Definitions.CardIdTable[chara]
-                        .Select((id, index) => (id, index))
-                        .Where(pair => Definitions.CardTable[pair.id].Level == lv);
-                }
-
-                static bool IsPositive(short value)
-                {
-                    return value > 0;
-                }
-
-                if (level == LevelWithTotal.Total)
-                {
-                    return formatter.FormatNumber(clearData
-                        .Where(dataPair => dataPair.Key.Chara == (CharaWithReserved)chara)
-                        .Sum(dataPair => getValues(dataPair.Value)
-                            .Where((value, index) =>
-                                MakeCardIdIndexPairs(dataPair.Key.Level).Any(pair => pair.CardIndex == index))
-                            .Count(IsPositive)));
-                }
-                else
-                {
-                    return formatter.FormatNumber(clearData
-                        .Where(dataPair => dataPair.Key == ((CharaWithReserved)chara, (Level)level))
-                        .Sum(dataPair => getValues(dataPair.Value)
-                            .Where((value, index) =>
-                                MakeCardIdIndexPairs((Level)level).Any(pair => pair.CardIndex == index))
-                            .Count(IsPositive)));
-                }
+            if (level == LevelWithTotal.Total)
+            {
+                return formatter.FormatNumber(clearData
+                    .Where(dataPair => dataPair.Key.Chara == (CharaWithReserved)chara)
+                    .Sum(dataPair => getValues(dataPair.Value)
+                        .Where((value, index) =>
+                            MakeCardIdIndexPairs(dataPair.Key.Level).Any(pair => pair.CardIndex == index))
+                        .Count(IsPositive)));
+            }
+            else
+            {
+                return formatter.FormatNumber(clearData
+                    .Where(dataPair => dataPair.Key == ((CharaWithReserved)chara, (Level)level))
+                    .Sum(dataPair => getValues(dataPair.Value)
+                        .Where((value, index) =>
+                            MakeCardIdIndexPairs((Level)level).Any(pair => pair.CardIndex == index))
+                        .Count(IsPositive)));
             }
         }
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

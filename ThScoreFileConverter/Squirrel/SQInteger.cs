@@ -9,61 +9,60 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
-namespace ThScoreFileConverter.Squirrel
+namespace ThScoreFileConverter.Squirrel;
+
+internal sealed class SQInteger : SQObject, IEquatable<SQInteger>
 {
-    internal sealed class SQInteger : SQObject, IEquatable<SQInteger>
+    public SQInteger(int value = default)
+        : base(SQObjectType.Integer)
     {
-        public SQInteger(int value = default)
-            : base(SQObjectType.Integer)
+        this.Value = value;
+    }
+
+    public new int Value
+    {
+        get => (int)base.Value;
+        private set => base.Value = value;
+    }
+
+    public static implicit operator int(SQInteger sq)
+    {
+        return sq.Value;
+    }
+
+    public static SQInteger Create(BinaryReader reader, bool skipType = false)
+    {
+        if (!skipType)
         {
-            this.Value = value;
+            var type = reader.ReadInt32();
+            if (type != (int)SQObjectType.Integer)
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
-        public new int Value
-        {
-            get => (int)base.Value;
-            private set => base.Value = value;
-        }
+        return new SQInteger(reader.ReadInt32());
+    }
 
-        public static implicit operator int(SQInteger sq)
-        {
-            return sq.Value;
-        }
+    public override bool Equals(object? obj)
+    {
+        return (obj is SQInteger value) && this.Equals(value);
+    }
 
-        public static SQInteger Create(BinaryReader reader, bool skipType = false)
-        {
-            if (!skipType)
-            {
-                var type = reader.ReadInt32();
-                if (type != (int)SQObjectType.Integer)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
-            }
-
-            return new SQInteger(reader.ReadInt32());
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return (obj is SQInteger value) && this.Equals(value);
-        }
-
-        public override int GetHashCode()
-        {
+    public override int GetHashCode()
+    {
 #if NETFRAMEWORK
-            return this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        return this.Type.GetHashCode() ^ this.Value.GetHashCode();
 #else
-            return HashCode.Combine(this.Type, this.Value);
+        return HashCode.Combine(this.Type, this.Value);
 #endif
-        }
+    }
 
-        public bool Equals(SQInteger? other)
-        {
-            if (other is null)
-                return false;
+    public bool Equals(SQInteger? other)
+    {
+        if (other is null)
+            return false;
 
-            return (this.Type == other.Type) && (this.Value == other.Value);
-        }
+        return (this.Type == other.Type) && (this.Value == other.Value);
     }
 }

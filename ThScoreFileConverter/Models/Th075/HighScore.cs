@@ -10,53 +10,52 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Properties;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+internal class HighScore : IBinaryReadable, IHighScore
 {
-    internal class HighScore : IBinaryReadable, IHighScore
+    public HighScore()
     {
-        public HighScore()
+        this.Name = string.Empty;
+    }
+
+    public string Name { get; private set; }
+
+    public byte Month { get; private set; }     // 1-based
+
+    public byte Day { get; private set; }       // 1-based
+
+    public int Score { get; private set; }
+
+    public void ReadFrom(BinaryReader reader)
+    {
+        this.Name = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
+
+        this.Month = reader.ReadByte();
+        this.Day = reader.ReadByte();
+        if ((this.Month == 0) && (this.Day == 0))
         {
-            this.Name = string.Empty;
+            // It's allowed.
         }
-
-        public string Name { get; private set; }
-
-        public byte Month { get; private set; }     // 1-based
-
-        public byte Day { get; private set; }       // 1-based
-
-        public int Score { get; private set; }
-
-        public void ReadFrom(BinaryReader reader)
+        else
         {
-            this.Name = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
-
-            this.Month = reader.ReadByte();
-            this.Day = reader.ReadByte();
-            if ((this.Month == 0) && (this.Day == 0))
+            if ((this.Month <= 0) || (this.Month > 12))
             {
-                // It's allowed.
-            }
-            else
-            {
-                if ((this.Month <= 0) || (this.Month > 12))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));
-                }
-
-                if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Day)));
-                }
+                throw new InvalidDataException(
+                    Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));
             }
 
-            _ = reader.ReadUInt16();    // always 0x0000?
-            this.Score = reader.ReadInt32();
+            if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
+            {
+                throw new InvalidDataException(
+                    Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Day)));
+            }
         }
+
+        _ = reader.ReadUInt16();    // always 0x0000?
+        this.Score = reader.ReadInt32();
     }
 }

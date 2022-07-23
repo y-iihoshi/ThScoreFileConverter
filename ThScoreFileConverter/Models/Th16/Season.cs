@@ -5,41 +5,42 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th16
+using ThScoreFileConverter.Core.Models;
+
+namespace ThScoreFileConverter.Models.Th16;
+
+/// <summary>
+/// Represents seasons of HSiFS.
+/// </summary>
+public enum Season
 {
     /// <summary>
-    /// Represents seasons of HSiFS.
+    /// Spring.
     /// </summary>
-    public enum Season
-    {
-        /// <summary>
-        /// Spring.
-        /// </summary>
-        [EnumAltName("春")]
-        Spring,
+    [EnumAltName("春")]
+    Spring,
 
-        /// <summary>
-        /// Summer.
-        /// </summary>
-        [EnumAltName("夏")]
-        Summer,
+    /// <summary>
+    /// Summer.
+    /// </summary>
+    [EnumAltName("夏")]
+    Summer,
 
-        /// <summary>
-        /// Autumn.
-        /// </summary>
-        [EnumAltName("秋")]
-        Autumn,
+    /// <summary>
+    /// Autumn.
+    /// </summary>
+    [EnumAltName("秋")]
+    Autumn,
 
-        /// <summary>
-        /// Winter.
-        /// </summary>
-        [EnumAltName("冬")]
-        Winter,
+    /// <summary>
+    /// Winter.
+    /// </summary>
+    [EnumAltName("冬")]
+    Winter,
 
-        /// <summary>
-        /// Doyou, the fifth season.
-        /// </summary>
-        [EnumAltName("土用")]
-        Full,
-    }
+    /// <summary>
+    /// Doyou, the fifth season.
+    /// </summary>
+    [EnumAltName("土用")]
+    Full,
 }

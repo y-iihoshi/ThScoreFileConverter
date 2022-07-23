@@ -1,0 +1,8 @@
+# Refer to the following for details:
+# https://github.com/fossas/fossa-cli/blob/master/docs/references/files/fossa-yml.md
+
+version: 3
+
+project:
+  id: github.com/y-iihoshi/ThScoreFileConverter
+  name: ThScoreFileConverter

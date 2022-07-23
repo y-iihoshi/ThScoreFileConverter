@@ -8,27 +8,27 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th143
+namespace ThScoreFileConverter.Models.Th143;
+
+internal class AllScoreData
+    : Th095.AllScoreDataBase<IScore, IStatus>
 {
-    internal class AllScoreData
-        : Th095.AllScoreDataBase<IScore, IStatus>
+    private readonly Dictionary<ItemWithTotal, IItemStatus> itemStatuses;
+
+    public AllScoreData()
+        : base(Definitions.SpellCards.Count)
     {
-        private readonly Dictionary<ItemWithTotal, IItemStatus> itemStatuses;
+        this.itemStatuses = new Dictionary<ItemWithTotal, IItemStatus>(EnumHelper<ItemWithTotal>.NumValues);
+    }
 
-        public AllScoreData()
-            : base(Definitions.SpellCards.Count)
-        {
-            this.itemStatuses = new Dictionary<ItemWithTotal, IItemStatus>(EnumHelper<ItemWithTotal>.NumValues);
-        }
+    public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses => this.itemStatuses;
 
-        public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses => this.itemStatuses;
-
-        public void Set(IItemStatus status)
-        {
-            _ = this.itemStatuses.TryAdd(status.Item, status);
-        }
+    public void Set(IItemStatus status)
+    {
+        _ = this.itemStatuses.TryAdd(status.Item, status);
     }
 }

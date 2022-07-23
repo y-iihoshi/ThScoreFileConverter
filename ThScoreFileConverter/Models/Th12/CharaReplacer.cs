@@ -8,22 +8,22 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th12;
 
-namespace ThScoreFileConverter.Models.Th12
+namespace ThScoreFileConverter.Models.Th12;
+
+// %T12CHARA[xx][y]
+internal class CharaReplacer : Th10.CharaReplacerBase<CharaWithTotal>
 {
-    // %T12CHARA[xx][y]
-    internal class CharaReplacer : Th10.CharaReplacerBase<CharaWithTotal>
+    public CharaReplacer(
+        IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaWithTotalParser,
+              Definitions.IsTotal,
+              clearDataDictionary,
+              formatter)
     {
-        public CharaReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.CharaWithTotalParser,
-                  Definitions.IsTotal,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

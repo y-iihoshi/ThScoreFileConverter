@@ -7,22 +7,23 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th125
+using ThScoreFileConverter.Core.Models.Th125;
+
+namespace ThScoreFileConverter.Models.Th125;
+
+internal interface IScore : Th095.IChapter
 {
-    internal interface IScore : Th095.IChapter
-    {
-        int BestshotScore { get; }
+    int BestshotScore { get; }
 
-        Chara Chara { get; }
+    Chara Chara { get; }
 
-        uint DateTime { get; }
+    uint DateTime { get; }
 
-        int FirstSuccess { get; }
+    int FirstSuccess { get; }
 
-        int HighScore { get; }
+    int HighScore { get; }
 
-        (Level Level, int Scene) LevelScene { get; }
+    (Level Level, int Scene) LevelScene { get; }
 
-        int TrialCount { get; }
-    }
+    int TrialCount { get; }
 }

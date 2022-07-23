@@ -9,52 +9,52 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+// %T75SCR[w][xx][y][z]
+internal class ScoreReplacer : IStringReplaceable
 {
-    // %T75SCR[w][xx][y][z]
-    internal class ScoreReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}SCR({1})({2})(\d)([1-3])",
+        Definitions.FormatPrefix,
+        Parsers.LevelParser.Pattern,
+        Parsers.CharaParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public ScoreReplacer(
+        IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
+        INumberFormatter formatter)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}SCR({1})({2})(\d)([1-3])",
-            Definitions.FormatPrefix,
-            Parsers.LevelParser.Pattern,
-            Parsers.CharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ScoreReplacer(
-            IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
-            INumberFormatter formatter)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+            var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
+            var type = IntegerHelper.Parse(match.Groups[4].Value);
+
+            if (chara == Chara.Meiling)
+                return match.ToString();
+
+            var key = ((CharaWithReserved)chara, level);
+            var score = clearData.TryGetValue(key, out var data) && rank < data.Ranking.Count
+                ? data.Ranking[rank] : new HighScore();
+
+            return type switch
             {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-                var type = IntegerHelper.Parse(match.Groups[4].Value);
+                1 => score.Name,
+                2 => formatter.FormatNumber(score.Score),
+                3 => Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day),
+                _ => match.ToString(),  // unreachable
+            };
+        });
+    }
 
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                var key = ((CharaWithReserved)chara, level);
-                var score = clearData.TryGetValue(key, out var data) && rank < data.Ranking.Count
-                    ? data.Ranking[rank] : new HighScore();
-
-                return type switch
-                {
-                    1 => score.Name,
-                    2 => formatter.FormatNumber(score.Score),
-                    3 => Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day),
-                    _ => match.ToString(),  // unreachable
-                };
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

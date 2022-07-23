@@ -5,41 +5,44 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th128
+using ThScoreFileConverter.Core.Models.Th128;
+using Level = ThScoreFileConverter.Core.Models.Level;
+using LevelWithTotal = ThScoreFileConverter.Core.Models.LevelWithTotal;
+
+namespace ThScoreFileConverter.Models.Th128;
+
+/// <summary>
+/// Provides the parsers used for FW.
+/// </summary>
+internal static class Parsers
 {
     /// <summary>
-    /// Provides the parsers used for FW.
+    /// Gets the parser of <see cref="Level"/>.
     /// </summary>
-    internal static class Parsers
-    {
-        /// <summary>
-        /// Gets the parser of <see cref="Level"/>.
-        /// </summary>
-        public static EnumShortNameParser<Level> LevelParser { get; } =
-            new EnumShortNameParser<Level>();
+    public static EnumShortNameParser<Level> LevelParser { get; } =
+        new EnumShortNameParser<Level>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="LevelWithTotal"/>.
-        /// </summary>
-        public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
-            new EnumShortNameParser<LevelWithTotal>();
+    /// <summary>
+    /// Gets the parser of <see cref="LevelWithTotal"/>.
+    /// </summary>
+    public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
+        new EnumShortNameParser<LevelWithTotal>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="Route"/>.
-        /// </summary>
-        public static EnumShortNameParser<Route> RouteParser { get; } =
-            new EnumShortNameParser<Route>();
+    /// <summary>
+    /// Gets the parser of <see cref="Route"/>.
+    /// </summary>
+    public static EnumShortNameParser<Route> RouteParser { get; } =
+        new EnumShortNameParser<Route>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="RouteWithTotal"/>.
-        /// </summary>
-        public static EnumShortNameParser<RouteWithTotal> RouteWithTotalParser { get; } =
-            new EnumShortNameParser<RouteWithTotal>();
+    /// <summary>
+    /// Gets the parser of <see cref="RouteWithTotal"/>.
+    /// </summary>
+    public static EnumShortNameParser<RouteWithTotal> RouteWithTotalParser { get; } =
+        new EnumShortNameParser<RouteWithTotal>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="StageWithTotal"/>.
-        /// </summary>
-        public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; } =
-            new EnumShortNameParser<StageWithTotal>();
-    }
+    /// <summary>
+    /// Gets the parser of <see cref="StageWithTotal"/>.
+    /// </summary>
+    public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; } =
+        new EnumShortNameParser<StageWithTotal>();
 }

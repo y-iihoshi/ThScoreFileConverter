@@ -9,70 +9,71 @@
 
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th18;
 using ThScoreFileConverter.Helpers;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
-using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
-namespace ThScoreFileConverter.Models.Th18
+namespace ThScoreFileConverter.Models.Th18;
+
+// %T18CRG[v][w][xx][y][z]
+internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
+    GameMode, CharaWithTotal, Level, LevelWithTotal, Level, Th14.LevelPracticeWithTotal, Stage, IScoreData>
 {
-    // %T18CRG[v][w][xx][y][z]
-    internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
-        GameMode, CharaWithTotal, Level, LevelWithTotal, Level, Th14.LevelPracticeWithTotal, Stage, IScoreData>
+    public CollectRateReplacer(
+        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+            CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Stage, IScoreData>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.GameModeParser,
+              Parsers.LevelWithTotalParser,
+              Parsers.CharaWithTotalParser,
+              Parsers.StageWithTotalParser,
+              CanReplace,
+              FindCardByModeType,
+              FindCardByLevel,
+              FindCardByLevelStage,
+              clearDataDictionary,
+              formatter)
     {
-        public CollectRateReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-                CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Stage, IScoreData>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.GameModeParser,
-                  Parsers.LevelWithTotalParser,
-                  Parsers.CharaWithTotalParser,
-                  Parsers.StageWithTotalParser,
-                  CanReplace,
-                  FindCardByModeType,
-                  FindCardByLevel,
-                  FindCardByLevelStage,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
+    }
 
-        private static bool CanReplace(
-            GameMode mode, LevelWithTotal level, CharaWithTotal chara, StageWithTotal stage)
-        {
-            return stage != StageWithTotal.Extra;
-        }
+    private static bool CanReplace(
+        GameMode mode, LevelWithTotal level, CharaWithTotal chara, StageWithTotal stage)
+    {
+        return stage != StageWithTotal.Extra;
+    }
 
-        private static Func<ISpellCard, bool> FindCardByModeType(GameMode mode, int type)
+    private static Func<ISpellCard, bool> FindCardByModeType(GameMode mode, int type)
+    {
+        return (mode, type) switch
         {
-            return (mode, type) switch
-            {
-                (GameMode.Story, 1) => card => card.ClearCount > 0,
-                (GameMode.Story, _) => card => card.TrialCount > 0,
-                (_, 1) => card => card.PracticeClearCount > 0,
-                _ => card => card.PracticeTrialCount > 0,
-            };
-        }
+            (GameMode.Story, 1) => card => card.ClearCount > 0,
+            (GameMode.Story, _) => card => card.TrialCount > 0,
+            (_, 1) => card => card.PracticeClearCount > 0,
+            _ => card => card.PracticeTrialCount > 0,
+        };
+    }
 
-        private static Func<ISpellCard, bool> FindCardByLevel(LevelWithTotal level)
+    private static Func<ISpellCard, bool> FindCardByLevel(LevelWithTotal level)
+    {
+        return level switch
         {
-            return level switch
-            {
-                LevelWithTotal.Total => FuncHelper.True,
-                LevelWithTotal.Extra => FuncHelper.True,
-                _ => card => card.Level == (Level)level,
-            };
-        }
+            LevelWithTotal.Total => FuncHelper.True,
+            LevelWithTotal.Extra => FuncHelper.True,
+            _ => card => card.Level == (Level)level,
+        };
+    }
 
-        private static Func<ISpellCard, bool> FindCardByLevelStage(LevelWithTotal level, StageWithTotal stage)
+    private static Func<ISpellCard, bool> FindCardByLevelStage(LevelWithTotal level, StageWithTotal stage)
+    {
+        return (level, stage) switch
         {
-            return (level, stage) switch
-            {
-                (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
-                (_, StageWithTotal.Total) => FuncHelper.True,
-                _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
-            };
-        }
+            (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
+            (_, StageWithTotal.Total) => FuncHelper.True,
+            _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
+        };
     }
 }

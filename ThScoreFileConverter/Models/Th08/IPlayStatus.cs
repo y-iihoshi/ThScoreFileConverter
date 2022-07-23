@@ -8,19 +8,19 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal interface IPlayStatus : Th06.IChapter
 {
-    internal interface IPlayStatus : Th06.IChapter
-    {
-        IEnumerable<byte> BgmFlags { get; }
+    IEnumerable<byte> BgmFlags { get; }
 
-        IReadOnlyDictionary<Level, IPlayCount> PlayCounts { get; }
+    IReadOnlyDictionary<Level, IPlayCount> PlayCounts { get; }
 
-        IPlayCount TotalPlayCount { get; }
+    IPlayCount TotalPlayCount { get; }
 
-        Time TotalPlayTime { get; }
+    Time TotalPlayTime { get; }
 
-        Time TotalRunningTime { get; }
-    }
+    Time TotalRunningTime { get; }
 }

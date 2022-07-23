@@ -5,21 +5,20 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+/// <summary>
+/// Represents a Touhou work.
+/// </summary>
+public sealed class Work
 {
     /// <summary>
-    /// Represents a Touhou work.
+    /// Gets or sets a number string. Should be a property name of <see cref="Properties.Resources"/>.
     /// </summary>
-    public sealed class Work
-    {
-        /// <summary>
-        /// Gets or sets a number string. Should be a property name of <see cref="Properties.Resources"/>.
-        /// </summary>
-        public string Number { get; set; } = string.Empty;
+    public string Number { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the work is supported by this tool.
-        /// </summary>
-        public bool IsSupported { get; set; }
-    }
+    /// <summary>
+    /// Gets or sets a value indicating whether the work is supported by this tool.
+    /// </summary>
+    public bool IsSupported { get; set; }
 }

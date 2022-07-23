@@ -9,12 +9,11 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th18
-{
-    internal interface IStatus : Th17.IStatus
-    {
-        IEnumerable<byte> AbilityCards { get; }
+namespace ThScoreFileConverter.Models.Th18;
 
-        IEnumerable<byte> InitialHoldAbilityCards { get; }
-    }
+internal interface IStatus : Th17.IStatus
+{
+    IEnumerable<byte> AbilityCards { get; }
+
+    IEnumerable<byte> InitialHoldAbilityCards { get; }
 }

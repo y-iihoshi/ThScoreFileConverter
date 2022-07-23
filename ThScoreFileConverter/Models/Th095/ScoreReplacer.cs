@@ -12,44 +12,43 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th095
+namespace ThScoreFileConverter.Models.Th095;
+
+// %T95SCR[x][y][z]
+internal class ScoreReplacer : IStringReplaceable
 {
-    // %T95SCR[x][y][z]
-    internal class ScoreReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}SCR({1})([1-9])([1-4])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}SCR({1})([1-9])([1-4])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+            var scene = IntegerHelper.Parse(match.Groups[2].Value);
+            var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+            var key = (level, scene);
+            if (!Definitions.SpellCards.ContainsKey(key))
+                return match.ToString();
+
+            var score = scores.FirstOrDefault(elem => (elem is not null) && elem.LevelScene.Equals(key));
+
+            return type switch
             {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var scene = IntegerHelper.Parse(match.Groups[2].Value);
-                var type = IntegerHelper.Parse(match.Groups[3].Value);
+                1 => formatter.FormatNumber(score?.HighScore ?? default),
+                2 => formatter.FormatNumber(score?.BestshotScore ?? default),
+                3 => formatter.FormatNumber(score?.TrialCount ?? default),
+                4 => (score is not null) ? formatter.FormatPercent(score.SlowRate2, 3) : "-----%",
+                _ => match.ToString(),  // unreachable
+            };
+        });
+    }
 
-                var key = (level, scene);
-                if (!Definitions.SpellCards.ContainsKey(key))
-                    return match.ToString();
-
-                var score = scores.FirstOrDefault(elem => (elem is not null) && elem.LevelScene.Equals(key));
-
-                return type switch
-                {
-                    1 => formatter.FormatNumber(score?.HighScore ?? default),
-                    2 => formatter.FormatNumber(score?.BestshotScore ?? default),
-                    3 => formatter.FormatNumber(score?.TrialCount ?? default),
-                    4 => (score is not null) ? formatter.FormatPercent(score.SlowRate2, 3) : "-----%",
-                    _ => match.ToString(),  // unreachable
-                };
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

@@ -8,29 +8,30 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th08;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal interface IHighScore : Th07.IHighScore<Chara, Level, StageProgress>
 {
-    internal interface IHighScore : Th07.IHighScore<Chara, Level, StageProgress>
-    {
-        int BombCount { get; }
+    int BombCount { get; }
 
-        IReadOnlyDictionary<int, byte> CardFlags { get; }
+    IReadOnlyDictionary<int, byte> CardFlags { get; }
 
-        int HumanRate { get; }
+    int HumanRate { get; }
 
-        int LastSpellCount { get; }
+    int LastSpellCount { get; }
 
-        int MissCount { get; }
+    int MissCount { get; }
 
-        int PauseCount { get; }
+    int PauseCount { get; }
 
-        byte PlayerNum { get; }
+    byte PlayerNum { get; }
 
-        uint PlayTime { get; }
+    uint PlayTime { get; }
 
-        int PointItem { get; }
+    int PointItem { get; }
 
-        int TimePoint { get; }
-    }
+    int TimePoint { get; }
 }

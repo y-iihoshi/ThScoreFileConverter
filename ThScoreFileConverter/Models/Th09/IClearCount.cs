@@ -8,11 +8,11 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
 
-namespace ThScoreFileConverter.Models.Th09
+namespace ThScoreFileConverter.Models.Th09;
+
+internal interface IClearCount
 {
-    internal interface IClearCount
-    {
-        IReadOnlyDictionary<Level, int> Counts { get; }
-    }
+    IReadOnlyDictionary<Level, int> Counts { get; }
 }

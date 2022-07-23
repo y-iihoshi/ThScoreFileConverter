@@ -8,19 +8,18 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Helpers;
 
-namespace ThScoreFileConverter.Models.Th16
+namespace ThScoreFileConverter.Models.Th16;
+
+internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
 {
-    internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
-    {
-        public Season Season { get; private set; }
+    public Season Season { get; private set; }
 
-        public override void ReadFrom(BinaryReader reader)
-        {
-            base.ReadFrom(reader);
-            this.SlowRate = reader.ReadSingle();
-            this.Season = EnumHelper.To<Season>(reader.ReadInt32());
-        }
+    public override void ReadFrom(BinaryReader reader)
+    {
+        base.ReadFrom(reader);
+        this.SlowRate = reader.ReadSingle();
+        this.Season = EnumHelper.To<Season>(reader.ReadInt32());
     }
 }

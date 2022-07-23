@@ -11,111 +11,111 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using ThScoreFileConverter.Core.Resources;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th145;
-using ThScoreFileConverter.Properties;
 
-namespace ThScoreFileConverter.Models
-{
+namespace ThScoreFileConverter.Models;
+
 #if !DEBUG
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-    internal class Th145Converter : ThConverter
+internal class Th145Converter : ThConverter
+{
+    private AllScoreData? allScoreData;
+
+    public override string SupportedVersions { get; } = "1.41";
+
+    public override bool HasCardReplacer { get; }
+
+    protected override bool ReadScoreFile(Stream input)
     {
-        private AllScoreData? allScoreData;
-
-        public override string SupportedVersions { get; } = "1.41";
-
-        public override bool HasCardReplacer { get; }
-
-        protected override bool ReadScoreFile(Stream input)
-        {
 #if DEBUG
-            using var decoded = new FileStream("th145decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th145decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
-            using var decoded = new MemoryStream();
+        using var decoded = new MemoryStream();
 #endif
 
-            if (!Extract(input, decoded))
-                return false;
+        if (!Extract(input, decoded))
+            return false;
 
-            decoded.Seek(0, SeekOrigin.Begin);
-            this.allScoreData = Read(decoded);
+        decoded.Seek(0, SeekOrigin.Begin);
+        this.allScoreData = Read(decoded);
 
-            return this.allScoreData is not null;
+        return this.allScoreData is not null;
+    }
+
+    protected override IEnumerable<IStringReplaceable> CreateReplacers(
+        INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
+    {
+        if (this.allScoreData is null)
+        {
+            throw new InvalidDataException(
+                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
+        return new List<IStringReplaceable>
         {
-            if (this.allScoreData is null)
-            {
-                throw new InvalidDataException(
-                    Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
-            }
+            new ClearRankReplacer(this.allScoreData.ClearRanks),
+            new ClearTimeReplacer(this.allScoreData.ClearTimes),
+        };
+    }
 
-            return new List<IStringReplaceable>
-            {
-                new ClearRankReplacer(this.allScoreData.ClearRanks),
-                new ClearTimeReplacer(this.allScoreData.ClearTimes),
-            };
-        }
+    private static bool Extract(Stream input, Stream output)
+    {
+        var succeeded = false;
 
-        private static bool Extract(Stream input, Stream output)
+        // See section 2.2 of RFC 1950
+        var validHeader = new byte[] { 0x78, 0x9C };
+
+        if (input.Length >= sizeof(int) + validHeader.Length)
         {
-            var succeeded = false;
+            var size = new byte[sizeof(int)];
+            var header = new byte[validHeader.Length];
 
-            // See section 2.2 of RFC 1950
-            var validHeader = new byte[] { 0x78, 0x9C };
+            _ = input.Seek(0, SeekOrigin.Begin);
+            _ = input.Read(size, 0, size.Length);
+            _ = input.Read(header, 0, header.Length);
 
-            if (input.Length >= sizeof(int) + validHeader.Length)
+            if (Enumerable.SequenceEqual(header, validHeader))
             {
-                var size = new byte[sizeof(int)];
-                var header = new byte[validHeader.Length];
+                var extracted = new byte[0x80000];
+                var extractedSize = 0;
 
-                _ = input.Seek(0, SeekOrigin.Begin);
-                _ = input.Read(size, 0, size.Length);
-                _ = input.Read(header, 0, header.Length);
+                using (var deflate = new DeflateStream(input, CompressionMode.Decompress, true))
+                    extractedSize = deflate.Read(extracted, 0, extracted.Length);
 
-                if (Enumerable.SequenceEqual(header, validHeader))
-                {
-                    var extracted = new byte[0x80000];
-                    var extractedSize = 0;
+                _ = output.Seek(0, SeekOrigin.Begin);
+                output.Write(extracted, 0, extractedSize);
 
-                    using (var deflate = new DeflateStream(input, CompressionMode.Decompress, true))
-                        extractedSize = deflate.Read(extracted, 0, extracted.Length);
-
-                    _ = output.Seek(0, SeekOrigin.Begin);
-                    output.Write(extracted, 0, extractedSize);
-
-                    succeeded = true;
-                }
-                else
-                {
-                    // Invalid header
-                }
+                succeeded = true;
             }
             else
             {
-                // The input stream is too short
+                // Invalid header
             }
-
-            return succeeded;
         }
-
-        private static AllScoreData? Read(Stream input)
+        else
         {
-            using var reader = new BinaryReader(input, Encoding.UTF8, true);
-            var allScoreData = new AllScoreData();
-
-            try
-            {
-                allScoreData.ReadFrom(reader);
-            }
-            catch (EndOfStreamException)
-            {
-            }
-
-            return allScoreData;
+            // The input stream is too short
         }
+
+        return succeeded;
+    }
+
+    private static AllScoreData? Read(Stream input)
+    {
+        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+        var allScoreData = new AllScoreData();
+
+        try
+        {
+            allScoreData.ReadFrom(reader);
+        }
+        catch (EndOfStreamException)
+        {
+        }
+
+        return allScoreData;
     }
 }

@@ -1,35 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;netcoreapp3.1;net5.0-windows</TargetFrameworks>
+    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;netcoreapp3.1;net6.0-windows</TargetFrameworks>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Copyright>© 2021 IIHOSHI Yoshinori</Copyright>
+    <Copyright>© 2021-2022 IIHOSHI Yoshinori</Copyright>
     <Description>Generator of the template files input to ThScoreFileConverter.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThScoreFileConverter\ThScoreFileConverter.csproj" />
+    <ProjectReference Include="..\ThScoreFileConverter.Core\ThScoreFileConverter.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Templates\jcanvas.min.js" />
-    <Content Include="Templates\jquery-1.11.1.min.js" />
     <Content Include="Templates\style.css" />
   </ItemGroup>
 
@@ -801,6 +786,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\th175.ttinclude" />
+    <None Update="Templates\th175score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th175score1.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th175score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th175score1.html</LastGenOutput>
+    </None>
+    <None Update="Templates\th175score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th175score2.tt</DependentUpon>
+    </None>
+    <None Update="Templates\th175score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th175score2.html</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Templates\th18.ttinclude" />
     <None Update="Templates\th18card1.html">
       <AutoGen>True</AutoGen>
@@ -856,6 +863,9 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
 
   <ItemGroup>
+    <T4ParameterValues Include="TargetDir">
+      <Value>$(TargetDir)</Value>
+    </T4ParameterValues>
     <T4ParameterValues Include="TargetPath">
       <Value>$(TargetPath)</Value>
     </T4ParameterValues>

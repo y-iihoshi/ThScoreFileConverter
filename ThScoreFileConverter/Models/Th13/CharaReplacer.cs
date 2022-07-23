@@ -8,31 +8,31 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th13;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13.StagePractice,
+    ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+// %T13CHARA[xx][y]
+internal class CharaReplacer : CharaReplacerBase<
+    CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, Th10.IScoreData<StageProgress>>
 {
-    // %T13CHARA[xx][y]
-    internal class CharaReplacer : CharaReplacerBase<
-        CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, Th10.IScoreData<StageProgress>>
+    public CharaReplacer(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.CharaWithTotalParser,
+              Definitions.IsTotal,
+              Definitions.IsToBeSummed,
+              static frames => new Time(frames),
+              clearDataDictionary,
+              formatter)
     {
-        public CharaReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.CharaWithTotalParser,
-                  Definitions.IsTotal,
-                  Definitions.IsToBeSummed,
-                  static frames => new Time(frames),
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

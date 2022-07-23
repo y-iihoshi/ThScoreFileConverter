@@ -8,22 +8,22 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System;
+using ThScoreFileConverter.Core.Models.Th105;
 
-namespace ThScoreFileConverter.Models.Th105
+namespace ThScoreFileConverter.Models.Th105;
+
+internal interface ISpellCardResult<TChara>
+    where TChara : struct, Enum
 {
-    internal interface ISpellCardResult<TChara>
-        where TChara : struct, Enum
-    {
-        TChara Enemy { get; }
+    TChara Enemy { get; }
 
-        uint Frames { get; }
+    uint Frames { get; }
 
-        int GotCount { get; }
+    int GotCount { get; }
 
-        int Id { get; }
+    int Id { get; }
 
-        Level Level { get; }
+    Level Level { get; }
 
-        int TrialCount { get; }
-    }
+    int TrialCount { get; }
 }

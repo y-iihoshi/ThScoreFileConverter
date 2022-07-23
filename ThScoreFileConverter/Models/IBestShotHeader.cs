@@ -7,16 +7,15 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Models;
+
+internal interface IBestShotHeader
 {
-    internal interface IBestShotHeader
-    {
-        short Height { get; }
+    short Height { get; }
 
-        string Signature { get; }
+    string Signature { get; }
 
-        float SlowRate { get; }
+    float SlowRate { get; }
 
-        short Width { get; }
-    }
+    short Width { get; }
 }

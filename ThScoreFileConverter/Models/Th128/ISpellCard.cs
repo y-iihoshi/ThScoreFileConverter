@@ -8,23 +8,23 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models;
 
-namespace ThScoreFileConverter.Models.Th128
+namespace ThScoreFileConverter.Models.Th128;
+
+internal interface ISpellCard
 {
-    internal interface ISpellCard
-    {
-        bool HasTried { get; }
+    bool HasTried { get; }
 
-        int Id { get; }
+    int Id { get; }
 
-        Level Level { get; }
+    Level Level { get; }
 
-        IEnumerable<byte> Name { get; }
+    IEnumerable<byte> Name { get; }
 
-        int NoIceCount { get; }
+    int NoIceCount { get; }
 
-        int NoMissCount { get; }
+    int NoMissCount { get; }
 
-        int TrialCount { get; }
-    }
+    int TrialCount { get; }
 }

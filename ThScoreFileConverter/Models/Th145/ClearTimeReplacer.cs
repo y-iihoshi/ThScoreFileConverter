@@ -11,47 +11,47 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th145;
 
-namespace ThScoreFileConverter.Models.Th145
+namespace ThScoreFileConverter.Models.Th145;
+
+// %T145TIMECLR[x][yy]
+internal class ClearTimeReplacer : IStringReplaceable
 {
-    // %T145TIMECLR[x][yy]
-    internal class ClearTimeReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}TIMECLR({1})({2})",
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser.Pattern,
+        Parsers.CharaWithTotalParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public ClearTimeReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearTimes)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}TIMECLR({1})({2})",
-            Definitions.FormatPrefix,
-            Parsers.LevelWithTotalParser.Pattern,
-            Parsers.CharaWithTotalParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ClearTimeReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearTimes)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+
+            Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara = chara switch
             {
-                var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+                CharaWithTotal.Total => dictionary => dictionary.Values.Sum(),
+                _ => dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : default,
+            };
 
-                Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara = chara switch
-                {
-                    CharaWithTotal.Total => dictionary => dictionary.Values.Sum(),
-                    _ => dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : default,
-                };
+            Func<IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel = level switch
+            {
+                LevelWithTotal.Total => dictionary => dictionary.Values.Sum(getValueByChara),
+                _ => dictionary => dictionary.TryGetValue((Level)level, out var times)
+                    ? getValueByChara(times) : default,
+            };
 
-                Func<IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel = level switch
-                {
-                    LevelWithTotal.Total => dictionary => dictionary.Values.Sum(getValueByChara),
-                    _ => dictionary => dictionary.TryGetValue((Level)level, out var times)
-                        ? getValueByChara(times) : default,
-                };
+            return new Time(getValueByLevel(clearTimes)).ToString();
+        });
+    }
 
-                return new Time(getValueByLevel(clearTimes)).ToString();
-            });
-        }
-
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

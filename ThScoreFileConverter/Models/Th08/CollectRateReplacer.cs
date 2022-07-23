@@ -11,82 +11,83 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Helpers;
+using GameMode = ThScoreFileConverter.Core.Models.GameMode;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+// %T08CRG[v][w][xx][yy][z]
+internal class CollectRateReplacer : IStringReplaceable
 {
-    // %T08CRG[v][w][xx][yy][z]
-    internal class CollectRateReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}CRG({1})({2})({3})({4})([12])",
+        Definitions.FormatPrefix,
+        Parsers.GameModeParser.Pattern,
+        Parsers.LevelPracticeWithTotalParser.Pattern,
+        Parsers.CharaWithTotalParser.Pattern,
+        Parsers.StageWithTotalParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CRG({1})({2})({3})({4})([12])",
-            Definitions.FormatPrefix,
-            Parsers.GameModeParser.Pattern,
-            Parsers.LevelPracticeWithTotalParser.Pattern,
-            Parsers.CharaWithTotalParser.Pattern,
-            Parsers.StageWithTotalParser.Pattern);
+        this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, cardAttacks, formatter));
 
-        private readonly MatchEvaluator evaluator;
-
-        public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
+        static string EvaluatorImpl(
+            Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
-            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, cardAttacks, formatter));
+            var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+            var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
+            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
+            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
+            var type = IntegerHelper.Parse(match.Groups[5].Value);
 
-            static string EvaluatorImpl(
-                Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
+            if (stage == StageWithTotal.Extra)
+                return match.ToString();
+            if ((mode == GameMode.Story) && (level == LevelPracticeWithTotal.LastWord))
+                return match.ToString();
+
+            Func<ICardAttackCareer, bool> findByType = type switch
             {
-                var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
-                var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
-                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
-                var type = IntegerHelper.Parse(match.Groups[5].Value);
+                1 => career => career.ClearCounts[chara] > 0,
+                _ => career => career.TrialCounts[chara] > 0,
+            };
 
-                if (stage == StageWithTotal.Extra)
-                    return match.ToString();
-                if ((mode == GameMode.Story) && (level == LevelPracticeWithTotal.LastWord))
-                    return match.ToString();
+            Func<ICardAttack, bool> findByMode = mode switch
+            {
+                GameMode.Story => attack => Definitions.CardTable.Any(
+                    pair => (pair.Key == attack.CardId) && (pair.Value.Level != LevelPractice.LastWord))
+                    && findByType(attack.StoryCareer),
+                _ => attack => findByType(attack.PracticeCareer),
+            };
 
-                Func<ICardAttackCareer, bool> findByType = type switch
-                {
-                    1 => career => career.ClearCounts[chara] > 0,
-                    _ => career => career.TrialCounts[chara] > 0,
-                };
+            Func<ICardAttack, bool> findByLevel = level switch
+            {
+                LevelPracticeWithTotal.Total => FuncHelper.True,
+                LevelPracticeWithTotal.Extra => FuncHelper.True,
+                LevelPracticeWithTotal.LastWord => FuncHelper.True,
+                _ => attack => attack.Level == level,
+            };
 
-                Func<ICardAttack, bool> findByMode = mode switch
-                {
-                    GameMode.Story => attack => Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Level != LevelPractice.LastWord))
-                        && findByType(attack.StoryCareer),
-                    _ => attack => findByType(attack.PracticeCareer),
-                };
+            Func<ICardAttack, bool> findByStage = (level, stage) switch
+            {
+                (LevelPracticeWithTotal.Extra, _) => attack => Definitions.CardTable.Any(
+                    pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.Extra)),
+                (LevelPracticeWithTotal.LastWord, _) => attack => Definitions.CardTable.Any(
+                    pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.LastWord)),
+                (_, StageWithTotal.Total) => FuncHelper.True,
+                _ => attack => Definitions.CardTable.Any(
+                    pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage)),
+            };
 
-                Func<ICardAttack, bool> findByLevel = level switch
-                {
-                    LevelPracticeWithTotal.Total => FuncHelper.True,
-                    LevelPracticeWithTotal.Extra => FuncHelper.True,
-                    LevelPracticeWithTotal.LastWord => FuncHelper.True,
-                    _ => attack => attack.Level == level,
-                };
-
-                Func<ICardAttack, bool> findByStage = (level, stage) switch
-                {
-                    (LevelPracticeWithTotal.Extra, _) => attack => Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.Extra)),
-                    (LevelPracticeWithTotal.LastWord, _) => attack => Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.LastWord)),
-                    (_, StageWithTotal.Total) => FuncHelper.True,
-                    _ => attack => Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage)),
-                };
-
-                return formatter.FormatNumber(
-                    cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByMode, findByLevel, findByStage)));
-            }
+            return formatter.FormatNumber(
+                cardAttacks.Values.Count(FuncHelper.MakeAndPredicate(findByMode, findByLevel, findByStage)));
         }
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

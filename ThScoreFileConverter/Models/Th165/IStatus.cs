@@ -9,10 +9,9 @@
 
 using System.Collections.Generic;
 
-namespace ThScoreFileConverter.Models.Th165
+namespace ThScoreFileConverter.Models.Th165;
+
+internal interface IStatus : Th125.IStatus
 {
-    internal interface IStatus : Th125.IStatus
-    {
-        IEnumerable<byte> NicknameFlags { get; }
-    }
+    IEnumerable<byte> NicknameFlags { get; }
 }

@@ -8,28 +8,29 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Models.Th10.CharaWithTotal>;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th10;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Core.Models.Th10.CharaWithTotal>;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+// %T10CARD[xxx][y]
+internal class CardReplacer : CardReplacerBase<Stage, Level>
 {
-    // %T10CARD[xxx][y]
-    internal class CardReplacer : CardReplacerBase<Stage, Level>
+    public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
+        : base(
+              Definitions.FormatPrefix,
+              Definitions.CardTable,
+              hideUntriedCards,
+              cardNumber => CardHasTried(clearDataDictionary, cardNumber))
     {
-        public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
-            : base(
-                  Definitions.FormatPrefix,
-                  Definitions.CardTable,
-                  hideUntriedCards,
-                  cardNumber => CardHasTried(clearDataDictionary, cardNumber))
-        {
-        }
+    }
 
-        private static bool CardHasTried(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
-        {
-            return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
-                && clearData.Cards.TryGetValue(cardNumber, out var card)
-                && card.HasTried;
-        }
+    private static bool CardHasTried(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
+    {
+        return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+            && clearData.Cards.TryGetValue(cardNumber, out var card)
+            && card.HasTried;
     }
 }

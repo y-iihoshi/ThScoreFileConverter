@@ -9,52 +9,52 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models.Th155;
 
-namespace ThScoreFileConverter.Models.Th155
+namespace ThScoreFileConverter.Models.Th155;
+
+// %T155CLEAR[x][yy]
+internal class ClearRankReplacer : IStringReplaceable
 {
-    // %T155CLEAR[x][yy]
-    internal class ClearRankReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(
+        @"{0}CLEAR({1})({2})",
+        Definitions.FormatPrefix,
+        Parsers.LevelParser.Pattern,
+        Parsers.StoryCharaParser.Pattern);
+
+    private readonly MatchEvaluator evaluator;
+
+    public ClearRankReplacer(IReadOnlyDictionary<StoryChara, AllScoreData.Story> storyDictionary)
     {
-        private static readonly string Pattern = Utils.Format(
-            @"{0}CLEAR({1})({2})",
-            Definitions.FormatPrefix,
-            Parsers.LevelParser.Pattern,
-            Parsers.StoryCharaParser.Pattern);
-
-        private readonly MatchEvaluator evaluator;
-
-        public ClearRankReplacer(IReadOnlyDictionary<StoryChara, AllScoreData.Story> storyDictionary)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
+            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
 
-                if (storyDictionary.TryGetValue(chara, out var story)
-                    && story.Available
-                    && ((story.Ed & ToLevels(level)) != Levels.None))
-                    return "Clear";
-                else
-                    return "Not Clear";
-            });
+            if (storyDictionary.TryGetValue(chara, out var story)
+                && story.Available
+                && ((story.Ed & ToLevels(level)) != Levels.None))
+                return "Clear";
+            else
+                return "Not Clear";
+        });
 
-            static Levels ToLevels(Level level)
-            {
-                return level switch
-                {
-                    Level.Easy      => Levels.Easy,
-                    Level.Normal    => Levels.Normal,
-                    Level.Hard      => Levels.Hard,
-                    Level.Lunatic   => Levels.Lunatic,
-                    Level.OverDrive => Levels.OverDrive,
-                    _               => Levels.None,
-                };
-            }
-        }
-
-        public string Replace(string input)
+        static Levels ToLevels(Level level)
         {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            return level switch
+            {
+                Level.Easy      => Levels.Easy,
+                Level.Normal    => Levels.Normal,
+                Level.Hard      => Levels.Hard,
+                Level.Lunatic   => Levels.Lunatic,
+                Level.OverDrive => Levels.OverDrive,
+                _               => Levels.None,
+            };
         }
+    }
+
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

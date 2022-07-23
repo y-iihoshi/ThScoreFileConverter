@@ -7,14 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th18
+namespace ThScoreFileConverter.Models.Th18;
+
+// %T18ACHV[xx]
+internal class AchievementReplacer : Th17.AchievementReplacerBase
 {
-    // %T18ACHV[xx]
-    internal class AchievementReplacer : Th17.AchievementReplacerBase
+    public AchievementReplacer(IStatus status)
+        : base(Definitions.FormatPrefix, Definitions.Achievements, status)
     {
-        public AchievementReplacer(IStatus status)
-            : base(Definitions.FormatPrefix, Definitions.Achievements, status)
-        {
-        }
     }
 }

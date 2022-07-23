@@ -8,24 +8,24 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th10;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+// %T10CRG[w][xx][y][z]
+internal class CollectRateReplacer : CollectRateReplacerBase<CharaWithTotal>
 {
-    // %T10CRG[w][xx][y][z]
-    internal class CollectRateReplacer : CollectRateReplacerBase<CharaWithTotal>
+    public CollectRateReplacer(
+        IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,
+        INumberFormatter formatter)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.LevelWithTotalParser,
+              Parsers.CharaWithTotalParser,
+              Parsers.StageWithTotalParser,
+              Definitions.CardTable,
+              clearDataDictionary,
+              formatter)
     {
-        public CollectRateReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,
-            INumberFormatter formatter)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.LevelWithTotalParser,
-                  Parsers.CharaWithTotalParser,
-                  Parsers.StageWithTotalParser,
-                  Definitions.CardTable,
-                  clearDataDictionary,
-                  formatter)
-        {
-        }
     }
 }

@@ -9,65 +9,64 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Core.Resources;
 
-namespace ThScoreFileConverter.Squirrel
+namespace ThScoreFileConverter.Squirrel;
+
+internal sealed class SQBool : SQObject, IEquatable<SQBool>
 {
-    internal sealed class SQBool : SQObject, IEquatable<SQBool>
+    private SQBool(bool value = default)
+        : base(SQObjectType.Bool)
     {
-        private SQBool(bool value = default)
-            : base(SQObjectType.Bool)
+        this.Value = value;
+    }
+
+    public static SQBool True { get; } = new SQBool(true);
+
+    public static SQBool False { get; } = new SQBool(false);
+
+    public new bool Value
+    {
+        get => (bool)base.Value;
+        private set => base.Value = value;
+    }
+
+    public static implicit operator bool(SQBool sq)
+    {
+        return sq.Value;
+    }
+
+    public static SQBool Create(BinaryReader reader, bool skipType = false)
+    {
+        if (!skipType)
         {
-            this.Value = value;
+            var type = reader.ReadInt32();
+            if (type != (int)SQObjectType.Bool)
+                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
-        public static SQBool True { get; } = new SQBool(true);
+        return (reader.ReadByte() != 0x00) ? True : False;
+    }
 
-        public static SQBool False { get; } = new SQBool(false);
+    public override bool Equals(object? obj)
+    {
+        return (obj is SQBool value) && this.Equals(value);
+    }
 
-        public new bool Value
-        {
-            get => (bool)base.Value;
-            private set => base.Value = value;
-        }
-
-        public static implicit operator bool(SQBool sq)
-        {
-            return sq.Value;
-        }
-
-        public static SQBool Create(BinaryReader reader, bool skipType = false)
-        {
-            if (!skipType)
-            {
-                var type = reader.ReadInt32();
-                if (type != (int)SQObjectType.Bool)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
-            }
-
-            return (reader.ReadByte() != 0x00) ? True : False;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return (obj is SQBool value) && this.Equals(value);
-        }
-
-        public override int GetHashCode()
-        {
+    public override int GetHashCode()
+    {
 #if NETFRAMEWORK
-            return this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        return this.Type.GetHashCode() ^ this.Value.GetHashCode();
 #else
-            return HashCode.Combine(this.Type, this.Value);
+        return HashCode.Combine(this.Type, this.Value);
 #endif
-        }
+    }
 
-        public bool Equals(SQBool? other)
-        {
-            if (other is null)
-                return false;
+    public bool Equals(SQBool? other)
+    {
+        if (other is null)
+            return false;
 
-            return (this.Type == other.Type) && (this.Value == other.Value);
-        }
+        return (this.Type == other.Type) && (this.Value == other.Value);
     }
 }

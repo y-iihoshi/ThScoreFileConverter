@@ -9,29 +9,28 @@
 
 using System.Text.RegularExpressions;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+// %T08TIME(ALL|PLY)
+internal class TimeReplacer : IStringReplaceable
 {
-    // %T08TIME(ALL|PLY)
-    internal class TimeReplacer : IStringReplaceable
+    private static readonly string Pattern = Utils.Format(@"{0}TIME(ALL|PLY)", Definitions.FormatPrefix);
+
+    private readonly MatchEvaluator evaluator;
+
+    public TimeReplacer(IPlayStatus playStatus)
     {
-        private static readonly string Pattern = Utils.Format(@"{0}TIME(ALL|PLY)", Definitions.FormatPrefix);
-
-        private readonly MatchEvaluator evaluator;
-
-        public TimeReplacer(IPlayStatus playStatus)
+        this.evaluator = new MatchEvaluator(match =>
         {
-            this.evaluator = new MatchEvaluator(match =>
-            {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
+            var kind = match.Groups[1].Value.ToUpperInvariant();
 
-                return (kind == "ALL")
-                    ? playStatus.TotalRunningTime.ToLongString() : playStatus.TotalPlayTime.ToLongString();
-            });
-        }
+            return (kind == "ALL")
+                ? playStatus.TotalRunningTime.ToLongString() : playStatus.TotalPlayTime.ToLongString();
+        });
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

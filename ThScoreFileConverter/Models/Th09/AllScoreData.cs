@@ -9,60 +9,61 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th09;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th09
+namespace ThScoreFileConverter.Models.Th09;
+
+internal class AllScoreData
 {
-    internal class AllScoreData
+    private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
+
+    public AllScoreData()
     {
-        private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
+        var numPairs = EnumHelper<Chara>.NumValues * EnumHelper<Level>.NumValues;
+        this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
+    }
 
-        public AllScoreData()
+    public Header? Header { get; private set; }
+
+    public IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
+
+    public IPlayStatus? PlayStatus { get; private set; }
+
+    public Th07.LastName? LastName { get; private set; }
+
+    public Th07.VersionInfo? VersionInfo { get; private set; }
+
+    public void Set(Header header)
+    {
+        this.Header = header;
+    }
+
+    public void Set(IHighScore score)
+    {
+        var key = (score.Chara, score.Level);
+        _ = this.rankings.TryAdd(key, new IHighScore[5].ToList());
+        if ((score.Rank >= 0) && (score.Rank < 5))
         {
-            var numPairs = EnumHelper<Chara>.NumValues * EnumHelper<Level>.NumValues;
-            this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
+            var ranking = (List<IHighScore>)this.rankings[key];
+            ranking[score.Rank] = score;
         }
+    }
 
-        public Header? Header { get; private set; }
+    public void Set(IPlayStatus status)
+    {
+        this.PlayStatus = status;
+    }
 
-        public IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
+    public void Set(Th07.LastName name)
+    {
+        this.LastName = name;
+    }
 
-        public IPlayStatus? PlayStatus { get; private set; }
-
-        public Th07.LastName? LastName { get; private set; }
-
-        public Th07.VersionInfo? VersionInfo { get; private set; }
-
-        public void Set(Header header)
-        {
-            this.Header = header;
-        }
-
-        public void Set(IHighScore score)
-        {
-            var key = (score.Chara, score.Level);
-            _ = this.rankings.TryAdd(key, new IHighScore[5].ToList());
-            if ((score.Rank >= 0) && (score.Rank < 5))
-            {
-                var ranking = (List<IHighScore>)this.rankings[key];
-                ranking[score.Rank] = score;
-            }
-        }
-
-        public void Set(IPlayStatus status)
-        {
-            this.PlayStatus = status;
-        }
-
-        public void Set(Th07.LastName name)
-        {
-            this.LastName = name;
-        }
-
-        public void Set(Th07.VersionInfo info)
-        {
-            this.VersionInfo = info;
-        }
+    public void Set(Th07.VersionInfo info)
+    {
+        this.VersionInfo = info;
     }
 }

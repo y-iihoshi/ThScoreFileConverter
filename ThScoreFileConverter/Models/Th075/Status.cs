@@ -11,35 +11,35 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+internal class Status : IBinaryReadable
 {
-    internal class Status : IBinaryReadable
+    public Status()
     {
-        public Status()
-        {
-            this.LastName = string.Empty;
-            this.ArcadeScores = ImmutableDictionary<(CharaWithReserved, CharaWithReserved), int>.Empty;
-        }
+        this.LastName = string.Empty;
+        this.ArcadeScores = ImmutableDictionary<(CharaWithReserved, CharaWithReserved), int>.Empty;
+    }
 
-        public string LastName { get; private set; }
+    public string LastName { get; private set; }
 
-        public IReadOnlyDictionary<(CharaWithReserved Player, CharaWithReserved Enemy), int> ArcadeScores { get; private set; }
+    public IReadOnlyDictionary<(CharaWithReserved Player, CharaWithReserved Enemy), int> ArcadeScores { get; private set; }
 
-        public void ReadFrom(BinaryReader reader)
-        {
-            var charas = EnumHelper<CharaWithReserved>.Enumerable;
+    public void ReadFrom(BinaryReader reader)
+    {
+        var charas = EnumHelper<CharaWithReserved>.Enumerable;
 
-            this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
-            this.ArcadeScores = charas.SelectMany(player => charas.Select(enemy => (player, enemy)))
-                .ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
+        this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
+        this.ArcadeScores = charas.SelectMany(player => charas.Select(enemy => (player, enemy)))
+            .ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
 
-            // FIXME... BGM flags?
-            _ = reader.ReadExactBytes(0x28);
+        // FIXME... BGM flags?
+        _ = reader.ReadExactBytes(0x28);
 
-            _ = reader.ReadExactBytes(0x100);
-        }
+        _ = reader.ReadExactBytes(0x100);
     }
 }

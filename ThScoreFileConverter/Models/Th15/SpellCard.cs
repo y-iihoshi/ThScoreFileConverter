@@ -7,10 +7,11 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th15
+using ThScoreFileConverter.Core.Models;
+
+namespace ThScoreFileConverter.Models.Th15;
+
+internal class SpellCard : Th13.SpellCard<Level>
 {
-    internal class SpellCard : Th13.SpellCard<Level>
-    {
-        public override bool HasTried => this.TrialCount > 0;
-    }
+    public override bool HasTried => this.TrialCount > 0;
 }

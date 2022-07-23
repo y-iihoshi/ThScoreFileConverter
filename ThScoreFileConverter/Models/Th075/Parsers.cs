@@ -5,29 +5,30 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th075
+using ThScoreFileConverter.Core.Models.Th075;
+
+namespace ThScoreFileConverter.Models.Th075;
+
+/// <summary>
+/// Provides the parsers used for IMP.
+/// </summary>
+internal static class Parsers
 {
     /// <summary>
-    /// Provides the parsers used for IMP.
+    /// Gets the parser of <see cref="Level"/>.
     /// </summary>
-    internal static class Parsers
-    {
-        /// <summary>
-        /// Gets the parser of <see cref="Level"/>.
-        /// </summary>
-        public static EnumShortNameParser<Level> LevelParser { get; } =
-            new EnumShortNameParser<Level>();
+    public static EnumShortNameParser<Level> LevelParser { get; } =
+        new EnumShortNameParser<Level>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="LevelWithTotal"/>.
-        /// </summary>
-        public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
-            new EnumShortNameParser<LevelWithTotal>();
+    /// <summary>
+    /// Gets the parser of <see cref="LevelWithTotal"/>.
+    /// </summary>
+    public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
+        new EnumShortNameParser<LevelWithTotal>();
 
-        /// <summary>
-        /// Gets the parser of <see cref="Chara"/>.
-        /// </summary>
-        public static EnumShortNameParser<Chara> CharaParser { get; } =
-            new EnumShortNameParser<Chara>();
-    }
+    /// <summary>
+    /// Gets the parser of <see cref="Chara"/>.
+    /// </summary>
+    public static EnumShortNameParser<Chara> CharaParser { get; } =
+        new EnumShortNameParser<Chara>();
 }

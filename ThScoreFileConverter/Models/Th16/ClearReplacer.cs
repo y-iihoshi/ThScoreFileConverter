@@ -9,36 +9,37 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th16;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th16.CharaWithTotal,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Core.Models.Th16.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Level,
+    ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 
-namespace ThScoreFileConverter.Models.Th16
-{
-    // %T16CLEAR[x][yy]
-    internal class ClearReplacer : Th13.ClearReplacerBase<
-        Chara, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
-    {
-        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
-            : base(
-                  Definitions.FormatPrefix,
-                  Parsers.LevelParser,
-                  Parsers.CharaParser,
-                  (level, chara) => GetRanking(clearDataDictionary, level, chara))
-        {
-        }
+namespace ThScoreFileConverter.Models.Th16;
 
-        private static IReadOnlyList<Th10.IScoreData<Th13.StageProgress>> GetRanking(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> dictionary, Level level, Chara chara)
-        {
-            return dictionary.TryGetValue(EnumHelper.To<CharaWithTotal>(chara), out var clearData)
-                && clearData.Rankings.TryGetValue(EnumHelper.To<Th14.LevelPracticeWithTotal>(level), out var ranking)
-                ? ranking : ImmutableList<Th10.IScoreData<Th13.StageProgress>>.Empty;
-        }
+// %T16CLEAR[x][yy]
+internal class ClearReplacer : Th13.ClearReplacerBase<
+    Chara, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+{
+    public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        : base(
+              Definitions.FormatPrefix,
+              Parsers.LevelParser,
+              Parsers.CharaParser,
+              (level, chara) => GetRanking(clearDataDictionary, level, chara))
+    {
+    }
+
+    private static IReadOnlyList<Th10.IScoreData<Th13.StageProgress>> GetRanking(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> dictionary, Level level, Chara chara)
+    {
+        return dictionary.TryGetValue(EnumHelper.To<CharaWithTotal>(chara), out var clearData)
+            && clearData.Rankings.TryGetValue(EnumHelper.To<Th14.LevelPracticeWithTotal>(level), out var ranking)
+            ? ranking : ImmutableList<Th10.IScoreData<Th13.StageProgress>>.Empty;
     }
 }

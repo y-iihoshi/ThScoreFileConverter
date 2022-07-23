@@ -7,10 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th135
+namespace ThScoreFileConverter.Models.Th135;
+
+internal static class Definitions
 {
-    internal static class Definitions
-    {
-        public static string FormatPrefix { get; } = "%T135";
-    }
+    public static string FormatPrefix { get; } = "%T135";
 }

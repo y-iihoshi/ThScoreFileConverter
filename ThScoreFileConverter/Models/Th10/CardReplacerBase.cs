@@ -10,61 +10,61 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
-namespace ThScoreFileConverter.Models.Th10
+namespace ThScoreFileConverter.Models.Th10;
+
+internal class CardReplacerBase<TStage, TLevel> : IStringReplaceable
+    where TStage : struct, Enum
+    where TLevel : struct, Enum
 {
-    internal class CardReplacerBase<TStage, TLevel> : IStringReplaceable
-        where TStage : struct, Enum
-        where TLevel : struct, Enum
+    private readonly string pattern;
+    private readonly MatchEvaluator evaluator;
+
+    protected CardReplacerBase(
+        string formatPrefix,
+        IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
+        bool hideUntriedCards,
+        Func<int, bool> cardHasTried)
+        : this(formatPrefix, cardTable, hideUntriedCards, cardHasTried, static level => level.ToString())
     {
-        private readonly string pattern;
-        private readonly MatchEvaluator evaluator;
+    }
 
-        protected CardReplacerBase(
-            string formatPrefix,
-            IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
-            bool hideUntriedCards,
-            Func<int, bool> cardHasTried)
-            : this(formatPrefix, cardTable, hideUntriedCards, cardHasTried, static level => level.ToString())
+    protected CardReplacerBase(
+        string formatPrefix,
+        IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
+        bool hideUntriedCards,
+        Func<int, bool> cardHasTried,
+        Func<TLevel, string> levelToString)
+    {
+        this.pattern = Utils.Format(
+            @"{0}CARD(\d{{{1}}})([NR])", formatPrefix, IntegerHelper.GetNumDigits(cardTable.Count));
+        this.evaluator = new MatchEvaluator(match =>
         {
-        }
+            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var type = match.Groups[2].Value.ToUpperInvariant();
 
-        protected CardReplacerBase(
-            string formatPrefix,
-            IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
-            bool hideUntriedCards,
-            Func<int, bool> cardHasTried,
-            Func<TLevel, string> levelToString)
-        {
-            this.pattern = Utils.Format(
-                @"{0}CARD(\d{{{1}}})([NR])", formatPrefix, IntegerHelper.GetNumDigits(cardTable.Count));
-            this.evaluator = new MatchEvaluator(match =>
+            if (cardTable.TryGetValue(number, out var cardInfo))
             {
-                var number = IntegerHelper.Parse(match.Groups[1].Value);
-                var type = match.Groups[2].Value.ToUpperInvariant();
-
-                if (cardTable.TryGetValue(number, out var cardInfo))
+                if (type == "N")
                 {
-                    if (type == "N")
-                    {
-                        return hideUntriedCards && !cardHasTried(number) ? "??????????" : cardInfo.Name;
-                    }
-                    else
-                    {
-                        return levelToString(cardInfo.Level);
-                    }
+                    return hideUntriedCards && !cardHasTried(number) ? "??????????" : cardInfo.Name;
                 }
                 else
                 {
-                    return match.ToString();
+                    return levelToString(cardInfo.Level);
                 }
-            });
-        }
+            }
+            else
+            {
+                return match.ToString();
+            }
+        });
+    }
 
-        public string Replace(string input)
-        {
-            return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
+    public string Replace(string input)
+    {
+        return Regex.Replace(input, this.pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 }

@@ -8,15 +8,15 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using ThScoreFileConverter.Core.Models.Th08;
 
-namespace ThScoreFileConverter.Models.Th08
+namespace ThScoreFileConverter.Models.Th08;
+
+internal interface ICardAttackCareer
 {
-    internal interface ICardAttackCareer
-    {
-        IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; }
+    IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; }
 
-        IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; }
+    IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; }
 
-        IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; }
-    }
+    IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; }
 }

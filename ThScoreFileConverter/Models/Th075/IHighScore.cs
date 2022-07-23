@@ -7,16 +7,15 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-namespace ThScoreFileConverter.Models.Th075
+namespace ThScoreFileConverter.Models.Th075;
+
+internal interface IHighScore
 {
-    internal interface IHighScore
-    {
-        byte Day { get; }
+    byte Day { get; }
 
-        byte Month { get; }
+    byte Month { get; }
 
-        string Name { get; }
+    string Name { get; }
 
-        int Score { get; }
-    }
+    int Score { get; }
 }

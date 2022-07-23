@@ -8,42 +8,42 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models.Th13;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13.StagePractice,
+    ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Core.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th13.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th13;
+
+// %T13CARD[xxx][y]
+internal class CardReplacer : Th10.CardReplacerBase<StagePractice, LevelPractice>
 {
-    // %T13CARD[xxx][y]
-    internal class CardReplacer : Th10.CardReplacerBase<StagePractice, LevelPractice>
+    public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
+        : base(
+              Definitions.FormatPrefix,
+              Definitions.CardTable,
+              hideUntriedCards,
+              cardNumber => CardHasTried(clearDataDictionary, cardNumber),
+              static level => LevelToString(level))
     {
-        public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
-            : base(
-                  Definitions.FormatPrefix,
-                  Definitions.CardTable,
-                  hideUntriedCards,
-                  cardNumber => CardHasTried(clearDataDictionary, cardNumber),
-                  static level => LevelToString(level))
-        {
-        }
+    }
 
-        private static bool CardHasTried(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
-        {
-            return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
-                && clearData.Cards.TryGetValue(cardNumber, out var card)
-                && card.HasTried;
-        }
+    private static bool CardHasTried(
+        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
+    {
+        return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+            && clearData.Cards.TryGetValue(cardNumber, out var card)
+            && card.HasTried;
+    }
 
-        private static string LevelToString(LevelPractice level)
-        {
-            var levelName = level.ToLongName();
-            return (levelName.Length > 0) ? levelName : level.ToString();
-        }
+    private static string LevelToString(LevelPractice level)
+    {
+        var levelName = level.ToLongName();
+        return (levelName.Length > 0) ? levelName : level.ToString();
     }
 }

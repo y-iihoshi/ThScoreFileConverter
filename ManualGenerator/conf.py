@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'ThScoreFileConverter'
-copyright = '2013-2021, IIHOSHI Yoshinori'
+copyright = '2013-2022, IIHOSHI Yoshinori'
 author = 'IIHOSHI Yoshinori'
 
 # The short X.Y version.

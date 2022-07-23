@@ -11,23 +11,23 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Helpers;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models;
 
-namespace ThScoreFileConverter.Models.Th09
+namespace ThScoreFileConverter.Models.Th09;
+
+internal class ClearCount : IBinaryReadable, IClearCount
 {
-    internal class ClearCount : IBinaryReadable, IClearCount
+    public ClearCount()
     {
-        public ClearCount()
-        {
-            this.Counts = ImmutableDictionary<Level, int>.Empty;
-        }
+        this.Counts = ImmutableDictionary<Level, int>.Empty;
+    }
 
-        public IReadOnlyDictionary<Level, int> Counts { get; private set; }
+    public IReadOnlyDictionary<Level, int> Counts { get; private set; }
 
-        public void ReadFrom(BinaryReader reader)
-        {
-            this.Counts = EnumHelper<Level>.Enumerable.ToDictionary(level => level, _ => reader.ReadInt32());
-            _ = reader.ReadUInt32();
-        }
+    public void ReadFrom(BinaryReader reader)
+    {
+        this.Counts = EnumHelper<Level>.Enumerable.ToDictionary(level => level, _ => reader.ReadInt32());
+        _ = reader.ReadUInt32();
     }
 }

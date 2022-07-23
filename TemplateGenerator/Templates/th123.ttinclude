@@ -16,7 +16,6 @@
     var characters = Definitions.CharacterNames;
     var storyCharacters = Definitions.StoryCharacterNames;
 
-    var cardsPerLevel = Definitions.NumCardsPerLevel;
     var cardsPerChara = Definitions.NumCardsPerCharacter;
 
     var cardTypes = Definitions.CardTypeNames;
