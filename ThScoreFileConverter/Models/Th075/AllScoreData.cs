@@ -31,8 +31,7 @@ internal class AllScoreData : IBinaryReadable
 
     public void ReadFrom(BinaryReader reader)
     {
-        this.ClearData = EnumHelper<CharaWithReserved>.Enumerable
-            .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
+        this.ClearData = EnumHelper.Cartesian<CharaWithReserved, Level>()
             .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<ClearData>(reader) as IClearData);
 
         this.Status = BinaryReadableHelper.Create<Status>(reader);

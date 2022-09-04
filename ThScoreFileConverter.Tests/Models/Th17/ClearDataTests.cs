@@ -89,8 +89,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
             levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            EnumHelper<Level>.Enumerable
-                .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
+            EnumHelper.Cartesian<Level, StagePractice>()
                 .ToDictionary(pair => pair, pair => CreatePractice(pair)));
         _ = mock.SetupGet(m => m.Cards).Returns(
             Definitions.CardTable.ToDictionary(

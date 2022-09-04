@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th12;
@@ -75,8 +76,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
             levels.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra
-                .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
+            levelsExceptExtra.Cartesian(stagesExceptExtra)
                 .ToDictionary(pair => pair, pair => CreatePractice(pair)));
         _ = mock.SetupGet(m => m.Cards).Returns(
             Enumerable.Range(1, 113).ToDictionary(index => index, index => CreateSpellCard(index)));

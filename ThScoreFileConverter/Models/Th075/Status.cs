@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Extensions;
@@ -34,8 +35,7 @@ internal class Status : IBinaryReadable
         var charas = EnumHelper<CharaWithReserved>.Enumerable;
 
         this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
-        this.ArcadeScores = charas.SelectMany(player => charas.Select(enemy => (player, enemy)))
-            .ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
+        this.ArcadeScores = charas.Cartesian(charas).ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
 
         // FIXME... BGM flags?
         _ = reader.ReadExactBytes(0x28);

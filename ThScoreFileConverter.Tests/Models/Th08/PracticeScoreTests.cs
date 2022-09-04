@@ -20,16 +20,15 @@ public class PracticeScoreTests
 {
     internal static Mock<IPracticeScore> MockPracticeScore()
     {
-        var pairs = EnumHelper<Stage>.Enumerable
-            .SelectMany(stage => EnumHelper<Level>.Enumerable.Select(level => (stage, level)));
+        var pairs = EnumHelper.Cartesian<Stage, Level>();
         var mock = new Mock<IPracticeScore>();
         _ = mock.SetupGet(m => m.Signature).Returns("PSCR");
         _ = mock.SetupGet(m => m.Size1).Returns(0x178);
         _ = mock.SetupGet(m => m.Size2).Returns(0x178);
         _ = mock.SetupGet(m => m.PlayCounts).Returns(
-            pairs.ToDictionary(pair => pair, pair => ((int)pair.stage * 10) + (int)pair.level));
+            pairs.ToDictionary(pair => pair, pair => ((int)pair.First * 10) + (int)pair.Second));
         _ = mock.SetupGet(m => m.HighScores).Returns(
-            pairs.ToDictionary(pair => pair, pair => ((int)pair.level * 10) + (int)pair.stage));
+            pairs.ToDictionary(pair => pair, pair => ((int)pair.Second * 10) + (int)pair.First));
         _ = mock.SetupGet(m => m.Chara).Returns(Chara.MarisaAlice);
         return mock;
     }

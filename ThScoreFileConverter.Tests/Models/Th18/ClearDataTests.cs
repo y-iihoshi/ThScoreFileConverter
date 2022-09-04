@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th18;
@@ -100,8 +101,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
             levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra
-                .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
+            levelsExceptExtra.Cartesian(stagesExceptExtra)
                 .ToDictionary(pair => pair, pair => CreatePractice(pair)));
         return mock;
     }

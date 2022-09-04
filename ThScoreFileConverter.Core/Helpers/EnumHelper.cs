@@ -6,7 +6,9 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using ThScoreFileConverter.Core.Extensions;
 
 namespace ThScoreFileConverter.Core.Helpers;
 
@@ -67,5 +69,18 @@ public static class EnumHelper
         var underlying = Convert.ChangeType(
             value, typeof(TEnum).GetEnumUnderlyingType(), CultureInfo.InvariantCulture);
         return Enum.IsDefined(typeof(TEnum), underlying) ? (TEnum)underlying : throw new InvalidCastException();
+    }
+
+    /// <summary>
+    /// Creates the Cartesian product of two enums.
+    /// </summary>
+    /// <typeparam name="T1">The enum type of the first sequence.</typeparam>
+    /// <typeparam name="T2">The enum type of the second sequence.</typeparam>
+    /// <returns>The Cartesian product of <typeparamref name="T1"/> and <typeparamref name="T2"/>.</returns>
+    public static IEnumerable<(T1 First, T2 Second)> Cartesian<T1, T2>()
+        where T1 : struct, Enum
+        where T2 : struct, Enum
+    {
+        return EnumHelper<T1>.Enumerable.Cartesian(EnumHelper<T2>.Enumerable);
     }
 }

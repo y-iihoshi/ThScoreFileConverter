@@ -32,9 +32,8 @@ public class StatusTests
     {
         encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
         decodedLastName = "Player1 ",
-        arcadeScores = EnumHelper<CharaWithReserved>.Enumerable
-            .SelectMany(player => EnumHelper<CharaWithReserved>.Enumerable.Select(enemy => (player, enemy)))
-            .ToDictionary(pair => pair, pair => ((int)pair.player * 100) + (int)pair.enemy),
+        arcadeScores = EnumHelper.Cartesian<CharaWithReserved, CharaWithReserved>()
+            .ToDictionary(pair => pair, pair => ((int)pair.First * 100) + (int)pair.Second),
     };
 
     internal static byte[] MakeByteArray(in Properties properties)

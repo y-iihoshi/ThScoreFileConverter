@@ -19,8 +19,7 @@ public class AllScoreDataTests
 
     internal static Properties ValidProperties { get; } = new Properties()
     {
-        clearData = EnumHelper<CharaWithReserved>.Enumerable
-            .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
+        clearData = EnumHelper.Cartesian<CharaWithReserved, Level>()
             .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
         status = StatusTests.ValidProperties,
     };

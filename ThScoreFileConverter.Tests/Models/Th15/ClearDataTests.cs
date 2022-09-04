@@ -39,8 +39,7 @@ public class ClearDataTests
                 mode => mode,
                 _ => ClearDataPerGameModeTests.MockClearDataPerGameMode().Object));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            EnumHelper<Level>.Enumerable
-                .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
+            EnumHelper.Cartesian<Level, StagePractice>()
                 .ToDictionary(pair => pair, pair => CreatePractice(pair)));
         return mock;
     }

@@ -1,5 +1,8 @@
 ﻿using System;
 using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
+using Protagonist = ThScoreFileConverter.Core.Tests.Extensions.Protagonist;
+using UnnamedCharacter = ThScoreFileConverter.Core.Tests.Extensions.UnnamedCharacter;
 
 namespace ThScoreFileConverter.Core.Tests.Helpers;
 
@@ -76,5 +79,21 @@ public class EnumHelperTests
     public void NumValuesTest()
     {
         Assert.AreEqual(7, EnumHelper<DayOfWeek>.NumValues);
+    }
+
+    [TestMethod]
+    public void CartesianTest()
+    {
+        var expected = new[]
+        {
+            (Protagonist.Reimu, UnnamedCharacter.大妖精),
+            (Protagonist.Reimu, UnnamedCharacter.小悪魔),
+            (Protagonist.Reimu, UnnamedCharacter.名無しの本読み妖怪),
+            (Protagonist.Marisa, UnnamedCharacter.大妖精),
+            (Protagonist.Marisa, UnnamedCharacter.小悪魔),
+            (Protagonist.Marisa, UnnamedCharacter.名無しの本読み妖怪),
+        };
+
+        CollectionAssert.That.AreEqual(expected, EnumHelper.Cartesian<Protagonist, UnnamedCharacter>());
     }
 }
