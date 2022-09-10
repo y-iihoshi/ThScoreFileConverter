@@ -15,6 +15,14 @@ using ThScoreFileConverter.Core.Models.Th18;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th18;
+using AllScoreData = ThScoreFileConverter.Models.Th13.AllScoreData<
+    ThScoreFileConverter.Core.Models.Th18.CharaWithTotal,
+    ThScoreFileConverter.Core.Models.Level,
+    ThScoreFileConverter.Core.Models.Level,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Stage,
+    ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>,
+    ThScoreFileConverter.Models.Th18.IStatus>;
 
 namespace ThScoreFileConverter.Models;
 
