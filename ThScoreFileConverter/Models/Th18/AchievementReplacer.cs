@@ -12,8 +12,8 @@ namespace ThScoreFileConverter.Models.Th18;
 // %T18ACHV[xx]
 internal class AchievementReplacer : Th17.AchievementReplacerBase
 {
-    public AchievementReplacer(IStatus status)
-        : base(Definitions.FormatPrefix, Definitions.Achievements, status)
+    public AchievementReplacer(Th17.IAchievementHolder holder)
+        : base(Definitions.FormatPrefix, Definitions.Achievements, holder)
     {
     }
 }
