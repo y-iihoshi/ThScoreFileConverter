@@ -7,13 +7,8 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
-
 namespace ThScoreFileConverter.Models.Th18;
 
-internal interface IStatus : Th17.IStatus
+internal interface IStatus : Th17.IStatus, IAbilityCardHolder
 {
-    IEnumerable<byte> AbilityCards { get; }
-
-    IEnumerable<byte> InitialHoldAbilityCards { get; }
 }

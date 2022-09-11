@@ -23,10 +23,8 @@ public class StatusTests
         _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(17));
         _ = mock.SetupGet(m => m.TotalPlayTime).Returns(12345678);
         _ = mock.SetupGet(m => m.Achievements).Returns(TestUtils.MakeRandomArray<byte>(30));
-        _ = mock.SetupGet(m => m.AbilityCards).Returns(
-            Enumerable.Range(0, 56).Select(number => (byte)(number % 4)));
-        _ = mock.SetupGet(m => m.InitialHoldAbilityCards).Returns(
-            Enumerable.Range(0, 0x30).Select(number => (byte)(number % 5)));
+        _ = mock.SetupGet(m => m.AbilityCards).Returns(TestUtils.MakeRandomArray<byte>(56));
+        _ = mock.SetupGet(m => m.InitialHoldAbilityCards).Returns(TestUtils.MakeRandomArray<byte>(0x30));
         return mock;
     }
 

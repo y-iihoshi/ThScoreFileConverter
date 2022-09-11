@@ -20,7 +20,7 @@ internal class AbilityCardReplacer : IStringReplaceable
 
     private readonly MatchEvaluator evaluator;
 
-    public AbilityCardReplacer(IStatus status)
+    public AbilityCardReplacer(IAbilityCardHolder holder)
     {
         this.evaluator = new MatchEvaluator(match =>
         {
@@ -29,7 +29,7 @@ internal class AbilityCardReplacer : IStringReplaceable
             if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
                 return match.ToString();
 
-            return (status.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
+            return (holder.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
         });
     }
 
