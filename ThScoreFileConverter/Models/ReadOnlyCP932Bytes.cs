@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ReadOnlyCP932String.cs" company="None">
+// <copyright file="ReadOnlyCP932Bytes.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -14,18 +14,18 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
-internal class ReadOnlyCP932String
+internal class ReadOnlyCP932Bytes
 {
     private readonly byte[] bytes;
     private readonly string str;
 
-    public ReadOnlyCP932String(IEnumerable<byte> bytes)
+    public ReadOnlyCP932Bytes(IEnumerable<byte> bytes)
     {
         this.bytes = bytes.ToArray();
         this.str = EncodingHelper.CP932.GetString(this.bytes).Split('\0')[0];
     }
 
-    public static ReadOnlyCP932String Empty { get; } = new ReadOnlyCP932String(Array.Empty<byte>());
+    public static ReadOnlyCP932Bytes Empty { get; } = new ReadOnlyCP932Bytes(Array.Empty<byte>());
 
     public IEnumerable<byte> Bytes => this.bytes;
 

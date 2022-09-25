@@ -7,13 +7,13 @@ using ThScoreFileConverter.Tests.UnitTesting;
 namespace ThScoreFileConverter.Tests.Models;
 
 [TestClass]
-public class ReadOnlyCP932StringTests
+public class ReadOnlyCP932BytesTests
 {
     [TestMethod]
     public void ReadOnlyCP932StringTest()
     {
         var expectedBytes = TestUtils.CP932Encoding.GetBytes("博麗 霊夢\0霧雨 魔理沙");
-        var actual = new ReadOnlyCP932String(expectedBytes);
+        var actual = new ReadOnlyCP932Bytes(expectedBytes);
 
         Assert.AreEqual("博麗 霊夢", actual.ToString());
         Assert.AreNotEqual("博麗 霊夢\0霧雨 魔理沙", actual.ToString());
@@ -23,7 +23,7 @@ public class ReadOnlyCP932StringTests
     [TestMethod]
     public void EmptyTest()
     {
-        var empty = ReadOnlyCP932String.Empty;
+        var empty = ReadOnlyCP932Bytes.Empty;
         Assert.IsFalse(empty.Bytes.Any());
         Assert.AreEqual(string.Empty, empty.ToString());
     }
@@ -31,8 +31,8 @@ public class ReadOnlyCP932StringTests
     [TestMethod]
     public void EmptyTestSameInstances()
     {
-        var empty = ReadOnlyCP932String.Empty;
-        var empty2 = ReadOnlyCP932String.Empty;
+        var empty = ReadOnlyCP932Bytes.Empty;
+        var empty2 = ReadOnlyCP932Bytes.Empty;
         Assert.AreSame(empty, empty2);
     }
 }
