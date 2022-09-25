@@ -8,13 +8,14 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
-internal class ReadOnlyCP932Bytes
+internal class ReadOnlyCP932Bytes : IEnumerable<byte>
 {
     private readonly byte[] bytes;
     private readonly string str;
@@ -29,8 +30,18 @@ internal class ReadOnlyCP932Bytes
 
     public IEnumerable<byte> Bytes => this.bytes;
 
+    public IEnumerator<byte> GetEnumerator()
+    {
+        return this.Bytes.GetEnumerator();
+    }
+
     public override string ToString()
     {
         return this.str;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return this.GetEnumerator();
     }
 }

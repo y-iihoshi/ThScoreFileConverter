@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models;
@@ -34,5 +35,31 @@ public class ReadOnlyCP932BytesTests
         var empty = ReadOnlyCP932Bytes.Empty;
         var empty2 = ReadOnlyCP932Bytes.Empty;
         Assert.AreSame(empty, empty2);
+    }
+
+    [TestMethod]
+    public void GetEnumeratorTestGeneric()
+    {
+        var expectedBytes = TestUtils.CP932Encoding.GetBytes("博麗 霊夢\0霧雨 魔理沙");
+        var actual = new ReadOnlyCP932Bytes(expectedBytes);
+
+        var index = 0;
+        foreach (var actualByte in actual)
+        {
+            Assert.AreEqual(expectedBytes[index++], actualByte);
+        }
+    }
+
+    [TestMethod]
+    public void GetEnumeratorTest()
+    {
+        var expectedBytes = TestUtils.CP932Encoding.GetBytes("博麗 霊夢\0霧雨 魔理沙");
+        var actual = new ReadOnlyCP932Bytes(expectedBytes);
+
+        var index = 0;
+        foreach (var actualByte in actual as IEnumerable)
+        {
+            Assert.AreEqual(expectedBytes[index++], actualByte);
+        }
     }
 }
