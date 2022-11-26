@@ -33,7 +33,7 @@ internal class CardAttack : Th06.Chapter, ICardAttack   // per card
         this.MaxBonuses = charas.ToDictionary(chara => chara, chara => reader.ReadUInt32());
         this.CardId = (short)(reader.ReadInt16() + 1);
         _ = reader.ReadByte();
-        this.CardName = reader.ReadExactBytes(0x30);
+        this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x30));
         _ = reader.ReadByte();      // always 0x00?
         this.TrialCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
         this.ClearCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());

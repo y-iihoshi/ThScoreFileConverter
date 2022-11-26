@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Extensions;
 
@@ -26,7 +25,7 @@ internal class SpellCardBase<TLevel> : IBinaryReadable, ISpellCard<TLevel>
         this.nameLength = nameLength;
     }
 
-    public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
+    public IEnumerable<byte> Name { get; private set; } = ReadOnlyCP932Bytes.Empty;
 
     public int ClearCount { get; private set; }
 
@@ -46,7 +45,7 @@ internal class SpellCardBase<TLevel> : IBinaryReadable, ISpellCard<TLevel>
 
     public void ReadFrom(BinaryReader reader)
     {
-        this.Name = reader.ReadExactBytes(this.nameLength);
+        this.Name = new ReadOnlyCP932Bytes(reader.ReadExactBytes(this.nameLength));
         this.ClearCount = reader.ReadInt32();
         this.PracticeClearCount = reader.ReadInt32();
         this.TrialCount = reader.ReadInt32();

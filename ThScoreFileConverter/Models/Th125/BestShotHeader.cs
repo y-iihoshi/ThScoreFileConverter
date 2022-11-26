@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Extensions;
@@ -69,7 +68,7 @@ internal class BestShotHeader : IBinaryReadable, IBestShotHeader
 
     public int ResultScore2 { get; private set; }   // ???
 
-    public IEnumerable<byte> CardName { get; private set; } = Enumerable.Empty<byte>();
+    public IEnumerable<byte> CardName { get; private set; } = ReadOnlyCP932Bytes.Empty;
 
     public void ReadFrom(BinaryReader reader)
     {
@@ -106,6 +105,6 @@ internal class BestShotHeader : IBinaryReadable, IBestShotHeader
         this.Angle = reader.ReadSingle();
         this.ResultScore2 = reader.ReadInt32();
         _ = reader.ReadUInt32();
-        this.CardName = reader.ReadExactBytes(0x50);
+        this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x50));
     }
 }
