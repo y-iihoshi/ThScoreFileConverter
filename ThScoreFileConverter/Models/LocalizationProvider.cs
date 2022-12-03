@@ -28,16 +28,16 @@ internal class LocalizationProvider : ILocalizationProvider
     {
     }
 
-#pragma warning disable CS0067
     /// <inheritdoc/>
+#pragma warning disable CS0067
     public event ProviderChangedEventHandler? ProviderChanged;
 #pragma warning restore CS0067
 
     /// <inheritdoc/>
     public event ProviderErrorEventHandler? ProviderError;
 
-#pragma warning disable CS0067
     /// <inheritdoc/>
+#pragma warning disable CS0067
     public event ValueChangedEventHandler? ValueChanged;
 #pragma warning restore CS0067
 
