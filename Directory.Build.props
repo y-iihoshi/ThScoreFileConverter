@@ -3,6 +3,7 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;net6.0-windows</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>

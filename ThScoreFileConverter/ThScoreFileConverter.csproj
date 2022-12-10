@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;net6.0-windows</TargetFrameworks>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <UseWPF>true</UseWPF>

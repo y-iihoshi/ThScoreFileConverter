@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;net6.0-windows</TargetFrameworks>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
