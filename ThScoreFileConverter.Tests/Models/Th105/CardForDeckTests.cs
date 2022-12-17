@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Models.Th105;

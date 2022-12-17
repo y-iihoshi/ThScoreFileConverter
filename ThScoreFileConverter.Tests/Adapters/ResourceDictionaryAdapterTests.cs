@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Adapters;
 
 namespace ThScoreFileConverter.Tests.Adapters;

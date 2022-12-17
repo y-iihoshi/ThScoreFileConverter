@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Interactivity;
 using SysDraw = System.Drawing;
 

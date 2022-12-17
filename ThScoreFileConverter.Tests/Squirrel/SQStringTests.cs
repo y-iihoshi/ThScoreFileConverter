@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverter.Tests.UnitTesting;
 

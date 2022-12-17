@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Helpers;
+﻿using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Tests.Helpers;
 

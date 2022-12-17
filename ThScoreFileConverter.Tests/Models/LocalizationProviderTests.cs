@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Providers;

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverter.Tests.UnitTesting;

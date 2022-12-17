@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
 

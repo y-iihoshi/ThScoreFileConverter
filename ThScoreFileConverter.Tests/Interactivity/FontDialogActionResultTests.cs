@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Interactivity;
 
 namespace ThScoreFileConverter.Tests.Interactivity;

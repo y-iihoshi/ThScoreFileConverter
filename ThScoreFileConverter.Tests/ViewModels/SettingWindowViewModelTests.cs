@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;

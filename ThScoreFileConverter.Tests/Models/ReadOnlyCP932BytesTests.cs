@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Tests.UnitTesting;
