@@ -18,41 +18,6 @@ namespace ThScoreFileConverter.Core.Helpers;
 public static class EnumHelper
 {
     /// <summary>
-    /// Converts the string representation of the name or numeric value of one or more enumerated
-    /// constants to an equivalent enumerated instance.
-    /// </summary>
-    /// <typeparam name="TEnum">The enumeration type.</typeparam>
-    /// <param name="value">A string containing the name or value to convert.</param>
-    /// <returns>
-    /// An instance of <typeparamref name="TEnum"/> whose value is represented by
-    /// <paramref name="value"/>.
-    /// </returns>
-    [CLSCompliant(false)]
-    public static TEnum Parse<TEnum>(string value)
-        where TEnum : struct, Enum
-    {
-        return Parse<TEnum>(value, false);
-    }
-
-    /// <summary>
-    /// Converts the string representation of the name or numeric value of one or more enumerated
-    /// constants to an equivalent enumerated instance.
-    /// </summary>
-    /// <typeparam name="TEnum">The enumeration type.</typeparam>
-    /// <param name="value">A string containing the name or value to convert.</param>
-    /// <param name="ignoreCase"><see langword="true"/> if ignore case; <see langword="false"/> to regard case.</param>
-    /// <returns>
-    /// An instance of <typeparamref name="TEnum"/> whose value is represented by
-    /// <paramref name="value"/>.
-    /// </returns>
-    [CLSCompliant(false)]
-    public static TEnum Parse<TEnum>(string value, bool ignoreCase)
-        where TEnum : struct, Enum
-    {
-        return (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
-    }
-
-    /// <summary>
     /// Converts a given integral value to an equivalent enumerated instance.
     /// </summary>
     /// <typeparam name="TEnum">The enumeration type.</typeparam>

@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using Protagonist = ThScoreFileConverter.Core.Tests.Extensions.Protagonist;
@@ -10,49 +9,6 @@ namespace ThScoreFileConverter.Core.Tests.Helpers;
 [TestClass]
 public class EnumHelperTests
 {
-    [TestMethod]
-    public void ParseEnumTestValidName()
-    {
-        Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday"));
-    }
-
-    [TestMethod]
-    public void ParseEnumTestInvalidName()
-    {
-        _ = Assert.ThrowsException<ArgumentException>(() => EnumHelper.Parse<DayOfWeek>("Sun"));
-    }
-
-    [TestMethod]
-    public void ParseEnumTestEmpty()
-    {
-        _ = Assert.ThrowsException<ArgumentException>(() => EnumHelper.Parse<DayOfWeek>(string.Empty));
-    }
-
-    [TestMethod]
-    public void ParseEnumTestNull()
-    {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => EnumHelper.Parse<DayOfWeek>(null!));
-    }
-
-    [TestMethod]
-    public void ParseEnumTestCaseSensitiveValidName()
-    {
-        Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday", false));
-    }
-
-    [TestMethod]
-    public void ParseEnumTestCaseSensitiveInvalidName()
-    {
-        _ = Assert.ThrowsException<ArgumentException>(() => EnumHelper.Parse<DayOfWeek>("sunday", false));
-    }
-
-    [TestMethod]
-    public void ParseEnumTestCaseInsensitiveValidName()
-    {
-        Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("Sunday", true));
-        Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.Parse<DayOfWeek>("sunday", true));
-    }
-
     [TestMethod]
     public void ToEnumTest()
     {
