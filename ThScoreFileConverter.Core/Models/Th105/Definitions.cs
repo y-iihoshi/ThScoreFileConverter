@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Helpers;
 using StageInfo = ThScoreFileConverter.Core.Models.Th105.StageInfo<ThScoreFileConverter.Core.Models.Th105.Chara>;
 
 namespace ThScoreFileConverter.Core.Models.Th105;
@@ -567,6 +568,6 @@ public static class Definitions
     /// <returns><c>true</c> if <paramref name="chara"/> has the story mode; otherwise <c>false</c>.</returns>
     public static bool HasStory(Chara chara)
     {
-        return Enum.IsDefined(typeof(Chara), chara);
+        return EnumHelper.IsDefined(chara);
     }
 }

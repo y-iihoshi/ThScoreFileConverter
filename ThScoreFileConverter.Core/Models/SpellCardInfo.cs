@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Core.Models;
@@ -44,11 +45,11 @@ public class SpellCardInfo<TStage, TLevel>
             throw new ArgumentOutOfRangeException(nameof(id));
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(name));
-        if (!Enum.IsDefined(typeof(TStage), stage))
+        if (!EnumHelper.IsDefined(stage))
             throw new ArgumentOutOfRangeException(nameof(stage));
         if (levels.Length <= 0)
             throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(levels));
-        if (levels.Any(static level => !Enum.IsDefined(typeof(TLevel), level)))
+        if (levels.Any(static level => !EnumHelper.IsDefined(level)))
             throw new ArgumentOutOfRangeException(nameof(levels));
 
         this.Id = id;

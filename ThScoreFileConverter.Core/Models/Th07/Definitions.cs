@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Helpers;
 using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
     ThScoreFileConverter.Core.Models.Th07.Stage, ThScoreFileConverter.Core.Models.Th07.Level>;
 
@@ -175,7 +176,7 @@ public static class Definitions
     /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
     public static bool CanPractice(Level level)
     {
-        return Enum.IsDefined(typeof(Level), level) && (level != Level.Extra) && (level != Level.Phantasm);
+        return EnumHelper.IsDefined(level) && (level != Level.Extra) && (level != Level.Phantasm);
     }
 
     /// <summary>
@@ -185,6 +186,6 @@ public static class Definitions
     /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
     public static bool CanPractice(Stage stage)
     {
-        return Enum.IsDefined(typeof(Stage), stage) && (stage != Stage.Extra) && (stage != Stage.Phantasm);
+        return EnumHelper.IsDefined(stage) && (stage != Stage.Extra) && (stage != Stage.Phantasm);
     }
 }

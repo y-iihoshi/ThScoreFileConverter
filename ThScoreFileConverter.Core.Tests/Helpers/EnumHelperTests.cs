@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using Protagonist = ThScoreFileConverter.Core.Tests.Extensions.Protagonist;
@@ -95,5 +96,12 @@ public class EnumHelperTests
         };
 
         CollectionAssert.That.AreEqual(expected, EnumHelper.Cartesian<Protagonist, UnnamedCharacter>());
+    }
+
+    [TestMethod]
+    public void IsDefinedTest()
+    {
+        Assert.IsTrue(EnumHelper.IsDefined(DayOfWeek.Sunday));
+        Assert.IsFalse(EnumHelper.IsDefined((DayOfWeek)7));
     }
 }
