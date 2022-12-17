@@ -5,9 +5,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Interactivity;
 
@@ -23,10 +23,8 @@ public sealed class OpenFileDialogActionResult
     /// <param name="fileNames">The file names of all selected files in the dialog box.</param>
     public OpenFileDialogActionResult(string fileName, IEnumerable<string> fileNames)
     {
-        if (fileName is null)
-            throw new ArgumentNullException(nameof(fileName));
-        if (fileNames is null)
-            throw new ArgumentNullException(nameof(fileNames));
+        Guard.IsNotNull(fileName);
+        Guard.IsNotNull(fileNames);
 
         this.FileName = fileName;
         this.FileNames = fileNames.ToArray();

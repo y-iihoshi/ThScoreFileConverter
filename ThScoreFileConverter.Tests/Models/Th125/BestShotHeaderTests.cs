@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th125;
@@ -91,8 +92,7 @@ public class BestShotHeaderTests
 
     internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
     {
-        if (actual is null)
-            throw new ArgumentNullException(nameof(actual));
+        Guard.IsNotNull(actual);
 
         Assert.AreEqual(expected.Signature, actual.Signature);
         Assert.AreEqual(expected.Level, actual.Level);

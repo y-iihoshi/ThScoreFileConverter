@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
@@ -70,8 +71,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
         get => this.lastTitle;
         set
         {
-            if (value is null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.IsNotNull(value);
 
             if (ThConverterFactory.CanCreate(value))
             {
@@ -128,8 +128,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
         get => this.language;
         set
         {
-            if (value is null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.IsNotNull(value);
 
             try
             {
@@ -254,8 +253,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     /// <returns><see langword="true"/> if <paramref name="storage"/> was changed; otherwise <see langword="false"/>.</returns>
     private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
     {
-        if (value is null)
-            throw new ArgumentNullException(nameof(value));
+        Guard.IsNotNull(value);
 
         if (EqualityComparer<T>.Default.Equals(storage, value))
             return false;

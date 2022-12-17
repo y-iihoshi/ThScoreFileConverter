@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 
@@ -40,12 +41,12 @@ internal sealed class SQArray : SQObject
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Array)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
+                ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         var num = reader.ReadInt32();
         if (num < 0)
-            throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionNumElementsMustNotBeNegative);
+            ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionNumElementsMustNotBeNegative);
 
         var dictionary = new Dictionary<int, SQObject>();
 
@@ -54,17 +55,22 @@ internal sealed class SQArray : SQObject
             var index = SQObject.Create(reader);
             var value = SQObject.Create(reader);
 
-            if (index is not SQInteger i)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionIndexMustBeAnInteger);
-            if (i >= num)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionIndexIsOutOfRange);
+            if (index is SQInteger i)
+            {
+                if (i >= num)
+                    ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionIndexIsOutOfRange);
 
-            dictionary.Add(i, value);
+                dictionary.Add(i, value);
+            }
+            else
+            {
+                ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionIndexMustBeAnInteger);
+            }
         }
 
         var sentinel = SQObject.Create(reader);
         if (sentinel is not SQNull)
-            throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongSentinel);
+            ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionWrongSentinel);
 
         var array = new SQObject[num];
         foreach (var pair in dictionary)

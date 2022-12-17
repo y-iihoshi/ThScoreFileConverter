@@ -7,8 +7,8 @@
 
 #if NETFRAMEWORK
 
-using System;
 using System.Collections.Generic;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Extensions;
 
@@ -30,8 +30,7 @@ public static class DictionaryExtensions
     /// </returns>
     public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {
-        if (dictionary is null)
-            throw new ArgumentNullException(nameof(dictionary));
+        Guard.IsNotNull(dictionary);
 
         if (dictionary.ContainsKey(key))
             return false;

@@ -13,6 +13,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Core.Resources;
@@ -67,7 +68,7 @@ internal class Th125Converter : ThConverter
     {
         if ((this.allScoreData is null) || (this.allScoreData.Status is null))
         {
-            throw new InvalidDataException(
+            ThrowHelper.ThrowInvalidDataException(
                 Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
@@ -94,8 +95,9 @@ internal class Th125Converter : ThConverter
     {
         using var decoded = new MemoryStream();
 
-        if (output is not FileStream outputFile)
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(output));
+        Guard.IsTrue(output is FileStream, nameof(output), ExceptionMessages.ArgumentExceptionWrongType);
+        var outputFile = (FileStream)output;
+
         var chara = Path.GetFileName(outputFile.Name)
             .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
             ? Chara.Hatate : Chara.Aya;

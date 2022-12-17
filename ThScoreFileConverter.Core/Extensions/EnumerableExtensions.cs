@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Core.Extensions;
 
@@ -29,8 +30,7 @@ public static class EnumerableExtensions
     /// </returns>
     public static IEnumerable<TSource> SkipLast<TSource>(this IEnumerable<TSource> source, int count)
     {
-        if (source is null)
-            throw new ArgumentNullException(nameof(source));
+        Guard.IsNotNull(source);
 
         return source.Take(source.Count() - count);
     }
@@ -47,8 +47,7 @@ public static class EnumerableExtensions
     /// </returns>
     public static IEnumerable<TSource> TakeLast<TSource>(this IEnumerable<TSource> source, int count)
     {
-        if (source is null)
-            throw new ArgumentNullException(nameof(source));
+        Guard.IsNotNull(source);
 
         return source.Skip(source.Count() - count);
     }
@@ -71,8 +70,7 @@ public static class EnumerableExtensions
         this IEnumerable<KeyValuePair<TKey, TValue>> source)
         where TKey : notnull
     {
-        if (source is null)
-            throw new ArgumentNullException(nameof(source));
+        Guard.IsNotNull(source);
 
         return source.ToDictionary(static pair => pair.Key, static pair => pair.Value);
     }
@@ -94,8 +92,7 @@ public static class EnumerableExtensions
         this IEnumerable<(TKey Key, TValue Value)> source)
         where TKey : notnull
     {
-        if (source is null)
-            throw new ArgumentNullException(nameof(source));
+        Guard.IsNotNull(source);
 
         return source.ToDictionary(static pair => pair.Key, static pair => pair.Value);
     }
@@ -114,10 +111,8 @@ public static class EnumerableExtensions
     public static IEnumerable<(T1 First, T2 Second)> Cartesian<T1, T2>(
         this IEnumerable<T1> first, IEnumerable<T2> second)
     {
-        if (first is null)
-            throw new ArgumentNullException(nameof(first));
-        if (second is null)
-            throw new ArgumentNullException(nameof(second));
+        Guard.IsNotNull(first);
+        Guard.IsNotNull(second);
 
         return first.SelectMany(element1 => second.Select(element2 => (element1, element2)));
     }

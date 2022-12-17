@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Squirrel;
@@ -28,7 +29,7 @@ internal sealed class SQNull : SQObject, IEquatable<SQNull>
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Null)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
+                ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         return Instance;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Extensions;
 
 namespace TemplateGenerator.Extensions;
@@ -21,14 +22,16 @@ internal static class EnumerableExtensions
         this IEnumerable<(TKey Key, TValue Value)> source)
         where TKey : struct, Enum
     {
-        return source?.ToDictionary(static pair => pair.Key.ToShortName(), static pair => pair.Value)
-            ?? throw new ArgumentNullException(nameof(source));
+        Guard.IsNotNull(source);
+
+        return source.ToDictionary(static pair => pair.Key.ToShortName(), static pair => pair.Value);
     }
 
     public static Dictionary<string, string> ToStringDictionary<TEnum>(this IEnumerable<TEnum> source)
         where TEnum : struct, Enum
     {
-        return source?.ToDictionary(static element => element.ToShortName(), static element => element.ToString())
-            ?? throw new ArgumentNullException(nameof(source));
+        Guard.IsNotNull(source);
+
+        return source.ToDictionary(static element => element.ToShortName(), static element => element.ToString());
     }
 }

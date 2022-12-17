@@ -51,7 +51,7 @@ public class SpellCardInfoTests
     public void SpellCardInfoTestInvalidStage(int stage)
     {
         var invalid = TestHelper.Cast<Stage>(stage);
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Assert.ThrowsException<ArgumentException>(
             () => new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
     }
 
@@ -63,7 +63,7 @@ public class SpellCardInfoTests
     public void SpellCardInfoTestInvalidLevel(int level)
     {
         var invalid = TestHelper.Cast<Level>(level);
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Assert.ThrowsException<ArgumentException>(
             () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid));
     }
 

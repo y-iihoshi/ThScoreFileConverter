@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Squirrel;
@@ -38,7 +39,7 @@ internal sealed class SQFloat : SQObject, IEquatable<SQFloat>
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Float)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
+                ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         return new SQFloat(reader.ReadSingle());

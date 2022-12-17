@@ -13,6 +13,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
@@ -66,7 +67,7 @@ internal class Th095Converter : ThConverter
     {
         if (this.allScoreData is null)
         {
-            throw new InvalidDataException(
+            ThrowHelper.ThrowInvalidDataException(
                 Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
@@ -92,8 +93,8 @@ internal class Th095Converter : ThConverter
     {
         using var decoded = new MemoryStream();
 
-        if (output is not FileStream outputFile)
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(output));
+        Guard.IsTrue(output is FileStream, nameof(output), ExceptionMessages.ArgumentExceptionWrongType);
+        var outputFile = (FileStream)output;
 
         var header = BestShotDeveloper.Develop<BestShotHeader>(input, output, PixelFormat.Format24bppRgb);
 

@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Core.Models;
 
@@ -30,27 +30,23 @@ public class SpellCardInfo<TStage, TLevel>
     /// <param name="stage">The stage which the spell card is used.</param>
     /// <param name="levels">The level(s) which the spell card is used.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is negative.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">
+    /// <exception cref="ArgumentException">
     /// <paramref name="stage"/> does not exist in the <typeparamref name="TStage"/> enumeration.
     /// </exception>
-    /// <exception cref="ArgumentOutOfRangeException">
+    /// <exception cref="ArgumentException">
     /// At least one element of <paramref name="levels"/> does not exist in the <typeparamref name="TLevel"/>
     /// enumeration.
     /// </exception>
     /// <exception cref="ArgumentException"><paramref name="levels"/> has no elements.</exception>
     public SpellCardInfo(int id, string name, TStage stage, params TLevel[] levels)
     {
-        if (id <= 0)
-            throw new ArgumentOutOfRangeException(nameof(id));
-        if (string.IsNullOrEmpty(name))
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(name));
-        if (!EnumHelper.IsDefined(stage))
-            throw new ArgumentOutOfRangeException(nameof(stage));
-        if (levels.Length <= 0)
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(levels));
-        if (levels.Any(static level => !EnumHelper.IsDefined(level)))
-            throw new ArgumentOutOfRangeException(nameof(levels));
+        Guard.IsGreaterThan(id, 0);
+        Guard.IsNotNullOrEmpty(name);
+        Guard.IsTrue(EnumHelper.IsDefined(stage), nameof(stage));
+        Guard.IsNotEmpty(levels);
+        Guard.IsTrue(levels.All(EnumHelper.IsDefined), nameof(levels));
 
         this.Id = id;
         this.Name = name;

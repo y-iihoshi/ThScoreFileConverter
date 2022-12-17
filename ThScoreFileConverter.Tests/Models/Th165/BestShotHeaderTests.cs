@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -115,8 +116,7 @@ public class BestShotHeaderTests
 
     internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
     {
-        if (actual is null)
-            throw new ArgumentNullException(nameof(actual));
+        Guard.IsNotNull(actual);
 
         Assert.AreEqual(expected.Signature, actual.Signature);
         Assert.AreEqual(expected.Weekday, actual.Weekday);

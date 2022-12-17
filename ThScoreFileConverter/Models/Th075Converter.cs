@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Core.Resources;
@@ -51,7 +52,7 @@ internal class Th075Converter : ThConverter
     {
         if (this.allScoreData is null)
         {
-            throw new InvalidDataException(
+            ThrowHelper.ThrowInvalidDataException(
                 Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 

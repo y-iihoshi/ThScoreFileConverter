@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Properties;
@@ -77,15 +78,16 @@ internal class ThConverter
     {
         try
         {
+            Guard.IsNotNull(threadArg);
+
             switch (threadArg)
             {
                 case (SettingsPerTitle settings, int inputCodePageId, int outputCodePageId, INumberFormatter formatter):
                     this.Convert(settings, inputCodePageId, outputCodePageId, formatter);
                     break;
-                case null:
-                    throw new ArgumentNullException(nameof(threadArg));
                 default:
-                    throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(threadArg));
+                    ThrowHelper.ThrowArgumentException(nameof(threadArg), ExceptionMessages.ArgumentExceptionWrongType);
+                    break;
             }
         }
         catch (Exception e)
@@ -212,7 +214,7 @@ internal class ThConverter
         using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
         _ = scr.Seek(0, SeekOrigin.Begin);
         if (!this.ReadScoreFile(scr))
-            throw new NotSupportedException(Resources.MessageFailedToReadScoreFile);
+            ThrowHelper.ThrowNotSupportedException(Resources.MessageFailedToReadScoreFile);
 
         if (this.HasBestShotConverter)
         {

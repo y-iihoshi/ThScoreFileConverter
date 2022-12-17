@@ -7,10 +7,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using CommunityToolkit.Diagnostics;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 
 #if DEBUG_TEST
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 #endif
 
@@ -48,8 +48,7 @@ public static class TestUtils
 
     public static byte[] MakeByteArray(params object[] args)
     {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
+        Guard.IsNotNull(args);
 
         static bool IsRankOneArray<T>(Array array)
         {

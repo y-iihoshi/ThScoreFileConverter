@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Extensions;
 
@@ -27,10 +28,7 @@ public static class StringExtensions
     /// <exception cref="ArgumentNullException"><paramref name="nonNullStr"/> is <see langword="null"/>.</exception>
     public static string ToNonNullString(this object obj, string nonNullStr = "(null)")
     {
-        if (nonNullStr is null)
-        {
-            throw new ArgumentNullException(nameof(nonNullStr));
-        }
+        Guard.IsNotNull(nonNullStr);
 
         return obj?.ToString() ?? nonNullStr;
     }

@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Models;
 
@@ -39,8 +39,7 @@ internal class NumberFormatter : INumberFormatter
     /// <inheritdoc/>
     public string FormatPercent(double number, int precision)
     {
-        if (precision is < 0 or > 99)
-            throw new ArgumentOutOfRangeException(nameof(precision));
+        Guard.IsInRange(precision, 0, 100);
 
         return Utils.Format($"{{0:F{precision}}}%", number);
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using CommunityToolkit.Diagnostics;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 #if DEBUG_TEST
@@ -40,8 +41,7 @@ public static class SquirrelHelper
 
     public static byte[] MakeByteArray(params object?[] args)
     {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
+        Guard.IsNotNull(args);
 
         static bool IsDictionary(object arg)
         {

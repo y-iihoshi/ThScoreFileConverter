@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Extensions;
@@ -74,7 +75,7 @@ internal class BestShotHeader : IBinaryReadable, IBestShotHeader
     {
         this.Signature = EncodingHelper.Default.GetString(reader.ReadExactBytes(SignatureSize));
         if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-            throw new InvalidDataException();
+            ThrowHelper.ThrowInvalidDataException();
 
         _ = reader.ReadUInt16();    // always 0x0405?
         this.Level = EnumHelper.To<Level>(reader.ReadInt16() - 1);

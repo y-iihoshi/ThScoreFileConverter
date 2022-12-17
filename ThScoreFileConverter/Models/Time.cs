@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Models;
 
@@ -39,8 +40,7 @@ public class Time
     /// </exception>
     public Time(long framesOrMilliseconds, bool isFrames)
     {
-        if (framesOrMilliseconds < 0)
-            throw new ArgumentOutOfRangeException(nameof(framesOrMilliseconds));
+        Guard.IsGreaterThanOrEqualTo(framesOrMilliseconds, 0);
 
         var seconds = framesOrMilliseconds / (isFrames ? 60 : 1000);
         var minutes = seconds / 60;
@@ -111,14 +111,10 @@ public class Time
     /// </exception>
     public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames)
     {
-        if (hours < 0)
-            throw new ArgumentOutOfRangeException(nameof(hours));
-        if ((minutes < 0) || (minutes >= 60))
-            throw new ArgumentOutOfRangeException(nameof(minutes));
-        if ((seconds < 0) || (seconds >= 60))
-            throw new ArgumentOutOfRangeException(nameof(seconds));
-        if ((framesOrMilliseconds < 0) || (framesOrMilliseconds >= (isFrames ? 60 : 1000)))
-            throw new ArgumentOutOfRangeException(nameof(framesOrMilliseconds));
+        Guard.IsGreaterThanOrEqualTo(hours, 0);
+        Guard.IsInRange(minutes, 0, 60);
+        Guard.IsInRange(seconds, 0, 60);
+        Guard.IsInRange(framesOrMilliseconds, 0, isFrames ? 60 : 1000);
 
         this.Hours = hours;
         this.Minutes = minutes;

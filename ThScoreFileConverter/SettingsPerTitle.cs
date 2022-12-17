@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter;
 
@@ -103,8 +103,7 @@ public class SettingsPerTitle : INotifyPropertyChanged
     /// <param name="propertyName">The name of the property.</param>
     private void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
     {
-        if (value is null)
-            throw new ArgumentNullException(nameof(value));
+        Guard.IsNotNull(value);
 
         if (EqualityComparer<T>.Default.Equals(storage, value))
             return;

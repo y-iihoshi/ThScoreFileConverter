@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Extensions;
@@ -32,8 +33,7 @@ public static class BinaryReaderExtensions
     /// <exception cref="EndOfStreamException">The end of stream is reached.</exception>
     public static byte[] ReadExactBytes(this BinaryReader reader, int count)
     {
-        if (reader is null)
-            throw new ArgumentNullException(nameof(reader));
+        Guard.IsNotNull(reader);
 
         var bytes = reader.ReadBytes(count);
         if (bytes.Length < count)
@@ -66,10 +66,8 @@ public static class BinaryReaderExtensions
     /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
     public static string ReadNullTerminatedString(this BinaryReader reader, Encoding encoding)
     {
-        if (reader is null)
-            throw new ArgumentNullException(nameof(reader));
-        if (encoding is null)
-            throw new ArgumentNullException(nameof(encoding));
+        Guard.IsNotNull(reader);
+        Guard.IsNotNull(encoding);
 
         var bytes = new List<byte>();
         var b = reader.ReadByte();
