@@ -24,9 +24,9 @@ public static class DictionaryExtensions
     /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
     /// <param name="dictionary">The dictionary to be added the element.</param>
     /// <param name="key">The key of the element to add.</param>
-    /// <param name="value">The value of the element to add. It can be <c>null</c>.</param>
+    /// <param name="value">The value of the element to add. It can be <see langword="null"/>.</param>
     /// <returns>
-    /// <c>true</c> if the key/value pair was added to the dictionary successfully; otherwise, <c>false</c>.
+    /// <see langword="true"/> if the key/value pair was added to the dictionary successfully; otherwise, <see langword="false"/>.
     /// </returns>
     public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {

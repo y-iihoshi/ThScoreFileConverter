@@ -63,7 +63,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     private readonly CompositeDisposable disposables;
 
     /// <summary>
-    /// <c>true</c> if the current instance has been disposed.
+    /// <see langword="true"/> if the current instance has been disposed.
     /// </summary>
     private bool disposed;
 
@@ -393,7 +393,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// Disposes the resources of the current instance.
     /// </summary>
     /// <param name="disposing">
-    /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
@@ -425,7 +425,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Overrides the mouse cursor for the entire application.
     /// </summary>
-    /// <param name="cursor">The new cursor or <c>null</c>.</param>
+    /// <param name="cursor">The new cursor or <see langword="null"/>.</param>
     private void OverrideCursor(Cursor? cursor)
     {
         this.dispatcher.Invoke(() => Mouse.OverrideCursor = cursor);
@@ -476,7 +476,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// </summary>
     /// <param name="selectedItems">A list indicating the path strings which will be deleted.</param>
     /// <returns>
-    /// <c>true</c> if <see cref="DeleteTemplateFiles"/> can be invoked; otherwise, <c>false</c>.
+    /// <see langword="true"/> if <see cref="DeleteTemplateFiles"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
     private bool CanDeleteTemplateFiles(IList? selectedItems)
     {
@@ -497,7 +497,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// Returns a value indicating whether <see cref="DeleteAllTemplateFiles"/> can be invoked.
     /// </summary>
     /// <returns>
-    /// <c>true</c> if <see cref="DeleteAllTemplateFiles"/> can be invoked; otherwise, <c>false</c>.
+    /// <see langword="true"/> if <see cref="DeleteAllTemplateFiles"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
     private bool CanDeleteAllTemplateFiles()
     {
@@ -526,7 +526,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// Returns a value indicating whether <see cref="Convert"/> can be invoked.
     /// </summary>
     /// <returns>
-    /// <c>true</c> if <see cref="Convert"/> can be invoked; otherwise, <c>false</c>.
+    /// <see langword="true"/> if <see cref="Convert"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
     private bool CanConvert()
     {

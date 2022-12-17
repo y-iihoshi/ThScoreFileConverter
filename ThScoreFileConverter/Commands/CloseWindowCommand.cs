@@ -40,7 +40,7 @@ public class CloseWindowCommand : ICommand
     /// Determines whether the command can execute in its current state.
     /// </summary>
     /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
-    /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if this command can be executed; otherwise, <see langword="false"/>.</returns>
 #if NET5_0_OR_GREATER
     public bool CanExecute([NotNullWhen(true)] object? parameter)
 #else

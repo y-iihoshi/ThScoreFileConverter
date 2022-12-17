@@ -226,7 +226,7 @@ internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     /// Disposes the resources of the current instance.
     /// </summary>
     /// <param name="disposing">
-    /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
     /// </param>
     protected virtual void Dispose(bool disposing)
     {

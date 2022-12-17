@@ -251,7 +251,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     /// <param name="storage">A backing field of the property to be set a value.</param>
     /// <param name="value">A value to set.</param>
     /// <param name="propertyName">The name of the property.</param>
-    /// <returns><c>true</c> if <paramref name="storage"/> was changed; otherwise <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if <paramref name="storage"/> was changed; otherwise <see langword="false"/>.</returns>
     private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
     {
         if (value is null)

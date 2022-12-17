@@ -109,7 +109,7 @@ public static class EnumerableExtensions
     /// <param name="second">The second sequence.</param>
     /// <returns>The Cartesian product of <paramref name="first"/> and <paramref name="second"/>.</returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="first"/> or <paramref name="second"/> is <c>null</c>.
+    /// <paramref name="first"/> or <paramref name="second"/> is <see langword="null"/>.
     /// </exception>
     public static IEnumerable<(T1 First, T2 Second)> Cartesian<T1, T2>(
         this IEnumerable<T1> first, IEnumerable<T2> second)

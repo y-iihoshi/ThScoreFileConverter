@@ -41,7 +41,7 @@ public static class DateTimeHelper
     /// <param name="unixTime">The number of seconds that have elapsed since the Unix epoch.</param>
     /// <returns>
     /// A string representation of <paramref name="unixTime"/> formatted with <see cref="ValidFormat"/>;
-    /// <see cref="InvalidFormat"/> if <paramref name="unixTime"/> is <c>null</c>.
+    /// <see cref="InvalidFormat"/> if <paramref name="unixTime"/> is <see langword="null"/>.
     /// </returns>
     public static string GetString(double? unixTime)
     {

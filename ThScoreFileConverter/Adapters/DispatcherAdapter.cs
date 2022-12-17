@@ -26,7 +26,7 @@ internal class DispatcherAdapter : IDispatcherAdapter
     /// </summary>
     /// <param name="dispatcher">
     /// <see cref="Dispatcher"/> to be wrapped;
-    /// if <c>null</c>, <see cref="Application.Current"/>.Dispatcher is used.
+    /// if <see langword="null"/>, <see cref="Application.Current"/>.Dispatcher is used.
     /// </param>
     public DispatcherAdapter(Dispatcher? dispatcher = null)
     {

@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Globalization;
 using ThScoreFileConverter.Properties;
 using WPFLocalizeExtension.Engine;
@@ -19,7 +20,7 @@ namespace ThScoreFileConverter.Models;
 public static class Utils
 {
     /// <summary>
-    /// Wraps the <c>string.Format()</c> method to specify an IFormatProvider instance.
+    /// Wraps the <see cref="string.Format(IFormatProvider, string, object[])"/> to specify an <see cref="IFormatProvider"/> instance.
     /// </summary>
     /// <param name="fmt">A composite format string.</param>
     /// <param name="args">An <see cref="object"/> array containing zero or more objects to format.</param>

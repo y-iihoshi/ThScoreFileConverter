@@ -255,7 +255,7 @@ public static class Definitions
     /// Gets wheter you can practice the specified stage or not.
     /// </summary>
     /// <param name="stage">A stage.</param>
-    /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if it can be practiced, otherwize <see langword="false"/>.</returns>
     public static bool CanPractice(Stage stage)
     {
         return EnumHelper.IsDefined(stage) && (stage != Stage.Extra);

@@ -21,7 +21,7 @@ public class AbilityCard
     /// <param name="name">Name of the card.</param>
     /// <param name="type">Type of the card.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is negative.</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
     public AbilityCard(int id, string name, AbilityCardType type)
     {
         if (id < 0)

@@ -38,7 +38,7 @@ public class BitReader
     /// The stream to read. Since a <see cref="BitReader"/> instance does not own <paramref name="stream"/>,
     /// it is responsible for the caller to close <paramref name="stream"/>.
     /// </param>
-    /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
     public BitReader(Stream stream)
     {

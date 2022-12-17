@@ -40,7 +40,7 @@ public static class EnumHelper
     /// </summary>
     /// <typeparam name="TEnum">The enumeration type.</typeparam>
     /// <param name="value">A string containing the name or value to convert.</param>
-    /// <param name="ignoreCase"><c>true</c> if ignore case; <c>false</c> to regard case.</param>
+    /// <param name="ignoreCase"><see langword="true"/> if ignore case; <see langword="false"/> to regard case.</param>
     /// <returns>
     /// An instance of <typeparamref name="TEnum"/> whose value is represented by
     /// <paramref name="value"/>.

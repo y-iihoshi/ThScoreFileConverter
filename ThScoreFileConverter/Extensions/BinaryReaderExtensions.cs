@@ -28,7 +28,7 @@ public static class BinaryReaderExtensions
     /// A byte array containing data read from the underlying stream.
     /// The length is ensured to be equal to <paramref name="count"/>.
     /// </returns>
-    /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <exception cref="EndOfStreamException">The end of stream is reached.</exception>
     public static byte[] ReadExactBytes(this BinaryReader reader, int count)
     {
@@ -47,7 +47,7 @@ public static class BinaryReaderExtensions
     /// </summary>
     /// <param name="reader">The <see cref="BinaryReader"/> to be used for reading data.</param>
     /// <returns>The string being read.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
     public static string ReadNullTerminatedString(this BinaryReader reader)
     {
@@ -61,7 +61,7 @@ public static class BinaryReaderExtensions
     /// <param name="encoding">The character encoding to use.</param>
     /// <returns>The string being read.</returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="reader"/> or <paramref name="encoding"/> is <c>null</c>.
+    /// <paramref name="reader"/> or <paramref name="encoding"/> is <see langword="null"/>.
     /// </exception>
     /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
     public static string ReadNullTerminatedString(this BinaryReader reader, Encoding encoding)

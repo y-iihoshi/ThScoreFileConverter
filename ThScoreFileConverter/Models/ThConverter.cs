@@ -100,7 +100,7 @@ internal class ThConverter
     /// </summary>
     /// <remarks>Needs to be overridden by a subclass.</remarks>
     /// <param name="input">The input stream that treats a score file.</param>
-    /// <returns><c>true</c> if read successfully; otherwise, <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if read successfully; otherwise, <see langword="false"/>.</returns>
     protected virtual bool ReadScoreFile(Stream input)
     {
         throw new NotImplementedException();
@@ -113,7 +113,7 @@ internal class ThConverter
     /// <param name="reader">The reader of the input stream that treats a template file.</param>
     /// <param name="writer">The stream writer for outputting the converted data.</param>
     /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
-    /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
+    /// <param name="hideUntriedCards"><see langword="true"/> if it hides untried spell cards.</param>
     protected virtual void Convert(
         StreamReader reader, StreamWriter writer, INumberFormatter formatter, bool hideUntriedCards)
     {
@@ -145,7 +145,7 @@ internal class ThConverter
     /// Creates the instances which implement IStringReplaceable interface.
     /// </summary>
     /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
-    /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
+    /// <param name="hideUntriedCards"><see langword="true"/> if it hides untried spell cards.</param>
     /// <param name="outputFilePath">The file path for outputting the converted data.</param>
     /// <returns>The created instances which implement IStringReplaceable interface.</returns>
     protected virtual IEnumerable<IStringReplaceable> CreateReplacers(

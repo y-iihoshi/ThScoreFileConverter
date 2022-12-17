@@ -31,8 +31,8 @@ public class Time
     /// </summary>
     /// <param name="framesOrMilliseconds">Number of frames or milliseconds.</param>
     /// <param name="isFrames">
-    /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
-    /// milliseconds.
+    /// <see langword="true"/> if treats <paramref name="framesOrMilliseconds"/> as a frames;
+    /// <see langword="false"/> for milliseconds.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="framesOrMilliseconds"/> is negative.
@@ -95,8 +95,8 @@ public class Time
     /// <param name="seconds">Number of seconds.</param>
     /// <param name="framesOrMilliseconds">Number of frames or milliseconds.</param>
     /// <param name="isFrames">
-    /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
-    /// milliseconds.
+    /// <see langword="true"/> if treats <paramref name="framesOrMilliseconds"/> as a frames;
+    /// <see langword="false"/> for milliseconds.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="hours"/> is negative.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
@@ -107,7 +107,7 @@ public class Time
     /// </exception>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="framesOrMilliseconds"/> is negative or exceeds the maximum value:
-    /// 59 if <paramref name="isFrames"/> is <c>true</c>; otherwise 999.
+    /// 59 if <paramref name="isFrames"/> is <see langword="true"/>; otherwise 999.
     /// </exception>
     public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames)
     {
@@ -167,7 +167,7 @@ public class Time
 
     /// <summary>
     /// Gets a value indicating whether the value less than a second is treated as fps or milliseconds.
-    /// <c>true</c> if fps; <c>false</c> for milliseconds.
+    /// <see langword="true"/> if fps; <see langword="false"/> for milliseconds.
     /// </summary>
     public bool IsFrames { get; }
 
@@ -183,7 +183,7 @@ public class Time
 
     /// <summary>
     /// Returns a string that represents the current instance.
-    /// If <see cref="IsFrames"/> is <c>true</c>, the string is formatted such as <c>hh:mm:ss.ff</c>;
+    /// If <see cref="IsFrames"/> is <see langword="true"/>, the string is formatted such as <c>hh:mm:ss.ff</c>;
     /// otherwise, <c>hh:mm:ss.ddd</c>.
     /// </summary>
     /// <returns>A string that represents the current instance.</returns>
