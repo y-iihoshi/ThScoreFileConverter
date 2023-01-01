@@ -10,7 +10,10 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Core.Helpers;
+
+#if NETFRAMEWORK
 using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Models.Th10;
 

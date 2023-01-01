@@ -17,9 +17,12 @@ using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Core.Resources;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th125;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Models;
 

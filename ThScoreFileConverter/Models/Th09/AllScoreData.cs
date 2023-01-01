@@ -12,7 +12,10 @@ using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th09;
+
+#if NETFRAMEWORK
 using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Models.Th09;
 

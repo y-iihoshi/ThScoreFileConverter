@@ -11,8 +11,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using ThScoreFileConverter.Helpers;
+
+#if !NET5_0_OR_GREATER
+using System.Security.Permissions;
+#endif
 
 namespace ThScoreFileConverter.Models;
 

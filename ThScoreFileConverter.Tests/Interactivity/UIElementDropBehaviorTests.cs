@@ -1,10 +1,13 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
+
+#if NET5_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 

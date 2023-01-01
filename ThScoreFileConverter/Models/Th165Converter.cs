@@ -16,9 +16,12 @@ using System.Text.RegularExpressions;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Core.Resources;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th165;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Models;
 
