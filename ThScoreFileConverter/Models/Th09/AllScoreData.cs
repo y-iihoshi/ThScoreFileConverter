@@ -48,7 +48,7 @@ internal class AllScoreData
     {
         var key = (score.Chara, score.Level);
         _ = this.rankings.TryAdd(key, new IHighScore[5].ToList());
-        if ((score.Rank >= 0) && (score.Rank < 5))
+        if (score.Rank is >= 0 and < 5)
         {
             var ranking = (List<IHighScore>)this.rankings[key];
             ranking[score.Rank] = score;

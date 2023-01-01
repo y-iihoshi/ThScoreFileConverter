@@ -37,7 +37,7 @@ internal class ClearReplacer : IStringReplaceable
             if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
             {
                 var stageProgress = ranking.Max(rank => rank.StageProgress);
-                if ((stageProgress == StageProgress.FourUncanny) || (stageProgress == StageProgress.FourPowerful))
+                if (stageProgress is StageProgress.FourUncanny or StageProgress.FourPowerful)
                 {
                     return "Stage 4";
                 }

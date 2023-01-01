@@ -43,7 +43,7 @@ internal class HighScore : IBinaryReadable, IHighScore
         }
         else
         {
-            if ((this.Month <= 0) || (this.Month > 12))
+            if (this.Month is <= 0 or > 12)
             {
                 ThrowHelper.ThrowInvalidDataException(
                     Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));

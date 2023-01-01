@@ -37,7 +37,7 @@ internal class CollectRateReplacer : IStringReplaceable
             var stage = Parsers.StageWithTotalParser.Parse(match.Groups[3].Value);
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
-            if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
+            if (stage is StageWithTotal.Extra or StageWithTotal.Phantasm)
                 return match.ToString();
 
             Func<ICardAttack, bool> findByLevel = level switch

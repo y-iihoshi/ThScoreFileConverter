@@ -40,7 +40,7 @@ public class HighScoreTests
         _ = mock.SetupGet(m => m.TimePoint).Returns(65432);
         _ = mock.SetupGet(m => m.HumanRate).Returns(7890);
         _ = mock.SetupGet(m => m.CardFlags).Returns(
-            Enumerable.Range(1, 222).ToDictionary(id => id, id => (byte)((id == 3) || (id == 7) ? id : 0)));
+            Enumerable.Range(1, 222).ToDictionary(id => id, id => (byte)(id is 3 or 7 ? id : 0)));
         return mock;
     }
 
