@@ -136,7 +136,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
             try
             {
                 _ = CultureInfo.GetCultureInfo(value);
-                this.SetProperty(ref this.language, value);
+                _ = this.SetProperty(ref this.language, value);
             }
             catch (CultureNotFoundException)
             {

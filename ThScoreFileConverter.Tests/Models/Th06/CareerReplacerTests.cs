@@ -16,10 +16,10 @@ public class CareerReplacerTests
         var mock1 = CardAttackTests.MockCardAttack();
 
         var mock2 = CardAttackTests.MockCardAttack();
-        mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
-        mock2.SetupGet(m => m.ClearCount).Returns((ushort)(mock1.Object.ClearCount + 2));
-        mock2.SetupGet(m => m.TrialCount).Returns((ushort)(mock1.Object.TrialCount + 3));
+        _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
+        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+        _ = mock2.SetupGet(m => m.ClearCount).Returns((ushort)(mock1.Object.ClearCount + 2));
+        _ = mock2.SetupGet(m => m.TrialCount).Returns((ushort)(mock1.Object.TrialCount + 3));
 
         return new[] { mock1.Object, mock2.Object };
     }
