@@ -116,7 +116,7 @@ public class ScoreDataTests
             () => TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize)));
     }
 
-    internal static int UnknownSize { get; } = 0;
+    internal static int UnknownSize { get; }
 
     [TestMethod]
     public void ScoreDataTest()
