@@ -33,6 +33,7 @@ internal class ClearTimeReplacer : IStringReplaceable
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara = chara switch
             {
                 CharaWithTotal.Total => dictionary => dictionary.Values.Sum(),
@@ -45,6 +46,7 @@ internal class ClearTimeReplacer : IStringReplaceable
                 _ => dictionary => dictionary.TryGetValue((Level)level, out var times)
                     ? getValueByChara(times) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             return new Time(getValueByLevel(clearTimes)).ToString();
         });

@@ -54,6 +54,7 @@ internal class CollectRateReplacer : IStringReplaceable
                 _ => career => career.TrialCounts[chara] > 0,
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ICardAttack, bool> findByMode = mode switch
             {
                 GameMode.Story => attack => Definitions.CardTable.Any(
@@ -69,6 +70,7 @@ internal class CollectRateReplacer : IStringReplaceable
                 LevelPracticeWithTotal.LastWord => FuncHelper.True,
                 _ => attack => attack.Level == level,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ICardAttack, bool> findByStage = (level, stage) switch
             {

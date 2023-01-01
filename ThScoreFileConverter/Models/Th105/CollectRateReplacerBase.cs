@@ -42,11 +42,13 @@ internal class CollectRateReplacerBase<TChara> : IStringReplaceable
             if (!canReplace(level, chara, type))
                 return match.ToString();
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<KeyValuePair<(TChara, int), ISpellCardResult<TChara>>, bool> findByLevel = level switch
             {
                 LevelWithTotal.Total => FuncHelper.True,
                 _ => pair => pair.Value.Level == (Level)level,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<KeyValuePair<(TChara, int), ISpellCardResult<TChara>>, bool> countByType = type switch
             {

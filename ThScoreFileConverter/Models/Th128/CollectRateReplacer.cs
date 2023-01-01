@@ -40,12 +40,14 @@ internal class CollectRateReplacer : IStringReplaceable
             if (stage == StageWithTotal.Extra)
                 return match.ToString();
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ISpellCard, bool> findByLevel = level switch
             {
                 LevelWithTotal.Total => FuncHelper.True,
                 LevelWithTotal.Extra => FuncHelper.True,
                 _ => card => card.Level == (Level)level,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ISpellCard, bool> findByStage = (level, stage) switch
             {

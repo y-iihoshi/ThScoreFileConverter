@@ -46,11 +46,13 @@ internal class CareerReplacer : IStringReplaceable
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ISpellCard<LevelPractice>, bool> isValidLevel = mode switch
             {
                 GameMode.Story => card => card.Level != LevelPractice.OverDrive,
                 _ => FuncHelper.True,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ISpellCard<LevelPractice>, int> getCount = (mode, type) switch
             {

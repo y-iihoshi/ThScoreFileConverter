@@ -47,6 +47,7 @@ internal class CharaExReplacer : IStringReplaceable
                 _ => clearData => clearData.ClearCounts.TryGetValue(level, out var count) ? count : default,
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
             {
                 _ when Definitions.IsTotal(chara) => dictionary => dictionary.Values
@@ -57,6 +58,7 @@ internal class CharaExReplacer : IStringReplaceable
                     && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
                     ? getValueByType(clearDataPerGameMode) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<long, string> toString = type switch
             {

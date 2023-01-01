@@ -39,6 +39,7 @@ internal class RouteReplacer : IStringReplaceable
                 _ => clearData => clearData.ClearCounts.Values.Sum(),
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute = route switch
             {
                 RouteWithTotal.Total => dictionary => dictionary.Values
@@ -46,6 +47,7 @@ internal class RouteReplacer : IStringReplaceable
                 _ => dictionary => dictionary.TryGetValue(route, out var clearData)
                     ? getValueByType(clearData) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<long, string> toString = type switch
             {

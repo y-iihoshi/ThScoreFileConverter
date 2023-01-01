@@ -40,6 +40,7 @@ internal class CollectRateReplacer : IStringReplaceable
             if (stage is StageWithTotal.Extra or StageWithTotal.Phantasm)
                 return match.ToString();
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ICardAttack, bool> findByLevel = level switch
             {
                 LevelWithTotal.Total => FuncHelper.True,
@@ -48,6 +49,7 @@ internal class CollectRateReplacer : IStringReplaceable
                 _ => attack => Definitions.CardTable.Any(
                     pair => (pair.Key == attack.CardId) && (pair.Value.Level == (Level)level)),
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ICardAttack, bool> findByStage = (level, stage) switch
             {

@@ -44,6 +44,7 @@ internal class CharaReplacer : IStringReplaceable
                     .Where(pair => !Models.Definitions.IsTotal(pair.Key)).Sum(pair => pair.Value),
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
             {
                 _ when Definitions.IsTotal(chara) => dictionary => dictionary.Values
@@ -54,6 +55,7 @@ internal class CharaReplacer : IStringReplaceable
                     && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
                     ? getValueByType(clearDataPerGameMode) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<long, string> toString = type switch
             {
