@@ -101,6 +101,8 @@ internal sealed class SQTable : SQObject
                     if (result is float)
                         result = (T)(object)(float)sqfloat;
                     break;
+                default:
+                    break;
             }
         }
 
