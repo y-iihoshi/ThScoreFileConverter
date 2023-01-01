@@ -22,8 +22,8 @@ public class CardReplacerTests
                             Mock.Of<ClearDataPerGameMode>(
                                 c => c.Cards == new Dictionary<int, ISpellCard>
                                 {
-                                    { 3, Mock.Of<ISpellCard>(s => s.HasTried == true) },
-                                    { 4, Mock.Of<ISpellCard>(s => s.HasTried == false) },
+                                    { 3, Mock.Of<ISpellCard>(s => s.HasTried) },
+                                    { 4, Mock.Of<ISpellCard>(s => !s.HasTried) },
                                 })
                         },
                     }))

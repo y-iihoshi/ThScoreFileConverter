@@ -13,9 +13,9 @@ public class CardReplacerTests
     internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } = new[]
     {
         Mock.Of<ISpellCard>(
-            m => (m.Id == 3) && (m.TrialCount == 1) && (m.Level == Level.Hard) && (m.HasTried == true)),
+            m => (m.Id == 3) && (m.TrialCount == 1) && (m.Level == Level.Hard) && m.HasTried),
         Mock.Of<ISpellCard>(
-            m => (m.Id == 4) && (m.TrialCount == 0) && (m.Level == Level.Lunatic) && (m.HasTried == false)),
+            m => (m.Id == 4) && (m.TrialCount == 0) && (m.Level == Level.Lunatic) && (!m.HasTried)),
     }.ToDictionary(card => card.Id);
 
     [TestMethod]

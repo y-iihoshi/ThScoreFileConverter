@@ -18,8 +18,8 @@ public class CardReplacerTests
             c => (c.Chara == CharaWithTotal.Total)
                  && (c.Cards == new Dictionary<int, ISpellCard>
                     {
-                       { 3, Mock.Of<ISpellCard>(s => s.HasTried == true) },
-                       { 4, Mock.Of<ISpellCard>(s => s.HasTried == false) },
+                       { 3, Mock.Of<ISpellCard>(s => s.HasTried) },
+                       { 4, Mock.Of<ISpellCard>(s => !s.HasTried) },
                     }))
     }.ToDictionary(element => element.Chara);
 
