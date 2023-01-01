@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
+using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
+    ThScoreFileConverter.Core.Models.Stage, ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Core.Tests.Models;
-
-using CardInfo = SpellCardInfo<Stage, Level>;
 
 [TestClass]
 public class SpellCardInfoTests

@@ -7,10 +7,9 @@ using ThScoreFileConverter.Core.Models.Th135;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th135;
 using ThScoreFileConverter.Tests.UnitTesting;
+using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th135;
-
-using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 [TestClass]
 public class AllScoreDataTests
