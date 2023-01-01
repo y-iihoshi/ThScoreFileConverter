@@ -6,9 +6,12 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
+
+#if NET5_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace ThScoreFileConverter.Commands;
 

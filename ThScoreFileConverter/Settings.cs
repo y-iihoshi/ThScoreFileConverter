@@ -17,8 +17,11 @@ using System.Windows;
 using System.Xml;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter;
 
