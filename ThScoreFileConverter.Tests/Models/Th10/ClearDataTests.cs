@@ -64,17 +64,15 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levels.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData<StageProgress>>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData<StageProgress>>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
             levels.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra.Cartesian(stagesExceptExtra)
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, CreatePractice));
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 110).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 110).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
@@ -89,13 +87,12 @@ public class ClearDataTests
             clearData.Size,
             TestUtils.Cast<int>(clearData.Chara),
             clearData.Rankings.Values.SelectMany(
-                ranking => ranking.Select(
-                    scoreData => ScoreDataTests.MakeByteArray(scoreData, scoreDataUnknownSize))),
+                ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData, scoreDataUnknownSize))),
             clearData.TotalPlayCount,
             clearData.PlayTime,
             clearData.ClearCounts.Values,
-            clearData.Practices.Values.Select(practice => PracticeTests.MakeByteArray(practice)),
-            clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
+            clearData.Practices.Values.Select(PracticeTests.MakeByteArray),
+            clearData.Cards.Values.Select(SpellCardTests.MakeByteArray));
     }
 
     internal static byte[] MakeByteArray(IClearData<CharaWithTotal> clearData)

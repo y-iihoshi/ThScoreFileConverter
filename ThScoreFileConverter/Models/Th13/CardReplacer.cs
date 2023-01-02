@@ -29,7 +29,7 @@ internal class CardReplacer : Th10.CardReplacerBase<StagePractice, LevelPractice
               Definitions.CardTable,
               hideUntriedCards,
               cardNumber => CardHasTried(clearDataDictionary, cardNumber),
-              static level => LevelToString(level))
+              LevelToString)
     {
     }
 

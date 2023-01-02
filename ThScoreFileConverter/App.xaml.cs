@@ -94,7 +94,7 @@ public partial class App : PrismApplication
         LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
         if (provider.AvailableCultures.Any(culture => culture.Name == this.settings.Language))
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(this.settings.Language!);
-        else if (provider.AvailableCultures.Any(culture => culture.Equals(CultureInfo.CurrentCulture)))
+        else if (provider.AvailableCultures.Any(CultureInfo.CurrentCulture.Equals))
             LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
         else
             LocalizeDictionary.Instance.Culture = provider.AvailableCultures.First();

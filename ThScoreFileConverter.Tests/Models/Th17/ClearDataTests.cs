@@ -79,8 +79,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levelsWithTotal.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
@@ -88,8 +87,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
             levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            EnumHelper.Cartesian<Level, StagePractice>()
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            EnumHelper.Cartesian<Level, StagePractice>().ToDictionary(pair => pair, CreatePractice));
         _ = mock.SetupGet(m => m.Cards).Returns(
             Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
@@ -113,13 +111,13 @@ public class ClearDataTests
             (int)clearData.Chara,
             clearData.Rankings.Values.SelectMany(
                 ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
-            clearData.Cards.Values.Select(card => Th13.SpellCardTests.MakeByteArray(card)),
+            clearData.Cards.Values.Select(Th13.SpellCardTests.MakeByteArray),
             clearData.TotalPlayCount,
             clearData.PlayTime,
             0u,
             clearData.ClearCounts.Values,
             clearData.ClearFlags.Values,
-            clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
+            clearData.Practices.Values.Select(Th10.PracticeTests.MakeByteArray),
             new byte[0x40]);
     }
 

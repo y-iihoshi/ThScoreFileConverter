@@ -405,7 +405,7 @@ public class SettingWindowViewModelTests
         Assert.IsTrue(command.CanExecute());
         Assert.AreEqual(0, numChanged);
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute());
+        _ = Assert.ThrowsException<ObjectDisposedException>(command.Execute);
     }
 
     [TestMethod]

@@ -64,8 +64,7 @@ public class ClearDataPerGameModeTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levelsWithTotal.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
@@ -73,17 +72,16 @@ public class ClearDataPerGameModeTests
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
             levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 119).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 119).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
     internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
     {
         return TestUtils.MakeByteArray(
-            clearData.Rankings.Values.SelectMany(
-                ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+            clearData.Rankings.Values.SelectMany(ranking => ranking.Select(ScoreDataTests.MakeByteArray)),
             new byte[0x140],
-            clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)),
+            clearData.Cards.Values.Select(SpellCardTests.MakeByteArray),
             clearData.TotalPlayCount,
             clearData.PlayTime,
             0u,

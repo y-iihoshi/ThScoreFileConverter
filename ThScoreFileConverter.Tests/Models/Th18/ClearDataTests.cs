@@ -81,8 +81,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levelsWithTotal.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.Cards).Returns(
             Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
@@ -100,8 +99,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
             levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra.Cartesian(stagesExceptExtra)
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, CreatePractice));
         return mock;
     }
 
@@ -118,7 +116,7 @@ public class ClearDataTests
             (int)clearData.Chara,
             clearData.Rankings.Values.SelectMany(
                 ranking => ranking.Select(scoreData => Th17.ScoreDataTests.MakeByteArray(scoreData))),
-            clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)),
+            clearData.Cards.Values.Select(SpellCardTests.MakeByteArray),
             Enumerable.Range(0, 10).Select(_ => spellCardBytes),
             clearData.TotalPlayCount,
             clearData.PlayTime,
@@ -126,7 +124,7 @@ public class ClearDataTests
             clearData.ClearCounts.Values,
             clearData.ClearFlags.Values,
             new byte[0xCA08],
-            clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
+            clearData.Practices.Values.Select(Th10.PracticeTests.MakeByteArray),
             new byte[0x120]
             );
     }

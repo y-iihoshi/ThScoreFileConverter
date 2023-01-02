@@ -38,8 +38,7 @@ public class ClearDataTests
                 mode => mode,
                 _ => ClearDataPerGameModeTests.MockClearDataPerGameMode().Object));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            EnumHelper.Cartesian<Level, StagePractice>()
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            EnumHelper.Cartesian<Level, StagePractice>().ToDictionary(pair => pair, CreatePractice));
         return mock;
     }
 
@@ -51,8 +50,8 @@ public class ClearDataTests
             clearData.Checksum,
             clearData.Size,
             (int)clearData.Chara,
-            clearData.GameModeData.Values.Select(data => ClearDataPerGameModeTests.MakeByteArray(data)),
-            clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
+            clearData.GameModeData.Values.Select(ClearDataPerGameModeTests.MakeByteArray),
+            clearData.Practices.Values.Select(Th10.PracticeTests.MakeByteArray),
             new byte[0x40]);
     }
 

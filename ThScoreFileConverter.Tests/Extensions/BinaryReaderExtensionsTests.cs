@@ -121,7 +121,7 @@ public class BinaryReaderExtensionsTests
     {
         BinaryReader reader = null!;
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => reader.ReadNullTerminatedString());
+        _ = Assert.ThrowsException<ArgumentNullException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
@@ -142,7 +142,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream();
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadNullTerminatedString());
+        _ = Assert.ThrowsException<EndOfStreamException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
@@ -153,7 +153,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadNullTerminatedString());
+        _ = Assert.ThrowsException<EndOfStreamException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]

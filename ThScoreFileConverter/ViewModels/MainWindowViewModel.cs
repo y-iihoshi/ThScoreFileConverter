@@ -467,8 +467,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
     private void AddTemplateFiles(OpenFileDialogActionResult result)
     {
-        this.TemplateFiles.Value = this.TemplateFiles.Value
-            .Union(result.FileNames.Where(file => File.Exists(file))).ToArray();
+        this.TemplateFiles.Value = this.TemplateFiles.Value.Union(result.FileNames.Where(File.Exists)).ToArray();
     }
 
     /// <summary>
@@ -592,7 +591,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
+                    var filePath = droppedPaths.FirstOrDefault(File.Exists);
                     if (filePath is not null)
                         this.ScoreFile.Value = filePath;
                 }
@@ -617,7 +616,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
                     if (dirPath is not null)
                         this.BestShotDirectory.Value = dirPath;
                 }
@@ -642,8 +641,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    this.TemplateFiles.Value = this.TemplateFiles.Value
-                        .Union(droppedPaths.Where(path => File.Exists(path))).ToArray();
+                    this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
                 }
             }
         }
@@ -666,7 +664,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
                     if (dirPath is not null)
                         this.OutputDirectory.Value = dirPath;
                 }

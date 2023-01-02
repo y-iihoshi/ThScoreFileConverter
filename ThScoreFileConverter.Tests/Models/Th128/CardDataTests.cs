@@ -32,7 +32,7 @@ public class CardDataTests
         _ = mock.SetupGet(m => m.Checksum).Returns(0u);
         _ = mock.SetupGet(m => m.Size).Returns(0x947C);
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 250).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 250).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
@@ -43,7 +43,7 @@ public class CardDataTests
             cardData.Version,
             cardData.Checksum,
             cardData.Size,
-            cardData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
+            cardData.Cards.Values.Select(SpellCardTests.MakeByteArray));
     }
 
     internal static void Validate(ICardData expected, ICardData actual)

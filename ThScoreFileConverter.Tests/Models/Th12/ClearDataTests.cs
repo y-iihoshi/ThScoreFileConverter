@@ -68,17 +68,15 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levels.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
             levels.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra.Cartesian(stagesExceptExtra)
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, CreatePractice));
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 113).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 113).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
