@@ -8,11 +8,7 @@ namespace ThScoreFileConverter.Tests.Models;
 [TestClass]
 public class LzssTests
 {
-    // "AbcAbc"
-    private readonly byte[] decompressed = new byte[]
-    {
-        0x41, 0x62, 0x63, 0x41, 0x62, 0x63,
-    };
+    private readonly byte[] decompressed = "AbcAbc"u8.ToArray();
 
     // f <- ch -->
     // 1 0100_0001
