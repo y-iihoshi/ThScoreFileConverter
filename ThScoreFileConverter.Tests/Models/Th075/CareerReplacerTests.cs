@@ -21,7 +21,7 @@ public class CareerReplacerTests
     {
         var mock = new Mock<INumberFormatter>();
         _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => "invoked: " + value.ToString());
+            .Returns((object value) => $"invoked: {value}");
         return mock;
     }
 

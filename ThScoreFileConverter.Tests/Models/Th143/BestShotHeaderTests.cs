@@ -109,7 +109,7 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
+        _ = mock.SetupGet(m => m.Signature).Returns($"{signature}E");
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));

@@ -65,7 +65,7 @@ internal sealed class SQTable : SQObject
 
     public override string? ToString()
     {
-        return "{ " + string.Join(", ", this.Value.Select(pair => pair.Key.ToNonNullString() + ": " + pair.Value.ToNonNullString())) + " }";
+        return $"{{ {string.Join(", ", this.Value.Select(pair => $"{pair.Key.ToNonNullString()}: {pair.Value.ToNonNullString()}"))} }}";
     }
 
     public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(

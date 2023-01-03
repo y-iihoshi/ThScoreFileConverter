@@ -105,7 +105,7 @@ public class BinaryReaderExtensionsTests
     [DynamicData(nameof(ReadNullTerminatedStringTestData))]
     public void ReadNullTerminatedStringTest(string expected, Encoding encoding, Encoding? encodingToRead)
     {
-        var nullTerminated = expected + "\0";
+        var nullTerminated = $"{expected}\0";
         var bytes = encoding.GetBytes(nullTerminated);
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
@@ -128,7 +128,7 @@ public class BinaryReaderExtensionsTests
     public void ReadNullTerminatedStringTestNullEncoding()
     {
         var expected = "博霊 霊夢";
-        var nullTerminated = expected + "\0";
+        var nullTerminated = $"{expected}\0";
         var bytes = Encoding.UTF8.GetBytes(nullTerminated);
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
@@ -160,7 +160,7 @@ public class BinaryReaderExtensionsTests
     public void ReadNullTerminatedStringTestInvalidEncoding()
     {
         var expected = "博霊 霊夢";
-        var nullTerminated = expected + "\0";
+        var nullTerminated = $"{expected}\0";
         var bytes = EncodingHelper.CP932.GetBytes(nullTerminated);
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);

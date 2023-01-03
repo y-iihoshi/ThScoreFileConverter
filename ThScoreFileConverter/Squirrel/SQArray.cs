@@ -81,6 +81,6 @@ internal sealed class SQArray : SQObject
 
     public override string? ToString()
     {
-        return "[ " + string.Join(", ", this.Value.Select(element => element.ToNonNullString())) + " ]";
+        return $"[ {string.Join(", ", this.Value.Select(element => element.ToNonNullString()))} ]";
     }
 }

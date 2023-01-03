@@ -26,9 +26,9 @@ public class ScoreReplacerTests
     {
         var mock = new Mock<INumberFormatter>();
         _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => "invoked: " + value.ToString());
+            .Returns((object value) => $"invoked: {value}");
         _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
-            .Returns((double value, int precision) => "invoked: " + value.ToString($"F{precision}") + "%");
+            .Returns((double value, int precision) => $"invoked: {value.ToString($"F{precision}")}%");
         return mock;
     }
 

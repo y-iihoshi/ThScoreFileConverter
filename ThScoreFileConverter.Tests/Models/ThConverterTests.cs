@@ -24,12 +24,11 @@ public class ThConverterTests
         var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
         converter.ConvertFinished +=
-            (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
+            (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
         converter.ConvertAllFinished +=
-            (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
+            (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
         converter.ExceptionOccurred +=
-            (sender, e) => Console.WriteLine(
-                Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
+            (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
         _ = Assert.ThrowsException<ArgumentNullException>(() => converter.Convert(null!));
     }
@@ -40,12 +39,11 @@ public class ThConverterTests
         var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
         converter.ConvertFinished +=
-            (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
+            (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
         converter.ConvertAllFinished +=
-            (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
+            (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
         converter.ExceptionOccurred +=
-            (sender, e) => Console.WriteLine(
-                Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
+            (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
         _ = Assert.ThrowsException<ArgumentException>(() => converter.Convert(1));
     }
@@ -58,12 +56,11 @@ public class ThConverterTests
         var converter = new Mock<ThConverter> { CallBase = true }.Object;
 
         converter.ConvertFinished +=
-            (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
+            (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
         converter.ConvertAllFinished +=
-            (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
+            (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
         converter.ExceptionOccurred +=
-            (sender, e) => Console.WriteLine(
-                Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
+            (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
         _ = Assert.ThrowsException<ArgumentException>(() => converter.Convert((settings, formatter)));
     }

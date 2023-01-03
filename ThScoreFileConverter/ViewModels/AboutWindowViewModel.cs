@@ -45,7 +45,7 @@ internal class AboutWindowViewModel : BindableBase, IDialogAware
         this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
         this.Uri = StringResources.ProjectUrl;
 
-        var uriString = "pack://application:,,,/" + this.Name + ";component/Resources/ApplicationIcon.ico";
+        var uriString = $"pack://application:,,,/{this.Name};component/Resources/ApplicationIcon.ico";
         var decoder = BitmapDecoder.Create(new Uri(uriString), BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);
 
         this.Icon = decoder.Frames.OrderByDescending(frame => frame.Width).First();
