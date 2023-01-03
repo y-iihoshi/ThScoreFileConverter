@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th07;
@@ -29,7 +30,7 @@ public class ScoreReplacerTests
         _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
             .Returns((object value) => $"invoked: {value}");
         _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
-            .Returns((double value, int precision) => $"invoked: {value.ToString($"F{precision}")}%");
+            .Returns((double value, int precision) => $"invoked: {value.ToString($"F{precision}", CultureInfo.InvariantCulture)}%");
         return mock;
     }
 
