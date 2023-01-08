@@ -39,10 +39,8 @@ internal class ShotReplacer : IStringReplaceable
                 return match.ToString();
 
             if (bestshots.TryGetValue((chara, level, scene), out var bestshot) &&
-                Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
             {
-                var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
                 var resultScore = formatter.FormatNumber(bestshot.Header.ResultScore);
                 var slowRate = formatter.FormatPercent(bestshot.Header.SlowRate, 6);
                 var cardName = EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0');

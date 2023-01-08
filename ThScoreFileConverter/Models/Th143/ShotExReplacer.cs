@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -44,16 +43,7 @@ internal class ShotExReplacer : IStringReplaceable
                 switch (type)
                 {
                     case 1:     // relative path to the bestshot file
-                        if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                            Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
-                        {
-                            return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                        }
-                        else
-                        {
-                            return string.Empty;
-                        }
-
+                        return UriHelper.GetRelativePath(outputFilePath, bestshot.Path);
                     case 2:     // width
                         return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                     case 3:     // height

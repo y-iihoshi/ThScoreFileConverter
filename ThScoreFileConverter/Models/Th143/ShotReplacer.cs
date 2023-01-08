@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models.Th143;
@@ -38,10 +37,8 @@ internal class ShotReplacer : IStringReplaceable
                 return match.ToString();
 
             if (bestshots.TryGetValue(key, out var bestshot) &&
-                Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
             {
-                var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
                 var alternativeString = StringHelper.Create($"SpellName: {enemyCardPair.Card}");
                 return StringHelper.Create(
                     $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
