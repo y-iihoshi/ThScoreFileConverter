@@ -31,9 +31,9 @@ public static class EnumHelper
     public static TEnum To<TEnum>(object value)
         where TEnum : struct, Enum
     {
-        var underlying = Convert.ChangeType(
-            value, typeof(TEnum).GetEnumUnderlyingType(), CultureInfo.InvariantCulture);
-        return Enum.IsDefined(typeof(TEnum), underlying) ? (TEnum)underlying : throw new InvalidCastException();
+        var type = typeof(TEnum);
+        var underlying = Convert.ChangeType(value, type.GetEnumUnderlyingType(), CultureInfo.InvariantCulture);
+        return Enum.IsDefined(type, underlying) ? (TEnum)underlying : throw new InvalidCastException();
     }
 
     /// <summary>

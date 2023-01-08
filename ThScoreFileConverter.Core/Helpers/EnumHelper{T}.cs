@@ -8,10 +8,6 @@
 using System;
 using System.Collections.Generic;
 
-#if !NET5_0_OR_GREATER
-using System.Linq;
-#endif
-
 namespace ThScoreFileConverter.Core.Helpers;
 
 /// <summary>
@@ -21,18 +17,18 @@ namespace ThScoreFileConverter.Core.Helpers;
 public static class EnumHelper<T>
     where T : struct, Enum
 {
-    private static readonly Array Values = Enum.GetValues(typeof(T));
+    private static readonly T[] Values =
+#if NET5_0_OR_GREATER
+        Enum.GetValues<T>();
+#else
+        (T[])Enum.GetValues(typeof(T));
+#endif
 
 #pragma warning disable CA1000 // Do not declare static members on generic types
     /// <summary>
     /// Gets the <see cref="IEnumerable{T}"/> instance to enumerate values of the <typeparamref name="T"/> type.
     /// </summary>
-    public static IEnumerable<T> Enumerable { get; } =
-#if NET5_0_OR_GREATER
-        Enum.GetValues<T>();
-#else
-        Values.Cast<T>();
-#endif
+    public static IEnumerable<T> Enumerable { get; } = Values;
 
     /// <summary>
     /// Gets the number of values of the <typeparamref name="T"/> type.
