@@ -126,8 +126,7 @@ public class StatusTests
         Assert.AreEqual(expected, Status.CanInitialize(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidItems
-        => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
+    public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidItems))]

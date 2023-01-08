@@ -127,8 +127,7 @@ public class HighScoreTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters
-        => TestUtils.GetInvalidEnumerators(typeof(Chara));
+    public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]
@@ -141,8 +140,7 @@ public class HighScoreTests
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
@@ -155,8 +153,7 @@ public class HighScoreTests
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidStageProgresses
-        => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+    public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]

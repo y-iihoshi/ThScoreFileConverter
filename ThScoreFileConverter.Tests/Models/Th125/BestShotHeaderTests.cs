@@ -177,8 +177,7 @@ public class BestShotHeaderTests
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]

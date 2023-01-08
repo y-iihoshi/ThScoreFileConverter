@@ -17,7 +17,7 @@ public class DefinitionsTests
         Assert.IsFalse(Definitions.CanPractice(Level.Extra));
     }
 
-    public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
@@ -39,7 +39,7 @@ public class DefinitionsTests
         Assert.IsFalse(Definitions.CanPractice(Stage.Extra));
     }
 
-    public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators(typeof(Stage));
+    public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]

@@ -134,9 +134,10 @@ public static class TestUtils
         return Core.Tests.UnitTesting.TestHelper.Cast<TResult>(value);
     }
 
-    public static IEnumerable<object[]> GetInvalidEnumerators(Type type)
+    public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()
+        where TEnum : struct, Enum
     {
-        return Core.Tests.UnitTesting.TestHelper.GetInvalidEnumerators(type);
+        return Core.Tests.UnitTesting.TestHelper.GetInvalidEnumerators<TEnum>();
     }
 
     private static bool Invoke<T>(Action<T> action, string key, T value)

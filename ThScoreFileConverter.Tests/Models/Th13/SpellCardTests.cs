@@ -112,11 +112,9 @@ public class SpellCardTests
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidTh13LevelPractices
-        => TestUtils.GetInvalidEnumerators(typeof(LevelPractice));
+    public static IEnumerable<object[]> InvalidTh13LevelPractices => TestUtils.GetInvalidEnumerators<LevelPractice>();
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     #region Th13
 

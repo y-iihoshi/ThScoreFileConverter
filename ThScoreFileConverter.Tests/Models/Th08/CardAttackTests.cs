@@ -111,8 +111,7 @@ public class CardAttackTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(LevelPracticeWithTotal));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<LevelPracticeWithTotal>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]

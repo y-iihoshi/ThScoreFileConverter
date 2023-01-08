@@ -107,8 +107,7 @@ public class ItemStatusTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidItems
-        => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
+    public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidItems))]

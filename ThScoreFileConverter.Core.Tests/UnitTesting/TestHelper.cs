@@ -16,9 +16,14 @@ public static class TestHelper
             : (TResult)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
     }
 
-    public static IEnumerable<object[]> GetInvalidEnumerators(Type type)
+    public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()
+        where TEnum : struct, Enum
     {
-        var values = Enum.GetValues(type).Cast<int>();
+#if NETFRAMEWORK
+        var values = Enum.GetValues(typeof(TEnum)).Cast<int>();
+#else
+        var values = Enum.GetValues<TEnum>().Cast<int>();
+#endif
         yield return new object[] { values.Min() - 1 };
         yield return new object[] { values.Max() + 1 };
     }

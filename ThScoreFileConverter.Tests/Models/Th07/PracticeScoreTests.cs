@@ -86,8 +86,7 @@ public class PracticeScoreTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters
-        => TestUtils.GetInvalidEnumerators(typeof(Chara));
+    public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]
@@ -100,8 +99,7 @@ public class PracticeScoreTests
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
@@ -114,8 +112,7 @@ public class PracticeScoreTests
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidStages
-        => TestUtils.GetInvalidEnumerators(typeof(Stage));
+    public static IEnumerable<object[]> InvalidStages => TestUtils.GetInvalidEnumerators<Stage>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]

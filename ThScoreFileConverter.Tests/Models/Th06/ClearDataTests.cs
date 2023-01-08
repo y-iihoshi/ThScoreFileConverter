@@ -87,8 +87,7 @@ public class ClearDataTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]

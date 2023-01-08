@@ -210,8 +210,7 @@ public class BestShotHeaderTests
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidDays
-        => TestUtils.GetInvalidEnumerators(typeof(Day));
+    public static IEnumerable<object[]> InvalidDays => TestUtils.GetInvalidEnumerators<Day>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidDays))]

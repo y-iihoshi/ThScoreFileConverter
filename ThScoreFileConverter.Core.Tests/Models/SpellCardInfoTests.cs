@@ -43,8 +43,7 @@ public class SpellCardInfoTests
             () => new CardInfo(1, string.Empty, Stage.One, Level.Hard, Level.Lunatic));
     }
 
-    public static IEnumerable<object[]> InvalidStages
-        => TestHelper.GetInvalidEnumerators(typeof(Stage));
+    public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]
@@ -55,8 +54,7 @@ public class SpellCardInfoTests
             () => new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestHelper.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]

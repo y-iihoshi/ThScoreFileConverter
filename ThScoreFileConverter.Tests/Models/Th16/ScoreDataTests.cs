@@ -72,8 +72,7 @@ public class ScoreDataTests
         Validate(mock.Object, scoreData);
     }
 
-    public static IEnumerable<object[]> InvalidStageProgresses
-        => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+    public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]
@@ -108,8 +107,7 @@ public class ScoreDataTests
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidSeasons
-        => TestUtils.GetInvalidEnumerators(typeof(Season));
+    public static IEnumerable<object[]> InvalidSeasons => TestUtils.GetInvalidEnumerators<Season>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidSeasons))]
