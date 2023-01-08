@@ -45,6 +45,14 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
             if (!canReplace(number, chara, type))
                 return match.ToString();
 
+            static string FormatTime(long value)
+            {
+                var time = new Time(value);
+                var minutes = (time.Hours * 60) + time.Minutes;
+                var milliseconds = time.Frames * 1000 / 60;
+                return StringHelper.Create($"{minutes:D2}:{time.Seconds:D2}.{milliseconds:D3}");
+            }
+
             Func<ISpellCardResult<TChara>, long> getValue = type switch
             {
                 1 => result => result.GotCount,
@@ -54,12 +62,7 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
 
             Func<long, string> toString = type switch
             {
-                3 => value =>
-                {
-                    var time = new Time(value);
-                    return StringHelper.Create(
-                        $"{(time.Hours * 60) + time.Minutes:D2}:{time.Seconds:D2}.{time.Frames * 1000 / 60:D3}");
-                },
+                3 => FormatTime,
                 _ => formatter.FormatNumber,
             };
 

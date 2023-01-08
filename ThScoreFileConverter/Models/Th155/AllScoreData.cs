@@ -72,6 +72,7 @@ internal class AllScoreData : IBinaryReadable
     {
         if (obj is SQString str)
         {
+#pragma warning disable format
             var chara = str.Value switch
             {
                 "reimu"   => StoryChara.ReimuKasen,
@@ -87,6 +88,7 @@ internal class AllScoreData : IBinaryReadable
                 "jyoon"   => StoryChara.JoonShion,
                 _         => (StoryChara?)null,
             };
+#pragma warning restore format
             return chara;
         }
         else

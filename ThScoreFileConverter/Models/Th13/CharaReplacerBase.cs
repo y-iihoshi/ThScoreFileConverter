@@ -51,8 +51,7 @@ internal class CharaReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, 
                     .Where(pair => levelIsToBeSummed(pair.Key)).Sum(pair => pair.Value),
             };
 
-            Func<IReadOnlyDictionary<TChWithT, IClearData<
-                TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>, long> getValueByChara = chara switch
+            Func<IReadOnlyDictionary<TChWithT, IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>, long> getValueByChara = chara switch
             {
                 _ when charaIsTotal(chara) => dictionary => dictionary.Values
                     .Where(clearData => !charaIsTotal(clearData.Chara)).Sum(getValueByType),

@@ -99,6 +99,7 @@ internal class SaveData
     {
         if (obj is SQString str)
         {
+#pragma warning disable format
             return str.Value switch
             {
                 "reimu"   => Chara.Reimu,
@@ -109,6 +110,7 @@ internal class SaveData
                 "flandre" => Chara.Flandre,
                 _         => null,
             };
+#pragma warning restore format
         }
         else
         {

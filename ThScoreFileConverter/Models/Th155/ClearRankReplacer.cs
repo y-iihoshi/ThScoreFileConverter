@@ -39,6 +39,7 @@ internal class ClearRankReplacer : IStringReplaceable
 
         static Levels ToLevels(Level level)
         {
+#pragma warning disable format
             return level switch
             {
                 Level.Easy      => Levels.Easy,
@@ -48,6 +49,7 @@ internal class ClearRankReplacer : IStringReplaceable
                 Level.OverDrive => Levels.OverDrive,
                 _               => Levels.None,
             };
+#pragma warning restore format
         }
     }
 
