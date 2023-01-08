@@ -131,7 +131,10 @@ public static class TestUtils
     public static TResult Cast<TResult>(object value)
         where TResult : struct
     {
-        return Core.Tests.UnitTesting.TestHelper.Cast<TResult>(value);
+        var type = typeof(TResult);
+        return type.IsEnum
+            ? (TResult)Enum.ToObject(type, value)
+            : (TResult)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
     }
 
     public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()

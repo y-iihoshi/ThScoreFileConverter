@@ -49,9 +49,8 @@ public class SpellCardInfoTests
     [DynamicData(nameof(InvalidStages))]
     public void SpellCardInfoTestInvalidStage(int stage)
     {
-        var invalid = TestHelper.Cast<Stage>(stage);
         _ = Assert.ThrowsException<ArgumentException>(
-            () => new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
+            () => new CardInfo(1, "月符「ムーンライトレイ」", (Stage)stage, Level.Hard, Level.Lunatic));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
@@ -60,9 +59,8 @@ public class SpellCardInfoTests
     [DynamicData(nameof(InvalidLevels))]
     public void SpellCardInfoTestInvalidLevel(int level)
     {
-        var invalid = TestHelper.Cast<Level>(level);
         _ = Assert.ThrowsException<ArgumentException>(
-            () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid));
+            () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, (Level)level));
     }
 
     [TestMethod]

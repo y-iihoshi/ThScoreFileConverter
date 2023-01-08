@@ -93,7 +93,7 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidChara(int chara)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
@@ -106,7 +106,7 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidLevel(int level)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
@@ -119,7 +119,7 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidStage(int stage)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Stage).Returns(TestUtils.Cast<Stage>(stage));
+        _ = mock.SetupGet(m => m.Stage).Returns((Stage)stage);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));

@@ -43,9 +43,9 @@ public class ClearDataTests
         static IPractice CreatePractice((LevelPractice, StagePractice) pair)
         {
             var mock = new Mock<IPractice>();
-            _ = mock.SetupGet(p => p.Score).Returns(123456u - (TestUtils.Cast<uint>(pair.Item1) * 10u));
-            _ = mock.SetupGet(p => p.Cleared).Returns((byte)(TestUtils.Cast<int>(pair.Item2) % 2));
-            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)(TestUtils.Cast<int>(pair.Item1) % 2));
+            _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
+            _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
+            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
             return mock.Object;
         }
 
@@ -78,9 +78,9 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)));
+            levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
+            levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
             EnumHelper.Cartesian<LevelPractice, StagePractice>().ToDictionary(pair => pair, CreatePractice));
         _ = mock.SetupGet(m => m.Cards).Returns(
@@ -95,7 +95,7 @@ public class ClearDataTests
             clearData.Version,
             clearData.Checksum,
             clearData.Size,
-            TestUtils.Cast<int>(clearData.Chara),
+            (int)clearData.Chara,
             clearData.Rankings.Values.SelectMany(
                 ranking => ranking.Select(scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))),
             clearData.TotalPlayCount,

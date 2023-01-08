@@ -21,9 +21,9 @@ public class ClearDataTests
         static IPractice CreatePractice((Level, StagePractice) pair)
         {
             var mock = new Mock<IPractice>();
-            _ = mock.SetupGet(p => p.Score).Returns(123456u - (TestUtils.Cast<uint>(pair.Item1) * 10u));
-            _ = mock.SetupGet(p => p.Cleared).Returns((byte)(TestUtils.Cast<int>(pair.Item2) % 2));
-            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)(TestUtils.Cast<int>(pair.Item1) % 2));
+            _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
+            _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
+            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
             return mock.Object;
         }
 

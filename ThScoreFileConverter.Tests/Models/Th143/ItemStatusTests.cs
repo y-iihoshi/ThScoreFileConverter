@@ -114,7 +114,7 @@ public class ItemStatusTests
     public void ItemStatusTestInvalidItems(int item)
     {
         var mock = MockItemStatus();
-        _ = mock.SetupGet(m => m.Item).Returns(TestUtils.Cast<ItemWithTotal>(item));
+        _ = mock.SetupGet(m => m.Item).Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new ItemStatus(chapter));

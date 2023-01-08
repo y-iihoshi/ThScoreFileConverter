@@ -79,7 +79,7 @@ public class ScoreDataTests
     public void ReadFromTestInvalidStageProgress(int stageProgress)
     {
         var mock = MockScoreData();
-        _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
+        _ = mock.SetupGet(m => m.StageProgress).Returns((StageProgress)stageProgress);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));

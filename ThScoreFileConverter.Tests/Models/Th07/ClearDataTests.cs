@@ -94,7 +94,7 @@ public class ClearDataTests
     public void ClearDataTestInvalidChara(int chara)
     {
         var mock = MockClearData();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new ClearData(chapter));

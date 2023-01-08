@@ -116,7 +116,7 @@ public class ScoreTests
     {
         var mock = MockScore();
         var levelScene = mock.Object.LevelScene;
-        _ = mock.SetupGet(m => m.LevelScene).Returns((TestUtils.Cast<Level>(level), levelScene.Scene));
+        _ = mock.SetupGet(m => m.LevelScene).Returns(((Level)level, levelScene.Scene));
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));

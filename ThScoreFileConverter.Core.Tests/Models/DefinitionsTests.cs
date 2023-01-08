@@ -23,8 +23,7 @@ public class DefinitionsTests
     [DynamicData(nameof(InvalidLevels))]
     public void CanPracticeTestInvalidLevel(int level)
     {
-        var invalid = TestHelper.Cast<Level>(level);
-        Assert.IsFalse(Definitions.CanPractice(invalid));
+        Assert.IsFalse(Definitions.CanPractice((Level)level));
     }
 
     [TestMethod]
@@ -43,9 +42,8 @@ public class DefinitionsTests
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]
-    public void CanPracticeTestInvalidStage(int level)
+    public void CanPracticeTestInvalidStage(int stage)
     {
-        var invalid = TestHelper.Cast<Stage>(level);
-        Assert.IsFalse(Definitions.CanPractice(invalid));
+        Assert.IsFalse(Definitions.CanPractice((Stage)stage));
     }
 }

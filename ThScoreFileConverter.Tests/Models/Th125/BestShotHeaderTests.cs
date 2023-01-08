@@ -62,7 +62,7 @@ public class BestShotHeaderTests
         return TestUtils.MakeByteArray(
             header.Signature.ToCharArray(),
             (ushort)0,
-            TestUtils.Cast<short>(header.Level + 1),
+            (short)(header.Level + 1),
             header.Scene,
             (ushort)0,
             header.Width,
@@ -184,7 +184,7 @@ public class BestShotHeaderTests
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));

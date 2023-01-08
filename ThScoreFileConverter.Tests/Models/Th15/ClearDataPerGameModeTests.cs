@@ -68,9 +68,9 @@ public class ClearDataPerGameModeTests
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)));
+            levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
+            levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
         _ = mock.SetupGet(m => m.Cards).Returns(
             Enumerable.Range(1, 119).ToDictionary(index => index, CreateSpellCard));
         return mock;

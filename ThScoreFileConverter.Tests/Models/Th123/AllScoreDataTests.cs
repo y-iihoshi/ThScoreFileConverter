@@ -34,7 +34,7 @@ public class AllScoreDataTests
         var charas = EnumHelper<Chara>.Enumerable.Where(chara => chara != Chara.Oonamazu);
         return new Properties()
         {
-            storyClearCounts = charas.ToDictionary(chara => chara, chara => TestUtils.Cast<byte>(chara)),
+            storyClearCounts = charas.ToDictionary(chara => chara, chara => (byte)chara),
             systemCards = Enumerable.Range(1, 5).ToDictionary(id => id, CreateCardForDeck),
             clearData = charas.ToDictionary(chara => chara, chara => Th105.ClearDataTests.MockClearData<Chara>().Object),
         };

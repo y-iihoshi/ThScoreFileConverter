@@ -87,7 +87,7 @@ public class CardAttackCareerTests
         var mock = MockCardAttackCareer();
         var maxBonuses = mock.Object.MaxBonuses;
         _ = mock.SetupGet(m => m.MaxBonuses).Returns(
-            maxBonuses.Concat(new[] { (TestUtils.Cast<CharaWithTotal>(999), 999u) }.ToDictionary()).ToDictionary());
+            maxBonuses.Concat(new[] { ((CharaWithTotal)999, 999u) }.ToDictionary()).ToDictionary());
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
@@ -115,7 +115,7 @@ public class CardAttackCareerTests
         var mock = MockCardAttackCareer();
         var trialCounts = mock.Object.TrialCounts;
         _ = mock.SetupGet(m => m.TrialCounts).Returns(
-            trialCounts.Concat(new[] { (TestUtils.Cast<CharaWithTotal>(999), 999) }.ToDictionary()).ToDictionary());
+            trialCounts.Concat(new[] { ((CharaWithTotal)999, 999) }.ToDictionary()).ToDictionary());
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 
@@ -143,7 +143,7 @@ public class CardAttackCareerTests
         var mock = MockCardAttackCareer();
         var clearCounts = mock.Object.ClearCounts;
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            clearCounts.Concat(new[] { (TestUtils.Cast<CharaWithTotal>(999), 999) }.ToDictionary()).ToDictionary());
+            clearCounts.Concat(new[] { ((CharaWithTotal)999, 999) }.ToDictionary()).ToDictionary());
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock.Object));
 

@@ -76,7 +76,7 @@ public class ClearCountTests
         var mock = MockClearCount();
         var counts = mock.Object.Counts;
         _ = mock.SetupGet(m => m.Counts).Returns(
-            counts.Concat(new[] { (TestUtils.Cast<Level>(99), 99) }.ToDictionary()).ToDictionary());
+            counts.Concat(new[] { ((Level)99, 99) }.ToDictionary()).ToDictionary());
 
         var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
 

@@ -32,7 +32,7 @@ public class AllScoreDataTests
         var charas = EnumHelper<Chara>.Enumerable;
         return new Properties()
         {
-            storyClearCounts = charas.ToDictionary(chara => chara, chara => TestUtils.Cast<byte>(chara)),
+            storyClearCounts = charas.ToDictionary(chara => chara, chara => (byte)chara),
             systemCards = Enumerable.Range(1, 5).ToDictionary(id => id, CreateCardForDeck),
             clearData = charas.ToDictionary(chara => chara, chara => ClearDataTests.MockClearData<Chara>().Object),
         };

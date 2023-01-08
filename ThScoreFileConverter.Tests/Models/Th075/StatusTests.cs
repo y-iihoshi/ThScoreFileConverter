@@ -108,7 +108,7 @@ public class StatusTests
     {
         var properties = new Properties(ValidProperties);
         var scores = properties.arcadeScores.ToDictionary();
-        scores.Add((CharaWithReserved.Reserved15, TestUtils.Cast<CharaWithReserved>(99)), 99);
+        scores.Add((CharaWithReserved.Reserved15, (CharaWithReserved)99), 99);
         properties.arcadeScores = scores;
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));

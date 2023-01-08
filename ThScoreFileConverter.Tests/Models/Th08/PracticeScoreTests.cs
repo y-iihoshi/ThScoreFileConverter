@@ -96,7 +96,7 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidChara(int chara)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));

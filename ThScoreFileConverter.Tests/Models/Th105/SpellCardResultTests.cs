@@ -33,7 +33,7 @@ public class SpellCardResultTests
     {
         return TestUtils.MakeByteArray(
             TestUtils.Cast<int>(properties.Enemy),
-            TestUtils.Cast<int>(properties.Level),
+            (int)properties.Level,
             properties.Id,
             properties.TrialCount,
             properties.GotCount,

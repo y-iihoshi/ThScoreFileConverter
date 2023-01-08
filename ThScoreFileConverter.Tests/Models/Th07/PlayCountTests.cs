@@ -101,7 +101,7 @@ public class PlayCountTests
     public void ReadFromTestExceededTrials()
     {
         var properties = new Properties(ValidProperties);
-        properties.trials.Add(TestUtils.Cast<Chara>(99), 99);
+        properties.trials.Add((Chara)99, 99);
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 

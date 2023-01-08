@@ -166,8 +166,7 @@ public class AllScoreDataTests
     [DataRow(Level.Normal, Stage.Phantasm)]
     public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
     {
-        var score = Mock.Of<IPracticeScore>(
-            m => (m.Level == TestUtils.Cast<Level>(level)) && (m.Stage == TestUtils.Cast<Stage>(stage)));
+        var score = Mock.Of<IPracticeScore>(m => (m.Level == (Level)level) && (m.Stage == (Stage)stage));
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);

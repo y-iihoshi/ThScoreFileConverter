@@ -118,7 +118,7 @@ public class CardAttackTests
     public void CardAttackTestInvalidLevel(int level)
     {
         var mock = MockCardAttack();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<LevelPracticeWithTotal>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((LevelPracticeWithTotal)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new CardAttack(chapter));

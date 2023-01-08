@@ -37,7 +37,7 @@ public class BestShotHeaderTests
         return TestUtils.MakeByteArray(
             header.Signature.ToCharArray(),
             (ushort)0,
-            TestUtils.Cast<short>(header.Day),
+            (short)header.Day,
             (short)(header.Scene - 1),
             (ushort)0,
             header.Width,
@@ -122,7 +122,7 @@ public class BestShotHeaderTests
     public void ReadFromTestInvalidDay(int day)
     {
         var mock = MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Day).Returns(TestUtils.Cast<Day>(day));
+        _ = mock.SetupGet(m => m.Day).Returns((Day)day);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));

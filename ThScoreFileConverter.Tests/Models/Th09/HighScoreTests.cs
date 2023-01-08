@@ -103,7 +103,7 @@ public class HighScoreTests
     public void HighScoreTestInvalidChara(int chara)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
@@ -116,7 +116,7 @@ public class HighScoreTests
     public void HighScoreTestInvalidLevel(int level)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));

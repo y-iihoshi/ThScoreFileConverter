@@ -39,7 +39,6 @@ public class DefinitionsTests
     [DynamicData(nameof(InvalidCharacters))]
     public void CanPracticeTestInvalidChara(int chara)
     {
-        var invalid = TestHelper.Cast<Chara>(chara);
-        Assert.IsFalse(Definitions.HasStory(invalid));
+        Assert.IsFalse(Definitions.HasStory((Chara)chara));
     }
 }

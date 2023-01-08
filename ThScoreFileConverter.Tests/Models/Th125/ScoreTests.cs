@@ -118,7 +118,7 @@ public class ScoreTests
     {
         var mock = MockScore();
         var levelScene = mock.Object.LevelScene;
-        _ = mock.SetupGet(m => m.LevelScene).Returns((TestUtils.Cast<Level>(level), levelScene.Scene));
+        _ = mock.SetupGet(m => m.LevelScene).Returns(((Level)level, levelScene.Scene));
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));
@@ -131,7 +131,7 @@ public class ScoreTests
     public void ScoreTestInvalidChara(int chara)
     {
         var mock = MockScore();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));

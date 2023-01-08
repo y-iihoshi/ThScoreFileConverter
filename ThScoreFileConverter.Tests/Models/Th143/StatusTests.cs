@@ -44,8 +44,8 @@ public class StatusTests
             new byte[0x17],
             status.TotalPlayTime,
             0,
-            TestUtils.Cast<int>(status.LastMainItem),
-            TestUtils.Cast<int>(status.LastSubItem),
+            (int)status.LastMainItem,
+            (int)status.LastSubItem,
             new byte[0x54],
             status.NicknameFlags,
             new byte[0x12D]);
@@ -133,7 +133,7 @@ public class StatusTests
     public void StatusTestInvalidLastMainItem(int item)
     {
         var mock = MockStatus();
-        _ = mock.SetupGet(m => m.LastMainItem).Returns(TestUtils.Cast<ItemWithTotal>(item));
+        _ = mock.SetupGet(m => m.LastMainItem).Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Status(chapter));
@@ -144,7 +144,7 @@ public class StatusTests
     public void StatusTestInvalidLastSubItem(int item)
     {
         var mock = MockStatus();
-        _ = mock.SetupGet(m => m.LastSubItem).Returns(TestUtils.Cast<ItemWithTotal>(item));
+        _ = mock.SetupGet(m => m.LastSubItem).Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Status(chapter));
