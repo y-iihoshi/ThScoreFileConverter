@@ -17,12 +17,8 @@ namespace ThScoreFileConverter.Models.Th07;
 // %T07PRAC[w][xx][y][z]
 internal class PracticeReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}PRAC({1})({2})({3})([12])",
-        Definitions.FormatPrefix,
-        Parsers.LevelParser.Pattern,
-        Parsers.CharaParser.Pattern,
-        Parsers.StageParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})([12])");
 
     private readonly MatchEvaluator evaluator;
 

@@ -29,7 +29,7 @@ internal class CardReplacerBase<TLevel, TEnemy> : IStringReplaceable
         bool hideUntriedCards,
         Func<TLevel, int, bool> levelSceneHasTried)
     {
-        this.pattern = Utils.Format(@"{0}CARD({1})([1-9])([12])", formatPrefix, levelParser.Pattern);
+        this.pattern = StringHelper.Create($"{formatPrefix}CARD({levelParser.Pattern})([1-9])([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1].Value);

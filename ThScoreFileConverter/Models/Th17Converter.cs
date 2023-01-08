@@ -68,7 +68,7 @@ internal class Th17Converter : ThConverter
         if ((this.allScoreData is null) || (this.allScoreData.Status is null))
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>

@@ -12,17 +12,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models.Th145;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th145;
 
 // %T145TIMECLR[x][yy]
 internal class ClearTimeReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}TIMECLR({1})({2})",
-        Definitions.FormatPrefix,
-        Parsers.LevelWithTotalParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}TIMECLR({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 

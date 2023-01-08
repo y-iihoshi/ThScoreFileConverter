@@ -18,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th125;
 // %T125SCRTL[x][y][z]
 internal class ScoreTotalReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SCRTL({1})([12])([1-5])", Definitions.FormatPrefix, Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SCRTL({Parsers.CharaParser.Pattern})([12])([1-5])");
 
     private readonly MatchEvaluator evaluator;
 

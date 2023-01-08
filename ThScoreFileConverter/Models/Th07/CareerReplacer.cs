@@ -18,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th07;
 // %T07C[xxx][yy][z]
 internal class CareerReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}C(\d{{3}})({1})([1-3])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $@"{Definitions.FormatPrefix}C(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([1-3])");
 
     private readonly MatchEvaluator evaluator;
 

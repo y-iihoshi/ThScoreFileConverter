@@ -20,11 +20,8 @@ namespace ThScoreFileConverter.Models.Th128;
 // %T128ROUTEEX[x][yy][z]
 internal class RouteExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}ROUTEEX({1})({2})([1-3])",
-        Definitions.FormatPrefix,
-        Parsers.LevelWithTotalParser.Pattern,
-        Parsers.RouteWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}ROUTEEX({Parsers.LevelWithTotalParser.Pattern})({Parsers.RouteWithTotalParser.Pattern})([1-3])");
 
     private readonly MatchEvaluator evaluator;
 

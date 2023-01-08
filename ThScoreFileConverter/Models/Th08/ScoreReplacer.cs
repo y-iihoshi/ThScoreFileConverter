@@ -21,11 +21,8 @@ namespace ThScoreFileConverter.Models.Th08;
 // %T08SCR[w][xx][y][z]
 internal class ScoreReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SCR({1})({2})(\d)([\dA-G])",
-        Definitions.FormatPrefix,
-        Parsers.LevelParser.Pattern,
-        Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([\dA-G])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -85,7 +82,7 @@ internal class ScoreReplacer : IStringReplaceable
                     cardStrings = score.CardFlags.Where(pair => pair.Value > 0).Select(pair =>
                     {
                         return Definitions.CardTable.TryGetValue(pair.Key, out var card)
-                            ? Utils.Format("No.{0:D3} {1}", card.Id, card.Name) : string.Empty;
+                            ? StringHelper.Create($"No.{card.Id:D3} {card.Name}") : string.Empty;
                     });
                     return string.Join(Environment.NewLine, cardStrings.ToArray());
                 case "G":   // number of got spell cards

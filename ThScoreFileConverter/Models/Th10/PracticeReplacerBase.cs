@@ -9,6 +9,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10;
 
@@ -30,8 +31,8 @@ internal class PracticeReplacerBase<TLevel, TChara, TStage> : IStringReplaceable
         Func<TLevel, TChara, TStage, IPractice?> getPractice,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}PRAC({1})({2})({3})", formatPrefix, levelParser.Pattern, charaParser.Pattern, stageParser.Pattern);
+        this.pattern = StringHelper.Create(
+            $"{formatPrefix}PRAC({levelParser.Pattern})({charaParser.Pattern})({stageParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1].Value);

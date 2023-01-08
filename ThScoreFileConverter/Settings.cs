@@ -17,6 +17,7 @@ using System.Windows;
 using System.Xml;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 
 #if NETFRAMEWORK
@@ -243,7 +244,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
     {
         return new InvalidDataException(
-            Utils.Format(ExceptionMessages.InvalidDataExceptionFileMayBeBroken, file), innerException);
+            StringHelper.Format(ExceptionMessages.InvalidDataExceptionFileMayBeBroken, file), innerException);
     }
 
     /// <summary>

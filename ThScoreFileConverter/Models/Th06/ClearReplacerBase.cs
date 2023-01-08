@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th06;
 
@@ -30,7 +31,7 @@ internal class ClearReplacerBase<TLevel, TChara, TStageProgress> : IStringReplac
         Func<TLevel, TChara, IReadOnlyList<IHighScore<TChara, TLevel, TStageProgress>>?> getRanking,
         Func<TStageProgress, bool> isAdditionalStage)
     {
-        this.pattern = Utils.Format(@"{0}CLEAR({1})({2})", formatPrefix, levelParser.Pattern, charaParser.Pattern);
+        this.pattern = StringHelper.Create($"{formatPrefix}CLEAR({levelParser.Pattern})({charaParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1].Value);

@@ -49,7 +49,7 @@ internal class HeaderBase : IBinaryReadable, IBinaryWritable
         if (this.EncodedAllSize < 0)
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
         }
 
         this.unknown1 = reader.ReadUInt32();
@@ -59,14 +59,14 @@ internal class HeaderBase : IBinaryReadable, IBinaryWritable
         if (this.EncodedBodySize < 0)
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
         }
 
         this.DecodedBodySize = reader.ReadInt32();
         if (this.DecodedBodySize < 0)
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
         }
     }
 

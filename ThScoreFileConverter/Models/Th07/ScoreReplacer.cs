@@ -23,11 +23,8 @@ namespace ThScoreFileConverter.Models.Th07;
 // %T07SCR[w][xx][y][z]
 internal class ScoreReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SCR({1})({2})(\d)([1-5])",
-        Definitions.FormatPrefix,
-        Parsers.LevelParser.Pattern,
-        Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-5])");
 
     private readonly MatchEvaluator evaluator;
 

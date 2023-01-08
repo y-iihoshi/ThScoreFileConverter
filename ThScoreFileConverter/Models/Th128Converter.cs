@@ -62,7 +62,7 @@ internal class Th128Converter : ThConverter
             || (this.allScoreData.Status is null))
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+                StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>

@@ -16,7 +16,7 @@ namespace ThScoreFileConverter.Models.Th18;
 // %T18ABIL[xx]
 internal class AbilityCardReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(@"{0}ABIL(\d{{2}})", Definitions.FormatPrefix);
+    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL(\d{{2}})");
 
     private readonly MatchEvaluator evaluator;
 

@@ -34,13 +34,9 @@ internal class CardReplacerBase<TChara> : IStringReplaceable
         bool hideUntriedCards)
     {
         var numLevels = EnumHelper<Level>.NumValues;
+        var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
 
-        this.pattern = Utils.Format(
-            @"{0}CARD(\d{{{1}}})({2})([NR])",
-            formatPrefix,
-            IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
-            charaParser.Pattern);
-
+        this.pattern = StringHelper.Create($@"{formatPrefix}CARD(\d{{{numDigits}}})({charaParser.Pattern})([NR])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);

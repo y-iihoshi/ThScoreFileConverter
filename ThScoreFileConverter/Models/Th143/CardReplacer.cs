@@ -19,8 +19,8 @@ namespace ThScoreFileConverter.Models.Th143;
 // %T143CARD[x][y][z]
 internal class CardReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CARD({1})([0-9])([12])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CARD({Parsers.DayParser.Pattern})([0-9])([12])");
 
     private readonly MatchEvaluator evaluator;
 

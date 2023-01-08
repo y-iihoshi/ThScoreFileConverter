@@ -21,7 +21,7 @@ internal class AchievementReplacerBase : IStringReplaceable
 
     protected AchievementReplacerBase(string formatPrefix, IReadOnlyList<string> achievementNames, IAchievementHolder achievementHolder)
     {
-        this.pattern = Utils.Format(@"{0}ACHV(\d{{2}})", formatPrefix);
+        this.pattern = StringHelper.Create($@"{formatPrefix}ACHV(\d{{2}})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);

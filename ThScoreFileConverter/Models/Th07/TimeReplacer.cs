@@ -8,13 +8,14 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th07;
 
 // %T07TIME(ALL|PLY)
 internal class TimeReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(@"{0}TIME(ALL|PLY)", Definitions.FormatPrefix);
+    private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}TIME(ALL|PLY)");
 
     private readonly MatchEvaluator evaluator;
 

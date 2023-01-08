@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Helpers;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th13;
@@ -52,7 +53,7 @@ internal class ClearReplacerBase<
         EnumShortNameParser<TCh> charaParser,
         Func<Level, TCh, IReadOnlyList<IScoreData>> getRanking)
     {
-        this.pattern = Utils.Format(@"{0}CLEAR({1})({2})", formatPrefix, levelParser.Pattern, charaParser.Pattern);
+        this.pattern = StringHelper.Create($"{formatPrefix}CLEAR({levelParser.Pattern})({charaParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1].Value);
