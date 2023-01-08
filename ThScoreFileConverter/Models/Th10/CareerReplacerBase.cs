@@ -32,7 +32,7 @@ internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringRepl
         IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(@"{0}C(\d{{3}})({1})([12])", formatPrefix, charaWithTotalParser.Pattern);
+        this.pattern = StringHelper.Create($@"{formatPrefix}C(\d{{3}})({charaWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);

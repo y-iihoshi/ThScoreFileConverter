@@ -18,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th143;
 // %T143SHOT[x][y]
 internal class ShotReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOT({1})([0-9])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOT({Parsers.DayParser.Pattern})([0-9])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -42,9 +42,9 @@ internal class ShotReplacer : IStringReplaceable
                 Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
             {
                 var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                var alternativeString = Utils.Format("SpellName: {0}", enemyCardPair.Card);
-                return Utils.Format(
-                    "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);
+                var alternativeString = StringHelper.Create($"SpellName: {enemyCardPair.Card}");
+                return StringHelper.Create(
+                    $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
             }
             else
             {

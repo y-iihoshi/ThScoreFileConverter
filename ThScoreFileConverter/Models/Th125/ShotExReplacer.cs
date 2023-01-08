@@ -20,11 +20,8 @@ namespace ThScoreFileConverter.Models.Th125;
 // %T125SHOTEX[w][x][y][z]
 internal class ShotExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOTEX({1})({2})([1-9])([1-7])",
-        Definitions.FormatPrefix,
-        Parsers.CharaParser.Pattern,
-        Parsers.LevelParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOTEX({Parsers.CharaParser.Pattern})({Parsers.LevelParser.Pattern})([1-9])([1-7])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -107,38 +104,33 @@ internal class ShotExReplacer : IStringReplaceable
     {
         Func<int, string> str = formatter.FormatNumber;
 
-        static string Fmt(string format, object value)
+        return new Detail[]
         {
-            return Utils.Format(format, value);
-        }
-
-        return new[]
-        {
-            new Detail(true,                       "Base Point    {0,9}", str(header.BasePoint)),
-            new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", Fmt("+ {0}", header.ClearShot)),
-            new Detail(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
-            new Detail(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
-            new Detail(header.Fields.PurpleShot,   "Purple Shot   {0,9}", "+ 300"),
-            new Detail(header.Fields.BlueShot,     "Blue Shot     {0,9}", "+ 300"),
-            new Detail(header.Fields.CyanShot,     "Cyan Shot     {0,9}", "+ 300"),
-            new Detail(header.Fields.GreenShot,    "Green Shot    {0,9}", "+ 300"),
-            new Detail(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
-            new Detail(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
-            new Detail(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
-            new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", Fmt("+ {0}", str(2100))),
-            new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", Fmt("+ {0}", str(header.RiskBonus))),
-            new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", Fmt("+ {0}", str(header.MacroBonus))),
-            new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", Fmt("+ {0}", header.FrontSideBackShot)),
-            new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", Fmt("+ {0}", header.FrontSideBackShot)),
-            new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", Fmt("+ {0}", header.FrontSideBackShot)),
-            new Detail(header.Fields.CatBonus,     "Cat Bonus     {0,9}", "+ 666"),
-            new Detail(true,                       string.Empty,          string.Empty),
-            new Detail(true,                       "Boss Shot!    {0,9}", Fmt("* {0:F2}", header.BossShot)),
-            new Detail(header.Fields.TwoShot,      "Two Shot!     {0,9}", "* 1.50"),
-            new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", Fmt("* {0:F2}", header.NiceShot)),
-            new Detail(true,                       "Angle Bonus   {0,9}", Fmt("* {0:F2}", header.AngleBonus)),
-            new Detail(true,                       string.Empty,          string.Empty),
-            new Detail(true,                       "Result Score  {0,9}", str(header.ResultScore)),
+            new(true,                       "Base Point    {0,9}", str(header.BasePoint)),
+            new(header.Fields.ClearShot,    "Clear Shot!   {0,9}", StringHelper.Create($"+ {header.ClearShot}")),
+            new(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
+            new(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
+            new(header.Fields.PurpleShot,   "Purple Shot   {0,9}", "+ 300"),
+            new(header.Fields.BlueShot,     "Blue Shot     {0,9}", "+ 300"),
+            new(header.Fields.CyanShot,     "Cyan Shot     {0,9}", "+ 300"),
+            new(header.Fields.GreenShot,    "Green Shot    {0,9}", "+ 300"),
+            new(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
+            new(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
+            new(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
+            new(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", StringHelper.Create($"+ {str(2100)}")),
+            new(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", StringHelper.Create($"+ {str(header.RiskBonus)}")),
+            new(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", StringHelper.Create($"+ {str(header.MacroBonus)}")),
+            new(header.Fields.FrontShot,    "Front Shot    {0,9}", StringHelper.Create($"+ {header.FrontSideBackShot}")),
+            new(header.Fields.SideShot,     "Side Shot     {0,9}", StringHelper.Create($"+ {header.FrontSideBackShot}")),
+            new(header.Fields.BackShot,     "Back Shot     {0,9}", StringHelper.Create($"+ {header.FrontSideBackShot}")),
+            new(header.Fields.CatBonus,     "Cat Bonus     {0,9}", "+ 666"),
+            new(true,                       string.Empty,          string.Empty),
+            new(true,                       "Boss Shot!    {0,9}", StringHelper.Create($"* {header.BossShot:F2}")),
+            new(header.Fields.TwoShot,      "Two Shot!     {0,9}", "* 1.50"),
+            new(header.Fields.NiceShot,     "Nice Shot!    {0,9}", StringHelper.Create($"* {header.NiceShot:F2}")),
+            new(true,                       "Angle Bonus   {0,9}", StringHelper.Create($"* {header.AngleBonus:F2}")),
+            new(true,                       string.Empty,          string.Empty),
+            new(true,                       "Result Score  {0,9}", str(header.ResultScore)),
         };
     }
 

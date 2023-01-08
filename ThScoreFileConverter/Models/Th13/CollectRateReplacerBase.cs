@@ -73,13 +73,8 @@ internal class CollectRateReplacerBase<
         Func<TGameMode, TChWithT, IEnumerable<ISpellCard<TLv>>> getSpellCards,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}CRG({1})({2})({3})({4})([12])",
-            formatPrefix,
-            gameModeParser.Pattern,
-            levelWithTotalParser.Pattern,
-            charaWithTotalParser.Pattern,
-            stageWithTotalParser.Pattern);
+        this.pattern = StringHelper.Create(
+            $"{formatPrefix}CRG({gameModeParser.Pattern})({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var mode = gameModeParser.Parse(match.Groups[1].Value);

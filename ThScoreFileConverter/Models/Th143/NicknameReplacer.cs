@@ -16,7 +16,7 @@ namespace ThScoreFileConverter.Models.Th143;
 // %T143NICK[xx]
 internal class NicknameReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(@"{0}NICK(\d{{2}})", Definitions.FormatPrefix);
+    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}NICK(\d{{2}})");
 
     private readonly MatchEvaluator evaluator;
 

@@ -31,11 +31,8 @@ internal class CharaExReplacerBase<TCharaWithTotal> : IStringReplaceable
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}CHARAEX({1})({2})([1-3])",
-            formatPrefix,
-            levelWithTotalParser.Pattern,
-            charaWithTotalParser.Pattern);
+        this.pattern = StringHelper.Create(
+            $"{formatPrefix}CHARAEX({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelWithTotalParser.Parse(match.Groups[1].Value);

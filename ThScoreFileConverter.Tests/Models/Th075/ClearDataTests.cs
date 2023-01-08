@@ -2,7 +2,7 @@
 using System.Linq;
 using Moq;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverter.Tests.Models.Th075.Stubs;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -42,7 +42,7 @@ public class ClearDataTests
                 .Select(index => new HighScoreStub()
                 {
                     EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
-                    Name = Utils.Format("Player{0} ", index),
+                    Name = StringHelper.Create($"Player{index} "),
                     Month = (byte)(1 + index),
                     Day = (byte)(10 + index),
                     Score = 1234567 + index,

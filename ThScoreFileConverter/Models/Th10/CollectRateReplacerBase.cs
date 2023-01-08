@@ -31,12 +31,8 @@ internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}CRG({1})({2})({3})([12])",
-            formatPrefix,
-            levelWithTotalParser.Pattern,
-            charaWithTotalParser.Pattern,
-            stageWithTotalParser.Pattern);
+        this.pattern = StringHelper.Create(
+            $"{formatPrefix}CRG({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelWithTotalParser.Parse(match.Groups[1].Value);

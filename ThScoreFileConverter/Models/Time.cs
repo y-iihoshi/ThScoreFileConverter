@@ -7,6 +7,7 @@
 
 using System;
 using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
@@ -174,7 +175,7 @@ public class Time
     /// <returns>A string that represents the current instance.</returns>
     public override string ToString()
     {
-        return Utils.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
+        return StringHelper.Create($"{this.Hours}:{this.Minutes:D2}:{this.Seconds:D2}");
     }
 
     /// <summary>
@@ -186,9 +187,7 @@ public class Time
     public string ToLongString()
     {
         return this.IsFrames
-            ? Utils.Format(
-                "{0}:{1:D2}:{2:D2}.{3:D2}", this.Hours, this.Minutes, this.Seconds, this.Frames)
-            : Utils.Format(
-                "{0}:{1:D2}:{2:D2}.{3:D3}", this.Hours, this.Minutes, this.Seconds, this.Milliseconds);
+            ? StringHelper.Create($"{this.Hours}:{this.Minutes:D2}:{this.Seconds:D2}.{this.Frames:D2}")
+            : StringHelper.Create($"{this.Hours}:{this.Minutes:D2}:{this.Seconds:D2}.{this.Milliseconds:D3}");
     }
 }

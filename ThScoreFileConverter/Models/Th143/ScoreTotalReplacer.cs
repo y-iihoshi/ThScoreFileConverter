@@ -18,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th143;
 // %T143SCRTL[x][y]
 internal class ScoreTotalReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SCRTL({1})([1-4])", Definitions.FormatPrefix, Parsers.ItemWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SCRTL({Parsers.ItemWithTotalParser.Pattern})([1-4])");
 
     private readonly MatchEvaluator evaluator;
 

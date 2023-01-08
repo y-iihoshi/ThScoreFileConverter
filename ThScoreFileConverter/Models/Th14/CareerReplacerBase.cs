@@ -40,12 +40,10 @@ internal class CareerReplacerBase<
             TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>> clearDataDictionary,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}C({1})(\d{{{2}}})({3})([12])",
-            formatPrefix,
-            gameModeParser.Pattern,
-            IntegerHelper.GetNumDigits(validCardNumbers.Count()),
-            charaWithTotalParser.Pattern);
+        var numDigits = IntegerHelper.GetNumDigits(validCardNumbers.Count());
+
+        this.pattern = StringHelper.Create(
+            $@"{formatPrefix}C({gameModeParser.Pattern})(\d{{{numDigits}}})({charaWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var mode = gameModeParser.Parse(match.Groups[1].Value);

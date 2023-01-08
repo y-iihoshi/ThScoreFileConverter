@@ -11,18 +11,15 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th06;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06PRAC[x][yy][z]
 internal class PracticeReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}PRAC({1})({2})({3})",
-        Definitions.FormatPrefix,
-        Parsers.LevelParser.Pattern,
-        Parsers.CharaParser.Pattern,
-        Parsers.StageParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 

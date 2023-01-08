@@ -10,14 +10,15 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models.Th145;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th145;
 
 // %T145CLEAR[x][yy]
 internal class ClearRankReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 

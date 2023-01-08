@@ -7,6 +7,7 @@
 
 using System;
 using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
@@ -65,6 +66,5 @@ internal class ThConverterEventArgs : EventArgs
     /// <summary>
     /// Gets a message string that represents the current instance.
     /// </summary>
-    public string Message => Utils.Format(
-        "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
+    public string Message => StringHelper.Create($"({this.Current}/{this.Total}) {System.IO.Path.GetFileName(this.Path)} ");
 }

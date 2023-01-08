@@ -18,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th175;
 // %T175CHR[xx][y]
 internal class CharaReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CHR({1})([1-4])", Definitions.FormatPrefix, Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CHR({Parsers.CharaWithTotalParser.Pattern})([1-4])");
 
     private readonly MatchEvaluator evaluator;
 

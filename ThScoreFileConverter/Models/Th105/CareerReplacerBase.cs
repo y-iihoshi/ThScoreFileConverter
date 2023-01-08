@@ -33,12 +33,9 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
         INumberFormatter formatter)
     {
         var numLevels = EnumHelper<Level>.NumValues;
+        var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
 
-        this.pattern = Utils.Format(
-            @"{0}C(\d{{{1}}})({2})([1-3])",
-            formatPrefix,
-            IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
-            charaParser.Pattern);
+        this.pattern = StringHelper.Create($@"{formatPrefix}C(\d{{{numDigits}}})({charaParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);
@@ -60,11 +57,8 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
                 3 => value =>
                 {
                     var time = new Time(value);
-                    return Utils.Format(
-                        "{0:D2}:{1:D2}.{2:D3}",
-                        (time.Hours * 60) + time.Minutes,
-                        time.Seconds,
-                        time.Frames * 1000 / 60);
+                    return StringHelper.Create(
+                        $"{(time.Hours * 60) + time.Minutes:D2}:{time.Seconds:D2}.{time.Frames * 1000 / 60:D3}");
                 },
                 _ => formatter.FormatNumber,
             };

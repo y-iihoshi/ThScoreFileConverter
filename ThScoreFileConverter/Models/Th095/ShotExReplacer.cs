@@ -20,8 +20,8 @@ namespace ThScoreFileConverter.Models.Th095;
 // %T95SHOTEX[x][y][z]
 internal class ShotExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOTEX({1})([1-9])([1-6])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOTEX({Parsers.LevelParser.Pattern})([1-9])([1-6])");
 
     private readonly MatchEvaluator evaluator;
 

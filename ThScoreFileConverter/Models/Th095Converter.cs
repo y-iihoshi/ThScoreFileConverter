@@ -86,7 +86,7 @@ internal class Th095Converter : ThConverter
 
     protected override string[] FilterBestShotFiles(string[] files)
     {
-        var pattern = Utils.Format(@"bs_({0})_[1-9].dat", Parsers.LevelLongPattern);
+        var pattern = StringHelper.Create($"bs_({Parsers.LevelLongPattern})_[1-9].dat");
 
         return files.Where(file => Regex.IsMatch(
             Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();

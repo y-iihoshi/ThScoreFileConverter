@@ -37,7 +37,7 @@ internal class CharaReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, 
             TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>> clearDataDictionary,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(@"{0}CHARA({1})([1-3])", formatPrefix, charaWithTotalParser.Pattern);
+        this.pattern = StringHelper.Create($"{formatPrefix}CHARA({charaWithTotalParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var chara = charaWithTotalParser.Parse(match.Groups[1].Value);

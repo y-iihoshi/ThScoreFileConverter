@@ -10,17 +10,15 @@
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08PLAY[x][yy]
 internal class PlayReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}PLAY({1})({2}|CL|CN|PR)",
-        Definitions.FormatPrefix,
-        Parsers.LevelWithTotalParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}PLAY({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern}|CL|CN|PR)");
 
     private readonly MatchEvaluator evaluator;
 

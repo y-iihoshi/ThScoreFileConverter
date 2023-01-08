@@ -88,7 +88,7 @@ internal class Th165Converter : ThConverter
 
     protected override string[] FilterBestShotFiles(string[] files)
     {
-        var pattern = Utils.Format(@"bs({0})_\d{{2}}.dat", Parsers.DayLongPattern);
+        var pattern = StringHelper.Create($@"bs({Parsers.DayLongPattern})_\d{{2}}.dat");
 
         return files.Where(file => Regex.IsMatch(
             Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();

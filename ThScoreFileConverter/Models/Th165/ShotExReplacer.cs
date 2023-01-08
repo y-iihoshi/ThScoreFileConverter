@@ -20,8 +20,8 @@ namespace ThScoreFileConverter.Models.Th165;
 // %T165SHOTEX[xx][y][z]
 internal class ShotExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOTEX({1})([1-7])([1-9])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([1-7])([1-9])");
 
     private static readonly Func<IBestShotHeader, IReadOnlyList<Hashtag>> HashtagList =
         header => new List<Hashtag>
