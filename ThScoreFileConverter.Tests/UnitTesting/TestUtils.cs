@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using CommunityToolkit.Diagnostics;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
@@ -87,33 +86,11 @@ public static class TestUtils
         return stream.ToArray();
     }
 
-    public static TResult[] MakeRandomArray<TResult>(int length)
-        where TResult : struct
+    public static byte[] MakeRandomArray(int length)
     {
-        var defaultValue = default(TResult);
-
-        Func<object> getNextValue = defaultValue switch
-        {
-            byte => () => Random.Next(byte.MaxValue + 1),
-            short => () => Random.Next(short.MaxValue + 1),
-            ushort => () => Random.Next(ushort.MaxValue + 1),
-            int => () =>
-            {
-                var maxValue = ushort.MaxValue + 1;
-                return (Random.Next(maxValue) << 16) | Random.Next(maxValue);
-            },
-            uint => () =>
-            {
-                var maxValue = ushort.MaxValue + 1;
-                return ((uint)Random.Next(maxValue) << 16) | (uint)Random.Next(maxValue);
-            },
-            _ => throw new NotImplementedException(),
-        };
-
-        return Enumerable
-            .Repeat(defaultValue, length)
-            .Select(i => (TResult)Convert.ChangeType(getNextValue(), typeof(TResult), CultureInfo.InvariantCulture))
-            .ToArray();
+        var bytes = new byte[length];
+        Random.NextBytes(bytes);
+        return bytes;
     }
 
     public static T Create<T>(byte[] array)

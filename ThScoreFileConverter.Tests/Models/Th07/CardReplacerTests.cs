@@ -17,7 +17,7 @@ public class CardReplacerTests
         _ = mock2.SetupGet(m => m.MaxBonuses).Returns(
             mock1.Object.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
         _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
         _ = mock2.SetupGet(m => m.TrialCounts).Returns(
             mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
         _ = mock2.SetupGet(m => m.ClearCounts).Returns(

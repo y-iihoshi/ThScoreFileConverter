@@ -12,7 +12,7 @@ public class AbilityCardReplacerTests
     {
         var mock = new Mock<IAbilityCardHolder>();
         _ = mock.SetupGet(m => m.AbilityCards).Returns(Enumerable.Range(0, 56).Select(number => (byte)(number % 4)));
-        _ = mock.SetupGet(m => m.InitialHoldAbilityCards).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock.SetupGet(m => m.InitialHoldAbilityCards).Returns(TestUtils.MakeRandomArray(0x30));
         return mock;
     }
 

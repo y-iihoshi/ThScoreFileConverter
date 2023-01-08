@@ -23,9 +23,9 @@ public class CardAttackTests
         _ = mock.SetupGet(m => m.Size2).Returns(0x22C);
         _ = mock.SetupGet(m => m.CardId).Returns(123);
         _ = mock.SetupGet(m => m.Level).Returns(LevelPracticeWithTotal.Lunatic);
-        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
-        _ = mock.SetupGet(m => m.EnemyName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
-        _ = mock.SetupGet(m => m.Comment).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
+        _ = mock.SetupGet(m => m.EnemyName).Returns(TestUtils.MakeRandomArray(0x30));
+        _ = mock.SetupGet(m => m.Comment).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.StoryCareer).Returns(CardAttackCareerTests.MockCardAttackCareer().Object);
         _ = mock.SetupGet(m => m.PracticeCareer).Returns(CardAttackCareerTests.MockCardAttackCareer().Object);
         SetupHasTried(mock);

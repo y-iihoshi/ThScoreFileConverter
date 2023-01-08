@@ -57,7 +57,7 @@ public class ClearDataTests
             int clear, int practiceClear, int trial, int practiceTrial, int id, Level level)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0xC0));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0xC0));
             _ = mock.SetupGet(s => s.ClearCount).Returns(clear);
             _ = mock.SetupGet(s => s.PracticeClearCount).Returns(practiceClear);
             _ = mock.SetupGet(s => s.TrialCount).Returns(trial);

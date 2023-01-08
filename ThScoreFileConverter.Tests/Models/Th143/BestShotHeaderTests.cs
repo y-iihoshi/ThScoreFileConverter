@@ -45,7 +45,7 @@ public class BestShotHeaderTests
             0u,
             header.DateTime,
             header.SlowRate,
-            TestUtils.MakeRandomArray<byte>(0x58));
+            TestUtils.MakeRandomArray(0x58));
     }
 
     internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)

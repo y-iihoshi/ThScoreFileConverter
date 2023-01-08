@@ -20,7 +20,7 @@ public class SpellCardTests
     internal static Mock<ISpellCard<Level>> MockSpellCard()
     {
         var mock = new Mock<ISpellCard<Level>>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.ClearCount).Returns(123);
         _ = mock.SetupGet(m => m.TrialCount).Returns(456);
         _ = mock.SetupGet(m => m.Id).Returns(789);
@@ -84,7 +84,7 @@ public class SpellCardTests
     {
         var mock = MockSpellCard();
         var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));

@@ -85,7 +85,7 @@ public class BestShotHeaderTests
             header.Score,
             0u,
             header.Fields.Data,
-            TestUtils.MakeRandomArray<byte>(0x28),
+            TestUtils.MakeRandomArray(0x28),
             header.Score2,
             header.BasePoint,
             header.NumViewed,
@@ -111,7 +111,7 @@ public class BestShotHeaderTests
             header.NumYellowBullets,
             header.NumOrangeBullets,
             header.NumLightBullets,
-            TestUtils.MakeRandomArray<byte>(0x78));
+            TestUtils.MakeRandomArray(0x78));
     }
 
     internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)

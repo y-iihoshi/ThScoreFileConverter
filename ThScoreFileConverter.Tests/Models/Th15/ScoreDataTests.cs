@@ -23,7 +23,7 @@ public class ScoreDataTests
         _ = mock.SetupGet(m => m.Score).Returns(12u);
         _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Three);
         _ = mock.SetupGet(m => m.ContinueCount).Returns(4);
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(10));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(10));
         _ = mock.SetupGet(m => m.DateTime).Returns(56u);
         _ = mock.SetupGet(m => m.SlowRate).Returns(7.8f);
         _ = mock.SetupGet(m => m.RetryCount).Returns(9u);
@@ -102,7 +102,7 @@ public class ScoreDataTests
         var mock = MockScoreData();
         var name = mock.Object.Name;
         var validNameLength = name.Count();
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 

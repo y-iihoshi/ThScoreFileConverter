@@ -17,13 +17,13 @@ public class CollectRateReplacerTests
 
         var mock2 = CardAttackTests.MockCardAttack();
         _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
         _ = mock2.SetupGet(m => m.ClearCount).Returns(0);
         _ = mock2.SetupGet(m => m.TrialCount).Returns(123);
 
         var mock3 = CardAttackTests.MockCardAttack();
         _ = mock3.SetupGet(m => m.CardId).Returns(2);
-        _ = mock3.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+        _ = mock3.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
         _ = mock3.SetupGet(m => m.ClearCount).Returns(123);
         _ = mock3.SetupGet(m => m.TrialCount).Returns(123);
 

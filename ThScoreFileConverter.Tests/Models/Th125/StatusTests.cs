@@ -18,7 +18,7 @@ public class StatusTests
         _ = mock.SetupGet(m => m.Size).Returns(0x474);
         _ = mock.SetupGet(m => m.Checksum).Returns(0u);
         _ = mock.SetupGet(m => m.LastName).Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"));
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(6));
+        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(6));
         _ = mock.SetupGet(m => m.TotalPlayTime).Returns(12345678);
         return mock;
     }

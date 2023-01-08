@@ -15,7 +15,7 @@ public class CardReplacerTests
 
         var mock2 = CardAttackTests.MockCardAttack();
         _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
         _ = mock2.SetupGet(m => m.ClearCount).Returns(0);
         _ = mock2.SetupGet(m => m.TrialCount).Returns(0);
         _ = mock2.SetupGet(m => m.HasTried).Returns(false);

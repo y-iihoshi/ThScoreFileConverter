@@ -24,7 +24,7 @@ public class CardAttackTests
         _ = mock.SetupGet(m => m.MaxBonuses).Returns(
             pairs.ToDictionary(pair => pair.chara, pair => (uint)pair.index));
         _ = mock.SetupGet(m => m.CardId).Returns(123);
-        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
         _ = mock.SetupGet(m => m.TrialCounts).Returns(
             pairs.ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)));
         _ = mock.SetupGet(m => m.ClearCounts).Returns(

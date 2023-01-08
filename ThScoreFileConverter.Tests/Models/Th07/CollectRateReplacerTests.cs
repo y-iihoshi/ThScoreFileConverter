@@ -17,7 +17,7 @@ public class CollectRateReplacerTests
 
         var mock2 = CardAttackTests.MockCardAttack();
         _ = mock2.SetupGet(m => m.CardId).Returns(2);
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
         _ = mock2.SetupGet(m => m.TrialCounts).Returns(
             mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 4)));
         _ = mock2.SetupGet(m => m.ClearCounts).Returns(
@@ -25,7 +25,7 @@ public class CollectRateReplacerTests
 
         var mock3 = CardAttackTests.MockCardAttack();
         _ = mock3.SetupGet(m => m.CardId).Returns(6);
-        _ = mock3.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock3.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
         _ = mock3.SetupGet(m => m.TrialCounts).Returns(
             mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 5)));
         _ = mock3.SetupGet(m => m.ClearCounts).Returns(
@@ -33,7 +33,7 @@ public class CollectRateReplacerTests
 
         var mock4 = CardAttackTests.MockCardAttack();
         _ = mock4.SetupGet(m => m.CardId).Returns(129);
-        _ = mock4.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock4.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
         _ = mock4.SetupGet(m => m.TrialCounts).Returns(
             mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
         _ = mock4.SetupGet(m => m.ClearCounts).Returns(
@@ -248,7 +248,7 @@ public class CollectRateReplacerTests
     {
         var mock = CardAttackTests.MockCardAttack();
         _ = mock.SetupGet(m => m.CardId).Returns(142);
-        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
+        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
         var cardAttacks = new[] { mock.Object }.ToDictionary(attack => (int)attack.CardId);
         var formatterMock = MockNumberFormatter();
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock.Object);

@@ -153,7 +153,7 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var cardName = mock.Object.CardName;
-        _ = mock.SetupGet(m => m.CardName).Returns(cardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.CardName).Returns(cardName.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 

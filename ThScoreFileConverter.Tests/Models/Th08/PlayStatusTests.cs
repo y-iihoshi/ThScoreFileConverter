@@ -26,7 +26,7 @@ public class PlayStatusTests
             EnumHelper<Level>.Enumerable.ToDictionary(
                 level => level, level => PlayCountTests.MockPlayCount().Object));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(PlayCountTests.MockPlayCount().Object);
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(21));
+        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(21));
         return mock;
     }
 

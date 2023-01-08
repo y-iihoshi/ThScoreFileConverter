@@ -16,7 +16,7 @@ public class CardAttackTests
         _ = attack.SetupGet(m => m.Size1).Returns(0x40);
         _ = attack.SetupGet(m => m.Size2).Returns(0x40);
         _ = attack.SetupGet(m => m.CardId).Returns(23);
-        _ = attack.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x24));
+        _ = attack.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
         _ = attack.SetupGet(m => m.TrialCount).Returns(789);
         _ = attack.SetupGet(m => m.ClearCount).Returns(456);
         _ = attack.SetupGet(m => m.HasTried).Returns(true);

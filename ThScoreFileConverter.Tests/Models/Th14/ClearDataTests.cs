@@ -52,7 +52,7 @@ public class ClearDataTests
         static ISpellCard CreateSpellCard(int index)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0x80));
             _ = mock.SetupGet(s => s.ClearCount).Returns(12 + index);
             _ = mock.SetupGet(s => s.PracticeClearCount).Returns(34 + index);
             _ = mock.SetupGet(s => s.TrialCount).Returns(56 + index);

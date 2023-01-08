@@ -21,7 +21,7 @@ public class SpellCardTests
         where TLevel : struct, Enum
     {
         var mock = new Mock<ISpellCard<TLevel>>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.ClearCount).Returns(1);
         _ = mock.SetupGet(m => m.PracticeClearCount).Returns(2);
         _ = mock.SetupGet(m => m.TrialCount).Returns(3);
@@ -96,7 +96,7 @@ public class SpellCardTests
     {
         var mock = MockSpellCard<TLevel>();
         var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));

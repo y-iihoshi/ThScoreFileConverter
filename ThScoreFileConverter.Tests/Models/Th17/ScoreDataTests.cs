@@ -69,7 +69,7 @@ public class ScoreDataTests
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
         var name = mock.Object.Name;
         var validNameLength = name.Count();
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 

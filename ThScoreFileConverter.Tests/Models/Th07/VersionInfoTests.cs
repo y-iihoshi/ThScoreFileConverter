@@ -22,7 +22,7 @@ public class VersionInfoTests
         signature = "VRSM",
         size1 = 0x1C,
         size2 = 0x1C,
-        version = TestUtils.MakeRandomArray<byte>(6),
+        version = TestUtils.MakeRandomArray(6),
     };
 
     internal static byte[] MakeData(in Properties properties)
