@@ -42,24 +42,16 @@ internal class ShotExReplacer : IStringReplaceable
 
             if (bestshots.TryGetValue(key, out var bestshot))
             {
-                switch (type)
+                return type switch
                 {
-                    case 1:     // relative path to the bestshot file
-                        return UriHelper.GetRelativePath(outputFilePath, bestshot.Path);
-                    case 2:     // width
-                        return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                    case 3:     // height
-                        return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                    case 4:     // score
-                        return formatter.FormatNumber(bestshot.Header.ResultScore);
-                    case 5:     // slow rate
-                        return formatter.FormatPercent(bestshot.Header.SlowRate, 6);
-                    case 6:     // date & time
-                        return DateTimeHelper.GetString(
-                            scores.FirstOrDefault(s => (s is not null) && s.LevelScene.Equals(key))?.DateTime);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
+                    2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
+                    3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
+                    4 => formatter.FormatNumber(bestshot.Header.ResultScore),
+                    5 => formatter.FormatPercent(bestshot.Header.SlowRate, 6),
+                    6 => DateTimeHelper.GetString(scores.FirstOrDefault(s => (s is not null) && s.LevelScene.Equals(key))?.DateTime),
+                    _ => match.ToString(),
+                };
             }
             else
             {

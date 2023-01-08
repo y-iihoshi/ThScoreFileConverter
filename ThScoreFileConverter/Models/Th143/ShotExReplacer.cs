@@ -40,19 +40,14 @@ internal class ShotExReplacer : IStringReplaceable
 
             if (bestshots.TryGetValue(key, out var bestshot))
             {
-                switch (type)
+                return type switch
                 {
-                    case 1:     // relative path to the bestshot file
-                        return UriHelper.GetRelativePath(outputFilePath, bestshot.Path);
-                    case 2:     // width
-                        return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                    case 3:     // height
-                        return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                    case 4:     // date & time
-                        return DateTimeHelper.GetString(bestshot.Header.DateTime);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
+                    2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
+                    3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
+                    4 => DateTimeHelper.GetString(bestshot.Header.DateTime),
+                    _ => match.ToString(),
+                };
             }
             else
             {
