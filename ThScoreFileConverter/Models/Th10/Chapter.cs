@@ -46,19 +46,19 @@ internal class Chapter : IBinaryReadable, Th095.IChapter
         if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
         }
 
         if (this.Version != expectedVersion)
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Version)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Version)));
         }
 
         if (this.Size != expectedSize)
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size)));
         }
     }
 

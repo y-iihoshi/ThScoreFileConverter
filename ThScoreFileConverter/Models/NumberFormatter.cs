@@ -42,6 +42,6 @@ internal class NumberFormatter : INumberFormatter
     {
         Guard.IsInRange(precision, 0, 100);
 
-        return Utils.Format(StringHelper.Create($"{{0:F{precision}}}%"), number);
+        return StringHelper.Format(StringHelper.Create($"{{0:F{precision}}}%"), number);
     }
 }

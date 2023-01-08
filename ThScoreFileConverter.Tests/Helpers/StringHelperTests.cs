@@ -17,8 +17,16 @@ public class StringHelperTests
 #else
         var expected = string.Format(CultureInfo.CurrentCulture, "{0:F}", now);
 #endif
-        var actual = StringHelper.Create($"{now:F}");
 
-        Assert.AreEqual(expected, actual);
+        Assert.AreEqual(expected, StringHelper.Create($"{now:F}"));
+    }
+
+    [TestMethod]
+    public void FormatTest()
+    {
+        var now = DateTime.Now;
+        var expected = string.Format(CultureInfo.CurrentCulture, "{0:F}", now);
+
+        Assert.AreEqual(expected, StringHelper.Format("{0:F}", now));
     }
 }

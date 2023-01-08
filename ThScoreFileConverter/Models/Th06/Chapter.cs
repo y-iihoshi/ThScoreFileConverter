@@ -42,13 +42,13 @@ internal class Chapter : IBinaryReadable, IChapter
         if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
         }
 
         if (this.Size1 != expectedSize)
         {
             ThrowHelper.ThrowInvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
         }
     }
 

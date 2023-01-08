@@ -72,7 +72,7 @@ internal class ShotExReplacer : IStringReplaceable
                     case 7:     // detail info
                         detailStrings = MakeDetailList(bestshot.Header, formatter)
                             .Where(detail => detail.Outputs)
-                            .Select(detail => Utils.Format(detail.Format, detail.Value));
+                            .Select(detail => StringHelper.Format(detail.Format, detail.Value));
                         return string.Join(Environment.NewLine, detailStrings.ToArray());
                     default:    // unreachable
                         return match.ToString();
