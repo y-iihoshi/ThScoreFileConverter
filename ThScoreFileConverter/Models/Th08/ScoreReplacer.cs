@@ -84,7 +84,7 @@ internal class ScoreReplacer : IStringReplaceable
                         return Definitions.CardTable.TryGetValue(pair.Key, out var card)
                             ? StringHelper.Create($"No.{card.Id:D3} {card.Name}") : string.Empty;
                     });
-                    return string.Join(Environment.NewLine, cardStrings.ToArray());
+                    return string.Join(Environment.NewLine, cardStrings);
                 case "G":   // number of got spell cards
                     return formatter.FormatNumber(score.CardFlags.Values.Count(flag => flag > 0));
                 default:    // unreachable

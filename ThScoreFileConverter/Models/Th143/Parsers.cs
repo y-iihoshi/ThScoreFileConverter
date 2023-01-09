@@ -33,5 +33,5 @@ internal static class Parsers
     /// Gets the pattern used for parsing as a long name of a <see cref="Day"/> enumerator.
     /// </summary>
     public static string DayLongPattern { get; } =
-        string.Join("|", EnumHelper<Day>.Enumerable.Select(day => day.ToLongName()).ToArray());
+        string.Join("|", EnumHelper<Day>.Enumerable.Select(day => day.ToLongName()));
 }

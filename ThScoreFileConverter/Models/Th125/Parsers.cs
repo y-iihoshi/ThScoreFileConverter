@@ -33,5 +33,5 @@ internal static class Parsers
     /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
     /// </summary>
     public static string LevelLongPattern { get; } =
-        string.Join("|", EnumHelper<Level>.Enumerable.Select(lv => lv.ToLongName()).ToArray());
+        string.Join("|", EnumHelper<Level>.Enumerable.Select(lv => lv.ToLongName()));
 }

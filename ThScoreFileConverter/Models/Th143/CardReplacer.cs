@@ -51,7 +51,7 @@ internal class CardReplacer : IStringReplaceable
 
             if (type == 1)
             {
-                return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()).ToArray());
+                return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
             }
             else
             {
