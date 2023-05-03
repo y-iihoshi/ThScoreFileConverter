@@ -39,7 +39,7 @@ goto end
 goto end
 
 :catalog
-%SPHINXINTL% update -p %BUILDDIR%\gettext
+%SPHINXINTL% update -p %BUILDDIR%\gettext -w 0
 goto end
 
 :multilangs
