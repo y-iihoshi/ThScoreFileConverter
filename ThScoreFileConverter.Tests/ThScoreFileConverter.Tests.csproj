@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Unit test project for ThScoreFileConverter.</Description>
-    <Copyright>Copyright © 2017-2022 IIHOSHI Yoshinori</Copyright>
+    <Copyright>Copyright © 2017 IIHOSHI Yoshinori</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Copyright>© 2021-2022 IIHOSHI Yoshinori</Copyright>
+    <Copyright>© 2021 IIHOSHI Yoshinori</Copyright>
     <Description>Generator of the template files input to ThScoreFileConverter.</Description>
   </PropertyGroup>
 
