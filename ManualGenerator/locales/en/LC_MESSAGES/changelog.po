@@ -1,5 +1,5 @@
 # Changelog of ThScoreFileConverter.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 #
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 14:42+0900\n"
-"PO-Revision-Date: 2023-05-03 15:27+0900\n"
+"PO-Revision-Date: 2023-05-03 21:44+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgid "東方虹龍洞に対応"
 msgstr "Supports TH18 Unconnected Marketeers."
 
 msgid "東方剛欲異聞に試験的に対応"
-msgstr "Experimental supports TH17.5 Touhou Gouyoku Ibun."
+msgstr "Experimental supports TH17.5 Sunken Fossil World."
 
 msgid "UI の表示言語を日本語と英語から選択できるように変更"
 msgstr "Makes the displaying language in the GUI selectable from Japanese or English."

@@ -8,7 +8,7 @@
 namespace ThScoreFileConverter.Core.Models.Th175;
 
 /// <summary>
-/// Represents levels of Gouyoku Ibun and total.
+/// Represents levels of SFW and total.
 /// </summary>
 public enum LevelWithTotal
 {

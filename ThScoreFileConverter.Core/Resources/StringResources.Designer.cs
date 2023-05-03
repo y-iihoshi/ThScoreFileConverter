@@ -286,7 +286,7 @@ namespace ThScoreFileConverter.Core.Resources {
         }
         
         /// <summary>
-        ///   Touhou Gouyoku Ibun に類似しているローカライズされた文字列を検索します。
+        ///   Sunken Fossil World に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string TH175 {
             get {

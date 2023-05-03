@@ -1,5 +1,5 @@
 # Supporting status of ThScoreFileConverter.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 #
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-23 11:52+0900\n"
-"PO-Revision-Date: 2022-07-23 14:39+0900\n"
+"PO-Revision-Date: 2023-05-03 21:44+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgstr ""
 "possibility that problems will occur due to lack of testing."
 
 msgid "東方剛欲異聞 ver. 1.04"
-msgstr "Touhou Gouyoku Ibun ver. 1.04"
+msgstr "Sunken Fossil World ver. 1.04"
 
 msgid "対応予定あり"
 msgstr "Will be supported"

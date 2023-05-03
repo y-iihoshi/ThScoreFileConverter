@@ -8,7 +8,7 @@
 namespace ThScoreFileConverter.Core.Models.Th175;
 
 /// <summary>
-/// Represents player characters of Gouyoku Ibun.
+/// Represents player characters of SFW.
 /// </summary>
 public enum Chara
 {
