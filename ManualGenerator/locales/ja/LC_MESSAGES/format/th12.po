@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-29 16:57+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2023-05-03 20:08+0900\n"
+"PO-Revision-Date: 2023-05-03 21:17+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-msgid "東方星蓮船用テンプレート書式"
+msgid "東方星蓮船用"
 msgstr ""
 
 msgid "スコアランキング"
@@ -252,14 +252,10 @@ msgstr ""
 msgid "``%T12CARD003R`` ... Easy"
 msgstr ""
 
-msgid ""
-":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前が ``?????`` "
-"のように出力されます。 （一応ネタバレ防止のため。）"
+msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前が ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
 msgstr ""
 
-msgid ""
-"一方、 スペルカードの難易度は、 未挑戦かどうかにかかわらず常に出力されます。 原作でも Result 画面を見れば難易度はバレるので、 "
-"このような仕様にしています。"
+msgid "一方、 スペルカードの難易度は、 未挑戦かどうかにかかわらず常に出力されます。 原作でも Result 画面を見れば難易度はバレるので、 このような仕様にしています。"
 msgstr ""
 
 msgid "スペルカード蒐集率"
@@ -322,15 +318,10 @@ msgstr ""
 msgid "``%T12CLEARNRB`` ... Normal 霊夢（霊）のクリア達成度"
 msgstr ""
 
-msgid ""
-"クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, "
-"``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All "
-"Clear``, ``Not Clear`` （Extra 未クリア）"
+msgid "クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``, ``Not Clear`` （Extra 未クリア）"
 msgstr ""
 
-msgid ""
-"本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 "
-"ランキング上に存在していなければ未クリア扱いになってしまいます。"
+msgid "本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 ランキング上に存在していなければ未クリア扱いになってしまいます。"
 msgstr ""
 
 msgid "キャラごとの個別データ"

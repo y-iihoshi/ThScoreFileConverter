@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,17 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-29 16:57+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2023-05-03 20:08+0900\n"
+"PO-Revision-Date: 2023-05-03 21:16+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-msgid "東方永夜抄用テンプレート書式"
-msgstr ""
+msgid "東方永夜抄用"
+msgstr "For TH08 Imperishable Night"
 
 msgid "スコアランキング"
 msgstr ""
@@ -300,10 +300,7 @@ msgstr ""
 msgid "人間率は小数点以下第 2 位まで（% 記号付きで）出力されます。 第 3 位以下はスコアファイルに保存されていません。"
 msgstr ""
 
-msgid ""
-"本ツールには、 `東方メモリマネージャー "
-"<http://www.sue445.net/downloads/ThMemoryManager.html>`_ の "
-"``GetSpellListTag`` 相当の設定項目はありません。 今後対応するかも知れません。"
+msgid "本ツールには、 `東方メモリマネージャー <http://www.sue445.net/downloads/ThMemoryManager.html>`_ の ``GetSpellListTag`` 相当の設定項目はありません。 今後対応するかも知れません。"
 msgstr ""
 
 msgid "御札戦歴"
@@ -396,9 +393,7 @@ msgstr ""
 msgid "``%T08CARD023R`` ... Normal"
 msgstr ""
 
-msgid ""
-":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????``"
-" のように出力されます。 （一応ネタバレ防止のため。）"
+msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
 msgstr ""
 
 msgid "スペルカード蒐集率"
@@ -518,15 +513,10 @@ msgstr ""
 msgid "``%T08CLEARNSK`` ... Normal 咲夜のクリア達成度"
 msgstr ""
 
-msgid ""
-"クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, "
-"``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6A``, ``Stage"
-" 6B``, ``FinalA Clear``, ``All Clear``, ``Not Clear`` （Extra 未クリア）"
+msgid "クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6A``, ``Stage 6B``, ``FinalA Clear``, ``All Clear``, ``Not Clear`` （Extra 未クリア）"
 msgstr ""
 
-msgid ""
-"本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 "
-"ランキング上に存在していなければ未クリア扱いになってしまいます。"
+msgid "本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 ランキング上に存在していなければ未クリア扱いになってしまいます。"
 msgstr ""
 
 msgid "スコアファイル内に、 クリア達成度を示すフラグのようなものが保存されているため、 ``FinalA Clear`` の判定に使用しています。"

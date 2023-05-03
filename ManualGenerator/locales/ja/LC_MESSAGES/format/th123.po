@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-29 16:57+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2023-05-03 20:08+0900\n"
+"PO-Revision-Date: 2023-05-03 21:17+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-msgid "東方非想天則用テンプレート書式"
+msgid "東方非想天則用"
 msgstr ""
 
 msgid "御札戦歴"
@@ -141,9 +141,7 @@ msgstr ""
 msgid "``%T123CARD01SNR`` ... Easy"
 msgstr ""
 
-msgid ""
-":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????``"
-" のように出力されます。 （一応ネタバレ防止のため。）"
+msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
 msgstr ""
 
 msgid "スペルカード蒐集率"
@@ -362,8 +360,6 @@ msgstr ""
 msgid "存在しないカードの指定（霊夢の Spell No.11 など）は無視されます。"
 msgstr ""
 
-msgid ""
-":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 未入手のカードの名前が ``?????`` "
-"のように出力されます。 （一応ネタバレ防止のため。）"
+msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 未入手のカードの名前が ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
 msgstr ""
 

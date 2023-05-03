@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-29 16:57+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2023-05-03 20:08+0900\n"
+"PO-Revision-Date: 2023-05-03 21:18+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-msgid "秘封ナイトメアダイアリー用テンプレート書式"
+msgid "秘封ナイトメアダイアリー用"
 msgstr ""
 
 msgid "スコア一覧"
@@ -174,9 +174,7 @@ msgstr ""
 msgid "``%T165CARDW232`` ... 裏・月曜日 弾幕夢 3 のスペルカード名"
 msgstr ""
 
-msgid ""
-":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは敵の名前・スペルカード名ともに "
-"``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
+msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは敵の名前・スペルカード名ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
 msgstr ""
 
 msgid "異名情報"
@@ -218,9 +216,7 @@ msgstr ""
 msgid "``%T165SHOT012`` ... 日曜日 弾幕夢 2 のベストショット"
 msgstr ""
 
-msgid ""
-"このテンプレート書式は ``<img src=\"./bestshot/bs01_01.png\" alt=\"～\" title=\"～\" "
-"border=0>`` のような HTML の IMG タグに置換されます。"
+msgid "このテンプレート書式は ``<img src=\"./bestshot/bs01_01.png\" alt=\"～\" title=\"～\" border=0>`` のような HTML の IMG タグに置換されます。"
 msgstr ""
 
 msgid "同時に、 対象となるベストショットファイル (bs??\\_??.dat) を PNG 形式に変換した画像ファイルが出力されます。"
@@ -229,9 +225,7 @@ msgstr ""
 msgid "IMG タグの alt 属性と title 属性には日時が出力されます。"
 msgstr ""
 
-msgid ""
-"画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` "
-"欄で指定されたフォルダに出力されます。"
+msgid "画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` 欄で指定されたフォルダに出力されます。"
 msgstr ""
 
 msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
@@ -288,8 +282,6 @@ msgstr ""
 msgid "``%T165SHOTEXW234`` ... 裏・月曜日 弾幕夢 3 のベストショット撮影日時"
 msgstr ""
 
-msgid ""
-"このテンプレート書式を使って、 例えば ``%T165SHOT012`` と同等の出力結果を得るには、 "
-"テンプレートファイルに以下の通りに記載します: ::"
+msgid "このテンプレート書式を使って、 例えば ``%T165SHOT012`` と同等の出力結果を得るには、 テンプレートファイルに以下の通りに記載します: ::"
 msgstr ""
 
