@@ -36,8 +36,7 @@ internal class ClearData : Th10.Chapter, IClearData // per character
         this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(
             mode => mode, _ => BinaryReadableHelper.Create<ClearDataPerGameMode>(reader) as IClearDataPerGameMode);
 
-        this.Practices = EnumHelper<Level>.Enumerable
-            .SelectMany(level => EnumHelper<Th14.StagePractice>.Enumerable.Select(stage => (level, stage)))
+        this.Practices = EnumHelper.Cartesian<Level, Th14.StagePractice>()
             .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
     }
 

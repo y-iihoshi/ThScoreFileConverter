@@ -55,8 +55,7 @@ internal class ClearDataBase<
         this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
         this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
 
-        this.Practices = EnumHelper<TLevelPractice>.Enumerable
-            .SelectMany(level => EnumHelper<TStagePractice>.Enumerable.Select(stage => (level, stage)))
+        this.Practices = EnumHelper.Cartesian<TLevelPractice, TStagePractice>()
             .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
 
         this.Cards = Enumerable.Range(0, numCards)

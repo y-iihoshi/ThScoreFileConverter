@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -20,8 +19,8 @@ namespace ThScoreFileConverter.Models.Th095;
 // %T95SHOTEX[x][y][z]
 internal class ShotExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOTEX({1})([1-9])([1-6])", Definitions.FormatPrefix, Parsers.LevelParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOTEX({Parsers.LevelParser.Pattern})([1-9])([1-6])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -43,33 +42,16 @@ internal class ShotExReplacer : IStringReplaceable
 
             if (bestshots.TryGetValue(key, out var bestshot))
             {
-                switch (type)
+                return type switch
                 {
-                    case 1:     // relative path to the bestshot file
-                        if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                            Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
-                        {
-                            return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                        }
-                        else
-                        {
-                            return string.Empty;
-                        }
-
-                    case 2:     // width
-                        return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                    case 3:     // height
-                        return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                    case 4:     // score
-                        return formatter.FormatNumber(bestshot.Header.ResultScore);
-                    case 5:     // slow rate
-                        return formatter.FormatPercent(bestshot.Header.SlowRate, 6);
-                    case 6:     // date & time
-                        return DateTimeHelper.GetString(
-                            scores.FirstOrDefault(s => (s is not null) && s.LevelScene.Equals(key))?.DateTime);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
+                    2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
+                    3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
+                    4 => formatter.FormatNumber(bestshot.Header.ResultScore),
+                    5 => formatter.FormatPercent(bestshot.Header.SlowRate, 6),
+                    6 => DateTimeHelper.GetString(scores.FirstOrDefault(s => (s is not null) && s.LevelScene.Equals(key))?.DateTime),
+                    _ => match.ToString(),
+                };
             }
             else
             {

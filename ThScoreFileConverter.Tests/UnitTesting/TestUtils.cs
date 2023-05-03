@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
+using CommunityToolkit.Diagnostics;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 
 #if DEBUG_TEST
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 #endif
 
@@ -48,8 +47,7 @@ public static class TestUtils
 
     public static byte[] MakeByteArray(params object[] args)
     {
-        if (args is null)
-            throw new ArgumentNullException(nameof(args));
+        Guard.IsNotNull(args);
 
         static bool IsRankOneArray<T>(Array array)
         {
@@ -88,33 +86,11 @@ public static class TestUtils
         return stream.ToArray();
     }
 
-    public static TResult[] MakeRandomArray<TResult>(int length)
-        where TResult : struct
+    public static byte[] MakeRandomArray(int length)
     {
-        var defaultValue = default(TResult);
-
-        Func<object> getNextValue = defaultValue switch
-        {
-            byte => () => Random.Next(byte.MaxValue + 1),
-            short => () => Random.Next(short.MaxValue + 1),
-            ushort => () => Random.Next(ushort.MaxValue + 1),
-            int => () =>
-            {
-                var maxValue = ushort.MaxValue + 1;
-                return (Random.Next(maxValue) << 16) | Random.Next(maxValue);
-            },
-            uint => () =>
-            {
-                var maxValue = ushort.MaxValue + 1;
-                return ((uint)Random.Next(maxValue) << 16) | (uint)Random.Next(maxValue);
-            },
-            _ => throw new NotImplementedException(),
-        };
-
-        return Enumerable
-            .Repeat(defaultValue, length)
-            .Select(i => (TResult)Convert.ChangeType(getNextValue(), typeof(TResult), CultureInfo.InvariantCulture))
-            .ToArray();
+        var bytes = new byte[length];
+        Random.NextBytes(bytes);
+        return bytes;
     }
 
     public static T Create<T>(byte[] array)
@@ -132,12 +108,16 @@ public static class TestUtils
     public static TResult Cast<TResult>(object value)
         where TResult : struct
     {
-        return Core.Tests.UnitTesting.TestHelper.Cast<TResult>(value);
+        var type = typeof(TResult);
+        return type.IsEnum
+            ? (TResult)Enum.ToObject(type, value)
+            : (TResult)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
     }
 
-    public static IEnumerable<object[]> GetInvalidEnumerators(Type type)
+    public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()
+        where TEnum : struct, Enum
     {
-        return Core.Tests.UnitTesting.TestHelper.GetInvalidEnumerators(type);
+        return Core.Tests.UnitTesting.TestHelper.GetInvalidEnumerators<TEnum>();
     }
 
     private static bool Invoke<T>(Action<T> action, string key, T value)

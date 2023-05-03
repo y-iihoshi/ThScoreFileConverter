@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Helpers;
+﻿using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Tests.Helpers;
 
@@ -22,7 +21,7 @@ public class FuncHelperTests
     [TestMethod]
     public void MakeAndPredicateTest()
     {
-        var pred = FuncHelper.MakeAndPredicate<int>(x => (x > 3), x => (x < 5));
+        var pred = FuncHelper.MakeAndPredicate<int>(x => x > 3, x => x < 5);
         Assert.IsFalse(pred(3));
         Assert.IsTrue(pred(4));
         Assert.IsFalse(pred(5));

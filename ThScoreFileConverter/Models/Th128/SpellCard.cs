@@ -9,7 +9,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Extensions;
@@ -18,7 +17,7 @@ namespace ThScoreFileConverter.Models.Th128;
 
 internal class SpellCard : IBinaryReadable, ISpellCard
 {
-    public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
+    public IEnumerable<byte> Name { get; private set; } = ReadOnlyCP932Bytes.Empty;
 
     public int NoMissCount { get; private set; }
 
@@ -34,7 +33,7 @@ internal class SpellCard : IBinaryReadable, ISpellCard
 
     public void ReadFrom(BinaryReader reader)
     {
-        this.Name = reader.ReadExactBytes(0x80);
+        this.Name = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x80));
         this.NoMissCount = reader.ReadInt32();
         this.NoIceCount = reader.ReadInt32();
         _ = reader.ReadUInt32();

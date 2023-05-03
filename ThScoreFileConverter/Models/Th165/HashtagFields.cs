@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th165;
 
-internal struct HashtagFields
+internal readonly struct HashtagFields
 {
     private static readonly int[] Masks;
 

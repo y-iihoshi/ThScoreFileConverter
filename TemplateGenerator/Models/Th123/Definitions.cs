@@ -37,11 +37,10 @@ public class Definitions : Th105.Definitions
     };
 
     private static readonly IEnumerable<(Chara, CardType, int)> NumCardsPerCharacterAndTypeImpl =
-        EnumHelper<Chara>.Enumerable.SelectMany(static chara =>
-            EnumHelper<CardType>.Enumerable.Select(cardType =>
-                (chara, cardType, cardType == CardType.System
-                    ? SystemCardNameTable.Count
-                    : CardNameTable.Keys.Count(key => key.Chara == chara && key.CardId / 100 == (int)cardType))));
+        EnumHelper.Cartesian<Chara, CardType>().Select(
+            static pair => (pair.First, pair.Second, pair.Second == CardType.System
+                ? SystemCardNameTable.Count
+                : CardNameTable.Keys.Count(key => key.Chara == pair.First && key.CardId / 100 == (int)pair.Second)));
 
     public static new string Title { get; } = StringResources.TH123;
 

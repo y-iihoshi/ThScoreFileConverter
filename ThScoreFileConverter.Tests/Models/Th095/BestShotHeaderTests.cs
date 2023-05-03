@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CommunityToolkit.Diagnostics;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Tests.UnitTesting;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
 
@@ -43,7 +46,7 @@ public class BestShotHeaderTests
         return TestUtils.MakeByteArray(
             header.Signature.ToCharArray(),
             (ushort)0,
-            TestUtils.Cast<short>(header.Level + 1),
+            (short)(header.Level + 1),
             header.Scene,
             (ushort)0,
             header.Width,
@@ -55,8 +58,7 @@ public class BestShotHeaderTests
 
     internal static void Validate(IBestShotHeader<Level> expected, in IBestShotHeader<Level> actual)
     {
-        if (actual is null)
-            throw new ArgumentNullException(nameof(actual));
+        Guard.IsNotNull(actual);
 
         Assert.AreEqual(expected.Signature, actual.Signature);
         Assert.AreEqual(expected.Level, actual.Level);
@@ -116,21 +118,20 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
+        _ = mock.SetupGet(m => m.Signature).Returns($"{signature}E");
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
@@ -152,7 +153,7 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var cardName = mock.Object.CardName;
-        _ = mock.SetupGet(m => m.CardName).Returns(cardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.CardName).Returns(cardName.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
 

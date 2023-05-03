@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th09;
@@ -25,7 +24,7 @@ public class PlayStatusTests
         _ = mock.SetupGet(m => m.Size2).Returns(0x1FC);
         _ = mock.SetupGet(m => m.TotalRunningTime).Returns(new Time(12, 34, 56, 789, false));
         _ = mock.SetupGet(m => m.TotalPlayTime).Returns(new Time(23, 45, 19, 876, false));
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(19));
+        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(19));
         _ = mock.SetupGet(m => m.MatchFlags).Returns(
             pairs.ToDictionary(pair => pair.chara, pair => (byte)pair.index));
         _ = mock.SetupGet(m => m.StoryFlags).Returns(

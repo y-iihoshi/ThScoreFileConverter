@@ -24,7 +24,7 @@ public sealed class EnumShortNameParser<TEnum>
     /// A regular expression of the short names of <typeparamref name="TEnum"/>.
     /// </summary>
     private static readonly string PatternImpl =
-        string.Join("|", EnumHelper<TEnum>.Enumerable.Select(elem => elem.ToShortName()).Distinct().ToArray());
+        string.Join("|", EnumHelper<TEnum>.Enumerable.Select(elem => elem.ToShortName()).Distinct());
 
     /// <summary>
     /// Gets a regular expression of the short names of <typeparamref name="TEnum"/>.

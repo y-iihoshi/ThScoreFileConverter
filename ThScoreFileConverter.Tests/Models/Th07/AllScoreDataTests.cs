@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -167,8 +166,7 @@ public class AllScoreDataTests
     [DataRow(Level.Normal, Stage.Phantasm)]
     public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
     {
-        var score = Mock.Of<IPracticeScore>(
-            m => (m.Level == TestUtils.Cast<Level>(level)) && (m.Stage == TestUtils.Cast<Stage>(stage)));
+        var score = Mock.Of<IPracticeScore>(m => (m.Level == (Level)level) && (m.Stage == (Stage)stage));
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);

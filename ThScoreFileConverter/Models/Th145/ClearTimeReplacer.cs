@@ -12,17 +12,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models.Th145;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th145;
 
 // %T145TIMECLR[x][yy]
 internal class ClearTimeReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}TIMECLR({1})({2})",
-        Definitions.FormatPrefix,
-        Parsers.LevelWithTotalParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}TIMECLR({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -33,6 +31,7 @@ internal class ClearTimeReplacer : IStringReplaceable
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara = chara switch
             {
                 CharaWithTotal.Total => dictionary => dictionary.Values.Sum(),
@@ -45,6 +44,7 @@ internal class ClearTimeReplacer : IStringReplaceable
                 _ => dictionary => dictionary.TryGetValue((Level)level, out var times)
                     ? getValueByChara(times) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             return new Time(getValueByLevel(clearTimes)).ToString();
         });

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
@@ -87,43 +86,40 @@ public class PracticeScoreTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters
-        => TestUtils.GetInvalidEnumerators(typeof(Chara));
+    public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void PracticeScoreTestInvalidChara(int chara)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void PracticeScoreTestInvalidLevel(int level)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidStages
-        => TestUtils.GetInvalidEnumerators(typeof(Stage));
+    public static IEnumerable<object[]> InvalidStages => TestUtils.GetInvalidEnumerators<Stage>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void PracticeScoreTestInvalidStage(int stage)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Stage).Returns(TestUtils.Cast<Stage>(stage));
+        _ = mock.SetupGet(m => m.Stage).Returns((Stage)stage);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));

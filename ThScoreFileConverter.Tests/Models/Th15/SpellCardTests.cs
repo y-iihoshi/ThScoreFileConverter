@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverter.Tests.UnitTesting;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
 
@@ -18,7 +20,7 @@ public class SpellCardTests
     internal static Mock<ISpellCard> MockSpellCard()
     {
         var mock = new Mock<ISpellCard>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.ClearCount).Returns(1);
         _ = mock.SetupGet(m => m.PracticeClearCount).Returns(2);
         _ = mock.SetupGet(m => m.TrialCount).Returns(3);
@@ -38,7 +40,7 @@ public class SpellCardTests
             spellCard.TrialCount,
             spellCard.PracticeTrialCount,
             spellCard.Id - 1,
-            TestUtils.Cast<int>(spellCard.Level),
+            (int)spellCard.Level,
             spellCard.PracticeScore);
     }
 
@@ -91,21 +93,20 @@ public class SpellCardTests
     {
         var mock = MockSpellCard();
         var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockSpellCard();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));

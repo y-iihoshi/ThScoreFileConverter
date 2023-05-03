@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverter.Tests.UnitTesting;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
 
@@ -25,7 +27,7 @@ public class SpellCardTests
     internal static Mock<ISpellCard> MockSpellCard()
     {
         var mock = new Mock<ISpellCard>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.NoMissCount).Returns(12);
         _ = mock.SetupGet(m => m.NoIceCount).Returns(34);
         _ = mock.SetupGet(m => m.TrialCount).Returns(56);
@@ -94,21 +96,20 @@ public class SpellCardTests
     {
         var mock = MockSpellCard();
         var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockSpellCard();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));

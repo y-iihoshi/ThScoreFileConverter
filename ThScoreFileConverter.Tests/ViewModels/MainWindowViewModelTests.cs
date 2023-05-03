@@ -4,18 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.ViewModels;
 

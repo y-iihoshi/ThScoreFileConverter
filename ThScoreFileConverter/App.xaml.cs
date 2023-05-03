@@ -14,6 +14,7 @@ using Prism.Unity;
 using Reactive.Bindings;
 using Reactive.Bindings.Schedulers;
 using ThScoreFileConverter.Adapters;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
@@ -75,7 +76,7 @@ public partial class App : PrismApplication
             var backup = Path.ChangeExtension(Prop.Resources.SettingFileName, Prop.Resources.BackupFileExtension);
             File.Delete(backup);
             File.Move(Prop.Resources.SettingFileName, backup);
-            var message = Utils.Format(
+            var message = StringHelper.Format(
                 Utils.GetLocalizedValues<string>(nameof(Prop.Resources.MessageSettingFileIsCorrupted)),
                 Prop.Resources.SettingFileName,
                 backup);
@@ -94,7 +95,7 @@ public partial class App : PrismApplication
         LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
         if (provider.AvailableCultures.Any(culture => culture.Name == this.settings.Language))
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(this.settings.Language!);
-        else if (provider.AvailableCultures.Any(culture => culture.Equals(CultureInfo.CurrentCulture)))
+        else if (provider.AvailableCultures.Any(CultureInfo.CurrentCulture.Equals))
             LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
         else
             LocalizeDictionary.Instance.Culture = provider.AvailableCultures.First();

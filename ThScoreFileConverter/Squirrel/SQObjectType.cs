@@ -36,7 +36,7 @@ public enum SQObjectType
     Float = RawType.Float | SQObjectAttributes.Numeric | SQObjectAttributes.CanBeFalse,
 
     /// <summary>
-    /// The Bool data type can have only two, the literals <c>true</c> and <c>false</c>.
+    /// The Bool data type can have only two, the literals <see langword="true"/> and <see langword="false"/>.
     /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#bool for details.
     /// </summary>
     Bool = RawType.Bool | SQObjectAttributes.CanBeFalse,

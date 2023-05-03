@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -23,7 +22,7 @@ public class LastNameTests
         signature = "LSNM",
         size1 = 0x18,
         size2 = 0x18,
-        name = TestUtils.MakeRandomArray<byte>(12),
+        name = TestUtils.MakeRandomArray(12),
     };
 
     internal static byte[] MakeData(in Properties properties)

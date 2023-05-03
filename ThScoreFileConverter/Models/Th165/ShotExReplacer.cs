@@ -20,8 +20,8 @@ namespace ThScoreFileConverter.Models.Th165;
 // %T165SHOTEX[xx][y][z]
 internal class ShotExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOTEX({1})([1-7])([1-9])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([1-7])([1-9])");
 
     private static readonly Func<IBestShotHeader, IReadOnlyList<Hashtag>> HashtagList =
         header => new List<Hashtag>
@@ -108,36 +108,21 @@ internal class ShotExReplacer : IStringReplaceable
 
             if (bestshots.TryGetValue(key, out var bestshot))
             {
-                switch (type)
+                return type switch
                 {
-                    case 1:     // relative path to the bestshot file
-                        if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                            Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
-                            return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                        else
-                            return string.Empty;
-                    case 2:     // width
-                        return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                    case 3:     // height
-                        return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                    case 4:     // date & time
-                        return DateTimeHelper.GetString(bestshot.Header.DateTime);
-                    case 5:     // hashtags
-                        var hashtags = HashtagList(bestshot.Header)
-                            .Where(hashtag => hashtag.Outputs)
-                            .Select(hashtag => hashtag.Name);
-                        return string.Join(Environment.NewLine, hashtags.ToArray());
-                    case 6:     // number of views
-                        return formatter.FormatNumber(bestshot.Header.NumViewed);
-                    case 7:     // number of likes
-                        return formatter.FormatNumber(bestshot.Header.NumLikes);
-                    case 8:     // number of favs
-                        return formatter.FormatNumber(bestshot.Header.NumFavs);
-                    case 9:     // score
-                        return formatter.FormatNumber(bestshot.Header.Score);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
+                    2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
+                    3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
+                    4 => DateTimeHelper.GetString(bestshot.Header.DateTime),
+                    5 => string.Join(
+                        Environment.NewLine,
+                        HashtagList(bestshot.Header).Where(hashtag => hashtag.Outputs).Select(hashtag => hashtag.Name)),
+                    6 => formatter.FormatNumber(bestshot.Header.NumViewed),
+                    7 => formatter.FormatNumber(bestshot.Header.NumLikes),
+                    8 => formatter.FormatNumber(bestshot.Header.NumFavs),
+                    9 => formatter.FormatNumber(bestshot.Header.Score),
+                    _ => match.ToString(),
+                };
             }
             else
             {

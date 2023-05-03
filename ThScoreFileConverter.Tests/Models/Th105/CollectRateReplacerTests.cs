@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th105;
@@ -85,7 +84,7 @@ public class CollectRateReplacerTests
     {
         var mock = new Mock<INumberFormatter>();
         _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => "invoked: " + value.ToString());
+            .Returns((object value) => $"invoked: {value}");
         return mock;
     }
 

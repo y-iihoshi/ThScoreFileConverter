@@ -19,9 +19,9 @@ internal class AchievementReplacerBase : IStringReplaceable
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
-    protected AchievementReplacerBase(string formatPrefix, IReadOnlyList<string> achievementNames, IStatus status)
+    protected AchievementReplacerBase(string formatPrefix, IReadOnlyList<string> achievementNames, IAchievementHolder achievementHolder)
     {
-        this.pattern = Utils.Format(@"{0}ACHV(\d{{2}})", formatPrefix);
+        this.pattern = StringHelper.Create($@"{formatPrefix}ACHV(\d{{2}})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);
@@ -29,7 +29,8 @@ internal class AchievementReplacerBase : IStringReplaceable
             if (number <= 0 || number > achievementNames.Count)
                 return match.ToString();
 
-            return (status.Achievements.ElementAt(number - 1) > 0) ? achievementNames[number - 1] : "??????????";
+            var index = number - 1;
+            return (achievementHolder.Achievements.ElementAt(index) > 0) ? achievementNames[index] : "??????????";
         });
     }
 

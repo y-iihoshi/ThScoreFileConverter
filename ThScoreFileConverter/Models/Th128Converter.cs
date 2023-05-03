@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Core.Resources;
@@ -60,8 +61,8 @@ internal class Th128Converter : ThConverter
             || (this.allScoreData.CardData is null)
             || (this.allScoreData.Status is null))
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>

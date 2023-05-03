@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
@@ -42,8 +41,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levels.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
@@ -59,8 +57,7 @@ public class ClearDataTests
             clearData.Checksum,
             clearData.Size,
             (int)clearData.Route,
-            clearData.Rankings.Values.SelectMany(
-                ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+            clearData.Rankings.Values.SelectMany(ranking => ranking.Select(ScoreDataTests.MakeByteArray)),
             clearData.TotalPlayCount,
             clearData.PlayTime,
             clearData.ClearCounts.Values);

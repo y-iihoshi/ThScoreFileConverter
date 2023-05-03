@@ -17,11 +17,8 @@ namespace ThScoreFileConverter.Models.Th075;
 // %T75SCR[w][xx][y][z]
 internal class ScoreReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SCR({1})({2})(\d)([1-3])",
-        Definitions.FormatPrefix,
-        Parsers.LevelParser.Pattern,
-        Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-3])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -47,7 +44,7 @@ internal class ScoreReplacer : IStringReplaceable
             {
                 1 => score.Name,
                 2 => formatter.FormatNumber(score.Score),
-                3 => Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day),
+                3 => StringHelper.Create($"{score.Month:D2}/{score.Day:D2}"),
                 _ => match.ToString(),  // unreachable
             };
         });

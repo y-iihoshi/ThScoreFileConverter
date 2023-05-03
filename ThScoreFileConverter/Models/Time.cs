@@ -6,6 +6,8 @@
 //-----------------------------------------------------------------------
 
 using System;
+using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
@@ -31,16 +33,15 @@ public class Time
     /// </summary>
     /// <param name="framesOrMilliseconds">Number of frames or milliseconds.</param>
     /// <param name="isFrames">
-    /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
-    /// milliseconds.
+    /// <see langword="true"/> if treats <paramref name="framesOrMilliseconds"/> as a frames;
+    /// <see langword="false"/> for milliseconds.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="framesOrMilliseconds"/> is negative.
     /// </exception>
     public Time(long framesOrMilliseconds, bool isFrames)
     {
-        if (framesOrMilliseconds < 0)
-            throw new ArgumentOutOfRangeException(nameof(framesOrMilliseconds));
+        Guard.IsGreaterThanOrEqualTo(framesOrMilliseconds, 0);
 
         var seconds = framesOrMilliseconds / (isFrames ? 60 : 1000);
         var minutes = seconds / 60;
@@ -95,8 +96,8 @@ public class Time
     /// <param name="seconds">Number of seconds.</param>
     /// <param name="framesOrMilliseconds">Number of frames or milliseconds.</param>
     /// <param name="isFrames">
-    /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
-    /// milliseconds.
+    /// <see langword="true"/> if treats <paramref name="framesOrMilliseconds"/> as a frames;
+    /// <see langword="false"/> for milliseconds.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="hours"/> is negative.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
@@ -107,18 +108,14 @@ public class Time
     /// </exception>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="framesOrMilliseconds"/> is negative or exceeds the maximum value:
-    /// 59 if <paramref name="isFrames"/> is <c>true</c>; otherwise 999.
+    /// 59 if <paramref name="isFrames"/> is <see langword="true"/>; otherwise 999.
     /// </exception>
     public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames)
     {
-        if (hours < 0)
-            throw new ArgumentOutOfRangeException(nameof(hours));
-        if ((minutes < 0) || (minutes >= 60))
-            throw new ArgumentOutOfRangeException(nameof(minutes));
-        if ((seconds < 0) || (seconds >= 60))
-            throw new ArgumentOutOfRangeException(nameof(seconds));
-        if ((framesOrMilliseconds < 0) || (framesOrMilliseconds >= (isFrames ? 60 : 1000)))
-            throw new ArgumentOutOfRangeException(nameof(framesOrMilliseconds));
+        Guard.IsGreaterThanOrEqualTo(hours, 0);
+        Guard.IsInRange(minutes, 0, 60);
+        Guard.IsInRange(seconds, 0, 60);
+        Guard.IsInRange(framesOrMilliseconds, 0, isFrames ? 60 : 1000);
 
         this.Hours = hours;
         this.Minutes = minutes;
@@ -167,7 +164,7 @@ public class Time
 
     /// <summary>
     /// Gets a value indicating whether the value less than a second is treated as fps or milliseconds.
-    /// <c>true</c> if fps; <c>false</c> for milliseconds.
+    /// <see langword="true"/> if fps; <see langword="false"/> for milliseconds.
     /// </summary>
     public bool IsFrames { get; }
 
@@ -178,21 +175,19 @@ public class Time
     /// <returns>A string that represents the current instance.</returns>
     public override string ToString()
     {
-        return Utils.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
+        return StringHelper.Create($"{this.Hours}:{this.Minutes:D2}:{this.Seconds:D2}");
     }
 
     /// <summary>
     /// Returns a string that represents the current instance.
-    /// If <see cref="IsFrames"/> is <c>true</c>, the string is formatted such as <c>hh:mm:ss.ff</c>;
+    /// If <see cref="IsFrames"/> is <see langword="true"/>, the string is formatted such as <c>hh:mm:ss.ff</c>;
     /// otherwise, <c>hh:mm:ss.ddd</c>.
     /// </summary>
     /// <returns>A string that represents the current instance.</returns>
     public string ToLongString()
     {
         return this.IsFrames
-            ? Utils.Format(
-                "{0}:{1:D2}:{2:D2}.{3:D2}", this.Hours, this.Minutes, this.Seconds, this.Frames)
-            : Utils.Format(
-                "{0}:{1:D2}:{2:D2}.{3:D3}", this.Hours, this.Minutes, this.Seconds, this.Milliseconds);
+            ? StringHelper.Create($"{this.Hours}:{this.Minutes:D2}:{this.Seconds:D2}.{this.Frames:D2}")
+            : StringHelper.Create($"{this.Hours}:{this.Minutes:D2}:{this.Seconds:D2}.{this.Milliseconds:D3}");
     }
 }

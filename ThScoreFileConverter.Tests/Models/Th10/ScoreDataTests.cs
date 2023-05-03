@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Tests.UnitTesting;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th10;
 
@@ -22,7 +24,7 @@ public class ScoreDataTests
         _ = mock.SetupGet(m => m.Score).Returns(12u);
         _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<TStageProgress>(3));
         _ = mock.SetupGet(m => m.ContinueCount).Returns(4);
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(10));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(10));
         _ = mock.SetupGet(m => m.DateTime).Returns(567u);
         _ = mock.SetupGet(m => m.SlowRate).Returns(8.9f);
         return mock;
@@ -89,7 +91,7 @@ public class ScoreDataTests
     {
         var mock = MockScoreData<TStageProgress>();
         var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         var scoreData = TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize));
 
@@ -114,7 +116,7 @@ public class ScoreDataTests
             () => TestUtils.Create<TScoreData>(MakeByteArray(mock.Object, unknownSize)));
     }
 
-    internal static int UnknownSize { get; } = 0;
+    internal static int UnknownSize { get; }
 
     [TestMethod]
     public void ScoreDataTest()
@@ -140,8 +142,7 @@ public class ScoreDataTests
         ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
     }
 
-    public static IEnumerable<object[]> InvalidStageProgresses
-        => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+    public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]

@@ -22,7 +22,7 @@ internal class CardReplacer : CardReplacerBase<Stage, Level>
               Definitions.CardTable,
               hideUntriedCards,
               cardNumber => CardHasTried(cardAttacks, cardNumber),
-              static cardInfo => CardLevelToString(cardInfo))
+              CardLevelToString)
     {
     }
 

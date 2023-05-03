@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverter.Tests.Models;
@@ -37,7 +36,10 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestOneBit()
     {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
         using var stream = new MemoryStream(new byte[] { 0b_0101_0011 });
+#pragma warning restore IDE0230 // Use UTF-8 string literal
+
         var reader = new BitReader(stream);
 
         Assert.AreEqual(0b0, reader.ReadBits(1));
@@ -99,7 +101,10 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestNegativeNumBits()
     {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
         using var stream = new MemoryStream(new byte[] { 0x53 });
+#pragma warning restore IDE0230 // Use UTF-8 string literal
+
         var reader = new BitReader(stream);
 
         _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.ReadBits(-1));
@@ -108,6 +113,7 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestExceededNumBits()
     {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
         var buffer = new byte[5]
         {
             0b_0101_0011,
@@ -116,6 +122,7 @@ public class BitReaderTests
             0b_0011_0101,
             0b_0101_1010,
         };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
         using var stream = new MemoryStream(buffer);
         var reader = new BitReader(stream);
@@ -126,7 +133,10 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestEndOfStream()
     {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
         using var stream = new MemoryStream(new byte[] { 0x53 });
+#pragma warning restore IDE0230 // Use UTF-8 string literal
+
         var reader = new BitReader(stream);
 
         Assert.AreEqual(0x53, reader.ReadBits(8));

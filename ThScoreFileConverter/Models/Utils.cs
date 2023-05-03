@@ -5,7 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Globalization;
 using ThScoreFileConverter.Properties;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Extensions;
@@ -18,20 +17,6 @@ namespace ThScoreFileConverter.Models;
 /// </summary>
 public static class Utils
 {
-    /// <summary>
-    /// Wraps the <c>string.Format()</c> method to specify an IFormatProvider instance.
-    /// </summary>
-    /// <param name="fmt">A composite format string.</param>
-    /// <param name="args">An <see cref="object"/> array containing zero or more objects to format.</param>
-    /// <returns>
-    /// A copy of <paramref name="fmt"/> in which the format items have been replaced by the string
-    /// representation of the corresponding objects in <paramref name="args"/>.
-    /// </returns>
-    public static string Format(string fmt, params object[] args)
-    {
-        return string.Format(CultureInfo.CurrentCulture, fmt, args);
-    }
-
     /// <summary>
     /// Gets a localized value.
     /// </summary>

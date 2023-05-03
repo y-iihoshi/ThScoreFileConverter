@@ -14,6 +14,7 @@ namespace ThScoreFileConverter.Squirrel;
 internal enum RawType
 {
 #pragma warning disable SA1602 // Enumeration items should be documented
+#pragma warning disable format
     Null          = 0x00000001,
     Integer       = 0x00000002,
     Float         = 0x00000004,
@@ -32,5 +33,6 @@ internal enum RawType
     Instance      = 0x00008000,
     WeakRef       = 0x00010000,
     Outer         = 0x00020000,
+#pragma warning restore format
 #pragma warning restore SA1602 // Enumeration items should be documented
 }

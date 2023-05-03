@@ -70,15 +70,9 @@ public static class EnumExtensions
             var type = typeof(TEnum);
             Debug.Assert(type.IsEnum, $"{nameof(TEnum)} must be an enum type.");
 
-            static TAttr? GetAttribute<TAttr>(MemberInfo memberInfo, bool inherit)
-                where TAttr : Attribute
-            {
-                return memberInfo.GetCustomAttribute(typeof(TAttr), inherit) is TAttr attr ? attr : default;
-            }
-
             static bool IsAllowedMultiple(MemberInfo memberInfo)
             {
-                return GetAttribute<AttributeUsageAttribute>(memberInfo, false) is { } usage
+                return memberInfo.GetCustomAttribute<AttributeUsageAttribute>(false) is { } usage
                     && usage.AllowMultiple;
             }
 
@@ -90,7 +84,7 @@ public static class EnumExtensions
                 .Where(field => field.FieldType == type)
                 .Select(static field =>
                     (enumValue: field.GetValue(null) is TEnum value ? value : default,
-                        attr: GetAttribute<TAttribute>(field, false)))
+                        attr: field.GetCustomAttribute<TAttribute>(false)))
                 .Where(static pair => pair.attr is not null)
                 .ToDictionary(static pair => pair.enumValue, static pair => pair.attr!);
         }

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -17,7 +16,7 @@ public class PlayReplacerTests
     {
         var mock = new Mock<INumberFormatter>();
         _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => "invoked: " + value.ToString());
+            .Returns((object value) => $"invoked: {value}");
         return mock;
     }
 

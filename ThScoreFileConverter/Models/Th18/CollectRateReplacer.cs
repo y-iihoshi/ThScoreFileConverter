@@ -59,12 +59,14 @@ internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
 
     private static Func<ISpellCard, bool> FindCardByLevel(LevelWithTotal level)
     {
+#pragma warning disable IDE0072 // Add missing cases to switch expression
         return level switch
         {
             LevelWithTotal.Total => FuncHelper.True,
             LevelWithTotal.Extra => FuncHelper.True,
             _ => card => card.Level == (Level)level,
         };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
     }
 
     private static Func<ISpellCard, bool> FindCardByLevelStage(LevelWithTotal level, StageWithTotal stage)

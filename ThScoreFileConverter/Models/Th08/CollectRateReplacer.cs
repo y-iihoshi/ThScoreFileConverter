@@ -20,13 +20,8 @@ namespace ThScoreFileConverter.Models.Th08;
 // %T08CRG[v][w][xx][yy][z]
 internal class CollectRateReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CRG({1})({2})({3})({4})([12])",
-        Definitions.FormatPrefix,
-        Parsers.GameModeParser.Pattern,
-        Parsers.LevelPracticeWithTotalParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern,
-        Parsers.StageWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CRG({Parsers.GameModeParser.Pattern})({Parsers.LevelPracticeWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})([12])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -54,6 +49,7 @@ internal class CollectRateReplacer : IStringReplaceable
                 _ => career => career.TrialCounts[chara] > 0,
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ICardAttack, bool> findByMode = mode switch
             {
                 GameMode.Story => attack => Definitions.CardTable.Any(
@@ -69,6 +65,7 @@ internal class CollectRateReplacer : IStringReplaceable
                 LevelPracticeWithTotal.LastWord => FuncHelper.True,
                 _ => attack => attack.Level == level,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ICardAttack, bool> findByStage = (level, stage) switch
             {

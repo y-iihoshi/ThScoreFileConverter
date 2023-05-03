@@ -15,9 +15,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
-using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter;
 
@@ -70,8 +75,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
         get => this.lastTitle;
         set
         {
-            if (value is null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.IsNotNull(value);
 
             if (ThConverterFactory.CanCreate(value))
             {
@@ -128,13 +132,12 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
         get => this.language;
         set
         {
-            if (value is null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.IsNotNull(value);
 
             try
             {
                 _ = CultureInfo.GetCultureInfo(value);
-                this.SetProperty(ref this.language, value);
+                _ = this.SetProperty(ref this.language, value);
             }
             catch (CultureNotFoundException)
             {
@@ -241,7 +244,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
     {
         return new InvalidDataException(
-            Utils.Format(ExceptionMessages.InvalidDataExceptionFileMayBeBroken, file), innerException);
+            StringHelper.Format(ExceptionMessages.InvalidDataExceptionFileMayBeBroken, file), innerException);
     }
 
     /// <summary>
@@ -251,11 +254,10 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     /// <param name="storage">A backing field of the property to be set a value.</param>
     /// <param name="value">A value to set.</param>
     /// <param name="propertyName">The name of the property.</param>
-    /// <returns><c>true</c> if <paramref name="storage"/> was changed; otherwise <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if <paramref name="storage"/> was changed; otherwise <see langword="false"/>.</returns>
     private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
     {
-        if (value is null)
-            throw new ArgumentNullException(nameof(value));
+        Guard.IsNotNull(value);
 
         if (EqualityComparer<T>.Default.Equals(storage, value))
             return false;

@@ -33,13 +33,12 @@ public class DefinitionsTests
         Assert.IsFalse(Definitions.HasStory(Chara.Oonamazu));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters => TestHelper.GetInvalidEnumerators(typeof(Chara));
+    public static IEnumerable<object[]> InvalidCharacters => TestHelper.GetInvalidEnumerators<Chara>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void CanPracticeTestInvalidChara(int chara)
     {
-        var invalid = TestHelper.Cast<Chara>(chara);
-        Assert.IsFalse(Definitions.HasStory(invalid));
+        Assert.IsFalse(Definitions.HasStory((Chara)chara));
     }
 }

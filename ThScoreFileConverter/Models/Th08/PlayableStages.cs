@@ -15,6 +15,7 @@ namespace ThScoreFileConverter.Models.Th08;
 [Flags]
 public enum PlayableStages
 {
+#pragma warning disable format
     /// <summary>
     /// Represents stage 1 is playable.
     /// </summary>
@@ -69,4 +70,5 @@ public enum PlayableStages
     /// Represents all stages are playable.
     /// </summary>
     AllClear = 0x8000,
+#pragma warning restore format
 }

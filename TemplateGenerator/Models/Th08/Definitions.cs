@@ -120,10 +120,10 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<(string, string), int> NumCardsPerStage4Level { get; } =
         new[] { StagePractice.FourUncanny, StagePractice.FourPowerful }
-            .SelectMany(static stage => EnumHelper<LevelPractice>.Enumerable.Select(level => (stage, level)))
+            .Cartesian(EnumHelper<LevelPractice>.Enumerable)
             .ToDictionary(
-                static pair => (pair.stage.ToShortName(), pair.level.ToShortName()),
-                static pair => CardTable.Values.Count(card => card.Stage == pair.stage && card.Level == pair.level));
+                static pair => (pair.First.ToShortName(), pair.Second.ToShortName()),
+                static pair => CardTable.Values.Count(card => (card.Stage, card.Level) == pair));
 
     public static int NumCardsWithLastWord { get; } =
         NumCardsPerLevelImpl.Sum(static pair => pair.Item2);

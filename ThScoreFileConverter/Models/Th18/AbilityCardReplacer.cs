@@ -16,11 +16,11 @@ namespace ThScoreFileConverter.Models.Th18;
 // %T18ABIL[xx]
 internal class AbilityCardReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(@"{0}ABIL(\d{{2}})", Definitions.FormatPrefix);
+    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL(\d{{2}})");
 
     private readonly MatchEvaluator evaluator;
 
-    public AbilityCardReplacer(IStatus status)
+    public AbilityCardReplacer(IAbilityCardHolder holder)
     {
         this.evaluator = new MatchEvaluator(match =>
         {
@@ -29,7 +29,7 @@ internal class AbilityCardReplacer : IStringReplaceable
             if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
                 return match.ToString();
 
-            return (status.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
+            return (holder.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
         });
     }
 

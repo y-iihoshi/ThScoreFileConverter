@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Models.Th075;
@@ -19,8 +18,7 @@ public class AllScoreDataTests
 
     internal static Properties ValidProperties { get; } = new Properties()
     {
-        clearData = EnumHelper<CharaWithReserved>.Enumerable
-            .SelectMany(chara => EnumHelper<Level>.Enumerable.Select(level => (chara, level)))
+        clearData = EnumHelper.Cartesian<CharaWithReserved, Level>()
             .ToDictionary(pair => pair, _ => ClearDataTests.MockClearData().Object),
         status = StatusTests.ValidProperties,
     };

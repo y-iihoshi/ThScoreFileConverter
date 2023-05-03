@@ -18,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th165;
 // %T165CARD[xx][y][z]
 internal class CardReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CARD({1})([1-7])([12])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CARD({Parsers.DayParser.Pattern})([1-7])([12])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -47,7 +47,7 @@ internal class CardReplacer : IStringReplaceable
             }
 
             if (type == 1)
-                return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()).ToArray());
+                return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
             else
                 return enemyCardPair.Card;
         });

@@ -5,8 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Drawing;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Interactivity;
 
@@ -22,7 +22,9 @@ public sealed class FontDialogActionResult
     /// <param name="color">A color.</param>
     public FontDialogActionResult(Font font, Color color)
     {
-        this.Font = font ?? throw new ArgumentNullException(nameof(font));
+        Guard.IsNotNull(font);
+
+        this.Font = font;
         this.Color = color;
     }
 

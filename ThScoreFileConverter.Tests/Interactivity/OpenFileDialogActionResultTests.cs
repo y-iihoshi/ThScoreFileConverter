@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Interactivity;
 

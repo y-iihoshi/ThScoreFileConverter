@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th18;
@@ -65,8 +66,7 @@ internal class ClearData : Th10.Chapter, IClearData // per character
 
         _ = reader.ReadExactBytes(0xCA08);
 
-        this.Practices = levelsExceptExtra
-            .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
+        this.Practices = levelsExceptExtra.Cartesian(stagesExceptExtra)
             .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
 
         _ = reader.ReadExactBytes(0x120);

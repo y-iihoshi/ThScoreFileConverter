@@ -120,6 +120,7 @@ public class FolderBrowserDialogAction : CommonDialogAction
         using var dialog = this.CreateDialog();
         var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
 
+#pragma warning disable IDE0010 // Add missing cases to switch statement
         switch (dialogResult)
         {
             case WinForms.DialogResult.OK:
@@ -144,5 +145,6 @@ public class FolderBrowserDialogAction : CommonDialogAction
             default:
                 throw new NotImplementedException(ExceptionMessages.NotImplementedExceptionShouldNotReachHere);
         }
+#pragma warning restore IDE0010 // Add missing cases to switch statement
     }
 }

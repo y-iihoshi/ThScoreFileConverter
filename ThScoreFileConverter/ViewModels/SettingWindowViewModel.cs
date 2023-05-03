@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Windows;
+using CommunityToolkit.Diagnostics;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -46,17 +47,9 @@ internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
     public SettingWindowViewModel(Settings settings, IResourceDictionaryAdapter adapter)
     {
-        if (!settings.OutputNumberGroupSeparator.HasValue)
-        {
-            throw new ArgumentException(
-                $"{nameof(settings.OutputNumberGroupSeparator)} has no value", nameof(settings));
-        }
-
-        if (!settings.InputCodePageId.HasValue)
-            throw new ArgumentException($"{nameof(settings.InputCodePageId)} has no value", nameof(settings));
-
-        if (!settings.OutputCodePageId.HasValue)
-            throw new ArgumentException($"{nameof(settings.OutputCodePageId)} has no value", nameof(settings));
+        Guard.IsTrue(settings.OutputNumberGroupSeparator.HasValue, nameof(settings), $"{nameof(settings.OutputNumberGroupSeparator)} has no value");
+        Guard.IsTrue(settings.InputCodePageId.HasValue, nameof(settings), $"{nameof(settings.InputCodePageId)} has no value");
+        Guard.IsTrue(settings.OutputCodePageId.HasValue, nameof(settings), $"{nameof(settings.OutputCodePageId)} has no value");
 
         this.resourceDictionaryAdapter = adapter;
         this.disposables = new CompositeDisposable();
@@ -226,7 +219,7 @@ internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     /// Disposes the resources of the current instance.
     /// </summary>
     /// <param name="disposing">
-    /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
@@ -255,7 +248,7 @@ internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
         if (this.disposed)
         {
-            throw new ObjectDisposedException(this.GetType().FullName);
+            ThrowHelper.ThrowObjectDisposedException(this.GetType().FullName);
         }
     }
 

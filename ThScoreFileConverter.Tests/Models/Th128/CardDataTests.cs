@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th128;
@@ -17,7 +16,7 @@ public class CardDataTests
         static ISpellCard CreateSpellCard(int index)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0x80));
             _ = mock.SetupGet(s => s.NoMissCount).Returns(123 + index);
             _ = mock.SetupGet(s => s.NoIceCount).Returns(456 + index);
             _ = mock.SetupGet(s => s.TrialCount).Returns(789 + index);
@@ -33,7 +32,7 @@ public class CardDataTests
         _ = mock.SetupGet(m => m.Checksum).Returns(0u);
         _ = mock.SetupGet(m => m.Size).Returns(0x947C);
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 250).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 250).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
@@ -44,7 +43,7 @@ public class CardDataTests
             cardData.Version,
             cardData.Checksum,
             cardData.Size,
-            cardData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)));
+            cardData.Cards.Values.Select(SpellCardTests.MakeByteArray));
     }
 
     internal static void Validate(ICardData expected, ICardData actual)

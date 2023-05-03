@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
@@ -23,9 +23,9 @@ public class ScoreReplacerTests
     {
         var mock = new Mock<INumberFormatter>();
         _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => "invoked: " + value.ToString());
+            .Returns((object value) => $"invoked: {value}");
         _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
-            .Returns((double value, int precision) => "invoked: " + value.ToString($"F{precision}") + "%");
+            .Returns((double value, int precision) => $"invoked: {value.ToString($"F{precision}", CultureInfo.InvariantCulture)}%");
         return mock;
     }
 
@@ -199,7 +199,7 @@ public class ScoreReplacerTests
         var formatterMock = MockNumberFormatter();
         var replacer = new ScoreReplacer(Rankings, formatterMock.Object);
         Assert.AreEqual(
-            "No.003 灯符「ファイヤフライフェノメノン」" + Environment.NewLine + "No.007 蠢符「リトルバグ」",
+            $"No.003 灯符「ファイヤフライフェノメノン」{Environment.NewLine}No.007 蠢符「リトルバグ」",
             replacer.Replace("%T08SCRHMA1F"));
     }
 

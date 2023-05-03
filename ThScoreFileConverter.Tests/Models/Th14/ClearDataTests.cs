@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
@@ -44,16 +43,16 @@ public class ClearDataTests
         static IPractice CreatePractice((LevelPractice, StagePractice) pair)
         {
             var mock = new Mock<IPractice>();
-            _ = mock.SetupGet(p => p.Score).Returns(123456u - (TestUtils.Cast<uint>(pair.Item1) * 10u));
-            _ = mock.SetupGet(p => p.Cleared).Returns((byte)(TestUtils.Cast<int>(pair.Item2) % 2));
-            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)(TestUtils.Cast<int>(pair.Item1) % 2));
+            _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
+            _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
+            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
             return mock.Object;
         }
 
         static ISpellCard CreateSpellCard(int index)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0x80));
             _ = mock.SetupGet(s => s.ClearCount).Returns(12 + index);
             _ = mock.SetupGet(s => s.PracticeClearCount).Returns(34 + index);
             _ = mock.SetupGet(s => s.TrialCount).Returns(56 + index);
@@ -75,20 +74,17 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levelsWithTotal.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)));
+            levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
+            levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            EnumHelper<LevelPractice>.Enumerable
-                .SelectMany(level => EnumHelper<StagePractice>.Enumerable.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            EnumHelper.Cartesian<LevelPractice, StagePractice>().ToDictionary(pair => pair, CreatePractice));
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 120).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 120).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
@@ -99,15 +95,15 @@ public class ClearDataTests
             clearData.Version,
             clearData.Checksum,
             clearData.Size,
-            TestUtils.Cast<int>(clearData.Chara),
+            (int)clearData.Chara,
             clearData.Rankings.Values.SelectMany(
                 ranking => ranking.Select(scoreData => Th10.ScoreDataTests.MakeByteArray(scoreData, 4))),
             clearData.TotalPlayCount,
             clearData.PlayTime,
             clearData.ClearCounts.Values,
             clearData.ClearFlags.Values,
-            clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
-            clearData.Cards.Values.Select(card => Th13.SpellCardTests.MakeByteArray(card)));
+            clearData.Practices.Values.Select(Th10.PracticeTests.MakeByteArray),
+            clearData.Cards.Values.Select(Th13.SpellCardTests.MakeByteArray));
     }
 
     internal static void Validate(IClearData expected, IClearData actual)

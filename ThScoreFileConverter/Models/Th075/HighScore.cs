@@ -10,8 +10,10 @@
 using System;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075;
 
@@ -42,16 +44,16 @@ internal class HighScore : IBinaryReadable, IHighScore
         }
         else
         {
-            if ((this.Month <= 0) || (this.Month > 12))
+            if (this.Month is <= 0 or > 12)
             {
-                throw new InvalidDataException(
-                    Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));
+                ThrowHelper.ThrowInvalidDataException(
+                    StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));
             }
 
             if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
             {
-                throw new InvalidDataException(
-                    Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Day)));
+                ThrowHelper.ThrowInvalidDataException(
+                    StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Day)));
             }
         }
 

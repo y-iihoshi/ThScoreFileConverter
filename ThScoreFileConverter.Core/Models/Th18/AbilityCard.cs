@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Core.Models.Th18;
 
@@ -21,13 +22,11 @@ public class AbilityCard
     /// <param name="name">Name of the card.</param>
     /// <param name="type">Type of the card.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is negative.</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
     public AbilityCard(int id, string name, AbilityCardType type)
     {
-        if (id < 0)
-            throw new ArgumentOutOfRangeException(nameof(id));
-        if (name is null)
-            throw new ArgumentNullException(nameof(name));
+        Guard.IsGreaterThanOrEqualTo(id, 0);
+        Guard.IsNotNull(name);
 
         this.Id = id;
         this.Name = name;

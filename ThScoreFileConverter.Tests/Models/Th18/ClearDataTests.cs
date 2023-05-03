@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th18;
@@ -47,9 +47,9 @@ public class ClearDataTests
         static IPractice CreatePractice((Level, Stage) pair)
         {
             var mock = new Mock<IPractice>();
-            _ = mock.SetupGet(p => p.Score).Returns(123456u - (TestUtils.Cast<uint>(pair.Item1) * 10u));
-            _ = mock.SetupGet(p => p.Cleared).Returns((byte)(TestUtils.Cast<int>(pair.Item2) % 2));
-            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)(TestUtils.Cast<int>(pair.Item1) % 2));
+            _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
+            _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
+            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
             return mock.Object;
         }
 
@@ -57,7 +57,7 @@ public class ClearDataTests
             int clear, int practiceClear, int trial, int practiceTrial, int id, Level level)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0xC0));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0xC0));
             _ = mock.SetupGet(s => s.ClearCount).Returns(clear);
             _ = mock.SetupGet(s => s.PracticeClearCount).Returns(practiceClear);
             _ = mock.SetupGet(s => s.TrialCount).Returns(trial);
@@ -81,8 +81,7 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levelsWithTotal.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.Cards).Returns(
             Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
@@ -96,13 +95,11 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)));
+            levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
+            levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra
-                .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, CreatePractice));
         return mock;
     }
 
@@ -119,7 +116,7 @@ public class ClearDataTests
             (int)clearData.Chara,
             clearData.Rankings.Values.SelectMany(
                 ranking => ranking.Select(scoreData => Th17.ScoreDataTests.MakeByteArray(scoreData))),
-            clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)),
+            clearData.Cards.Values.Select(SpellCardTests.MakeByteArray),
             Enumerable.Range(0, 10).Select(_ => spellCardBytes),
             clearData.TotalPlayCount,
             clearData.PlayTime,
@@ -127,7 +124,7 @@ public class ClearDataTests
             clearData.ClearCounts.Values,
             clearData.ClearFlags.Values,
             new byte[0xCA08],
-            clearData.Practices.Values.Select(practice => Th10.PracticeTests.MakeByteArray(practice)),
+            clearData.Practices.Values.Select(Th10.PracticeTests.MakeByteArray),
             new byte[0x120]
             );
     }

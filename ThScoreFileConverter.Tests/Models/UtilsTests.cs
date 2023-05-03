@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Globalization;
 using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Engine;
 
@@ -9,15 +7,6 @@ namespace ThScoreFileConverter.Tests.Models;
 [TestClass]
 public class UtilsTests
 {
-    [TestMethod]
-    public void FormatTest()
-    {
-        var now = DateTime.Now;
-        Assert.AreEqual(
-            string.Format(CultureInfo.CurrentCulture, "{0:F}", now),
-            Utils.Format("{0:F}", now));
-    }
-
     [TestMethod]
     public void GetLocalizedValueTest()
     {

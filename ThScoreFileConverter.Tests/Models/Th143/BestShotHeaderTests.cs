@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CommunityToolkit.Diagnostics;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
@@ -37,7 +37,7 @@ public class BestShotHeaderTests
         return TestUtils.MakeByteArray(
             header.Signature.ToCharArray(),
             (ushort)0,
-            TestUtils.Cast<short>(header.Day),
+            (short)header.Day,
             (short)(header.Scene - 1),
             (ushort)0,
             header.Width,
@@ -45,13 +45,12 @@ public class BestShotHeaderTests
             0u,
             header.DateTime,
             header.SlowRate,
-            TestUtils.MakeRandomArray<byte>(0x58));
+            TestUtils.MakeRandomArray(0x58));
     }
 
     internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
     {
-        if (actual is null)
-            throw new ArgumentNullException(nameof(actual));
+        Guard.IsNotNull(actual);
 
         Assert.AreEqual(expected.Signature, actual.Signature);
         Assert.AreEqual(expected.Day, actual.Day);
@@ -110,21 +109,20 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature + "E");
+        _ = mock.SetupGet(m => m.Signature).Returns($"{signature}E");
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidDays
-        => TestUtils.GetInvalidEnumerators(typeof(Day));
+    public static IEnumerable<object[]> InvalidDays => TestUtils.GetInvalidEnumerators<Day>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidDays))]
     public void ReadFromTestInvalidDay(int day)
     {
         var mock = MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Day).Returns(TestUtils.Cast<Day>(day));
+        _ = mock.SetupGet(m => m.Day).Returns((Day)day);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));

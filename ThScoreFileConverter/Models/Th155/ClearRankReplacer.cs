@@ -10,17 +10,15 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models.Th155;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th155;
 
 // %T155CLEAR[x][yy]
 internal class ClearRankReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CLEAR({1})({2})",
-        Definitions.FormatPrefix,
-        Parsers.LevelParser.Pattern,
-        Parsers.StoryCharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.StoryCharaParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -41,6 +39,7 @@ internal class ClearRankReplacer : IStringReplaceable
 
         static Levels ToLevels(Level level)
         {
+#pragma warning disable format
             return level switch
             {
                 Level.Easy      => Levels.Easy,
@@ -50,6 +49,7 @@ internal class ClearRankReplacer : IStringReplaceable
                 Level.OverDrive => Levels.OverDrive,
                 _               => Levels.None,
             };
+#pragma warning restore format
         }
     }
 

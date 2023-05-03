@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models.Th143;
@@ -18,8 +17,8 @@ namespace ThScoreFileConverter.Models.Th143;
 // %T143SHOT[x][y]
 internal class ShotReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOT({1})([0-9])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOT({Parsers.DayParser.Pattern})([0-9])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -38,13 +37,11 @@ internal class ShotReplacer : IStringReplaceable
                 return match.ToString();
 
             if (bestshots.TryGetValue(key, out var bestshot) &&
-                Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
             {
-                var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                var alternativeString = Utils.Format("SpellName: {0}", enemyCardPair.Card);
-                return Utils.Format(
-                    "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);
+                var alternativeString = StringHelper.Create($"SpellName: {enemyCardPair.Card}");
+                return StringHelper.Create(
+                    $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
             }
             else
             {

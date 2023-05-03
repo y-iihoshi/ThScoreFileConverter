@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -19,8 +18,8 @@ namespace ThScoreFileConverter.Models.Th143;
 // %T143SHOTEX[w][x][y]
 internal class ShotExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOTEX({1})([0-9])([1-4])", Definitions.FormatPrefix, Parsers.DayParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([0-9])([1-4])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -41,28 +40,14 @@ internal class ShotExReplacer : IStringReplaceable
 
             if (bestshots.TryGetValue(key, out var bestshot))
             {
-                switch (type)
+                return type switch
                 {
-                    case 1:     // relative path to the bestshot file
-                        if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                            Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
-                        {
-                            return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                        }
-                        else
-                        {
-                            return string.Empty;
-                        }
-
-                    case 2:     // width
-                        return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                    case 3:     // height
-                        return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                    case 4:     // date & time
-                        return DateTimeHelper.GetString(bestshot.Header.DateTime);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
+                    2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
+                    3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
+                    4 => DateTimeHelper.GetString(bestshot.Header.DateTime),
+                    _ => match.ToString(),
+                };
             }
             else
             {

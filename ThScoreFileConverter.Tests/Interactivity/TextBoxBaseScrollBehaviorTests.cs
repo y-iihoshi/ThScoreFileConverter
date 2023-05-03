@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -65,7 +64,7 @@ public class TextBoxBaseScrollBehaviorTests
                 $"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}"));
         }
 
-        BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
+        _ = BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
         behaviors.Add(behavior);
         textbox.LayoutUpdated += onLayoutUpdated;
 
@@ -101,7 +100,7 @@ public class TextBoxBaseScrollBehaviorTests
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
+        _ = BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
         behaviors.Add(behavior);
         textbox.LayoutUpdated += onLayoutUpdated;
 

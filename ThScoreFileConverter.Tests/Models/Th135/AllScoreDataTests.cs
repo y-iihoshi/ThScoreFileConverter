@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th135;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th135;
 using ThScoreFileConverter.Tests.UnitTesting;
+using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th135;
-
-using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 [TestClass]
 public class AllScoreDataTests
@@ -36,7 +34,7 @@ public class AllScoreDataTests
         {
             storyProgress = 1,
             storyClearFlags = EnumHelper<Chara>.Enumerable.ToDictionary(
-                chara => chara, chara => TestUtils.Cast<Levels>(30 - (int)chara)),
+                chara => chara, chara => (Levels)(30 - (int)chara)),
             endingCount = 2,
             ending2Count = 3,
             isEnabledStageTanuki1 = true,

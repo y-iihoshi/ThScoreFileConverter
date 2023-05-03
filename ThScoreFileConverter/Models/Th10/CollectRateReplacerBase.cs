@@ -31,12 +31,8 @@ internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}CRG({1})({2})({3})([12])",
-            formatPrefix,
-            levelWithTotalParser.Pattern,
-            charaWithTotalParser.Pattern,
-            stageWithTotalParser.Pattern);
+        this.pattern = StringHelper.Create(
+            $"{formatPrefix}CRG({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelWithTotalParser.Parse(match.Groups[1].Value);
@@ -47,12 +43,14 @@ internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
             if (stage == StageWithTotal.Extra)
                 return match.ToString();
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ISpellCard<Level>, bool> findByLevel = level switch
             {
                 LevelWithTotal.Total => FuncHelper.True,
                 LevelWithTotal.Extra => FuncHelper.True,
                 _ => card => card.Level == (Level)level,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ISpellCard<Level>, bool> findByStage = (level, stage) switch
             {

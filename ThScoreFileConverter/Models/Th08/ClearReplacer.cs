@@ -13,14 +13,15 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08CLEAR[x][yy]
 internal class ClearReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CLEAR({1})({2})", Definitions.FormatPrefix, Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -37,7 +38,7 @@ internal class ClearReplacer : IStringReplaceable
             if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
             {
                 var stageProgress = ranking.Max(rank => rank.StageProgress);
-                if ((stageProgress == StageProgress.FourUncanny) || (stageProgress == StageProgress.FourPowerful))
+                if (stageProgress is StageProgress.FourUncanny or StageProgress.FourPowerful)
                 {
                     return "Stage 4";
                 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
@@ -32,9 +31,8 @@ public class StatusTests
     {
         encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
         decodedLastName = "Player1 ",
-        arcadeScores = EnumHelper<CharaWithReserved>.Enumerable
-            .SelectMany(player => EnumHelper<CharaWithReserved>.Enumerable.Select(enemy => (player, enemy)))
-            .ToDictionary(pair => pair, pair => ((int)pair.player * 100) + (int)pair.enemy),
+        arcadeScores = EnumHelper.Cartesian<CharaWithReserved, CharaWithReserved>()
+            .ToDictionary(pair => pair, pair => ((int)pair.First * 100) + (int)pair.Second),
     };
 
     internal static byte[] MakeByteArray(in Properties properties)
@@ -110,7 +108,7 @@ public class StatusTests
     {
         var properties = new Properties(ValidProperties);
         var scores = properties.arcadeScores.ToDictionary();
-        scores.Add((CharaWithReserved.Reserved15, TestUtils.Cast<CharaWithReserved>(99)), 99);
+        scores.Add((CharaWithReserved.Reserved15, (CharaWithReserved)99), 99);
         properties.arcadeScores = scores;
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));

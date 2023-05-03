@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
@@ -406,7 +405,7 @@ public class SettingWindowViewModelTests
         Assert.IsTrue(command.CanExecute());
         Assert.AreEqual(0, numChanged);
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute());
+        _ = Assert.ThrowsException<ObjectDisposedException>(command.Execute);
     }
 
     [TestMethod]

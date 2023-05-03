@@ -1,2 +1,2 @@
-sphinx == 5.0.2
+sphinx == 6.2.1
 sphinx-intl == 2.0.1

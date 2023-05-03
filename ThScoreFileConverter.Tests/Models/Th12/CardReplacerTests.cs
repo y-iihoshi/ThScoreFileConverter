@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th12;
 using ThScoreFileConverter.Models.Th12;
@@ -19,8 +18,8 @@ public class CardReplacerTests
             c => (c.Chara == CharaWithTotal.Total)
                  && (c.Cards == new Dictionary<int, ISpellCard>
                     {
-                        { 3, Mock.Of<ISpellCard>(s => s.HasTried == true) },
-                        { 4, Mock.Of<ISpellCard>(s => s.HasTried == false) },
+                        { 3, Mock.Of<ISpellCard>(s => s.HasTried) },
+                        { 4, Mock.Of<ISpellCard>(s => !s.HasTried) },
                     }))
     }.ToDictionary(clearData => clearData.Chara);
 

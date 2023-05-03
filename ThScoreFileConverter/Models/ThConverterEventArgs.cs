@@ -6,7 +6,8 @@
 //-----------------------------------------------------------------------
 
 using System;
-using ThScoreFileConverter.Core.Resources;
+using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
@@ -31,18 +32,16 @@ internal class ThConverterEventArgs : EventArgs
     /// <param name="path">The path of the last output file.</param>
     /// <param name="current">The number of the files that have been output.</param>
     /// <param name="total">The total number of the files.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="path"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="path"/> is empty.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="current"/> is not positive or greater than <paramref name="total"/>.
     /// </exception>
     public ThConverterEventArgs(string path, int current, int total)
     {
-        if (string.IsNullOrEmpty(path))
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionMustNotBeEmpty, nameof(path));
-        if (current <= 0)
-            throw new ArgumentOutOfRangeException(nameof(current));
-        if (total < current)
-            throw new ArgumentOutOfRangeException(nameof(total));
+        Guard.IsNotNullOrEmpty(path);
+        Guard.IsGreaterThan(current, 0);
+        Guard.IsGreaterThanOrEqualTo(total, current);
 
         this.Path = path;
         this.Current = current;
@@ -67,6 +66,5 @@ internal class ThConverterEventArgs : EventArgs
     /// <summary>
     /// Gets a message string that represents the current instance.
     /// </summary>
-    public string Message => Utils.Format(
-        "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
+    public string Message => StringHelper.Create($"({this.Current}/{this.Total}) {System.IO.Path.GetFileName(this.Path)} ");
 }

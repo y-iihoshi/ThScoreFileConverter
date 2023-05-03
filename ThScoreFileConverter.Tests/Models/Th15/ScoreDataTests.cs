@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverter.Tests.UnitTesting;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
 
@@ -21,7 +23,7 @@ public class ScoreDataTests
         _ = mock.SetupGet(m => m.Score).Returns(12u);
         _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Three);
         _ = mock.SetupGet(m => m.ContinueCount).Returns(4);
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(10));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(10));
         _ = mock.SetupGet(m => m.DateTime).Returns(56u);
         _ = mock.SetupGet(m => m.SlowRate).Returns(7.8f);
         _ = mock.SetupGet(m => m.RetryCount).Returns(9u);
@@ -70,15 +72,14 @@ public class ScoreDataTests
         Validate(mock.Object, scoreData);
     }
 
-    public static IEnumerable<object[]> InvalidStageProgresses
-        => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+    public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]
     public void ReadFromTestInvalidStageProgress(int stageProgress)
     {
         var mock = MockScoreData();
-        _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
+        _ = mock.SetupGet(m => m.StageProgress).Returns((StageProgress)stageProgress);
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
@@ -101,7 +102,7 @@ public class ScoreDataTests
         var mock = MockScoreData();
         var name = mock.Object.Name;
         var validNameLength = name.Count();
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverter.Tests.UnitTesting;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
@@ -40,8 +39,7 @@ public class ScoreDataTests
         Th10.ScoreDataTests.ReadFromTestExceededNameHelper<ScoreData, StageProgress>(UnknownSize);
     }
 
-    public static IEnumerable<object[]> InvalidStageProgresses
-        => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+    public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]

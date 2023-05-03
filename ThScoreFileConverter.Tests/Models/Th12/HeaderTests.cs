@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models.Th12;
+﻿using ThScoreFileConverter.Models.Th12;
 using ThScoreFileConverter.Tests.Models.Th095;
 using ThScoreFileConverter.Tests.UnitTesting;
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
@@ -119,6 +118,7 @@ public class SQTableTests
         _ = Assert.ThrowsException<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
+#pragma warning disable JSON002 // Probable JSON string detected
     [DataTestMethod]
     [DataRow(
         new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
@@ -132,6 +132,7 @@ public class SQTableTests
             (int)SQOT.Null },
         "{ 123: 456, 78: 90 }",
         DisplayName = "two pairs")]
+#pragma warning restore JSON002 // Probable JSON string detected
     public void ToStringTest(int[] array, string expected)
     {
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));

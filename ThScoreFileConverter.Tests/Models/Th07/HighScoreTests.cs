@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -128,43 +127,40 @@ public class HighScoreTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters
-        => TestUtils.GetInvalidEnumerators(typeof(Chara));
+    public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void HighScoreTestInvalidChara(int chara)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void HighScoreTestInvalidLevel(int level)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<Level>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidStageProgresses
-        => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
+    public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]
     public void HighScoreTestInvalidStageProgress(int stageProgress)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.StageProgress).Returns(TestUtils.Cast<StageProgress>(stageProgress));
+        _ = mock.SetupGet(m => m.StageProgress).Returns((StageProgress)stageProgress);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));

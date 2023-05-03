@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using ThScoreFileConverter.Core.Resources;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Models;
 
@@ -38,14 +38,12 @@ public class BitReader
     /// The stream to read. Since a <see cref="BitReader"/> instance does not own <paramref name="stream"/>,
     /// it is responsible for the caller to close <paramref name="stream"/>.
     /// </param>
-    /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
     public BitReader(Stream stream)
     {
-        if (stream is null)
-            throw new ArgumentNullException(nameof(stream));
-        if (!stream.CanRead)
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionStreamMustBeReadable, nameof(stream));
+        Guard.IsNotNull(stream);
+        Guard.CanRead(stream);
 
         this.stream = stream;
         this.current = 0;
@@ -60,8 +58,7 @@ public class BitReader
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="num"/> is negative.</exception>
     public int ReadBits(int num)
     {
-        if (num < 0)
-            throw new ArgumentOutOfRangeException(nameof(num));
+        Guard.IsGreaterThanOrEqualTo(num, 0);
 
         var value = 0;
         for (var i = 0; i < num; i++)

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th11;
@@ -46,7 +46,7 @@ public class ClearDataTests
         static ISpellCard CreateSpellCard(int index)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0x80));
             _ = mock.SetupGet(s => s.ClearCount).Returns(123 + index);
             _ = mock.SetupGet(s => s.TrialCount).Returns(456 + index);
             _ = mock.SetupGet(s => s.Id).Returns(index);
@@ -68,18 +68,15 @@ public class ClearDataTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levels.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
             levels.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra
-                .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                .ToDictionary(pair => pair, pair => CreatePractice(pair)));
+            levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, CreatePractice));
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 175).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 175).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 

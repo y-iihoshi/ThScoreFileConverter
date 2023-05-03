@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th145;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -42,7 +41,7 @@ public class AllScoreDataTests
         {
             storyProgress = 1,
             storyClearFlags = charas.ToDictionary(
-                chara => chara, chara => TestUtils.Cast<Levels>(30 - (int)chara)),
+                chara => chara, chara => (Levels)(30 - (int)chara)),
             endingCount = 2,
             ending2Count = 3,
             isEnabledStageTanuki1 = true,

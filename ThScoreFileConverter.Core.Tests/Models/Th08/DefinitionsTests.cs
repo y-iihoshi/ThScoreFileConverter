@@ -21,13 +21,12 @@ public class DefinitionsTests
         Assert.IsFalse(Definitions.CanPractice(Stage.Extra));
     }
 
-    public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators(typeof(Stage));
+    public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]
-    public void CanPracticeTestInvalidStage(int level)
+    public void CanPracticeTestInvalidStage(int stage)
     {
-        var invalid = TestHelper.Cast<Stage>(level);
-        Assert.IsFalse(Definitions.CanPractice(invalid));
+        Assert.IsFalse(Definitions.CanPractice((Stage)stage));
     }
 }

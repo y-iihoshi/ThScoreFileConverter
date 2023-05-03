@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
@@ -48,7 +47,7 @@ public class ClearDataPerGameModeTests
         static ISpellCard CreateSpellCard(int index)
         {
             var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0x80));
             _ = mock.SetupGet(s => s.ClearCount).Returns(12 + index);
             _ = mock.SetupGet(s => s.PracticeClearCount).Returns(34 + index);
             _ = mock.SetupGet(s => s.TrialCount).Returns(56 + index);
@@ -65,26 +64,24 @@ public class ClearDataPerGameModeTests
         _ = mock.SetupGet(m => m.Rankings).Returns(
             levelsWithTotal.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
         _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
         _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
         _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)));
+            levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
         _ = mock.SetupGet(m => m.ClearFlags).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2));
+            levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
         _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 119).ToDictionary(index => index, index => CreateSpellCard(index)));
+            Enumerable.Range(1, 119).ToDictionary(index => index, CreateSpellCard));
         return mock;
     }
 
     internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
     {
         return TestUtils.MakeByteArray(
-            clearData.Rankings.Values.SelectMany(
-                ranking => ranking.Select(scoreData => ScoreDataTests.MakeByteArray(scoreData))),
+            clearData.Rankings.Values.SelectMany(ranking => ranking.Select(ScoreDataTests.MakeByteArray)),
             new byte[0x140],
-            clearData.Cards.Values.Select(card => SpellCardTests.MakeByteArray(card)),
+            clearData.Cards.Values.Select(SpellCardTests.MakeByteArray),
             clearData.TotalPlayCount,
             clearData.PlayTime,
             0u,

@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Extensions;
 
@@ -22,15 +23,12 @@ public static class StringExtensions
     /// Returns a non-null string that represents the specified object.
     /// </summary>
     /// <param name="obj">The object to get its string representation.</param>
-    /// <param name="nonNullStr">The non-null string to be returned when <paramref name="obj"/> is <c>null</c>.</param>
+    /// <param name="nonNullStr">The non-null string to be returned when <paramref name="obj"/> is <see langword="null"/>.</param>
     /// <returns>A non-null string that represents <paramref name="obj"/>.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="nonNullStr"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="nonNullStr"/> is <see langword="null"/>.</exception>
     public static string ToNonNullString(this object obj, string nonNullStr = "(null)")
     {
-        if (nonNullStr is null)
-        {
-            throw new ArgumentNullException(nameof(nonNullStr));
-        }
+        Guard.IsNotNull(nonNullStr);
 
         return obj?.ToString() ?? nonNullStr;
     }

@@ -34,7 +34,7 @@ internal class Status : Th10.Chapter, IStatus
         _ = reader.ReadExactBytes(0x4);
         this.Achievements = reader.ReadExactBytes(30);
         _ = reader.ReadExactBytes(0x62);
-        this.AbilityCards = reader.ReadExactBytes(56);
+        this.AbilityCards = reader.ReadExactBytes(Definitions.AbilityCardTable.Count);
         _ = reader.ReadExactBytes(0x48);
         this.InitialHoldAbilityCards = reader.ReadExactBytes(0x30); // Story, Extra, Practice
         _ = reader.ReadExactBytes(0x0250);

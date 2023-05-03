@@ -16,11 +16,11 @@ namespace ThScoreFileConverter.Helpers;
 public static class FuncHelper
 {
     /// <summary>
-    /// Always returns <c>true</c>.
+    /// Always returns <see langword="true"/>.
     /// </summary>
     /// <typeparam name="T">The type of the argument.</typeparam>
     /// <param name="arg">An argument. Not used.</param>
-    /// <returns>Always <c>true</c>.</returns>
+    /// <returns>Always <see langword="true"/>.</returns>
     public static bool True<T>(T arg)
     {
         _ = arg;

@@ -50,6 +50,7 @@ internal class AllScoreData : IBinaryReadable
 
             var key = new SQString(str);
             var type = (SQObjectType)reader.ReadUInt32();
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             var value = type switch
             {
                 SQObjectType.Table => ReadSQObject(reader, SQObjectType.Table),
@@ -57,6 +58,7 @@ internal class AllScoreData : IBinaryReadable
                 SQObjectType.Integer => SQInteger.Create(reader, true),
                 _ => SQNull.Instance,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             if (value != SQNull.Instance)
             {
@@ -71,12 +73,14 @@ internal class AllScoreData : IBinaryReadable
             }
         }
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
         return containerType switch
         {
             SQObjectType.Table => new SQTable(pairs),
             SQObjectType.Array => new SQArray(elements),
             _ => SQNull.Instance,
         };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
     }
 
     private void ParseSaveDataDictionary()

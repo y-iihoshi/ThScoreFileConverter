@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
@@ -106,7 +105,7 @@ public class BinaryReaderExtensionsTests
     [DynamicData(nameof(ReadNullTerminatedStringTestData))]
     public void ReadNullTerminatedStringTest(string expected, Encoding encoding, Encoding? encodingToRead)
     {
-        var nullTerminated = expected + "\0";
+        var nullTerminated = $"{expected}\0";
         var bytes = encoding.GetBytes(nullTerminated);
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
@@ -122,14 +121,14 @@ public class BinaryReaderExtensionsTests
     {
         BinaryReader reader = null!;
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => reader.ReadNullTerminatedString());
+        _ = Assert.ThrowsException<ArgumentNullException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
     public void ReadNullTerminatedStringTestNullEncoding()
     {
         var expected = "博霊 霊夢";
-        var nullTerminated = expected + "\0";
+        var nullTerminated = $"{expected}\0";
         var bytes = Encoding.UTF8.GetBytes(nullTerminated);
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
@@ -143,7 +142,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream();
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadNullTerminatedString());
+        _ = Assert.ThrowsException<EndOfStreamException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
@@ -154,14 +153,14 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadNullTerminatedString());
+        _ = Assert.ThrowsException<EndOfStreamException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
     public void ReadNullTerminatedStringTestInvalidEncoding()
     {
         var expected = "博霊 霊夢";
-        var nullTerminated = expected + "\0";
+        var nullTerminated = $"{expected}\0";
         var bytes = EncodingHelper.CP932.GetBytes(nullTerminated);
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);

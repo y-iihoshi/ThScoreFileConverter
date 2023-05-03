@@ -6,62 +6,63 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Text;
 
 namespace ThScoreFileConverter.Helpers;
 
 /// <summary>
-/// Contains read-only instances of <see cref="System.Text.Encoding"/> class for convenience.
+/// Contains read-only instances of <see cref="Encoding"/> class for convenience.
 /// </summary>
 public static class EncodingHelper
 {
     static EncodingHelper()
     {
-        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-        CP932 = System.Text.Encoding.GetEncoding(932);
-        Default = System.Text.Encoding.Default;
-        UTF8 = System.Text.Encoding.UTF8;
-        UTF8NoBOM = new System.Text.UTF8Encoding(false);
-        Encodings = new Dictionary<int, System.Text.Encoding>();
+        CP932 = Encoding.GetEncoding(932);
+        Default = Encoding.Default;
+        UTF8 = Encoding.UTF8;
+        UTF8NoBOM = new UTF8Encoding(false);
+        Encodings = new Dictionary<int, Encoding>();
     }
 
     /// <summary>
     /// Gets the code page 932 encoding.
     /// </summary>
-    public static System.Text.Encoding CP932 { get; }
+    public static Encoding CP932 { get; }
 
     /// <summary>
     /// Gets the default encoding.
     /// </summary>
-    public static System.Text.Encoding Default { get; }
+    public static Encoding Default { get; }
 
     /// <summary>
     /// Gets the UTF-8 encoding. The Unicode byte order mark is emitted.
     /// </summary>
-    public static System.Text.Encoding UTF8 { get; }
+    public static Encoding UTF8 { get; }
 
     /// <summary>
     /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
     /// </summary>
-    public static System.Text.Encoding UTF8NoBOM { get; }
+    public static Encoding UTF8NoBOM { get; }
 
     /// <summary>
-    /// Gets the dictionary caching <see cref="System.Text.Encoding"/> instances.
+    /// Gets the dictionary caching <see cref="Encoding"/> instances.
     /// </summary>
-    private static IDictionary<int, System.Text.Encoding> Encodings { get; }
+    private static IDictionary<int, Encoding> Encodings { get; }
 
     /// <summary>
     /// Returns the encoding associated with the specified code page identifier.
     /// </summary>
     /// <param name="codePage">The code page identifier of the preferred encoding.</param>
-    /// <returns>The <see cref="System.Text.Encoding"/> associated with <paramref name="codePage"/>.</returns>
-    public static System.Text.Encoding GetEncoding(int codePage)
+    /// <returns>The <see cref="Encoding"/> associated with <paramref name="codePage"/>.</returns>
+    public static Encoding GetEncoding(int codePage)
     {
         if (Encodings.TryGetValue(codePage, out var encoding))
             return encoding;
 
         // To prevent BOM output for UTF-8
-        encoding = (codePage == 65001) ? UTF8NoBOM : System.Text.Encoding.GetEncoding(codePage);
+        encoding = (codePage == 65001) ? UTF8NoBOM : Encoding.GetEncoding(codePage);
         Encodings.Add(codePage, encoding);
         return encoding;
     }

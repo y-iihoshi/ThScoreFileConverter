@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th08;
@@ -24,9 +23,9 @@ public class CardAttackTests
         _ = mock.SetupGet(m => m.Size2).Returns(0x22C);
         _ = mock.SetupGet(m => m.CardId).Returns(123);
         _ = mock.SetupGet(m => m.Level).Returns(LevelPracticeWithTotal.Lunatic);
-        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
-        _ = mock.SetupGet(m => m.EnemyName).Returns(TestUtils.MakeRandomArray<byte>(0x30));
-        _ = mock.SetupGet(m => m.Comment).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
+        _ = mock.SetupGet(m => m.EnemyName).Returns(TestUtils.MakeRandomArray(0x30));
+        _ = mock.SetupGet(m => m.Comment).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.StoryCareer).Returns(CardAttackCareerTests.MockCardAttackCareer().Object);
         _ = mock.SetupGet(m => m.PracticeCareer).Returns(CardAttackCareerTests.MockCardAttackCareer().Object);
         SetupHasTried(mock);
@@ -112,15 +111,14 @@ public class CardAttackTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(LevelPracticeWithTotal));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<LevelPracticeWithTotal>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void CardAttackTestInvalidLevel(int level)
     {
         var mock = MockCardAttack();
-        _ = mock.SetupGet(m => m.Level).Returns(TestUtils.Cast<LevelPracticeWithTotal>(level));
+        _ = mock.SetupGet(m => m.Level).Returns((LevelPracticeWithTotal)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new CardAttack(chapter));

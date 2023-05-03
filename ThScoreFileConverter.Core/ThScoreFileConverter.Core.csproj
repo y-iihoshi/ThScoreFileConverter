@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;netcoreapp3.1;net6.0-windows</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -19,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.2">
+    <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.0" />
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

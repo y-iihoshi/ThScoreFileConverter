@@ -27,7 +27,7 @@ internal class CardAttack : Chapter, ICardAttack    // per card
         _ = reader.ReadExactBytes(8);
         this.CardId = (short)(reader.ReadInt16() + 1);
         _ = reader.ReadExactBytes(6);
-        this.CardName = reader.ReadExactBytes(0x24);
+        this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x24));
         this.TrialCount = reader.ReadUInt16();
         this.ClearCount = reader.ReadUInt16();
     }

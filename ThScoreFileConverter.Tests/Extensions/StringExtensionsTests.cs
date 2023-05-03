@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Tests.Extensions;
@@ -11,7 +10,9 @@ public class StringExtensionsTests
     public void ToNonNullStringTest()
     {
         var value = 12;
+#pragma warning disable CA1305 // Specify IFormatProvider
         Assert.AreEqual(value.ToString(), value.ToNonNullString());
+#pragma warning restore CA1305 // Specify IFormatProvider
     }
 
     [TestMethod]

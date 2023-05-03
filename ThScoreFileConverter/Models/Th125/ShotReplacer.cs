@@ -19,11 +19,8 @@ namespace ThScoreFileConverter.Models.Th125;
 // %T125SHOT[x][y][z]
 internal class ShotReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}SHOT({1})({2})([1-9])",
-        Definitions.FormatPrefix,
-        Parsers.CharaParser.Pattern,
-        Parsers.LevelParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}SHOT({Parsers.CharaParser.Pattern})({Parsers.LevelParser.Pattern})([1-9])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -42,18 +39,15 @@ internal class ShotReplacer : IStringReplaceable
                 return match.ToString();
 
             if (bestshots.TryGetValue((chara, level, scene), out var bestshot) &&
-                Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
-                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
             {
-                var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
-                var alternativeString = Utils.Format(
-                    "ClearData: {0}{3}Slow: {1}{3}SpellName: {2}",
-                    formatter.FormatNumber(bestshot.Header.ResultScore),
-                    formatter.FormatPercent(bestshot.Header.SlowRate, 6),
-                    EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
-                    Environment.NewLine);
-                return Utils.Format(
-                    "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);
+                var resultScore = formatter.FormatNumber(bestshot.Header.ResultScore);
+                var slowRate = formatter.FormatPercent(bestshot.Header.SlowRate, 6);
+                var cardName = EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0');
+                var alternativeString = StringHelper.Create(
+                    $"ClearData: {resultScore}{Environment.NewLine}Slow: {slowRate}{Environment.NewLine}SpellName: {cardName}");
+                return StringHelper.Create(
+                    $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
             }
             else
             {

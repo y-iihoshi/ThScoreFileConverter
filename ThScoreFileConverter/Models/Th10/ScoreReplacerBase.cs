@@ -29,8 +29,8 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
         Func<Level, TChara, int, IScoreData<StageProgress>> getScore,
         INumberFormatter formatter)
     {
-        this.pattern = Utils.Format(
-            @"{0}SCR({1})({2})(\d)([1-5])", formatPrefix, levelParser.Pattern, charaParser.Pattern);
+        this.pattern = StringHelper.Create(
+            $@"{formatPrefix}SCR({levelParser.Pattern})({charaParser.Pattern})(\d)([1-5])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1].Value);

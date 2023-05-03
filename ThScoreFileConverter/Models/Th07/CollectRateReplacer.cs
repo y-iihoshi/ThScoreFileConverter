@@ -19,12 +19,8 @@ namespace ThScoreFileConverter.Models.Th07;
 // %T07CRG[w][xx][yy][z]
 internal class CollectRateReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CRG({1})({2})({3})([12])",
-        Definitions.FormatPrefix,
-        Parsers.LevelWithTotalParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern,
-        Parsers.StageWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CRG({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})([12])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -37,9 +33,10 @@ internal class CollectRateReplacer : IStringReplaceable
             var stage = Parsers.StageWithTotalParser.Parse(match.Groups[3].Value);
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
-            if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
+            if (stage is StageWithTotal.Extra or StageWithTotal.Phantasm)
                 return match.ToString();
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ICardAttack, bool> findByLevel = level switch
             {
                 LevelWithTotal.Total => FuncHelper.True,
@@ -48,6 +45,7 @@ internal class CollectRateReplacer : IStringReplaceable
                 _ => attack => Definitions.CardTable.Any(
                     pair => (pair.Key == attack.CardId) && (pair.Value.Level == (Level)level)),
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ICardAttack, bool> findByStage = (level, stage) switch
             {

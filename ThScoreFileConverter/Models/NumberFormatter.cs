@@ -5,7 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
+using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
@@ -33,15 +34,14 @@ internal class NumberFormatter : INumberFormatter
         where T : struct
     {
         return (this.settings.OutputNumberGroupSeparator is bool output && output)
-            ? Utils.Format("{0:N0}", number) : (number.ToString() ?? string.Empty);
+            ? StringHelper.Create($"{number:N0}") : (number.ToString() ?? string.Empty);
     }
 
     /// <inheritdoc/>
     public string FormatPercent(double number, int precision)
     {
-        if (precision is < 0 or > 99)
-            throw new ArgumentOutOfRangeException(nameof(precision));
+        Guard.IsInRange(precision, 0, 100);
 
-        return Utils.Format($"{{0:F{precision}}}%", number);
+        return StringHelper.Format(StringHelper.Create($"{{0:F{precision}}}%"), number);
     }
 }

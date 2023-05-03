@@ -63,7 +63,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     private readonly CompositeDisposable disposables;
 
     /// <summary>
-    /// <c>true</c> if the current instance has been disposed.
+    /// <see langword="true"/> if the current instance has been disposed.
     /// </summary>
     private bool disposed;
 
@@ -393,7 +393,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// Disposes the resources of the current instance.
     /// </summary>
     /// <param name="disposing">
-    /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
@@ -425,7 +425,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Overrides the mouse cursor for the entire application.
     /// </summary>
-    /// <param name="cursor">The new cursor or <c>null</c>.</param>
+    /// <param name="cursor">The new cursor or <see langword="null"/>.</param>
     private void OverrideCursor(Cursor? cursor)
     {
         this.dispatcher.Invoke(() => Mouse.OverrideCursor = cursor);
@@ -467,8 +467,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
     private void AddTemplateFiles(OpenFileDialogActionResult result)
     {
-        this.TemplateFiles.Value = this.TemplateFiles.Value
-            .Union(result.FileNames.Where(file => File.Exists(file))).ToArray();
+        this.TemplateFiles.Value = this.TemplateFiles.Value.Union(result.FileNames.Where(File.Exists)).ToArray();
     }
 
     /// <summary>
@@ -476,7 +475,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// </summary>
     /// <param name="selectedItems">A list indicating the path strings which will be deleted.</param>
     /// <returns>
-    /// <c>true</c> if <see cref="DeleteTemplateFiles"/> can be invoked; otherwise, <c>false</c>.
+    /// <see langword="true"/> if <see cref="DeleteTemplateFiles"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
     private bool CanDeleteTemplateFiles(IList? selectedItems)
     {
@@ -497,7 +496,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// Returns a value indicating whether <see cref="DeleteAllTemplateFiles"/> can be invoked.
     /// </summary>
     /// <returns>
-    /// <c>true</c> if <see cref="DeleteAllTemplateFiles"/> can be invoked; otherwise, <c>false</c>.
+    /// <see langword="true"/> if <see cref="DeleteAllTemplateFiles"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
     private bool CanDeleteAllTemplateFiles()
     {
@@ -526,7 +525,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// Returns a value indicating whether <see cref="Convert"/> can be invoked.
     /// </summary>
     /// <returns>
-    /// <c>true</c> if <see cref="Convert"/> can be invoked; otherwise, <c>false</c>.
+    /// <see langword="true"/> if <see cref="Convert"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
     private bool CanConvert()
     {
@@ -592,7 +591,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
+                    var filePath = droppedPaths.FirstOrDefault(File.Exists);
                     if (filePath is not null)
                         this.ScoreFile.Value = filePath;
                 }
@@ -617,7 +616,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
                     if (dirPath is not null)
                         this.BestShotDirectory.Value = dirPath;
                 }
@@ -642,8 +641,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    this.TemplateFiles.Value = this.TemplateFiles.Value
-                        .Union(droppedPaths.Where(path => File.Exists(path))).ToArray();
+                    this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
                 }
             }
         }
@@ -666,7 +664,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
                     if (dirPath is not null)
                         this.OutputDirectory.Value = dirPath;
                 }

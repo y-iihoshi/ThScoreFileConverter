@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th10;
@@ -24,7 +23,7 @@ public class StatusTests
         _ = mock.SetupGet(m => m.Checksum).Returns(0u);
         _ = mock.SetupGet(m => m.Size).Returns(0x448);
         _ = mock.SetupGet(m => m.LastName).Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"));
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(numBgms));
+        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(numBgms));
         return mock;
     }
 

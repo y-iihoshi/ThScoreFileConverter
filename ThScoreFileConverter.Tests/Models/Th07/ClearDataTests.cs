@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th07;
@@ -88,15 +87,14 @@ public class ClearDataTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidCharacters
-        => TestUtils.GetInvalidEnumerators(typeof(Chara));
+    public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void ClearDataTestInvalidChara(int chara)
     {
         var mock = MockClearData();
-        _ = mock.SetupGet(m => m.Chara).Returns(TestUtils.Cast<Chara>(chara));
+        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new ClearData(chapter));

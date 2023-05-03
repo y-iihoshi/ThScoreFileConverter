@@ -52,7 +52,7 @@ internal static class ThConverterFactory
     /// Gets whether a new instance of the subclass of <see cref="ThConverter"/> can be create.
     /// </summary>
     /// <param name="key">The string to specify the subclass.</param>
-    /// <returns><c>true</c> if the instance can be create, otherwise <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if the instance can be create, otherwise <see langword="false"/>.</returns>
     public static bool CanCreate(string key)
     {
         return ConverterTypes.ContainsKey(key);
@@ -62,7 +62,7 @@ internal static class ThConverterFactory
     /// Creates a new instance of the subclass of the <see cref="ThConverter"/> class.
     /// </summary>
     /// <param name="key">The string to specify the subclass.</param>
-    /// <returns>An instance of the subclass specified by <paramref name="key"/>, otherwise <c>null</c>.</returns>
+    /// <returns>An instance of the subclass specified by <paramref name="key"/>, otherwise <see langword="null"/>.</returns>
     public static ThConverter? Create(string key)
     {
         return ConverterTypes.TryGetValue(key, out var type) ? Activator.CreateInstance(type) as ThConverter : null;

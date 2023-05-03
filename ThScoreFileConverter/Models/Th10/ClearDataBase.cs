@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
@@ -46,8 +47,7 @@ internal class ClearDataBase<TCharaWithTotal, TScoreData>
         this.PlayTime = reader.ReadInt32();
         this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
 
-        this.Practices = levelsExceptExtra
-            .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
+        this.Practices = levelsExceptExtra.Cartesian(stagesExceptExtra)
             .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Practice>(reader) as IPractice);
 
         this.Cards = Enumerable.Range(0, numCards)

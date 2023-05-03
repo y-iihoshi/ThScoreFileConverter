@@ -19,11 +19,8 @@ namespace ThScoreFileConverter.Models.Th15;
 // %T15CHARA[x][yy][z]
 internal class CharaReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CHARA({1})({2})([1-3])",
-        Definitions.FormatPrefix,
-        Parsers.GameModeParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CHARA({Parsers.GameModeParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})([1-3])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -44,6 +41,7 @@ internal class CharaReplacer : IStringReplaceable
                     .Where(pair => !Models.Definitions.IsTotal(pair.Key)).Sum(pair => pair.Value),
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
             {
                 _ when Definitions.IsTotal(chara) => dictionary => dictionary.Values
@@ -54,6 +52,7 @@ internal class CharaReplacer : IStringReplaceable
                     && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
                     ? getValueByType(clearDataPerGameMode) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<long, string> toString = type switch
             {

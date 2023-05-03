@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
@@ -43,7 +44,7 @@ internal sealed class SQTable : SQObject
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.Table)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
+                ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         var table = new SQTable();
@@ -64,7 +65,7 @@ internal sealed class SQTable : SQObject
 
     public override string? ToString()
     {
-        return "{ " + string.Join(", ", this.Value.Select(pair => pair.Key.ToNonNullString() + ": " + pair.Value.ToNonNullString())) + " }";
+        return $"{{ {string.Join(", ", this.Value.Select(pair => $"{pair.Key.ToNonNullString()}: {pair.Value.ToNonNullString()}"))} }}";
     }
 
     public Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
@@ -99,6 +100,8 @@ internal sealed class SQTable : SQObject
                 case SQFloat sqfloat:
                     if (result is float)
                         result = (T)(object)(float)sqfloat;
+                    break;
+                default:
                     break;
             }
         }

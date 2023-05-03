@@ -13,12 +13,16 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Core.Resources;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th125;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Models;
 
@@ -67,8 +71,8 @@ internal class Th125Converter : ThConverter
     {
         if ((this.allScoreData is null) || (this.allScoreData.Status is null))
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
         return new List<IStringReplaceable>
@@ -84,7 +88,7 @@ internal class Th125Converter : ThConverter
 
     protected override string[] FilterBestShotFiles(string[] files)
     {
-        var pattern = Utils.Format(@"bs2?_({0})_[1-9].dat", Parsers.LevelLongPattern);
+        var pattern = StringHelper.Create($"bs2?_({Parsers.LevelLongPattern})_[1-9].dat");
 
         return files.Where(file => Regex.IsMatch(
             Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
@@ -94,8 +98,9 @@ internal class Th125Converter : ThConverter
     {
         using var decoded = new MemoryStream();
 
-        if (output is not FileStream outputFile)
-            throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(output));
+        Guard.IsTrue(output is FileStream, nameof(output), ExceptionMessages.ArgumentExceptionWrongType);
+        var outputFile = (FileStream)output;
+
         var chara = Path.GetFileName(outputFile.Name)
             .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
             ? Chara.Hatate : Chara.Aya;

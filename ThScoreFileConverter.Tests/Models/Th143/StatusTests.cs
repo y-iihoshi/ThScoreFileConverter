@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -23,7 +22,7 @@ public class StatusTests
         _ = mock.SetupGet(m => m.Checksum).Returns(0u);
         _ = mock.SetupGet(m => m.Size).Returns(0x224);
         _ = mock.SetupGet(m => m.LastName).Returns(TestUtils.CP932Encoding.GetBytes("Player1     \0\0"));
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray<byte>(9));
+        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(9));
         _ = mock.SetupGet(m => m.TotalPlayTime).Returns(12345678);
         _ = mock.SetupGet(m => m.LastMainItem).Returns(ItemWithTotal.Camera);
         _ = mock.SetupGet(m => m.LastSubItem).Returns(ItemWithTotal.Doll);
@@ -45,8 +44,8 @@ public class StatusTests
             new byte[0x17],
             status.TotalPlayTime,
             0,
-            TestUtils.Cast<int>(status.LastMainItem),
-            TestUtils.Cast<int>(status.LastSubItem),
+            (int)status.LastMainItem,
+            (int)status.LastSubItem,
             new byte[0x54],
             status.NicknameFlags,
             new byte[0x12D]);
@@ -127,15 +126,14 @@ public class StatusTests
         Assert.AreEqual(expected, Status.CanInitialize(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidItems
-        => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
+    public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidItems))]
     public void StatusTestInvalidLastMainItem(int item)
     {
         var mock = MockStatus();
-        _ = mock.SetupGet(m => m.LastMainItem).Returns(TestUtils.Cast<ItemWithTotal>(item));
+        _ = mock.SetupGet(m => m.LastMainItem).Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Status(chapter));
@@ -146,7 +144,7 @@ public class StatusTests
     public void StatusTestInvalidLastSubItem(int item)
     {
         var mock = MockStatus();
-        _ = mock.SetupGet(m => m.LastSubItem).Returns(TestUtils.Cast<ItemWithTotal>(item));
+        _ = mock.SetupGet(m => m.LastSubItem).Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Status(chapter));

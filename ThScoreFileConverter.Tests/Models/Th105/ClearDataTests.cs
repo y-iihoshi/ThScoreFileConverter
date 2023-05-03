@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
@@ -39,13 +38,9 @@ public class ClearDataTests
 
         var mock = new Mock<IClearData<TChara>>();
         _ = mock.SetupGet(m => m.CardsForDeck).Returns(
-            Enumerable.Range(1, 10)
-                .Select(value => CreateCardForDeck(value))
-                .ToDictionary(card => card.Id));
+            Enumerable.Range(1, 10).Select(CreateCardForDeck).ToDictionary(card => card.Id));
         _ = mock.SetupGet(m => m.SpellCardResults).Returns(
-            EnumHelper<TChara>.Enumerable
-                .Select((chara, index) => CreateSpellCardResult(chara, index))
-                .ToDictionary(result => (result.Enemy, result.Id)));
+            EnumHelper<TChara>.Enumerable.Select(CreateSpellCardResult).ToDictionary(result => (result.Enemy, result.Id)));
         return mock;
     }
 

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverter.Tests.UnitTesting;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 
@@ -31,7 +33,7 @@ public class SpellCardResultTests
     {
         return TestUtils.MakeByteArray(
             TestUtils.Cast<int>(properties.Enemy),
-            TestUtils.Cast<int>(properties.Level),
+            (int)properties.Level,
             properties.Id,
             properties.TrialCount,
             properties.GotCount,

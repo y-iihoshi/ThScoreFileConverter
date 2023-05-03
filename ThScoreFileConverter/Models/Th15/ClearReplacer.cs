@@ -14,18 +14,15 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
+using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th15;
 
 // %T15CLEAR[x][y][zz]
 internal class ClearReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}CLEAR({1})({2})({3})",
-        Definitions.FormatPrefix,
-        Parsers.GameModeParser.Pattern,
-        Parsers.LevelParser.Pattern,
-        Parsers.CharaParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}CLEAR({Parsers.GameModeParser.Pattern})({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 

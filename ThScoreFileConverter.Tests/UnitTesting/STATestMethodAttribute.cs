@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.UnitTesting;
 

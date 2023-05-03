@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
@@ -91,7 +90,7 @@ public class PlayCountTests
         var mock = MockPlayCount();
         var trials = mock.Object.Trials;
         _ = mock.SetupGet(m => m.Trials).Returns(
-            trials.Concat(new[] { (TestUtils.Cast<Chara>(99), 99) }.ToDictionary()).ToDictionary());
+            trials.Concat(new[] { ((Chara)99, 99) }.ToDictionary()).ToDictionary());
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
 

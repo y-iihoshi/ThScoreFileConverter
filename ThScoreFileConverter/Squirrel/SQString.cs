@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
@@ -40,7 +41,7 @@ internal sealed class SQString : SQObject, IEquatable<SQString>
         {
             var type = reader.ReadInt32();
             if (type != (int)SQObjectType.String)
-                throw new InvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
+                ThrowHelper.ThrowInvalidDataException(ExceptionMessages.InvalidDataExceptionWrongType);
         }
 
         var size = reader.ReadInt32();

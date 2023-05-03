@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -113,7 +112,7 @@ public class HeaderBaseTests
     [TestMethod]
     public void ReadFromTestExceededSignature()
     {
-        var properties = MakeProperties(ValidProperties.signature + "e");
+        var properties = MakeProperties($"{ValidProperties.signature}e");
 
         // <--- sig ----> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
         // xx xx xx xx 65 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00

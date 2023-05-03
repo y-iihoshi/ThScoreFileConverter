@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
+using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
+    ThScoreFileConverter.Core.Models.Stage, ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Core.Tests.Models;
-
-using CardInfo = SpellCardInfo<Stage, Level>;
 
 [TestClass]
 public class SpellCardInfoTests
@@ -43,28 +43,24 @@ public class SpellCardInfoTests
             () => new CardInfo(1, string.Empty, Stage.One, Level.Hard, Level.Lunatic));
     }
 
-    public static IEnumerable<object[]> InvalidStages
-        => TestHelper.GetInvalidEnumerators(typeof(Stage));
+    public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void SpellCardInfoTestInvalidStage(int stage)
     {
-        var invalid = TestHelper.Cast<Stage>(stage);
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-            () => new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic));
+        _ = Assert.ThrowsException<ArgumentException>(
+            () => new CardInfo(1, "月符「ムーンライトレイ」", (Stage)stage, Level.Hard, Level.Lunatic));
     }
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestHelper.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void SpellCardInfoTestInvalidLevel(int level)
     {
-        var invalid = TestHelper.Cast<Level>(level);
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
-            () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid));
+        _ = Assert.ThrowsException<ArgumentException>(
+            () => new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, (Level)level));
     }
 
     [TestMethod]

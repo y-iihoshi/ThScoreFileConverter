@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
@@ -108,15 +107,14 @@ public class ItemStatusTests
         _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
-    public static IEnumerable<object[]> InvalidItems
-        => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
+    public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
 
     [DataTestMethod]
     [DynamicData(nameof(InvalidItems))]
     public void ItemStatusTestInvalidItems(int item)
     {
         var mock = MockItemStatus();
-        _ = mock.SetupGet(m => m.Item).Returns(TestUtils.Cast<ItemWithTotal>(item));
+        _ = mock.SetupGet(m => m.Item).Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
         _ = Assert.ThrowsException<InvalidCastException>(() => new ItemStatus(chapter));

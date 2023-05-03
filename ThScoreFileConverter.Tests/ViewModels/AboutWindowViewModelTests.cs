@@ -2,7 +2,6 @@
 using System.IO.Packaging;
 using System.Threading;
 using System.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;

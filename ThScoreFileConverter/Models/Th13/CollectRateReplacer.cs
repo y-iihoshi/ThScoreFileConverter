@@ -72,6 +72,7 @@ internal class CollectRateReplacer : CollectRateReplacerBase<
 
     private static Func<ISpellCard, bool> FindCardByLevel(LevelPracticeWithTotal level)
     {
+#pragma warning disable IDE0072 // Add missing cases to switch expression
         return level switch
         {
             LevelPracticeWithTotal.Total => FuncHelper.True,
@@ -79,6 +80,7 @@ internal class CollectRateReplacer : CollectRateReplacerBase<
             LevelPracticeWithTotal.OverDrive => FuncHelper.True,
             _ => card => card.Level == (LevelPractice)level,
         };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
     }
 
     private static Func<ISpellCard, bool> FindCardByLevelStage(LevelPracticeWithTotal level, StageWithTotal stage)

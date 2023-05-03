@@ -10,6 +10,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
@@ -40,14 +41,14 @@ internal class Chapter : IBinaryReadable, IChapter
     {
         if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
         }
 
         if (this.Size1 != expectedSize)
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
         }
     }
 

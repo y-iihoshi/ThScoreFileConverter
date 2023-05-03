@@ -20,11 +20,8 @@ namespace ThScoreFileConverter.Models.Th128;
 // %T128ROUTEEX[x][yy][z]
 internal class RouteExReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}ROUTEEX({1})({2})([1-3])",
-        Definitions.FormatPrefix,
-        Parsers.LevelWithTotalParser.Pattern,
-        Parsers.RouteWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $"{Definitions.FormatPrefix}ROUTEEX({Parsers.LevelWithTotalParser.Pattern})({Parsers.RouteWithTotalParser.Pattern})([1-3])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -52,6 +49,7 @@ internal class RouteExReplacer : IStringReplaceable
                 _ => clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count) ? count : default,
             };
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute = route switch
             {
                 RouteWithTotal.Total => dictionary => dictionary.Values
@@ -59,6 +57,7 @@ internal class RouteExReplacer : IStringReplaceable
                 _ => dictionary => dictionary.TryGetValue(route, out var clearData)
                     ? getValueByType(clearData) : default,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<long, string> toString = type switch
             {

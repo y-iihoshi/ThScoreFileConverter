@@ -72,6 +72,7 @@ internal class AllScoreData : IBinaryReadable
     {
         if (obj is SQString str)
         {
+#pragma warning disable format
             var chara = str.Value switch
             {
                 "reimu"   => StoryChara.ReimuKasen,
@@ -87,6 +88,7 @@ internal class AllScoreData : IBinaryReadable
                 "jyoon"   => StoryChara.JoonShion,
                 _         => (StoryChara?)null,
             };
+#pragma warning restore format
             return chara;
         }
         else
@@ -111,6 +113,7 @@ internal class AllScoreData : IBinaryReadable
 
     private void ParseStoryDictionary()
     {
+#pragma warning disable IDE0200 // Remove unnecessary lambda expression
         this.StoryDictionary = GetDictionary(
             this.allData,
             "story",
@@ -118,6 +121,7 @@ internal class AllScoreData : IBinaryReadable
             value => true,
             key => ParseStoryChara(key)!.Value,
             value => ParseStory(value));
+#pragma warning restore IDE0200 // Remove unnecessary lambda expression
     }
 
     private void ParseCharacterDictionary()

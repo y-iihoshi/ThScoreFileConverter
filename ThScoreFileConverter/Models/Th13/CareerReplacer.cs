@@ -28,11 +28,8 @@ namespace ThScoreFileConverter.Models.Th13;
 // %T13C[w][xxx][yy][z]
 internal class CareerReplacer : IStringReplaceable
 {
-    private static readonly string Pattern = Utils.Format(
-        @"{0}C({1})(\d{{3}})({2})([12])",
-        Definitions.FormatPrefix,
-        Parsers.GameModeParser.Pattern,
-        Parsers.CharaWithTotalParser.Pattern);
+    private static readonly string Pattern = StringHelper.Create(
+        $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([12])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -46,11 +43,13 @@ internal class CareerReplacer : IStringReplaceable
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
+#pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ISpellCard<LevelPractice>, bool> isValidLevel = mode switch
             {
                 GameMode.Story => card => card.Level != LevelPractice.OverDrive,
                 _ => FuncHelper.True,
             };
+#pragma warning restore IDE0072 // Add missing cases to switch expression
 
             Func<ISpellCard<LevelPractice>, int> getCount = (mode, type) switch
             {

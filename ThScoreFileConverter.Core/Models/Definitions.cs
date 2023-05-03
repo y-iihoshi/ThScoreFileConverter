@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
+using ThScoreFileConverter.Core.Helpers;
 
 namespace ThScoreFileConverter.Core.Models;
 
@@ -18,19 +18,19 @@ public static class Definitions
     /// Gets wheter you can practice the specified level or not.
     /// </summary>
     /// <param name="level">A level.</param>
-    /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if it can be practiced, otherwize <see langword="false"/>.</returns>
     public static bool CanPractice(Level level)
     {
-        return Enum.IsDefined(typeof(Level), level) && (level != Level.Extra);
+        return EnumHelper.IsDefined(level) && (level != Level.Extra);
     }
 
     /// <summary>
     /// Gets wheter you can practice the specified stage or not.
     /// </summary>
     /// <param name="stage">A stage.</param>
-    /// <returns><c>true</c> if it can be practiced, otherwize <c>false</c>.</returns>
+    /// <returns><see langword="true"/> if it can be practiced, otherwize <see langword="false"/>.</returns>
     public static bool CanPractice(Stage stage)
     {
-        return Enum.IsDefined(typeof(Stage), stage) && (stage != Stage.Extra);
+        return EnumHelper.IsDefined(stage) && (stage != Stage.Extra);
     }
 }

@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         configuration: [Debug, Release]
-        target-framework: [net48, netcoreapp3.1, net6.0-windows]
+        target-framework: [net48, net6.0-windows]
 
     steps:
     - uses: actions/checkout@v3
@@ -29,8 +29,13 @@ jobs:
         python -m pip install -U pip
         python -m pip install -r ManualGenerator/requirements.txt
 
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3.0.3
+      with:
+        global-json-file: 'global.json'
+
     - name: Cache NuGet packages
-      uses: actions/cache@v3.0.5
+      uses: actions/cache@v3.3.1
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ matrix.target-framework }}-${{ hashFiles('**/*.csproj') }}
@@ -39,7 +44,7 @@ jobs:
           ${{ runner.os }}-nuget-
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v1.3
 
     - name: Build
       run: >
@@ -60,22 +65,22 @@ jobs:
     - name: Generate coverage report
       run: >
         dotnet test ThScoreFileConverter.Core.Tests
-        /p:Configuration=${{ matrix.configuration }}
-        /p:TargetFrameworks=${{ matrix.target-framework }}
-        /p:CollectCoverage=true
-        /p:CoverletOutput="../CoverageResults/"
+        --configuration ${{ matrix.configuration }}
+        --framework ${{ matrix.target-framework }}
+        -e CollectCoverage=true
+        -e CoverletOutput="../CoverageResults/"
 
         dotnet test ThScoreFileConverter.Tests
-        /p:Configuration=${{ matrix.configuration }}
-        /p:TargetFrameworks=${{ matrix.target-framework }}
-        /p:CollectCoverage=true
-        /p:CoverletOutput="../CoverageResults/"
-        /p:MergeWith="../CoverageResults/coverage.${{ matrix.target-framework }}.json"
-        /p:CoverletOutputFormat=opencover
+        --configuration ${{ matrix.configuration }}
+        --framework ${{ matrix.target-framework }}
+        -e CollectCoverage=true
+        -e CoverletOutput="../CoverageResults/"
+        -e MergeWith="../CoverageResults/coverage.${{ matrix.target-framework }}.json"
+        -e CoverletOutputFormat=opencover
       if: matrix.configuration == 'Debug'
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.0
+      uses: codecov/codecov-action@v3.1.3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: CoverageResults/coverage.${{ matrix.target-framework }}.opencover.xml

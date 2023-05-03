@@ -5,9 +5,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Diagnostics;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Core.Resources;
 
@@ -191,11 +191,8 @@ public class UIElementDropBehavior : Behavior<UIElement>
     {
         if (command is not null)
         {
-            if (sender is not UIElement)
-                throw new ArgumentException(ExceptionMessages.ArgumentExceptionWrongType, nameof(sender));
-
-            if (e is null)
-                throw new ArgumentNullException(nameof(e));
+            Guard.IsTrue(sender is UIElement, nameof(sender), ExceptionMessages.ArgumentExceptionWrongType);
+            Guard.IsNotNull(e);
 
             command.Execute(e);
         }

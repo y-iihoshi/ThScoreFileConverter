@@ -17,17 +17,15 @@
 前提条件
 --------
 
-ThSFC を利用するには、 .NET Framework 4.8, .NET Core 3.1 または .NET 6
-が必要です。
+ThSFC を利用するには、 .NET Framework 4.8 または .NET 6 が必要です。
 
-2022 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
+2022 年 11 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。
 
-* Windows 11 Pro Version 21H2
+* Windows 11 Pro Version 22H2
 * .NET Framework 4.8
-* .NET Core 3.1
 * .NET 6
-* Visual Studio Community 2022 Version 17.2
+* Visual Studio Community 2022 Version 17.4
 * Python 3.10
 
 免責事項

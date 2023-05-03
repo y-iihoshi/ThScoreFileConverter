@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th13;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Tests.UnitTesting;
+
+#if NETFRAMEWORK
+using ThScoreFileConverter.Core.Extensions;
+#endif
 
 namespace ThScoreFileConverter.Tests.Models.Th13;
 
@@ -19,7 +21,7 @@ public class SpellCardTests
         where TLevel : struct, Enum
     {
         var mock = new Mock<ISpellCard<TLevel>>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray<byte>(0x80));
+        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
         _ = mock.SetupGet(m => m.ClearCount).Returns(1);
         _ = mock.SetupGet(m => m.PracticeClearCount).Returns(2);
         _ = mock.SetupGet(m => m.TrialCount).Returns(3);
@@ -94,7 +96,7 @@ public class SpellCardTests
     {
         var mock = MockSpellCard<TLevel>();
         var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray());
+        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
@@ -110,11 +112,9 @@ public class SpellCardTests
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock.Object)));
     }
 
-    public static IEnumerable<object[]> InvalidTh13LevelPractices
-        => TestUtils.GetInvalidEnumerators(typeof(LevelPractice));
+    public static IEnumerable<object[]> InvalidTh13LevelPractices => TestUtils.GetInvalidEnumerators<LevelPractice>();
 
-    public static IEnumerable<object[]> InvalidLevels
-        => TestUtils.GetInvalidEnumerators(typeof(Level));
+    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
     #region Th13
 

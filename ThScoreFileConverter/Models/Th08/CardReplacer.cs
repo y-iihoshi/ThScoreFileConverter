@@ -23,7 +23,7 @@ internal class CardReplacer : Th06.CardReplacerBase<StagePractice, LevelPractice
               Definitions.CardTable,
               hideUntriedCards,
               cardNumber => CardHasTried(cardAttacks, cardNumber),
-              static cardInfo => CardLevelToString(cardInfo))
+              CardLevelToString)
     {
     }
 

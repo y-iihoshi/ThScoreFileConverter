@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Interactivity;
 
@@ -20,7 +20,9 @@ public sealed class FolderBrowserDialogActionResult
     /// <param name="selectedPath">A path string.</param>
     public FolderBrowserDialogActionResult(string selectedPath)
     {
-        this.SelectedPath = selectedPath ?? throw new ArgumentNullException(nameof(selectedPath));
+        Guard.IsNotNull(selectedPath);
+
+        this.SelectedPath = selectedPath;
     }
 
     /// <summary>

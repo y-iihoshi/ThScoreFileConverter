@@ -33,12 +33,9 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
         INumberFormatter formatter)
     {
         var numLevels = EnumHelper<Level>.NumValues;
+        var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
 
-        this.pattern = Utils.Format(
-            @"{0}C(\d{{{1}}})({2})([1-3])",
-            formatPrefix,
-            IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels),
-            charaParser.Pattern);
+        this.pattern = StringHelper.Create($@"{formatPrefix}C(\d{{{numDigits}}})({charaParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);
@@ -47,6 +44,14 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
 
             if (!canReplace(number, chara, type))
                 return match.ToString();
+
+            static string FormatTime(long value)
+            {
+                var time = new Time(value);
+                var minutes = (time.Hours * 60) + time.Minutes;
+                var milliseconds = time.Frames * 1000 / 60;
+                return StringHelper.Create($"{minutes:D2}:{time.Seconds:D2}.{milliseconds:D3}");
+            }
 
             Func<ISpellCardResult<TChara>, long> getValue = type switch
             {
@@ -57,15 +62,7 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
 
             Func<long, string> toString = type switch
             {
-                3 => value =>
-                {
-                    var time = new Time(value);
-                    return Utils.Format(
-                        "{0:D2}:{1:D2}.{2:D3}",
-                        (time.Hours * 60) + time.Minutes,
-                        time.Seconds,
-                        time.Frames * 1000 / 60);
-                },
+                3 => FormatTime,
                 _ => formatter.FormatNumber,
             };
 

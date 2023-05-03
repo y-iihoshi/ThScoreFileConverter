@@ -7,6 +7,7 @@
 
 using System;
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 
 namespace ThScoreFileConverter.Models;
@@ -49,12 +50,9 @@ internal static class ThCrypt
     public static void Decrypt(
         Stream input, Stream output, int size, byte key, byte step, int block, int limit)
     {
-        if (size < 0)
-            throw new ArgumentOutOfRangeException(nameof(size));
-        if (block < 0)
-            throw new ArgumentOutOfRangeException(nameof(block));
-        if (limit < 0)
-            throw new ArgumentOutOfRangeException(nameof(limit));
+        Guard.IsGreaterThanOrEqualTo(size, 0);
+        Guard.IsGreaterThanOrEqualTo(block, 0);
+        Guard.IsGreaterThanOrEqualTo(limit, 0);
 
         var inBlock = new byte[block];
         var outBlock = new byte[block];

@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Helpers;
 
@@ -22,8 +23,7 @@ public static class IntegerHelper
     /// <returns>A converted one digit value.</returns>
     public static int ToZeroBased(int input)
     {
-        if ((input < 0) || (input > 9))
-            throw new ArgumentOutOfRangeException(nameof(input));
+        Guard.IsInRange(input, 0, 10);
 
         return (input + 9) % 10;
     }
@@ -35,8 +35,7 @@ public static class IntegerHelper
     /// <returns>A converted one digit value.</returns>
     public static int ToOneBased(int input)
     {
-        if ((input < 0) || (input > 9))
-            throw new ArgumentOutOfRangeException(nameof(input));
+        Guard.IsInRange(input, 0, 10);
 
         return (input + 1) % 10;
     }

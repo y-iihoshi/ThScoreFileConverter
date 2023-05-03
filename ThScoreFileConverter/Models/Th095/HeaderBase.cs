@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
@@ -47,8 +48,8 @@ internal class HeaderBase : IBinaryReadable, IBinaryWritable
         this.EncodedAllSize = reader.ReadInt32();
         if (this.EncodedAllSize < 0)
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
         }
 
         this.unknown1 = reader.ReadUInt32();
@@ -57,15 +58,15 @@ internal class HeaderBase : IBinaryReadable, IBinaryWritable
         this.EncodedBodySize = reader.ReadInt32();
         if (this.EncodedBodySize < 0)
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
         }
 
         this.DecodedBodySize = reader.ReadInt32();
         if (this.DecodedBodySize < 0)
         {
-            throw new InvalidDataException(
-                Utils.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
+            ThrowHelper.ThrowInvalidDataException(
+                StringHelper.Format(ExceptionMessages.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
         }
     }
 
