@@ -26,48 +26,24 @@
     <None Include="make.bat" />
     <None Include="requirements.txt" />
     <Compile Include="conf.py" />
-    <Content Include="changelog.rst" />
-    <Content Include="format.rst" />
-    <Content Include="glossary.rst" />
-    <Content Include="howtouse.rst" />
-    <Content Include="index.rst" />
-    <Content Include="installation.rst" />
-    <Content Include="introduction.rst" />
-    <Content Include="supportedworks.rst" />
-    <Folder Include="format\" />
-    <Content Include="format\th06.rst" />
-    <Content Include="format\th07.rst" />
-    <Content Include="format\th075.rst" />
-    <Content Include="format\th08.rst" />
-    <Content Include="format\th09.rst" />
-    <Content Include="format\th095.rst" />
-    <Content Include="format\th10.rst" />
-    <Content Include="format\th105.rst" />
-    <Content Include="format\th11.rst" />
-    <Content Include="format\th12.rst" />
-    <Content Include="format\th123.rst" />
-    <Content Include="format\th125.rst" />
-    <Content Include="format\th128.rst" />
-    <Content Include="format\th13.rst" />
-    <Content Include="format\th135.rst" />
-    <Content Include="format\th14.rst" />
-    <Content Include="format\th143.rst" />
-    <Content Include="format\th145.rst" />
-    <Content Include="format\th15.rst" />
-    <Content Include="format\th155.rst" />
-    <Content Include="format\th16.rst" />
-    <Content Include="format\th165.rst" />
-    <Content Include="format\th17.rst" />
-    <Content Include="format\th175.rst" />
-    <Content Include="format\th18.rst" />
-    <Folder Include="_static\" />
-    <Content Include="_static\custom.css" />
-    <Content Include="_static\mainwindow.en.png" />
-    <Content Include="_static\mainwindow.ja.png" />
-    <Content Include="_static\settingwindow.en.png" />
-    <Content Include="_static\settingwindow.ja.png" />
-    <Folder Include="_templates\" />
+    <Content Include="**\*.rst" />
+    <Content Include="**\*.po" />
+    <Content Include="_static\**\*.css" />
+    <Content Include="_static\**\*.png" />
     <None Include="_templates\.keep" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- For *.pyproj, Visual Studio forces the Folder items to be saved... -->
+    <Folder Include="format\" />
+    <Folder Include="locales\" />
+    <Folder Include="locales\en\" />
+    <Folder Include="locales\en\LC_MESSAGES\" />
+    <Folder Include="locales\en\LC_MESSAGES\format\" />
+    <Folder Include="locales\ja\" />
+    <Folder Include="locales\ja\LC_MESSAGES\" />
+    <Folder Include="locales\ja\LC_MESSAGES\format\" />
+    <Folder Include="_static\" />
+    <Folder Include="_templates\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- This task seems not necessary for *.pyproj. -->
