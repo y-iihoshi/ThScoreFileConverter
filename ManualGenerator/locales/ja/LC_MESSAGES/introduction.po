@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-03 14:42+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+msgid "イントロダクション"
+msgstr ""
+
+msgid "これは何？"
+msgstr ""
+
+msgid ":term:`ThScoreFileConverter` (以下、 :term:`ThSFC`) は、 東方 Project の各作品のスコアファイルからランキングや御札戦歴などのデータを読み込み、 任意のテキストファイルに書き出すことのできるツールです。 文花帖形式のベストショットの現像 (PNG 画像出力) も可能です。"
+msgstr ""
+
+msgid ":term:`東方メモリマネージャー` の代替ツールとなることを目指して開発中です。 特に、 風神録までの :term:`テンプレート書式` については互換性を維持しています。"
+msgstr ""
+
+msgid "前提条件"
+msgstr ""
+
+msgid "ThSFC を利用するには、 .NET Framework 4.8 または .NET 6 が必要です。"
+msgstr ""
+
+msgid "2022 年 11 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
+msgstr ""
+
+msgid "Windows 11 Pro Version 22H2"
+msgstr ""
+
+msgid ".NET Framework 4.8"
+msgstr ""
+
+msgid ".NET 6"
+msgstr ""
+
+msgid "Visual Studio Community 2022 Version 17.4"
+msgstr ""
+
+msgid "Python 3.10"
+msgstr ""
+
+msgid "免責事項"
+msgstr ""
+
+msgid "**ThSFC の利用は自己責任の下で実施して下さい。**"
+msgstr ""
+
+msgid "ThSFC の免責事項などの詳細は以下の通りです。 (つまり BSD 2-Clause License です。)"
+msgstr ""
+
+msgid "著作権"
+msgstr ""
+
+msgid "東方 Project の各作品の著作権は `上海アリス幻樂団 <https://www16.big.or.jp/~zun/>`_ 様にあります。 ThSFC 作者とは一切関係がありません。"
+msgstr ""
+
+msgid "東方萃夢想、 東方緋想天、 東方非想天則、 東方心綺楼、 東方深秘録、 東方憑依華の著作権は `黄昏フロンティア <https://www.tasofro.net/>`_ 様及び `上海アリス幻樂団 <https://www16.big.or.jp/~zun/>`_ 様にあります。 ThSFC 作者とは一切関係がありません。"
+msgstr ""
+
+msgid "東方メモリマネージャーの著作権は `sue445 <http://www.sue445.net/>`_ 様にあります。 ThSFC 作者とは一切関係がありません。"
+msgstr ""
+
+msgid "ThSFC の著作権は IIHOSHI Yoshinori (`Web サイト <https://www.colorless-sight.jp/>`_, `Twitter <https://twitter.com/iihoshi>`_) にあります。"
+msgstr ""
+

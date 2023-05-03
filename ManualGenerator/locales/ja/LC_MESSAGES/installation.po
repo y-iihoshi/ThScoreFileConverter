@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "インストレーション"
+msgstr ""
+
+msgid "インストール方法"
+msgstr ""
+
+msgid "Web からダウンロードした zip ファイルを任意の場所に展開して下さい。"
+msgstr ""
+
+msgid "展開後のファイル構成は以下のようになります。 ::"
+msgstr ""
+
+msgid "アップデート方法"
+msgstr ""
+
+msgid "新しいバージョンの zip ファイルから展開したファイル一式を、 古いバージョンの展開先フォルダー内に上書きしてください。"
+msgstr ""
+
+msgid ""
+"または、 古いバージョンの展開先フォルダー内に生成されている設定ファイル (:file:`settings.xml`) を、 "
+"新しいバージョンの展開先フォルダー内にコピーまたは移動してください。"
+msgstr ""
+
+msgid "アンインストール方法"
+msgstr ""
+
+msgid "展開したフォルダーごと削除して下さい。 ThSFC はレジストリの書き換えをしません。"
+msgstr ""
+

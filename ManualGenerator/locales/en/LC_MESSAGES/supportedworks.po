@@ -1,0 +1,124 @@
+# Supporting status of ThScoreFileConverter.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-23 11:52+0900\n"
+"PO-Revision-Date: 2022-07-23 14:39+0900\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+msgid "各作品への対応状況"
+msgstr "Supporting status"
+
+msgid "対応済み"
+msgstr "Supported"
+
+msgid "ThSFC が対応している東方 Project の作品名及びバージョンは以下の通りです:"
+msgstr "ThSFC supports the following Touhou Project games and versions:"
+
+msgid "東方紅魔郷 ver. 1.02h"
+msgstr "Embodiment of Scarlet Devil ver. 1.02h"
+
+msgid "東方妖々夢 ver. 1.00b"
+msgstr "Perfect Cherry Blossom ver. 1.00b"
+
+msgid "東方萃夢想 ver. 1.11"
+msgstr "Immaterial and Missing Power ver. 1.11"
+
+msgid "東方永夜抄 ver. 1.00d"
+msgstr "Imperishable Night ver. 1.00d"
+
+msgid "東方花映塚 ver. 1.50a"
+msgstr "Phantasmagoria of Flower View ver. 1.50a"
+
+msgid "東方文花帖 ver. 1.02a"
+msgstr "Shoot the Bullet ver. 1.02a"
+
+msgid "東方風神録 ver. 1.00a"
+msgstr "Mountain of Faith ver. 1.00a"
+
+msgid "東方緋想天 ver. 1.06a"
+msgstr "Scarlet Weather Rhapsody ver. 1.06a"
+
+msgid "東方地霊殿 ver. 1.00a"
+msgstr "Subterranean Animism ver. 1.00a"
+
+msgid "東方星蓮船 ver. 1.00b"
+msgstr "Undefined Fantastic Object ver. 1.00b"
+
+msgid "東方非想天則 ver. 1.10a"
+msgstr "Touhou Hisoutensoku ver. 1.10a"
+
+msgid "ダブルスポイラー ver. 1.00a"
+msgstr "Double Spoiler ver. 1.00a"
+
+msgid "妖精大戦争 ver. 1.00a"
+msgstr "Fairy Wars ver. 1.00a"
+
+msgid "東方神霊廟 ver. 1.00c"
+msgstr "Ten Desires ver. 1.00c"
+
+msgid "東方心綺楼 ver. 1.34b"
+msgstr "Hopeless Masquerade ver. 1.34b"
+
+msgid "東方輝針城 ver. 1.00b"
+msgstr "Double Dealing Character ver. 1.00b"
+
+msgid "弾幕アマノジャク ver. 1.00a"
+msgstr "Impossible Spell Card ver. 1.00a"
+
+msgid "東方深秘録 ver. 1.41"
+msgstr "Urban Legend in Limbo ver. 1.41"
+
+msgid "東方紺珠伝 ver. 1.00b"
+msgstr "Legacy of Lunatic Kingdom ver. 1.00b"
+
+msgid "東方憑依華 ver. 1.10c"
+msgstr "Antinomy of Common Flowers ver. 1.10c"
+
+msgid "東方天空璋 ver. 1.00a"
+msgstr "Hidden Star in Four Seasons ver. 1.00a"
+
+msgid "秘封ナイトメアダイアリー ver. 1.00a"
+msgstr "Violet Detector ver. 1.00a"
+
+msgid "東方鬼形獣 ver. 1.00b"
+msgstr "Wily Beast and Weakest Creature ver. 1.00b"
+
+msgid "東方虹龍洞 ver. 1.00a"
+msgstr "Unconnected Marketeers ver. 1.00a"
+
+msgid "試験的に対応済み"
+msgstr "Supported experimentally"
+
+msgid ""
+"以下作品への対応については、 試験的機能として実装しています。 ThSFC 作者の原作プレイの腕前の都合で、 動作確認を十分にできていないため、 "
+"不具合が生じる可能性が高いです:"
+msgstr ""
+"The following game is implemented as experimental functions. Since the "
+"ThSFC author is not good at playing action games well, there is a high "
+"possibility that problems will occur due to lack of testing."
+
+msgid "東方剛欲異聞 ver. 1.04"
+msgstr "Touhou Gouyoku Ibun ver. 1.04"
+
+msgid "対応予定あり"
+msgstr "Will be supported"
+
+msgid "以下作品については、 ThSFC 作者の原作プレイ進捗状況に伴って今後対応予定です:"
+msgstr ""
+"The following game(s) will be supported in the future depending on the "
+"gameplay progress of the ThSFC author."
+
+msgid "バレットフィリア達の闇市場"
+msgstr "100th Black Market"
+

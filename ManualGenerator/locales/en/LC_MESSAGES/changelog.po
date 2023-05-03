@@ -1,0 +1,414 @@
+# Changelog of ThScoreFileConverter.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-03 14:42+0900\n"
+"PO-Revision-Date: 2023-05-03 15:27+0900\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+msgid "変更履歴"
+msgstr "Changelog"
+
+msgid "v2.5.0 (2022/mm/dd)"
+msgstr "v2.5.0 (dd Mmm 2022)"
+
+msgid "東方虹龍洞に対応"
+msgstr "Supports TH18 Unconnected Marketeers."
+
+msgid "東方剛欲異聞に試験的に対応"
+msgstr "Experimental supports TH17.5 Touhou Gouyoku Ibun."
+
+msgid "UI の表示言語を日本語と英語から選択できるように変更"
+msgstr "Makes the displaying language in the GUI selectable from Japanese or English."
+
+msgid ".NET 6 に対応"
+msgstr "Supports .NET 6."
+
+msgid "アプリケーションアイコンを追加"
+msgstr "Added the application icon."
+
+msgid "設定ファイルが壊れていた場合に起動しない問題を修正"
+msgstr "Fixed the issue that it does not launch with corrupted configuration file."
+
+msgid "ベストショットファイル変換後の画像ファイルの解像度が、 ディスプレイの拡大率設定に依存して変化する問題を修正"
+msgstr "Fixed PNG image development not to depend on the display scaling."
+
+msgid "jQuery と jCanvas を再配布しないように修正"
+msgstr "Fixed not to redistribute jQuery and jCanvas."
+
+msgid "v2.4.0 (2019/12/22)"
+msgstr "v2.4.0 (22 Dec 2019)"
+
+msgid "秘封ナイトメアダイアリーに対応"
+msgstr "Supports TH16.5 Violet Detector."
+
+msgid "東方鬼形獣に対応"
+msgstr "Supports Th17 Wily Beast and Weakest Creature."
+
+msgid "入出力ファイルの文字エンコーディングの初期値を UTF-8 に変更"
+msgstr "Changed the default character encoding setting for input/output files to UTF-8."
+
+msgid "テンプレートファイルの文字エンコーディングを UTF-8 に変更"
+msgstr "Changed the character encoding of HTML templates to UTF-8."
+
+msgid "テンプレートファイルを XHTML 1.1 から HTML5 に変更"
+msgstr "Rewrote HTML templates in HTML5."
+
+msgid "作品別に定義していたスタイルシートをテンプレートファイル内に統合"
+msgstr "Integrated cascading style sheets per work (e.g. th06.css) into HTML templates."
+
+msgid "東方萃夢想"
+msgstr "TH07.5 Immaterial and Missing Power"
+
+msgid ":ref:`T75CRG` の難易度 Total の出力が誤っていたため修正"
+msgstr "Bugfix: the output of :ref:`T75CRG` with Level = Total was incorrect."
+
+msgid "東方永夜抄"
+msgstr "TH08 Imperishable Night"
+
+msgid "御札戦歴（スペルプラクティス）用テンプレートファイルにおいて、 Stage 4 のステージ別スペルカード蒐集率を一部出力していなかったため修正"
+msgstr "Bugfix: in the HTML template of Combat Experience (Spell Practice mode), format strings for Spell Card Collection Rate of Stage 4 was missing."
+
+msgid "プラクティススコア用テンプレートファイルにおいて、 アリスの Stage 4B のスコアを出力していなかったため修正"
+msgstr "Bugfix: in the HTML template of Practice Score, the format strings for the Alice's score of Stage 4B was missing."
+
+msgid "東方緋想天"
+msgstr "TH10.5 Scarlet Weather Rhapsody"
+
+msgid ":ref:`T105DC` において、存在しないカードを無視していなかったため修正"
+msgstr "Bugfix: the format strings indicating nonexistent spell cards were not ignored when converting with :ref:`T105DC`."
+
+msgid "東方神霊廟"
+msgstr "TH13 Ten Desires"
+
+msgid "御札戦歴（ゲーム本編）用テンプレートファイルにおいて、 スペルカードの総数に Over Drive の分も誤って含まれていたため修正"
+msgstr "Bugfix: in the HTML template of Combat Experience (Story mode), the spell cards of Over Drive were wrongly summed to the total number of spell cards."
+
+msgid ".NET Framework の対象バージョンを 4.5 から 4.8 に変更"
+msgstr "Updated .NET Framework from 4.5 to 4.8."
+
+msgid "マニュアルの誤記を修正"
+msgstr "Fixed wrong descriptions in the manual."
+
+msgid "v2.3.0 (2018/5/4)"
+msgstr "v2.3.0 (4 May 2018)"
+
+msgid "東方憑依華 ver. 1.10c に対応"
+msgstr "Supports TH15.5 Antinomy of Common Flowers ver. 1.10c."
+
+msgid "v2.2.0 (2018/2/10)"
+msgstr "v2.2.0 (10 Feb 2018)"
+
+msgid "東方憑依華に対応"
+msgstr "Supports TH15.5 Antinomy of Common Flowers."
+
+msgid "v2.1.0 (2017/9/24)"
+msgstr "v2.1.0 (24 Sep 2017)"
+
+msgid "東方天空璋に対応"
+msgstr "Supports TH16 Hidden Star in Four Seasons."
+
+msgid "v2.0.0 (2017/6/18)"
+msgstr "v2.0.0 (18 Jun 2017)"
+
+msgid ":abbr:`MVVM (Model-View-ViewModel)` に則ってソフトウェアの構成を変更"
+msgstr "Changed the software architecture according to MVVM (Model-View-ViewModel)."
+
+msgid "マニュアルの作成に `Sphinx <https://www.sphinx-doc.org/ja/stable/>`_ を利用するように変更"
+msgstr "Started to use `Sphinx <https://www.sphinx-doc.org/en/stable/>`_ to generate the manual."
+
+msgid "`Semantic Versioning 2.0.0 <https://semver.org/>`_ を基にバージョン付与規則を変更"
+msgstr "Changed the versioning rule according to `Semantic Versioning 2.0.0 <https://semver.org/>`_."
+
+msgid "東方深秘録に対応"
+msgstr "Supports TH14.5 Urban Legend in Limbo."
+
+msgid "東方紺珠伝に対応"
+msgstr "Supports TH15 Legacy of Lunatic Kingdom."
+
+msgid "東方文花帖"
+msgstr "TH09.5 Shoot the Bullet"
+
+msgid "64-bit 環境下でベストショットを現像できない不具合を修正"
+msgstr "Bugfix: failed to develop best shot files under a 64-bit environment."
+
+msgid "ウィンドウなどのサイズをフォント設定に追従するように変更"
+msgstr "Changed the size of UI (e.g. windows and controls) to follow the font settings."
+
+msgid ".NET Framework の対象バージョンを 3.5 から 4.5 に変更"
+msgstr "Updated .NET Framework from 3.5 to 4.5."
+
+msgid "v1.10.0.0 (2014/10/5)"
+msgstr "v1.10.0.0 (5 Oct 2014)"
+
+msgid "東方心綺楼に対応"
+msgstr "Supports TH13.5 Hopeless Masquerade."
+
+msgid "v1.9.1.0 (2014/8/24)"
+msgstr "v1.9.1.0 (24 Aug 2014)"
+
+msgid "東方非想天則"
+msgstr "TH12.3 Touhou Hisoutensoku"
+
+msgid "スペルカード名の誤記を修正"
+msgstr "Bugfix: some spell card names were incorrect."
+
+msgid "v1.9.0.0 (2014/8/20)"
+msgstr "v1.9.0.0 (20 Aug 2014)"
+
+msgid "東方非想天則に対応"
+msgstr "Supports TH12.3 Touhou Hisoutensoku."
+
+msgid ":ref:`T75CARD` において、 スペルカードの番号に 000 が指定された場合を無視していなかったため修正"
+msgstr "Bugfix: the format string specifying with Number = 000 were not ignored when converting with :ref:`T75CARD`."
+
+msgid ":ref:`T08SCR` において、 取得スペルカード一覧を正しく出力できていなかったため修正"
+msgstr "Bugfix: the list of got spell cards was wrongly output when converting with :ref:`T08SCR`."
+
+msgid "存在しないレベルとシーンの組み合わせを無視していなかったため修正"
+msgstr "Bugfix: the format strings indicating nonexistent pairs of level and scene were not ignored."
+
+msgid ":ref:`T105CARD` において、 スペルカードの番号に 000 が指定された場合を無視していなかったため修正"
+msgstr "Bugfix: the format string specifying with Number = 000 were not ignored when converting with :ref:`T105CARD`."
+
+msgid "ダブルスポイラー"
+msgstr "TH12.5 Double Spoiler"
+
+msgid "弾幕アマノジャク"
+msgstr "TH14.3 Impossible Spell Card"
+
+msgid "存在しない日付とシーンの組み合わせを無視していなかったため修正"
+msgstr "Bugfix: the format strings indicating nonexistent pairs of day and scene were not ignored."
+
+msgid "全体的にソースコードを整理（いつまでやるのか…）"
+msgstr "Organized source codes as a whole. (Till when will I do it...)"
+
+msgid "テンプレート書式の誤記を修正"
+msgstr "Fixed errors of template formats."
+
+msgid "v1.8.1.0 (2014/7/13)"
+msgstr "v1.8.1.0 (13 Jul 2014)"
+
+msgid "入出力ファイルの文字エンコーディングを指定できるようにした"
+msgstr "Makes the character encodings for input/output files configurable."
+
+msgid "今までは入出力ともに Shift\\_JIS 固定だった"
+msgstr "Before this change Shift\\_JIS was used for both."
+
+msgid "作品名コンボボックスのドロップダウンリストの高さを修正"
+msgstr "Fixed the height of the drop-down list of the game title combo box."
+
+msgid "初期化処理の整理により処理時間を短縮"
+msgstr "Reduced processing time by organizing the initialization process."
+
+msgid "テンプレートファイルを 1 つ追加（HTML5 Canvas を使用）"
+msgstr "Added one template file using HTML5 Canvas."
+
+msgid "全体的にソースコードを整理"
+msgstr "Organized source codes as a whole."
+
+msgid "結果的に本ツールのファイルサイズが若干縮小した"
+msgstr "As a result, the file size of this tool was slightly reduced."
+
+msgid "v1.8.0.0 (2014/6/8)"
+msgstr "v1.8.0.0 (8 Jun 2014)"
+
+msgid "東方緋想天に対応"
+msgstr "Supports TH10.5 Scarlet Weather Rhapsody."
+
+msgid "弾幕アマノジャクに対応"
+msgstr "Supports TH14.3 Impossible Spell Card."
+
+msgid "テンプレートファイルのフッター部分の誤記・リンク先を修正"
+msgstr "Fixed errors and links in the footer of template files."
+
+msgid "v1.7.0.0 (2014/4/13)"
+msgstr "v1.7.0.0 (13 Apr 2014)"
+
+msgid "東方萃夢想に対応"
+msgstr "Supports TH07.5 Immaterial and Missing Power."
+
+msgid "v1.6.1.0 (2014/3/10)"
+msgstr "v1.6.1.0 (10 Mar 2014)"
+
+msgid "スペルカードの情報を全て内部データとして持つようにした （Thanks to `東方Wiki <http://thwiki.info/>`_）"
+msgstr "Contains all spell card information as internal data. (Thanks to `東方Wiki <http://thwiki.info/>`_.)"
+
+msgid "未挑戦のスペルカード名を出力するかどうか選択可能にした"
+msgstr "Makes it configurable whether untried spell card names are output."
+
+msgid "スペルカードに挑戦済みかどうかの判定方法を一部修正"
+msgstr "Fixed the condition whether a spell card has been tried or not."
+
+msgid ":ref:`T08CARD` において、 Last Word のスペルカードの難易度を Normal と出力していたため修正"
+msgstr "Bugfix: the level of spell cards were wrongly output as Normal instead of Last Word by :ref:`T08CARD`."
+
+msgid ":ref:`T08C` と :ref:`T08CRG` において、 ゲーム本編と Last Word の組み合わせを無視していなかったため修正"
+msgstr "Bugfix: the format strings indicating the pairs of Story mode and Last Word were not ignored when converting with :ref:`T08C` and :ref:`T08CRG`."
+
+msgid ":ref:`T13C` と :ref:`T13CRG` において、 ゲーム本編と Over Drive の組み合わせを無視していなかったため修正"
+msgstr "Bugfix: the format strings indicating the pairs of Story mode and Over Drive were not ignored when converting with :ref:`T13C` and :ref:`T13CRG`."
+
+msgid "御札戦歴（ゲーム本編）のテンプレートファイルに Over Drive の分を 誤掲載していたため削除"
+msgstr "Bugfix: Over Drive related contents were wrongly contained in the template file of Combat Experience (Story mode)."
+
+msgid "v1.6.0.0 (2014/3/2)"
+msgstr "v1.6.0.0 (2 Mar 2014)"
+
+msgid "東方輝針城に対応"
+msgstr "Supports TH14 Double Dealing Character."
+
+msgid ":ref:`T08CLEAR` において、``FinalA Clear`` を出力する判定方法を修正"
+msgstr "Fixed the condition outputting ``FinalA Clear`` by :ref:`T08CLEAR`."
+
+msgid "東方星蓮船"
+msgstr "TH12 Undefined Fantastic Object"
+
+msgid "プラクティススコアのテンプレートファイルの誤記を修正"
+msgstr "Bugfix: fixed errors in the template file of Practice Score."
+
+msgid "妖精大戦争"
+msgstr "TH12.8 Fairy Wars"
+
+msgid "スペルカード蒐集率のテンプレートファイルの誤記を修正"
+msgstr "Bugfix: fixed errors in the template file of Spell Card Collection Rate."
+
+msgid "v1.5.1.0 (2014/2/3)"
+msgstr "v1.5.1.0 (3 Feb 2014)"
+
+msgid ":ref:`T13SCR` の到達ステージと :ref:`T13CLEAR` において、 Extra クリア済みの場合に ``-------`` と出力していたため修正"
+msgstr "Bugfix: in the case of outputting the stage progress of :ref:`T13SCR` and :ref:`T13CLEAR`, ``-------`` was output even if Extra has been cleared."
+
+msgid "v1.5.0.0 (2014/1/27)"
+msgstr "v1.5.0.0 (27 Jan 2014)"
+
+msgid "東方神霊廟に対応"
+msgstr "Supports TH13 Ten Desires."
+
+msgid "東方妖々夢"
+msgstr "TH07 Perfect Cherry Blossom"
+
+msgid ":ref:`T07CRG` で難易度を指定した場合に、 ステージの指定に関係なく全ステージ合計の値を出力していたため修正"
+msgstr "Bugfix: when specifying a level in :ref:`T07CRG`, the total value across stages was output regardless specifying a stage."
+
+msgid ".NET Framework の対象バージョンを 3.0 から 3.5 に変更"
+msgstr "Updated .NET Framework from 3.0 to 3.5."
+
+msgid "v1.4.0.0 (2013/12/10)"
+msgstr "v1.4.0.0 (10 Dec 2013)"
+
+msgid "妖精大戦争に対応"
+msgstr "Supports TH12.8 Fairy Wars"
+
+msgid "v1.3.1.0 (2013/11/16)"
+msgstr "v1.3.1.0 (16 Nov 2013)"
+
+msgid "東方文花帖、ダブルスポイラー"
+msgstr "TH09.5 Shoot the Bullet, TH12.5 Double Spoiler"
+
+msgid "ベストショットファイル変換後の画像ファイルの出力先フォルダー名を 変更可能にした"
+msgstr "Makes the output destination folder name of the image files converted from best shots configurable."
+
+msgid "v1.3.0.0 (2013/11/11)"
+msgstr "v1.3.0.0 (11 Nov 2013)"
+
+msgid "ダブルスポイラーに対応"
+msgstr "Supports TH12.5 Double Spoiler."
+
+msgid "v1.2.0.0 (2013/9/26)"
+msgstr "v1.2.0.0 (26 Sep 2013)"
+
+msgid "東方星蓮船に対応"
+msgstr "Supports TH12 Undefined Fantastic Object."
+
+msgid "v1.1.3.0 (2013/9/12)"
+msgstr "v1.1.3.0 (12 Sep 2013)"
+
+msgid "数値を桁区切り形式で出力するかどうか選択可能にした"
+msgstr "Makes it configurable whether the number group separator is output."
+
+msgid ":ref:`T07SCR` の日付と :ref:`T07CARD` のスペルカード名において、 余計な null 文字を出力していたため修正"
+msgstr "Bugfix: Unnecessary null characters were output in the date of :ref:`T07SCR` and the spell card name of :ref:`T07CARD`."
+
+msgid ":ref:`T08SCR` の日付と :ref:`T08CARD` のスペルカード名において、 余計な null 文字を出力していたため修正"
+msgstr "Bugfix: Unnecessary null characters were output in the date of :ref:`T08SCR` and the spell card name of :ref:`T08CARD`."
+
+msgid "v1.1.2.0 (2013/8/30)"
+msgstr "v1.1.2.0 (30 Aug 2013)"
+
+msgid "UI のフォントを変更可能にした"
+msgstr "Makes the GUI font configurable."
+
+msgid "v1.1.1.0 (2013/8/24)"
+msgstr "v1.1.1.0 (24 Aug 2013)"
+
+msgid "東方風神録"
+msgstr "TH10 Mountain of Faith"
+
+msgid "全主人公合計のプレイ時間などがテンプレートファイルから漏れていたため修正"
+msgstr "Bugfix: the total play time across characters and so on were not contained in template files."
+
+msgid ":ref:`T10CHARAEX` にて、 全難易度合計のクリア回数の出力に対応"
+msgstr "Supports outputting the total clear count across levels by :ref:`T10CHARAEX`."
+
+msgid "東方地霊殿"
+msgstr "TH11 Subterranean Animism"
+
+msgid ":ref:`T11CHARAEX` にて、 全難易度合計のクリア回数の出力に対応"
+msgstr "Supports outputting the total clear count across levels by :ref:`T11CHARAEX`."
+
+msgid "v1.1.0.0 (2013/8/12)"
+msgstr "v1.1.0.0 (12 Aug 2013)"
+
+msgid "東方地霊殿に対応"
+msgstr "Supports TH11 Subterranean Animism."
+
+msgid "v1.0.2.0 (2013/7/28)"
+msgstr "v1.0.2.0 (28 Jul 2013)"
+
+msgid "東方紅魔郷"
+msgstr "TH06 Embodiment of Scarlet Devil"
+
+msgid "score.dat が初期状態の場合に変換失敗する不具合を修正"
+msgstr "Bugfix: the conversion failed when score.dat was in the initial state."
+
+msgid ":ref:`T06PRAC` を新規追加"
+msgstr "Added :ref:`T06PRAC`."
+
+msgid ":ref:`T07PRAC` を新規追加"
+msgstr "Added :ref:`T07PRAC`."
+
+msgid ":ref:`T08PRAC` を新規追加"
+msgstr "Added :ref:`T08PRAC`."
+
+msgid ":ref:`T10PRAC` を新規追加"
+msgstr "Added :ref:`T10PRAC`."
+
+msgid "v1.0.1.0 (2013/7/21)"
+msgstr "v1.0.1.0 (21 Jul 2013)"
+
+msgid "Easy 以外のクリア回数が出力に含まれていなかった不具合を修正"
+msgstr "Bugfix: the clear counts except Level = Easy were not output."
+
+msgid ":ref:`T10CHARAEX` を新規追加"
+msgstr "Added :ref:`T10CHARAEX`."
+
+msgid "v1.0.0.0 (2013/7/8)"
+msgstr "v1.0.0.0 (8 Jul 2013)"
+
+msgid "公開開始"
+msgstr "First public release."
+
+msgid "東方紅魔郷～東方風神録に対応"
+msgstr "Supports TH06 Embodiment of Scarlet Devil through TH10 Mountain of Faith."
+

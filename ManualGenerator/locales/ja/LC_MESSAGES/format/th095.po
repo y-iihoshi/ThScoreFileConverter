@@ -1,0 +1,254 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方文花帖用テンプレート書式"
+msgstr ""
+
+msgid "スコア一覧"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T95SCR[x][y][z]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "レベル"
+msgstr ""
+
+msgid "``[1～9]``"
+msgstr ""
+
+msgid "Level 1～9"
+msgstr ""
+
+msgid "``[0]``"
+msgstr ""
+
+msgid "Level 10"
+msgstr ""
+
+msgid "``[X]``"
+msgstr ""
+
+msgid "Level EX"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "シーン"
+msgstr ""
+
+msgid "1～9"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "ハイスコア"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "登録してあるベストショットのスコア"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "撮影枚数"
+msgstr ""
+
+msgid "``[4]``"
+msgstr ""
+
+msgid "処理落ち率"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T95SCR111`` ... 1-1 でのハイスコア"
+msgstr ""
+
+msgid "``%T95SCR233`` ... 2-3 での撮影枚数"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。"
+msgstr ""
+
+msgid "相違点"
+msgstr ""
+
+msgid "処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。 今後、 この桁数を設定可能にするかも知れません。"
+msgstr ""
+
+msgid "スコア合計"
+msgstr ""
+
+msgid "``%T95SCRTL[x]``"
+msgstr ""
+
+msgid "撮影総合評価点"
+msgstr ""
+
+msgid "登録してあるベストショットのスコアの合計"
+msgstr ""
+
+msgid "総撮影枚数"
+msgstr ""
+
+msgid "撮影に成功したシーン数の合計"
+msgstr ""
+
+msgid "``%T95SCRTL1`` ... 撮影総合評価点"
+msgstr ""
+
+msgid "``%T95SCRTL3`` ... 総撮影枚数"
+msgstr ""
+
+msgid "被写体 & スペルカード情報"
+msgstr ""
+
+msgid "``%T95CARD[x][y][z]``"
+msgstr ""
+
+msgid "被写体の名前"
+msgstr ""
+
+msgid "スペルカード名"
+msgstr ""
+
+msgid "``%T95CARD111`` ... 1-1 の被写体の名前"
+msgstr ""
+
+msgid "``%T95CARD232`` ... 2-3 のスペルカード名"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは被写体の名前・スペルカード名ともに "
+"``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid "ベストショット出力"
+msgstr ""
+
+msgid "``%T95SHOT[x][y]``"
+msgstr ""
+
+msgid "``%T95SHOT12`` ... 1-2 のベストショット"
+msgstr ""
+
+msgid ""
+"このテンプレート書式は ``<img src=\"./bestshot/bs_01_1.png\" alt=\"～\" title=\"～\" "
+"border=0>`` のような HTML の IMG タグに置換されます。"
+msgstr ""
+
+msgid "同時に、 対象となるベストショットファイル (bs\\_??\\_?.dat) を PNG 形式に変換した画像ファイルが出力されます。"
+msgstr ""
+
+msgid "IMG タグの alt 属性と title 属性には、 ベストショット撮影時のスコアと処理落ち率、 及びスペルカード名が出力されます。"
+msgstr ""
+
+msgid ""
+"画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` "
+"欄で指定されたフォルダに出力されます。"
+msgstr ""
+
+msgid "ベストショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
+msgstr ""
+
+msgid "本ツールでは、 ベストショットファイルから PNG 形式への変換を自前で行います。 そのため Susie プラグインは不要です。"
+msgstr ""
+
+msgid ""
+"自前で変換する都合上、 東方文花帖 ver. 1.02a 以外で撮影されたベストショットファイルの変換には非対応です。 "
+"対応予定も今のところありません。"
+msgstr ""
+
+msgid "ベストショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
+msgstr ""
+
+msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
+msgstr ""
+
+msgid "ベストショット出力（詳細版）"
+msgstr ""
+
+msgid "``%T95SHOTEX[x][y][z]``"
+msgstr ""
+
+msgid "画像ファイルへの相対パス"
+msgstr ""
+
+msgid "画像ファイルの幅 (px)"
+msgstr ""
+
+msgid "画像ファイルの高さ (px)"
+msgstr ""
+
+msgid "ベストショット撮影時のスコア"
+msgstr ""
+
+msgid "``[5]``"
+msgstr ""
+
+msgid "ベストショット撮影時の処理落ち率"
+msgstr ""
+
+msgid "``[6]``"
+msgstr ""
+
+msgid "ベストショット撮影日時"
+msgstr ""
+
+msgid "``%T95SHOTEX121`` ... 1-2 の画像ファイルへの相対パス"
+msgstr ""
+
+msgid "``%T95SHOTEX236`` ... 2-3 のベストショット撮影日時"
+msgstr ""
+
+msgid ""
+"このテンプレート書式を使って、 例えば ``%T95SHOT12`` と同等の出力結果を得るには、 テンプレートファイルに以下の通りに記載します:"
+" ::"
+msgstr ""
+
+msgid "このテンプレート書式は本ツール独自のものです。"
+msgstr ""
+
+msgid ""
+":ref:`T95SHOT` により出力される IMG タグが気に食わなかったから、 この書式を新規追加し、 "
+"かつベストショットファイルの変換を自前で実装したようなものです。"
+msgstr ""
+

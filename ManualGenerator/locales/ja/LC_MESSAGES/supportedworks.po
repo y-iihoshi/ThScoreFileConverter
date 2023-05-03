@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-23 11:52+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+msgid "各作品への対応状況"
+msgstr ""
+
+msgid "対応済み"
+msgstr ""
+
+msgid "ThSFC が対応している東方 Project の作品名及びバージョンは以下の通りです:"
+msgstr ""
+
+msgid "東方紅魔郷 ver. 1.02h"
+msgstr ""
+
+msgid "東方妖々夢 ver. 1.00b"
+msgstr ""
+
+msgid "東方萃夢想 ver. 1.11"
+msgstr ""
+
+msgid "東方永夜抄 ver. 1.00d"
+msgstr ""
+
+msgid "東方花映塚 ver. 1.50a"
+msgstr ""
+
+msgid "東方文花帖 ver. 1.02a"
+msgstr ""
+
+msgid "東方風神録 ver. 1.00a"
+msgstr ""
+
+msgid "東方緋想天 ver. 1.06a"
+msgstr ""
+
+msgid "東方地霊殿 ver. 1.00a"
+msgstr ""
+
+msgid "東方星蓮船 ver. 1.00b"
+msgstr ""
+
+msgid "東方非想天則 ver. 1.10a"
+msgstr ""
+
+msgid "ダブルスポイラー ver. 1.00a"
+msgstr ""
+
+msgid "妖精大戦争 ver. 1.00a"
+msgstr ""
+
+msgid "東方神霊廟 ver. 1.00c"
+msgstr ""
+
+msgid "東方心綺楼 ver. 1.34b"
+msgstr ""
+
+msgid "東方輝針城 ver. 1.00b"
+msgstr ""
+
+msgid "弾幕アマノジャク ver. 1.00a"
+msgstr ""
+
+msgid "東方深秘録 ver. 1.41"
+msgstr ""
+
+msgid "東方紺珠伝 ver. 1.00b"
+msgstr ""
+
+msgid "東方憑依華 ver. 1.10c"
+msgstr ""
+
+msgid "東方天空璋 ver. 1.00a"
+msgstr ""
+
+msgid "秘封ナイトメアダイアリー ver. 1.00a"
+msgstr ""
+
+msgid "東方鬼形獣 ver. 1.00b"
+msgstr ""
+
+msgid "東方虹龍洞 ver. 1.00a"
+msgstr ""
+
+msgid "試験的に対応済み"
+msgstr ""
+
+msgid ""
+"以下作品への対応については、 試験的機能として実装しています。 ThSFC 作者の原作プレイの腕前の都合で、 動作確認を十分にできていないため、 "
+"不具合が生じる可能性が高いです:"
+msgstr ""
+
+msgid "東方剛欲異聞 ver. 1.04"
+msgstr ""
+
+msgid "対応予定あり"
+msgstr ""
+
+msgid "以下作品については、 ThSFC 作者の原作プレイ進捗状況に伴って今後対応予定です:"
+msgstr ""
+
+msgid "バレットフィリア達の闇市場"
+msgstr ""
+

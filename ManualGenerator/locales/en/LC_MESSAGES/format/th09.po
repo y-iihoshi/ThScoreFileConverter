@@ -1,0 +1,267 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "東方花映塚用テンプレート書式"
+msgstr ""
+
+msgid "スコアランキング"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T09SCR[w][xx][y][z]``"
+msgstr ""
+
+msgid "``[w]``"
+msgstr ""
+
+msgid "難易度"
+msgstr ""
+
+msgid "``[E]``"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "``[N]``"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "``[H]``"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "Lunatic"
+msgstr ""
+
+msgid "``[X]``"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
+msgid "``[xx]``"
+msgstr ""
+
+msgid "キャラの名前"
+msgstr ""
+
+msgid "``[RM]``"
+msgstr ""
+
+msgid "霊夢"
+msgstr ""
+
+msgid "``[MR]``"
+msgstr ""
+
+msgid "魔理沙"
+msgstr ""
+
+msgid "``[SK]``"
+msgstr ""
+
+msgid "咲夜"
+msgstr ""
+
+msgid "``[YM]``"
+msgstr ""
+
+msgid "妖夢"
+msgstr ""
+
+msgid "``[RS]``"
+msgstr ""
+
+msgid "鈴仙"
+msgstr ""
+
+msgid "``[CI]``"
+msgstr ""
+
+msgid "チルノ"
+msgstr ""
+
+msgid "``[LY]``"
+msgstr ""
+
+msgid "リリカ"
+msgstr ""
+
+msgid "``[MY]``"
+msgstr ""
+
+msgid "ミスティア"
+msgstr ""
+
+msgid "``[TW]``"
+msgstr ""
+
+msgid "てゐ"
+msgstr ""
+
+msgid "``[AY]``"
+msgstr ""
+
+msgid "文"
+msgstr ""
+
+msgid "``[MD]``"
+msgstr ""
+
+msgid "メディスン"
+msgstr ""
+
+msgid "``[YU]``"
+msgstr ""
+
+msgid "幽香"
+msgstr ""
+
+msgid "``[KM]``"
+msgstr ""
+
+msgid "小町"
+msgstr ""
+
+msgid "``[SI]``"
+msgstr ""
+
+msgid "四季映姫"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "順位"
+msgstr ""
+
+msgid "``[1～5]``"
+msgstr ""
+
+msgid "1～5 位"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "登録名"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "スコア"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "日付"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T09SCRNMR12`` ... Normal 魔理沙の 1 位のスコア"
+msgstr ""
+
+msgid "``%T09SCRXRM41`` ... Extra 霊夢の 4 位の登録名"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid ""
+"日付は年月日が ``yy/mm/dd`` の形式で出力されます。 年は西暦の下 2 桁だけがスコアファイルに保存されています。 また、 "
+"時分秒はそもそもスコアファイルに保存されていません。"
+msgstr ""
+
+msgid "相違点"
+msgstr ""
+
+msgid "スコアの 1 の位には、 原作と同様にコンティニュー回数が出力されます。"
+msgstr ""
+
+msgid "クリア達成度"
+msgstr ""
+
+msgid "``%T09CLEAR[x][yy][z]``"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "``[yy]``"
+msgstr ""
+
+msgid "出力形式"
+msgstr ""
+
+msgid "クリア回数"
+msgstr ""
+
+msgid "クリアしたかどうかのフラグ情報"
+msgstr ""
+
+msgid "``%T09CLEARXMR1`` ... Extra 魔理沙のクリア回数"
+msgstr ""
+
+msgid "``%T09CLEARNSK2`` ... Normal 咲夜のクリアフラグ"
+msgstr ""
+
+msgid ""
+"フラグ情報は、 ゲームの進行状況に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Not Cleared``, "
+"``Cleared``"
+msgstr ""
+
+msgid "1 回以上プレイしているが未クリアの場合に ``Not Cleared`` が出力されます。"
+msgstr ""
+
+msgid "総起動時間"
+msgstr ""
+
+msgid "``%T09TIMEALL``"
+msgstr ""
+
+msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
+msgstr ""
+
+msgid "スコアファイルには総プレイ時間のようなものも保存されているようですが、 確証を持てないので（本ツールでも）出力しません。"
+msgstr ""
+
+msgid "秒とミリ秒の間は ``:`` ではなく ``.`` で出力されます。"
+msgstr ""
+

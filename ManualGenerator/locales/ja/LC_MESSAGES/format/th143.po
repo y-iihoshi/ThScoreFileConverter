@@ -1,0 +1,316 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# This file is distributed under the same license as the
+# ThScoreFileConverter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ThScoreFileConverter 2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-29 16:57+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: IIHOSHI Yoshinori\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+msgid "弾幕アマノジャク用テンプレート書式"
+msgstr ""
+
+msgid "スコア一覧"
+msgstr ""
+
+msgid "書式"
+msgstr ""
+
+msgid "``%T143SCR[w][x][y][z]``"
+msgstr ""
+
+msgid "``[w]``"
+msgstr ""
+
+msgid "日付"
+msgstr ""
+
+msgid "``[1～9]``"
+msgstr ""
+
+msgid "一日目～九日目"
+msgstr ""
+
+msgid "``[L]``"
+msgstr ""
+
+msgid "最終日"
+msgstr ""
+
+msgid "``[x]``"
+msgstr ""
+
+msgid "シーン"
+msgstr ""
+
+msgid "1～9"
+msgstr ""
+
+msgid "``[0]``"
+msgstr ""
+
+msgid "10"
+msgstr ""
+
+msgid "``[y]``"
+msgstr ""
+
+msgid "アイテムなど"
+msgstr ""
+
+msgid "ノーアイテム"
+msgstr ""
+
+msgid "``[1]``"
+msgstr ""
+
+msgid "ひらり布"
+msgstr ""
+
+msgid "``[2]``"
+msgstr ""
+
+msgid "天狗のトイカメラ"
+msgstr ""
+
+msgid "``[3]``"
+msgstr ""
+
+msgid "隙間の折りたたみ傘"
+msgstr ""
+
+msgid "``[4]``"
+msgstr ""
+
+msgid "亡霊の送り提灯"
+msgstr ""
+
+msgid "``[5]``"
+msgstr ""
+
+msgid "血に飢えた陰陽玉"
+msgstr ""
+
+msgid "``[6]``"
+msgstr ""
+
+msgid "四尺マジックボム"
+msgstr ""
+
+msgid "``[7]``"
+msgstr ""
+
+msgid "身代わり地蔵"
+msgstr ""
+
+msgid "``[8]``"
+msgstr ""
+
+msgid "呪いのデコイ人形"
+msgstr ""
+
+msgid "``[9]``"
+msgstr ""
+
+msgid "打ち出の小槌（レプリカ）"
+msgstr ""
+
+msgid "``[T]``"
+msgstr ""
+
+msgid "合計"
+msgstr ""
+
+msgid "（項目が得点の場合、 この指定は無視されます。）"
+msgstr ""
+
+msgid "``[z]``"
+msgstr ""
+
+msgid "項目"
+msgstr ""
+
+msgid "得点"
+msgstr ""
+
+msgid "挑戦回数"
+msgstr ""
+
+msgid "クリア回数"
+msgstr ""
+
+msgid "例"
+msgstr ""
+
+msgid "``%T143SCR11T1`` ... 一日目 シーン 1 の得点"
+msgstr ""
+
+msgid "``%T143SCR2313`` ... 二日目 シーン 3 のひらり布でのクリア回数"
+msgstr ""
+
+msgid "補足"
+msgstr ""
+
+msgid "存在しない日付とシーンの組み合わせ（一日目 シーン 7 など）は無視されます。"
+msgstr ""
+
+msgid "スコア合計"
+msgstr ""
+
+msgid "``%T143SCRTL[x][y]``"
+msgstr ""
+
+msgid "（項目が得点の合計の場合、 この指定は無視されます。）"
+msgstr ""
+
+msgid "得点の合計"
+msgstr ""
+
+msgid "挑戦回数の合計"
+msgstr ""
+
+msgid "クリア回数の合計"
+msgstr ""
+
+msgid "クリアシーン数"
+msgstr ""
+
+msgid "``%T143SCRTLT1`` ... 得点の合計"
+msgstr ""
+
+msgid "``%T143SCRTL04`` ... ノーアイテムでのクリアシーン数"
+msgstr ""
+
+msgid "スペルカード情報"
+msgstr ""
+
+msgid "``%T143CARD[x][y][z]``"
+msgstr ""
+
+msgid "敵の名前"
+msgstr ""
+
+msgid "スペルカード名"
+msgstr ""
+
+msgid "``%T143CARD111`` ... 一日目 シーン 1 の敵の名前"
+msgstr ""
+
+msgid "``%T143CARD232`` ... 二日目 シーン 3 のスペルカード名"
+msgstr ""
+
+msgid ""
+":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは敵の名前・スペルカード名ともに "
+"``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
+msgstr ""
+
+msgid "異名情報"
+msgstr ""
+
+msgid "``%T143NICK[xx]``"
+msgstr ""
+
+msgid "``[xx]``"
+msgstr ""
+
+msgid "番号"
+msgstr ""
+
+msgid "``[01～70]``"
+msgstr ""
+
+msgid "1～70"
+msgstr ""
+
+msgid "``%T143NICK11`` ... はじめてのアマノジャク"
+msgstr ""
+
+msgid "未取得の異名は ``?????`` のように出力されます。"
+msgstr ""
+
+msgid "No.29 の異名のゲーム内表示は誤記と思われるため、 修正しています。"
+msgstr ""
+
+msgid "総プレイ時間"
+msgstr ""
+
+msgid "``%T143TIMEPLY``"
+msgstr ""
+
+msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
+msgstr ""
+
+msgid "スクリーンショット出力"
+msgstr ""
+
+msgid "``%T143SHOT[x][y]``"
+msgstr ""
+
+msgid "``%T143SHOT12`` ... 一日目 シーン 2 のスクリーンショット"
+msgstr ""
+
+msgid ""
+"このテンプレート書式は ``<img src=\"./screenshot/sc01_01.png\" alt=\"～\" title=\"～\""
+" border=0>`` のような HTML の IMG タグに置換されます。"
+msgstr ""
+
+msgid "同時に、 対象となるスクリーンショットファイル (sc??\\_??.dat) を PNG 形式に変換した画像ファイルが出力されます。"
+msgstr ""
+
+msgid "IMG タグの alt 属性と title 属性には日時が出力されます。"
+msgstr ""
+
+msgid ""
+"画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` "
+"欄で指定されたフォルダに出力されます。"
+msgstr ""
+
+msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
+msgstr ""
+
+msgid "スクリーンショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
+msgstr ""
+
+msgid "スクリーンショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
+msgstr ""
+
+msgid "スクリーンショット出力（詳細版）"
+msgstr ""
+
+msgid "``%T143SHOTEX[x][y][z]``"
+msgstr ""
+
+msgid "画像ファイルへの相対パス"
+msgstr ""
+
+msgid "画像ファイルの幅 (px)"
+msgstr ""
+
+msgid "画像ファイルの高さ (px)"
+msgstr ""
+
+msgid "スクリーンショット撮影日時"
+msgstr ""
+
+msgid "``%T143SHOTEX121`` ... 一日目 シーン 2 の画像ファイルへの相対パス"
+msgstr ""
+
+msgid "``%T143SHOTEX234`` ... 二日目 シーン 3 のスクリーンショット撮影日時"
+msgstr ""
+
+msgid ""
+"このテンプレート書式を使って、 例えば ``%T143SHOT12`` と同等の出力結果を得るには、 "
+"テンプレートファイルに以下の通りに記載します: ::"
+msgstr ""
+
