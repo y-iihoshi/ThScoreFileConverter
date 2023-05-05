@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH06.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:15+0900\n"
+"PO-Revision-Date: 2023-05-05 22:54+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方紅魔郷用"
 msgstr "For TH06 Embodiment of Scarlet Devil"
 
 msgid "スコアランキング"
-msgstr ""
+msgstr "Score ranking"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T06SCR[w][xx][y][z]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[E]``"
 msgstr ""
@@ -70,154 +68,154 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RA]``"
 msgstr ""
 
 msgid "霊夢（霊）"
-msgstr ""
+msgstr "Reimu A"
 
 msgid "``[RB]``"
 msgstr ""
 
 msgid "霊夢（夢）"
-msgstr ""
+msgstr "Reimu B"
 
 msgid "``[MA]``"
 msgstr ""
 
 msgid "魔理沙（魔）"
-msgstr ""
+msgstr "Marisa A"
 
 msgid "``[MB]``"
 msgstr ""
 
 msgid "魔理沙（恋）"
-msgstr ""
+msgstr "Marisa B"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "順位"
-msgstr ""
+msgstr "Rank"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "1～9 位"
-msgstr ""
+msgstr "1st - 9th"
 
 msgid "``[0]``"
 msgstr ""
 
 msgid "10 位"
-msgstr ""
+msgstr "10th"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "登録名"
-msgstr ""
+msgstr "Registered name"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "スコア"
-msgstr ""
+msgstr "Score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "到達ステージ"
-msgstr ""
+msgstr "Reached stage"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T06SCRNMB12`` ... Normal 魔理沙（恋）の 1 位のスコア"
-msgstr ""
+msgstr "``%T06SCRNMB12`` ... The 1st score of Normal Marisa B"
 
 msgid "``%T06SCRXRA41`` ... Extra 霊夢（霊）の 4 位の登録名"
-msgstr ""
+msgstr "``%T06SCRXRA41`` ... The 4th registered name of Extra Reimu A"
 
 msgid "御札戦歴"
-msgstr ""
+msgstr "Combat experience"
 
 msgid "``%T06C[xx][y]``"
 msgstr ""
 
 msgid "スペルカードの番号など"
-msgstr ""
+msgstr "Spell card number etc."
 
 msgid "``[00]``"
 msgstr ""
 
 msgid "全スペルカードの合計値"
-msgstr ""
+msgstr "Total value of all spell cards"
 
 msgid "``[01～64]``"
 msgstr ""
 
 msgid "スペルカードの番号"
-msgstr ""
+msgstr "Spell card number"
 
 msgid "取得回数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦回数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``%T06C011`` ... 月符「ムーンライトレイ」の取得回数"
-msgstr ""
+msgstr "``%T06C011`` ... Number of acquisitions of Moon Sign \"Moonlight Ray\""
 
 msgid "``%T06C022`` ... 夜符「ナイトバード」の挑戦回数"
-msgstr ""
+msgstr "``%T06C022`` ... Number of trials of Night Sign \"Night Bird\""
 
 msgid "スペルカード基本情報"
-msgstr ""
+msgstr "Spell card basic information"
 
 msgid "``%T06CARD[xx][y]``"
 msgstr ""
 
 msgid "スペルカードの名前"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``[R]``"
 msgstr ""
 
 msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)"
-msgstr ""
+msgstr "Spell card difficulty (Easy, Normal, Hard, Lunatic, Extra)"
 
 msgid "``%T06CARD01N`` ... 月符「ムーンライトレイ」"
-msgstr ""
+msgstr "``%T06CARD01N`` ... Moon Sign \"Moonlight Ray\""
 
 msgid "``%T06CARD01R`` ... Hard, Lunatic"
 msgstr ""
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "1 枚が複数の難易度にまたがっているスペルカードについては、 難易度はカンマ区切りで出力されます。"
-msgstr ""
+msgstr "For spell cards where one card is used for multiple difficulty levels, the difficulty levels are output separated by commas."
 
 msgid "相違点"
-msgstr ""
+msgstr "Differences"
 
 msgid "``Hard,Lunatic`` ではなく ``Hard, Lunatic`` のように半角空白も出力されます。"
-msgstr ""
+msgstr "A space is also output as ``Hard, Lunatic`` rather than ``Hard,Lunatic``."
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????`` のように出力されます。 (一応ネタバレ防止のため。)"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for name and difficulty level (to prevent spoilers)."
 
 msgid "スペルカード蒐集率"
-msgstr ""
+msgstr "Spell card collection rate"
 
 msgid "``%T06CRG[x][y]``"
 msgstr ""
@@ -226,34 +224,34 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "ステージ"
-msgstr ""
+msgstr "Stage"
 
 msgid "全ステージ合計"
-msgstr ""
+msgstr "Total of all stages"
 
 msgid "``[1～6]``"
-msgstr ""
+msgstr "``[1-6]``"
 
 msgid "Stage 1～6"
-msgstr ""
+msgstr "Stage 1-6"
 
 msgid "取得数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``%T06CRG01`` ... 全ステージ合計の取得数"
-msgstr ""
+msgstr "``%T06CRG01`` ... The total number of acquisitions for all stages"
 
 msgid "``%T06CRG12`` ... Stage 1 の挑戦数"
-msgstr ""
+msgstr "``%T06CRG12`` ... Number of Stage 1 trials"
 
 msgid "紅魔郷では 1 枚で複数の難易度にまたがっているスペルカードがあるため、 難易度の指定はできません。"
-msgstr ""
+msgstr "In Embodiment of Scarlet Devil, there are spell cards which one card is used for multiple difficulty levels, so you cannot specify the difficulty level for this format."
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "``%T06CLEAR[x][yy]``"
 msgstr ""
@@ -262,32 +260,32 @@ msgid "``[yy]``"
 msgstr ""
 
 msgid "``%T06CLEARXMA`` ... Extra 魔理沙（魔）のクリア達成度"
-msgstr ""
+msgstr "``%T06CLEARXMA`` ... Clear achievement of Extra Marisa A"
 
 msgid "``%T06CLEARNRA`` ... Normal 霊夢（霊）のクリア達成度"
-msgstr ""
+msgstr "``%T06CLEARNRA`` ... Clear achievement of Normal Reimu A"
 
 msgid "クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``, ``Not Clear`` （Extra 未クリア）"
-msgstr ""
+msgstr "Depending on the clear achievement (game progress), one of the following string is output: ``-------`` (not played), ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``, ``Not Clear`` (Extra not cleared)."
 
 msgid "本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 ランキング上に存在していなければ未クリア扱いになってしまいます。"
-msgstr ""
+msgstr "Since this tool calculates the degree of clear achievement based on the ranking, even if it has actually been cleared, it is treated as uncleared if it does not exist on the ranking."
 
 msgid "プラクティススコア"
-msgstr ""
+msgstr "Practice score"
 
 msgid "``%T06PRAC[x][yy][z]``"
 msgstr ""
 
 msgid "``%T06PRACEMA1`` ... Easy 魔理沙（魔）の Stage 1 のプラクティススコア"
-msgstr ""
+msgstr "``%T06PRACEMA1`` ... Practice score of Stage 1 of Easy Marisa A"
 
 msgid "``%T06PRACNRA4`` ... Normal 霊夢（霊）の Stage 4 のプラクティススコア"
-msgstr ""
+msgstr "``%T06PRACNRA4`` ... Practice score of Stage 4 of Normal Reimu A"
 
 msgid "存在しない難易度とステージの組み合わせ（つまり Easy の Stage 6）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of difficulty and stage (i.e. Stage 6 of Easy) is ignored."
 
 msgid "このテンプレート書式は本ツール独自のものです。"
-msgstr ""
+msgstr "This template format is unique to this tool."
 
