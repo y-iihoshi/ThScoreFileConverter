@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 14:42+0900\n"
+"POT-Creation-Date: 2023-05-05 20:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "ThSFC を利用するには、 .NET Framework 4.8 または .NET 6 が必要です。"
 msgstr ""
 
-msgid "2022 年 11 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
+msgid "2023 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
 msgstr ""
 
 msgid "Windows 11 Pro Version 22H2"
@@ -48,7 +48,7 @@ msgstr ""
 msgid ".NET 6"
 msgstr ""
 
-msgid "Visual Studio Community 2022 Version 17.4"
+msgid "Visual Studio Community 2022 Version 17.5"
 msgstr ""
 
 msgid "Python 3.10"

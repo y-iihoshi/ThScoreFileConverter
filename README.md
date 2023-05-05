@@ -48,6 +48,7 @@ format from best shot files.
 
 ### Will be supported
 * TH18.5 バレットフィリア達の闇市場　～ 100th Black Market.
+* TH19 東方獣王園　～ Unfinished Dream of All Living Ghost.
 
 ## Environments
 
@@ -55,7 +56,7 @@ format from best shot files.
 * Windows 11 Pro Version 22H2
 * .NET Framework 4.8
 * .NET 6
-* Visual Studio Community 2022 17.4
+* Visual Studio Community 2022 17.5
 * Python 3.10
 
 ### Tested environment

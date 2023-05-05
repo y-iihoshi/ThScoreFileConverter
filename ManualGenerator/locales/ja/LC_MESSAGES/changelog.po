@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 14:42+0900\n"
+"POT-Creation-Date: 2023-05-05 20:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "変更履歴"
 msgstr ""
 
-msgid "v2.5.0 (2022/mm/dd)"
+msgid "v2.5.0 (2023/mm/dd)"
 msgstr ""
 
 msgid "東方虹龍洞に対応"
@@ -46,6 +46,9 @@ msgid "ベストショットファイル変換後の画像ファイルの解像�
 msgstr ""
 
 msgid "jQuery と jCanvas を再配布しないように修正"
+msgstr ""
+
+msgid "英語版マニュアルを追加（但しテンプレート書式の英訳は未完了）"
 msgstr ""
 
 msgid "v2.4.0 (2019/12/22)"

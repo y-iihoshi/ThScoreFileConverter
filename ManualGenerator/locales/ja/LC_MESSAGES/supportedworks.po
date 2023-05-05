@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2013-2021, IIHOSHI Yoshinori
+# Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-23 11:52+0900\n"
+"POT-Creation-Date: 2023-05-05 20:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
@@ -102,9 +102,7 @@ msgstr ""
 msgid "試験的に対応済み"
 msgstr ""
 
-msgid ""
-"以下作品への対応については、 試験的機能として実装しています。 ThSFC 作者の原作プレイの腕前の都合で、 動作確認を十分にできていないため、 "
-"不具合が生じる可能性が高いです:"
+msgid "以下作品への対応については、 試験的機能として実装しています。 ThSFC 作者の原作プレイの腕前の都合で、 動作確認を十分にできていないため、 不具合が生じる可能性が高いです:"
 msgstr ""
 
 msgid "東方剛欲異聞 ver. 1.04"
@@ -117,5 +115,8 @@ msgid "以下作品については、 ThSFC 作者の原作プレイ進捗状況
 msgstr ""
 
 msgid "バレットフィリア達の闇市場"
+msgstr ""
+
+msgid "東方獣王園"
 msgstr ""
 
