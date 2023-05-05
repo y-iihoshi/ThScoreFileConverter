@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-05 22:57+0900\n"
+"PO-Revision-Date: 2023-05-05 23:14+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -239,7 +239,7 @@ msgid "``%T07C001TL1`` ... 全主人公合計の霜符「フロストコラム�
 msgstr "``%T07C001TL1`` ... The total MaxBonus-es of Frost Sign \"Frost Columns\" of all characters"
 
 msgid "``%T07C002SB3`` ... 咲夜（時）の霜符「フロストコラムス -Lunatic-」の挑戦回数"
-msgstr "``%T07C002SB3`` ... Number of trials of Frost Sign \"Frost Columns\" of Sakuya B"
+msgstr "``%T07C002SB3`` ... Number of trials of Frost Sign \"Frost Columns -Lunatic-\" of Sakuya B"
 
 msgid "スペルカード基本情報"
 msgstr "Spell card basic information"
