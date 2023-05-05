@@ -34,6 +34,9 @@ jobs:
       with:
         global-json-file: 'global.json'
 
+    - name: Restore .NET tools
+      run: dotnet tool restore
+
     - name: Cache NuGet packages
       uses: actions/cache@v3.3.1
       with:

@@ -17,14 +17,20 @@
 
 # -- Project information -----------------------------------------------------
 
+import json
+import subprocess
+
+result = subprocess.run(['dotnet', 'gitversion'], check=True, capture_output=True)
+gitversion = json.loads(result.stdout)
+
 project = 'ThScoreFileConverter'
 copyright = '2013, IIHOSHI Yoshinori'
 author = 'IIHOSHI Yoshinori'
 
 # The short X.Y version.
-version = '2.4'
+version = f"{gitversion['Major']}.{gitversion['Minor']}"
 # The full version, including alpha/beta/rc tags.
-release = '2.4.0'
+release = gitversion['FullSemVer']
 
 
 # -- General configuration ---------------------------------------------------
@@ -53,7 +59,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # i18n related settings
 gettext_compact = False
 gettext_location = False
-gettext_last_translator = author
+#gettext_last_translator = author
 gettext_language_team = ''
 
 
