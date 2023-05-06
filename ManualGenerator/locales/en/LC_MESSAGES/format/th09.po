@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH09
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-05-07 01:21+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方花映塚用"
 msgstr "For TH09 Phantasmagoria of Flower View"
 
 msgid "スコアランキング"
-msgstr ""
+msgstr "Score ranking"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T09SCR[w][xx][y][z]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficultiy"
 
 msgid "``[E]``"
 msgstr ""
@@ -70,151 +68,151 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RM]``"
 msgstr ""
 
 msgid "霊夢"
-msgstr ""
+msgstr "Reimu"
 
 msgid "``[MR]``"
 msgstr ""
 
 msgid "魔理沙"
-msgstr ""
+msgstr "Marisa"
 
 msgid "``[SK]``"
 msgstr ""
 
 msgid "咲夜"
-msgstr ""
+msgstr "Sakuya"
 
 msgid "``[YM]``"
 msgstr ""
 
 msgid "妖夢"
-msgstr ""
+msgstr "Youmu"
 
 msgid "``[RS]``"
 msgstr ""
 
 msgid "鈴仙"
-msgstr ""
+msgstr "Reisen"
 
 msgid "``[CI]``"
 msgstr ""
 
 msgid "チルノ"
-msgstr ""
+msgstr "Cirno"
 
 msgid "``[LY]``"
 msgstr ""
 
 msgid "リリカ"
-msgstr ""
+msgstr "Lyrica"
 
 msgid "``[MY]``"
 msgstr ""
 
 msgid "ミスティア"
-msgstr ""
+msgstr "Mystia"
 
 msgid "``[TW]``"
 msgstr ""
 
 msgid "てゐ"
-msgstr ""
+msgstr "Tewi"
 
 msgid "``[AY]``"
 msgstr ""
 
 msgid "文"
-msgstr ""
+msgstr "Aya"
 
 msgid "``[MD]``"
 msgstr ""
 
 msgid "メディスン"
-msgstr ""
+msgstr "Medicine"
 
 msgid "``[YU]``"
 msgstr ""
 
 msgid "幽香"
-msgstr ""
+msgstr "Yuuka"
 
 msgid "``[KM]``"
 msgstr ""
 
 msgid "小町"
-msgstr ""
+msgstr "Komachi"
 
 msgid "``[SI]``"
 msgstr ""
 
 msgid "四季映姫"
-msgstr ""
+msgstr "Eiki Shiki"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "順位"
-msgstr ""
+msgstr "Rank"
 
 msgid "``[1～5]``"
 msgstr ""
 
 msgid "1～5 位"
-msgstr ""
+msgstr "1st - 5th"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "登録名"
-msgstr ""
+msgstr "Registered name"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "スコア"
-msgstr ""
+msgstr "Score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "日付"
-msgstr ""
+msgstr "Date"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T09SCRNMR12`` ... Normal 魔理沙の 1 位のスコア"
-msgstr ""
+msgstr "``%T09SCRNMR12`` ... The 1st score of Normal Marisa"
 
 msgid "``%T09SCRXRM41`` ... Extra 霊夢の 4 位の登録名"
-msgstr ""
+msgstr "``%T09SCRXRM41`` ... The 4th registered name of Extra Reimu"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "日付は年月日が ``yy/mm/dd`` の形式で出力されます。 年は西暦の下 2 桁だけがスコアファイルに保存されています。 また、 時分秒はそもそもスコアファイルに保存されていません。"
-msgstr ""
+msgstr "As for the date, only the year, month, and day are output in the ``yy/mm/dd`` format. The last two digits of the year are saved in the scorefile. In addition, hours, minutes and seconds are not saved in the first place."
 
 msgid "相違点"
-msgstr ""
+msgstr "Differences"
 
 msgid "スコアの 1 の位には、 原作と同様にコンティニュー回数が出力されます。"
-msgstr ""
+msgstr "Just like in the game, the number of continuations is output at the ones place of the score."
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "``%T09CLEAR[x][yy][z]``"
 msgstr ""
@@ -226,38 +224,38 @@ msgid "``[yy]``"
 msgstr ""
 
 msgid "出力形式"
-msgstr ""
+msgstr "Output type"
 
 msgid "クリア回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "クリアしたかどうかのフラグ情報"
-msgstr ""
+msgstr "Cleared flag information"
 
 msgid "``%T09CLEARXMR1`` ... Extra 魔理沙のクリア回数"
-msgstr ""
+msgstr "``%T09CLEARXMR1`` ... Number of cleared times of Extra Marisa"
 
 msgid "``%T09CLEARNSK2`` ... Normal 咲夜のクリアフラグ"
-msgstr ""
+msgstr "``%T09CLEARNSK2`` ... Cleared flag of Normal Sakuya"
 
 msgid "フラグ情報は、 ゲームの進行状況に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Not Cleared``, ``Cleared``"
-msgstr ""
+msgstr "Depending on the game progress, one of the following string is output as a cleared flag information: ``-------`` (not played), ``Not Cleared``, ``Cleared``"
 
 msgid "1 回以上プレイしているが未クリアの場合に ``Not Cleared`` が出力されます。"
-msgstr ""
+msgstr "``Not Cleared`` is output when you played at least once but not cleared."
 
 msgid "総起動時間"
-msgstr ""
+msgstr "Total runtime"
 
 msgid "``%T09TIMEALL``"
 msgstr ""
 
 msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
-msgstr ""
+msgstr "Hours, minutes, seconds and milliseconds are output as the ``h:mm:ss.ddd`` format."
 
 msgid "スコアファイルには総プレイ時間のようなものも保存されているようですが、 確証を持てないので（本ツールでも）出力しません。"
-msgstr ""
+msgstr "It seems that the total playtime is also saved in the score file, but it is not sure, so this tool don't output it."
 
 msgid "秒とミリ秒の間は ``:`` ではなく ``.`` で出力されます。"
-msgstr ""
+msgstr "``.`` is output between seconds and milliseconds instead of ``:``."
 
