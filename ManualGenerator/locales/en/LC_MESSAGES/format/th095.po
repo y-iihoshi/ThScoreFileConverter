@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH09.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-05-07 02:35+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方文花帖用"
 msgstr "For TH09.5 Shoot the Bullet"
 
 msgid "スコア一覧"
-msgstr ""
+msgstr "Scores"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T95SCR[x][y][z]``"
 msgstr ""
@@ -34,13 +32,13 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "レベル"
-msgstr ""
+msgstr "Level"
 
 msgid "``[1～9]``"
 msgstr ""
 
 msgid "Level 1～9"
-msgstr ""
+msgstr "Level 1-9"
 
 msgid "``[0]``"
 msgstr ""
@@ -58,185 +56,185 @@ msgid "``[y]``"
 msgstr ""
 
 msgid "シーン"
-msgstr ""
+msgstr "Scene"
 
 msgid "1～9"
-msgstr ""
+msgstr "1-9"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "ハイスコア"
-msgstr ""
+msgstr "High score"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "登録してあるベストショットのスコア"
-msgstr ""
+msgstr "Registered best shot score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "撮影枚数"
-msgstr ""
+msgstr "Number of pictures"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "処理落ち率"
-msgstr ""
+msgstr "Slow rate"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T95SCR111`` ... 1-1 でのハイスコア"
-msgstr ""
+msgstr "``%T95SCR111`` ... High score of 1-1"
 
 msgid "``%T95SCR233`` ... 2-3 での撮影枚数"
-msgstr ""
+msgstr "``%T95SCR233`` ... Number of pictures of 2-3"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of level and scene (i.e. 1-7 etc.) is ignored."
 
 msgid "相違点"
-msgstr ""
+msgstr "Differences"
 
 msgid "処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。 今後、 この桁数を設定可能にするかも知れません。"
-msgstr ""
+msgstr "The slow rate is output to the third decimal place with the \\% symbol. This number of digits may be configurable in the future."
 
 msgid "スコア合計"
-msgstr ""
+msgstr "Total score"
 
 msgid "``%T95SCRTL[x]``"
 msgstr ""
 
 msgid "撮影総合評価点"
-msgstr ""
+msgstr "Total of high scores"
 
 msgid "登録してあるベストショットのスコアの合計"
-msgstr ""
+msgstr "Total score of registered best shots"
 
 msgid "総撮影枚数"
-msgstr ""
+msgstr "Total number of pictures"
 
 msgid "撮影に成功したシーン数の合計"
-msgstr ""
+msgstr "Total number of scenes suceeded"
 
 msgid "``%T95SCRTL1`` ... 撮影総合評価点"
-msgstr ""
+msgstr "``%T95SCRTL1`` ... Total of high scores"
 
 msgid "``%T95SCRTL3`` ... 総撮影枚数"
-msgstr ""
+msgstr "``%T95SCRTL3`` ... Total number of pictures"
 
 msgid "被写体 & スペルカード情報"
-msgstr ""
+msgstr "Object & Spell card information"
 
 msgid "``%T95CARD[x][y][z]``"
 msgstr ""
 
 msgid "被写体の名前"
-msgstr ""
+msgstr "Object name"
 
 msgid "スペルカード名"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``%T95CARD111`` ... 1-1 の被写体の名前"
-msgstr ""
+msgstr "``%T95CARD111`` ... Object name of 1-1"
 
 msgid "``%T95CARD232`` ... 2-3 のスペルカード名"
-msgstr ""
+msgstr "``%T95CARD232`` ... Spell card name of 2-3"
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは被写体の名前・スペルカード名ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for object name and spell card name (to prevent spoilers)."
 
 msgid "ベストショット出力"
-msgstr ""
+msgstr "Best shot output"
 
 msgid "``%T95SHOT[x][y]``"
 msgstr ""
 
 msgid "``%T95SHOT12`` ... 1-2 のベストショット"
-msgstr ""
+msgstr "``%T95SHOT12`` ... Best shot of 1-2"
 
 msgid "このテンプレート書式は ``<img src=\"./bestshot/bs_01_1.png\" alt=\"～\" title=\"～\" border=0>`` のような HTML の IMG タグに置換されます。"
-msgstr ""
+msgstr "This template format will be converted to an IMG tag of HTML such as ``<img src=\"./bestshot/bs_01_1.png\" alt=\"～\" title=\"～\" border=0>``."
 
 msgid "同時に、 対象となるベストショットファイル (bs\\_??\\_?.dat) を PNG 形式に変換した画像ファイルが出力されます。"
-msgstr ""
+msgstr "At the same time, the image file in PNG format converted from the corresponding best shot file (bs\\_??\\_?.dat) is output."
 
 msgid "IMG タグの alt 属性と title 属性には、 ベストショット撮影時のスコアと処理落ち率、 及びスペルカード名が出力されます。"
-msgstr ""
+msgstr "The score and slow rate when the best shot taken, and the spell card name, are output as the alt and title attributes of the IMG tag."
 
 msgid "画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` 欄で指定されたフォルダに出力されます。"
-msgstr ""
+msgstr "The image file is output into the folder specified by :guilabel:`I&mage output` field under the folder specified by :guilabel:`&Output` field."
 
 msgid "ベストショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
-msgstr ""
+msgstr "If a best shot file does not exist, the IMG tag and the image file are not output."
 
 msgid "本ツールでは、 ベストショットファイルから PNG 形式への変換を自前で行います。 そのため Susie プラグインは不要です。"
-msgstr ""
+msgstr "This tool develops best shot files to PNG format on its own. So any Susie plugin is not needed."
 
 msgid "自前で変換する都合上、 東方文花帖 ver. 1.02a 以外で撮影されたベストショットファイルの変換には非対応です。 対応予定も今のところありません。"
-msgstr ""
+msgstr "This tool does not support developing best shot files saved except Shoot the Bullet ver. 1.02a. There is no plan to support for now."
 
 msgid "ベストショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
-msgstr ""
+msgstr "Developing a best shot file is executed even if this template format is not written in a template file."
 
 msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
-msgstr ""
+msgstr "If the output folder of image files does not exist, this tool will automatically create it."
 
 msgid "ベストショット出力（詳細版）"
-msgstr ""
+msgstr "Best shot output (detailed version)"
 
 msgid "``%T95SHOTEX[x][y][z]``"
 msgstr ""
 
 msgid "画像ファイルへの相対パス"
-msgstr ""
+msgstr "Relative path of image file"
 
 msgid "画像ファイルの幅 (px)"
-msgstr ""
+msgstr "Width of image file (in pixel)"
 
 msgid "画像ファイルの高さ (px)"
-msgstr ""
+msgstr "Height of image file (in pixel)"
 
 msgid "ベストショット撮影時のスコア"
-msgstr ""
+msgstr "Score when the best shot was taken"
 
 msgid "``[5]``"
 msgstr ""
 
 msgid "ベストショット撮影時の処理落ち率"
-msgstr ""
+msgstr "Slow rate when the best shot was taken"
 
 msgid "``[6]``"
 msgstr ""
 
 msgid "ベストショット撮影日時"
-msgstr ""
+msgstr "Date and time of the best shot taken"
 
 msgid "``%T95SHOTEX121`` ... 1-2 の画像ファイルへの相対パス"
-msgstr ""
+msgstr "``%T95SHOTEX121`` ... Relative path of the image file of 1-2"
 
 msgid "``%T95SHOTEX236`` ... 2-3 のベストショット撮影日時"
-msgstr ""
+msgstr "``%T95SHOTEX236`` ... Date and time of the best shot of 2-3 taken"
 
 msgid "このテンプレート書式を使って、 例えば ``%T95SHOT12`` と同等の出力結果を得るには、 テンプレートファイルに以下の通りに記載します: ::"
-msgstr ""
+msgstr "To get the same output as ``%T95SHOT12`` using this template format, write the following in a template file:"
 
 msgid "このテンプレート書式は本ツール独自のものです。"
-msgstr ""
+msgstr "This template format is unique to this tool."
 
 msgid ":ref:`T95SHOT` により出力される IMG タグが気に食わなかったから、 この書式を新規追加し、 かつベストショットファイルの変換を自前で実装したようなものです。"
-msgstr ""
+msgstr "I was not satisfied with the IMG tag output by :ref:`T95SHOT`, so I added this format and implemented the development of best shot files by myself."
 
