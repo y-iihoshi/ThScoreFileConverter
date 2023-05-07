@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats of TH12.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-05-07 21:05+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "ダブルスポイラー用"
 msgstr "For TH12.5 Double Spoiler"
 
 msgid "スコア一覧"
-msgstr ""
+msgstr "Scores"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T125SCR[w][x][y][z]``"
 msgstr ""
@@ -34,37 +32,37 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[A]``"
 msgstr ""
 
 msgid "文"
-msgstr ""
+msgstr "Aya"
 
 msgid "``[H]``"
 msgstr ""
 
 msgid "はたて"
-msgstr ""
+msgstr "Hatate"
 
 msgid "``[x]``"
 msgstr ""
 
 msgid "レベル"
-msgstr ""
+msgstr "Level"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "Level 1～9"
-msgstr ""
+msgstr "Level 1-9"
 
 msgid "``[A～C]``"
-msgstr ""
+msgstr "``[A-C]``"
 
 msgid "Level 10～12"
-msgstr ""
+msgstr "Level 10-12"
 
 msgid "``[X]``"
 msgstr ""
@@ -82,200 +80,200 @@ msgid "``[y]``"
 msgstr ""
 
 msgid "シーン"
-msgstr ""
+msgstr "Scene"
 
 msgid "1～9"
-msgstr ""
+msgstr "1-9"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "得点"
-msgstr ""
+msgstr "Score"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "登録してあるベストショットの得点"
-msgstr ""
+msgstr "Registered best shot score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "撮影枚数"
-msgstr ""
+msgstr "Number of pictures"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "初成功時枚数"
-msgstr ""
+msgstr "Number of pictures at the first success"
 
 msgid "``[5]``"
 msgstr ""
 
 msgid "日時"
-msgstr ""
+msgstr "Date and time"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T125SCRA111`` ... 文の 1-1 の得点"
-msgstr ""
+msgstr "``%T125SCRA111`` ... Score of 1-1 of Aya"
 
 msgid "``%T125SCRH233`` ... はたての 2-3 の撮影枚数"
-msgstr ""
+msgstr "``%T125SCRH233`` ... Number of pictures of 2-3 of Hatate"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of level and scene (e.g. 1-7) is ignored."
 
 msgid "スコア合計"
-msgstr ""
+msgstr "Total score"
 
 msgid "``%T125SCRTL[x][y][z]``"
 msgstr ""
 
 msgid "集計方法"
-msgstr ""
+msgstr "Aggregation method"
 
 msgid "ゲーム内表示準拠"
-msgstr ""
+msgstr "As displayed in-game"
 
 msgid "自機準拠"
-msgstr ""
+msgstr "Per character"
 
 msgid "総撮影得点"
-msgstr ""
+msgstr "Total scores"
 
 msgid "登録してあるベストショットの得点の合計"
-msgstr ""
+msgstr "Total score of registered best shots"
 
 msgid "総撮影枚数"
-msgstr ""
+msgstr "Total number of pictures"
 
 msgid "初成功時枚数の合計"
-msgstr ""
+msgstr "Total number of pictures at the first successes"
 
 msgid "クリアシーン数"
-msgstr ""
+msgstr "Number of cleared scenes"
 
 msgid "``%T125SCRTLA11`` ... 文の総撮影得点（ゲーム内表示準拠）"
-msgstr ""
+msgstr "``%T125SCRTLA11`` ... Total scores of Aya (as displayed in-game)"
 
 msgid "``%T125SCRTLH23`` ... はたての総撮影枚数（自機準拠）"
-msgstr ""
+msgstr "``%T125SCRTLH23`` ... Total number of pictures of Hatate (per character)"
 
 msgid "集計方法を変えると、 SPOILER の ??-5～??-9 の得点などが、 文とはたてのどちらの集計結果に含まれるかが変わります。 「ゲーム内表示準拠」 では文の方に、 「自機準拠」 でははたての方に含まれます。"
-msgstr ""
+msgstr "If the aggregation method is changed, which the aggregation result, for Aya or Hatate, contains the values for SPOILER ??-5 to ??-9 will be changed. In the case of \"as displayed in-game\", the result for Aya contains them, otherwise for Hatate."
 
 msgid "被写体 & スペルカード情報"
-msgstr ""
+msgstr "Object & Spell card information"
 
 msgid "``%T125CARD[x][y][z]``"
 msgstr ""
 
 msgid "被写体の名前"
-msgstr ""
+msgstr "Object name"
 
 msgid "スペルカード名"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``%T125CARD111`` ... 1-1 の被写体の名前"
-msgstr ""
+msgstr "``%T125CARD111`` ... Object name of 1-1"
 
 msgid "``%T125CARD232`` ... 2-3 のスペルカード名"
-msgstr ""
+msgstr "``%T125CARD232`` ... Spell card name of 2-3"
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは被写体の名前・スペルカード名ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for object name and spell card name (to prevent spoilers)."
 
 msgid "総プレイ時間"
-msgstr ""
+msgstr "Total playtime"
 
 msgid "``%T125TIMEPLY``"
 msgstr ""
 
 msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
-msgstr ""
+msgstr "Hours, minutes, seconds and milliseconds are output as the ``h:mm:ss.ddd`` format."
 
 msgid "ベストショット出力"
-msgstr ""
+msgstr "Best shot output"
 
 msgid "``%T125SHOT[x][y][z]``"
 msgstr ""
 
 msgid "``%T125SHOTA12`` ... 文の 1-2 のベストショット"
-msgstr ""
+msgstr "``%T125SHOTA12`` ... Best shot of 1-2 of Aya"
 
 msgid "このテンプレート書式は ``<img src=\"./bestshot/bs_01_1.png\" alt=\"～\" title=\"～\" border=0>`` のような HTML の IMG タグに置換されます。"
-msgstr ""
+msgstr "This template format will be converted to an IMG tag of HTML such as ``<img src=\"./bestshot/bs_01_1.png\" alt=\"...\" title=\"...\" border=0>``."
 
 msgid "同時に、 対象となるベストショットファイル (bs\\_??\\_?.dat や bs2\\_??\\_?.dat) を PNG 形式に変換した画像ファイルが出力されます。"
-msgstr ""
+msgstr "At the same time, the image file in PNG format converted from the corresponding best shot file (bs\\_??\\_?.dat and bs2\\_??\\_?.dat) is output."
 
 msgid "IMG タグの alt 属性と title 属性には、 ベストショット撮影時の得点と処理落ち率、 及びスペルカード名が出力されます。"
-msgstr ""
+msgstr "The score and slow rate when the best shot taken, and the spell card name, are output as the alt and title attributes of the IMG tag."
 
 msgid "画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` 欄で指定されたフォルダに出力されます。"
-msgstr ""
+msgstr "The image file is output into the folder specified by :guilabel:`I&mage output` field under the folder specified by :guilabel:`&Output` field."
 
 msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
-msgstr ""
+msgstr "If the output folder of image files does not exist, this tool will automatically create it."
 
 msgid "ベストショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
-msgstr ""
+msgstr "If a best shot file does not exist, the IMG tag and the image file are not output."
 
 msgid "ベストショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
-msgstr ""
+msgstr "Developing a best shot file is executed even if this template format is not written in a template file."
 
 msgid "ベストショット出力（詳細版）"
-msgstr ""
+msgstr "Best shot output (detailed version)"
 
 msgid "``%T125SHOTEX[w][x][y][z]``"
 msgstr ""
 
 msgid "画像ファイルへの相対パス"
-msgstr ""
+msgstr "Relative path of image file"
 
 msgid "画像ファイルの幅 (px)"
-msgstr ""
+msgstr "Width of image file (in pixel)"
 
 msgid "画像ファイルの高さ (px)"
-msgstr ""
+msgstr "Height of image file (in pixel)"
 
 msgid "ベストショット撮影時の得点"
-msgstr ""
+msgstr "Score when the best shot was taken"
 
 msgid "ベストショット撮影時の処理落ち率"
-msgstr ""
+msgstr "Slow rate when the best shot was taken"
 
 msgid "``[6]``"
 msgstr ""
 
 msgid "ベストショット撮影日時"
-msgstr ""
+msgstr "Date and time of the best shot taken"
 
 msgid "``[7]``"
 msgstr ""
 
 msgid "詳細情報（獲得ボーナスなど）"
-msgstr ""
+msgstr "Detailed information (e.g. acquired bonuses)"
 
 msgid "``%T125SHOTEXA121`` ... 文の 1-2 の画像ファイルへの相対パス"
-msgstr ""
+msgstr "``%T125SHOTEXA121`` ... Relative path of the image file of 1-2 of Aya"
 
 msgid "``%T125SHOTEXH236`` ... はたての 2-3 のベストショット撮影日時"
-msgstr ""
+msgstr "``%T125SHOTEXH236`` ... Date and time of the best shot of 2-3 of Hatate"
 
 msgid "このテンプレート書式を使って、 例えば ``%T125SHOTA12`` と同等の出力結果を得るには、 テンプレートファイルに以下の通りに記載します: ::"
-msgstr ""
+msgstr "To get the same output as ``%T125SHOTA12`` using this template format, write the following in a template file: ::"
 
