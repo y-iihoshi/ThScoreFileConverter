@@ -1,4 +1,4 @@
-# Template formats for TH09
+# Template formats for TH09.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-07 01:21+0900\n"
+"PO-Revision-Date: 2023-05-07 13:41+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -161,7 +161,7 @@ msgid "順位"
 msgstr "Rank"
 
 msgid "``[1～5]``"
-msgstr ""
+msgstr "``[1-5]``"
 
 msgid "1～5 位"
 msgstr "1st - 5th"
