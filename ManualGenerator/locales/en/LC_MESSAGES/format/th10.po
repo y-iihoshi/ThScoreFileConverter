@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH10.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-05-07 14:56+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方風神録用"
 msgstr "For TH10 Mountain of Faith"
 
 msgid "スコアランキング"
-msgstr ""
+msgstr "Score ranking"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T10SCR[w][xx][y][z]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[E]``"
 msgstr ""
@@ -70,121 +68,121 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RA]``"
 msgstr ""
 
 msgid "霊夢 (A)"
-msgstr ""
+msgstr "Reimu A"
 
 msgid "``[RB]``"
 msgstr ""
 
 msgid "霊夢 (B)"
-msgstr ""
+msgstr "Reimu B"
 
 msgid "``[RC]``"
 msgstr ""
 
 msgid "霊夢 (C)"
-msgstr ""
+msgstr "Reimu C"
 
 msgid "``[MA]``"
 msgstr ""
 
 msgid "魔理沙 (A)"
-msgstr ""
+msgstr "Marisa A"
 
 msgid "``[MB]``"
 msgstr ""
 
 msgid "魔理沙 (B)"
-msgstr ""
+msgstr "Marisa B"
 
 msgid "``[MC]``"
 msgstr ""
 
 msgid "魔理沙 (C)"
-msgstr ""
+msgstr "Marisa C"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "順位"
-msgstr ""
+msgstr "Rank"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "1～9 位"
-msgstr ""
+msgstr "1st - 9th"
 
 msgid "``[0]``"
 msgstr ""
 
 msgid "10 位"
-msgstr ""
+msgstr "10th"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "登録名"
-msgstr ""
+msgstr "Registered name"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "スコア"
-msgstr ""
+msgstr "Score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "到達ステージ"
-msgstr ""
+msgstr "Reached stage"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "日時"
-msgstr ""
+msgstr "Date and time"
 
 msgid "``[5]``"
 msgstr ""
 
 msgid "処理落ち率"
-msgstr ""
+msgstr "Slow rate"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T10SCRNMC12`` ... Normal 魔理沙 (C) の 1 位のスコア"
-msgstr ""
+msgstr "``%T10SCRNMC12`` ... The 1st score of Normal Marisa C"
 
 msgid "``%T10SCRXRA44`` ... Extra 霊夢 (A) の 4 位の日時"
-msgstr ""
+msgstr "``%T10SCRXRA44`` ... The 4th date and time of Extra Reimu A"
 
 msgid "相違点"
-msgstr ""
+msgstr "Differences"
 
 msgid "スコアの 1 の位には、 原作と同様にコンティニュー回数が出力されます。"
-msgstr ""
+msgstr "Just like in the game, the number of continuations is output at the ones place of the score."
 
 msgid "日時は年月日及び時分秒が ``yyyy/mm/dd hh:mm:ss`` の形式で出力されます。"
-msgstr ""
+msgstr "The date and time are output in the format of ``yyyy/mm/dd hh:mm:ss`` with the year, month, day, hours, minutes, and seconds."
 
 msgid "処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。 今後、 この桁数を設定可能にするかも知れません。"
-msgstr ""
+msgstr "The slow rate is output to the third decimal place with the \\% symbol. This number of digits may be configurable in the future."
 
 msgid "御札戦歴"
-msgstr ""
+msgstr "Combat experience"
 
 msgid "``%T10C[xxx][yy][z]``"
 msgstr ""
@@ -193,79 +191,79 @@ msgid "``[xxx]``"
 msgstr ""
 
 msgid "スペルカードの番号など"
-msgstr ""
+msgstr "Spell card number etc."
 
 msgid "``[000]``"
 msgstr ""
 
 msgid "全スペルカードの合計値"
-msgstr ""
+msgstr "Total value of all spell cards"
 
 msgid "``[001～110]``"
-msgstr ""
+msgstr "``[001-110]``"
 
 msgid "スペルカードの番号"
-msgstr ""
+msgstr "Spell card number"
 
 msgid "``[yy]``"
 msgstr ""
 
 msgid "キャラの名前など"
-msgstr ""
+msgstr "Character name etc."
 
 msgid "``[TL]``"
 msgstr ""
 
 msgid "全主人公合計"
-msgstr ""
+msgstr "Total of all characters"
 
 msgid "取得回数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦回数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``%T10C003TL1`` ... 全主人公合計の秋符「オータムスカイ」の取得回数"
-msgstr ""
+msgstr "``%T10C003TL1`` ... The total number of acquisitions of Autumn Sign \"Autumn Sky\" of all characters"
 
 msgid "``%T10C003MC2`` ... 魔理沙 (C) の秋符「オータムスカイ」の挑戦回数"
-msgstr ""
+msgstr "``%T10C003MC2`` ... The number of trials of Autumn Sign \"Autumn Sky\" of Marisa C"
 
 msgid "スペルカード基本情報"
-msgstr ""
+msgstr "Spell card basic information"
 
 msgid "``%T10CARD[xxx][y]``"
 msgstr ""
 
 msgid "スペルカードの名前"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``[R]``"
 msgstr ""
 
 msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)"
-msgstr ""
+msgstr "Spell card difficulty (Easy, Normal, Hard, Lunatic, Extra)"
 
 msgid "``%T10CARD003N`` ... 秋符「オータムスカイ」"
-msgstr ""
+msgstr "``%T10CARD003N`` ... Autumn Sign \"Autumn Sky\""
 
 msgid "``%T10CARD003R`` ... Easy"
 msgstr ""
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前が ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for name (to prevent spoilers)."
 
 msgid "一方、 スペルカードの難易度は、 未挑戦かどうかにかかわらず常に出力されます。 原作でも Result 画面を見れば難易度はバレるので、 このような仕様にしています。"
-msgstr ""
+msgstr "On the other hand, a spell card difficulty is always output even if untried. It is the specification because the difficulty is also shown in the result screen of the game."
 
 msgid "スペルカード蒐集率"
-msgstr ""
+msgstr "Spell card collection rate"
 
 msgid "``%T10CRG[w][xx][y][z]``"
 msgstr ""
 
 msgid "難易度など"
-msgstr ""
+msgstr "Difficulty etc."
 
 msgid "``[T]``"
 msgstr ""
@@ -274,37 +272,37 @@ msgid "Total"
 msgstr ""
 
 msgid "ステージ"
-msgstr ""
+msgstr "Stage"
 
 msgid "全ステージ合計"
-msgstr ""
+msgstr "Total of all stages"
 
 msgid "``[1～6]``"
-msgstr ""
+msgstr "``[1-6]``"
 
 msgid "Stage 1～6"
-msgstr ""
+msgstr "Stage 1-6"
 
 msgid "（Extra ではこの指定は無視され、 Total ではそのステージの Easy～Lunatic の合計が出力されます。）"
-msgstr ""
+msgstr "(If the specified difficulty is Extra, this stage specification is ignored. If the one is Total, it outputs the sum of Easy to Lunatic for the specified stage.)"
 
 msgid "取得数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``%T10CRGERA01`` ... Easy 霊夢 (A) の全ステージ合計の取得数"
-msgstr ""
+msgstr "``%T10CRGERA01`` ... The total number of acquisitions for all stages of Easy Reimu A"
 
 msgid "``%T10CRGTMC41`` ... 魔理沙 (C) の Stage 4 の全難易度合計の取得数"
-msgstr ""
+msgstr "``%T10CRGTMC41`` ... The total number of acquisitions for all difficulties of Stage 4 of Marisa C"
 
 msgid "``%T10CRGTTL02`` ... 全難易度・全キャラ・全ステージ合計の挑戦数"
-msgstr ""
+msgstr "``%T10CRGTTL02`` ... The total number of trials for all difficulties, characters, and stages"
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "``%T10CLEAR[x][yy]``"
 msgstr ""
@@ -313,77 +311,77 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "``%T10CLEARXMA`` ... Extra 魔理沙 (A) のクリア達成度"
-msgstr ""
+msgstr "``%T10CLEARXMA`` ... Clear achievement of Extra Marisa A"
 
 msgid "``%T10CLEARNRB`` ... Normal 霊夢 (B) のクリア達成度"
-msgstr ""
+msgstr "``%T10CLEARNRB`` ... Clear achievement of Normal Reimu B"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``, ``Not Clear`` （Extra 未クリア）"
-msgstr ""
+msgstr "Depending on the clear achievement (game progress), one of the following string is output: ``-------`` (not played), ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``, ``Not Clear`` (Extra not cleared)."
 
 msgid "本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 ランキング上に存在していなければ未クリア扱いになってしまいます。"
-msgstr ""
+msgstr "Since this tool calculates the degree of clear achievement based on the ranking, even if it has actually been cleared, it is treated as uncleared if it does not exist on the ranking."
 
 msgid "キャラごとの個別データ"
-msgstr ""
+msgstr "Individual data per character"
 
 msgid "``%T10CHARA[xx][y]``"
 msgstr ""
 
 msgid "総プレイ回数"
-msgstr ""
+msgstr "Total number of played times"
 
 msgid "プレイ時間"
-msgstr ""
+msgstr "Playtime"
 
 msgid "クリア回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "``%T10CHARATL2`` ... 全主人公合計のプレイ時間"
-msgstr ""
+msgstr "``%T10CHARATL2`` ... Total playtime of all characters"
 
 msgid "``%T10CHARARA1`` ... 霊夢 (A) の総プレイ回数"
-msgstr ""
+msgstr "``%T10CHARARA1`` ... Total number of played times of Reimu A"
 
 msgid "プレイ時間は時分秒が ``h:mm:ss`` の形式で出力されます。"
-msgstr ""
+msgstr "The playtime is output in the format of ``h:mm:ss`` with hours, minutes, and seconds."
 
 msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
-msgstr ""
+msgstr "In addition, since the playtime is saved as the number of frames in the score file, it is converted to seconds as a fixed 60 fps and then output."
 
 msgid "キャラごとの個別データ（詳細版）"
-msgstr ""
+msgstr "Individual data per character (detailed version)"
 
 msgid "``%T10CHARAEX[x][yy][z]``"
 msgstr ""
 
 msgid "（総プレイ回数とプレイ時間ではこの指定は無視されます。）"
-msgstr ""
+msgstr "(If the specified total number of played times or playtime, this specification is ignored.)"
 
 msgid "``%T10CHARAEXETL2`` ... 全主人公合計のプレイ時間"
-msgstr ""
+msgstr "``%T10CHARAEXETL2`` ... Total playtime of all characters"
 
 msgid "``%T10CHARAEXERA1`` ... 霊夢 (A) の総プレイ回数"
-msgstr ""
+msgstr "``%T10CHARAEXERA1`` ... Total number of played times of Reimu A"
 
 msgid "``%T10CHARAEXTMC3`` ... 魔理沙 (C) の全難易度合計のクリア回数"
-msgstr ""
+msgstr "``%T10CHARAEXTMC3`` ... Total number of cleared times for all difficulties of Marisa C"
 
 msgid "このテンプレート書式は本ツール独自のものです。"
-msgstr ""
+msgstr "This template format is unique to this tool."
 
 msgid "プラクティススコア"
-msgstr ""
+msgstr "Practice score"
 
 msgid "``%T10PRAC[x][yy][z]``"
 msgstr ""
 
 msgid "``%T10PRACEMC1`` ... Easy 魔理沙 (C) の Stage 1 のプラクティススコア"
-msgstr ""
+msgstr "``%T10PRACEMC1`` ... Practice score of Stage 1 of Easy Marisa C"
 
 msgid "``%T10PRACNRA4`` ... Normal 霊夢 (A) の Stage 4 のプラクティススコア"
-msgstr ""
+msgstr "``%T10PRACNRA4`` ... Practice score of Stage 4 of Normal Reimu A"
 
