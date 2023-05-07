@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH12.8.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-05-07 21:51+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "妖精大戦争"
 msgstr "For TH12.8 Fairy Wars"
 
 msgid "スコアランキング"
-msgstr ""
+msgstr "Score ranking"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T128SCR[w][xx][y][z]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[E]``"
 msgstr ""
@@ -70,130 +68,130 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "ルート"
-msgstr ""
+msgstr "Route"
 
 msgid "``[A1]``"
 msgstr ""
 
 msgid "ルート A1"
-msgstr ""
+msgstr "Route A1"
 
 msgid "``[A2]``"
 msgstr ""
 
 msgid "ルート A2"
-msgstr ""
+msgstr "Route A2"
 
 msgid "``[B1]``"
 msgstr ""
 
 msgid "ルート B1"
-msgstr ""
+msgstr "Route B1"
 
 msgid "``[B2]``"
 msgstr ""
 
 msgid "ルート B2"
-msgstr ""
+msgstr "Route B2"
 
 msgid "``[C1]``"
 msgstr ""
 
 msgid "ルート C1"
-msgstr ""
+msgstr "Route C1"
 
 msgid "``[C2]``"
 msgstr ""
 
 msgid "ルート C2"
-msgstr ""
+msgstr "Route C2"
 
 msgid "``[EX]``"
 msgstr ""
 
 msgid "ルート EX"
-msgstr ""
+msgstr "Route EX"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "順位"
-msgstr ""
+msgstr "Rank"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "1～9 位"
-msgstr ""
+msgstr "1st - 9th"
 
 msgid "``[0]``"
 msgstr ""
 
 msgid "10 位"
-msgstr ""
+msgstr "10th"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "登録名"
-msgstr ""
+msgstr "Registered name"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "スコア"
-msgstr ""
+msgstr "Score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "到達ステージ"
-msgstr ""
+msgstr "Reached stage"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "日時"
-msgstr ""
+msgstr "Date and time"
 
 msgid "``[5]``"
 msgstr ""
 
 msgid "処理落ち率"
-msgstr ""
+msgstr "Slow rate"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T128SCRNC212`` ... Normal ルート C2 の 1 位のスコア"
-msgstr ""
+msgstr "``%T128SCRNC212`` ... The 1st score of Normal Route C2"
 
 msgid "``%T128SCRXEX44`` ... Extra の 4 位の日時"
-msgstr ""
+msgstr "``%T128SCRXEX44`` ... The 4th date and time of Extra"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "存在しない難易度とルートの組み合わせ（Easy のルート EX や Extra のルート A1 など）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of difficulty and route (e.g. Route EX of Easy, Route A1 of Extra) is ignored."
 
 msgid "スコアの 1 の位には、 原作と同様にコンティニュー回数が出力されます。"
-msgstr ""
+msgstr "Just like in the game, the number of continuations is output at the ones place of the score."
 
 msgid "日時は年月日及び時分秒が ``yyyy/mm/dd hh:mm:ss`` の形式で出力されます。"
-msgstr ""
+msgstr "The date and time are output in the format of ``yyyy/mm/dd hh:mm:ss`` with the year, month, day, hours, minutes, and seconds."
 
 msgid "処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。 今後、 この桁数を設定可能にするかも知れません。"
-msgstr ""
+msgstr "The slow rate is output to the third decimal place with the \\% symbol. This number of digits may be configurable in the future."
 
 msgid "御札戦歴"
-msgstr ""
+msgstr "Combat experience"
 
 msgid "``%T128C[xxx][y]``"
 msgstr ""
@@ -202,64 +200,64 @@ msgid "``[xxx]``"
 msgstr ""
 
 msgid "スペルカードの番号など"
-msgstr ""
+msgstr "Spell card number etc."
 
 msgid "``[000]``"
 msgstr ""
 
 msgid "全スペルカードの合計値"
-msgstr ""
+msgstr "Total value of all spell cards"
 
 msgid "``[001～250]``"
-msgstr ""
+msgstr "``[001-250]``"
 
 msgid "スペルカードの番号"
-msgstr ""
+msgstr "Spell card number"
 
 msgid "ノーアイス勝利回数"
-msgstr ""
+msgstr "Number of no-ice wins"
 
 msgid "ノーミス勝利回数"
-msgstr ""
+msgstr "Number of no-miss wins"
 
 msgid "挑戦回数"
-msgstr ""
+msgstr "Number of trials"
 
-msgid "``%T128C0011`` ... 月符「ルナティックレイン」(Easy) のノーアイス処理回数"
-msgstr ""
+msgid "``%T128C0011`` ... 月符「ルナティックレイン」(Easy) のノーアイス勝利回数"
+msgstr "``%T128C0011`` ... Number of no-ice wins of Moon Sign \"Lunatic Rain\" (Easy)"
 
 msgid "``%T128C0053`` ... 月符「ルナサイクロン」(Easy) の挑戦回数"
-msgstr ""
+msgstr "``%T128C0053`` ... Number of trials of Moon Sign \"Luna Cyclone\" (Easy)"
 
 msgid "スペルカード基本情報"
-msgstr ""
+msgstr "Spell card basic information"
 
 msgid "``%T128CARD[xxx][y]``"
 msgstr ""
 
 msgid "スペルカードの名前"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``[R]``"
 msgstr ""
 
 msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)"
-msgstr ""
+msgstr "Spell card difficulty (Easy, Normal, Hard, Lunatic, Extra)"
 
 msgid "``%T128CARD001N`` ... 月符「ルナティックレイン」"
-msgstr ""
+msgstr "``%T128CARD001N`` ... Moon Sign \"Lunatic Rain\""
 
 msgid "``%T128CARD001R`` ... Easy"
 msgstr ""
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前が ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for name (to prevent spoilers)."
 
 msgid "一方、 スペルカードの難易度は、 未挑戦かどうかにかかわらず常に出力されます。 原作でも Result 画面を見れば難易度はバレるので、 このような仕様にしています。"
-msgstr ""
+msgstr "On the other hand, a spell card difficulty is always output even if untried. It is the specification because the difficulty is also shown in the result screen of the game."
 
 msgid "スペルカード蒐集率"
-msgstr ""
+msgstr "Spell card collection rate"
 
 msgid "``%T128CRG[x][yyy][z]``"
 msgstr ""
@@ -268,7 +266,7 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "難易度など"
-msgstr ""
+msgstr "Difficulty etc."
 
 msgid "``[T]``"
 msgstr ""
@@ -280,13 +278,13 @@ msgid "``[yyy]``"
 msgstr ""
 
 msgid "ステージなど"
-msgstr ""
+msgstr "Stage etc."
 
 msgid "``[TTL]``"
 msgstr ""
 
 msgid "全ステージ合計"
-msgstr ""
+msgstr "Total of all stages"
 
 msgid "``[A11]``"
 msgstr ""
@@ -379,28 +377,28 @@ msgid "Stage C2-3"
 msgstr ""
 
 msgid "（Extra ではこの指定は無視され、 Total ではそのステージの Easy～Lunatic の合計が出力されます。）"
-msgstr ""
+msgstr "(If the specified difficulty is Extra, this stage specification is ignored. If the one is Total, it outputs the sum of Easy to Lunatic for the specified stage.)"
 
 msgid "ノーアイス勝利数"
-msgstr ""
+msgstr "Number of no-ice wins"
 
 msgid "ノーミス勝利数"
-msgstr ""
+msgstr "Number of no-miss wins"
 
 msgid "挑戦数"
-msgstr ""
+msgstr "Number of trials"
 
 msgid "``%T128CRGETTL1`` ... Easy の全ステージ合計のノーアイス勝利数"
-msgstr ""
+msgstr "``%T128CRGETTL1`` ... The total number of no-ice wins for all stages of Easy"
 
 msgid "``%T128CRGTC232`` ... Stage C2-3 の全難易度合計のノーミス勝利数"
-msgstr ""
+msgstr "``%T128CRGTC232`` ... The total number of no-miss wins for all difficulties of Stage C2-3"
 
 msgid "``%T128CRGTTTL3`` ... 全難易度・全ステージ合計の挑戦数"
-msgstr ""
+msgstr "``%T128CRGTTTL3`` ... The total number of trials for all difficulties and stages"
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "``%T128CLEAR[x][yy]``"
 msgstr ""
@@ -409,83 +407,83 @@ msgid "``[yy]``"
 msgstr ""
 
 msgid "``%T128CLEARXEX`` ... Extra のクリア達成度"
-msgstr ""
+msgstr "``%T128CLEARXEX`` ... Clear achievement of Extra"
 
 msgid "``%T128CLEARNA2`` ... Normal ルート A2 のクリア達成度"
-msgstr ""
+msgstr "``%T128CLEARNA2`` ... Clear achievement of Normal Route A2"
 
 msgid "クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage A-1``, ``Stage A1-2``, ``Stage A1-3``, ``Stage A2-2``, ``Stage A2-3``, ``A1 Clear``, ``A2 Clear``, ``Stage B-1``, ``Stage B1-2``, ``Stage B1-3``, ``Stage B2-2``, ``Stage B2-3``, ``B1 Clear``, ``B2 Clear``, ``Stage C-1``, ``Stage C1-2``, ``Stage C1-3``, ``Stage C2-2``, ``Stage C2-3``, ``C1 Clear``, ``C2 Clear``, ``Extra Stage``, ``Extra Clear``"
-msgstr ""
+msgstr "Depending on the clear achievement (game progress), one of the following string is output: ``-------`` (not played), ``Stage A-1``, ``Stage A1-2``, ``Stage A1-3``, ``Stage A2-2``, ``Stage A2-3``, ``A1 Clear``, ``A2 Clear``, ``Stage B-1``, ``Stage B1-2``, ``Stage B1-3``, ``Stage B2-2``, ``Stage B2-3``, ``B1 Clear``, ``B2 Clear``, ``Stage C-1``, ``Stage C1-2``, ``Stage C1-3``, ``Stage C2-2``, ``Stage C2-3``, ``C1 Clear``, ``C2 Clear``, ``Extra Stage``, ``Extra Clear``"
 
 msgid "本ツールではランキングを基にクリア達成度を算出しているため、 実際はクリア済みであっても、 ランキング上に存在していなければ未クリア扱いになってしまいます。"
-msgstr ""
+msgstr "Since this tool calculates the degree of clear achievement based on the ranking, even if it has actually been cleared, it is treated as uncleared if it does not exist on the ranking."
 
 msgid "ルートごとの個別データ"
-msgstr ""
+msgstr "Individual data per route"
 
 msgid "``%T128ROUTE[xx][y]``"
 msgstr ""
 
 msgid "ルートなど"
-msgstr ""
+msgstr "Route etc."
 
 msgid "``[TL]``"
 msgstr ""
 
 msgid "全ルート合計"
-msgstr ""
+msgstr "Total value of all routes"
 
 msgid "総プレイ回数"
-msgstr ""
+msgstr "Total number of played times"
 
 msgid "プレイ時間"
-msgstr ""
+msgstr "Playtime"
 
 msgid "クリア回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "``%T128ROUTETL2`` ... 全ルート合計のプレイ時間"
-msgstr ""
+msgstr "``%T128ROUTETL2`` ... Total playtime of all routes"
 
 msgid "``%T128ROUTEA11`` ... ルート A1 の総プレイ回数"
-msgstr ""
+msgstr "``%T128ROUTEA11`` ... Total number of played times of Route A1"
 
 msgid "プレイ時間は時分秒が ``h:mm:ss`` の形式で出力されます。"
-msgstr ""
+msgstr "The playtime is output in the format of ``h:mm:ss`` with hours, minutes, and seconds."
 
 msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
-msgstr ""
+msgstr "In addition, since the playtime is saved as the number of frames in the score file, it is converted to seconds as a fixed 60 fps and then output."
 
 msgid "総プレイ回数は、 ゲーム内部ではルート A1～C2 毎ではなくルート A, B, C 毎にカウントされているようです。 この書式での出力結果は参考程度としてください。"
-msgstr ""
+msgstr "In the game, the number of played times seems to be counted per Route A, B, C, not per Route A1-C2. So the output results of this format should be used only as a reference."
 
 msgid "ルートごとの個別データ（詳細版）"
-msgstr ""
+msgstr "Individual data per route (detailed version)"
 
 msgid "``%T128ROUTEEX[x][yy][z]``"
 msgstr ""
 
 msgid "（総プレイ回数とプレイ時間ではこの指定は無視されます。）"
-msgstr ""
+msgstr "(If the specified total number of played times or playtime, this specification is ignored.)"
 
 msgid "``%T128ROUTEEXETL2`` ... 全ルート合計のプレイ時間"
-msgstr ""
+msgstr "``%T128ROUTEEXETL2`` ... Total playtime of all routes"
 
 msgid "``%T128ROUTEEXEA11`` ... ルート A1 の総プレイ回数"
-msgstr ""
+msgstr "``%T128ROUTEEXEA11`` ... Total number of played times of Route A1"
 
 msgid "``%T128ROUTEEXTC23`` ... ルート C2 の全難易度合計のクリア回数"
-msgstr ""
+msgstr "``%T128ROUTEEXTC23`` ... Total number of cleared times for all difficulties of Route C2"
 
 msgid "この書式で出力される全ルート合計のプレイ時間は、 ゲーム内で表示される時間と一致しません。 代わりに :ref:`T128TIMEPLY` の書式を使ってください。"
-msgstr ""
+msgstr "The total playtime for all routes output by this format does not match the playtime displayed in-game. Use the :ref:`T128TIMEPLY` format instead."
 
 msgid "総プレイ時間"
-msgstr ""
+msgstr "Total playtime"
 
 msgid "``%T128TIMEPLY``"
 msgstr ""
 
 msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
-msgstr ""
+msgstr "Hours, minutes, seconds and milliseconds are output as the ``h:mm:ss.ddd`` format."
 
