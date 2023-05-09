@@ -42,11 +42,26 @@ jobs:
     - name: Fetch all history for all tags and branches
       run: git fetch --prune --unshallow
 
+    # Needed to avoid build errors related to Sphinx.
+    - name: Setup Python environment
+      id: setup-python-env
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+        cache-dependency-path: 'ManualGenerator/requirements.txt'
+    - name: Restore Python packages
+      run: |
+        python -m pip install -U pip
+        python -m pip install -r ManualGenerator/requirements.txt
+        echo "CODEQL_PYTHON=${{ steps.setup-python-env.outputs.python-path }}" >> $GITHUB_ENV
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
+        setup-python-dependencies: false
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file. 
         # Prefix the list here with "+" to use these queries and those in the config file.
