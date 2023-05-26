@@ -56,7 +56,7 @@ jobs:
         python -m pip install -r ManualGenerator/requirements.txt
         echo "CODEQL_PYTHON=${{ steps.setup-python-env.outputs.python-path }}" >> $GITHUB_ENV
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3.0.3
+      uses: actions/setup-dotnet@v3.1.0
       with:
         global-json-file: 'global.json'
     - name: Restore .NET tools
