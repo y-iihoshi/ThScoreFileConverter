@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH17.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"POT-Creation-Date: 2023-07-30 18:49+0900\n"
+"PO-Revision-Date: 2023-07-30 18:58+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方剛欲異聞用"
 msgstr "For TH17.5 Sunken Fossil World"
 
 msgid "スコアランキング"
-msgstr ""
+msgstr "Score ranking"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T175SCR[w][xx][y][z]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[N]``"
 msgstr ""
@@ -52,97 +50,100 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RM]``"
 msgstr ""
 
 msgid "霊夢"
-msgstr ""
+msgstr "Reimu"
 
 msgid "``[MR]``"
 msgstr ""
 
 msgid "魔理沙"
-msgstr ""
+msgstr "Marisa"
 
 msgid "``[KN]``"
 msgstr ""
 
 msgid "神奈子"
-msgstr ""
+msgstr "Kanako"
 
 msgid "``[MI]``"
 msgstr ""
 
 msgid "水蜜"
-msgstr ""
+msgstr "Minamitsu"
 
 msgid "``[JS]``"
 msgstr ""
 
 msgid "女苑 & 紫苑"
-msgstr ""
+msgstr "Joon & Shion"
 
 msgid "``[FL]``"
 msgstr ""
 
 msgid "フランドール"
-msgstr ""
+msgstr "Flandre"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "順位"
-msgstr ""
+msgstr "Rank"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "1～9 位"
-msgstr ""
+msgstr "1st - 9th"
 
 msgid "``[0]``"
 msgstr ""
 
 msgid "10 位"
-msgstr ""
+msgstr "10th"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "ハイスコア"
-msgstr ""
+msgstr "High score"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "クリアタイム"
-msgstr ""
+msgstr "Clear time"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T175SCRNKN11`` ... Normal 神奈子の 1 位のハイスコア"
-msgstr ""
+msgstr "``%T175SCRNKN11`` ... The 1st high score of Normal Kanako"
 
-msgid "``%T175SCRHRM42`` ... HARD 霊夢の 4 位のクリアタイム"
-msgstr ""
+msgid "``%T175SCRHRM42`` ... Hard 霊夢の 4 位のクリアタイム"
+msgstr "``%T175SCRHRM42`` ... The 4th clear time of Hard Reimu"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
-msgid "クリアタイムは時分秒が ``h:mm:ss`` の形式で出力されます。 なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
-msgstr ""
+msgid "クリアタイムは時分秒が ``h:mm:ss`` の形式で出力されます。"
+msgstr "The clear time is output in the format of ``h:mm:ss`` with hours, minutes, and seconds."
+
+msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
+msgstr "In addition, since the playtime is saved as the number of frames in the score file, it is converted to seconds as a fixed 60 fps and then output."
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "``%T175CLEAR[x][yy]``"
 msgstr ""
@@ -154,50 +155,50 @@ msgid "``[yy]``"
 msgstr ""
 
 msgid "``%T175CLEARHMR`` ... Hard 魔理沙のクリア達成度"
-msgstr ""
+msgstr "``%T175CLEARHMR`` ... Clear achievement of Hard Marisa"
 
 msgid "``%T175CLEARNRM`` ... Normal 霊夢のクリア達成度"
-msgstr ""
+msgstr "``%T175CLEARNRM`` ... Clear achievement of Normal Reimu"
 
 msgid "クリア達成度（ゲームの進行状況）に応じて次の文字列が出力されます: ``-------`` （未プレイ）, ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``"
-msgstr ""
+msgstr "Depending on the clear achievement (game progress), one of the following string is output: ``-------`` (not played), ``Stage 1``, ``Stage 2``, ``Stage 3``, ``Stage 4``, ``Stage 5``, ``Stage 6``, ``All Clear``"
 
 msgid "キャラクター戦歴"
-msgstr ""
+msgstr "Combat experience per character"
 
 msgid "``%T175CHR[xx][y]``"
 msgstr ""
 
 msgid "キャラの名前など"
-msgstr ""
+msgstr "Character name etc."
 
 msgid "``[TL]``"
 msgstr ""
 
 msgid "全主人公合計"
-msgstr ""
+msgstr "Total of all characters"
 
 msgid "使用回数"
-msgstr ""
+msgstr "Number of played times"
 
 msgid "あきらめた回数"
-msgstr ""
+msgstr "Number of give-up times"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "クリア回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "完璧 (ノーダメージ) クリア回数"
-msgstr ""
+msgstr "Number of cleared times with no damage"
 
 msgid "``%T175CHRTL2`` ... 全主人公合計のあきらめた回数"
-msgstr ""
+msgstr "``%T175CHRTL2`` ... Total number of give-up times for all characters"
 
 msgid "``%T175CHRRM1`` ... 霊夢の使用回数"
-msgstr ""
+msgstr "``%T175CHRRM1`` ... Number of played times of Reimu"
 
