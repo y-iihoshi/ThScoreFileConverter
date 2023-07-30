@@ -168,7 +168,7 @@
         のような HTML の IMG タグに置換されます。
       | 同時に、 対象となるスクリーンショットファイル (sc??\_??.dat) を PNG
         形式に変換した画像ファイルが出力されます。
-    - IMG タグの alt 属性と title 属性には日時が出力されます。
+    - IMG タグの alt 属性と title 属性にはスペルカード名が出力されます。
     - 画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の
       :guilabel:`画像出力先(&I)` 欄で指定されたフォルダに出力されます。
     - 画像ファイルの出力先フォルダが存在しない場合、
@@ -214,4 +214,4 @@
       と同等の出力結果を得るには、
       テンプレートファイルに以下の通りに記載します: ::
 
-        <img src="%T143SHOTEX121" alt="DateTime: %T143SHOTEX124" title="DateTime: %T143SHOTEX124" border=0>
+        <img src="%T143SHOTEX121" alt="SpellName: %T143CARD122" title="SpellName: %T143CARD122" border=0>
