@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats of TH16.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"POT-Creation-Date: 2023-07-30 16:58+0900\n"
+"PO-Revision-Date: 2023-07-30 16:59+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "秘封ナイトメアダイアリー用"
 msgstr "For TH16.5 Violet Detector"
 
 msgid "スコア一覧"
-msgstr ""
+msgstr "Scores"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T165SCR[xx][y][z]``"
 msgstr ""
@@ -34,91 +32,91 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "曜日"
-msgstr ""
+msgstr "Day of week"
 
 msgid "``[01～07]``"
-msgstr ""
+msgstr "``[01-07]``"
 
 msgid "日曜日～土曜日"
-msgstr ""
+msgstr "Sunday - Saturday"
 
 msgid "``[W1～W7]``"
-msgstr ""
+msgstr "``[W1-W7]``"
 
 msgid "裏・日曜日～裏・土曜日"
-msgstr ""
+msgstr "Wrong Sunday - Wrong Saturday"
 
 msgid "``[N1～N7]``"
-msgstr ""
+msgstr "``[N1-N7]``"
 
 msgid "悪夢日曜～悪夢土曜"
-msgstr ""
+msgstr "Nightmare Sunday - Nightmare Saturday"
 
 msgid "``[ND]``"
 msgstr ""
 
 msgid "ナイトメアダイアリー"
-msgstr ""
+msgstr "Nightmare Diary"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "弾幕夢"
-msgstr ""
+msgstr "Danmaku Dream"
 
 msgid "``[1～7]``"
-msgstr ""
+msgstr "``[1-7]``"
 
 msgid "1～7"
-msgstr ""
+msgstr "1-7"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "写真評価点"
-msgstr ""
+msgstr "Score"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "挑戦回数"
-msgstr ""
+msgstr "Number of trials"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "撃破回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "撮影枚数"
-msgstr ""
+msgstr "Number of pictures"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T165SCR0111`` ... 日曜日 弾幕夢 1 の写真評価点"
-msgstr ""
+msgstr "``%T165SCR0111`` ... Score of Sunday, Danmaku Dream 1"
 
 msgid "``%T165SCRW233`` ... 裏・月曜日 弾幕夢 3 の撃破回数"
-msgstr ""
+msgstr "``%T165SCRW233`` ... Number of cleared times of Wrong Monday, Danmaku Dream 3"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "存在しない曜日と弾幕夢の組み合わせ（日曜日 弾幕夢 3 など）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of day of week and Danmaku Dream (e.g. Sunday, Danmaku Dream 3) is ignored."
 
 msgid "スコア合計"
-msgstr ""
+msgstr "Total score"
 
 msgid "``%T165SCRTL[x]``"
 msgstr ""
@@ -127,161 +125,161 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "総合評価点"
-msgstr ""
+msgstr "Total scores"
 
 msgid "挑戦回数の合計"
-msgstr ""
+msgstr "Total number of trials"
 
 msgid "撃破回数の合計"
-msgstr ""
+msgstr "Total number of cleared times"
 
 msgid "夢日記取得数"
-msgstr ""
+msgstr "Number of acquired Dream Diaries"
 
 msgid "``[5]``"
 msgstr ""
 
 msgid "総撮影枚数"
-msgstr ""
+msgstr "Total number of pictures"
 
 msgid "``[6]``"
 msgstr ""
 
 msgid "異名取得数"
-msgstr ""
+msgstr "Number of acquired nicknames"
 
 msgid "``%T165SCRTL1`` ... 総合評価点"
-msgstr ""
+msgstr "``%T165SCRTL1`` ... Total scores"
 
 msgid "``%T165SCRTL4`` ... 夢日記取得数"
-msgstr ""
+msgstr "``%T165SCRTL4`` ... Number of acquired Dream Diaries"
 
 msgid "スペルカード情報"
-msgstr ""
+msgstr "Spell card information"
 
 msgid "``%T165CARD[xx][y][z]``"
 msgstr ""
 
 msgid "敵の名前"
-msgstr ""
+msgstr "Enemy name"
 
 msgid "スペルカード名"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``%T165CARD0111`` ... 日曜日 弾幕夢 1 の敵の名前"
-msgstr ""
+msgstr "``%T165CARD0111`` ... Enemy name of Sunday, Danmaku Dream 1"
 
 msgid "``%T165CARDW232`` ... 裏・月曜日 弾幕夢 3 のスペルカード名"
-msgstr ""
+msgstr "``%T165CARDW232`` ... Spell card name of Wrong Monday, Danmaku Dream 3"
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは敵の名前・スペルカード名ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for enemy name and spell card name (to prevent spoilers)."
 
 msgid "異名情報"
-msgstr ""
+msgstr "Nickname information"
 
 msgid "``%T165NICK[xx]``"
 msgstr ""
 
 msgid "番号"
-msgstr ""
+msgstr "Number"
 
 msgid "``[01～50]``"
-msgstr ""
+msgstr "``[01-50]``"
 
 msgid "1～50"
-msgstr ""
+msgstr "1-50"
 
 msgid "``%T165NICK13`` ... 初めての弾幕写真"
-msgstr ""
+msgstr "``%T165NICK13`` ... Your First Danmaku Photo"
 
 msgid "未取得の異名は ``?????`` のように出力されます。"
-msgstr ""
+msgstr "It is output as ``?????`` for unlocked nickname."
 
 msgid "総プレイ時間"
-msgstr ""
+msgstr "Total playtime"
 
 msgid "``%T165TIMEPLY``"
 msgstr ""
 
 msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
-msgstr ""
+msgstr "Hours, minutes, seconds and milliseconds are output as the ``h:mm:ss.ddd`` format."
 
 msgid "ベストショット出力"
-msgstr ""
+msgstr "Best shot output"
 
 msgid "``%T165SHOT[xx][y]``"
 msgstr ""
 
 msgid "``%T165SHOT012`` ... 日曜日 弾幕夢 2 のベストショット"
-msgstr ""
+msgstr "``%T165SHOT012`` ... Best shot of Sunday, Danmaku Dream 2"
 
 msgid "このテンプレート書式は ``<img src=\"./bestshot/bs01_01.png\" alt=\"～\" title=\"～\" border=0>`` のような HTML の IMG タグに置換されます。"
-msgstr ""
+msgstr "This template format will be converted to an IMG tag of HTML such as ``<img src=\"./bestshot/bs01_01.png\" alt=\"...\" title=\"...\" border=0>``."
 
 msgid "同時に、 対象となるベストショットファイル (bs??\\_??.dat) を PNG 形式に変換した画像ファイルが出力されます。"
-msgstr ""
+msgstr "At the same time, the image file in PNG format converted from the corresponding best shot file (bs??\\_??.dat) is output."
 
-msgid "IMG タグの alt 属性と title 属性には日時が出力されます。"
-msgstr ""
+msgid "IMG タグの alt 属性と title 属性にはスペルカード名が出力されます。"
+msgstr "The spell card name is output as the alt and title attributes of the IMG tag."
 
 msgid "画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` 欄で指定されたフォルダに出力されます。"
-msgstr ""
+msgstr "The image file is output into the folder specified by :guilabel:`I&mage output` field under the folder specified by :guilabel:`&Output` field."
 
 msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
-msgstr ""
+msgstr "If the output folder of image files does not exist, this tool will automatically create it."
 
 msgid "ベストショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
-msgstr ""
+msgstr "If a best shot file does not exist, the IMG tag and the image file are not output."
 
 msgid "ベストショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
-msgstr ""
+msgstr "Developing a best shot file is executed even if this template format is not written in a template file."
 
 msgid "ベストショット出力（詳細版）"
-msgstr ""
+msgstr "Best shot output (detailed version)"
 
 msgid "``%T165SHOTEX[xx][y][z]``"
 msgstr ""
 
 msgid "画像ファイルへの相対パス"
-msgstr ""
+msgstr "Relative path of image file"
 
 msgid "画像ファイルの幅 (px)"
-msgstr ""
+msgstr "Width of image file (in pixel)"
 
 msgid "画像ファイルの高さ (px)"
-msgstr ""
+msgstr "Height of image file (in pixel)"
 
 msgid "ベストショット撮影日時"
-msgstr ""
+msgstr "Date and time of the best shot taken"
 
 msgid "ハッシュタグ"
-msgstr ""
+msgstr "Hashtag"
 
 msgid "この写真を見た回数"
-msgstr ""
+msgstr "Photo views"
 
 msgid "``[7]``"
 msgstr ""
 
 msgid "イイッすね！"
-msgstr ""
+msgstr "Like it!"
 
 msgid "``[8]``"
 msgstr ""
 
 msgid "お気に入り！"
-msgstr ""
+msgstr "Faved!"
 
 msgid "``[9]``"
 msgstr ""
 
 msgid "``%T165SHOTEX0121`` ... 日曜日 弾幕夢 2 の画像ファイルへの相対パス"
-msgstr ""
+msgstr "``%T165SHOTEX0121`` ... Relative path of the image file of Sunday, Danmaku Dream 2"
 
 msgid "``%T165SHOTEXW234`` ... 裏・月曜日 弾幕夢 3 のベストショット撮影日時"
-msgstr ""
+msgstr "``%T165SHOTEXW234`` ... Date and time of the best shot of Wrong Monday, Danmaku Dream 3"
 
 msgid "このテンプレート書式を使って、 例えば ``%T165SHOT012`` と同等の出力結果を得るには、 テンプレートファイルに以下の通りに記載します: ::"
-msgstr ""
+msgstr "To get the same output as ``%T165SHOT012`` using this template format, write the following in a template file: ::"
 
