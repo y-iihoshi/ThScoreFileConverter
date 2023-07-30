@@ -214,4 +214,4 @@
       と同等の出力結果を得るには、
       テンプレートファイルに以下の通りに記載します: ::
 
-        <img src="%T143SHOTEX121" alt="SpellName: %T143CARD122" title="SpellName: %T143CARD122" border=0>
+        <img src="%T143SHOTEX121" alt="DateTime: %T143SHOTEX124" title="DateTime: %T143SHOTEX124" border=0>
