@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH07.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:15+0900\n"
+"PO-Revision-Date: 2023-07-30 18:48+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方萃夢想用"
 msgstr "For TH07.5 Immaterial and Missing Power"
 
 msgid "スコアランキング"
-msgstr ""
+msgstr "Score ranking"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T75SCR[w][xx][y][z]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[E]``"
 msgstr ""
@@ -64,127 +62,127 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RM]``"
 msgstr ""
 
 msgid "霊夢"
-msgstr ""
+msgstr "Reimu"
 
 msgid "``[MR]``"
 msgstr ""
 
 msgid "魔理沙"
-msgstr ""
+msgstr "Marisa"
 
 msgid "``[SK]``"
 msgstr ""
 
 msgid "咲夜"
-msgstr ""
+msgstr "Sakuya"
 
 msgid "``[AL]``"
 msgstr ""
 
 msgid "アリス"
-msgstr ""
+msgstr "Alice"
 
 msgid "``[PC]``"
 msgstr ""
 
 msgid "パチュリー"
-msgstr ""
+msgstr "Patchouli"
 
 msgid "``[YM]``"
 msgstr ""
 
 msgid "妖夢"
-msgstr ""
+msgstr "Youmu"
 
 msgid "``[RL]``"
 msgstr ""
 
 msgid "レミリア"
-msgstr ""
+msgstr "Remilia"
 
 msgid "``[YU]``"
 msgstr ""
 
 msgid "幽々子"
-msgstr ""
+msgstr "Yuyuko"
 
 msgid "``[YK]``"
 msgstr ""
 
 msgid "紫"
-msgstr ""
+msgstr "Yukari"
 
 msgid "``[SU]``"
 msgstr ""
 
 msgid "萃香"
-msgstr ""
+msgstr "Suika"
 
 msgid "``[y]``"
 msgstr ""
 
 msgid "順位"
-msgstr ""
+msgstr "Rank"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "1～9 位"
-msgstr ""
+msgstr "1st - 9th"
 
 msgid "``[0]``"
 msgstr ""
 
 msgid "10 位"
-msgstr ""
+msgstr "10th"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "名前"
-msgstr ""
+msgstr "Name"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "スコア"
-msgstr ""
+msgstr "Score"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "日付"
-msgstr ""
+msgstr "Date"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T75SCRNSK12`` ... Normal 咲夜の 1 位のスコア"
-msgstr ""
+msgstr "``%T75SCRNSK12`` ... The 1st score of Normal Sakuya"
 
 msgid "``%T75SCRLRM43`` ... Lunatic 霊夢の 4 位の日付"
-msgstr ""
+msgstr "``%T75SCRLRM43`` ... The 4th date of Lunatic Reimu"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "日付は月日だけが ``mm/dd`` の形式で出力されます。 年や時分秒はそもそもスコアファイルに保存されていません。"
-msgstr ""
+msgstr "As for the date, only the month and day are output in the ``mm/dd`` format. Year, hours, minutes and seconds are not saved in the score file in the first place."
 
 msgid "御札戦歴"
-msgstr ""
+msgstr "Combat experience"
 
 msgid "``%T75C[xxx][yy][z]``"
 msgstr ""
@@ -193,19 +191,19 @@ msgid "``[xxx]``"
 msgstr ""
 
 msgid "スペルカードの番号など"
-msgstr ""
+msgstr "Spell card number etc."
 
 msgid "``[000]``"
 msgstr ""
 
 msgid "全スペルカードの合計値"
-msgstr ""
+msgstr "Total value of all spell cards"
 
 msgid "``[001～100]``"
-msgstr ""
+msgstr "``[001-100]``"
 
 msgid "スペルカードの番号"
-msgstr ""
+msgstr "Spell card number"
 
 msgid "``[yy]``"
 msgstr ""
@@ -214,10 +212,10 @@ msgid "MaxBonus"
 msgstr ""
 
 msgid "取得回数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦回数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``[4]``"
 msgstr ""
@@ -226,43 +224,43 @@ msgid "★"
 msgstr ""
 
 msgid "``%T75C003RM1`` ... 霊夢の符の壱「スターダストレヴァリエ」-Hard- の MaxBonus"
-msgstr ""
+msgstr "``%T75C003RM1`` ... MaxBonus of First Card \"Stardust Reverie\" -Hard- of Reimu"
 
 msgid "``%T75C008MR2`` ... 魔理沙の符の弐「ドールクルセイダー」-Lunatic- の取得回数"
-msgstr ""
+msgstr "``%T75C008MR2`` ... Number of acquisitions of Second Card \"Doll Crusader\" -Lunatic- of Marisa"
 
 msgid "キャラが異なると、 スペルカードの番号が同じでもその中身は異なります。"
-msgstr ""
+msgstr "If the character is different, the contents will be different even if the spell card number is the same."
 
 msgid "スペルカード基本情報"
-msgstr ""
+msgstr "Spell card basic information"
 
 msgid "``%T75CARD[xxx][yy][z]``"
 msgstr ""
 
 msgid "スペルカードの名前"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``[R]``"
 msgstr ""
 
 msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic)"
-msgstr ""
+msgstr "Spell card difficulty (Easy, Normal, Hard, Lunatic)"
 
 msgid "``%T75CARD001SKN`` ... 符の壱「夢想妙珠連」-Easy-"
-msgstr ""
+msgstr "``%T75CARD001SKN`` ... First Card \"Dream Orb String\" -Easy-"
 
 msgid "``%T75CARD001SKR`` ... Easy"
 msgstr ""
 
 msgid "相違点"
-msgstr ""
+msgstr "Differences"
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for name and difficulty level (to prevent spoilers)."
 
 msgid "スペルカード蒐集率"
-msgstr ""
+msgstr "Spell card collection rate"
 
 msgid "``%T75CRG[x][yy][z]``"
 msgstr ""
@@ -271,7 +269,7 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "難易度など"
-msgstr ""
+msgstr "Difficulty etc."
 
 msgid "``[T]``"
 msgstr ""
@@ -280,41 +278,41 @@ msgid "Total"
 msgstr ""
 
 msgid "取得数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "真に取得した枚数（★の数）"
-msgstr ""
+msgstr "Number of truly acquisitions (number of stars)"
 
 msgid "``%T75CRGEYK1`` ... Easy 紫の取得数"
-msgstr ""
+msgstr "``%T75CRGEYK1`` ... Number of acquisitions of Easy Yukari"
 
 msgid "``%T75CRGHRL2`` ... Hard レミリアの挑戦数"
-msgstr ""
+msgstr "``%T75CRGHRL2`` ... Number of trials of Hard Remilia"
 
 msgid "キャラクター戦歴"
-msgstr ""
+msgstr "Combat experience per character"
 
 msgid "``%T75CHR[x][yy][z]``"
 msgstr ""
 
 msgid "使用回数"
-msgstr ""
+msgstr "Number of played times"
 
 msgid "クリア回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "最大連続技数"
-msgstr ""
+msgstr "Max combo"
 
 msgid "最大ダメージ"
-msgstr ""
+msgstr "Max damage"
 
 msgid "``%T75CHREYK1`` ... Easy 紫の使用回数"
-msgstr ""
+msgstr "``%T75CHREYK1`` ... Number of played times of Easy Yukari"
 
 msgid "``%T75CHRHRL2`` ... Hard レミリアのクリア回数"
-msgstr ""
+msgstr "``%T75CHRHRL2`` ... Number of cleared times of Hard Remilia"
 

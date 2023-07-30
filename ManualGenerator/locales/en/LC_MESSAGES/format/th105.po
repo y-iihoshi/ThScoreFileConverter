@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH10.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-05-07 17:47+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方緋想天用"
 msgstr "For TH10.5 Scarlet Weather Rhapsody"
 
 msgid "御札戦歴"
-msgstr ""
+msgstr "Combat experience"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T105C[xxx][yy][z]``"
 msgstr ""
@@ -34,166 +32,166 @@ msgid "``[xxx]``"
 msgstr ""
 
 msgid "スペルカードの番号など"
-msgstr ""
+msgstr "Spell card number etc."
 
 msgid "``[000]``"
 msgstr ""
 
 msgid "全スペルカードの合計値"
-msgstr ""
+msgstr "Total value of all spell cards"
 
 msgid "``[001～100]``"
-msgstr ""
+msgstr "``[001-100]``"
 
 msgid "スペルカードの番号"
-msgstr ""
+msgstr "Spell card number"
 
 msgid "``[yy]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RM]``"
 msgstr ""
 
 msgid "霊夢"
-msgstr ""
+msgstr "Reimu"
 
 msgid "``[MR]``"
 msgstr ""
 
 msgid "魔理沙"
-msgstr ""
+msgstr "Marisa"
 
 msgid "``[SK]``"
 msgstr ""
 
 msgid "咲夜"
-msgstr ""
+msgstr "Sakuya"
 
 msgid "``[AL]``"
 msgstr ""
 
 msgid "アリス"
-msgstr ""
+msgstr "Alice"
 
 msgid "``[PC]``"
 msgstr ""
 
 msgid "パチュリー"
-msgstr ""
+msgstr "Patchouli"
 
 msgid "``[YM]``"
 msgstr ""
 
 msgid "妖夢"
-msgstr ""
+msgstr "Youmu"
 
 msgid "``[RL]``"
 msgstr ""
 
 msgid "レミリア"
-msgstr ""
+msgstr "Remilia"
 
 msgid "``[YU]``"
 msgstr ""
 
 msgid "幽々子"
-msgstr ""
+msgstr "Yuyuko"
 
 msgid "``[YK]``"
 msgstr ""
 
 msgid "紫"
-msgstr ""
+msgstr "Yukari"
 
 msgid "``[SU]``"
 msgstr ""
 
 msgid "萃香"
-msgstr ""
+msgstr "Suika"
 
 msgid "``[RS]``"
 msgstr ""
 
 msgid "鈴仙"
-msgstr ""
+msgstr "Reisen"
 
 msgid "``[AY]``"
 msgstr ""
 
 msgid "文"
-msgstr ""
+msgstr "Aya"
 
 msgid "``[KM]``"
 msgstr ""
 
 msgid "小町"
-msgstr ""
+msgstr "Komachi"
 
 msgid "``[IK]``"
 msgstr ""
 
 msgid "衣玖"
-msgstr ""
+msgstr "Iku"
 
 msgid "``[TN]``"
 msgstr ""
 
 msgid "天子"
-msgstr ""
+msgstr "Tenshi"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "取得回数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "挑戦回数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "残り時間"
-msgstr ""
+msgstr "Time left"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T105C001RM1`` ... 霊夢の星符「ポラリスユニーク」(Easy) の取得回数"
-msgstr ""
+msgstr "``%T105C001RM1`` ... Number of acquisitions of Star Sign \"Polaris Unique\" (Easy) of Reimu"
 
 msgid "``%T105C008MR2`` ... 魔理沙の剣符「ソルジャーオブクロス」(Lunatic) の挑戦回数"
-msgstr ""
+msgstr "``%T105C008MR2`` ... Number of trials of Sword Sign \"Soldier of Cross\" (Lunatic) of Marisa"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "キャラが異なると、 スペルカードの番号が同じでもその中身は異なります。"
-msgstr ""
+msgstr "If the character is different, the contents will be different even if the spell card number is the same."
 
 msgid "存在しないキャラと番号の組み合わせ（霊夢の No.77 など）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of character and number (e.g. No.77 of Reimu) is ignored."
 
 msgid "残り時間は分秒およびミリ秒が ``mm:ss.ddd`` の形式で出力されます。"
-msgstr ""
+msgstr "The time left is output in the format of ``mm:ss.ddd`` with minutes, seconds, and milliseconds."
 
 msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
-msgstr ""
+msgstr "In addition, since the time left is saved as the number of frames in the score file, it is converted to seconds as a fixed 60 fps and then output."
 
 msgid "スペルカード基本情報"
-msgstr ""
+msgstr "Spell card basic information"
 
 msgid "``%T105CARD[xxx][yy][z]``"
 msgstr ""
@@ -202,25 +200,25 @@ msgid "``[N]``"
 msgstr ""
 
 msgid "スペルカードの名前"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``[R]``"
 msgstr ""
 
 msgid "スペルカードの難易度 (Easy, Normal, Hard, Lunatic)"
-msgstr ""
+msgstr "Spell card difficulty (Easy, Normal, Hard, Lunatic)"
 
 msgid "``%T105CARD001SKN`` ... 星符「ポラリスユニーク」"
-msgstr ""
+msgstr "``%T105CARD001SKN`` ... Star Sign \"Polaris Unique\""
 
 msgid "``%T105CARD001SKR`` ... Easy"
 msgstr ""
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは名前・難易度ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for name and difficulty level (to prevent spoilers)."
 
 msgid "スペルカード蒐集率"
-msgstr ""
+msgstr "Spell card collection rate"
 
 msgid "``%T105CRG[x][yy][z]``"
 msgstr ""
@@ -229,7 +227,7 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "難易度など"
-msgstr ""
+msgstr "Difficulty etc."
 
 msgid "``[E]``"
 msgstr ""
@@ -259,19 +257,19 @@ msgid "Total"
 msgstr ""
 
 msgid "取得数（勝率の分子）"
-msgstr ""
+msgstr "Number of acquisitions (numerator of winning rate)"
 
 msgid "挑戦数（勝率の分母）"
-msgstr ""
+msgstr "Number of trials (denominator of winning rate)"
 
 msgid "``%T105CRGEYK1`` ... Easy 紫の取得数"
-msgstr ""
+msgstr "``%T105CRGEYK1`` ... Number of acquisitions of Easy Yukari"
 
 msgid "``%T105CRGHRL2`` ... Hard レミリアの挑戦数"
-msgstr ""
+msgstr "``%T105CRGHRL2`` ... Number of trials of Hard Remilia"
 
 msgid "デッキ用カード蒐集歴"
-msgstr ""
+msgstr "Collection history of cards for deck"
 
 msgid "``%T105DC[ww][x][yy][z]``"
 msgstr ""
@@ -280,10 +278,10 @@ msgid "``[ww]``"
 msgstr ""
 
 msgid "（System ではこの指定は無視されます。）"
-msgstr ""
+msgstr "(this specification is ignored if the card type is system.)"
 
 msgid "カードの種類"
-msgstr ""
+msgstr "Card type"
 
 msgid "``[Y]``"
 msgstr ""
@@ -304,35 +302,35 @@ msgid "Spell"
 msgstr ""
 
 msgid "カードの番号"
-msgstr ""
+msgstr "Card number"
 
 msgid "``[01～11]``"
-msgstr ""
+msgstr "``[01-11]``"
 
 msgid "カードの名前"
-msgstr ""
+msgstr "Card name"
 
 msgid "``[C]``"
 msgstr ""
 
 msgid "蒐集枚数"
-msgstr ""
+msgstr "Number of collected cards"
 
 msgid "``%T105DCRMY01N`` ... 「気質発現」"
-msgstr ""
+msgstr "``%T105DCRMY01N`` ... \"Temperament Manifestation\""
 
 msgid "``%T105DCMRK02N`` ... ミアズマスウィープ"
-msgstr ""
+msgstr "``%T105DCMRK02N`` ... Miasma Sweep"
 
 msgid "``%T105DCSKP03C`` ... 傷符「インスクライブレッドソウル」の蒐集枚数"
-msgstr ""
+msgstr "``%T105DCSKP03C`` ... Number of collected cards of Wound Sign \"Inscribe Red Soul\""
 
 msgid "キャラが異なると、 カードの番号が同じでもその中身は異なります。 （System は除く。）"
-msgstr ""
+msgstr "If the character is different, the contents will be different even if the card number is the same. (Except for system cards.)"
 
 msgid "存在しないカードの指定（霊夢の Spell No.09 など）は無視されます。"
-msgstr ""
+msgstr "Specifying a nonexistent card (e.g. spell card No.09 of Reimu) is ignored."
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 未入手のカードの名前が ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, an unacquired card name is output as ``?????`` (to prevent spoilers)."
 

@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats of TH14.3.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"POT-Creation-Date: 2023-07-30 17:01+0900\n"
+"PO-Revision-Date: 2023-07-30 19:35+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "弾幕アマノジャク用"
 msgstr "For TH14.3 Impossible Spell Card"
 
 msgid "スコア一覧"
-msgstr ""
+msgstr "Scores"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T143SCR[w][x][y][z]``"
 msgstr ""
@@ -34,28 +32,28 @@ msgid "``[w]``"
 msgstr ""
 
 msgid "日付"
-msgstr ""
+msgstr "Day"
 
 msgid "``[1～9]``"
-msgstr ""
+msgstr "``[1-9]``"
 
 msgid "一日目～九日目"
-msgstr ""
+msgstr "1st Day - 9th Day"
 
 msgid "``[L]``"
 msgstr ""
 
 msgid "最終日"
-msgstr ""
+msgstr "Last Day"
 
 msgid "``[x]``"
 msgstr ""
 
 msgid "シーン"
-msgstr ""
+msgstr "Scene"
 
 msgid "1～9"
-msgstr ""
+msgstr "1-9"
 
 msgid "``[0]``"
 msgstr ""
@@ -67,154 +65,154 @@ msgid "``[y]``"
 msgstr ""
 
 msgid "アイテムなど"
-msgstr ""
+msgstr "Item etc."
 
 msgid "ノーアイテム"
-msgstr ""
+msgstr "No item"
 
 msgid "``[1]``"
 msgstr ""
 
 msgid "ひらり布"
-msgstr ""
+msgstr "Nimble Fabric"
 
 msgid "``[2]``"
 msgstr ""
 
 msgid "天狗のトイカメラ"
-msgstr ""
+msgstr "Tengu's Toy Camera"
 
 msgid "``[3]``"
 msgstr ""
 
 msgid "隙間の折りたたみ傘"
-msgstr ""
+msgstr "Gap Folding Umbrella"
 
 msgid "``[4]``"
 msgstr ""
 
 msgid "亡霊の送り提灯"
-msgstr ""
+msgstr "Ghastly Send-Off Lantern"
 
 msgid "``[5]``"
 msgstr ""
 
 msgid "血に飢えた陰陽玉"
-msgstr ""
+msgstr "Bloodthirsty Yin-Yang Orb"
 
 msgid "``[6]``"
 msgstr ""
 
 msgid "四尺マジックボム"
-msgstr ""
+msgstr "Four-Feet Magic Bomb"
 
 msgid "``[7]``"
 msgstr ""
 
 msgid "身代わり地蔵"
-msgstr ""
+msgstr "Substitute Jizo"
 
 msgid "``[8]``"
 msgstr ""
 
 msgid "呪いのデコイ人形"
-msgstr ""
+msgstr "Cursed Decoy Doll"
 
 msgid "``[9]``"
 msgstr ""
 
 msgid "打ち出の小槌（レプリカ）"
-msgstr ""
+msgstr "A Miracle Mallet Replica"
 
 msgid "``[T]``"
 msgstr ""
 
 msgid "合計"
-msgstr ""
+msgstr "Total"
 
 msgid "（項目が得点の場合、 この指定は無視されます。）"
-msgstr ""
+msgstr "(If the specified type is Score, this item specification is ignored.)"
 
 msgid "``[z]``"
 msgstr ""
 
 msgid "項目"
-msgstr ""
+msgstr "Type"
 
 msgid "得点"
-msgstr ""
+msgstr "Score"
 
 msgid "挑戦回数"
-msgstr ""
+msgstr "Number of trials"
 
 msgid "クリア回数"
-msgstr ""
+msgstr "Number of cleared times"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T143SCR11T1`` ... 一日目 シーン 1 の得点"
-msgstr ""
+msgstr "``%T143SCR11T1`` ... Score of 1st Day, Scene 1"
 
 msgid "``%T143SCR2313`` ... 二日目 シーン 3 のひらり布でのクリア回数"
-msgstr ""
+msgstr "Number of cleared times with Nimble Fabric of 2nd Day, Scene 3"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "存在しない日付とシーンの組み合わせ（一日目 シーン 7 など）は無視されます。"
-msgstr ""
+msgstr "A nonexistent pair of day and scene (e.g. 1st Day, Scene 7) is ignored."
 
 msgid "スコア合計"
-msgstr ""
+msgstr "Total score"
 
 msgid "``%T143SCRTL[x][y]``"
 msgstr ""
 
 msgid "（項目が得点の合計の場合、 この指定は無視されます。）"
-msgstr ""
+msgstr "(If the specified type is Total of scores, this item specification is ignored.)"
 
 msgid "得点の合計"
-msgstr ""
+msgstr "Total of scores"
 
 msgid "挑戦回数の合計"
-msgstr ""
+msgstr "Total number of trials"
 
 msgid "クリア回数の合計"
-msgstr ""
+msgstr "Total number of cleared times"
 
 msgid "クリアシーン数"
-msgstr ""
+msgstr "Number of cleared scenes"
 
 msgid "``%T143SCRTLT1`` ... 得点の合計"
-msgstr ""
+msgstr "``%T143SCRTLT1`` ... Total of scores"
 
 msgid "``%T143SCRTL04`` ... ノーアイテムでのクリアシーン数"
-msgstr ""
+msgstr "``%T143SCRTL04`` ... Number of cleared scenes with No item"
 
 msgid "スペルカード情報"
-msgstr ""
+msgstr "Spell card information"
 
 msgid "``%T143CARD[x][y][z]``"
 msgstr ""
 
 msgid "敵の名前"
-msgstr ""
+msgstr "Enemy name"
 
 msgid "スペルカード名"
-msgstr ""
+msgstr "Spell card name"
 
 msgid "``%T143CARD111`` ... 一日目 シーン 1 の敵の名前"
-msgstr ""
+msgstr "``%T143CARD111`` ... Enemy name of 1st Day, Scene 1"
 
 msgid "``%T143CARD232`` ... 二日目 シーン 3 のスペルカード名"
-msgstr ""
+msgstr "``%T143CARD232`` ... Spell card name of 2nd Day, Scene 3"
 
 msgid ":ref:`未挑戦のスペルカード名を出力しない <howtouse>` 設定にしている場合、 該当するものは敵の名前・スペルカード名ともに ``?????`` のように出力されます。 （一応ネタバレ防止のため。）"
-msgstr ""
+msgstr "If you have set :ref:`not to output untried spell card names <howtouse>`, the corresponding one is output as ``?????`` for enemy name and spell card name (to prevent spoilers)."
 
 msgid "異名情報"
-msgstr ""
+msgstr "Nickname information"
 
 msgid "``%T143NICK[xx]``"
 msgstr ""
@@ -223,86 +221,86 @@ msgid "``[xx]``"
 msgstr ""
 
 msgid "番号"
-msgstr ""
+msgstr "Number"
 
 msgid "``[01～70]``"
-msgstr ""
+msgstr "``[01-70]``"
 
 msgid "1～70"
-msgstr ""
+msgstr "1-70"
 
 msgid "``%T143NICK11`` ... はじめてのアマノジャク"
-msgstr ""
+msgstr "``%T143NICK11`` ... First Amanojaku"
 
 msgid "未取得の異名は ``?????`` のように出力されます。"
-msgstr ""
+msgstr "It is output as ``?????`` for unacquired nicknames."
 
 msgid "No.29 の異名のゲーム内表示は誤記と思われるため、 修正しています。"
-msgstr ""
+msgstr "Nickname No.29 is fixed because the name shown in-game seems incorrect."
 
 msgid "総プレイ時間"
-msgstr ""
+msgstr "Total playtime"
 
 msgid "``%T143TIMEPLY``"
 msgstr ""
 
 msgid "時分秒およびミリ秒が ``h:mm:ss.ddd`` の形式で出力されます。"
-msgstr ""
+msgstr "Hours, minutes, seconds and milliseconds are output as the ``h:mm:ss.ddd`` format."
 
 msgid "スクリーンショット出力"
-msgstr ""
+msgstr "Screenshot output"
 
 msgid "``%T143SHOT[x][y]``"
 msgstr ""
 
 msgid "``%T143SHOT12`` ... 一日目 シーン 2 のスクリーンショット"
-msgstr ""
+msgstr "``%T143SHOT12`` ... Screenshot of 1st Day, Scene 2"
 
 msgid "このテンプレート書式は ``<img src=\"./screenshot/sc01_01.png\" alt=\"～\" title=\"～\" border=0>`` のような HTML の IMG タグに置換されます。"
-msgstr ""
+msgstr "This template format will be converted to an IMG tag of HTML such as ``<img src=\"./screenshot/sc01_01.png\" alt=\"...\" title=\"...\" border=0>``."
 
 msgid "同時に、 対象となるスクリーンショットファイル (sc??\\_??.dat) を PNG 形式に変換した画像ファイルが出力されます。"
-msgstr ""
+msgstr "At the same time, the image file in PNG format converted from the corresponding screenshot file (sc??\\_??.dat) is output."
 
-msgid "IMG タグの alt 属性と title 属性には日時が出力されます。"
-msgstr ""
+msgid "IMG タグの alt 属性と title 属性にはスペルカード名が出力されます。"
+msgstr "The spell card name is output as the alt and title attributes of the IMG tag."
 
 msgid "画像ファイルは、 :guilabel:`出力先(&O)` 欄で指定されたフォルダ内の :guilabel:`画像出力先(&I)` 欄で指定されたフォルダに出力されます。"
-msgstr ""
+msgstr "The image file is output into the folder specified by :guilabel:`I&mage output` field under the folder specified by :guilabel:`&Output` field."
 
 msgid "画像ファイルの出力先フォルダが存在しない場合、 本ツールが自動で作成します。"
-msgstr ""
+msgstr "If the output folder of image files does not exist, this tool will automatically create it."
 
 msgid "スクリーンショットファイルが存在しない場合、 IMG タグや画像ファイルは出力されません。"
-msgstr ""
+msgstr "If a screenshot file does not exist, the IMG tag and the image file are not output."
 
 msgid "スクリーンショットファイルの変換は、 このテンプレート書式がテンプレートファイル内に無くても実行されます。"
-msgstr ""
+msgstr "Developing a screenshot file is executed even if this template format is not written in a template file."
 
 msgid "スクリーンショット出力（詳細版）"
-msgstr ""
+msgstr "Screenshot output (detailed version)"
 
 msgid "``%T143SHOTEX[x][y][z]``"
 msgstr ""
 
 msgid "画像ファイルへの相対パス"
-msgstr ""
+msgstr "Relative path of image file"
 
 msgid "画像ファイルの幅 (px)"
-msgstr ""
+msgstr "Width of image file (in pixel)"
 
 msgid "画像ファイルの高さ (px)"
-msgstr ""
+msgstr "Height of image file (in pixel)"
 
 msgid "スクリーンショット撮影日時"
-msgstr ""
+msgstr "Date and time of the screenshot taken"
 
 msgid "``%T143SHOTEX121`` ... 一日目 シーン 2 の画像ファイルへの相対パス"
-msgstr ""
+msgstr "``%T143SHOTEX121`` ... Relative path of the image file of 1st Day, Scene 2"
 
 msgid "``%T143SHOTEX234`` ... 二日目 シーン 3 のスクリーンショット撮影日時"
-msgstr ""
+msgstr "``%T143SHOTEX234`` ... Date and time of the screenshot of 2st Day, Scene 3"
 
 msgid "このテンプレート書式を使って、 例えば ``%T143SHOT12`` と同等の出力結果を得るには、 テンプレートファイルに以下の通りに記載します: ::"
-msgstr ""
+msgstr "To get the same output as ``%T143SHOT12`` using this template format, write the following in a template file: ::"
 
