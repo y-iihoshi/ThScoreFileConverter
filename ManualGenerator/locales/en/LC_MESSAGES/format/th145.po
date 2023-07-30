@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH14.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-07-30 14:49+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方深秘録用"
 msgstr "For TH14.5 Urban Legend in Limbo"
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T145CLEAR[x][yy]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[E]``"
 msgstr ""
@@ -64,121 +62,121 @@ msgid "``[yy]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RA]``"
 msgstr ""
 
 msgid "霊夢（序）"
-msgstr ""
+msgstr "Reimu (Prologue)"
 
 msgid "``[MR]``"
 msgstr ""
 
 msgid "魔理沙"
-msgstr ""
+msgstr "Marisa"
 
 msgid "``[IU]``"
 msgstr ""
 
 msgid "一輪 & 雲山"
-msgstr ""
+msgstr "Ichirin & Unzan"
 
 msgid "``[BY]``"
 msgstr ""
 
 msgid "白蓮"
-msgstr ""
+msgstr "Byakuren"
 
 msgid "``[FT]``"
 msgstr ""
 
 msgid "布都"
-msgstr ""
+msgstr "Futo"
 
 msgid "``[MK]``"
 msgstr ""
 
 msgid "神子"
-msgstr ""
+msgstr "Miko"
 
 msgid "``[NT]``"
 msgstr ""
 
 msgid "にとり"
-msgstr ""
+msgstr "Nitori"
 
 msgid "``[KO]``"
 msgstr ""
 
 msgid "こいし"
-msgstr ""
+msgstr "Koishi"
 
 msgid "``[MM]``"
 msgstr ""
 
 msgid "マミゾウ"
-msgstr ""
+msgstr "Mamizou"
 
 msgid "``[KK]``"
 msgstr ""
 
 msgid "こころ"
-msgstr ""
+msgstr "Kokoro"
 
 msgid "``[KS]``"
 msgstr ""
 
 msgid "華扇"
-msgstr ""
+msgstr "Kasen"
 
 msgid "``[MO]``"
 msgstr ""
 
 msgid "妹紅"
-msgstr ""
+msgstr "Mokou"
 
 msgid "``[SN]``"
 msgstr ""
 
 msgid "針妙丸"
-msgstr ""
+msgstr "Shinmyoumaru"
 
 msgid "``[SM]``"
 msgstr ""
 
 msgid "菫子"
-msgstr ""
+msgstr "Sumireko"
 
 msgid "``[RB]``"
 msgstr ""
 
 msgid "霊夢（終）"
-msgstr ""
+msgstr "Reimu (Final)"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T145CLEAREMR`` ... Easy 魔理沙のクリア達成度"
-msgstr ""
+msgstr "``%T145CLEAREMR`` ... Clear achievement of Easy Marisa"
 
 msgid "``%T145CLEARNRA`` ... Normal 霊夢（序）のクリア達成度"
-msgstr ""
+msgstr "``%T145CLEARNRA`` ... Clear achievement of Normal Reimu (Prologue)"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "ストーリーモードのクリア達成度 （ゲームの進行状況） に応じて次の文字列が出力されます: ``Not Clear``, ``Bronze``, ``Silver``, ``Gold``"
-msgstr ""
+msgstr "Depending on the clear achievement (game progress) of Story mode, one of the following string is output: ``Not Clear``, ``Bronze``, ``Silver``, ``Gold``"
 
 msgid "クリア時間"
-msgstr ""
+msgstr "Clear time"
 
 msgid "``%T145TIMECLR[x][yy]``"
 msgstr ""
 
 msgid "難易度など"
-msgstr ""
+msgstr "Difficulty etc."
 
 msgid "``[T]``"
 msgstr ""
@@ -187,26 +185,26 @@ msgid "Total"
 msgstr ""
 
 msgid "キャラの名前など"
-msgstr ""
+msgstr "Character name etc."
 
 msgid "``[TL]``"
 msgstr ""
 
 msgid "全キャラ合計"
-msgstr ""
+msgstr "Total of all characters"
 
 msgid "``%T145TIMECLRTTL`` ... 全キャラ・全難易度合計のクリア時間"
-msgstr ""
+msgstr "``%T145TIMECLRTTL`` ... Total clear time for all characters and difficulties"
 
 msgid "``%T145TIMECLRERA`` ... Easy 霊夢（序）のクリア時間"
-msgstr ""
+msgstr "``%T145TIMECLRERA`` ... Clear time of Easy Reimu (Prologue)"
 
 msgid "``%T145TIMECLRTMR`` ... 魔理沙の全難易度合計のクリア時間"
-msgstr ""
+msgstr "``%T145TIMECLRTMR`` ... Total clear time for all difficulties of Marisa"
 
 msgid "時分秒が ``h:mm:ss`` の形式で出力されます。"
-msgstr ""
+msgstr "Hours, minutes and seconds are output as the ``h:mm:ss`` format."
 
 msgid "なお、 スコアファイルにはフレーム数単位で保存されているため、 60fps 固定と見なして換算した結果を出力しています。"
-msgstr ""
+msgstr "In addition, since the playtime is saved as the number of frames in the score file, it is converted to seconds as a fixed 60 fps and then output."
 
