@@ -1,16 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Template formats for TH15.5.
 # Copyright (C) 2013, IIHOSHI Yoshinori
 # This file is distributed under the same license as the
 # ThScoreFileConverter package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 20:08+0900\n"
-"PO-Revision-Date: 2023-05-03 21:16+0900\n"
+"PO-Revision-Date: 2023-07-30 15:20+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,10 +20,10 @@ msgid "東方憑依華用"
 msgstr "For TH15.5 Antinomy of Common Flowers"
 
 msgid "クリア達成度"
-msgstr ""
+msgstr "Clear achievement"
 
 msgid "書式"
-msgstr ""
+msgstr "Format"
 
 msgid "``%T155CLEAR[x][yy]``"
 msgstr ""
@@ -34,7 +32,7 @@ msgid "``[x]``"
 msgstr ""
 
 msgid "難易度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "``[E]``"
 msgstr ""
@@ -70,86 +68,86 @@ msgid "``[yy]``"
 msgstr ""
 
 msgid "キャラの名前"
-msgstr ""
+msgstr "Character name"
 
 msgid "``[RK]``"
 msgstr ""
 
 msgid "霊夢 & 華扇"
-msgstr ""
+msgstr "Reimu & Kasen"
 
 msgid "``[MK]``"
 msgstr ""
 
 msgid "魔理沙 & こいし"
-msgstr ""
+msgstr "Marisa & Koishi"
 
 msgid "``[NK]``"
 msgstr ""
 
 msgid "にとり & こころ"
-msgstr ""
+msgstr "Nitori & Kokoro"
 
 msgid "``[MM]``"
 msgstr ""
 
 msgid "マミゾウ & 妹紅"
-msgstr ""
+msgstr "Mamizou & Mokou"
 
 msgid "``[MB]``"
 msgstr ""
 
 msgid "神子 & 白蓮"
-msgstr ""
+msgstr "Miko & Byakuren"
 
 msgid "``[FI]``"
 msgstr ""
 
 msgid "布都 & 一輪"
-msgstr ""
+msgstr "Futo & Ichirin"
 
 msgid "``[RD]``"
 msgstr ""
 
 msgid "鈴仙 & ドレミー"
-msgstr ""
+msgstr "Reisen & Doremy"
 
 msgid "``[SD]``"
 msgstr ""
 
 msgid "菫子 & ドレミー"
-msgstr ""
+msgstr "Sumireko & Doremy"
 
 msgid "``[TS]``"
 msgstr ""
 
 msgid "天子 & 針妙丸"
-msgstr ""
+msgstr "Tenshi & Shinmyoumaru"
 
 msgid "``[YR]``"
 msgstr ""
 
 msgid "紫 & 霊夢"
-msgstr ""
+msgstr "Yukari & Reimu"
 
 msgid "``[JS]``"
 msgstr ""
 
 msgid "女苑 & 紫苑"
-msgstr ""
+msgstr "Joon & Shion"
 
 msgid "例"
-msgstr ""
+msgstr "Example"
 
 msgid "``%T155CLEAREMK`` ... Easy 魔理沙 & こいしのクリア達成度"
-msgstr ""
+msgstr "``%T155CLEAREMK`` ... Clear achievement of Easy Marisa & Koishi"
 
 msgid "``%T155CLEARNRK`` ... Normal 霊夢 & 華扇のクリア達成度"
-msgstr ""
+msgstr "``%T155CLEARNRK`` ... Clear achievement of Normal Reimu & Kasen"
 
 msgid "補足"
-msgstr ""
+msgstr "Supplement"
 
 msgid "ストーリーモードのクリア達成度 （ゲームの進行状況） に応じて次の文字列が出力されます: ``Not Clear``, ``Clear``"
-msgstr ""
+msgstr "Depending on the clear achievement (game progress) of Story mode, one of the following string is output: ``Not Clear``, ``Clear``"
 
