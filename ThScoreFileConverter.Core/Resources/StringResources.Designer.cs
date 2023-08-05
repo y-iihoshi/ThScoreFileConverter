@@ -311,5 +311,14 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("TH185", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Unfinished Dream of All Living Ghost に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH19 {
+            get {
+                return ResourceManager.GetString("TH19", resourceCulture);
+            }
+        }
     }
 }
