@@ -15,6 +15,10 @@ on:
         required: true
         type: string
         default: 'net48'
+      artifact-name:
+        required: true
+        type: string
+        default: 'ThScoreFileConverter.Debug.net48'
 
 jobs:
   build:
@@ -102,12 +106,14 @@ jobs:
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Collect artifacts
-      run: .\CollectArtifacts.ps1 -Configuration ${{ inputs.dotnet-configuration }} -TargetFramework ${{ inputs.dotnet-target-framework }}
-      if: inputs.dotnet-configuration == 'Release'
+      id: collect-artifacts
+      run: |
+        $OutputDir = Join-Path 'publish' ${{ inputs.dotnet-configuration }} ${{ inputs.dotnet-target-framework }}
+        .\CollectArtifacts.ps1 -Configuration ${{ inputs.dotnet-configuration }} -TargetFramework ${{ inputs.dotnet-target-framework }} -OutputDir $OutputDir
+        echo "artifact-path=$OutputDir" >> $env:GITHUB_OUTPUT
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: ThScoreFileConverter.${{ inputs.dotnet-target-framework }}
-        path: publish\${{ inputs.dotnet-target-framework }}
-      if: inputs.dotnet-configuration == 'Release'
+        name: ${{ inputs.artifact-name }}
+        path: ${{ steps.collect-artifacts.outputs.artifact-path }}

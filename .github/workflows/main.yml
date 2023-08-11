@@ -14,3 +14,4 @@ jobs:
       python-version: '3.x'
       dotnet-configuration: ${{ matrix.configuration }}
       dotnet-target-framework: ${{ matrix.target-framework }}
+      artifact-name: 'ThScoreFileConverter.${{ matrix.configuration }}.${{ matrix.target-framework }}'

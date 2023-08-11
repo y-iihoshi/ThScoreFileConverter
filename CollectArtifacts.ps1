@@ -4,10 +4,13 @@ param(
     [Parameter(Mandatory)]
     [String] $Configuration,
     [Parameter(Mandatory)]
-    [String] $TargetFramework
+    [String] $TargetFramework,
+    [String] $OutputDir
 )
 
-$OutputDir = Join-Path 'publish' $TargetFramework
+if ([string]::IsNullOrEmpty($OutputDir)) {
+    $OutputDir = Join-Path 'publish' $Configuration $TargetFramework
+}
 
 $Arguments = @{
     Path = Join-Path 'ThScoreFileConverter\bin' $Configuration $TargetFramework
