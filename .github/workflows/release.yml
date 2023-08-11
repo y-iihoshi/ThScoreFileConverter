@@ -44,5 +44,5 @@ jobs:
           fail_on_unmatched_files: true
           draft: true
           files: |
-            'ThScoreFileConverter-${{ github.ref_name }}-net48.zip'
-            'ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip'
+            ThScoreFileConverter-${{ github.ref_name }}-net48.zip
+            ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip
