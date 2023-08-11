@@ -24,16 +24,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Download artifact
+      - name: Download artifact (net48)
         uses: actions/download-artifact@v3
         with:
-          name: 'ThScoreFileConverter-${{ github.ref_name }}-${{ matrix.target-framework }}'
-          path: 'artifact'
-      - name: Zip artifact
-        run: 7z a ThScoreFileConverter-${{ github.ref_name }}-${{ matrix.target-framework }}.zip -r ./artifact/*
+          name: 'ThScoreFileConverter-${{ github.ref_name }}-net48'
+          path: 'artifacts/net48'
+      - name: Download artifact (net6.0)
+        uses: actions/download-artifact@v3
+        with:
+          name: 'ThScoreFileConverter-${{ github.ref_name }}-net6.0-windows'
+          path: 'artifacts/net6.0'
+      - name: Zip artifacts
+        run: |
+          7z a ThScoreFileConverter-${{ github.ref_name }}-net48.zip -r ./artifacts/net48/*
+          7z a ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip -r ./artifacts/net6.0/*
       - name: Create GitHub release as draft
         uses: softprops/action-gh-release@v1
         with:
           fail_on_unmatched_files: true
           draft: true
-          files: 'ThScoreFileConverter-${{ github.ref_name }}-${{ matrix.target-framework }}.zip'
+          files: |
+            'ThScoreFileConverter-${{ github.ref_name }}-net48.zip'
+            'ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip'
