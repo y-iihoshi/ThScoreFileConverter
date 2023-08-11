@@ -1,0 +1,119 @@
+name: _build
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: true
+        type: string
+        default: '3.x'
+      dotnet-configuration:
+        required: true
+        type: string
+        default: 'Debug'
+      dotnet-target-framework:
+        required: true
+        type: string
+        default: 'net48'
+      artifact-name:
+        required: true
+        type: string
+        default: 'ThScoreFileConverter.Debug.net48'
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup Python environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: 'pip'
+        cache-dependency-path: 'ManualGenerator/requirements.txt'
+
+    - name: Restore Python packages
+      run: |
+        python -m pip install -U pip
+        python -m pip install -r ManualGenerator/requirements.txt
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3.2.0
+      with:
+        global-json-file: 'global.json'
+
+    - name: Restore .NET tools
+      run: dotnet tool restore
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v3.3.1
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ inputs.dotnet-target-framework }}-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-${{ inputs.dotnet-target-framework }}-
+          ${{ runner.os }}-nuget-
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.3
+
+    - name: Build
+      run: >
+        msbuild ThScoreFileConverter.sln /m /restore /verbosity:minimal
+        /p:Configuration=${{ inputs.dotnet-configuration }}
+        /p:TargetFrameworks=${{ inputs.dotnet-target-framework }}
+
+    - name: Dump version
+      run: dotnet gitversion
+
+    - name: Run FOSSA scan and upload build data
+      env:
+        FOSSA_API_KEY: 546ea14e5b1c4a901201f2d1cfc44a83   # Push only API token
+      run: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force
+        iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.ps1'))
+        fossa analyze
+        fossa test
+      if: inputs.dotnet-configuration == 'Debug'
+
+    - name: Generate coverage report
+      run: >
+        dotnet test ThScoreFileConverter.Core.Tests
+        --configuration ${{ inputs.dotnet-configuration }}
+        --framework ${{ inputs.dotnet-target-framework }}
+        -e CollectCoverage=true
+        -e CoverletOutput="../CoverageResults/"
+
+        dotnet test ThScoreFileConverter.Tests
+        --configuration ${{ inputs.dotnet-configuration }}
+        --framework ${{ inputs.dotnet-target-framework }}
+        -e CollectCoverage=true
+        -e CoverletOutput="../CoverageResults/"
+        -e MergeWith="../CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.json"
+        -e CoverletOutputFormat=opencover
+      if: inputs.dotnet-configuration == 'Debug'
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3.1.4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
+      if: inputs.dotnet-configuration == 'Debug'
+
+    - name: Collect artifacts
+      id: collect-artifacts
+      run: |
+        $OutputDir = Join-Path 'publish' ${{ inputs.dotnet-configuration }} ${{ inputs.dotnet-target-framework }}
+        .\CollectArtifacts.ps1 -Configuration ${{ inputs.dotnet-configuration }} -TargetFramework ${{ inputs.dotnet-target-framework }} -OutputDir $OutputDir
+        echo "artifact-path=$OutputDir" >> $env:GITHUB_OUTPUT
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ steps.collect-artifacts.outputs.artifact-path }}
