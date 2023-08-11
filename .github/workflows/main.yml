@@ -4,102 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-
-    runs-on: windows-2022
-
     strategy:
       matrix:
         configuration: [Debug, Release]
         target-framework: [net48, net6.0-windows]
 
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Setup Python environment
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-        cache: 'pip'
-        cache-dependency-path: 'ManualGenerator/requirements.txt'
-
-    - name: Restore Python packages
-      run: |
-        python -m pip install -U pip
-        python -m pip install -r ManualGenerator/requirements.txt
-
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v3.2.0
-      with:
-        global-json-file: 'global.json'
-
-    - name: Restore .NET tools
-      run: dotnet tool restore
-
-    - name: Cache NuGet packages
-      uses: actions/cache@v3.3.1
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ matrix.target-framework }}-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-${{ matrix.target-framework }}-
-          ${{ runner.os }}-nuget-
-
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.3
-
-    - name: Build
-      run: >
-        msbuild ThScoreFileConverter.sln /m /restore /verbosity:minimal
-        /p:Configuration=${{ matrix.configuration }}
-        /p:TargetFrameworks=${{ matrix.target-framework }}
-
-    - name: Dump version
-      run: dotnet gitversion
-
-    - name: Run FOSSA scan and upload build data
-      env:
-        FOSSA_API_KEY: 546ea14e5b1c4a901201f2d1cfc44a83   # Push only API token
-      run: |
-        Set-ExecutionPolicy Bypass -Scope Process -Force
-        iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fossas/fossa-cli/master/install-latest.ps1'))
-        fossa analyze
-        fossa test
-      if: matrix.configuration == 'Debug'
-
-    - name: Generate coverage report
-      run: >
-        dotnet test ThScoreFileConverter.Core.Tests
-        --configuration ${{ matrix.configuration }}
-        --framework ${{ matrix.target-framework }}
-        -e CollectCoverage=true
-        -e CoverletOutput="../CoverageResults/"
-
-        dotnet test ThScoreFileConverter.Tests
-        --configuration ${{ matrix.configuration }}
-        --framework ${{ matrix.target-framework }}
-        -e CollectCoverage=true
-        -e CoverletOutput="../CoverageResults/"
-        -e MergeWith="../CoverageResults/coverage.${{ matrix.target-framework }}.json"
-        -e CoverletOutputFormat=opencover
-      if: matrix.configuration == 'Debug'
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: CoverageResults/coverage.${{ matrix.target-framework }}.opencover.xml
-      if: matrix.configuration == 'Debug'
-
-    - name: Collect artifacts
-      run: CollectArtifacts.bat ${{ matrix.configuration }} ${{ matrix.target-framework }}
-      shell: cmd
-      if: matrix.configuration == 'Release'
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: ThScoreFileConverter.${{ matrix.target-framework }}
-        path: publish\${{ matrix.target-framework }}
-      if: matrix.configuration == 'Release'
+    uses: ./.github/workflows/_build.yml
+    with:
+      python-version: '3.x'
+      dotnet-configuration: ${{ matrix.configuration }}
+      dotnet-target-framework: ${{ matrix.target-framework }}
