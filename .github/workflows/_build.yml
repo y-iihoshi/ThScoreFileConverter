@@ -102,8 +102,7 @@ jobs:
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Collect artifacts
-      run: CollectArtifacts.bat ${{ inputs.dotnet-configuration }} ${{ inputs.dotnet-target-framework }}
-      shell: cmd
+      run: .\CollectArtifacts.ps1 -Configuration ${{ inputs.dotnet-configuration }} -TargetFramework ${{ inputs.dotnet-target-framework }}
       if: inputs.dotnet-configuration == 'Release'
 
     - name: Upload artifact
