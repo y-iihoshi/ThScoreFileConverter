@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th10Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,28 +12,26 @@ using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models.Th10;
+using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th10;
-using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Core.Models.Th10.CharaWithTotal>;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th15;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th10Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions { get; } = "1.00a";
+    public override string SupportedVersions { get; } = "1.00b";
 
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
 #if DEBUG
-        using var decoded = new FileStream("th10decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th15decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -119,7 +117,7 @@ internal class Th10Converter : ThConverter
         var header = new Header();
         header.ReadFrom(reader);
         var remainSize = header.DecodedBodySize;
-        var chapter = new Chapter();
+        var chapter = new Th10.Chapter();
 
         try
         {
@@ -128,7 +126,7 @@ internal class Th10Converter : ThConverter
                 chapter.ReadFrom(reader);
                 if (!chapter.IsValid)
                     return false;
-                if (!ClearData.CanInitialize(chapter) && !Status.CanInitialize(chapter))
+                if (!ClearData.CanInitialize(chapter) && !Th13.Status.CanInitialize(chapter))
                     return false;
 
                 remainSize -= chapter.Size;
@@ -144,15 +142,15 @@ internal class Th10Converter : ThConverter
 
     private static AllScoreData? Read(Stream input)
     {
-        var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
+        var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
         {
-            { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-            { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
+            { ClearData.ValidSignature,   (data, ch) => data.Set(new ClearData(ch))   },
+            { Th13.Status.ValidSignature, (data, ch) => data.Set(new Th13.Status(ch)) },
         };
 
         using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
         var allScoreData = new AllScoreData();
-        var chapter = new Chapter();
+        var chapter = new Th10.Chapter();
 
         var header = new Header();
         header.ReadFrom(reader);

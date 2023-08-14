@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th105Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -15,14 +15,13 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th105;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th105;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th105Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 

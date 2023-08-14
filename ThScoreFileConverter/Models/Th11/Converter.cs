@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th13Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,35 +12,27 @@ using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models.Th13;
+using ThScoreFileConverter.Core.Models.Th11;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th13;
-using AllScoreData = ThScoreFileConverter.Models.Th13.AllScoreData<
-    ThScoreFileConverter.Core.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Core.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Core.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Core.Models.Th13.StagePractice,
-    ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>,
-    ThScoreFileConverter.Models.Th125.IStatus>;
+using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Core.Models.Th11.CharaWithTotal>;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th11;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th13Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions { get; } = "1.00c";
+    public override string SupportedVersions { get; } = "1.00a";
 
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
 #if DEBUG
-        using var decoded = new FileStream("th13decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th11decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif

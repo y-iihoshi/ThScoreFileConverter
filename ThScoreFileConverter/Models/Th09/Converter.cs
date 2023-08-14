@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th128Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,27 +12,30 @@ using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models.Th128;
+using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th09;
 using ThScoreFileConverter.Core.Resources;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th128;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th09;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th128Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions { get; } = "1.00a";
+    public override string SupportedVersions { get; } = "1.50a";
+
+    public override bool HasCardReplacer { get; }
 
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
 #if DEBUG
-        using var decoded = new FileStream("th128decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th09decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -57,9 +60,7 @@ internal class Th128Converter : ThConverter
     protected override IEnumerable<IStringReplaceable> CreateReplacers(
         INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
     {
-        if ((this.allScoreData is null)
-            || (this.allScoreData.CardData is null)
-            || (this.allScoreData.Status is null))
+        if ((this.allScoreData is null) || (this.allScoreData.PlayStatus is null))
         {
             ThrowHelper.ThrowInvalidDataException(
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
@@ -67,74 +68,89 @@ internal class Th128Converter : ThConverter
 
         return new List<IStringReplaceable>
         {
-            new ScoreReplacer(this.allScoreData.ClearData, formatter),
-            new CareerReplacer(this.allScoreData.CardData.Cards, formatter),
-            new CardReplacer(this.allScoreData.CardData.Cards, hideUntriedCards),
-            new CollectRateReplacer(this.allScoreData.CardData.Cards, formatter),
-            new ClearReplacer(this.allScoreData.ClearData),
-            new RouteReplacer(this.allScoreData.ClearData, formatter),
-            new RouteExReplacer(this.allScoreData.ClearData, formatter),
-            new TimeReplacer(this.allScoreData.Status),
+            new ScoreReplacer(this.allScoreData.Rankings, formatter),
+            new TimeReplacer(this.allScoreData.PlayStatus),
+            new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts, formatter),
         };
     }
 
     private static bool Decrypt(Stream input, Stream output)
     {
-        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
-        using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
-        var header = new Header();
+        var size = (int)input.Length;
+        ThCrypt.Decrypt(input, output, size, 0x3A, 0xCD, 0x0100, 0x0C00);
 
-        header.ReadFrom(reader);
-        if (!header.IsValid)
-            return false;
-        if (header.EncodedAllSize != reader.BaseStream.Length)
-            return false;
+        var data = new byte[size];
+        _ = output.Seek(0, SeekOrigin.Begin);
+        _ = output.Read(data, 0, size);
 
-        header.WriteTo(writer);
-        ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
+        uint checksum = 0;
+        byte temp = 0;
+        for (var index = 2; index < size; index++)
+        {
+            temp += data[index - 1];
+            temp = (byte)((temp >> 5) | (temp << 3));
+            data[index] ^= temp;
+            if (index > 3)
+                checksum += data[index];
+        }
 
-        return true;
+        _ = output.Seek(0, SeekOrigin.Begin);
+        output.Write(data, 0, size);
+
+        return (ushort)checksum == BitConverter.ToUInt16(data, 2);
     }
 
     private static bool Extract(Stream input, Stream output)
     {
         using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
         using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
+        var header = new FileHeader();
 
-        var header = new Header();
         header.ReadFrom(reader);
+        if (!header.IsValid)
+            return false;
+        if (header.Size + header.EncodedBodySize != input.Length)
+            return false;
+
         header.WriteTo(writer);
 
-        var bodyBeginPos = output.Position;
         Lzss.Decompress(input, output);
         output.Flush();
         output.SetLength(output.Position);
 
-        return header.DecodedBodySize == (output.Position - bodyBeginPos);
+        return output.Position == header.DecodedAllSize;
     }
 
     private static bool Validate(Stream input)
     {
         using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
+        var header = new FileHeader();
+        var chapter = new Th06.Chapter();
 
-        var header = new Header();
         header.ReadFrom(reader);
-        var remainSize = header.DecodedBodySize;
-        var chapter = new Th10.Chapter();
+        var remainSize = header.DecodedAllSize - header.Size;
+        if (remainSize <= 0)
+            return false;
 
         try
         {
             while (remainSize > 0)
             {
                 chapter.ReadFrom(reader);
-                if (!chapter.IsValid)
-                    return false;
-                if (!ClearData.CanInitialize(chapter) &&
-                    !CardData.CanInitialize(chapter) &&
-                    !Status.CanInitialize(chapter))
+                if (chapter.Size1 == 0)
                     return false;
 
-                remainSize -= chapter.Size;
+                switch (chapter.Signature)
+                {
+                    case Header.ValidSignature:
+                        if (chapter.FirstByteOfData != 0x01)
+                            return false;
+                        break;
+                    default:
+                        break;
+                }
+
+                remainSize -= chapter.Size1;
             }
         }
         catch (EndOfStreamException)
@@ -147,20 +163,20 @@ internal class Th128Converter : ThConverter
 
     private static AllScoreData? Read(Stream input)
     {
-        var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
+        var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>
         {
-            { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-            { CardData.ValidSignature,  (data, ch) => data.Set(new CardData(ch))  },
-            { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
+            { Header.ValidSignature,           (data, ch) => data.Set(new Header(ch))           },
+            { HighScore.ValidSignature,        (data, ch) => data.Set(new HighScore(ch))        },
+            { PlayStatus.ValidSignature,       (data, ch) => data.Set(new PlayStatus(ch))       },
+            { Th07.LastName.ValidSignature,    (data, ch) => data.Set(new Th07.LastName(ch))    },
+            { Th07.VersionInfo.ValidSignature, (data, ch) => data.Set(new Th07.VersionInfo(ch)) },
         };
 
         using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
         var allScoreData = new AllScoreData();
-        var chapter = new Th10.Chapter();
+        var chapter = new Th06.Chapter();
 
-        var header = new Header();
-        header.ReadFrom(reader);
-        allScoreData.Set(header);
+        _ = reader.ReadExactBytes(FileHeader.ValidSize);
 
         try
         {
@@ -177,9 +193,10 @@ internal class Th128Converter : ThConverter
         }
 
         if ((allScoreData.Header is not null) &&
-            (allScoreData.ClearData.Count == EnumHelper<RouteWithTotal>.NumValues) &&
-            (allScoreData.CardData is not null) &&
-            (allScoreData.Status is not null))
+            (allScoreData.Rankings.Count == EnumHelper<Chara>.NumValues * EnumHelper<Level>.NumValues) &&
+            (allScoreData.PlayStatus is not null) &&
+            (allScoreData.LastName is not null) &&
+            (allScoreData.VersionInfo is not null))
             return allScoreData;
         else
             return null;

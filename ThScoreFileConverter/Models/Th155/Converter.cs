@@ -1,5 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="Th175Converter.cs" company="None">
+﻿//-----------------------------------------------------------------------
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -9,28 +9,29 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th175;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th155;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th175Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions { get; } = "1.04";
+    public override string SupportedVersions { get; } = "1.10c";
 
     public override bool HasCardReplacer { get; }
 
     protected override bool ReadScoreFile(Stream input)
     {
 #if DEBUG
-        using var decoded = new FileStream("th175decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th155decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -55,38 +56,50 @@ internal class Th175Converter : ThConverter
 
         return new List<IStringReplaceable>
         {
-            new ScoreReplacer(
-                this.allScoreData.SaveDataDictionary[0].ScoreDictionary,
-                this.allScoreData.SaveDataDictionary[0].TimeDictionary,
-                formatter),
-            new CharaReplacer(
-                this.allScoreData.SaveDataDictionary[0].UseCountDictionary,
-                this.allScoreData.SaveDataDictionary[0].RetireCountDictionary,
-                this.allScoreData.SaveDataDictionary[0].ClearCountDictionary,
-                this.allScoreData.SaveDataDictionary[0].PerfectClearCountDictionary,
-                formatter),
+            new ClearRankReplacer(this.allScoreData.StoryDictionary),
         };
     }
 
     private static bool Extract(Stream input, Stream output)
     {
-        using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
-        using var writer = new BinaryWriter(output, EncodingHelper.UTF8NoBOM, true);
+        var succeeded = false;
 
-        var initialKey = reader.ReadInt32();
-        var key = 0;
+        // See section 2.2 of RFC 1950
+        var validHeader = new byte[] { 0x78, 0x9C };
 
-        var size = input.Length - input.Position;
-        for (var index = 0; index < size; index += sizeof(int))
+        if (input.Length >= sizeof(int) + validHeader.Length)
         {
-            var value = RandomHelper.ParkMillerRNG(index ^ initialKey);
-            var decoded = reader.ReadInt32() ^ value;
-            writer.Write(decoded);
+            var size = new byte[sizeof(int)];
+            var header = new byte[validHeader.Length];
 
-            key ^= decoded;
+            _ = input.Seek(0, SeekOrigin.Begin);
+            _ = input.Read(size, 0, size.Length);
+            _ = input.Read(header, 0, header.Length);
+
+            if (Enumerable.SequenceEqual(header, validHeader))
+            {
+                var extracted = new byte[0x80000];
+                var extractedSize = 0;
+
+                using (var deflate = new DeflateStream(input, CompressionMode.Decompress, true))
+                    extractedSize = deflate.Read(extracted, 0, extracted.Length);
+
+                _ = output.Seek(0, SeekOrigin.Begin);
+                output.Write(extracted, 0, extractedSize);
+
+                succeeded = true;
+            }
+            else
+            {
+                // Invalid header
+            }
+        }
+        else
+        {
+            // The input stream is too short
         }
 
-        return key == initialKey;
+        return succeeded;
     }
 
     private static AllScoreData? Read(Stream input)
