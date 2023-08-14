@@ -25,7 +25,7 @@ internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
     Level,
     LevelWithTotal,
     Core.Models.Th14.LevelPractice,
-    Th14.LevelPracticeWithTotal,
+    Core.Models.Th14.LevelPracticeWithTotal,
     Th14.StagePractice,
     IScoreData>
 {

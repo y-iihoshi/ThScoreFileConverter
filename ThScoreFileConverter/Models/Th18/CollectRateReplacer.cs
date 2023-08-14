@@ -19,11 +19,11 @@ namespace ThScoreFileConverter.Models.Th18;
 
 // %T18CRG[v][w][xx][y][z]
 internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
-    GameMode, CharaWithTotal, Level, LevelWithTotal, Level, Th14.LevelPracticeWithTotal, Stage, IScoreData>
+    GameMode, CharaWithTotal, Level, LevelWithTotal, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, IScoreData>
 {
     public CollectRateReplacer(
         IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-            CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Stage, IScoreData>> clearDataDictionary,
+            CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, IScoreData>> clearDataDictionary,
         INumberFormatter formatter)
         : base(
               Definitions.FormatPrefix,

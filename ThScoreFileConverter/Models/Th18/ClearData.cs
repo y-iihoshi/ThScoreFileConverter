@@ -21,7 +21,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th18.CharaWithTotal,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Core.Models.Stage,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
@@ -37,7 +37,7 @@ internal class ClearData : Th10.Chapter, IClearData // per character
     public ClearData(Th10.Chapter chapter)
         : base(chapter, ValidSignature, ValidVersion, ValidSize)
     {
-        var levelsWithTotal = EnumHelper<Th14.LevelPracticeWithTotal>.Enumerable;
+        var levelsWithTotal = EnumHelper<Core.Models.Th14.LevelPracticeWithTotal>.Enumerable;
         var levelsExceptExtra = EnumHelper<Level>.Enumerable.Where(level => level != Level.Extra);
         var stagesExceptExtra = EnumHelper<Stage>.Enumerable.Where(stage => stage != Stage.Extra);
 
@@ -74,15 +74,15 @@ internal class ClearData : Th10.Chapter, IClearData // per character
 
     public CharaWithTotal Chara { get; }
 
-    public IReadOnlyDictionary<Th14.LevelPracticeWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
+    public IReadOnlyDictionary<Core.Models.Th14.LevelPracticeWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
 
     public int TotalPlayCount { get; }
 
     public int PlayTime { get; }    // unit: 10ms
 
-    public IReadOnlyDictionary<Th14.LevelPracticeWithTotal, int> ClearCounts { get; }
+    public IReadOnlyDictionary<Core.Models.Th14.LevelPracticeWithTotal, int> ClearCounts { get; }
 
-    public IReadOnlyDictionary<Th14.LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
+    public IReadOnlyDictionary<Core.Models.Th14.LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
     public IReadOnlyDictionary<(Level Level, Stage Stage), Th10.IPractice> Practices { get; }
 
