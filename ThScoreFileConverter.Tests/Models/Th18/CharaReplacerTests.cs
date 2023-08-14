@@ -10,10 +10,10 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th18.CharaWithTotal,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
     ThScoreFileConverter.Core.Models.Stage,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
-using LevelPracticeWithTotal = ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal;
+using LevelPracticeWithTotal = ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal;
 
 namespace ThScoreFileConverter.Tests.Models.Th18;
 

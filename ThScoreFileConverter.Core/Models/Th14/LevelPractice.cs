@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th14;
+namespace ThScoreFileConverter.Core.Models.Th14;
 
 /// <summary>
 /// Representing levels of DDC.

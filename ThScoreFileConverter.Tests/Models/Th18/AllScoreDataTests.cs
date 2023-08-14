@@ -2,7 +2,7 @@
 using ThScoreFileConverter.Core.Models.Th18;
 using ThScoreFileConverter.Models.Th18;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
-using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
+using StagePractice = ThScoreFileConverter.Core.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverter.Tests.Models.Th18;
 

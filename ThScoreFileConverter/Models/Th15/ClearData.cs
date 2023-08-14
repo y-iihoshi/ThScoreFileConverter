@@ -36,7 +36,7 @@ internal class ClearData : Th10.Chapter, IClearData // per character
         this.GameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(
             mode => mode, _ => BinaryReadableHelper.Create<ClearDataPerGameMode>(reader) as IClearDataPerGameMode);
 
-        this.Practices = EnumHelper.Cartesian<Level, Th14.StagePractice>()
+        this.Practices = EnumHelper.Cartesian<Level, Core.Models.Th14.StagePractice>()
             .ToDictionary(pair => pair, _ => BinaryReadableHelper.Create<Th10.Practice>(reader) as Th10.IPractice);
     }
 
@@ -44,7 +44,7 @@ internal class ClearData : Th10.Chapter, IClearData // per character
 
     public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-    public IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
+    public IReadOnlyDictionary<(Level Level, Core.Models.Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
 
     public static bool CanInitialize(Th10.Chapter chapter)
     {

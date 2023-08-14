@@ -15,14 +15,14 @@ namespace ThScoreFileConverter.Models.Th18;
 
 // %T18CHARAEX[x][yy][z]
 internal class CharaExReplacer : Th13.CharaExReplacerBase<
-    CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Stage, Th10.IScoreData<Th13.StageProgress>>
+    CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, Th10.IScoreData<Th13.StageProgress>>
 {
     public CharaExReplacer(
         IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
             CharaWithTotal,
             Level,
             Level,
-            Th14.LevelPracticeWithTotal,
+            Core.Models.Th14.LevelPracticeWithTotal,
             Stage,
             Th10.IScoreData<Th13.StageProgress>>> clearDataDictionary,
         INumberFormatter formatter)

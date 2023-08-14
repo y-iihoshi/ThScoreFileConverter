@@ -5,9 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
-
-namespace ThScoreFileConverter.Models.Th14;
+namespace ThScoreFileConverter.Core.Models.Th14;
 
 /// <summary>
 /// Represents stages of spell practice for DDC and later works.

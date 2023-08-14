@@ -17,8 +17,8 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14.StagePractice,
+    ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 
 namespace ThScoreFileConverter.Models.Th16;
@@ -36,7 +36,7 @@ internal class ScoreReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = (Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
+            var level = (Core.Models.Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
             var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
             var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
             var type = IntegerHelper.Parse(match.Groups[4].Value);

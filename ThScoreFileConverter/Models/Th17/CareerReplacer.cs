@@ -16,15 +16,15 @@ namespace ThScoreFileConverter.Models.Th17;
 
 // %T17C[w][xxx][yy][z]
 internal class CareerReplacer : Th14.CareerReplacerBase<
-    GameMode, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    GameMode, CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>
 {
     public CareerReplacer(
         IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
             CharaWithTotal,
             Level,
             Level,
-            Th14.LevelPracticeWithTotal,
-            Th14.StagePractice,
+            Core.Models.Th14.LevelPracticeWithTotal,
+            Core.Models.Th14.StagePractice,
             IScoreData>> clearDataDictionary,
         INumberFormatter formatter)
         : base(

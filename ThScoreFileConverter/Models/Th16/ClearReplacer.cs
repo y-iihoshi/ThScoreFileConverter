@@ -16,15 +16,15 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th16.CharaWithTotal,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14.StagePractice,
+    ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 
 namespace ThScoreFileConverter.Models.Th16;
 
 // %T16CLEAR[x][yy]
 internal class ClearReplacer : Th13.ClearReplacerBase<
-    Chara, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    Chara, CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>
 {
     public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         : base(
@@ -39,7 +39,7 @@ internal class ClearReplacer : Th13.ClearReplacerBase<
         IReadOnlyDictionary<CharaWithTotal, IClearData> dictionary, Level level, Chara chara)
     {
         return dictionary.TryGetValue(EnumHelper.To<CharaWithTotal>(chara), out var clearData)
-            && clearData.Rankings.TryGetValue(EnumHelper.To<Th14.LevelPracticeWithTotal>(level), out var ranking)
+            && clearData.Rankings.TryGetValue(EnumHelper.To<Core.Models.Th14.LevelPracticeWithTotal>(level), out var ranking)
             ? ranking : ImmutableList<Th10.IScoreData<Th13.StageProgress>>.Empty;
     }
 }

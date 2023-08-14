@@ -16,10 +16,10 @@ namespace ThScoreFileConverter.Models.Th17;
 
 // %T17CLEAR[x][yy]
 internal class ClearReplacer : Th13.ClearReplacerBase<
-    Chara, CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    Chara, CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>
 {
     public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-        CharaWithTotal, Level, Level, Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>> clearDataDictionary)
+        CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>> clearDataDictionary)
         : base(Definitions.FormatPrefix, Parsers.LevelParser, Parsers.CharaParser, clearDataDictionary)
     {
     }

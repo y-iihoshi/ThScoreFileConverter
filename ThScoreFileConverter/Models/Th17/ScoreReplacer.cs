@@ -14,8 +14,8 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th17.CharaWithTotal,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14.StagePractice,
+    ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Core.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>>;
 
 namespace ThScoreFileConverter.Models.Th17;
@@ -38,7 +38,7 @@ internal class ScoreReplacer : Th13.ScoreReplacerBase<Chara>
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, Level level, Chara chara, int rank)
     {
         return clearDataDictionary.TryGetValue((CharaWithTotal)chara, out var clearData)
-            && clearData.Rankings.TryGetValue((Th14.LevelPracticeWithTotal)level, out var ranking)
+            && clearData.Rankings.TryGetValue((Core.Models.Th14.LevelPracticeWithTotal)level, out var ranking)
             && (rank < ranking.Count)
             ? ranking[rank] : new ScoreData();
     }
