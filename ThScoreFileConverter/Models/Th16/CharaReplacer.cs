@@ -15,14 +15,14 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14.StagePractice,
+    ThScoreFileConverter.Core.Models.Th14.StagePractice,
     ThScoreFileConverter.Models.Th16.IScoreData>;
 
 namespace ThScoreFileConverter.Models.Th16;
 
 // %T16CHARA[xx][y]
 internal class CharaReplacer : Th13.CharaReplacerBase<
-    CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Th14.StagePractice, IScoreData>
+    CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>
 {
     public CharaReplacer(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)

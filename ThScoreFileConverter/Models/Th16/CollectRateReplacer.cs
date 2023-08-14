@@ -24,7 +24,7 @@ internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
     LevelWithTotal,
     Level,
     Core.Models.Th14.LevelPracticeWithTotal,
-    Th14.StagePractice,
+    Core.Models.Th14.StagePractice,
     IScoreData>
 {
     public CollectRateReplacer(
@@ -33,7 +33,7 @@ internal class CollectRateReplacer : Th13.CollectRateReplacerBase<
             Level,
             Level,
             Core.Models.Th14.LevelPracticeWithTotal,
-            Th14.StagePractice,
+            Core.Models.Th14.StagePractice,
             IScoreData>> clearDataDictionary,
         INumberFormatter formatter)
         : base(

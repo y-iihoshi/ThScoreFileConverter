@@ -19,5 +19,5 @@ internal interface IClearData : Th095.IChapter
 
     IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-    IReadOnlyDictionary<(Level Level, Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
+    IReadOnlyDictionary<(Level Level, Core.Models.Th14.StagePractice Stage), Th10.IPractice> Practices { get; }
 }
