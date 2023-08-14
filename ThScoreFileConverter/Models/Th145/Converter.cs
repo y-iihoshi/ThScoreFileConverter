@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th155Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -14,25 +14,24 @@ using System.Linq;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th155;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th145;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th155Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions { get; } = "1.10c";
+    public override string SupportedVersions { get; } = "1.41";
 
     public override bool HasCardReplacer { get; }
 
     protected override bool ReadScoreFile(Stream input)
     {
 #if DEBUG
-        using var decoded = new FileStream("th155decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th145decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -57,7 +56,8 @@ internal class Th155Converter : ThConverter
 
         return new List<IStringReplaceable>
         {
-            new ClearRankReplacer(this.allScoreData.StoryDictionary),
+            new ClearRankReplacer(this.allScoreData.ClearRanks),
+            new ClearTimeReplacer(this.allScoreData.ClearTimes),
         };
     }
 

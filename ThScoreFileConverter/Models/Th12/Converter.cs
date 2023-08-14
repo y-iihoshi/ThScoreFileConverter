@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th18Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,35 +12,27 @@ using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models.Th18;
+using ThScoreFileConverter.Core.Models.Th12;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th18;
-using AllScoreData = ThScoreFileConverter.Models.Th13.AllScoreData<
-    ThScoreFileConverter.Core.Models.Th18.CharaWithTotal,
-    ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Core.Models.Level,
-    ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Core.Models.Stage,
-    ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>,
-    ThScoreFileConverter.Models.Th18.IStatus>;
+using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<ThScoreFileConverter.Core.Models.Th12.CharaWithTotal>;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th12;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th18Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions => "1.00a";
+    public override string SupportedVersions { get; } = "1.00b";
 
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
 #if DEBUG
-        using var decoded = new FileStream("th18decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th12decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -65,7 +57,7 @@ internal class Th18Converter : ThConverter
     protected override IEnumerable<IStringReplaceable> CreateReplacers(
         INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
     {
-        if ((this.allScoreData is null) || (this.allScoreData.Status is null))
+        if (this.allScoreData is null)
         {
             ThrowHelper.ThrowInvalidDataException(
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
@@ -80,8 +72,6 @@ internal class Th18Converter : ThConverter
             new ClearReplacer(this.allScoreData.ClearData),
             new CharaReplacer(this.allScoreData.ClearData, formatter),
             new CharaExReplacer(this.allScoreData.ClearData, formatter),
-            new AbilityCardReplacer(this.allScoreData.Status),
-            new AchievementReplacer(this.allScoreData.Status),
             new PracticeReplacer(this.allScoreData.ClearData, formatter),
         };
     }

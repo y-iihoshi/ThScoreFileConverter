@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th143Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -9,41 +9,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using CommunityToolkit.Diagnostics;
-using ThScoreFileConverter.Core.Models.Th143;
+using ThScoreFileConverter.Core.Helpers;
+using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th143;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Extensions;
-#endif
-
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th128;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th143Converter : ThConverter
+internal class Converter : ThConverter
 {
-    private readonly Dictionary<(Day Day, int Scene), (string Path, Th143.IBestShotHeader Header)> bestshots =
-        new(Th143.Definitions.SpellCards.Count);
-
     private AllScoreData? allScoreData;
 
     public override string SupportedVersions { get; } = "1.00a";
-
-    public override bool HasBestShotConverter { get; } = true;
 
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
 #if DEBUG
-        using var decoded = new FileStream("th143decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th128decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -68,7 +56,9 @@ internal class Th143Converter : ThConverter
     protected override IEnumerable<IStringReplaceable> CreateReplacers(
         INumberFormatter formatter, bool hideUntriedCards, string outputFilePath)
     {
-        if ((this.allScoreData is null) || (this.allScoreData.Status is null))
+        if ((this.allScoreData is null)
+            || (this.allScoreData.CardData is null)
+            || (this.allScoreData.Status is null))
         {
             ThrowHelper.ThrowInvalidDataException(
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
@@ -76,35 +66,15 @@ internal class Th143Converter : ThConverter
 
         return new List<IStringReplaceable>
         {
-            new ScoreReplacer(this.allScoreData.Scores, formatter),
-            new ScoreTotalReplacer(this.allScoreData.Scores, this.allScoreData.ItemStatuses, formatter),
-            new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
-            new NicknameReplacer(this.allScoreData.Status),
+            new ScoreReplacer(this.allScoreData.ClearData, formatter),
+            new CareerReplacer(this.allScoreData.CardData.Cards, formatter),
+            new CardReplacer(this.allScoreData.CardData.Cards, hideUntriedCards),
+            new CollectRateReplacer(this.allScoreData.CardData.Cards, formatter),
+            new ClearReplacer(this.allScoreData.ClearData),
+            new RouteReplacer(this.allScoreData.ClearData, formatter),
+            new RouteExReplacer(this.allScoreData.ClearData, formatter),
             new TimeReplacer(this.allScoreData.Status),
-            new ShotReplacer(this.bestshots, outputFilePath),
-            new ShotExReplacer(this.bestshots, outputFilePath),
         };
-    }
-
-    protected override string[] FilterBestShotFiles(string[] files)
-    {
-        var pattern = StringHelper.Create($@"sc({Parsers.DayLongPattern})_\d{{2}}.dat");
-
-        return files.Where(file => Regex.IsMatch(
-            Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
-    }
-
-    protected override void ConvertBestShot(Stream input, Stream output)
-    {
-        using var decoded = new MemoryStream();
-
-        Guard.IsTrue(output is FileStream, nameof(output), ExceptionMessages.ArgumentExceptionWrongType);
-        var outputFile = (FileStream)output;
-
-        var header = BestShotDeveloper.Develop<BestShotHeader>(input, output, PixelFormat.Format32bppArgb);
-
-        var key = (header.Day, header.Scene);
-        _ = this.bestshots.TryAdd(key, (outputFile.Name, header));
     }
 
     private static bool Decrypt(Stream input, Stream output)
@@ -158,8 +128,8 @@ internal class Th143Converter : ThConverter
                 chapter.ReadFrom(reader);
                 if (!chapter.IsValid)
                     return false;
-                if (!Score.CanInitialize(chapter) &&
-                    !ItemStatus.CanInitialize(chapter) &&
+                if (!ClearData.CanInitialize(chapter) &&
+                    !CardData.CanInitialize(chapter) &&
                     !Status.CanInitialize(chapter))
                     return false;
 
@@ -178,9 +148,9 @@ internal class Th143Converter : ThConverter
     {
         var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
         {
-            { Score.ValidSignature,      (data, ch) => data.Set(new Score(ch))      },
-            { ItemStatus.ValidSignature, (data, ch) => data.Set(new ItemStatus(ch)) },
-            { Status.ValidSignature,     (data, ch) => data.Set(new Status(ch))     },
+            { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
+            { CardData.ValidSignature,  (data, ch) => data.Set(new CardData(ch))  },
+            { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
         };
 
         using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
@@ -206,7 +176,8 @@ internal class Th143Converter : ThConverter
         }
 
         if ((allScoreData.Header is not null) &&
-            //// (allScoreData.scores.Count >= 0) &&
+            (allScoreData.ClearData.Count == EnumHelper<RouteWithTotal>.NumValues) &&
+            (allScoreData.CardData is not null) &&
             (allScoreData.Status is not null))
             return allScoreData;
         else

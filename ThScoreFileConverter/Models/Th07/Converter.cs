@@ -1,42 +1,38 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Th09Converter.cs" company="None">
+// <copyright file="Converter.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // ElementsMustBeDocumented
+#pragma warning disable SA1600 // Elements should be documented
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models;
-using ThScoreFileConverter.Core.Models.Th09;
+using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Models.Th09;
 
-namespace ThScoreFileConverter.Models;
+namespace ThScoreFileConverter.Models.Th07;
 
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Th09Converter : ThConverter
+internal class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 
-    public override string SupportedVersions { get; } = "1.50a";
-
-    public override bool HasCardReplacer { get; }
+    public override string SupportedVersions { get; } = "1.00b";
 
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
 #if DEBUG
-        using var decoded = new FileStream("th09decoded.dat", FileMode.Create, FileAccess.ReadWrite);
+        using var decoded = new FileStream("th07decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
         using var decoded = new MemoryStream();
 #endif
@@ -70,19 +66,21 @@ internal class Th09Converter : ThConverter
         return new List<IStringReplaceable>
         {
             new ScoreReplacer(this.allScoreData.Rankings, formatter),
+            new CareerReplacer(this.allScoreData.CardAttacks, formatter),
+            new CardReplacer(this.allScoreData.CardAttacks, hideUntriedCards),
+            new CollectRateReplacer(this.allScoreData.CardAttacks, formatter),
+            new ClearReplacer(this.allScoreData.Rankings),
+            new PlayReplacer(this.allScoreData.PlayStatus, formatter),
             new TimeReplacer(this.allScoreData.PlayStatus),
-            new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts, formatter),
+            new PracticeReplacer(this.allScoreData.PracticeScores, formatter),
         };
     }
 
     private static bool Decrypt(Stream input, Stream output)
     {
         var size = (int)input.Length;
-        ThCrypt.Decrypt(input, output, size, 0x3A, 0xCD, 0x0100, 0x0C00);
-
         var data = new byte[size];
-        _ = output.Seek(0, SeekOrigin.Begin);
-        _ = output.Read(data, 0, size);
+        _ = input.Read(data, 0, size);
 
         uint checksum = 0;
         byte temp = 0;
@@ -95,7 +93,6 @@ internal class Th09Converter : ThConverter
                 checksum += data[index];
         }
 
-        _ = output.Seek(0, SeekOrigin.Begin);
         output.Write(data, 0, size);
 
         return (ushort)checksum == BitConverter.ToUInt16(data, 2);
@@ -147,6 +144,11 @@ internal class Th09Converter : ThConverter
                         if (chapter.FirstByteOfData != 0x01)
                             return false;
                         break;
+                    case VersionInfo.ValidSignature:
+                        if (chapter.FirstByteOfData != 0x01)
+                            return false;
+                        //// th07.exe does something more things here...
+                        break;
                     default:
                         break;
                 }
@@ -166,11 +168,14 @@ internal class Th09Converter : ThConverter
     {
         var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>
         {
-            { Header.ValidSignature,           (data, ch) => data.Set(new Header(ch))           },
-            { HighScore.ValidSignature,        (data, ch) => data.Set(new HighScore(ch))        },
-            { PlayStatus.ValidSignature,       (data, ch) => data.Set(new PlayStatus(ch))       },
-            { Th07.LastName.ValidSignature,    (data, ch) => data.Set(new Th07.LastName(ch))    },
-            { Th07.VersionInfo.ValidSignature, (data, ch) => data.Set(new Th07.VersionInfo(ch)) },
+            { Header.ValidSignature,        (data, ch) => data.Set(new Header(ch))        },
+            { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
+            { ClearData.ValidSignature,     (data, ch) => data.Set(new ClearData(ch))     },
+            { CardAttack.ValidSignature,    (data, ch) => data.Set(new CardAttack(ch))    },
+            { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
+            { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
+            { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
+            { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
         };
 
         using var reader = new BinaryReader(input, EncodingHelper.UTF8NoBOM, true);
@@ -194,7 +199,10 @@ internal class Th09Converter : ThConverter
         }
 
         if ((allScoreData.Header is not null) &&
-            (allScoreData.Rankings.Count == EnumHelper<Chara>.NumValues * EnumHelper<Level>.NumValues) &&
+            //// (allScoreData.rankings.Count >= 0) &&
+            (allScoreData.ClearData.Count == EnumHelper<Chara>.NumValues) &&
+            //// (allScoreData.cardAttacks.Length == NumCards) &&
+            //// (allScoreData.practiceScores.Count >= 0) &&
             (allScoreData.PlayStatus is not null) &&
             (allScoreData.LastName is not null) &&
             (allScoreData.VersionInfo is not null))
