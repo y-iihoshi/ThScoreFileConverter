@@ -8,15 +8,15 @@
         xmlns:m="clr-namespace:ThScoreFileConverter.Models"
         lex:LocalizeDictionary.DesignCulture="ja-JP"
         lex:LocalizeDictionary.Provider="{x:Static m:LocalizationProvider.Instance}"
+        Height="{Binding Height.Value, Mode=TwoWay}"
         IsEnabled="{Binding IsIdle.Value}"
-        Height="480"
-        MinHeight="480"
-        MinWidth="480"
+        MinHeight="{Binding MinHeight}"
+        MinWidth="{Binding MinWidth}"
         ResizeMode="CanResizeWithGrip"
         Style="{StaticResource WindowStyleKey}"
         Title="{Binding Title}"
         UseLayoutRounding="True"
-        Width="480">
+        Width="{Binding Width.Value, Mode=TwoWay}">
 
     <xb:Interaction.Triggers>
         <xb:EventTrigger EventName="Closed">
@@ -83,11 +83,11 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"
-                               MinHeight="240"/>
+                <RowDefinition Height="{Binding MainContentHeight.Value, Mode=TwoWay}"
+                               MinHeight="{Binding MainContentMinHeight}"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"
-                               MinHeight="80"/>
+                <RowDefinition Height="{Binding SubContentHeight.Value, Mode=TwoWay}"
+                               MinHeight="{Binding SubContentMinHeight}"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
