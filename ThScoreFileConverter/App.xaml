@@ -29,15 +29,27 @@
             <Setter Property="SizeToContent"
                     Value="WidthAndHeight"/>
         </Style>
+        <Style x:Key="HorizontalSeparatorStyle"
+               BasedOn="{StaticResource {x:Type Separator}}"
+               TargetType="{x:Type Separator}">
+            <Setter Property="Margin"
+                    Value="0,5"/>
+            <Setter Property="Opacity"
+                    Value="0"/>
+        </Style>
+        <Style x:Key="VerticalSeparatorStyle"
+               BasedOn="{StaticResource {x:Type Separator}}"
+               TargetType="{x:Type Separator}">
+            <Setter Property="Margin"
+                    Value="2,0"/>
+            <Setter Property="Opacity"
+                    Value="0"/>
+        </Style>
         <Style x:Key="HorizontalStackPanelStyle"
                TargetType="{x:Type StackPanel}">
             <Style.Resources>
-                <Style TargetType="Separator">
-                    <Setter Property="Margin"
-                            Value="2,0"/>
-                    <Setter Property="Opacity"
-                            Value="0"/>
-                </Style>
+                <Style BasedOn="{StaticResource VerticalSeparatorStyle}"
+                       TargetType="{x:Type Separator}"/>
             </Style.Resources>
             <Setter Property="Orientation"
                     Value="Horizontal"/>
@@ -45,12 +57,8 @@
         <Style x:Key="VerticalStackPanelStyle"
                TargetType="{x:Type StackPanel}">
             <Style.Resources>
-                <Style TargetType="Separator">
-                    <Setter Property="Margin"
-                            Value="0,5"/>
-                    <Setter Property="Opacity"
-                            Value="0"/>
-                </Style>
+                <Style BasedOn="{StaticResource HorizontalSeparatorStyle}"
+                       TargetType="{x:Type Separator}"/>
             </Style.Resources>
             <Setter Property="Orientation"
                     Value="Vertical"/>

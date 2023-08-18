@@ -9,11 +9,14 @@
         lex:LocalizeDictionary.DesignCulture="ja-JP"
         lex:LocalizeDictionary.Provider="{x:Static m:LocalizationProvider.Instance}"
         IsEnabled="{Binding IsIdle.Value}"
-        ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight"
+        Height="480"
+        MinHeight="480"
+        MinWidth="480"
+        ResizeMode="CanResizeWithGrip"
         Style="{StaticResource WindowStyleKey}"
         Title="{Binding Title}"
-        UseLayoutRounding="True">
+        UseLayoutRounding="True"
+        Width="480">
 
     <xb:Interaction.Triggers>
         <xb:EventTrigger EventName="Closed">
@@ -21,9 +24,8 @@
         </xb:EventTrigger>
     </xb:Interaction.Triggers>
 
-    <StackPanel Margin="10"
-                Style="{StaticResource VerticalStackPanelStyle}">
-        <Grid>
+    <DockPanel Margin="12">
+        <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -64,248 +66,256 @@
             <Label Grid.Column="1"
                    Content="{Binding SupportedVersions}"/>
         </Grid>
+        <Separator DockPanel.Dock="Top"
+                   Style="{StaticResource HorizontalSeparatorStyle}"/>
 
-        <Separator/>
+        <StackPanel DockPanel.Dock="Bottom"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource HorizontalStackPanelStyle}">
+            <Button Command="{Binding OpenSettingWindowCommand}"
+                    Content="{lex:Loc ViewsMainWindowButtonSetting}"/>
+            <Separator/>
+            <Button Command="{Binding OpenAboutWindowCommand}"
+                    Content="{lex:Loc ViewsMainWindowButtonAbout}"/>
+        </StackPanel>
+        <Separator DockPanel.Dock="Bottom"
+                   Style="{StaticResource HorizontalSeparatorStyle}"/>
 
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid.Resources>
-                <Style BasedOn="{StaticResource {x:Type Button}}"
-                       TargetType="{x:Type Button}">
-                    <Setter Property="Margin"
-                            Value="5,2,0,2"/>
-                </Style>
-                <Style BasedOn="{StaticResource {x:Type ListBox}}"
-                       TargetType="{x:Type ListBox}">
-                    <Setter Property="Margin"
-                            Value="0,2"/>
-                </Style>
-                <Style BasedOn="{StaticResource {x:Type TextBox}}"
-                       TargetType="{x:Type TextBox}">
-                    <Setter Property="Margin"
-                            Value="0,2"/>
-                </Style>
-            </Grid.Resources>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-            <Label Grid.Column="0"
-                   Grid.Row="0"
-                   Content="{lex:Loc ViewsMainWindowLabelScore}"
-                   HorizontalAlignment="Left"
-                   Target="{Binding ElementName=ScoreTextBox, Mode=OneWay}"
-                   VerticalAlignment="Center"/>
-            <TextBox x:Name="ScoreTextBox"
-                     Grid.Column="1"
-                     Grid.Row="0"
-                     IsReadOnly="True"
-                     Text="{Binding ScoreFile.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                     VerticalAlignment="Center">
-                <xb:Interaction.Behaviors>
-                    <i:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"
-                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
-                </xb:Interaction.Behaviors>
-            </TextBox>
-            <Button Grid.Column="2"
-                    Grid.Row="0"
-                    Content="{lex:Loc ViewsMainWindowButtonOpen}"
-                    VerticalAlignment="Center">
-                <xb:Interaction.Triggers>
-                    <xb:EventTrigger EventName="Click">
-                        <i:OpenFileDialogAction Filter="{lex:Loc ScoreFileFilter}"
-                                                InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory.Value}"
-                                                OkCommand="{Binding SelectScoreFileCommand}"
-                                                Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                    </xb:EventTrigger>
-                </xb:Interaction.Triggers>
-            </Button>
+                <Grid.Resources>
+                    <Style BasedOn="{StaticResource {x:Type Button}}"
+                           TargetType="{x:Type Button}">
+                        <Setter Property="Margin"
+                                Value="5,2,0,2"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type ListBox}}"
+                           TargetType="{x:Type ListBox}">
+                        <Setter Property="Margin"
+                                Value="0,2"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type TextBox}}"
+                           TargetType="{x:Type TextBox}">
+                        <Setter Property="Margin"
+                                Value="0,2"/>
+                    </Style>
+                </Grid.Resources>
 
-            <Label Grid.Column="0"
-                   Grid.Row="1"
-                   Content="{lex:Loc ViewsMainWindowLabelBestShot}"
-                   HorizontalAlignment="Left"
-                   IsEnabled="{Binding CanHandleBestShot}"
-                   Target="{Binding ElementName=BestShotTextBox, Mode=OneWay}"
-                   VerticalAlignment="Center"/>
-            <TextBox x:Name="BestShotTextBox"
-                     Grid.Column="1"
-                     Grid.Row="1"
-                     IsEnabled="{Binding CanHandleBestShot}"
-                     IsReadOnly="True"
-                     Text="{Binding BestShotDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                     VerticalAlignment="Center">
-                <xb:Interaction.Behaviors>
-                    <i:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
-                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
-                </xb:Interaction.Behaviors>
-            </TextBox>
-            <Button Grid.Column="2"
-                    Grid.Row="1"
-                    Content="{lex:Loc ViewsMainWindowButtonOpen}"
-                    IsEnabled="{Binding CanHandleBestShot}"
-                    VerticalAlignment="Center">
-                <xb:Interaction.Triggers>
-                    <xb:EventTrigger EventName="Click">
-                        <i:FolderBrowserDialogAction Description="{lex:Loc MessageSelectBestShotDirectory}"
-                                                     OkCommand="{Binding SelectBestShotDirectoryCommand}"
-                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                     SelectedPath="{Binding Text, ElementName=BestShotTextBox}"
-                                                     ShowNewFolderButton="False"/>
-                    </xb:EventTrigger>
-                </xb:Interaction.Triggers>
-            </Button>
-
-            <Label Grid.Column="0"
-                   Grid.Row="2"
-                   Content="{lex:Loc ViewsMainWindowLabelTemplates}"
-                   HorizontalAlignment="Left"
-                   Target="{Binding ElementName=TemplateListBox, Mode=OneWay}"
-                   VerticalAlignment="Top"/>
-            <ListBox x:Name="TemplateListBox"
-                     Grid.Column="1"
-                     Grid.Row="2"
-                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     AllowDrop="True"
-                     Height="100"
-                     ItemsSource="{Binding TemplateFiles.Value}"
-                     SelectionMode="Multiple"
-                     VerticalAlignment="Top">
-                <xb:Interaction.Behaviors>
-                    <i:UIElementDropBehavior DropCommand="{Binding DropTemplateFilesCommand}"
-                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
-                </xb:Interaction.Behaviors>
-                <xb:Interaction.Triggers>
-                    <xb:EventTrigger EventName="SelectionChanged">
-                        <xb:InvokeCommandAction Command="{Binding TemplateFilesSelectionChangedCommand}"/>
-                    </xb:EventTrigger>
-                </xb:Interaction.Triggers>
-            </ListBox>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="2">
-                <Button Content="{lex:Loc ViewsMainWindowButtonAdd}">
+                <Label Grid.Column="0"
+                       Grid.Row="0"
+                       Content="{lex:Loc ViewsMainWindowLabelScore}"
+                       HorizontalAlignment="Left"
+                       Target="{Binding ElementName=ScoreTextBox, Mode=OneWay}"
+                       VerticalAlignment="Center"/>
+                <TextBox x:Name="ScoreTextBox"
+                         Grid.Column="1"
+                         Grid.Row="0"
+                         IsReadOnly="True"
+                         Text="{Binding ScoreFile.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center">
+                    <xb:Interaction.Behaviors>
+                        <i:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"
+                                                 PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                                 PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                    </xb:Interaction.Behaviors>
+                </TextBox>
+                <Button Grid.Column="2"
+                        Grid.Row="0"
+                        Content="{lex:Loc ViewsMainWindowButtonOpen}"
+                        VerticalAlignment="Center">
                     <xb:Interaction.Triggers>
                         <xb:EventTrigger EventName="Click">
-                            <i:OpenFileDialogAction Filter="{lex:Loc TemplateFileFilter}"
-                                                    InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory.Value}"
-                                                    Multiselect="True"
-                                                    OkCommand="{Binding AddTemplateFilesCommand}"
+                            <i:OpenFileDialogAction Filter="{lex:Loc ScoreFileFilter}"
+                                                    InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory.Value}"
+                                                    OkCommand="{Binding SelectScoreFileCommand}"
                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                         </xb:EventTrigger>
                     </xb:Interaction.Triggers>
                 </Button>
-                <Button Command="{Binding DeleteTemplateFilesCommand}"
-                        CommandParameter="{Binding SelectedItems, ElementName=TemplateListBox}"
-                        Content="{lex:Loc ViewsMainWindowButtonRemove}"/>
-                <Button Command="{Binding DeleteAllTemplateFilesCommand}"
-                        Content="{lex:Loc ViewsMainWindowButtonRemoveAll}"/>
-            </StackPanel>
 
-            <Label Grid.Column="0"
-                   Grid.Row="3"
-                   Content="{lex:Loc ViewsMainWindowLabelOutput}"
-                   HorizontalAlignment="Left"
-                   Target="{Binding ElementName=OutputTextBox, Mode=OneWay}"
-                   VerticalAlignment="Center"/>
-            <TextBox x:Name="OutputTextBox"
-                     Grid.Column="1"
-                     Grid.Row="3"
+                <Label Grid.Column="0"
+                       Grid.Row="1"
+                       Content="{lex:Loc ViewsMainWindowLabelBestShot}"
+                       HorizontalAlignment="Left"
+                       IsEnabled="{Binding CanHandleBestShot}"
+                       Target="{Binding ElementName=BestShotTextBox, Mode=OneWay}"
+                       VerticalAlignment="Center"/>
+                <TextBox x:Name="BestShotTextBox"
+                         Grid.Column="1"
+                         Grid.Row="1"
+                         IsEnabled="{Binding CanHandleBestShot}"
+                         IsReadOnly="True"
+                         Text="{Binding BestShotDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center">
+                    <xb:Interaction.Behaviors>
+                        <i:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
+                                                 PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                                 PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                    </xb:Interaction.Behaviors>
+                </TextBox>
+                <Button Grid.Column="2"
+                        Grid.Row="1"
+                        Content="{lex:Loc ViewsMainWindowButtonOpen}"
+                        IsEnabled="{Binding CanHandleBestShot}"
+                        VerticalAlignment="Center">
+                    <xb:Interaction.Triggers>
+                        <xb:EventTrigger EventName="Click">
+                            <i:FolderBrowserDialogAction Description="{lex:Loc MessageSelectBestShotDirectory}"
+                                                         OkCommand="{Binding SelectBestShotDirectoryCommand}"
+                                                         Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                         SelectedPath="{Binding Text, ElementName=BestShotTextBox}"
+                                                         ShowNewFolderButton="False"/>
+                        </xb:EventTrigger>
+                    </xb:Interaction.Triggers>
+                </Button>
+
+                <Label Grid.Column="0"
+                       Grid.Row="2"
+                       Content="{lex:Loc ViewsMainWindowLabelTemplates}"
+                       HorizontalAlignment="Left"
+                       Target="{Binding ElementName=TemplateListBox, Mode=OneWay}"
+                       VerticalAlignment="Top"/>
+                <ListBox x:Name="TemplateListBox"
+                         Grid.Column="1"
+                         Grid.Row="2"
+                         ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         AllowDrop="True"
+                         ItemsSource="{Binding TemplateFiles.Value}"
+                         SelectionMode="Multiple">
+                    <xb:Interaction.Behaviors>
+                        <i:UIElementDropBehavior DropCommand="{Binding DropTemplateFilesCommand}"
+                                                 PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                                 PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                    </xb:Interaction.Behaviors>
+                    <xb:Interaction.Triggers>
+                        <xb:EventTrigger EventName="SelectionChanged">
+                            <xb:InvokeCommandAction Command="{Binding TemplateFilesSelectionChangedCommand}"/>
+                        </xb:EventTrigger>
+                    </xb:Interaction.Triggers>
+                </ListBox>
+                <StackPanel Grid.Column="2"
+                            Grid.Row="2">
+                    <Button Content="{lex:Loc ViewsMainWindowButtonAdd}">
+                        <xb:Interaction.Triggers>
+                            <xb:EventTrigger EventName="Click">
+                                <i:OpenFileDialogAction Filter="{lex:Loc TemplateFileFilter}"
+                                                        InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory.Value}"
+                                                        Multiselect="True"
+                                                        OkCommand="{Binding AddTemplateFilesCommand}"
+                                                        Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                            </xb:EventTrigger>
+                        </xb:Interaction.Triggers>
+                    </Button>
+                    <Button Command="{Binding DeleteTemplateFilesCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=TemplateListBox}"
+                            Content="{lex:Loc ViewsMainWindowButtonRemove}"/>
+                    <Button Command="{Binding DeleteAllTemplateFilesCommand}"
+                            Content="{lex:Loc ViewsMainWindowButtonRemoveAll}"/>
+                </StackPanel>
+
+                <Label Grid.Column="0"
+                       Grid.Row="3"
+                       Content="{lex:Loc ViewsMainWindowLabelOutput}"
+                       HorizontalAlignment="Left"
+                       Target="{Binding ElementName=OutputTextBox, Mode=OneWay}"
+                       VerticalAlignment="Center"/>
+                <TextBox x:Name="OutputTextBox"
+                         Grid.Column="1"
+                         Grid.Row="3"
+                         IsReadOnly="True"
+                         Text="{Binding OutputDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center">
+                    <xb:Interaction.Behaviors>
+                        <i:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
+                                                 PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                                 PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                    </xb:Interaction.Behaviors>
+                </TextBox>
+                <Button Grid.Column="2"
+                        Grid.Row="3"
+                        Content="{lex:Loc ViewsMainWindowButtonOpen}"
+                        VerticalAlignment="Center">
+                    <xb:Interaction.Triggers>
+                        <xb:EventTrigger EventName="Click">
+                            <i:FolderBrowserDialogAction Description="{lex:Loc MessageSelectOutputDirectory}"
+                                                         OkCommand="{Binding SelectOutputDirectoryCommand}"
+                                                         Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                         SelectedPath="{Binding Text, ElementName=OutputTextBox}"/>
+                        </xb:EventTrigger>
+                    </xb:Interaction.Triggers>
+                </Button>
+
+                <Label Grid.Column="0"
+                       Grid.Row="4"
+                       Content="{lex:Loc ViewsMainWindowLabelImageOutput}"
+                       HorizontalAlignment="Left"
+                       IsEnabled="{Binding CanHandleBestShot}"
+                       Target="{Binding ElementName=ImageOutputTextBox, Mode=OneWay}"
+                       VerticalAlignment="Center"/>
+                <TextBox x:Name="ImageOutputTextBox"
+                         Grid.Column="1"
+                         Grid.Row="4"
+                         IsEnabled="{Binding CanHandleBestShot}"
+                         Text="{Binding ImageOutputDirectory.Value, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center"/>
+                <CheckBox Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Grid.Row="5"
+                          Content="{lex:Loc ViewsMainWindowCheckBoxHideUntriedCardNames}"
+                          IsChecked="{Binding HidesUntriedCards.Value}"
+                          IsEnabled="{Binding CanReplaceCardNames}"/>
+
+                <Separator Grid.ColumnSpan="3"
+                           Grid.Row="6"
+                           Style="{StaticResource HorizontalSeparatorStyle}"/>
+
+                <Button Grid.ColumnSpan="3"
+                        Grid.Row="7"
+                        Command="{Binding ConvertCommand}"
+                        Content="{lex:Loc ViewsMainWindowButtonConvert}"
+                        HorizontalAlignment="Center"
+                        IsDefault="True"
+                        MinWidth="100"/>
+            </Grid>
+
+            <Separator Grid.Row="1"
+                       Style="{StaticResource HorizontalSeparatorStyle}"/>
+
+            <TextBox Grid.Row="2"
+                     AllowDrop="False"
+                     FontSize="10"
                      IsReadOnly="True"
-                     Text="{Binding OutputDirectory.Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                     VerticalAlignment="Center">
+                     IsUndoEnabled="False"
+                     Text="{Binding Log.Value, Mode=OneWay, NotifyOnTargetUpdated=True}"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Visible">
                 <xb:Interaction.Behaviors>
-                    <i:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
-                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                    <i:TextBoxBaseScrollBehavior AutoScrollToEnd="True"/>
                 </xb:Interaction.Behaviors>
             </TextBox>
-            <Button Grid.Column="2"
-                    Grid.Row="3"
-                    Content="{lex:Loc ViewsMainWindowButtonOpen}"
-                    VerticalAlignment="Center">
-                <xb:Interaction.Triggers>
-                    <xb:EventTrigger EventName="Click">
-                        <i:FolderBrowserDialogAction Description="{lex:Loc MessageSelectOutputDirectory}"
-                                                     OkCommand="{Binding SelectOutputDirectoryCommand}"
-                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                     SelectedPath="{Binding Text, ElementName=OutputTextBox}"/>
-                    </xb:EventTrigger>
-                </xb:Interaction.Triggers>
-            </Button>
-
-            <Label Grid.Column="0"
-                   Grid.Row="4"
-                   Content="{lex:Loc ViewsMainWindowLabelImageOutput}"
-                   HorizontalAlignment="Left"
-                   IsEnabled="{Binding CanHandleBestShot}"
-                   Target="{Binding ElementName=ImageOutputTextBox, Mode=OneWay}"
-                   VerticalAlignment="Center"/>
-            <TextBox x:Name="ImageOutputTextBox"
-                     Grid.Column="1"
-                     Grid.Row="4"
-                     IsEnabled="{Binding CanHandleBestShot}"
-                     Text="{Binding ImageOutputDirectory.Value, UpdateSourceTrigger=PropertyChanged}"
-                     VerticalAlignment="Center"/>
-            <CheckBox Grid.Column="1"
-                      Grid.ColumnSpan="2"
-                      Grid.Row="5"
-                      Content="{lex:Loc ViewsMainWindowCheckBoxHideUntriedCardNames}"
-                      IsChecked="{Binding HidesUntriedCards.Value}"
-                      IsEnabled="{Binding CanReplaceCardNames}"/>
         </Grid>
-
-        <Separator/>
-
-        <Button Command="{Binding ConvertCommand}"
-                Content="{lex:Loc ViewsMainWindowButtonConvert}"
-                HorizontalAlignment="Center"
-                IsDefault="True"
-                MinWidth="100"/>
-
-        <Separator/>
-
-        <TextBox AllowDrop="False"
-                 FontSize="10"
-                 Height="70"
-                 IsReadOnly="True"
-                 IsUndoEnabled="False"
-                 Text="{Binding Log.Value, Mode=OneWay, NotifyOnTargetUpdated=True}"
-                 TextWrapping="Wrap"
-                 VerticalScrollBarVisibility="Visible">
-            <xb:Interaction.Behaviors>
-                <i:TextBoxBaseScrollBehavior AutoScrollToEnd="True"/>
-            </xb:Interaction.Behaviors>
-        </TextBox>
-
-        <Separator/>
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1"
-                        Style="{StaticResource HorizontalStackPanelStyle}">
-                <Button Command="{Binding OpenSettingWindowCommand}"
-                        Content="{lex:Loc ViewsMainWindowButtonSetting}"/>
-                <Separator/>
-                <Button Command="{Binding OpenAboutWindowCommand}"
-                        Content="{lex:Loc ViewsMainWindowButtonAbout}"/>
-            </StackPanel>
-        </Grid>
-    </StackPanel>
+    </DockPanel>
 </Window>
