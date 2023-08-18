@@ -29,6 +29,16 @@
             <Setter Property="SizeToContent"
                     Value="WidthAndHeight"/>
         </Style>
+        <Style x:Key="HorizontalGridSplitterStyle"
+               BasedOn="{StaticResource {x:Type GridSplitter}}"
+               TargetType="{x:Type GridSplitter}">
+            <Setter Property="Height"
+                    Value="10"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch"/>
+            <Setter Property="ShowsPreview"
+                    Value="True"/>
+        </Style>
         <Style x:Key="HorizontalSeparatorStyle"
                BasedOn="{StaticResource {x:Type Separator}}"
                TargetType="{x:Type Separator}">
