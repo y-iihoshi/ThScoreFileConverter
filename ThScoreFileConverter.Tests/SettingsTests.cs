@@ -9,83 +9,6 @@ using ThScoreFileConverter.Core.Tests.UnitTesting;
 namespace ThScoreFileConverter.Tests;
 
 [TestClass]
-#if NETFRAMEWORK
-[DeploymentItem(@"TestData\empty.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-root-node.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-root-node.xml", @"TestData")]
-[DeploymentItem(@"TestData\wrong-namespace.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-child-nodes.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-last-title.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-last-title.xml", @"TestData")]
-[DeploymentItem(@"TestData\nonexistent-last-title.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-dictionary.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-dictionary.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-key-value-types.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-key.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-key.xml", @"TestData")]
-[DeploymentItem(@"TestData\unknown-key.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-value.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-value.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-best-shot-directory.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-best-shot-directory.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-hide-untried-cards.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-hide-untried-cards.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-hide-untried-cards.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-image-output-directory.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-image-output-directory.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-output-directory.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-output-directory.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-score-file.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-score-file.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-template-files.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-template-files.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-template-files.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-font-family-name.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-font-family-name.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\negative-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\zero-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\exceeded-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-output-number-group-separator.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-output-number-group-separator.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-output-number-group-separator.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-input-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-input-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-input-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\unsupported-input-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-output-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-output-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-output-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\unsupported-output-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-language.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
-[DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-optional-settings.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-window-width.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-window-width.xml", @"TestData")]
-[DeploymentItem(@"TestData\negative-window-width.xml", @"TestData")]
-[DeploymentItem(@"TestData\zero-window-width.xml", @"TestData")]
-[DeploymentItem(@"TestData\below-window-width.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-window-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-window-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\negative-window-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\zero-window-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\below-window-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-main-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-main-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\negative-main-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\zero-main-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\below-main-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\empty-sub-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-sub-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\negative-sub-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\zero-sub-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\below-sub-content-height.xml", @"TestData")]
-[DeploymentItem(@"TestData\invalid-character.xml", @"TestData")]
-#endif
 public class SettingsTests
 {
     [TestMethod]
@@ -389,7 +312,7 @@ public class SettingsTests
     public void LoadTestNoFontFamilyName()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-font-family-name.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
     }
 
@@ -405,7 +328,7 @@ public class SettingsTests
     public void LoadTestNoFontSize()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-font-size.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
     }
 
@@ -448,7 +371,7 @@ public class SettingsTests
     public void LoadTestNoOutputNumberGroupSeparator()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-output-number-group-separator.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
     }
 
@@ -470,7 +393,7 @@ public class SettingsTests
     public void LoadTestNoInputCodePageId()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-input-code-page-id.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(65001, settings.InputCodePageId);
     }
 
@@ -500,7 +423,7 @@ public class SettingsTests
     public void LoadTestNoOutputCodePageId()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-output-code-page-id.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(65001, settings.OutputCodePageId);
     }
 
@@ -530,7 +453,7 @@ public class SettingsTests
     public void LoadTestNoLanguage()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-language.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
     }
 
