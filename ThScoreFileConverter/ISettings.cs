@@ -49,6 +49,26 @@ public interface ISettings
     bool? OutputNumberGroupSeparator { get; set; }
 
     /// <summary>
+    /// Gets or sets the width of the main window.
+    /// </summary>
+    double? WindowWidth { get; set; }
+
+    /// <summary>
+    /// Gets or sets the height of the main window.
+    /// </summary>
+    double? WindowHeight { get; set; }
+
+    /// <summary>
+    /// Gets or sets the height of the main content area in the main window.
+    /// </summary>
+    double? MainContentHeight { get; set; }
+
+    /// <summary>
+    /// Gets or sets the height of the sub content area in the main window.
+    /// </summary>
+    double? SubContentHeight { get; set; }
+
+    /// <summary>
     /// Loads the settings from the specified XML file.
     /// </summary>
     /// <param name="path">The path of the XML file to load.</param>

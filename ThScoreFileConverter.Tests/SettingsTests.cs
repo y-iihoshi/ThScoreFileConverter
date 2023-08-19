@@ -63,6 +63,27 @@ namespace ThScoreFileConverter.Tests;
 [DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
 [DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
+[DeploymentItem(@"TestData\no-optional-settings.xml", @"TestData")]
+[DeploymentItem(@"TestData\empty-window-width.xml", @"TestData")]
+[DeploymentItem(@"TestData\invalid-window-width.xml", @"TestData")]
+[DeploymentItem(@"TestData\negative-window-width.xml", @"TestData")]
+[DeploymentItem(@"TestData\zero-window-width.xml", @"TestData")]
+[DeploymentItem(@"TestData\below-window-width.xml", @"TestData")]
+[DeploymentItem(@"TestData\empty-window-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\invalid-window-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\negative-window-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\zero-window-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\below-window-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\empty-main-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\invalid-main-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\negative-main-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\zero-main-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\below-main-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\empty-sub-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\invalid-sub-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\negative-sub-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\zero-sub-content-height.xml", @"TestData")]
+[DeploymentItem(@"TestData\below-sub-content-height.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-character.xml", @"TestData")]
 #endif
 public class SettingsTests
@@ -79,6 +100,10 @@ public class SettingsTests
         Assert.AreEqual(65001, settings.InputCodePageId);
         Assert.AreEqual(65001, settings.OutputCodePageId);
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
+        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
     }
 
     [TestMethod]
@@ -106,6 +131,10 @@ public class SettingsTests
         Assert.AreEqual(65001, settings.InputCodePageId);
         Assert.AreEqual(65001, settings.OutputCodePageId);
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
+        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
     }
 
     [TestMethod]
@@ -530,6 +559,190 @@ public class SettingsTests
     }
 
     [TestMethod]
+    public void LoadTestNoWindowWidth()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\no-optional-settings.xml");
+        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+    }
+
+    [TestMethod]
+    public void LoadTestEmptyWindowWidth()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\empty-window-width.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestInvalidWindowWidth()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\invalid-window-width.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestNegativeWindowWidth()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\negative-window-width.xml");
+        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+    }
+
+    [TestMethod]
+    public void LoadTestZeroWindowWidth()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\zero-window-width.xml");
+        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+    }
+
+    [TestMethod]
+    public void LoadTestBelowWindowWidth()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\below-window-width.xml");
+        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+    }
+
+    [TestMethod]
+    public void LoadTestNoWindowHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\no-optional-settings.xml");
+        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestEmptyWindowHeight()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\empty-window-height.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestInvalidWindowHeight()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\invalid-window-height.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestNegativeWindowHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\negative-window-height.xml");
+        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestZeroWindowHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\zero-window-height.xml");
+        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestBelowWindowHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\below-window-height.xml");
+        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestNoMainContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\no-optional-settings.xml");
+        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestEmptyMainContentHeight()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\empty-main-content-height.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestInvalidMainContentHeight()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\invalid-main-content-height.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestNegativeMainContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\negative-main-content-height.xml");
+        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestZeroMainContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\zero-main-content-height.xml");
+        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestBelowMainContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\below-main-content-height.xml");
+        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestNoSubContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\no-optional-settings.xml");
+        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestEmptySubContentHeight()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\empty-sub-content-height.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestInvalidSubContentHeight()
+    {
+        _ = Assert.ThrowsException<InvalidDataException>(
+            () => new Settings().Load(@"TestData\invalid-sub-content-height.xml"));
+    }
+
+    [TestMethod]
+    public void LoadTestNegativeSubContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\negative-sub-content-height.xml");
+        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestZeroSubContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\zero-sub-content-height.xml");
+        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+    }
+
+    [TestMethod]
+    public void LoadTestBelowSubContentHeight()
+    {
+        var settings = new Settings();
+        settings.Load(@"TestData\below-sub-content-height.xml");
+        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+    }
+
+    [TestMethod]
     public void LoadTestInvalidCharacter()
     {
         _ = Assert.ThrowsException<InvalidDataException>(
@@ -547,6 +760,11 @@ public class SettingsTests
             OutputNumberGroupSeparator = false,
             InputCodePageId = 932,
             OutputCodePageId = 932,
+            Language = "ja-JP",
+            WindowWidth = 480.5,
+            WindowHeight = 480.5,
+            MainContentHeight = 240.5,
+            SubContentHeight = 80.5,
         };
 
         var settingsPerTitle = settings.GetSettingsPerTitle(settings.LastTitle);
@@ -581,6 +799,12 @@ public class SettingsTests
         Assert.AreEqual(settings.OutputNumberGroupSeparator, settings2.OutputNumberGroupSeparator);
         Assert.AreEqual(settings.InputCodePageId, settings2.InputCodePageId);
         Assert.AreEqual(settings.OutputCodePageId, settings2.OutputCodePageId);
+        Assert.AreEqual(settings.Language, settings2.Language);
+
+        Assert.AreEqual(settings.WindowWidth, settings2.WindowWidth);
+        Assert.AreEqual(settings.WindowHeight, settings2.WindowHeight);
+        Assert.AreEqual(settings.MainContentHeight, settings2.MainContentHeight);
+        Assert.AreEqual(settings.SubContentHeight, settings2.SubContentHeight);
     }
 
     [TestMethod]
@@ -632,6 +856,30 @@ public class SettingsTests
         var language = settings.Language;
         settings.Language = "invalid";
         Assert.AreEqual(language, settings.Language);
+    }
+
+    [TestMethod]
+    public void WindowWidthTestNull()
+    {
+        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().WindowWidth = null);
+    }
+
+    [TestMethod]
+    public void WindowHeightTestNull()
+    {
+        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().WindowHeight = null);
+    }
+
+    [TestMethod]
+    public void MainContentHeightTestNull()
+    {
+        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().MainContentHeight = null);
+    }
+
+    [TestMethod]
+    public void SubContentHeightTestNull()
+    {
+        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().SubContentHeight = null);
     }
 
     [TestMethod]

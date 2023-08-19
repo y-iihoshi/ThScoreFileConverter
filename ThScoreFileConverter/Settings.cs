@@ -39,6 +39,10 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     private int? inputCodePageId;
     private int? outputCodePageId;
     private string? language;
+    private double? windowWidth;
+    private double? windowHeight;
+    private double? mainContentHeight;
+    private double? subContentHeight;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Settings"/> class.
@@ -53,6 +57,10 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
         this.inputCodePageId = 65001;
         this.outputCodePageId = 65001;
         this.language = CultureInfo.InvariantCulture.Name;
+        this.windowWidth = WindowMinWidth;
+        this.windowHeight = WindowMinHeight;
+        this.mainContentHeight = MainContentMinHeight;
+        this.subContentHeight = SubContentMinHeight;
     }
 
     /// <inheritdoc/>
@@ -67,6 +75,26 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     /// Gets the maximum font size for this application.
     /// </summary>
     public static double MaxFontSize { get; } = 72;
+
+    /// <summary>
+    /// Gets the minimum width of the main window.
+    /// </summary>
+    public static double WindowMinWidth { get; } = 480;
+
+    /// <summary>
+    /// Gets the minimum height of the main window.
+    /// </summary>
+    public static double WindowMinHeight { get; } = 480;
+
+    /// <summary>
+    /// Gets the minimum height of the main content area in the main window.
+    /// </summary>
+    public static double MainContentMinHeight { get; } = 240;
+
+    /// <summary>
+    /// Gets the minimum height of the sub content area in the main window.
+    /// </summary>
+    public static double SubContentMinHeight { get; } = 80;
 
     /// <inheritdoc/>
     [DataMember(Order = 0)]
@@ -145,6 +173,38 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
         }
     }
 
+    /// <inheritdoc/>
+    [DataMember(Order = 8)]
+    public double? WindowWidth
+    {
+        get => this.windowWidth;
+        set => this.SetProperty(ref this.windowWidth, value);
+    }
+
+    /// <inheritdoc/>
+    [DataMember(Order = 9)]
+    public double? WindowHeight
+    {
+        get => this.windowHeight;
+        set => this.SetProperty(ref this.windowHeight, value);
+    }
+
+    /// <inheritdoc/>
+    [DataMember(Order = 10)]
+    public double? MainContentHeight
+    {
+        get => this.mainContentHeight;
+        set => this.SetProperty(ref this.mainContentHeight, value);
+    }
+
+    /// <inheritdoc/>
+    [DataMember(Order = 11)]
+    public double? SubContentHeight
+    {
+        get => this.subContentHeight;
+        set => this.SetProperty(ref this.subContentHeight, value);
+    }
+
     /// <summary>
     /// Gets the number of <see cref="SettingsPerTitle"/> instances.
     /// </summary>
@@ -201,6 +261,15 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
                 this.OutputCodePageId = settings.OutputCodePageId.Value;
             if (settings.Language is not null)
                 this.Language = settings.Language;
+
+            if (settings.WindowWidth.HasValue && (settings.WindowWidth.Value >= WindowMinWidth))
+                this.WindowWidth = settings.WindowWidth.Value;
+            if (settings.WindowHeight.HasValue && (settings.WindowHeight.Value >= WindowMinHeight))
+                this.WindowHeight = settings.WindowHeight.Value;
+            if (settings.MainContentHeight.HasValue && (settings.MainContentHeight.Value >= MainContentMinHeight))
+                this.MainContentHeight = settings.MainContentHeight.Value;
+            if (settings.SubContentHeight.HasValue && (settings.SubContentHeight.Value >= SubContentMinHeight))
+                this.SubContentHeight = settings.SubContentHeight.Value;
         }
         catch (FileNotFoundException)
         {

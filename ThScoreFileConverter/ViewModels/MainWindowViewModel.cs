@@ -94,6 +94,20 @@ internal class MainWindowViewModel : BindableBase, IDisposable
 
         var rpMode = ReactivePropertyMode.DistinctUntilChanged;
 
+        this.MinWidth = Settings.WindowMinWidth;
+        this.Width = this.settings.ToReactivePropertySlimAsSynchronized(
+            x => x.WindowWidth, value => (double)value!, value => value, rpMode);
+        this.MinHeight = Settings.WindowMinHeight;
+        this.Height = this.settings.ToReactivePropertySlimAsSynchronized(
+            x => x.WindowHeight, value => (double)value!, value => value, rpMode);
+
+        this.MainContentMinHeight = Settings.MainContentMinHeight;
+        this.MainContentHeight = this.settings.ToReactivePropertySlimAsSynchronized(
+            x => x.MainContentHeight, value => new GridLength((double)value!, GridUnitType.Star), value => value.Value, rpMode);
+        this.SubContentMinHeight = Settings.SubContentMinHeight;
+        this.SubContentHeight = this.settings.ToReactivePropertySlimAsSynchronized(
+            x => x.SubContentHeight, value => new GridLength((double)value!, GridUnitType.Star), value => value.Value, rpMode);
+
         this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
         this.Works = Definitions.Works;
         this.IsIdle = new ReactivePropertySlim<bool>(true);
@@ -213,6 +227,46 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     }
 
     #region Properties to bind a view
+
+    /// <summary>
+    /// Gets the minimum width of the window.
+    /// </summary>
+    public double MinWidth { get; }
+
+    /// <summary>
+    /// Gets the current width of the window.
+    /// </summary>
+    public ReactivePropertySlim<double> Width { get; }
+
+    /// <summary>
+    /// Gets the minimum height of the window.
+    /// </summary>
+    public double MinHeight { get; }
+
+    /// <summary>
+    /// Gets the current height of the window.
+    /// </summary>
+    public ReactivePropertySlim<double> Height { get; }
+
+    /// <summary>
+    /// Gets the minimum height of the main content.
+    /// </summary>
+    public double MainContentMinHeight { get; }
+
+    /// <summary>
+    /// Gets the current height of the main content.
+    /// </summary>
+    public ReactivePropertySlim<GridLength> MainContentHeight { get; }
+
+    /// <summary>
+    /// Gets the minimum height of the sub content.
+    /// </summary>
+    public double SubContentMinHeight { get; }
+
+    /// <summary>
+    /// Gets the current height of the sub content.
+    /// </summary>
+    public ReactivePropertySlim<GridLength> SubContentHeight { get; }
 
     /// <summary>
     /// Gets a title string.
@@ -416,6 +470,10 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             this.LastWorkNumber.Dispose();
             this.IsIdle.Dispose();
             this.CurrentSetting.Dispose();
+            this.SubContentHeight.Dispose();
+            this.MainContentHeight.Dispose();
+            this.Height.Dispose();
+            this.Width.Dispose();
             this.disposables.Dispose();
         }
 
