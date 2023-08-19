@@ -40,26 +40,20 @@ namespace ThScoreFileConverter.Tests;
 [DeploymentItem(@"TestData\no-template-files.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-template-files.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-template-files.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-font-family-name.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-font-family-name.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-font-size.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-font-size.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-font-size.xml", @"TestData")]
 [DeploymentItem(@"TestData\negative-font-size.xml", @"TestData")]
 [DeploymentItem(@"TestData\zero-font-size.xml", @"TestData")]
 [DeploymentItem(@"TestData\exceeded-font-size.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-output-number-group-separator.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-output-number-group-separator.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-output-number-group-separator.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-input-code-page-id.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-input-code-page-id.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-input-code-page-id.xml", @"TestData")]
 [DeploymentItem(@"TestData\unsupported-input-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-output-code-page-id.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-output-code-page-id.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-output-code-page-id.xml", @"TestData")]
 [DeploymentItem(@"TestData\unsupported-output-code-page-id.xml", @"TestData")]
-[DeploymentItem(@"TestData\no-language.xml", @"TestData")]
 [DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
 [DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
 [DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
@@ -389,7 +383,7 @@ public class SettingsTests
     public void LoadTestNoFontFamilyName()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-font-family-name.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
     }
 
@@ -405,7 +399,7 @@ public class SettingsTests
     public void LoadTestNoFontSize()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-font-size.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
     }
 
@@ -448,7 +442,7 @@ public class SettingsTests
     public void LoadTestNoOutputNumberGroupSeparator()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-output-number-group-separator.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
     }
 
@@ -470,7 +464,7 @@ public class SettingsTests
     public void LoadTestNoInputCodePageId()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-input-code-page-id.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(65001, settings.InputCodePageId);
     }
 
@@ -500,7 +494,7 @@ public class SettingsTests
     public void LoadTestNoOutputCodePageId()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-output-code-page-id.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(65001, settings.OutputCodePageId);
     }
 
@@ -530,7 +524,7 @@ public class SettingsTests
     public void LoadTestNoLanguage()
     {
         var settings = new Settings();
-        settings.Load(@"TestData\no-language.xml");
+        settings.Load(@"TestData\no-optional-settings.xml");
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
     }
 
