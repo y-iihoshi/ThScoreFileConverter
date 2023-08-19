@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns="http://schemas.datacontract.org/2004/07/ThScoreFileConverter">
+  <LastTitle>TH06</LastTitle>
+  <Dictionary xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+    <d2p1:KeyValueOfstringSettingsPerTitlewSAbBC2S>
+      <d2p1:Key>TH06</d2p1:Key>
+      <d2p1:Value>
+        <BestShotDirectory />
+        <HideUntriedCards>false</HideUntriedCards>
+        <ImageOutputDirectory />
+        <OutputDirectory />
+        <ScoreFile />
+        <TemplateFiles />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSettingsPerTitlewSAbBC2S>
+  </Dictionary>
+  <WindowWidth>-1</WindowWidth>
+</Settings>

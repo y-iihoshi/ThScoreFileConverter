@@ -80,6 +80,34 @@ public class MainWindowViewModelTests
     }
 
     [TestMethod]
+    public void MinWidthTest()
+    {
+        using var window = CreateViewModel();
+        Assert.AreEqual(Settings.WindowMinWidth, window.MinWidth);
+    }
+
+    [TestMethod]
+    public void MinHeightTest()
+    {
+        using var window = CreateViewModel();
+        Assert.AreEqual(Settings.WindowMinHeight, window.MinHeight);
+    }
+
+    [TestMethod]
+    public void MainContentMinHeightTest()
+    {
+        using var window = CreateViewModel();
+        Assert.AreEqual(Settings.MainContentMinHeight, window.MainContentMinHeight);
+    }
+
+    [TestMethod]
+    public void SubContentMinHeightTest()
+    {
+        using var window = CreateViewModel();
+        Assert.AreEqual(Settings.SubContentMinHeight, window.SubContentMinHeight);
+    }
+
+    [TestMethod]
     public void TitleTest()
     {
         using var window = CreateViewModel();
