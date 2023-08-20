@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th06;
 using ThScoreFileConverter.Models.Th06;
@@ -12,16 +12,16 @@ namespace ThScoreFileConverter.Tests.Models.Th06;
 [TestClass]
 public class PracticeScoreTests
 {
-    internal static Mock<IPracticeScore> MockPracticeScore()
+    internal static IPracticeScore MockPracticeScore()
     {
-        var mock = new Mock<IPracticeScore>();
-        _ = mock.SetupGet(m => m.Signature).Returns("PSCR");
-        _ = mock.SetupGet(m => m.Size1).Returns(0x14);
-        _ = mock.SetupGet(m => m.Size2).Returns(0x14);
-        _ = mock.SetupGet(m => m.HighScore).Returns(123456);
-        _ = mock.SetupGet(m => m.Chara).Returns(Chara.ReimuB);
-        _ = mock.SetupGet(m => m.Level).Returns(Level.Hard);
-        _ = mock.SetupGet(m => m.Stage).Returns(Stage.Six);
+        var mock = Substitute.For<IPracticeScore>();
+        _ = mock.Signature.Returns("PSCR");
+        _ = mock.Size1.Returns((short)0x14);
+        _ = mock.Size2.Returns((short)0x14);
+        _ = mock.HighScore.Returns(123456);
+        _ = mock.Chara.Returns(Chara.ReimuB);
+        _ = mock.Level.Returns(Level.Hard);
+        _ = mock.Stage.Returns(Stage.Six);
         return mock;
     }
 
@@ -55,20 +55,20 @@ public class PracticeScoreTests
     public void PracticeScoreTestChapter()
     {
         var mock = MockPracticeScore();
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new PracticeScore(chapter);
 
-        Validate(mock.Object, score);
+        Validate(mock, score);
     }
 
     [TestMethod]
     public void PracticeScoreTestInvalidSignature()
     {
         var mock = MockPracticeScore();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
@@ -76,10 +76,10 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidSize1()
     {
         var mock = MockPracticeScore();
-        var size = mock.Object.Size1;
-        _ = mock.SetupGet(m => m.Size1).Returns(--size);
+        var size = mock.Size1;
+        _ = mock.Size1.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
@@ -90,9 +90,9 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidChara(int chara)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
+        _ = mock.Chara.Returns((Chara)chara);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 
@@ -103,9 +103,9 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidLevel(int level)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
+        _ = mock.Level.Returns((Level)level);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 
@@ -116,9 +116,9 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidStage(int stage)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Stage).Returns((Stage)stage);
+        _ = mock.Stage.Returns((Stage)stage);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 }

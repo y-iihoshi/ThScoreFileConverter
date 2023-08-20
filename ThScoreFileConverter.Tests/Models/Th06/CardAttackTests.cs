@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -9,17 +9,17 @@ namespace ThScoreFileConverter.Tests.Models.Th06;
 [TestClass]
 public class CardAttackTests
 {
-    internal static Mock<ICardAttack> MockCardAttack()
+    internal static ICardAttack MockCardAttack()
     {
-        var attack = new Mock<ICardAttack>();
-        _ = attack.SetupGet(m => m.Signature).Returns("CATK");
-        _ = attack.SetupGet(m => m.Size1).Returns(0x40);
-        _ = attack.SetupGet(m => m.Size2).Returns(0x40);
-        _ = attack.SetupGet(m => m.CardId).Returns(23);
-        _ = attack.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
-        _ = attack.SetupGet(m => m.TrialCount).Returns(789);
-        _ = attack.SetupGet(m => m.ClearCount).Returns(456);
-        _ = attack.SetupGet(m => m.HasTried).Returns(true);
+        var attack = Substitute.For<ICardAttack>();
+        _ = attack.Signature.Returns("CATK");
+        _ = attack.Size1.Returns((short)0x40);
+        _ = attack.Size2.Returns((short)0x40);
+        _ = attack.CardId.Returns((short)23);
+        _ = attack.CardName.Returns(TestUtils.MakeRandomArray(0x24));
+        _ = attack.TrialCount.Returns((ushort)789);
+        _ = attack.ClearCount.Returns((ushort)456);
+        _ = attack.HasTried.Returns(true);
         return attack;
     }
 
@@ -53,10 +53,10 @@ public class CardAttackTests
     public void CardAttackTestChapter()
     {
         var mock = MockCardAttack();
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock.Object, cardAttack);
+        Validate(mock, cardAttack);
         Assert.IsTrue(cardAttack.HasTried);
     }
 
@@ -64,10 +64,10 @@ public class CardAttackTests
     public void CardAttackTestInvalidSignature()
     {
         var mock = MockCardAttack();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
     }
 
@@ -75,10 +75,10 @@ public class CardAttackTests
     public void CardAttackTestInvalidSize1()
     {
         var mock = MockCardAttack();
-        var size = mock.Object.Size1;
-        _ = mock.SetupGet(m => m.Size1).Returns(--size);
+        var size = mock.Size1;
+        _ = mock.Size1.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
     }
 
@@ -86,12 +86,12 @@ public class CardAttackTests
     public void CardAttackTestNotTried()
     {
         var mock = MockCardAttack();
-        _ = mock.SetupGet(m => m.TrialCount).Returns(0);
+        _ = mock.TrialCount.Returns((ushort)0);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock.Object, cardAttack);
+        Validate(mock, cardAttack);
         Assert.IsFalse(cardAttack.HasTried);
     }
 }

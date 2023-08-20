@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -14,13 +15,13 @@ public class CardReplacerTests
         var mock1 = CardAttackTests.MockCardAttack();
 
         var mock2 = CardAttackTests.MockCardAttack();
-        _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
-        _ = mock2.SetupGet(m => m.ClearCount).Returns(0);
-        _ = mock2.SetupGet(m => m.TrialCount).Returns(0);
-        _ = mock2.SetupGet(m => m.HasTried).Returns(false);
+        _ = mock2.CardId.Returns(_ => (short)(mock1.CardId + 1));
+        _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x24));
+        _ = mock2.ClearCount.Returns((ushort)0);
+        _ = mock2.TrialCount.Returns((ushort)0);
+        _ = mock2.HasTried.Returns(false);
 
-        return new[] { mock1.Object, mock2.Object };
+        return new[] { mock1, mock2 };
     }
 
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =

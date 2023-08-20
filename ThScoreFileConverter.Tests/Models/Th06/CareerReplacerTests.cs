@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -16,22 +16,22 @@ public class CareerReplacerTests
         var mock1 = CardAttackTests.MockCardAttack();
 
         var mock2 = CardAttackTests.MockCardAttack();
-        _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x24));
-        _ = mock2.SetupGet(m => m.ClearCount).Returns((ushort)(mock1.Object.ClearCount + 2));
-        _ = mock2.SetupGet(m => m.TrialCount).Returns((ushort)(mock1.Object.TrialCount + 3));
+        _ = mock2.CardId.Returns(_ => (short)(mock1.CardId + 1));
+        _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x24));
+        _ = mock2.ClearCount.Returns(_ => (ushort)(mock1.ClearCount + 2));
+        _ = mock2.TrialCount.Returns(_ => (ushort)(mock1.TrialCount + 3));
 
-        return new[] { mock1.Object, mock2.Object };
+        return new[] { mock1, mock2 };
     }
 
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
         CreateCardAttacks().ToDictionary(attack => (int)attack.CardId);
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
         return mock;
     }
 
@@ -39,7 +39,7 @@ public class CareerReplacerTests
     public void CareerReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -48,7 +48,7 @@ public class CareerReplacerTests
     {
         var formatterMock = MockNumberFormatter();
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
-        var replacer = new CareerReplacer(cardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(cardAttacks, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -56,7 +56,7 @@ public class CareerReplacerTests
     public void ReplaceTestClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 456", replacer.Replace("%T06C231"));
     }
 
@@ -64,7 +64,7 @@ public class CareerReplacerTests
     public void ReplaceTestTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 789", replacer.Replace("%T06C232"));
     }
 
@@ -72,7 +72,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 914", replacer.Replace("%T06C001"));
     }
 
@@ -80,7 +80,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
 
         Assert.AreEqual("invoked: 1581", replacer.Replace("%T06C002"));
     }
@@ -89,7 +89,7 @@ public class CareerReplacerTests
     public void ReplaceTestNonexistentClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T06C011"));
     }
 
@@ -97,7 +97,7 @@ public class CareerReplacerTests
     public void ReplaceTestNonexistentTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T06C012"));
     }
 
@@ -105,7 +105,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T06X231", replacer.Replace("%T06X231"));
     }
 
@@ -113,7 +113,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidNumber()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T06C651", replacer.Replace("%T06C651"));
     }
 
@@ -121,7 +121,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(CardAttacks, formatterMock.Object);
+        var replacer = new CareerReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T06C233", replacer.Replace("%T06C233"));
     }
 }

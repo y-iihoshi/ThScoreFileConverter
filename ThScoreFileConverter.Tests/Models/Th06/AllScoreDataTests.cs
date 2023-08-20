@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -56,7 +56,8 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetHighScoreTest()
     {
-        var score = Mock.Of<IHighScore>(m => m.Score == 876543u);
+        var score = Substitute.For<IHighScore>();
+        _ = score.Score.Returns(876543u);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
@@ -67,8 +68,10 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetHighScoreTestTwice()
     {
-        var score1 = Mock.Of<IHighScore>(m => m.Score == 876543u);
-        var score2 = Mock.Of<IHighScore>(m => m.Score == 876543u);
+        var score1 = Substitute.For<IHighScore>();
+        _ = score1.Score.Returns(876543u);
+        var score2 = Substitute.For<IHighScore>();
+        _ = score2.Score.Returns(876543u);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score1);
@@ -81,7 +84,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetClearDataTest()
     {
-        var clearData = Mock.Of<IClearData>();
+        var clearData = Substitute.For<IClearData>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData);
@@ -92,8 +95,9 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetClearDataTestTwice()
     {
-        var clearData1 = Mock.Of<IClearData>();
-        var clearData2 = Mock.Of<IClearData>(m => m.Chara == clearData1.Chara);
+        var clearData1 = Substitute.For<IClearData>();
+        var clearData2 = Substitute.For<IClearData>();
+        _ = clearData2.Chara.Returns(clearData1.Chara);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData1);
@@ -106,7 +110,8 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetCardAttackTest()
     {
-        var attack = Mock.Of<ICardAttack>(m => m.CardId == 1);
+        var attack = Substitute.For<ICardAttack>();
+        _ = attack.CardId.Returns((short)1);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(attack);
@@ -117,8 +122,10 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetCardAttackTestTwice()
     {
-        var attack1 = Mock.Of<ICardAttack>(m => m.CardId == 1);
-        var attack2 = Mock.Of<ICardAttack>(m => m.CardId == attack1.CardId);
+        var attack1 = Substitute.For<ICardAttack>();
+        _ = attack1.CardId.Returns((short)1);
+        var attack2 = Substitute.For<ICardAttack>();
+        _ = attack2.CardId.Returns((short)1);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(attack1);
@@ -131,7 +138,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetPracticeScoreTest()
     {
-        var score = Mock.Of<IPracticeScore>();
+        var score = Substitute.For<IPracticeScore>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
@@ -142,8 +149,10 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetPracticeScoreTestTwice()
     {
-        var score1 = Mock.Of<IPracticeScore>();
-        var score2 = Mock.Of<IPracticeScore>(m => (m.Level == score1.Level) && (m.Stage == score1.Stage));
+        var score1 = Substitute.For<IPracticeScore>();
+        var score2 = Substitute.For<IPracticeScore>();
+        _ = score2.Level.Returns(score1.Level);
+        _ = score2.Stage.Returns(score1.Stage);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score1);
@@ -160,7 +169,9 @@ public class AllScoreDataTests
     [DataRow(Level.Normal, Stage.Extra)]
     public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
     {
-        var score = Mock.Of<IPracticeScore>(m => (m.Level == (Level)level) && (m.Stage == (Stage)stage));
+        var score = Substitute.For<IPracticeScore>();
+        score.Level.Returns((Level)level);
+        score.Stage.Returns((Stage)stage);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
