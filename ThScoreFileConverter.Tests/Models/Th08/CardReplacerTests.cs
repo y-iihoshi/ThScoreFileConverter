@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
@@ -11,26 +12,26 @@ public class CardReplacerTests
     private static IEnumerable<ICardAttack> CreateCardAttacks()
     {
         var storyCareerMock = CardAttackCareerTests.MockCardAttackCareer();
-        var trialCounts = storyCareerMock.Object.TrialCounts;
-        var clearCounts = storyCareerMock.Object.ClearCounts;
+        var trialCounts = storyCareerMock.TrialCounts;
+        var clearCounts = storyCareerMock.ClearCounts;
         var noTrialCounts = trialCounts.ToDictionary(pair => pair.Key, pair => 0);
         var noClearCounts = clearCounts.ToDictionary(pair => pair.Key, pair => 0);
-        _ = storyCareerMock.SetupGet(m => m.TrialCounts).Returns(noTrialCounts);
-        _ = storyCareerMock.SetupGet(m => m.ClearCounts).Returns(noClearCounts);
+        _ = storyCareerMock.TrialCounts.Returns(noTrialCounts);
+        _ = storyCareerMock.ClearCounts.Returns(noClearCounts);
 
         var practiceCareerMock = CardAttackCareerTests.MockCardAttackCareer();
-        _ = practiceCareerMock.SetupGet(m => m.TrialCounts).Returns(noTrialCounts);
-        _ = practiceCareerMock.SetupGet(m => m.ClearCounts).Returns(noClearCounts);
+        _ = practiceCareerMock.TrialCounts.Returns(noTrialCounts);
+        _ = practiceCareerMock.ClearCounts.Returns(noClearCounts);
 
         var attack1Mock = CardAttackTests.MockCardAttack();
 
         var attack2Mock = CardAttackTests.MockCardAttack();
-        _ = attack2Mock.SetupGet(m => m.CardId).Returns((short)(attack1Mock.Object.CardId + 1));
-        _ = attack2Mock.SetupGet(m => m.StoryCareer).Returns(storyCareerMock.Object);
-        _ = attack2Mock.SetupGet(m => m.PracticeCareer).Returns(practiceCareerMock.Object);
+        _ = attack2Mock.CardId.Returns(_ => (short)(attack1Mock.CardId + 1));
+        _ = attack2Mock.StoryCareer.Returns(storyCareerMock);
+        _ = attack2Mock.PracticeCareer.Returns(practiceCareerMock);
         CardAttackTests.SetupHasTried(attack2Mock);
 
-        return new[] { attack1Mock.Object, attack2Mock.Object };
+        return new[] { attack1Mock, attack2Mock };
     }
 
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =

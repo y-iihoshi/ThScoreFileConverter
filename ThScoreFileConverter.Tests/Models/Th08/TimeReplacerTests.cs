@@ -5,7 +5,7 @@ namespace ThScoreFileConverter.Tests.Models.Th08;
 [TestClass]
 public class TimeReplacerTests
 {
-    internal static IPlayStatus PlayStatus { get; } = PlayStatusTests.MockPlayStatus().Object;
+    internal static IPlayStatus PlayStatus { get; } = PlayStatusTests.MockPlayStatus();
 
     [TestMethod]
     public void TimeReplacerTest()

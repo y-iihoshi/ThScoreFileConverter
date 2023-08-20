@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
@@ -17,18 +17,16 @@ namespace ThScoreFileConverter.Tests.Models.Th08;
 [TestClass]
 public class PracticeScoreTests
 {
-    internal static Mock<IPracticeScore> MockPracticeScore()
+    internal static IPracticeScore MockPracticeScore()
     {
         var pairs = EnumHelper.Cartesian<Stage, Level>();
-        var mock = new Mock<IPracticeScore>();
-        _ = mock.SetupGet(m => m.Signature).Returns("PSCR");
-        _ = mock.SetupGet(m => m.Size1).Returns(0x178);
-        _ = mock.SetupGet(m => m.Size2).Returns(0x178);
-        _ = mock.SetupGet(m => m.PlayCounts).Returns(
-            pairs.ToDictionary(pair => pair, pair => ((int)pair.First * 10) + (int)pair.Second));
-        _ = mock.SetupGet(m => m.HighScores).Returns(
-            pairs.ToDictionary(pair => pair, pair => ((int)pair.Second * 10) + (int)pair.First));
-        _ = mock.SetupGet(m => m.Chara).Returns(Chara.MarisaAlice);
+        var mock = Substitute.For<IPracticeScore>();
+        _ = mock.Signature.Returns("PSCR");
+        _ = mock.Size1.Returns((short)0x178);
+        _ = mock.Size2.Returns((short)0x178);
+        _ = mock.PlayCounts.Returns(pairs.ToDictionary(pair => pair, pair => ((int)pair.First * 10) + (int)pair.Second));
+        _ = mock.HighScores.Returns(pairs.ToDictionary(pair => pair, pair => ((int)pair.Second * 10) + (int)pair.First));
+        _ = mock.Chara.Returns(Chara.MarisaAlice);
         return mock;
     }
 
@@ -61,20 +59,20 @@ public class PracticeScoreTests
     {
         var mock = MockPracticeScore();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new PracticeScore(chapter);
 
-        Validate(mock.Object, score);
+        Validate(mock, score);
     }
 
     [TestMethod]
     public void PracticeScoreTestInvalidSignature()
     {
         var mock = MockPracticeScore();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
@@ -82,10 +80,10 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidSize1()
     {
         var mock = MockPracticeScore();
-        var size = mock.Object.Size1;
-        _ = mock.SetupGet(m => m.Size1).Returns(--size);
+        var size = mock.Size1;
+        _ = mock.Size1.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
@@ -96,9 +94,9 @@ public class PracticeScoreTests
     public void PracticeScoreTestInvalidChara(int chara)
     {
         var mock = MockPracticeScore();
-        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
+        _ = mock.Chara.Returns((Chara)chara);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
     }
 }

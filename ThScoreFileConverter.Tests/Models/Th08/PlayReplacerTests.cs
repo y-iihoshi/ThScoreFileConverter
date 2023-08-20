@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 
@@ -7,13 +7,13 @@ namespace ThScoreFileConverter.Tests.Models.Th08;
 [TestClass]
 public class PlayReplacerTests
 {
-    internal static IPlayStatus PlayStatus { get; } = PlayStatusTests.MockPlayStatus().Object;
+    internal static IPlayStatus PlayStatus { get; } = PlayStatusTests.MockPlayStatus();
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
         return mock;
     }
 
@@ -21,7 +21,7 @@ public class PlayReplacerTests
     public void PlayReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -29,7 +29,7 @@ public class PlayReplacerTests
     public void ReplaceTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08PLAYHSR"));
     }
 
@@ -37,7 +37,7 @@ public class PlayReplacerTests
     public void ReplaceTestLevelTotal()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08PLAYTSR"));
     }
 
@@ -45,7 +45,7 @@ public class PlayReplacerTests
     public void ReplaceTestCharaTotal()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08PLAYHTL"));
     }
 
@@ -53,7 +53,7 @@ public class PlayReplacerTests
     public void ReplaceTestClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T08PLAYHCL"));
     }
 
@@ -61,7 +61,7 @@ public class PlayReplacerTests
     public void ReplaceTestContinueCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T08PLAYHCN"));
     }
 
@@ -69,7 +69,7 @@ public class PlayReplacerTests
     public void ReplaceTestPracticeCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("invoked: 5", replacer.Replace("%T08PLAYHPR"));
     }
 
@@ -77,7 +77,7 @@ public class PlayReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("%T08XXXXHSR", replacer.Replace("%T08XXXXHSR"));
     }
 
@@ -85,7 +85,7 @@ public class PlayReplacerTests
     public void ReplaceTestInvalidLevel()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("%T08PLAYYSR", replacer.Replace("%T08PLAYYSR"));
     }
 
@@ -93,7 +93,7 @@ public class PlayReplacerTests
     public void ReplaceTestInvalidChara()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new PlayReplacer(PlayStatus, formatterMock.Object);
+        var replacer = new PlayReplacer(PlayStatus, formatterMock);
         Assert.AreEqual("%T08PLAYHXX", replacer.Replace("%T08PLAYHXX"));
     }
 }
