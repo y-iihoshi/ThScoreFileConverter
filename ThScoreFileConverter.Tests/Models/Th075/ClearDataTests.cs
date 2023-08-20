@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
@@ -12,32 +12,29 @@ namespace ThScoreFileConverter.Tests.Models.Th075;
 [TestClass]
 public class ClearDataTests
 {
-    internal static Mock<IClearData> MockInitialClearData()
+    internal static IClearData MockInitialClearData()
     {
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(m => m.MaxBonuses).Returns(ImmutableList<int>.Empty);
-        _ = mock.SetupGet(m => m.CardGotCount).Returns(ImmutableList<short>.Empty);
-        _ = mock.SetupGet(m => m.CardTrialCount).Returns(ImmutableList<short>.Empty);
-        _ = mock.SetupGet(m => m.CardTrulyGot).Returns(ImmutableList<byte>.Empty);
-        _ = mock.SetupGet(m => m.Ranking).Returns(ImmutableList<IHighScore>.Empty);
+        var mock = Substitute.For<IClearData>();
+        _ = mock.MaxBonuses.Returns(ImmutableList<int>.Empty);
+        _ = mock.CardGotCount.Returns(ImmutableList<short>.Empty);
+        _ = mock.CardTrialCount.Returns(ImmutableList<short>.Empty);
+        _ = mock.CardTrulyGot.Returns(ImmutableList<byte>.Empty);
+        _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
         return mock;
     }
 
-    internal static Mock<IClearData> MockClearData()
+    internal static IClearData MockClearData()
     {
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(m => m.UseCount).Returns(1234);
-        _ = mock.SetupGet(m => m.ClearCount).Returns(2345);
-        _ = mock.SetupGet(m => m.MaxCombo).Returns(3456);
-        _ = mock.SetupGet(m => m.MaxDamage).Returns(4567);
-        _ = mock.SetupGet(m => m.MaxBonuses).Returns(Enumerable.Range(9, 100).ToList());
-        _ = mock.SetupGet(m => m.CardGotCount).Returns(
-            Enumerable.Range(8, 100).Select(count => (short)count).ToList());
-        _ = mock.SetupGet(m => m.CardTrialCount).Returns(
-            Enumerable.Range(7, 100).Select(count => (short)count).ToList());
-        _ = mock.SetupGet(m => m.CardTrulyGot).Returns(
-            Enumerable.Range(6, 100).Select(got => (byte)got).ToList());
-        _ = mock.SetupGet(m => m.Ranking).Returns(
+        var mock = Substitute.For<IClearData>();
+        _ = mock.UseCount.Returns(1234);
+        _ = mock.ClearCount.Returns(2345);
+        _ = mock.MaxCombo.Returns(3456);
+        _ = mock.MaxDamage.Returns(4567);
+        _ = mock.MaxBonuses.Returns(Enumerable.Range(9, 100).ToList());
+        _ = mock.CardGotCount.Returns(Enumerable.Range(8, 100).Select(count => (short)count).ToList());
+        _ = mock.CardTrialCount.Returns(Enumerable.Range(7, 100).Select(count => (short)count).ToList());
+        _ = mock.CardTrulyGot.Returns(Enumerable.Range(6, 100).Select(got => (byte)got).ToList());
+        _ = mock.Ranking.Returns(
             Enumerable.Range(0, 10)
                 .Select(index => new HighScoreStub()
                 {
@@ -96,15 +93,15 @@ public class ClearDataTests
         var mock = MockInitialClearData();
         var clearData = new ClearData();
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
     }
 
     [TestMethod]
     public void ReadFromTest()
     {
         var mock = MockClearData();
-        var clearData = TestUtils.Create<ClearData>(MakeByteArray(mock.Object));
+        var clearData = TestUtils.Create<ClearData>(MakeByteArray(mock));
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
     }
 }

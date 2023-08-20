@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
@@ -14,15 +15,14 @@ public class CardReplacerTests
     private static IClearData CreateClearData()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.SetupGet(m => m.CardTrialCount).Returns(
-            Enumerable.Repeat(0, 100).Select(count => (short)count).ToList());
-        return mock.Object;
+        _ = mock.CardTrialCount.Returns(Enumerable.Repeat(0, 100).Select(count => (short)count).ToList());
+        return mock;
     }
 
     internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
             level => (CharaWithReserved.Reimu, level),
-            level => ClearDataTests.MockClearData().Object)
+            level => ClearDataTests.MockClearData())
         .Concat(EnumHelper<Level>.Enumerable.ToDictionary(
             level => (CharaWithReserved.Marisa, level),
             level => CreateClearData()))
