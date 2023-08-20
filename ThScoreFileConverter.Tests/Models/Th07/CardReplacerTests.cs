@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -14,17 +15,14 @@ public class CardReplacerTests
         var mock1 = CardAttackTests.MockCardAttack();
 
         var mock2 = CardAttackTests.MockCardAttack();
-        _ = mock2.SetupGet(m => m.MaxBonuses).Returns(
-            mock1.Object.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
-        _ = mock2.SetupGet(m => m.CardId).Returns((short)(mock1.Object.CardId + 1));
-        _ = mock2.SetupGet(m => m.CardName).Returns(TestUtils.MakeRandomArray(0x30));
-        _ = mock2.SetupGet(m => m.TrialCounts).Returns(
-            mock1.Object.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
-        _ = mock2.SetupGet(m => m.ClearCounts).Returns(
-            mock1.Object.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
-        _ = mock2.SetupGet(m => m.HasTried).Returns(false);
+        _ = mock2.MaxBonuses.Returns(_ => mock1.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
+        _ = mock2.CardId.Returns(_ => (short)(mock1.CardId + 1));
+        _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x30));
+        _ = mock2.TrialCounts.Returns(_ => mock1.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+        _ = mock2.ClearCounts.Returns(_ => mock1.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+        _ = mock2.HasTried.Returns(false);
 
-        return new[] { mock1.Object, mock2.Object };
+        return new[] { mock1, mock2 };
     }
 
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
