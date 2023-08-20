@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using Moq;
+using NSubstitute;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
@@ -19,11 +19,11 @@ namespace ThScoreFileConverter.Tests.ViewModels;
 [TestClass]
 public class SettingWindowViewModelTests
 {
-    private static Mock<IResourceDictionaryAdapter> MockResourceDictionaryAdapter()
+    private static IResourceDictionaryAdapter MockResourceDictionaryAdapter()
     {
-        var mock = new Mock<IResourceDictionaryAdapter>();
-        _ = mock.SetupGet(m => m.FontFamily).Returns(new FontFamily());
-        _ = mock.SetupGet(m => m.FontSize).Returns(default(double));
+        var mock = Substitute.For<IResourceDictionaryAdapter>();
+        _ = mock.FontFamily.Returns(new FontFamily());
+        _ = mock.FontSize.Returns(default(double));
         return mock;
     }
 
@@ -31,7 +31,7 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
-        return new SettingWindowViewModel(settings, resourceDictionaryAdapterMock.Object);
+        return new SettingWindowViewModel(settings, resourceDictionaryAdapterMock);
     }
 
     [TestMethod]
@@ -52,11 +52,11 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var font = SysDraw.SystemFonts.DefaultFont;
-        var adapterMock = new Mock<IResourceDictionaryAdapter>();
-        _ = adapterMock.SetupGet(m => m.FontFamily).Returns(new FontFamily(font.Name));
-        _ = adapterMock.SetupGet(m => m.FontSize).Returns(font.Size);
+        var adapterMock = Substitute.For<IResourceDictionaryAdapter>();
+        _ = adapterMock.FontFamily.Returns(new FontFamily(font.Name));
+        _ = adapterMock.FontSize.Returns(font.Size);
 
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
         Assert.AreEqual(font.Name, window.Font.Name);
         Assert.AreEqual(font.Size, window.Font.Size);
     }
@@ -73,7 +73,7 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var adapterMock = MockResourceDictionaryAdapter();
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
         Assert.AreEqual(settings.OutputNumberGroupSeparator, window.OutputNumberGroupSeparator.Value);
 
         var numChanged = 0;
@@ -98,7 +98,7 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var adapterMock = MockResourceDictionaryAdapter();
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
         Assert.AreEqual(settings.InputCodePageId, window.InputCodePageId.Value);
 
         var numChanged = 0;
@@ -123,7 +123,7 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var adapterMock = MockResourceDictionaryAdapter();
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
         Assert.AreEqual(settings.OutputCodePageId, window.OutputCodePageId.Value);
 
         var numChanged = 0;
@@ -171,10 +171,10 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var font = SysDraw.SystemFonts.DefaultFont;
-        var adapterMock = new Mock<IResourceDictionaryAdapter>();
-        _ = adapterMock.SetupGet(m => m.FontFamily).Returns(new FontFamily(font.Name));
-        _ = adapterMock.SetupGet(m => m.FontSize).Returns(font.Size);
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        var adapterMock = Substitute.For<IResourceDictionaryAdapter>();
+        _ = adapterMock.FontFamily.Returns(new FontFamily(font.Name));
+        _ = adapterMock.FontSize.Returns(font.Size);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
 
         var command = window.FontDialogOkCommand;
         Assert.IsNotNull(command);
@@ -190,7 +190,7 @@ public class SettingWindowViewModelTests
 
         command.Execute(result);
         Assert.AreEqual(1, numChanged);
-        adapterMock.Verify(m => m.UpdateResources(result.Font.FontFamily.Name, result.Font.Size), Times.Once);
+        adapterMock.Received(1).UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
     }
 
     [TestMethod]
@@ -237,10 +237,10 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var font = SysDraw.SystemFonts.DefaultFont;
-        var adapterMock = new Mock<IResourceDictionaryAdapter>();
-        _ = adapterMock.SetupGet(m => m.FontFamily).Returns(new FontFamily(font.Name));
-        _ = adapterMock.SetupGet(m => m.FontSize).Returns(font.Size);
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        var adapterMock = Substitute.For<IResourceDictionaryAdapter>();
+        _ = adapterMock.FontFamily.Returns(new FontFamily(font.Name));
+        _ = adapterMock.FontSize.Returns(font.Size);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
 
         var command = window.FontDialogApplyCommand;
         Assert.IsNotNull(command);
@@ -256,7 +256,7 @@ public class SettingWindowViewModelTests
 
         command.Execute(result);
         Assert.AreEqual(1, numChanged);
-        adapterMock.Verify(m => m.UpdateResources(result.Font.FontFamily.Name, result.Font.Size), Times.Once);
+        adapterMock.Received(1).UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
     }
 
     [TestMethod]
@@ -303,10 +303,10 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var font = SysDraw.SystemFonts.DefaultFont;
-        var adapterMock = new Mock<IResourceDictionaryAdapter>();
-        _ = adapterMock.SetupGet(m => m.FontFamily).Returns(new FontFamily(font.Name));
-        _ = adapterMock.SetupGet(m => m.FontSize).Returns(font.Size);
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        var adapterMock = Substitute.For<IResourceDictionaryAdapter>();
+        _ = adapterMock.FontFamily.Returns(new FontFamily(font.Name));
+        _ = adapterMock.FontSize.Returns(font.Size);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
 
         var command = window.FontDialogCancelCommand;
         Assert.IsNotNull(command);
@@ -322,7 +322,7 @@ public class SettingWindowViewModelTests
 
         command.Execute(result);
         Assert.AreEqual(1, numChanged);
-        adapterMock.Verify(m => m.UpdateResources(result.Font.FontFamily.Name, result.Font.Size), Times.Once);
+        adapterMock.Received(1).UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
     }
 
     [TestMethod]
@@ -369,10 +369,10 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         var font = SysDraw.SystemFonts.DefaultFont;
-        var adapterMock = new Mock<IResourceDictionaryAdapter>();
-        _ = adapterMock.SetupGet(m => m.FontFamily).Returns(new FontFamily(font.Name));
-        _ = adapterMock.SetupGet(m => m.FontSize).Returns(font.Size);
-        using var window = new SettingWindowViewModel(settings, adapterMock.Object);
+        var adapterMock = Substitute.For<IResourceDictionaryAdapter>();
+        _ = adapterMock.FontFamily.Returns(new FontFamily(font.Name));
+        _ = adapterMock.FontSize.Returns(font.Size);
+        using var window = new SettingWindowViewModel(settings, adapterMock);
 
         var command = window.ResetFontCommand;
         Assert.IsNotNull(command);
@@ -385,8 +385,7 @@ public class SettingWindowViewModelTests
 
         command.Execute();
         Assert.AreEqual(1, numChanged);
-        adapterMock.Verify(
-            m => m.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize), Times.Once);
+        adapterMock.Received(1).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
     }
 
     [TestMethod]
