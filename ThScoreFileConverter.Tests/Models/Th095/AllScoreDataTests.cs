@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -55,7 +55,7 @@ public class AllScoreDataTests
         where TScore : class, IChapter
         where TStatus : IStatus
     {
-        var score = Mock.Of<TScore>();
+        var score = Substitute.For<TScore>();
 
         var allScoreData = new TAllScoreData();
         allScoreData.Set(score);
@@ -68,8 +68,8 @@ public class AllScoreDataTests
         where TScore : class, IChapter
         where TStatus : IStatus
     {
-        var score1 = Mock.Of<TScore>();
-        var score2 = Mock.Of<TScore>();
+        var score1 = Substitute.For<TScore>();
+        var score2 = Substitute.For<TScore>();
 
         var allScoreData = new TAllScoreData();
         allScoreData.Set(score1);
@@ -84,7 +84,7 @@ public class AllScoreDataTests
         where TScore : IChapter
         where TStatus : class, IStatus
     {
-        var status = Mock.Of<TStatus>();
+        var status = Substitute.For<TStatus>();
 
         var allScoreData = new TAllScoreData();
         allScoreData.Set(status);
@@ -97,8 +97,8 @@ public class AllScoreDataTests
         where TScore : IChapter
         where TStatus : class, IStatus
     {
-        var status1 = Mock.Of<TStatus>();
-        var status2 = Mock.Of<TStatus>();
+        var status1 = Substitute.For<TStatus>();
+        var status2 = Substitute.For<TStatus>();
 
         var allScoreData = new TAllScoreData();
         allScoreData.Set(status1);
