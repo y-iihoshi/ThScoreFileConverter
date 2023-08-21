@@ -1,5 +1,5 @@
 ﻿using System;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th10;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -49,13 +49,8 @@ public class AllScoreDataTests
         where TCharaWithTotal : struct, Enum
     {
         var chara = TestUtils.Cast<TCharaWithTotal>(1);
-#if false
-        var clearData = Mock.Of<IClearData<TCharaWithTotal>>(m => m.Chara == chara);
-#else
-        var mock = new Mock<IClearData<TCharaWithTotal>>();
-        _ = mock.SetupGet(m => m.Chara).Returns(chara);
-        var clearData = mock.Object;
-#endif
+        var clearData = Substitute.For<IClearData<TCharaWithTotal>>();
+        _ = clearData.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData<TCharaWithTotal>();
         allScoreData.Set(clearData);
@@ -67,17 +62,10 @@ public class AllScoreDataTests
         where TCharaWithTotal : struct, Enum
     {
         var chara = TestUtils.Cast<TCharaWithTotal>(1);
-#if false
-        var clearData1 = Mock.Of<IClearData<TCharaWithTotal>>(m => m.Chara == chara);
-        var clearData2 = Mock.Of<IClearData<TCharaWithTotal>>(m => m.Chara == chara);
-#else
-        var mock1 = new Mock<IClearData<TCharaWithTotal>>();
-        _ = mock1.SetupGet(m => m.Chara).Returns(chara);
-        var clearData1 = mock1.Object;
-        var mock2 = new Mock<IClearData<TCharaWithTotal>>();
-        _ = mock2.SetupGet(m => m.Chara).Returns(chara);
-        var clearData2 = mock2.Object;
-#endif
+        var clearData1 = Substitute.For<IClearData<TCharaWithTotal>>();
+        _ = clearData1.Chara.Returns(chara);
+        var clearData2 = Substitute.For<IClearData<TCharaWithTotal>>();
+        _ = clearData2.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData<TCharaWithTotal>();
         allScoreData.Set(clearData1);
@@ -90,7 +78,7 @@ public class AllScoreDataTests
     internal static void SetStatusTestHelper<TCharaWithTotal>()
         where TCharaWithTotal : struct, Enum
     {
-        var status = Mock.Of<IStatus>();
+        var status = Substitute.For<IStatus>();
 
         var allScoreData = new AllScoreData<TCharaWithTotal>();
         allScoreData.Set(status);
@@ -101,8 +89,8 @@ public class AllScoreDataTests
     internal static void SetStatusTestTwiceHelper<TCharaWithTotal>()
         where TCharaWithTotal : struct, Enum
     {
-        var status1 = Mock.Of<IStatus>();
-        var status2 = Mock.Of<IStatus>();
+        var status1 = Substitute.For<IStatus>();
+        var status2 = Substitute.For<IStatus>();
 
         var allScoreData = new AllScoreData<TCharaWithTotal>();
         allScoreData.Set(status1);

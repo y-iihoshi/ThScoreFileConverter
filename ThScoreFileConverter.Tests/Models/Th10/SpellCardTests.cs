@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th10;
@@ -17,14 +17,14 @@ namespace ThScoreFileConverter.Tests.Models.Th10;
 [TestClass]
 public class SpellCardTests
 {
-    internal static Mock<ISpellCard<Level>> MockSpellCard()
+    internal static ISpellCard<Level> MockSpellCard()
     {
-        var mock = new Mock<ISpellCard<Level>>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
-        _ = mock.SetupGet(m => m.ClearCount).Returns(123);
-        _ = mock.SetupGet(m => m.TrialCount).Returns(456);
-        _ = mock.SetupGet(m => m.Id).Returns(789);
-        _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
+        var mock = Substitute.For<ISpellCard<Level>>();
+        _ = mock.Name.Returns(TestUtils.MakeRandomArray(0x80));
+        _ = mock.ClearCount.Returns(123);
+        _ = mock.TrialCount.Returns(456);
+        _ = mock.Id.Returns(789);
+        _ = mock.Level.Returns(Level.Normal);
         return mock;
     }
 
@@ -50,10 +50,10 @@ public class SpellCardTests
     [TestMethod]
     public void SpellCardTest()
     {
-        var mock = new Mock<ISpellCard<Level>>();
+        var mock = Substitute.For<ISpellCard<Level>>();
         var spellCard = new SpellCard();
 
-        Validate(mock.Object, spellCard);
+        Validate(mock, spellCard);
         Assert.IsFalse(spellCard.HasTried);
     }
 
@@ -62,9 +62,9 @@ public class SpellCardTests
     {
         var mock = MockSpellCard();
 
-        var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
+        var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock));
 
-        Validate(mock.Object, spellCard);
+        Validate(mock, spellCard);
         Assert.IsTrue(spellCard.HasTried);
     }
 
@@ -72,22 +72,22 @@ public class SpellCardTests
     public void ReadFromTestShortenedName()
     {
         var mock = MockSpellCard();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
         _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededName()
     {
         var mock = MockSpellCard();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
@@ -97,9 +97,9 @@ public class SpellCardTests
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockSpellCard();
-        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
+        _ = mock.Level.Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 }

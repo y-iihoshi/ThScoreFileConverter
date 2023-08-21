@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
@@ -10,7 +10,7 @@ namespace ThScoreFileConverter.Tests.Models.Th11;
 [TestClass]
 public class StatusTests
 {
-    internal static Mock<IStatus> MockStatus()
+    internal static IStatus MockStatus()
     {
         return Th10.StatusTests.MockStatus(0x0000, 17);
     }
@@ -20,10 +20,10 @@ public class StatusTests
     {
         var mock = MockStatus();
 
-        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock));
         var status = new Status(chapter);
 
-        Th10.StatusTests.Validate(mock.Object, status);
+        Th10.StatusTests.Validate(mock, status);
         Assert.IsFalse(status.IsValid);
     }
 
@@ -31,10 +31,10 @@ public class StatusTests
     public void StatusTestInvalidSignature()
     {
         var mock = MockStatus();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
     }
 
@@ -42,10 +42,10 @@ public class StatusTests
     public void StatusTestInvalidVersion()
     {
         var mock = MockStatus();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
     }
 
@@ -53,10 +53,10 @@ public class StatusTests
     public void StatusTestInvalidSize()
     {
         var mock = MockStatus();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(++size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(++size);
 
-        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
     }
 
