@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Models;
@@ -14,55 +14,27 @@ namespace ThScoreFileConverter.Tests.Models.Th123;
 [TestClass]
 public class CareerReplacerTests
 {
-    private static IClearData CreateClearData()
+    private static IClearData MockClearData()
     {
-#if false
-        return Mock.Of<IClearData>(
-            c => c.SpellCardResults == new[]
-            {
-                Mock.Of<ISpellCardResult>(
-                    s => (s.Enemy == Chara.Meiling)
-                         && (s.Id == 6)
-                         && (s.GotCount == 12)
-                         && (s.TrialCount == 34)
-                         && (s.Frames == 5678)),
-                Mock.Of<ISpellCardResult>(
-                    s => (s.Enemy == Chara.Marisa)
-                         && (s.Id == 18)
-                         && (s.GotCount == 1)
-                         && (s.TrialCount == 90)
-                         && (s.Frames == 23456)),
-            }.ToDictionary(result => (result.Enemy, result.Id)));   // causes CS8143
-#else
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(m => m.SpellCardResults).Returns(
-            new[]
-            {
-                Mock.Of<ISpellCardResult>(
-                    m => (m.Enemy == Chara.Meiling)
-                         && (m.Id == 6)
-                         && (m.GotCount == 12)
-                         && (m.TrialCount == 34)
-                         && (m.Frames == 5678)),
-                Mock.Of<ISpellCardResult>(
-                    m => (m.Enemy == Chara.Marisa)
-                         && (m.Id == 18)
-                         && (m.GotCount == 1)
-                         && (m.TrialCount == 90)
-                         && (m.Frames == 23456)),
-            }.ToDictionary(result => (result.Enemy, result.Id)));
-        return mock.Object;
-#endif
+        var spellCardResults = new[]
+        {
+            Th105.SpellCardResultTests.MockSpellCardResult(Chara.Meiling, default, 6, 34, 12, 5678),
+            Th105.SpellCardResultTests.MockSpellCardResult(Chara.Marisa, default, 18, 90, 1, 23456),
+        }.ToDictionary(result => (result.Enemy, result.Id));
+
+        var mock = Substitute.For<IClearData>();
+        _ = mock.SpellCardResults.Returns(spellCardResults);
+        return mock;
     }
 
     internal static IReadOnlyDictionary<Chara, IClearData> ClearDataDictionary { get; } =
-        new[] { (Chara.Cirno, CreateClearData()) }.ToDictionary();
+        new[] { (Chara.Cirno, MockClearData()) }.ToDictionary();
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<long>()).Returns(callInfo => $"invoked: {(long)callInfo[0]}");
         return mock;
     }
 
@@ -70,7 +42,7 @@ public class CareerReplacerTests
     public void CareerReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -79,7 +51,7 @@ public class CareerReplacerTests
     {
         var dictionary = ImmutableDictionary<Chara, IClearData>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -87,7 +59,7 @@ public class CareerReplacerTests
     public void ReplaceTestGotCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 12", replacer.Replace("%T123C15CI1"));
     }
 
@@ -95,7 +67,7 @@ public class CareerReplacerTests
     public void ReplaceTestTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 34", replacer.Replace("%T123C15CI2"));
     }
 
@@ -103,7 +75,7 @@ public class CareerReplacerTests
     public void ReplaceTestTime()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("01:34.633", replacer.Replace("%T123C15CI3"));
     }
 
@@ -111,7 +83,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalGotCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 13", replacer.Replace("%T123C00CI1"));
     }
 
@@ -119,7 +91,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 124", replacer.Replace("%T123C00CI2"));
     }
 
@@ -127,7 +99,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalTime()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("08:05.566", replacer.Replace("%T123C00CI3"));
     }
 
@@ -136,7 +108,7 @@ public class CareerReplacerTests
     {
         var dictionary = ImmutableDictionary<Chara, IClearData>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T123C15CI1"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T123C15CI2"));
         Assert.AreEqual("00:00.000", replacer.Replace("%T123C15CI3"));
@@ -145,16 +117,12 @@ public class CareerReplacerTests
     [TestMethod]
     public void ReplaceTestEmptySpellCardResults()
     {
-        var dictionary = new Dictionary<Chara, IClearData>
-        {
-            {
-                Chara.Marisa,
-                Mock.Of<IClearData>(
-                    m => m.SpellCardResults == ImmutableDictionary<(Chara, int), ISpellCardResult>.Empty)
-            },
-        };
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.SpellCardResults.Returns(ImmutableDictionary<(Chara, int), ISpellCardResult>.Empty);
+
+        var dictionary = new[] { (Chara.Marisa, clearData) }.ToDictionary();
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T123C15CI1"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T123C15CI2"));
         Assert.AreEqual("00:00.000", replacer.Replace("%T123C15CI3"));
@@ -164,7 +132,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T123X15CI1", replacer.Replace("%T123X15CI1"));
     }
 
@@ -172,7 +140,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidNumber()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T123C65CI1", replacer.Replace("%T123C65CI1"));
     }
 
@@ -180,7 +148,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidChara()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T123C15XX1", replacer.Replace("%T123C15XX1"));
         Assert.AreEqual("%T123C15NM1", replacer.Replace("%T123C15NM1"));
     }
@@ -189,7 +157,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T123C15CIX", replacer.Replace("%T123C15CIX"));
     }
 }
