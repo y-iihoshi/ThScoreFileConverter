@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -52,7 +52,8 @@ public class AllScoreDataTests
     public void SetClearDataTest()
     {
         var route = RouteWithTotal.A2;
-        var clearData = Mock.Of<IClearData>(m => m.Route == route);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Route.Returns(route);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData);
@@ -64,8 +65,10 @@ public class AllScoreDataTests
     public void SetClearDataTestTwice()
     {
         var route = RouteWithTotal.A2;
-        var clearData1 = Mock.Of<IClearData>(m => m.Route == route);
-        var clearData2 = Mock.Of<IClearData>(m => m.Route == route);
+        var clearData1 = Substitute.For<IClearData>();
+        _ = clearData1.Route.Returns(route);
+        var clearData2 = Substitute.For<IClearData>();
+        _ = clearData2.Route.Returns(route);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData1);
@@ -78,7 +81,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetCardDataTest()
     {
-        var cardData = Mock.Of<ICardData>();
+        var cardData = Substitute.For<ICardData>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(cardData);
@@ -89,8 +92,8 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetCardDataTestTwice()
     {
-        var cardData1 = Mock.Of<ICardData>();
-        var cardData2 = Mock.Of<ICardData>();
+        var cardData1 = Substitute.For<ICardData>();
+        var cardData2 = Substitute.For<ICardData>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(cardData1);
@@ -103,7 +106,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetStatusTest()
     {
-        var status = Mock.Of<IStatus>();
+        var status = Substitute.For<IStatus>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
@@ -114,8 +117,8 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetStatusTestTwice()
     {
-        var status1 = Mock.Of<IStatus>();
-        var status2 = Mock.Of<IStatus>();
+        var status1 = Substitute.For<IStatus>();
+        var status2 = Substitute.For<IStatus>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status1);

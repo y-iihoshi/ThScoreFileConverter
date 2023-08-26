@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 
@@ -15,19 +15,19 @@ public class CareerReplacerTests
         var mock1 = SpellCardTests.MockSpellCard();
 
         var mock2 = SpellCardTests.MockSpellCard();
-        _ = mock2.SetupGet(m => m.Id).Returns(mock1.Object.Id + 1);
+        _ = mock2.Id.Returns(mock1.Id + 1);
 
-        return new[] { mock1.Object, mock2.Object };
+        return new[] { mock1, mock2 };
     }
 
     internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } =
         CreateSpellCards().ToDictionary(card => card.Id);
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
         return mock;
     }
 
@@ -35,7 +35,7 @@ public class CareerReplacerTests
     public void CareerReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -44,7 +44,7 @@ public class CareerReplacerTests
     {
         var cards = ImmutableDictionary<int, ISpellCard>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(cards, formatterMock.Object);
+        var replacer = new CareerReplacer(cards, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -52,7 +52,7 @@ public class CareerReplacerTests
     public void ReplaceTestNoIceCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("invoked: 34", replacer.Replace("%T128C0781"));
     }
 
@@ -60,7 +60,7 @@ public class CareerReplacerTests
     public void ReplaceTestNoMissCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("invoked: 12", replacer.Replace("%T128C0782"));
     }
 
@@ -68,7 +68,7 @@ public class CareerReplacerTests
     public void ReplaceTestTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("invoked: 56", replacer.Replace("%T128C0783"));
     }
 
@@ -76,7 +76,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalNoIceCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("invoked: 68", replacer.Replace("%T128C0001"));
     }
 
@@ -84,7 +84,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalNoMissCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("invoked: 24", replacer.Replace("%T128C0002"));
     }
 
@@ -92,7 +92,7 @@ public class CareerReplacerTests
     public void ReplaceTestTotalTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("invoked: 112", replacer.Replace("%T128C0003"));
     }
 
@@ -101,7 +101,7 @@ public class CareerReplacerTests
     {
         var cards = ImmutableDictionary<int, ISpellCard>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(cards, formatterMock.Object);
+        var replacer = new CareerReplacer(cards, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T128C0781"));
     }
 
@@ -109,7 +109,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("%T128X0781", replacer.Replace("%T128X0781"));
     }
 
@@ -117,7 +117,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidNumber()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("%T128C2511", replacer.Replace("%T128C2511"));
     }
 
@@ -125,7 +125,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(SpellCards, formatterMock.Object);
+        var replacer = new CareerReplacer(SpellCards, formatterMock);
         Assert.AreEqual("%T128C078X", replacer.Replace("%T128C078X"));
     }
 }

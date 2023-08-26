@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th128;
@@ -17,15 +17,15 @@ namespace ThScoreFileConverter.Tests.Models.Th128;
 public class ScoreReplacerTests
 {
     internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =
-        new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Route);
+        new[] { ClearDataTests.MockClearData() }.ToDictionary(clearData => clearData.Route);
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
-        _ = mock.Setup(formatter => formatter.FormatPercent(It.IsAny<double>(), It.IsAny<int>()))
-            .Returns((double value, int precision) => $"invoked: {value.ToString($"F{precision}", CultureInfo.InvariantCulture)}%");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<uint>()).Returns(callInfo => $"invoked: {(uint)callInfo[0]}");
+        _ = mock.FormatPercent(Arg.Any<double>(), Arg.Any<int>())
+            .Returns(callInfo => $"invoked: {((double)callInfo[0]).ToString($"F{(int)callInfo[1]}", CultureInfo.InvariantCulture)}%");
         return mock;
     }
 
@@ -33,7 +33,7 @@ public class ScoreReplacerTests
     public void ScoreReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -42,7 +42,7 @@ public class ScoreReplacerTests
     {
         var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(dictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -50,7 +50,7 @@ public class ScoreReplacerTests
     public void ReplaceTestName()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("Player1", replacer.Replace("%T128SCRHA221"));
     }
 
@@ -58,7 +58,7 @@ public class ScoreReplacerTests
     public void ReplaceTestScore()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 123446701", replacer.Replace("%T128SCRHA222"));
     }
 
@@ -66,7 +66,7 @@ public class ScoreReplacerTests
     public void ReplaceTestStage()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("A2 Clear", replacer.Replace("%T128SCRHA223"));
     }
 
@@ -74,7 +74,7 @@ public class ScoreReplacerTests
     public void ReplaceTestDateTime()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         var expected = DateTimeHelper.GetString(34567890);
         Assert.AreEqual(expected, replacer.Replace("%T128SCRHA224"));
     }
@@ -83,7 +83,7 @@ public class ScoreReplacerTests
     public void ReplaceTestSlowRate()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 1.200%", replacer.Replace("%T128SCRHA225"));  // really...?
     }
 
@@ -92,7 +92,7 @@ public class ScoreReplacerTests
     {
         var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(dictionary, formatterMock);
         Assert.AreEqual("--------", replacer.Replace("%T128SCRHA221"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T128SCRHA222"));
         Assert.AreEqual("-------", replacer.Replace("%T128SCRHA223"));
@@ -103,15 +103,13 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyRankings()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Route == RouteWithTotal.A2)
-                     && (m.Rankings == ImmutableDictionary<Level, IReadOnlyList<IScoreData>>.Empty))
-        }.ToDictionary(clearData => clearData.Route);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Route.Returns(RouteWithTotal.A2);
+        _ = clearData.Rankings.Returns(ImmutableDictionary<Level, IReadOnlyList<IScoreData>>.Empty);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Route);
         var formatterMock = MockNumberFormatter();
 
-        var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(dictionary, formatterMock);
         Assert.AreEqual("--------", replacer.Replace("%T128SCRHA221"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T128SCRHA222"));
         Assert.AreEqual("-------", replacer.Replace("%T128SCRHA223"));
@@ -122,17 +120,16 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyRanking()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Route == RouteWithTotal.A2)
-                     && (m.Rankings == EnumHelper<Level>.Enumerable.ToDictionary(
-                        level => level,
-                        level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>)))
-        }.ToDictionary(clearData => clearData.Route);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Route.Returns(RouteWithTotal.A2);
+        _ = clearData.Rankings.Returns(
+            EnumHelper<Level>.Enumerable.ToDictionary(
+                level => level,
+                level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>));
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Route);
         var formatterMock = MockNumberFormatter();
 
-        var replacer = new ScoreReplacer(dictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(dictionary, formatterMock);
         Assert.AreEqual("--------", replacer.Replace("%T128SCRHA221"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T128SCRHA222"));
         Assert.AreEqual("-------", replacer.Replace("%T128SCRHA223"));
@@ -144,7 +141,7 @@ public class ScoreReplacerTests
     public void ReplaceTestLevelExtra()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128SCRXA223", replacer.Replace("%T128SCRXA223"));
     }
 
@@ -152,7 +149,7 @@ public class ScoreReplacerTests
     public void ReplaceTestRouteExtra()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128SCRHEX23", replacer.Replace("%T128SCRHEX23"));
     }
 
@@ -160,7 +157,7 @@ public class ScoreReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128XXXHA221", replacer.Replace("%T128XXXHA221"));
     }
 
@@ -168,7 +165,7 @@ public class ScoreReplacerTests
     public void ReplaceTestInvalidLevel()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128SCRYA221", replacer.Replace("%T128SCRYA221"));
     }
 
@@ -176,7 +173,7 @@ public class ScoreReplacerTests
     public void ReplaceTestInvalidRoute()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128SCRHXX21", replacer.Replace("%T128SCRHXX21"));
     }
 
@@ -184,7 +181,7 @@ public class ScoreReplacerTests
     public void ReplaceTestInvalidRank()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128SCRHA2X1", replacer.Replace("%T128SCRHA2X1"));
     }
 
@@ -192,7 +189,7 @@ public class ScoreReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T128SCRHA22X", replacer.Replace("%T128SCRHA22X"));
     }
 }

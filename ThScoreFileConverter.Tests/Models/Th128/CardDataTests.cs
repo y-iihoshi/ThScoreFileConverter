@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -11,28 +11,29 @@ namespace ThScoreFileConverter.Tests.Models.Th128;
 [TestClass]
 public class CardDataTests
 {
-    internal static Mock<ICardData> MockCardData()
+    internal static ICardData MockCardData()
     {
-        static ISpellCard CreateSpellCard(int index)
+        static ISpellCard MockSpellCard(int index)
         {
-            var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0x80));
-            _ = mock.SetupGet(s => s.NoMissCount).Returns(123 + index);
-            _ = mock.SetupGet(s => s.NoIceCount).Returns(456 + index);
-            _ = mock.SetupGet(s => s.TrialCount).Returns(789 + index);
-            _ = mock.SetupGet(s => s.Id).Returns(index);
-            _ = mock.SetupGet(s => s.Level).Returns(Level.Hard);
-            _ = mock.SetupGet(s => s.HasTried).Returns(true);
-            return mock.Object;
+            var mock = Substitute.For<ISpellCard>();
+            _ = mock.Name.Returns(TestUtils.MakeRandomArray(0x80));
+            _ = mock.NoMissCount.Returns(123 + index);
+            _ = mock.NoIceCount.Returns(456 + index);
+            _ = mock.TrialCount.Returns(789 + index);
+            _ = mock.Id.Returns(index);
+            _ = mock.Level.Returns(Level.Hard);
+            _ = mock.HasTried.Returns(true);
+            return mock;
         }
 
-        var mock = new Mock<ICardData>();
-        _ = mock.SetupGet(m => m.Signature).Returns("CD");
-        _ = mock.SetupGet(m => m.Version).Returns(1);
-        _ = mock.SetupGet(m => m.Checksum).Returns(0u);
-        _ = mock.SetupGet(m => m.Size).Returns(0x947C);
-        _ = mock.SetupGet(m => m.Cards).Returns(
-            Enumerable.Range(1, 250).ToDictionary(index => index, CreateSpellCard));
+        var cards = Enumerable.Range(1, 250).ToDictionary(index => index, MockSpellCard);
+
+        var mock = Substitute.For<ICardData>();
+        _ = mock.Signature.Returns("CD");
+        _ = mock.Version.Returns((ushort)1);
+        _ = mock.Checksum.Returns(0u);
+        _ = mock.Size.Returns(0x947C);
+        _ = mock.Cards.Returns(cards);
         return mock;
     }
 
@@ -64,10 +65,10 @@ public class CardDataTests
     {
         var mock = MockCardData();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new CardData(chapter);
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
         Assert.IsFalse(clearData.IsValid);
     }
 
@@ -75,10 +76,10 @@ public class CardDataTests
     public void CardDataTestInvalidSignature()
     {
         var mock = MockCardData();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
     }
 
@@ -86,10 +87,10 @@ public class CardDataTests
     public void CardDataTestInvalidVersion()
     {
         var mock = MockCardData();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
     }
 
@@ -97,10 +98,10 @@ public class CardDataTests
     public void CardDataTestInvalidSize()
     {
         var mock = MockCardData();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(--size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
     }
 
