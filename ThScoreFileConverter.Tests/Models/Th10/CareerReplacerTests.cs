@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Tests.Models.Th10;
 public class CareerReplacerTests
 {
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-        new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
+        new[] { ClearDataTests.MockClearData() }.ToDictionary(clearData => clearData.Chara);
 
     private static INumberFormatter MockNumberFormatter()
     {
