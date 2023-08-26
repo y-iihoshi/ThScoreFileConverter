@@ -12,7 +12,7 @@ namespace ThScoreFileConverter.Tests.Models.Th075;
 [TestClass]
 public class CollectRateReplacerTests
 {
-    private static IClearData CreateClearData()
+    private static IClearData MockClearData()
     {
         var mock = ClearDataTests.MockClearData();
         _ = mock.CardGotCount.Returns(Enumerable.Range(1, 100).Select(count => (short)(count % 5)).ToList());
@@ -24,7 +24,7 @@ public class CollectRateReplacerTests
     internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
             level => (CharaWithReserved.Reimu, level),
-            level => CreateClearData());
+            level => MockClearData());
 
     private static INumberFormatter MockNumberFormatter()
     {

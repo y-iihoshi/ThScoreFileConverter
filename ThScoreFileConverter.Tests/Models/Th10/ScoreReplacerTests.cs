@@ -141,7 +141,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestStageExtra()
     {
-        static IScoreData CreateScoreData()
+        static IScoreData MockScoreData()
         {
             var mock = Substitute.For<IScoreData>();
             _ = mock.DateTime.Returns(34567890u);
@@ -149,19 +149,19 @@ public class ScoreReplacerTests
             return mock;
         }
 
-        static IClearData CreateClearData()
+        static IClearData MockClearData()
         {
             var mock = Substitute.For<IClearData>();
             _ = mock.Chara.Returns(CharaWithTotal.ReimuB);
             _ = mock.Rankings.Returns(
                 _ => EnumHelper<Level>.Enumerable.ToDictionary(
                     level => level,
-                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData()).ToList()
+                    level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList()
                         as IReadOnlyList<IScoreData>));
             return mock;
         }
 
-        var dictionary = new[] { CreateClearData() }.ToDictionary(clearData => clearData.Chara);
+        var dictionary = new[] { MockClearData() }.ToDictionary(clearData => clearData.Chara);
         var formatterMock = MockNumberFormatter();
 
         var replacer = new ScoreReplacer(dictionary, formatterMock);

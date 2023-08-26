@@ -16,7 +16,7 @@ public class ClearReplacerTests
 {
     private static IEnumerable<IClearData> CreateClearDataList()
     {
-        static IScoreData CreateScoreData(Level level, int index)
+        static IScoreData MockScoreData(Level level, int index)
         {
             var mock = Substitute.For<IScoreData>();
             _ = mock.StageProgress.Returns(
@@ -30,7 +30,7 @@ public class ClearReplacerTests
         _ = mock.Rankings.Returns(
             _ => EnumHelper<Level>.Enumerable.ToDictionary(
                 level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
+                level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList()
                     as IReadOnlyList<IScoreData>));
         return new[] { mock };
     }

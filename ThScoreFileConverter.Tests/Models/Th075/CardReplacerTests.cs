@@ -12,7 +12,7 @@ namespace ThScoreFileConverter.Tests.Models.Th075;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IClearData CreateClearData()
+    private static IClearData MockClearData()
     {
         var mock = ClearDataTests.MockClearData();
         _ = mock.CardTrialCount.Returns(Enumerable.Repeat(0, 100).Select(count => (short)count).ToList());
@@ -25,7 +25,7 @@ public class CardReplacerTests
             level => ClearDataTests.MockClearData())
         .Concat(EnumHelper<Level>.Enumerable.ToDictionary(
             level => (CharaWithReserved.Marisa, level),
-            level => CreateClearData()))
+            level => MockClearData()))
         .ToDictionary();
 
     [TestMethod]

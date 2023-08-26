@@ -77,7 +77,7 @@ public class CareerReplacerTests
     [TestMethod]
     public void ReplaceTestNotStar()
     {
-        static IClearData CreateClearData()
+        static IClearData MockClearData()
         {
             var mock = ClearDataTests.MockClearData();
             var cardTrulyGot = mock.CardTrulyGot;
@@ -87,7 +87,7 @@ public class CareerReplacerTests
 
         var clearData = EnumHelper<Level>.Enumerable.ToDictionary(
             level => (CharaWithReserved.Reimu, level),
-            level => CreateClearData());
+            level => MockClearData());
         var formatterMock = MockNumberFormatter();
 
         var replacer = new CareerReplacer(clearData, formatterMock);

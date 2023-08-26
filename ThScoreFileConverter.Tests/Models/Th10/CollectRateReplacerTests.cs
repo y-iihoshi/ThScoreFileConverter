@@ -16,7 +16,7 @@ public class CollectRateReplacerTests
 {
     private static IEnumerable<IClearData> CreateClearDataList()
     {
-        static ISpellCard<Level> CreateSpellCard(int clearCount, int trialCount, int id, Level level)
+        static ISpellCard<Level> MockSpellCard(int clearCount, int trialCount, int id, Level level)
         {
             var mock = Substitute.For<ISpellCard<Level>>();
             _ = mock.ClearCount.Returns(clearCount);
@@ -31,14 +31,14 @@ public class CollectRateReplacerTests
         _ = mock1.Cards.Returns(
             _ => Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
-                pair => CreateSpellCard(pair.Key % 3, pair.Key % 5, pair.Value.Id, pair.Value.Level)));
+                pair => MockSpellCard(pair.Key % 3, pair.Key % 5, pair.Value.Id, pair.Value.Level)));
 
         var mock2 = Substitute.For<IClearData>();
         _ = mock2.Chara.Returns(CharaWithTotal.Total);
         _ = mock2.Cards.Returns(
             _ => Definitions.CardTable.ToDictionary(
                 pair => pair.Key,
-                pair => CreateSpellCard(pair.Key % 7, pair.Key % 11, pair.Value.Id, pair.Value.Level)));
+                pair => MockSpellCard(pair.Key % 7, pair.Key % 11, pair.Value.Id, pair.Value.Level)));
 
         return new[] { mock1, mock2 };
     }
