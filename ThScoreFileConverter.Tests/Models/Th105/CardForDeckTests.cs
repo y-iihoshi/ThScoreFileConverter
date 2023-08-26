@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -13,11 +13,11 @@ namespace ThScoreFileConverter.Tests.Models.Th105;
 [TestClass]
 public class CardForDeckTests
 {
-    internal static Mock<ICardForDeck> MockCardForDeck()
+    internal static ICardForDeck MockCardForDeck(int id, int maxNumber)
     {
-        var mock = new Mock<ICardForDeck>();
-        _ = mock.SetupGet(m => m.Id).Returns(1);
-        _ = mock.SetupGet(m => m.MaxNumber).Returns(2);
+        var mock = Substitute.For<ICardForDeck>();
+        _ = mock.Id.Returns(id);
+        _ = mock.MaxNumber.Returns(maxNumber);
         return mock;
     }
 
@@ -35,26 +35,26 @@ public class CardForDeckTests
     [TestMethod]
     public void CardForDeckTest()
     {
-        var mock = new Mock<ICardForDeck>();
+        var mock = Substitute.For<ICardForDeck>();
         var cardForDeck = new CardForDeck();
 
-        Validate(mock.Object, cardForDeck);
+        Validate(mock, cardForDeck);
     }
 
     [TestMethod]
     public void ReadFromTest()
     {
-        var mock = MockCardForDeck();
-        var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(mock.Object));
+        var mock = MockCardForDeck(1, 2);
+        var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(mock));
 
-        Validate(mock.Object, cardForDeck);
+        Validate(mock, cardForDeck);
     }
 
     [TestMethod]
     public void ReadFromTestShortened()
     {
-        var mock = MockCardForDeck();
-        var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
+        var mock = MockCardForDeck(1, 2);
+        var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
         _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<CardForDeck>(array));
     }
@@ -62,11 +62,11 @@ public class CardForDeckTests
     [TestMethod]
     public void ReadFromTestExceeded()
     {
-        var mock = MockCardForDeck();
-        var array = MakeByteArray(mock.Object).Concat(new byte[1] { 1 }).ToArray();
+        var mock = MockCardForDeck(1, 2);
+        var array = MakeByteArray(mock).Concat(new byte[1] { 1 }).ToArray();
 
         var cardForDeck = TestUtils.Create<CardForDeck>(array);
 
-        Validate(mock.Object, cardForDeck);
+        Validate(mock, cardForDeck);
     }
 }

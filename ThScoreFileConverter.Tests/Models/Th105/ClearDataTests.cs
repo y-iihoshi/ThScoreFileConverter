@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th105;
@@ -13,34 +13,24 @@ namespace ThScoreFileConverter.Tests.Models.Th105;
 [TestClass]
 public class ClearDataTests
 {
-    internal static Mock<IClearData<TChara>> MockClearData<TChara>()
+    internal static IClearData<TChara> MockClearData<TChara>()
         where TChara : struct, Enum
     {
-        static ICardForDeck CreateCardForDeck(int id)
+        static ICardForDeck MockCardForDeck(int id)
         {
-            var mock = new Mock<ICardForDeck>();
-            _ = mock.SetupGet(c => c.Id).Returns(id);
-            _ = mock.SetupGet(c => c.MaxNumber).Returns((id % 4) + 1);
-            return mock.Object;
+            return CardForDeckTests.MockCardForDeck(id, (id % 4) + 1);
         }
 
-        static ISpellCardResult<TChara> CreateSpellCardResult(TChara chara, int index)
+        static ISpellCardResult<TChara> MockSpellCardResult(TChara enemy, int index)
         {
-            var mock = new Mock<ISpellCardResult<TChara>>();
-            _ = mock.SetupGet(m => m.Enemy).Returns(chara);
-            _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
-            _ = mock.SetupGet(m => m.Id).Returns(index + 1);
-            _ = mock.SetupGet(m => m.TrialCount).Returns(index * 100);
-            _ = mock.SetupGet(m => m.GotCount).Returns(index * 50);
-            _ = mock.SetupGet(m => m.Frames).Returns(8901u - (uint)index);
-            return mock.Object;
+            return SpellCardResultTests.MockSpellCardResult(enemy, Level.Normal, index + 1, index * 100, index * 50, 8901u - (uint)index);
         }
 
-        var mock = new Mock<IClearData<TChara>>();
-        _ = mock.SetupGet(m => m.CardsForDeck).Returns(
-            Enumerable.Range(1, 10).Select(CreateCardForDeck).ToDictionary(card => card.Id));
-        _ = mock.SetupGet(m => m.SpellCardResults).Returns(
-            EnumHelper<TChara>.Enumerable.Select(CreateSpellCardResult).ToDictionary(result => (result.Enemy, result.Id)));
+        var mock = Substitute.For<IClearData<TChara>>();
+        _ = mock.CardsForDeck.Returns(
+            _ => Enumerable.Range(1, 10).Select(MockCardForDeck).ToDictionary(card => card.Id));
+        _ = mock.SpellCardResults.Returns(
+            _ => EnumHelper<TChara>.Enumerable.Select(MockSpellCardResult).ToDictionary(result => (result.Enemy, result.Id)));
         return mock;
     }
 
@@ -81,16 +71,16 @@ public class ClearDataTests
         where TChara : struct, Enum
     {
         var mock = MockClearData<TChara>();
-        var clearData = TestUtils.Create<ClearData<TChara>>(MakeByteArray(mock.Object));
+        var clearData = TestUtils.Create<ClearData<TChara>>(MakeByteArray(mock));
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
     }
 
     internal static void ReadFromTestShortenedHelper<TChara>()
         where TChara : struct, Enum
     {
         var mock = MockClearData<TChara>();
-        var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
+        var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
         _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
     }
@@ -99,11 +89,11 @@ public class ClearDataTests
         where TChara : struct, Enum
     {
         var mock = MockClearData<TChara>();
-        var array = MakeByteArray(mock.Object).Concat(new byte[1] { 1 }).ToArray();
+        var array = MakeByteArray(mock).Concat(new byte[1] { 1 }).ToArray();
 
         var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
     }
 
     internal static void ReadFromTestDuplicatedHelper<TChara>()
@@ -111,16 +101,16 @@ public class ClearDataTests
     {
         var mock = MockClearData<TChara>();
         var array = TestUtils.MakeByteArray(
-            mock.Object.CardsForDeck.Count + 1,
-            mock.Object.CardsForDeck.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
-            CardForDeckTests.MakeByteArray(mock.Object.CardsForDeck.First().Value),
-            mock.Object.SpellCardResults.Count + 1,
-            mock.Object.SpellCardResults.Select(pair => SpellCardResultTests.MakeByteArray(pair.Value)),
-            SpellCardResultTests.MakeByteArray(mock.Object.SpellCardResults.First().Value));
+            mock.CardsForDeck.Count + 1,
+            mock.CardsForDeck.Select(pair => CardForDeckTests.MakeByteArray(pair.Value)),
+            CardForDeckTests.MakeByteArray(mock.CardsForDeck.First().Value),
+            mock.SpellCardResults.Count + 1,
+            mock.SpellCardResults.Select(pair => SpellCardResultTests.MakeByteArray(pair.Value)),
+            SpellCardResultTests.MakeByteArray(mock.SpellCardResults.First().Value));
 
         var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
     }
 
     [TestMethod]

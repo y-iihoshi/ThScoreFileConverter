@@ -36,7 +36,7 @@ public class AllScoreDataTests
         {
             storyClearCounts = charas.ToDictionary(chara => chara, chara => (byte)chara),
             systemCards = Enumerable.Range(1, 5).ToDictionary(id => id, CreateCardForDeck),
-            clearData = charas.ToDictionary(chara => chara, chara => Th105.ClearDataTests.MockClearData<Chara>().Object),
+            clearData = charas.ToDictionary(chara => chara, chara => Th105.ClearDataTests.MockClearData<Chara>()),
         };
     }
 
