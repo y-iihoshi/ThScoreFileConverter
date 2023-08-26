@@ -7,7 +7,7 @@ namespace ThScoreFileConverter.Tests.Models.Th125;
 [TestClass]
 public class CardReplacerTests
 {
-    internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore().Object };
+    internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore() };
 
     [TestMethod]
     public void CardReplacerTest()
