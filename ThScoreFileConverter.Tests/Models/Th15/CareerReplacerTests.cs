@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
@@ -14,13 +14,13 @@ namespace ThScoreFileConverter.Tests.Models.Th15;
 public class CareerReplacerTests
 {
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
-        new[] { ClearDataTests.MockClearData().Object }.ToDictionary(clearData => clearData.Chara);
+        new[] { ClearDataTests.MockClearData() }.ToDictionary(clearData => clearData.Chara);
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
         return mock;
     }
 
@@ -28,7 +28,7 @@ public class CareerReplacerTests
     public void CareerReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -37,7 +37,7 @@ public class CareerReplacerTests
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -45,7 +45,7 @@ public class CareerReplacerTests
     public void ReplaceTestPointdeviceClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 15", replacer.Replace("%T15CP003MR1"));
     }
 
@@ -53,7 +53,7 @@ public class CareerReplacerTests
     public void ReplaceTestPointdeviceTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 59", replacer.Replace("%T15CP003MR2"));
     }
 
@@ -61,7 +61,7 @@ public class CareerReplacerTests
     public void ReplaceTestPointdeviceTotalClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 8568", replacer.Replace("%T15CP000MR1"));
     }
 
@@ -69,7 +69,7 @@ public class CareerReplacerTests
     public void ReplaceTestPointdeviceTotalTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 13804", replacer.Replace("%T15CP000MR2"));
     }
 
@@ -77,7 +77,7 @@ public class CareerReplacerTests
     public void ReplaceTestLegacyClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 15", replacer.Replace("%T15CL003MR1"));
     }
 
@@ -85,7 +85,7 @@ public class CareerReplacerTests
     public void ReplaceTestLegacyTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 59", replacer.Replace("%T15CL003MR2"));
     }
 
@@ -93,7 +93,7 @@ public class CareerReplacerTests
     public void ReplaceTestLegacyTotalClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 8568", replacer.Replace("%T15CL000MR1"));
     }
 
@@ -101,7 +101,7 @@ public class CareerReplacerTests
     public void ReplaceTestLegacyTotalTrialCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 13804", replacer.Replace("%T15CL000MR2"));
     }
 
@@ -110,44 +110,38 @@ public class CareerReplacerTests
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T15CP003MR1"));
     }
 
     [TestMethod]
     public void ReplaceTestEmptyGameModes()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
+        _ = clearData.GameModeData.Returns(ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
         var formatterMock = MockNumberFormatter();
 
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T15CP003MR1"));
     }
 
     [TestMethod]
     public void ReplaceTestEmptyCards()
     {
-        var dictionary = new[]
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Cards.Returns(ImmutableDictionary<int, ISpellCard>.Empty);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
+        _ = clearData.GameModeData.Returns(new Dictionary<GameMode, IClearDataPerGameMode>
         {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Cards == ImmutableDictionary<int, ISpellCard>.Empty)
-                            },
-                        }))
-        }.ToDictionary(clearData => clearData.Chara);
+            { GameMode.Pointdevice, clearDataPerGameMode },
+        });
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
         var formatterMock = MockNumberFormatter();
 
-        var replacer = new CareerReplacer(dictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T15CP003MR1"));
     }
 
@@ -155,7 +149,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15XP003MR1", replacer.Replace("%T15XP003MR1"));
     }
 
@@ -163,7 +157,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidGameMode()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CX003MR1", replacer.Replace("%T15CX003MR1"));
     }
 
@@ -171,7 +165,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidNumber()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CP120MR1", replacer.Replace("%T15CP120MR1"));
     }
 
@@ -179,7 +173,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidChara()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CP003XX1", replacer.Replace("%T15CP003XX1"));
     }
 
@@ -187,7 +181,7 @@ public class CareerReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock.Object);
+        var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CP003MRX", replacer.Replace("%T15CP003MRX"));
     }
 }

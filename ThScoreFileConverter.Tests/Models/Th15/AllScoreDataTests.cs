@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverter.Tests.Models.Th095;
@@ -52,7 +52,8 @@ public class AllScoreDataTests
     public void SetClearDataTest()
     {
         var chara = CharaWithTotal.Marisa;
-        var clearData = Mock.Of<IClearData>(m => m.Chara == chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData);
@@ -64,8 +65,10 @@ public class AllScoreDataTests
     public void SetClearDataTestTwice()
     {
         var chara = CharaWithTotal.Marisa;
-        var clearData1 = Mock.Of<IClearData>(m => m.Chara == chara);
-        var clearData2 = Mock.Of<IClearData>(m => m.Chara == chara);
+        var clearData1 = Substitute.For<IClearData>();
+        _ = clearData1.Chara.Returns(chara);
+        var clearData2 = Substitute.For<IClearData>();
+        _ = clearData2.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData1);
@@ -78,7 +81,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetStatusTest()
     {
-        var status = Mock.Of<IStatus>();
+        var status = Substitute.For<IStatus>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
@@ -89,8 +92,8 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetStatusTestTwice()
     {
-        var status1 = Mock.Of<IStatus>();
-        var status2 = Mock.Of<IStatus>();
+        var status1 = Substitute.For<IStatus>();
+        var status2 = Substitute.For<IStatus>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status1);
