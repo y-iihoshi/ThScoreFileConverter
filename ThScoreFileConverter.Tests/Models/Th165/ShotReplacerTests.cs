@@ -12,7 +12,7 @@ public class ShotReplacerTests
     internal static IReadOnlyDictionary<(Day, int), (string, IBestShotHeader)> BestShots { get; } =
         new List<(string, IBestShotHeader header)>
         {
-            (@"C:\path\to\output\bestshots\bs02_03.png", BestShotHeaderTests.MockBestShotHeader().Object),
+            (@"C:\path\to\output\bestshots\bs02_03.png", BestShotHeaderTests.MockBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
 
     [TestMethod]
@@ -35,7 +35,7 @@ public class ShotReplacerTests
     {
         var bestshots = new List<(string, IBestShotHeader header)>
         {
-            ("abcde", BestShotHeaderTests.MockInitialBestShotHeader().Object),
+            ("abcde", BestShotHeaderTests.MockInitialBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
         Assert.IsNotNull(replacer);
@@ -82,7 +82,7 @@ public class ShotReplacerTests
     {
         var bestshots = new List<(string, IBestShotHeader header)>
         {
-            ("abcde", BestShotHeaderTests.MockInitialBestShotHeader().Object),
+            ("abcde", BestShotHeaderTests.MockInitialBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT023"));

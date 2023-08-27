@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th165;
 
 namespace ThScoreFileConverter.Tests.Models.Th165;
@@ -11,8 +11,8 @@ public class CardReplacerTests
     private static IReadOnlyList<IScore> CreateScores()
     {
         var mock = ScoreTests.MockScore();
-        _ = mock.SetupGet(m => m.Number).Returns(57);
-        return new[] { mock.Object };
+        _ = mock.Number.Returns(57);
+        return new[] { mock };
     }
 
     internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
@@ -83,7 +83,9 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestZeroNumber()
     {
-        var scores = new[] { Mock.Of<IScore>(m => m.Number == 0) };
+        var score = Substitute.For<IScore>();
+        _ = score.Number.Returns(0);
+        var scores = new[] { score };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));
@@ -92,7 +94,9 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestExceededNumber()
     {
-        var scores = new[] { Mock.Of<IScore>(m => m.Number == 104) };
+        var score = Substitute.For<IScore>();
+        _ = score.Number.Returns(104);
+        var scores = new[] { score };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));
@@ -101,7 +105,9 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestMismatchNumber()
     {
-        var scores = new[] { Mock.Of<IScore>(m => m.Number == 58) };
+        var score = Substitute.For<IScore>();
+        _ = score.Number.Returns(58);
+        var scores = new[] { score };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T165CARDN111"));

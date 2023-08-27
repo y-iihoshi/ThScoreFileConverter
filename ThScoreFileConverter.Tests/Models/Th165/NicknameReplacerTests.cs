@@ -5,7 +5,7 @@ namespace ThScoreFileConverter.Tests.Models.Th165;
 [TestClass]
 public class NicknameReplacerTests
 {
-    internal static IStatus Status { get; } = StatusTests.MockStatus().Object;
+    internal static IStatus Status { get; } = StatusTests.MockStatus();
 
     [TestMethod]
     public void NicknameReplacerTest()

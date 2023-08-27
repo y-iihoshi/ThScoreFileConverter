@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th165;
@@ -16,14 +16,14 @@ public class ShotExReplacerTests
     internal static IReadOnlyDictionary<(Day, int), (string, IBestShotHeader)> BestShots { get; } =
         new List<(string, IBestShotHeader header)>
         {
-            (@"C:\path\to\output\bestshots\bs02_03.png", BestShotHeaderTests.MockBestShotHeader().Object),
+            (@"C:\path\to\output\bestshots\bs02_03.png", BestShotHeaderTests.MockBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
         return mock;
     }
 
@@ -31,7 +31,7 @@ public class ShotExReplacerTests
     public void ShotExReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.IsNotNull(replacer);
     }
 
@@ -40,7 +40,7 @@ public class ShotExReplacerTests
     {
         var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(bestshots, formatterMock, @"C:\path\to\output\");
         Assert.IsNotNull(replacer);
     }
 
@@ -49,10 +49,10 @@ public class ShotExReplacerTests
     {
         var bestshots = new List<(string, IBestShotHeader header)>
         {
-            ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
+            ("abcde", BestShotHeaderTests.MockBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(bestshots, formatterMock, @"C:\path\to\output\");
         Assert.IsNotNull(replacer);
     }
 
@@ -60,7 +60,7 @@ public class ShotExReplacerTests
     public void ShotExReplacerTestEmptyOutputFilePath()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, string.Empty);
+        var replacer = new ShotExReplacer(BestShots, formatterMock, string.Empty);
         Assert.IsNotNull(replacer);
     }
 
@@ -68,7 +68,7 @@ public class ShotExReplacerTests
     public void ShotExReplacerTestInvalidOutputFilePath()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, "abcde");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, "abcde");
         Assert.IsNotNull(replacer);
     }
 
@@ -76,7 +76,7 @@ public class ShotExReplacerTests
     public void ReplaceTestPath()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(@"bestshots/bs02_03.png", replacer.Replace("%T165SHOTEX0231"));
     }
 
@@ -84,7 +84,7 @@ public class ShotExReplacerTests
     public void ReplaceTestWidth()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("4", replacer.Replace("%T165SHOTEX0232"));
     }
 
@@ -92,7 +92,7 @@ public class ShotExReplacerTests
     public void ReplaceTestHeight()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("5", replacer.Replace("%T165SHOTEX0233"));
     }
 
@@ -100,7 +100,7 @@ public class ShotExReplacerTests
     public void ReplaceTestDateTime()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         var expected = DateTimeHelper.GetString(11);
         Assert.AreEqual(expected, replacer.Replace("%T165SHOTEX0234"));
     }
@@ -109,7 +109,7 @@ public class ShotExReplacerTests
     public void ReplaceTestHashtags()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(string.Join(Environment.NewLine, new[]
         {
             "＃敵が見切れてる",
@@ -124,7 +124,7 @@ public class ShotExReplacerTests
     public void ReplaceTestNumViews()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("invoked: 19", replacer.Replace("%T165SHOTEX0236"));
     }
 
@@ -132,7 +132,7 @@ public class ShotExReplacerTests
     public void ReplaceTestNumLikes()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("invoked: 20", replacer.Replace("%T165SHOTEX0237"));
     }
 
@@ -140,7 +140,7 @@ public class ShotExReplacerTests
     public void ReplaceTestNumFavs()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("invoked: 21", replacer.Replace("%T165SHOTEX0238"));
     }
 
@@ -148,7 +148,7 @@ public class ShotExReplacerTests
     public void ReplaceTestScore()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("invoked: 13", replacer.Replace("%T165SHOTEX0239"));
     }
 
@@ -157,7 +157,7 @@ public class ShotExReplacerTests
     {
         var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(bestshots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));
         Assert.AreEqual("0", replacer.Replace("%T165SHOTEX0232"));
         Assert.AreEqual("0", replacer.Replace("%T165SHOTEX0233"));
@@ -173,13 +173,13 @@ public class ShotExReplacerTests
     public void ReplaceTestEmptyHashtags()
     {
         var mock = BestShotHeaderTests.MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Fields).Returns(new HashtagFields(0, 0, 0));
+        _ = mock.Fields.Returns(new HashtagFields(0, 0, 0));
         var bestshots = new List<(string, IBestShotHeader header)>
         {
-            (@"C:\path\to\output\bestshots\bs02_03.png", mock.Object),
+            (@"C:\path\to\output\bestshots\bs02_03.png", mock),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(bestshots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0235"));
     }
 
@@ -188,10 +188,10 @@ public class ShotExReplacerTests
     {
         var bestshots = new List<(string, IBestShotHeader header)>
         {
-            ("abcde", BestShotHeaderTests.MockBestShotHeader().Object),
+            ("abcde", BestShotHeaderTests.MockBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(bestshots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(bestshots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));
     }
 
@@ -199,7 +199,7 @@ public class ShotExReplacerTests
     public void ReplaceTestEmptyOutputFilePath()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, string.Empty);
+        var replacer = new ShotExReplacer(BestShots, formatterMock, string.Empty);
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));
     }
 
@@ -207,7 +207,7 @@ public class ShotExReplacerTests
     public void ReplaceTestInvalidOutputFilePath()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, "abcde");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, "abcde");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0231"));
     }
 
@@ -215,7 +215,7 @@ public class ShotExReplacerTests
     public void ReplaceTestNonexistentDay()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0331"));
     }
 
@@ -223,7 +223,7 @@ public class ShotExReplacerTests
     public void ReplaceTestNonexistentScene()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOTEX0221"));
     }
 
@@ -231,7 +231,7 @@ public class ShotExReplacerTests
     public void ReplaceTestNonexistentSpellCard()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("%T165SHOTEX0131", replacer.Replace("%T165SHOTEX0131"));
     }
 
@@ -239,7 +239,7 @@ public class ShotExReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("%T165XXXXXX0231", replacer.Replace("%T165XXXXXX0231"));
     }
 
@@ -247,7 +247,7 @@ public class ShotExReplacerTests
     public void ReplaceTestInvalidDay()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("%T165SHOTEXXX31", replacer.Replace("%T165SHOTEXXX31"));
     }
 
@@ -255,7 +255,7 @@ public class ShotExReplacerTests
     public void ReplaceTestInvalidScene()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("%T165SHOTEX02X1", replacer.Replace("%T165SHOTEX02X1"));
     }
 
@@ -263,7 +263,7 @@ public class ShotExReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new ShotExReplacer(BestShots, formatterMock.Object, @"C:\path\to\output\");
+        var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         Assert.AreEqual("%T165SHOTEX023X", replacer.Replace("%T165SHOTEX023X"));
     }
 }
