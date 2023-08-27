@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
 
@@ -44,7 +44,8 @@ public class AllScoreDataTests
     public void SetItemStatusTest()
     {
         var item = ItemWithTotal.Fablic;
-        var status = Mock.Of<IItemStatus>(m => m.Item == item);
+        var status = Substitute.For<IItemStatus>();
+        _ = status.Item.Returns(item);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
@@ -56,8 +57,10 @@ public class AllScoreDataTests
     public void SetItemStatusTestTwice()
     {
         var item = ItemWithTotal.Fablic;
-        var status1 = Mock.Of<IItemStatus>(m => m.Item == item);
-        var status2 = Mock.Of<IItemStatus>(m => m.Item == item);
+        var status1 = Substitute.For<IItemStatus>();
+        _ = status1.Item.Returns(item);
+        var status2 = Substitute.For<IItemStatus>();
+        _ = status2.Item.Returns(item);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status1);
