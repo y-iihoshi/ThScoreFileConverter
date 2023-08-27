@@ -95,7 +95,7 @@ public class CardReplacerTests
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
         _ = clearData.Cards.Returns(ImmutableDictionary<int, ISpellCard<Level>>.Empty);
-        var dictionary = (new[] { clearData }).ToDictionary(data => data.Chara);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new CardReplacer(dictionary, true);
         Assert.AreEqual("??????????", replacer.Replace("%T10CARD003N"));
