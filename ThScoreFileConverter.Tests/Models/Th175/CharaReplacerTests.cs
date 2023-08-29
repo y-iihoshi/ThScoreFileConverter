@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th175;
 using ThScoreFileConverter.Models.Th175;
 using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
@@ -38,11 +38,11 @@ public class CharaReplacerTests
             { Chara.Marisa, 10 },
         };
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        var mock = new Mock<INumberFormatter>();
-        _ = mock.Setup(formatter => formatter.FormatNumber(It.IsAny<It.IsValueType>()))
-            .Returns((object value) => $"invoked: {value}");
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
         return mock;
     }
 
@@ -50,7 +50,7 @@ public class CharaReplacerTests
     public void CharaReplacerTest()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -59,7 +59,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(counts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(counts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -68,7 +68,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, counts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, counts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -77,7 +77,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, counts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, counts, PerfectClearCounts, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -86,7 +86,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, counts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, counts, formatterMock);
         Assert.IsNotNull(replacer);
     }
 
@@ -94,7 +94,7 @@ public class CharaReplacerTests
     public void ReplaceTestUseCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 98", replacer.Replace("%T175CHRRM1"));
     }
@@ -103,7 +103,7 @@ public class CharaReplacerTests
     public void ReplaceTestRetireCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 76", replacer.Replace("%T175CHRRM2"));
     }
@@ -112,7 +112,7 @@ public class CharaReplacerTests
     public void ReplaceTestClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 54", replacer.Replace("%T175CHRRM3"));
     }
@@ -121,7 +121,7 @@ public class CharaReplacerTests
     public void ReplaceTestPerfectClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 32", replacer.Replace("%T175CHRRM4"));
     }
@@ -130,7 +130,7 @@ public class CharaReplacerTests
     public void ReplaceTestTotalUseCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 174", replacer.Replace("%T175CHRTL1"));
     }
@@ -139,7 +139,7 @@ public class CharaReplacerTests
     public void ReplaceTestTotalRetireCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 130", replacer.Replace("%T175CHRTL2"));
     }
@@ -148,7 +148,7 @@ public class CharaReplacerTests
     public void ReplaceTestTotalClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 86", replacer.Replace("%T175CHRTL3"));
     }
@@ -157,7 +157,7 @@ public class CharaReplacerTests
     public void ReplaceTestTotalPerfectClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
 
         Assert.AreEqual("invoked: 42", replacer.Replace("%T175CHRTL4"));
     }
@@ -167,7 +167,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(counts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(counts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRRM1"));
     }
 
@@ -176,7 +176,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, counts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, counts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRRM2"));
     }
 
@@ -185,7 +185,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, counts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, counts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRRM3"));
     }
 
@@ -194,7 +194,7 @@ public class CharaReplacerTests
     {
         var counts = ImmutableDictionary<Chara, int>.Empty;
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, counts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, counts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRRM4"));
     }
 
@@ -202,7 +202,7 @@ public class CharaReplacerTests
     public void ReplaceTestNonexistentUseCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRKN1"));
     }
 
@@ -210,7 +210,7 @@ public class CharaReplacerTests
     public void ReplaceTestNonexistentRetireCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRKN2"));
     }
 
@@ -218,7 +218,7 @@ public class CharaReplacerTests
     public void ReplaceTestNonexistentClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRKN3"));
     }
 
@@ -226,7 +226,7 @@ public class CharaReplacerTests
     public void ReplaceTestNonexistentPerfectClearCount()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T175CHRKN4"));
     }
 
@@ -234,7 +234,7 @@ public class CharaReplacerTests
     public void ReplaceTestInvalidFormat()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("%T175XXXRM1", replacer.Replace("%T175XXXRM1"));
     }
 
@@ -242,7 +242,7 @@ public class CharaReplacerTests
     public void ReplaceTestInvalidChara()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("%T175CHRXX1", replacer.Replace("%T175CHRXX1"));
     }
 
@@ -250,7 +250,7 @@ public class CharaReplacerTests
     public void ReplaceTestInvalidType()
     {
         var formatterMock = MockNumberFormatter();
-        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock.Object);
+        var replacer = new CharaReplacer(UseCounts, RetireCounts, ClearCounts, PerfectClearCounts, formatterMock);
         Assert.AreEqual("%T175CHRRMX", replacer.Replace("%T175CHRRMX"));
     }
 }
