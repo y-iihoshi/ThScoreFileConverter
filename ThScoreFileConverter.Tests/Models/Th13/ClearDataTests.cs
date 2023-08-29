@@ -25,7 +25,7 @@ public class ClearDataTests
 {
     internal static IClearData MockClearData()
     {
-        static IScoreData CreateScoreData(int index)
+        static IScoreData MockScoreData(int index)
         {
             var mock = Substitute.For<IScoreData>();
             _ = mock.Score.Returns(12345670u - ((uint)index * 1000u));
@@ -37,7 +37,7 @@ public class ClearDataTests
             return mock;
         }
 
-        static IPractice CreatePractice((LevelPractice, StagePractice) pair)
+        static IPractice MockPractice((LevelPractice, StagePractice) pair)
         {
             var mock = Substitute.For<IPractice>();
             _ = mock.Score.Returns(123456u - ((uint)pair.Item1 * 10u));
@@ -46,7 +46,7 @@ public class ClearDataTests
             return mock;
         }
 
-        static ISpellCard<LevelPractice> CreateSpellCard(int index)
+        static ISpellCard<LevelPractice> MockSpellCard(int index)
         {
             var mock = Substitute.For<ISpellCard<LevelPractice>>();
             _ = mock.Name.Returns(TestUtils.MakeRandomArray(0x80));
@@ -63,9 +63,9 @@ public class ClearDataTests
         var levelsWithTotal = EnumHelper<LevelPracticeWithTotal>.Enumerable;
         var rankings = levelsWithTotal.ToDictionary(
             level => level,
-            level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>);
-        var practices = EnumHelper.Cartesian<LevelPractice, StagePractice>().ToDictionary(pair => pair, CreatePractice);
-        var cards = Enumerable.Range(1, 127).ToDictionary(index => index, CreateSpellCard);
+            level => Enumerable.Range(0, 10).Select(MockScoreData).ToList() as IReadOnlyList<IScoreData>);
+        var practices = EnumHelper.Cartesian<LevelPractice, StagePractice>().ToDictionary(pair => pair, MockPractice);
+        var cards = Enumerable.Range(1, 127).ToDictionary(index => index, MockSpellCard);
 
         var mock = Substitute.For<IClearData>();
         _ = mock.Signature.Returns("CR");
