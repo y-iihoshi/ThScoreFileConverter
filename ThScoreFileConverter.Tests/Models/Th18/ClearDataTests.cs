@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
@@ -29,84 +29,81 @@ namespace ThScoreFileConverter.Tests.Models.Th18;
 [TestClass]
 public class ClearDataTests
 {
-    internal static Mock<IClearData> MockClearData()
+    internal static IClearData MockClearData()
     {
-        static IScoreData CreateScoreData(int index)
+        static IScoreData MockScoreData(int index)
         {
-            var mock = new Mock<IScoreData>();
-            _ = mock.SetupGet(s => s.Score).Returns(12345670u - ((uint)index * 1000u));
-            _ = mock.SetupGet(s => s.StageProgress).Returns((StageProgress)index);
-            _ = mock.SetupGet(s => s.ContinueCount).Returns((byte)index);
-            _ = mock.SetupGet(s => s.Name).Returns(
-                TestUtils.MakeByteArray($"Player{index}\0\0\0").Skip(1));   // skip length
-            _ = mock.SetupGet(s => s.DateTime).Returns(34567890u);
-            _ = mock.SetupGet(s => s.SlowRate).Returns(1.2f);
-            return mock.Object;
+            var mock = Substitute.For<IScoreData>();
+            _ = mock.Score.Returns(12345670u - ((uint)index * 1000u));
+            _ = mock.StageProgress.Returns((StageProgress)index);
+            _ = mock.ContinueCount.Returns((byte)index);
+            _ = mock.Name.Returns(TestUtils.MakeByteArray($"Player{index}\0\0\0").Skip(1));   // skip length
+            _ = mock.DateTime.Returns(34567890u);
+            _ = mock.SlowRate.Returns(1.2f);
+            return mock;
         }
 
-        static IPractice CreatePractice((Level, Stage) pair)
+        static IPractice MockPractice((Level, Stage) pair)
         {
-            var mock = new Mock<IPractice>();
-            _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
-            _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
-            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
-            return mock.Object;
+            var mock = Substitute.For<IPractice>();
+            _ = mock.Score.Returns(123456u - ((uint)pair.Item1 * 10u));
+            _ = mock.Cleared.Returns((byte)((int)pair.Item2 % 2));
+            _ = mock.Unlocked.Returns((byte)((int)pair.Item1 % 2));
+            return mock;
         }
 
-        static ISpellCard CreateSpellCard(
+        static ISpellCard MockSpellCard(
             int clear, int practiceClear, int trial, int practiceTrial, int id, Level level)
         {
-            var mock = new Mock<ISpellCard>();
-            _ = mock.SetupGet(s => s.Name).Returns(TestUtils.MakeRandomArray(0xC0));
-            _ = mock.SetupGet(s => s.ClearCount).Returns(clear);
-            _ = mock.SetupGet(s => s.PracticeClearCount).Returns(practiceClear);
-            _ = mock.SetupGet(s => s.TrialCount).Returns(trial);
-            _ = mock.SetupGet(s => s.PracticeTrialCount).Returns(practiceTrial);
-            _ = mock.SetupGet(s => s.Id).Returns(id);
-            _ = mock.SetupGet(s => s.Level).Returns(level);
-            _ = mock.SetupGet(s => s.PracticeScore).Returns(90123);
-            return mock.Object;
+            var mock = Substitute.For<ISpellCard>();
+            _ = mock.Name.Returns(TestUtils.MakeRandomArray(0xC0));
+            _ = mock.ClearCount.Returns(clear);
+            _ = mock.PracticeClearCount.Returns(practiceClear);
+            _ = mock.TrialCount.Returns(trial);
+            _ = mock.PracticeTrialCount.Returns(practiceTrial);
+            _ = mock.Id.Returns(id);
+            _ = mock.Level.Returns(level);
+            _ = mock.PracticeScore.Returns(90123);
+            return mock;
         }
 
         var levelsWithTotal = EnumHelper<LevelPracticeWithTotal>.Enumerable;
         var levelsExceptExtra = EnumHelper<Level>.Enumerable.Where(static level => level != Level.Extra);
         var stagesExceptExtra = EnumHelper<Stage>.Enumerable.Where(static stage => stage != Stage.Extra);
+        var rankings = levelsWithTotal.ToDictionary(
+            level => level,
+            level => Enumerable.Range(0, 10).Select(MockScoreData).ToList() as IReadOnlyList<IScoreData>);
+        var cards = Definitions.CardTable.ToDictionary(
+            pair => pair.Key,
+            pair => MockSpellCard(
+                (pair.Key % 2 == 0) ? 0 : 12 + pair.Key,
+                (pair.Key % 3 == 0) ? 0 : 34 + pair.Key,
+                (pair.Key % 4 == 0) ? 0 : 56 + pair.Key,
+                (pair.Key % 5 == 0) ? 0 : 78 + pair.Key,
+                pair.Value.Id,
+                pair.Value.Level));
+        var practices = levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, MockPractice);
 
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(m => m.Signature).Returns("CR");
-        _ = mock.SetupGet(m => m.Version).Returns(3);
-        _ = mock.SetupGet(m => m.Checksum).Returns(0u);
-        _ = mock.SetupGet(m => m.Size).Returns(0x130F0);
-        _ = mock.SetupGet(m => m.Chara).Returns(CharaWithTotal.Marisa);
-        _ = mock.SetupGet(m => m.Rankings).Returns(
-            levelsWithTotal.ToDictionary(
-                level => level,
-                level => Enumerable.Range(0, 10).Select(CreateScoreData).ToList() as IReadOnlyList<IScoreData>));
-        _ = mock.SetupGet(m => m.Cards).Returns(
-            Definitions.CardTable.ToDictionary(
-                pair => pair.Key,
-                pair => CreateSpellCard(
-                    (pair.Key % 2 == 0) ? 0 : 12 + pair.Key,
-                    (pair.Key % 3 == 0) ? 0 : 34 + pair.Key,
-                    (pair.Key % 4 == 0) ? 0 : 56 + pair.Key,
-                    (pair.Key % 5 == 0) ? 0 : 78 + pair.Key,
-                    pair.Value.Id,
-                    pair.Value.Level)));
-        _ = mock.SetupGet(m => m.TotalPlayCount).Returns(23);
-        _ = mock.SetupGet(m => m.PlayTime).Returns(4567890);
-        _ = mock.SetupGet(m => m.ClearCounts).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
-        _ = mock.SetupGet(m => m.ClearFlags).Returns(
-            levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
-        _ = mock.SetupGet(m => m.Practices).Returns(
-            levelsExceptExtra.Cartesian(stagesExceptExtra).ToDictionary(pair => pair, CreatePractice));
+        var mock = Substitute.For<IClearData>();
+        _ = mock.Signature.Returns("CR");
+        _ = mock.Version.Returns((ushort)3);
+        _ = mock.Checksum.Returns(0u);
+        _ = mock.Size.Returns(0x130F0);
+        _ = mock.Chara.Returns(CharaWithTotal.Marisa);
+        _ = mock.Rankings.Returns(rankings);
+        _ = mock.Cards.Returns(cards);
+        _ = mock.TotalPlayCount.Returns(23);
+        _ = mock.PlayTime.Returns(4567890);
+        _ = mock.ClearCounts.Returns(levelsWithTotal.ToDictionary(level => level, level => 100 - (int)level));
+        _ = mock.ClearFlags.Returns(levelsWithTotal.ToDictionary(level => level, level => (int)level % 2));
+        _ = mock.Practices.Returns(practices);
         return mock;
     }
 
     internal static byte[] MakeByteArray(IClearData clearData)
     {
         var spellCardMock = SpellCardTests.MockSpellCard();
-        var spellCardBytes = SpellCardTests.MakeByteArray(spellCardMock.Object);
+        var spellCardBytes = SpellCardTests.MakeByteArray(spellCardMock);
 
         return TestUtils.MakeByteArray(
             clearData.Signature.ToCharArray(),
@@ -166,10 +163,10 @@ public class ClearDataTests
     {
         var mock = MockClearData();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
         Assert.IsFalse(clearData.IsValid);
     }
 
@@ -177,10 +174,10 @@ public class ClearDataTests
     public void ClearDataTestInvalidSignature()
     {
         var mock = MockClearData();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 
@@ -188,10 +185,10 @@ public class ClearDataTests
     public void ClearDataTestInvalidVersion()
     {
         var mock = MockClearData();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 
@@ -199,10 +196,10 @@ public class ClearDataTests
     public void ClearDataTestInvalidSize()
     {
         var mock = MockClearData();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(--size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 

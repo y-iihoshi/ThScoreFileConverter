@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th18;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -8,15 +8,15 @@ namespace ThScoreFileConverter.Tests.Models.Th18;
 [TestClass]
 public class AbilityCardReplacerTests
 {
-    internal static Mock<IAbilityCardHolder> MockAbilityCardHolder()
+    internal static IAbilityCardHolder MockAbilityCardHolder()
     {
-        var mock = new Mock<IAbilityCardHolder>();
-        _ = mock.SetupGet(m => m.AbilityCards).Returns(Enumerable.Range(0, 56).Select(number => (byte)(number % 4)));
-        _ = mock.SetupGet(m => m.InitialHoldAbilityCards).Returns(TestUtils.MakeRandomArray(0x30));
+        var mock = Substitute.For<IAbilityCardHolder>();
+        _ = mock.AbilityCards.Returns(Enumerable.Range(0, 56).Select(number => (byte)(number % 4)));
+        _ = mock.InitialHoldAbilityCards.Returns(TestUtils.MakeRandomArray(0x30));
         return mock;
     }
 
-    internal static IAbilityCardHolder AbilityCardHolder { get; } = MockAbilityCardHolder().Object;
+    internal static IAbilityCardHolder AbilityCardHolder { get; } = MockAbilityCardHolder();
 
     [TestMethod]
     public void AbilityCardReplacerTest()

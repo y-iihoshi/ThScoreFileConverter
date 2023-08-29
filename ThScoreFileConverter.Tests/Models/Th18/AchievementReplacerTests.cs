@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models.Th18;
 using IAchievementHolder = ThScoreFileConverter.Models.Th17.IAchievementHolder;
 
@@ -8,14 +8,14 @@ namespace ThScoreFileConverter.Tests.Models.Th18;
 [TestClass]
 public class AchievementReplacerTests
 {
-    internal static Mock<IAchievementHolder> MockAchievementHolder()
+    internal static IAchievementHolder MockAchievementHolder()
     {
-        var mock = new Mock<IAchievementHolder>();
-        _ = mock.SetupGet(m => m.Achievements).Returns(Enumerable.Range(0, 30).Select(number => (byte)(number % 3)));
+        var mock = Substitute.For<IAchievementHolder>();
+        _ = mock.Achievements.Returns(Enumerable.Range(0, 30).Select(number => (byte)(number % 3)));
         return mock;
     }
 
-    internal static IAchievementHolder AchievementHolder { get; } = MockAchievementHolder().Object;
+    internal static IAchievementHolder AchievementHolder { get; } = MockAchievementHolder();
 
     [TestMethod]
     public void AchievementReplacerTest()
