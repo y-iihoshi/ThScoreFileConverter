@@ -74,8 +74,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = MockNumberFormatter();
         var replacer = new ScoreReplacer(Rankings, formatterMock);
-        var replaced = replacer.Replace("%T06SCRHRB12");
-        Assert.AreEqual("invoked: 1234567", replaced);
+        Assert.AreEqual("invoked: 1234567", replacer.Replace("%T06SCRHRB12"));
     }
 
     [TestMethod]

@@ -88,7 +88,7 @@ public class ClearReplacerTests
 
         var rankings = EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
             level => level,
-            _ => new[] { MockScoreData() } as IReadOnlyList<IScoreData>);
+            level => new[] { MockScoreData() } as IReadOnlyList<IScoreData>);
 
         var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
         _ = clearDataPerGameMode.Rankings.Returns(rankings);

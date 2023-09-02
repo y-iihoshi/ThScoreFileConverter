@@ -41,9 +41,8 @@ public class ClearDataTests
 
         static ISpellCard<Level> MockSpellCard(int index)
         {
-            var name = TestUtils.MakeRandomArray(0x80);
             var mock = Substitute.For<ISpellCard<Level>>();
-            _ = mock.Name.Returns(name);
+            _ = mock.Name.Returns(TestUtils.MakeRandomArray(0x80));
             _ = mock.ClearCount.Returns(123 + index);
             _ = mock.TrialCount.Returns(456 + index);
             _ = mock.Id.Returns(index);
