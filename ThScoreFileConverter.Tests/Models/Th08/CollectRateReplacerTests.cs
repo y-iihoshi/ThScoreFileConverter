@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
@@ -89,18 +88,10 @@ public class CollectRateReplacerTests
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
         CreateCardAttacks().ToDictionary(element => (int)element.CardId);
 
-    private static INumberFormatter MockNumberFormatter()
-    {
-        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
-        var mock = Substitute.For<INumberFormatter>();
-        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
-        return mock;
-    }
-
     [TestMethod]
     public void CollectRateReplacerTest()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -109,7 +100,7 @@ public class CollectRateReplacerTests
     public void CollectRateReplacerTestEmpty()
     {
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -117,7 +108,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGSLMA1A1"));
     }
@@ -125,7 +116,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGSLMA1A2"));
     }
@@ -133,7 +124,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelExtraClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGSXMA1A1"));
     }
@@ -141,7 +132,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelExtraTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGSXMA1A2"));
     }
@@ -149,7 +140,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelLastWordClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGSWMA1A1", replacer.Replace("%T08CRGSWMA1A1"));
     }
@@ -157,7 +148,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelLastWordTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGSWMA1A2", replacer.Replace("%T08CRGSWMA1A2"));
     }
@@ -165,7 +156,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGSTMA1A1"));
     }
@@ -173,7 +164,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGSTMA1A2"));
     }
@@ -181,7 +172,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryCharaTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGSLTL1A1"));
     }
@@ -189,7 +180,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryCharaTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGSLTL1A2"));
     }
@@ -197,7 +188,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryStageTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGSLMA001"));
     }
@@ -205,7 +196,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryStageTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T08CRGSLMA002"));
     }
@@ -213,7 +204,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGSTTL001"));
     }
@@ -221,7 +212,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T08CRGSTTL002"));
     }
@@ -229,7 +220,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGPLMA1A1"));
     }
@@ -237,7 +228,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGPLMA1A2"));
     }
@@ -245,7 +236,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelExtraClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGPXMA1A1"));
     }
@@ -253,7 +244,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelExtraTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGPXMA1A2"));
     }
@@ -261,7 +252,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelLastWordClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGPWMA1A1"));
     }
@@ -269,7 +260,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelLastWordTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGPWMA1A2"));
     }
@@ -277,7 +268,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGPTMA1A1"));
     }
@@ -285,7 +276,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGPTMA1A2"));
     }
@@ -293,7 +284,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeCharaTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 1", replacer.Replace("%T08CRGPLTL1A1"));
     }
@@ -301,7 +292,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeCharaTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGPLTL1A2"));
     }
@@ -309,7 +300,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeStageTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGPLMA001"));
     }
@@ -317,7 +308,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeStageTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T08CRGPLMA002"));
     }
@@ -325,7 +316,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 2", replacer.Replace("%T08CRGPTTL001"));
     }
@@ -333,7 +324,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T08CRGPTTL002"));
     }
@@ -342,7 +333,7 @@ public class CollectRateReplacerTests
     public void ReplaceTestEmptyClearCount()
     {
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGSLMA1A1"));
     }
@@ -351,7 +342,7 @@ public class CollectRateReplacerTests
     public void ReplaceTestEmptyTrialCount()
     {
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGSLMA1A2"));
     }
@@ -359,7 +350,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08XXXSLMA1A1", replacer.Replace("%T08XXXSLMA1A1"));
     }
@@ -367,7 +358,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidGameMode()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGXLMA1A1", replacer.Replace("%T08CRGXLMA1A1"));
     }
@@ -375,7 +366,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGSYMA1A1", replacer.Replace("%T08CRGSYMA1A1"));
     }
@@ -383,7 +374,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGSLXX1A1", replacer.Replace("%T08CRGSLXX1A1"));
     }
@@ -391,7 +382,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidStage()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGSLMAXX1", replacer.Replace("%T08CRGSLMAXX1"));
         Assert.AreEqual("%T08CRGSLMAEX1", replacer.Replace("%T08CRGSLMAEX1"));
@@ -400,7 +391,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
         Assert.AreEqual("%T08CRGSLMA1AX", replacer.Replace("%T08CRGSLMA1AX"));
     }
@@ -412,7 +403,7 @@ public class CollectRateReplacerTests
         _ = mock.CardId.Returns((short)223);
         var cardAttacks = new[] { mock }.ToDictionary(attack => (int)attack.CardId);
 
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGSLMA1A1"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T08CRGSXMA1A1"));

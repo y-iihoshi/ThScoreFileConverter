@@ -5,7 +5,6 @@ using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Models.Th075;
-using INumberFormatter = ThScoreFileConverter.Models.INumberFormatter;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
 
@@ -21,18 +20,10 @@ public class ScoreReplacerTests
             },
         };
 
-    private static INumberFormatter MockNumberFormatter()
-    {
-        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
-        var mock = Substitute.For<INumberFormatter>();
-        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
-        return mock;
-    }
-
     [TestMethod]
     public void ScoreReplacerTest()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -41,7 +32,7 @@ public class ScoreReplacerTests
     public void ScoreReplacerTestEmpty()
     {
         var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(clearData, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -52,7 +43,7 @@ public class ScoreReplacerTests
         var mock = ClearDataTests.MockClearData();
         _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new ScoreReplacer(clearData, formatterMock);
         Assert.IsNotNull(replacer);
@@ -61,7 +52,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestName()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("Player0 ", replacer.Replace("%T75SCRHRM11"));
     }
@@ -69,7 +60,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestScore()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
 
         Assert.AreEqual("invoked: 1234567", replacer.Replace("%T75SCRHRM12"));
@@ -78,7 +69,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestDate()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("01/10", replacer.Replace("%T75SCRHRM13"));
     }
@@ -87,7 +78,7 @@ public class ScoreReplacerTests
     public void ReplaceTestEmpty()
     {
         var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(clearData, formatterMock);
         Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHRM11"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T75SCRHRM12"));
@@ -100,7 +91,7 @@ public class ScoreReplacerTests
         var mock = ClearDataTests.MockClearData();
         _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new ScoreReplacer(clearData, formatterMock);
         Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHRM11"));
@@ -111,7 +102,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestMeiling()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("%T75SCRHML11", replacer.Replace("%T75SCRHML11"));
     }
@@ -119,7 +110,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestNonexistentChara()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHMR11"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T75SCRHMR12"));
@@ -129,7 +120,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestNonexistentLevel()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRNRM11"));
         Assert.AreEqual("invoked: 0", replacer.Replace("%T75SCRNRM12"));
@@ -143,7 +134,7 @@ public class ScoreReplacerTests
         var ranking = mock.Ranking;
         _ = mock.Ranking.Returns(ranking.Take(1).ToList());
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new ScoreReplacer(clearData, formatterMock);
         Assert.AreEqual(string.Empty, replacer.Replace("%T75SCRHRM21"));
@@ -154,7 +145,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("%T75XXXHRM11", replacer.Replace("%T75XXXHRM11"));
     }
@@ -162,7 +153,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("%T75SCRXRM11", replacer.Replace("%T75SCRXRM11"));
     }
@@ -170,7 +161,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("%T75SCRHXX11", replacer.Replace("%T75SCRHXX11"));
     }
@@ -178,7 +169,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidRank()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("%T75SCRHRMX1", replacer.Replace("%T75SCRHRMX1"));
     }
@@ -186,7 +177,7 @@ public class ScoreReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearData, formatterMock);
         Assert.AreEqual("%T75SCRHRM1X", replacer.Replace("%T75SCRHRM1X"));
     }

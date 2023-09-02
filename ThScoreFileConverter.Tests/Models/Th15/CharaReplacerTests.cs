@@ -7,7 +7,6 @@ using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
 using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 
@@ -52,18 +51,10 @@ public class CharaReplacerTests
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
         CreateClearDataList().ToDictionary(element => element.Chara);
 
-    private static INumberFormatter MockNumberFormatter()
-    {
-        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
-        var mock = Substitute.For<INumberFormatter>();
-        _ = mock.FormatNumber(Arg.Any<long>()).Returns(callInfo => $"invoked: {(long)callInfo[0]}");
-        return mock;
-    }
-
     [TestMethod]
     public void CharaReplacerTest()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -72,7 +63,7 @@ public class CharaReplacerTests
     public void CharaReplacerTestEmpty()
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(dictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -80,7 +71,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestPointdeviceTotalPlayCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 23", replacer.Replace("%T15CHARAPMR1"));
     }
@@ -88,7 +79,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestPointdevicePlayTime()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("12:41:18", replacer.Replace("%T15CHARAPMR2"));
     }
@@ -96,7 +87,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestPointdeviceClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 490", replacer.Replace("%T15CHARAPMR3"));
     }
@@ -104,7 +95,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestPointdeviceCharaTotalTotalPlayCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 35", replacer.Replace("%T15CHARAPTL1"));
     }
@@ -112,7 +103,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestPointdeviceCharaTotalPlayTime()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("22:17:26", replacer.Replace("%T15CHARAPTL2"));
     }
@@ -120,7 +111,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestPointdeviceCharaTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 730", replacer.Replace("%T15CHARAPTL3"));
     }
@@ -128,7 +119,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestLegacyTotalPlayCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 34", replacer.Replace("%T15CHARALMR1"));
     }
@@ -136,7 +127,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestLegacyPlayTime()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARALMR2"));
     }
@@ -144,7 +135,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestLegacyClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 740", replacer.Replace("%T15CHARALMR3"));
     }
@@ -152,7 +143,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestLegacyCharaTotalTotalPlayCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 34", replacer.Replace("%T15CHARALTL1"));
     }
@@ -160,7 +151,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestLegacyCharaTotalPlayTime()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARALTL2"));
     }
@@ -168,7 +159,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestLegacyCharaTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 740", replacer.Replace("%T15CHARALTL3"));
     }
@@ -177,7 +168,7 @@ public class CharaReplacerTests
     public void ReplaceTestEmpty()
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T15CHARAPMR1"));
         Assert.AreEqual("0:00:00", replacer.Replace("%T15CHARAPMR2"));
@@ -191,7 +182,7 @@ public class CharaReplacerTests
         _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
         _ = clearData.GameModeData.Returns(ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty);
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new CharaReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T15CHARAPMR3"));
@@ -206,7 +197,7 @@ public class CharaReplacerTests
         _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
         _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new CharaReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T15CHARAPMR3"));
@@ -215,7 +206,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15XXXXXPMR1", replacer.Replace("%T15XXXXXPMR1"));
     }
@@ -223,7 +214,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidGameMode()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CHARAXMR1", replacer.Replace("%T15CHARAXMR1"));
     }
@@ -231,7 +222,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CHARAPXX1", replacer.Replace("%T15CHARAPXX1"));
     }
@@ -239,7 +230,7 @@ public class CharaReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CharaReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T15CHARAPMRX", replacer.Replace("%T15CHARAPMRX"));
     }

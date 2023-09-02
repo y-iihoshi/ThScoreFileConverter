@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using NSubstitute;
 using ThScoreFileConverter.Models;
 
@@ -7,6 +8,20 @@ namespace ThScoreFileConverter.Tests.Models;
 [TestClass]
 public class NumberFormatterTests
 {
+    private static INumberFormatter MockNumberFormatter()
+    {
+        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
+        var mock = Substitute.For<INumberFormatter>();
+        _ = mock.FormatNumber(Arg.Any<ushort>()).Returns(callInfo => $"invoked: {(ushort)callInfo[0]}");
+        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
+        _ = mock.FormatNumber(Arg.Any<uint>()).Returns(callInfo => $"invoked: {(uint)callInfo[0]}");
+        _ = mock.FormatNumber(Arg.Any<long>()).Returns(callInfo => $"invoked: {(long)callInfo[0]}");
+        _ = mock.FormatPercent(Arg.Any<double>(), Arg.Any<int>())
+            .Returns(callInfo => $"invoked: {((double)callInfo[0]).ToString($"F{(int)callInfo[1]}", CultureInfo.InvariantCulture)}%");
+        return mock;
+    }
+
+    internal static INumberFormatter Mock { get; } = MockNumberFormatter();
 
     [TestMethod]
     public void FormatNumberTest()

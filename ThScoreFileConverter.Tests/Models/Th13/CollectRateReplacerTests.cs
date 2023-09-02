@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th13;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using Definitions = ThScoreFileConverter.Models.Th13.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
@@ -55,18 +54,10 @@ public class CollectRateReplacerTests
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
         CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
-    private static INumberFormatter MockNumberFormatter()
-    {
-        // NOTE: NSubstitute v5.0.0 has no substitute for Moq's It.IsAny<It.IsValueType>.
-        var mock = Substitute.For<INumberFormatter>();
-        _ = mock.FormatNumber(Arg.Any<int>()).Returns(callInfo => $"invoked: {(int)callInfo[0]}");
-        return mock;
-    }
-
     [TestMethod]
     public void CollectRateReplacerTest()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -75,7 +66,7 @@ public class CollectRateReplacerTests
     public void CollectRateReplacerTestEmpty()
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(dictionary, formatterMock);
         Assert.IsNotNull(replacer);
     }
@@ -83,7 +74,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T13CRGSHMR31"));
     }
@@ -91,7 +82,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T13CRGSHMR32"));
     }
@@ -99,7 +90,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelExtraClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 9", replacer.Replace("%T13CRGSXMR31"));
     }
@@ -107,7 +98,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelExtraTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 11", replacer.Replace("%T13CRGSXMR32"));
     }
@@ -115,7 +106,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelOverDriveClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGSDMR31", replacer.Replace("%T13CRGSDMR31"));
     }
@@ -123,7 +114,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelOverDriveTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGSDMR32", replacer.Replace("%T13CRGSDMR32"));
     }
@@ -131,7 +122,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 10", replacer.Replace("%T13CRGSTMR31"));
     }
@@ -139,7 +130,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryLevelTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 12", replacer.Replace("%T13CRGSTMR32"));
     }
@@ -147,7 +138,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryCharaTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T13CRGSHTL31"));
     }
@@ -155,7 +146,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryCharaTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T13CRGSHTL32"));
     }
@@ -163,7 +154,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryStageTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 20", replacer.Replace("%T13CRGSHMR01"));
     }
@@ -171,7 +162,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryStageTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 22", replacer.Replace("%T13CRGSHMR02"));
     }
@@ -179,7 +170,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 102", replacer.Replace("%T13CRGSTTL01"));
     }
@@ -187,7 +178,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestStoryTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 109", replacer.Replace("%T13CRGSTTL02"));
     }
@@ -195,7 +186,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T13CRGPHMR31"));
     }
@@ -203,7 +194,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 4", replacer.Replace("%T13CRGPHMR32"));
     }
@@ -211,7 +202,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelExtraClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 11", replacer.Replace("%T13CRGPXMR31"));
     }
@@ -219,7 +210,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelExtraTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 12", replacer.Replace("%T13CRGPXMR32"));
     }
@@ -227,7 +218,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelOverDriveClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 7", replacer.Replace("%T13CRGPDMR31"));
     }
@@ -235,7 +226,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelOverDriveTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 7", replacer.Replace("%T13CRGPDMR32"));
     }
@@ -243,7 +234,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 12", replacer.Replace("%T13CRGPTMR31"));
     }
@@ -251,7 +242,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeLevelTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 12", replacer.Replace("%T13CRGPTMR32"));
     }
@@ -259,7 +250,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeCharaTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T13CRGPHTL31"));
     }
@@ -267,7 +258,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeCharaTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 3", replacer.Replace("%T13CRGPHTL32"));
     }
@@ -275,7 +266,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeStageTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 23", replacer.Replace("%T13CRGPHMR01"));
     }
@@ -283,7 +274,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeStageTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 26", replacer.Replace("%T13CRGPHMR02"));
     }
@@ -291,7 +282,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeTotalClearCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 85", replacer.Replace("%T13CRGPTTL01"));
     }
@@ -299,7 +290,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestPracticeTotalTrialCount()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("invoked: 102", replacer.Replace("%T13CRGPTTL02"));
     }
@@ -308,7 +299,7 @@ public class CollectRateReplacerTests
     public void ReplaceTestEmpty()
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T13CRGSHMR31"));
     }
@@ -320,7 +311,7 @@ public class CollectRateReplacerTests
         _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
         _ = clearData.Cards.Returns(ImmutableDictionary<int, ISpellCard>.Empty);
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new CollectRateReplacer(dictionary, formatterMock);
         Assert.AreEqual("invoked: 0", replacer.Replace("%T13CRGSHMR31"));
@@ -329,7 +320,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13XXXSHMR31", replacer.Replace("%T13XXXSHMR31"));
     }
@@ -337,7 +328,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidGameMode()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGXHMR31", replacer.Replace("%T13CRGXHMR31"));
     }
@@ -345,7 +336,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGSYMR31", replacer.Replace("%T13CRGSYMR31"));
     }
@@ -353,7 +344,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGSHXX31", replacer.Replace("%T13CRGSHXX31"));
     }
@@ -361,7 +352,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidStage()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGSHMRX1", replacer.Replace("%T13CRGSHMRX1"));
     }
@@ -369,7 +360,7 @@ public class CollectRateReplacerTests
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
-        var formatterMock = MockNumberFormatter();
+        var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(ClearDataDictionary, formatterMock);
         Assert.AreEqual("%T13CRGSHMR3X", replacer.Replace("%T13CRGSHMR3X"));
     }
