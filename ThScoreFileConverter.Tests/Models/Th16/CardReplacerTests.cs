@@ -20,19 +20,17 @@ public class CardReplacerTests
 {
     private static IReadOnlyList<IClearData> CreateClearDataList()
     {
-        var spellCard1 = Substitute.For<ISpellCard>();
-        _ = spellCard1.HasTried.Returns(true);
+        static ISpellCard MockSpellCard(int index)
+        {
+            var mock = Substitute.For<ISpellCard>();
+            _ = mock.HasTried.Returns(index % 2 != 0);
+            return mock;
+        }
 
-        var spellCard2 = Substitute.For<ISpellCard>();
-        _ = spellCard2.HasTried.Returns(false);
-
+        var cards = new[] { 1, 2 }.ToDictionary(index => index, MockSpellCard);
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
-        _ = clearData.Cards.Returns(new Dictionary<int, ISpellCard>
-        {
-            { 1, spellCard1 },
-            { 2, spellCard2 },
-        });
+        _ = clearData.Cards.Returns(cards);
         return new[] { clearData };
     }
 

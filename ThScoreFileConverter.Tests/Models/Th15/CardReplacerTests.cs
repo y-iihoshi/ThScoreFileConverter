@@ -14,18 +14,16 @@ public class CardReplacerTests
 {
     private static IReadOnlyList<IClearData> CreateClearDataList()
     {
-        var spellCard1 = Substitute.For<ISpellCard>();
-        _ = spellCard1.HasTried.Returns(true);
-
-        var spellCard2 = Substitute.For<ISpellCard>();
-        _ = spellCard2.HasTried.Returns(false);
-
-        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
-        _ = clearDataPerGameMode.Cards.Returns(new Dictionary<int, ISpellCard>
+        static ISpellCard MockSpellCard(int index)
         {
-            { 3, spellCard1 },
-            { 4, spellCard2 },
-        });
+            var mock = Substitute.For<ISpellCard>();
+            _ = mock.HasTried.Returns(index % 2 != 0);
+            return mock;
+        }
+
+        var cards = new[] { 3, 4 }.ToDictionary(index => index, MockSpellCard);
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Cards.Returns(cards);
 
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
