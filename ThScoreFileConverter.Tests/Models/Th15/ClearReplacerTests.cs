@@ -95,10 +95,7 @@ public class ClearReplacerTests
 
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
-        _ = clearData.GameModeData.Returns(new Dictionary<GameMode, IClearDataPerGameMode>
-        {
-            { GameMode.Pointdevice, clearDataPerGameMode },
-        });
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
         var dictionary = new[] { clearData }.ToDictionary(element => element.Chara);
 
         var replacer = new ClearReplacer(dictionary);

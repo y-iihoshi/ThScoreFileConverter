@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
@@ -134,10 +135,7 @@ public class CareerReplacerTests
         _ = clearDataPerGameMode.Cards.Returns(ImmutableDictionary<int, ISpellCard>.Empty);
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
-        _ = clearData.GameModeData.Returns(new Dictionary<GameMode, IClearDataPerGameMode>
-        {
-            { GameMode.Pointdevice, clearDataPerGameMode },
-        });
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
         var formatterMock = MockNumberFormatter();
 

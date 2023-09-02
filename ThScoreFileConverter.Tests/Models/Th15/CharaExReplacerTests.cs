@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
@@ -286,10 +287,7 @@ public class CharaExReplacerTests
         _ = clearDataPerGameMode.ClearCounts.Returns(ImmutableDictionary<LevelWithTotal, int>.Empty);
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
-        _ = clearData.GameModeData.Returns(new Dictionary<GameMode, IClearDataPerGameMode>
-        {
-            { GameMode.Pointdevice, clearDataPerGameMode },
-        });
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
         var formatterMock = MockNumberFormatter();
 

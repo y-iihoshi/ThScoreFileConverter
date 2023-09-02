@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models.Th15;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
@@ -28,10 +29,7 @@ public class CardReplacerTests
 
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
-        _ = clearData.GameModeData.Returns(new Dictionary<GameMode, IClearDataPerGameMode>
-        {
-            { GameMode.Pointdevice, clearDataPerGameMode },
-        });
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
         return new[] { clearData };
     }
 
@@ -113,10 +111,7 @@ public class CardReplacerTests
         _ = clearDataPerGameMode.Cards.Returns(ImmutableDictionary<int, ISpellCard>.Empty);
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
-        _ = clearData.GameModeData.Returns(new Dictionary<GameMode, IClearDataPerGameMode>
-        {
-            { GameMode.Pointdevice, clearDataPerGameMode },
-        });
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new CardReplacer(dictionary, true);
