@@ -13,9 +13,10 @@ public class CardReplacerTests
     private static IEnumerable<ICardAttack> CreateCardAttacks()
     {
         var mock1 = CardAttackTests.MockCardAttack();
+        var cardId = mock1.CardId;
 
         var mock2 = CardAttackTests.MockCardAttack();
-        _ = mock2.CardId.Returns(_ => (short)(mock1.CardId + 1));
+        _ = mock2.CardId.Returns(++cardId);
         _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x24));
         _ = mock2.ClearCount.Returns((ushort)0);
         _ = mock2.TrialCount.Returns((ushort)0);

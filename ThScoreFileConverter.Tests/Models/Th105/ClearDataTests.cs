@@ -26,11 +26,11 @@ public class ClearDataTests
             return SpellCardResultTests.MockSpellCardResult(enemy, Level.Normal, index + 1, index * 100, index * 50, 8901u - (uint)index);
         }
 
+        var cardsForDeck = Enumerable.Range(1, 10).Select(MockCardForDeck).ToDictionary(card => card.Id);
+        var spellCardResults = EnumHelper<TChara>.Enumerable.Select(MockSpellCardResult).ToDictionary(result => (result.Enemy, result.Id));
         var mock = Substitute.For<IClearData<TChara>>();
-        _ = mock.CardsForDeck.Returns(
-            _ => Enumerable.Range(1, 10).Select(MockCardForDeck).ToDictionary(card => card.Id));
-        _ = mock.SpellCardResults.Returns(
-            _ => EnumHelper<TChara>.Enumerable.Select(MockSpellCardResult).ToDictionary(result => (result.Enemy, result.Id)));
+        _ = mock.CardsForDeck.Returns(cardsForDeck);
+        _ = mock.SpellCardResults.Returns(spellCardResults);
         return mock;
     }
 

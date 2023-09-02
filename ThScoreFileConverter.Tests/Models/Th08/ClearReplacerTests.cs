@@ -17,8 +17,9 @@ public class ClearReplacerTests
     private static IEnumerable<IReadOnlyList<IHighScore>> CreateRankings()
     {
         var mock1 = HighScoreTests.MockHighScore();
+        var stageProgress = mock1.StageProgress;
         var mock2 = HighScoreTests.MockHighScore();
-        _ = mock2.StageProgress.Returns(_ => mock1.StageProgress - 1);
+        _ = mock2.StageProgress.Returns(--stageProgress);
         return new[] { new[] { mock1, mock2 } };
     }
 

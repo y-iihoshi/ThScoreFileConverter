@@ -99,8 +99,9 @@ public class AllScoreDataTests
     public void SetClearDataTestTwice()
     {
         var clearData1 = Substitute.For<IClearData>();
+        var chara = clearData1.Chara;
         var clearData2 = Substitute.For<IClearData>();
-        _ = clearData2.Chara.Returns(_ => clearData1.Chara);
+        _ = clearData2.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData1);

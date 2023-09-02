@@ -16,15 +16,17 @@ public class PlayStatusTests
 {
     internal static IPlayStatus MockPlayStatus()
     {
+        var playCounts = EnumHelper<Level>.Enumerable.ToDictionary(level => level, level => PlayCountTests.MockPlayCount());
+        var totalPlayCount = PlayCountTests.MockPlayCount();
+
         var mock = Substitute.For<IPlayStatus>();
         _ = mock.Signature.Returns("PLST");
         _ = mock.Size1.Returns((short)0x228);
         _ = mock.Size2.Returns((short)0x228);
         _ = mock.TotalRunningTime.Returns(new Time(12, 34, 56, 789, false));
         _ = mock.TotalPlayTime.Returns(new Time(23, 45, 19, 876, false));
-        _ = mock.PlayCounts.Returns(
-            _ => EnumHelper<Level>.Enumerable.ToDictionary(level => level, level => PlayCountTests.MockPlayCount()));
-        _ = mock.TotalPlayCount.Returns(_ => PlayCountTests.MockPlayCount());
+        _ = mock.PlayCounts.Returns(playCounts);
+        _ = mock.TotalPlayCount.Returns(totalPlayCount);
         _ = mock.BgmFlags.Returns(TestUtils.MakeRandomArray(21));
         return mock;
     }

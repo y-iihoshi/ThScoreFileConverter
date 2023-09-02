@@ -18,6 +18,8 @@ public class PlayStatusTests
     {
         var characters = EnumHelper<Chara>.Enumerable;
         var pairs = characters.Select((chara, index) => (chara, index));
+        var clearCounts = characters.ToDictionary(chara => chara, _ => ClearCountTests.MockClearCount());
+
         var mock = Substitute.For<IPlayStatus>();
         _ = mock.Signature.Returns("PLST");
         _ = mock.Size1.Returns((short)0x1FC);
@@ -28,7 +30,7 @@ public class PlayStatusTests
         _ = mock.MatchFlags.Returns(pairs.ToDictionary(pair => pair.chara, pair => (byte)pair.index));
         _ = mock.StoryFlags.Returns(pairs.ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)));
         _ = mock.ExtraFlags.Returns(pairs.ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)));
-        _ = mock.ClearCounts.Returns(_ => characters.ToDictionary(chara => chara, _ => ClearCountTests.MockClearCount()));
+        _ = mock.ClearCounts.Returns(clearCounts);
         return mock;
     }
 

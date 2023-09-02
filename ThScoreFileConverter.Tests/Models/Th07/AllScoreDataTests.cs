@@ -100,8 +100,9 @@ public class AllScoreDataTests
     public void SetClearDataTestTwice()
     {
         var clearData1 = Substitute.For<IClearData>();
+        var chara = clearData1.Chara;
         var clearData2 = Substitute.For<IClearData>();
-        _ = clearData2.Chara.Returns(_ => clearData1.Chara);
+        _ = clearData2.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData1);
@@ -154,9 +155,11 @@ public class AllScoreDataTests
     public void SetPracticeScoreTestTwice()
     {
         var score1 = Substitute.For<IPracticeScore>();
+        var level = score1.Level;
+        var stage = score1.Stage;
         var score2 = Substitute.For<IPracticeScore>();
-        _ = score2.Level.Returns(_ => score1.Level);
-        _ = score2.Stage.Returns(_ => score1.Stage);
+        _ = score2.Level.Returns(level);
+        _ = score2.Stage.Returns(stage);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score1);

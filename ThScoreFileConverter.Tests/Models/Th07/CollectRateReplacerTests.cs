@@ -14,24 +14,26 @@ public class CollectRateReplacerTests
     private static IEnumerable<ICardAttack> CreateCardAttacks()
     {
         var mock1 = CardAttackTests.MockCardAttack();
+        var trialCounts = mock1.TrialCounts;
+        var clearCounts = mock1.ClearCounts;
 
         var mock2 = CardAttackTests.MockCardAttack();
         _ = mock2.CardId.Returns((short)2);
         _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x30));
-        _ = mock2.TrialCounts.Returns(_ => mock1.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 4)));
-        _ = mock2.ClearCounts.Returns(_ => mock1.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 3)));
+        _ = mock2.TrialCounts.Returns(trialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 4)));
+        _ = mock2.ClearCounts.Returns(clearCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 3)));
 
         var mock3 = CardAttackTests.MockCardAttack();
         _ = mock3.CardId.Returns((short)6);
         _ = mock3.CardName.Returns(TestUtils.MakeRandomArray(0x30));
-        _ = mock3.TrialCounts.Returns(_ => mock1.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 5)));
-        _ = mock3.ClearCounts.Returns(_ => mock1.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+        _ = mock3.TrialCounts.Returns(trialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 5)));
+        _ = mock3.ClearCounts.Returns(clearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
 
         var mock4 = CardAttackTests.MockCardAttack();
         _ = mock4.CardId.Returns((short)129);
         _ = mock4.CardName.Returns(TestUtils.MakeRandomArray(0x30));
-        _ = mock4.TrialCounts.Returns(_ => mock1.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
-        _ = mock4.ClearCounts.Returns(_ => mock1.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+        _ = mock4.TrialCounts.Returns(trialCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
+        _ = mock4.ClearCounts.Returns(clearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
         _ = mock4.HasTried.Returns(false);
 
         return new[] { mock1, mock2, mock3, mock4 };

@@ -24,13 +24,12 @@ public class ClearReplacerTests
             return mock;
         }
 
+        var rankings = EnumHelper<Level>.Enumerable.ToDictionary(
+            level => level,
+            level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList() as IReadOnlyList<IScoreData>);
         var mock = Substitute.For<IClearData>();
         _ = mock.Route.Returns(RouteWithTotal.A2);
-        _ = mock.Rankings.Returns(
-            _ => EnumHelper<Level>.Enumerable.ToDictionary(
-                level => level,
-                level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList()
-                    as IReadOnlyList<IScoreData>));
+        _ = mock.Rankings.Returns(rankings);
         return new[] { mock };
     }
 

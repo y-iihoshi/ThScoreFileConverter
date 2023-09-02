@@ -24,9 +24,10 @@ public class CardReplacerTests
         _ = practiceCareerMock.ClearCounts.Returns(noClearCounts);
 
         var attack1Mock = CardAttackTests.MockCardAttack();
+        var cardId = attack1Mock.CardId;
 
         var attack2Mock = CardAttackTests.MockCardAttack();
-        _ = attack2Mock.CardId.Returns(_ => (short)(attack1Mock.CardId + 1));
+        _ = attack2Mock.CardId.Returns(++cardId);
         _ = attack2Mock.StoryCareer.Returns(storyCareerMock);
         _ = attack2Mock.PracticeCareer.Returns(practiceCareerMock);
         CardAttackTests.SetupHasTried(attack2Mock);

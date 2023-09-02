@@ -166,13 +166,12 @@ public class ScoreReplacerTests
 
         static IClearData MockClearData()
         {
+            var rankings = EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
+                level => level,
+                level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList() as IReadOnlyList<IScoreData>);
             var mock = Substitute.For<IClearData>();
             _ = mock.Chara.Returns(CharaWithTotal.Aya);
-            _ = mock.Rankings.Returns(
-                _ => EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
-                    level => level,
-                    level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList()
-                        as IReadOnlyList<IScoreData>));
+            _ = mock.Rankings.Returns(rankings);
             return mock;
         }
 
@@ -196,13 +195,12 @@ public class ScoreReplacerTests
 
         static IClearData MockClearData()
         {
+            var rankings = EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
+                level => level,
+                level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList() as IReadOnlyList<IScoreData>);
             var mock = Substitute.For<IClearData>();
             _ = mock.Chara.Returns(CharaWithTotal.Aya);
-            _ = mock.Rankings.Returns(
-                _ => EnumHelper<LevelPracticeWithTotal>.Enumerable.ToDictionary(
-                    level => level,
-                    level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList()
-                        as IReadOnlyList<IScoreData>));
+            _ = mock.Rankings.Returns(rankings);
             return mock;
         }
 

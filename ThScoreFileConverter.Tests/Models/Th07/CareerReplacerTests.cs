@@ -14,13 +14,17 @@ public class CareerReplacerTests
     private static IEnumerable<ICardAttack> CreateCardAttacks()
     {
         var mock1 = CardAttackTests.MockCardAttack();
+        var maxBonuses = mock1.MaxBonuses;
+        var cardId = mock1.CardId;
+        var trialCounts = mock1.TrialCounts;
+        var clearCounts = mock1.ClearCounts;
 
         var mock2 = CardAttackTests.MockCardAttack();
-        _ = mock2.MaxBonuses.Returns(_ => mock1.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
-        _ = mock2.CardId.Returns(_ => (short)(mock1.CardId + 1));
+        _ = mock2.MaxBonuses.Returns(maxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value * 1000));
+        _ = mock2.CardId.Returns(++cardId);
         _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x30));
-        _ = mock2.TrialCounts.Returns(_ => mock1.TrialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 3)));
-        _ = mock2.ClearCounts.Returns(_ => mock1.ClearCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 2)));
+        _ = mock2.TrialCounts.Returns(trialCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 3)));
+        _ = mock2.ClearCounts.Returns(clearCounts.ToDictionary(pair => pair.Key, pair => (ushort)(pair.Value * 2)));
 
         return new[] { mock1, mock2 };
     }

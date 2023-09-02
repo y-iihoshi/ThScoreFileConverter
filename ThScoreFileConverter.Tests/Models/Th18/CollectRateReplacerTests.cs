@@ -36,21 +36,19 @@ public class CollectRateReplacerTests
             return mock;
         }
 
+        var cards1 = Definitions.CardTable.ToDictionary(
+            pair => pair.Key,
+            pair => MockSpellCard(pair.Value.Id, pair.Value.Level, pair.Key % 2, pair.Key % 3, pair.Key % 4, pair.Key % 5));
         var mock1 = Substitute.For<IClearData>();
         _ = mock1.Chara.Returns(CharaWithTotal.Marisa);
-        _ = mock1.Cards.Returns(
-            _ => Definitions.CardTable.ToDictionary(
-                pair => pair.Key,
-                pair => MockSpellCard(
-                    pair.Value.Id, pair.Value.Level, pair.Key % 2, pair.Key % 3, pair.Key % 4, pair.Key % 5)));
+        _ = mock1.Cards.Returns(cards1);
 
+        var cards2 = Definitions.CardTable.ToDictionary(
+            pair => pair.Key,
+            pair => MockSpellCard(pair.Value.Id, pair.Value.Level, pair.Key % 6, pair.Key % 7, pair.Key % 8, pair.Key));
         var mock2 = Substitute.For<IClearData>();
         _ = mock2.Chara.Returns(CharaWithTotal.Total);
-        _ = mock2.Cards.Returns(
-            _ => Definitions.CardTable.ToDictionary(
-                pair => pair.Key,
-                pair => MockSpellCard(
-                    pair.Value.Id, pair.Value.Level, pair.Key % 6, pair.Key % 7, pair.Key % 8, pair.Key)));
+        _ = mock2.Cards.Returns(cards2);
 
         return new[] { mock1, mock2 };
     }

@@ -14,12 +14,15 @@ public class CareerReplacerTests
     private static IEnumerable<ICardAttack> CreateCardAttacks()
     {
         var mock1 = CardAttackTests.MockCardAttack();
+        var cardId = mock1.CardId;
+        var clearCount = mock1.ClearCount;
+        var trialCount = mock1.TrialCount;
 
         var mock2 = CardAttackTests.MockCardAttack();
-        _ = mock2.CardId.Returns(_ => (short)(mock1.CardId + 1));
+        _ = mock2.CardId.Returns(++cardId);
         _ = mock2.CardName.Returns(TestUtils.MakeRandomArray(0x24));
-        _ = mock2.ClearCount.Returns(_ => (ushort)(mock1.ClearCount + 2));
-        _ = mock2.TrialCount.Returns(_ => (ushort)(mock1.TrialCount + 3));
+        _ = mock2.ClearCount.Returns((ushort)(clearCount + 2));
+        _ = mock2.TrialCount.Returns((ushort)(trialCount + 3));
 
         return new[] { mock1, mock2 };
     }

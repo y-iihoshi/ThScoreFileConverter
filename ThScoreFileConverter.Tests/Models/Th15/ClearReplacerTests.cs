@@ -28,19 +28,18 @@ public class ClearReplacerTests
 
         static IClearDataPerGameMode MockClearDataPerGameMode()
         {
+            var rankings = EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                level => level,
+                level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList() as IReadOnlyList<IScoreData>);
             var mock = Substitute.For<IClearDataPerGameMode>();
-            _ = mock.Rankings.Returns(
-                _ => EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
-                    level => level,
-                    level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList()
-                        as IReadOnlyList<IScoreData>));
+            _ = mock.Rankings.Returns(rankings);
             return mock;
         }
 
+        var gameModeData = new[] { (GameMode.Pointdevice, MockClearDataPerGameMode()) }.ToDictionary();
         var mock = Substitute.For<IClearData>();
         _ = mock.Chara.Returns(CharaWithTotal.Marisa);
-        _ = mock.GameModeData.Returns(
-            _ => new[] { (GameMode.Pointdevice, MockClearDataPerGameMode()) }.ToDictionary());
+        _ = mock.GameModeData.Returns(gameModeData);
         return new[] { mock };
     }
 

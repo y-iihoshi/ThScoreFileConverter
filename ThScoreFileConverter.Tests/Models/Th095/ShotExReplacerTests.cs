@@ -17,8 +17,9 @@ public class ShotExReplacerTests
     {
         var headerMock = BestShotHeaderTests.MockBestShotHeader();
 
+        var levelScene = (headerMock.Level, headerMock.Scene);
         var scoreMock = ScoreTests.MockScore();
-        _ = scoreMock.LevelScene.Returns(_ => (headerMock.Level, headerMock.Scene));
+        _ = scoreMock.LevelScene.Returns(levelScene);
 
         return new[] { scoreMock };
     }

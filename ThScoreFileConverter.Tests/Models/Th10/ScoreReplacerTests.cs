@@ -151,13 +151,12 @@ public class ScoreReplacerTests
 
         static IClearData MockClearData()
         {
+            var rankings = EnumHelper<Level>.Enumerable.ToDictionary(
+                level => level,
+                level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList() as IReadOnlyList<IScoreData>);
             var mock = Substitute.For<IClearData>();
             _ = mock.Chara.Returns(CharaWithTotal.ReimuB);
-            _ = mock.Rankings.Returns(
-                _ => EnumHelper<Level>.Enumerable.ToDictionary(
-                    level => level,
-                    level => Enumerable.Range(0, 10).Select(index => MockScoreData()).ToList()
-                        as IReadOnlyList<IScoreData>));
+            _ = mock.Rankings.Returns(rankings);
             return mock;
         }
 
