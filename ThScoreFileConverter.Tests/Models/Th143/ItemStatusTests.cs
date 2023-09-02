@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -12,20 +12,20 @@ namespace ThScoreFileConverter.Tests.Models.Th143;
 [TestClass]
 public class ItemStatusTests
 {
-    internal static Mock<IItemStatus> MockItemStatus()
+    internal static IItemStatus MockItemStatus()
     {
-        var mock = new Mock<IItemStatus>();
-        _ = mock.SetupGet(m => m.Signature).Returns("TI");
-        _ = mock.SetupGet(m => m.Version).Returns(1);
-        _ = mock.SetupGet(m => m.Checksum).Returns(0u);
-        _ = mock.SetupGet(m => m.Size).Returns(0x34);
-        _ = mock.SetupGet(m => m.Item).Returns(ItemWithTotal.NoItem);
-        _ = mock.SetupGet(m => m.UseCount).Returns(98);
-        _ = mock.SetupGet(m => m.ClearedCount).Returns(76);
-        _ = mock.SetupGet(m => m.ClearedScenes).Returns(54);
-        _ = mock.SetupGet(m => m.ItemLevel).Returns(3);
-        _ = mock.SetupGet(m => m.AvailableCount).Returns(2);
-        _ = mock.SetupGet(m => m.FramesOrRanges).Returns(1);
+        var mock = Substitute.For<IItemStatus>();
+        _ = mock.Signature.Returns("TI");
+        _ = mock.Version.Returns((ushort)1);
+        _ = mock.Checksum.Returns(0u);
+        _ = mock.Size.Returns(0x34);
+        _ = mock.Item.Returns(ItemWithTotal.NoItem);
+        _ = mock.UseCount.Returns(98);
+        _ = mock.ClearedCount.Returns(76);
+        _ = mock.ClearedScenes.Returns(54);
+        _ = mock.ItemLevel.Returns(3);
+        _ = mock.AvailableCount.Returns(2);
+        _ = mock.FramesOrRanges.Returns(1);
         return mock;
     }
 
@@ -67,10 +67,10 @@ public class ItemStatusTests
     {
         var mock = MockItemStatus();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var itemStatus = new ItemStatus(chapter);
 
-        Validate(mock.Object, itemStatus);
+        Validate(mock, itemStatus);
         Assert.IsFalse(itemStatus.IsValid);
     }
 
@@ -78,10 +78,10 @@ public class ItemStatusTests
     public void ItemStatusTestInvalidSignature()
     {
         var mock = MockItemStatus();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
@@ -89,10 +89,10 @@ public class ItemStatusTests
     public void ItemStatusTestInvalidVersion()
     {
         var mock = MockItemStatus();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
@@ -100,10 +100,10 @@ public class ItemStatusTests
     public void ItemStatusTestInvalidSize()
     {
         var mock = MockItemStatus();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(--size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
@@ -114,9 +114,9 @@ public class ItemStatusTests
     public void ItemStatusTestInvalidItems(int item)
     {
         var mock = MockItemStatus();
-        _ = mock.SetupGet(m => m.Item).Returns((ItemWithTotal)item);
+        _ = mock.Item.Returns((ItemWithTotal)item);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new ItemStatus(chapter));
     }
 

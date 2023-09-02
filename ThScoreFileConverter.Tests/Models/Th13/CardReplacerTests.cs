@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th13;
 using ThScoreFileConverter.Models.Th13;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
@@ -18,16 +18,24 @@ namespace ThScoreFileConverter.Tests.Models.Th13;
 [TestClass]
 public class CardReplacerTests
 {
-    internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+    private static IReadOnlyList<IClearData> CreateClearDataList()
     {
-        Mock.Of<IClearData>(
-            c => (c.Chara == CharaWithTotal.Total)
-                 && (c.Cards == new Dictionary<int, ISpellCard>
-                    {
-                        { 1, Mock.Of<ISpellCard<LevelPractice>>(s => s.HasTried) },
-                        { 2, Mock.Of<ISpellCard<LevelPractice>>(s => !s.HasTried) },
-                    }))
-    }.ToDictionary(clearData => clearData.Chara);
+        static ISpellCard MockSpellCard(int index)
+        {
+            var mock = Substitute.For<ISpellCard>();
+            _ = mock.HasTried.Returns(index % 2 != 0);
+            return mock;
+        }
+
+        var cards = new[] { 1, 2 }.ToDictionary(index => index, MockSpellCard);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Total);
+        _ = clearData.Cards.Returns(cards);
+        return new[] { clearData };
+    }
+
+    internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+        CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
     [TestMethod]
     public void CardReplacerTest()
@@ -95,11 +103,10 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyCards()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Total) && (m.Cards == ImmutableDictionary<int, ISpellCard>.Empty))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Total);
+        _ = clearData.Cards.Returns(ImmutableDictionary<int, ISpellCard>.Empty);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new CardReplacer(dictionary, true);
         Assert.AreEqual("??????????", replacer.Replace("%T13CARD001N"));

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th128;
@@ -17,23 +17,23 @@ namespace ThScoreFileConverter.Tests.Models.Th128;
 [TestClass]
 public class SpellCardTests
 {
-    internal static Mock<ISpellCard> MockInitialSpellCard()
+    internal static ISpellCard MockInitialSpellCard()
     {
-        var mock = new Mock<ISpellCard>();
-        _ = mock.SetupGet(m => m.Name).Returns(Enumerable.Empty<byte>());
+        var mock = Substitute.For<ISpellCard>();
+        _ = mock.Name.Returns(Enumerable.Empty<byte>());
         return mock;
     }
 
-    internal static Mock<ISpellCard> MockSpellCard()
+    internal static ISpellCard MockSpellCard()
     {
-        var mock = new Mock<ISpellCard>();
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(0x80));
-        _ = mock.SetupGet(m => m.NoMissCount).Returns(12);
-        _ = mock.SetupGet(m => m.NoIceCount).Returns(34);
-        _ = mock.SetupGet(m => m.TrialCount).Returns(56);
-        _ = mock.SetupGet(m => m.Id).Returns(78);
-        _ = mock.SetupGet(m => m.Level).Returns(Level.Normal);
-        _ = mock.SetupGet(m => m.HasTried).Returns(true);
+        var mock = Substitute.For<ISpellCard>();
+        _ = mock.Name.Returns(TestUtils.MakeRandomArray(0x80));
+        _ = mock.NoMissCount.Returns(12);
+        _ = mock.NoIceCount.Returns(34);
+        _ = mock.TrialCount.Returns(56);
+        _ = mock.Id.Returns(78);
+        _ = mock.Level.Returns(Level.Normal);
+        _ = mock.HasTried.Returns(true);
         return mock;
     }
 
@@ -65,7 +65,7 @@ public class SpellCardTests
         var mock = MockInitialSpellCard();
         var spellCard = new SpellCard();
 
-        Validate(mock.Object, spellCard);
+        Validate(mock, spellCard);
         Assert.IsFalse(spellCard.HasTried);
     }
 
@@ -74,9 +74,9 @@ public class SpellCardTests
     {
         var mock = MockSpellCard();
 
-        var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock.Object));
+        var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock));
 
-        Validate(mock.Object, spellCard);
+        Validate(mock, spellCard);
         Assert.IsTrue(spellCard.HasTried);
     }
 
@@ -84,22 +84,22 @@ public class SpellCardTests
     public void ReadFromTestShortenedName()
     {
         var mock = MockSpellCard();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
         _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededName()
     {
         var mock = MockSpellCard();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
@@ -109,9 +109,9 @@ public class SpellCardTests
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockSpellCard();
-        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
+        _ = mock.Level.Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<SpellCard>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 }

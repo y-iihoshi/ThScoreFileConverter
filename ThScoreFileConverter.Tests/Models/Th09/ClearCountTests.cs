@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
@@ -14,18 +14,17 @@ namespace ThScoreFileConverter.Tests.Models.Th09;
 [TestClass]
 public class ClearCountTests
 {
-    internal static Mock<IClearCount> MockInitialClearCount()
+    internal static IClearCount MockInitialClearCount()
     {
-        var mock = new Mock<IClearCount>();
-        _ = mock.SetupGet(m => m.Counts).Returns(ImmutableDictionary<Level, int>.Empty);
+        var mock = Substitute.For<IClearCount>();
+        _ = mock.Counts.Returns(ImmutableDictionary<Level, int>.Empty);
         return mock;
     }
 
-    internal static Mock<IClearCount> MockClearCount()
+    internal static IClearCount MockClearCount()
     {
-        var mock = new Mock<IClearCount>();
-        _ = mock.SetupGet(m => m.Counts).Returns(
-            EnumHelper<Level>.Enumerable.Select((level, index) => (level, index)).ToDictionary());
+        var mock = Substitute.For<IClearCount>();
+        _ = mock.Counts.Returns(EnumHelper<Level>.Enumerable.Select((level, index) => (level, index)).ToDictionary());
         return mock;
     }
 
@@ -46,7 +45,7 @@ public class ClearCountTests
 
         var clearCount = new ClearCount();
 
-        Validate(mock.Object, clearCount);
+        Validate(mock, clearCount);
     }
 
     [TestMethod]
@@ -54,33 +53,31 @@ public class ClearCountTests
     {
         var mock = MockClearCount();
 
-        var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
+        var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock));
 
-        Validate(mock.Object, clearCount);
+        Validate(mock, clearCount);
     }
 
     [TestMethod]
     public void ReadFromTestShortenedTrials()
     {
         var mock = MockClearCount();
-        var counts = mock.Object.Counts;
-        _ = mock.SetupGet(m => m.Counts).Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
+        var counts = mock.Counts;
+        _ = mock.Counts.Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<ClearCount>(MakeByteArray(mock.Object)));
+        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearCount>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededTrials()
     {
         var mock = MockClearCount();
-        var counts = mock.Object.Counts;
-        _ = mock.SetupGet(m => m.Counts).Returns(
-            counts.Concat(new[] { ((Level)99, 99) }.ToDictionary()).ToDictionary());
+        var counts = mock.Counts;
+        _ = mock.Counts.Returns(counts.Concat(new[] { ((Level)99, 99) }.ToDictionary()).ToDictionary());
 
-        var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock.Object));
+        var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock));
 
-        CollectionAssert.That.AreNotEqual(mock.Object.Counts.Values, clearCount.Counts.Values);
-        CollectionAssert.That.AreEqual(mock.Object.Counts.Values.SkipLast(1), clearCount.Counts.Values);
+        CollectionAssert.That.AreNotEqual(mock.Counts.Values, clearCount.Counts.Values);
+        CollectionAssert.That.AreEqual(mock.Counts.Values.SkipLast(1), clearCount.Counts.Values);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -11,20 +11,20 @@ namespace ThScoreFileConverter.Tests.Models.Th095;
 [TestClass]
 public class ScoreTests
 {
-    internal static Mock<IScore> MockScore()
+    internal static IScore MockScore()
     {
-        var mock = new Mock<IScore>();
-        _ = mock.SetupGet(m => m.Signature).Returns("SC");
-        _ = mock.SetupGet(m => m.Version).Returns(1);
-        _ = mock.SetupGet(m => m.Size).Returns(0x60);
-        _ = mock.SetupGet(m => m.Checksum).Returns(0u);
-        _ = mock.SetupGet(m => m.LevelScene).Returns((Level.Nine, 6));
-        _ = mock.SetupGet(m => m.HighScore).Returns(1234567);
-        _ = mock.SetupGet(m => m.BestshotScore).Returns(23456);
-        _ = mock.SetupGet(m => m.DateTime).Returns(34567890);
-        _ = mock.SetupGet(m => m.TrialCount).Returns(9876);
-        _ = mock.SetupGet(m => m.SlowRate1).Returns(1.23f);
-        _ = mock.SetupGet(m => m.SlowRate2).Returns(2.34f);
+        var mock = Substitute.For<IScore>();
+        _ = mock.Signature.Returns("SC");
+        _ = mock.Version.Returns((ushort)1);
+        _ = mock.Size.Returns(0x60);
+        _ = mock.Checksum.Returns(0u);
+        _ = mock.LevelScene.Returns((Level.Nine, 6));
+        _ = mock.HighScore.Returns(1234567);
+        _ = mock.BestshotScore.Returns(23456);
+        _ = mock.DateTime.Returns(34567890u);
+        _ = mock.TrialCount.Returns(9876);
+        _ = mock.SlowRate1.Returns(1.23f);
+        _ = mock.SlowRate2.Returns(2.34f);
         return mock;
     }
 
@@ -68,10 +68,10 @@ public class ScoreTests
     {
         var mock = MockScore();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new Score(chapter);
 
-        Validate(mock.Object, score);
+        Validate(mock, score);
         Assert.IsFalse(score.IsValid);
     }
 
@@ -79,10 +79,10 @@ public class ScoreTests
     public void ScoreTestInvalidSignature()
     {
         var mock = MockScore();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
     }
 
@@ -90,10 +90,10 @@ public class ScoreTests
     public void ScoreTestInvalidVersion()
     {
         var mock = MockScore();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
     }
 
@@ -101,10 +101,10 @@ public class ScoreTests
     public void ScoreTestInvalidSize()
     {
         var mock = MockScore();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(--size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
     }
 
@@ -115,10 +115,10 @@ public class ScoreTests
     public void ScoreTestInvalidLevel(int level)
     {
         var mock = MockScore();
-        var levelScene = mock.Object.LevelScene;
-        _ = mock.SetupGet(m => m.LevelScene).Returns(((Level)level, levelScene.Scene));
+        var levelScene = mock.LevelScene;
+        _ = mock.LevelScene.Returns(((Level)level, levelScene.Scene));
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));
     }
 

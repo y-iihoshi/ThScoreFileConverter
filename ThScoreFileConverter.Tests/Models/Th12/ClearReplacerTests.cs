@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th12;
@@ -17,23 +17,22 @@ public class ClearReplacerTests
 {
     private static IEnumerable<IClearData> CreateClearDataList()
     {
-        static IScoreData CreateScoreData(Level level, int index)
+        static IScoreData MockScoreData(Level level, int index)
         {
-            var mock = new Mock<IScoreData>();
-            _ = mock.SetupGet(s => s.StageProgress).Returns(
+            var mock = Substitute.For<IScoreData>();
+            _ = mock.StageProgress.Returns(
                 level == Level.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
-            _ = mock.SetupGet(s => s.DateTime).Returns((uint)index % 2);
-            return mock.Object;
+            _ = mock.DateTime.Returns((uint)index % 2);
+            return mock;
         }
 
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.ReimuB);
-        _ = mock.SetupGet(c => c.Rankings).Returns(
-            EnumHelper<Level>.Enumerable.ToDictionary(
-                level => level,
-                level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
-                    as IReadOnlyList<IScoreData>));
-        return new[] { mock.Object };
+        var rankings = EnumHelper<Level>.Enumerable.ToDictionary(
+            level => level,
+            level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList() as IReadOnlyList<IScoreData>);
+        var mock = Substitute.For<IClearData>();
+        _ = mock.Chara.Returns(CharaWithTotal.ReimuB);
+        _ = mock.Rankings.Returns(rankings);
+        return new[] { mock };
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
@@ -79,12 +78,10 @@ public class ClearReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyRankings()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.ReimuB)
-                     && (m.Rankings == ImmutableDictionary<Level, IReadOnlyList<IScoreData>>.Empty))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.ReimuB);
+        _ = clearData.Rankings.Returns(ImmutableDictionary<Level, IReadOnlyList<IScoreData>>.Empty);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
         Assert.AreEqual("-------", replacer.Replace("%T12CLEARHRB"));
@@ -93,14 +90,13 @@ public class ClearReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyRanking()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.ReimuB)
-                     && (m.Rankings == EnumHelper<Level>.Enumerable.ToDictionary(
-                        level => level,
-                        level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>)))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.ReimuB);
+        _ = clearData.Rankings.Returns(
+            EnumHelper<Level>.Enumerable.ToDictionary(
+                level => level,
+                level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>));
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
         Assert.AreEqual("-------", replacer.Replace("%T12CLEARHRB"));

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Models.Th123;
@@ -13,31 +13,21 @@ namespace ThScoreFileConverter.Tests.Models.Th123;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IClearData CreateClearData()
+    private static IClearData MockClearData()
     {
-#if false
-        return Mock.Of<IClearData>(
-            c => c.SpellCardResults == new[]
-            {
-                Mock.Of<ISpellCardResult>(
-                    s => (s.Enemy == Chara.Meiling) && (s.Id == 0) && (s.TrialCount == 1)),
-                Mock.Of<ISpellCardResult>(
-                    s => (s.Enemy == Chara.Meiling) && (s.Id == 1) && (s.TrialCount == 0)),
-            }.ToDictionary(result => (result.Enemy, result.Id)));   // causes CS8143
-#else
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(m => m.SpellCardResults).Returns(
-            new[]
-            {
-                Mock.Of<ISpellCardResult>(m => (m.Enemy == Chara.Meiling) && (m.Id == 0) && (m.TrialCount == 1)),
-                Mock.Of<ISpellCardResult>(m => (m.Enemy == Chara.Meiling) && (m.Id == 1) && (m.TrialCount == 0)),
-            }.ToDictionary(result => (result.Enemy, result.Id)));
-        return mock.Object;
-#endif
+        var spellCardResults = new[]
+        {
+            Th105.SpellCardResultTests.MockSpellCardResult(Chara.Meiling, default, 0, 1, default, default),
+            Th105.SpellCardResultTests.MockSpellCardResult(Chara.Meiling, default, 1, 0, default, default),
+        }.ToDictionary(result => (result.Enemy, result.Id));
+
+        var mock = Substitute.For<IClearData>();
+        _ = mock.SpellCardResults.Returns(spellCardResults);
+        return mock;
     }
 
     internal static IReadOnlyDictionary<Chara, IClearData> ClearDataDictionary { get; } =
-        new[] { (Chara.Cirno, CreateClearData()) }.ToDictionary();
+        new[] { (Chara.Cirno, MockClearData()) }.ToDictionary();
 
     [TestMethod]
     public void CardReplacerTest()
@@ -97,14 +87,10 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestEmptySpellCardResults()
     {
-        var dictionary = new Dictionary<Chara, IClearData>
-        {
-            {
-                Chara.Marisa,
-                Mock.Of<IClearData>(
-                    m => m.SpellCardResults == ImmutableDictionary<(Chara, int), ISpellCardResult>.Empty)
-            },
-        };
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.SpellCardResults.Returns(ImmutableDictionary<(Chara, int), ISpellCardResult>.Empty);
+
+        var dictionary = new[] { (Chara.Marisa, clearData) }.ToDictionary();
         var replacer = new CardReplacer(dictionary, true);
         Assert.AreEqual("??????????", replacer.Replace("%T123CARD09CIN"));
     }

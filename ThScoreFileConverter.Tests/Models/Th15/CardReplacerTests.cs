@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models.Th15;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
@@ -11,23 +12,27 @@ namespace ThScoreFileConverter.Tests.Models.Th15;
 [TestClass]
 public class CardReplacerTests
 {
-    internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } = new[]
+    private static IReadOnlyList<IClearData> CreateClearDataList()
     {
-        Mock.Of<IClearData>(
-            m => (m.Chara == CharaWithTotal.Total)
-                 && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                    {
-                        {
-                            GameMode.Pointdevice,
-                            Mock.Of<ClearDataPerGameMode>(
-                                c => c.Cards == new Dictionary<int, ISpellCard>
-                                {
-                                    { 3, Mock.Of<ISpellCard>(s => s.HasTried) },
-                                    { 4, Mock.Of<ISpellCard>(s => !s.HasTried) },
-                                })
-                        },
-                    }))
-    }.ToDictionary(clearData => clearData.Chara);
+        static ISpellCard MockSpellCard(int index)
+        {
+            var mock = Substitute.For<ISpellCard>();
+            _ = mock.HasTried.Returns(index % 2 != 0);
+            return mock;
+        }
+
+        var cards = new[] { 3, 4 }.ToDictionary(index => index, MockSpellCard);
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Cards.Returns(cards);
+
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Total);
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
+        return new[] { clearData };
+    }
+
+    internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
+        CreateClearDataList().ToDictionary(clearData => clearData.Chara);
 
     [TestMethod]
     public void CardReplacerTest()
@@ -88,12 +93,10 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyGameModes()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Total)
-                     && (m.GameModeData == ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Total);
+        _ = clearData.GameModeData.Returns(ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new CardReplacer(dictionary, true);
         Assert.AreEqual("??????????", replacer.Replace("%T15CARD003N"));
@@ -102,19 +105,12 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyCards()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Total)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Cards == ImmutableDictionary<int, ISpellCard>.Empty)
-                            },
-                        }))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Cards.Returns(ImmutableDictionary<int, ISpellCard>.Empty);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Total);
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new CardReplacer(dictionary, true);
         Assert.AreEqual("??????????", replacer.Replace("%T15CARD003N"));

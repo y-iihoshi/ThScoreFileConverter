@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
@@ -17,31 +17,30 @@ public class ClearReplacerTests
 {
     private static IEnumerable<IClearData> CreateClearDataList()
     {
-        static IScoreData CreateScoreData(LevelWithTotal level, int index)
+        static IScoreData MockScoreData(LevelWithTotal level, int index)
         {
-            var mock = new Mock<IScoreData>();
-            _ = mock.SetupGet(s => s.StageProgress).Returns(
+            var mock = Substitute.For<IScoreData>();
+            _ = mock.StageProgress.Returns(
                 level == LevelWithTotal.Extra ? StageProgress.Extra : (StageProgress)(5 - (index % 5)));
-            _ = mock.SetupGet(s => s.DateTime).Returns((uint)index % 2);
-            return mock.Object;
+            _ = mock.DateTime.Returns((uint)index % 2);
+            return mock;
         }
 
-        static IClearDataPerGameMode CreateClearDataPerGameMode()
+        static IClearDataPerGameMode MockClearDataPerGameMode()
         {
-            var mock = new Mock<IClearDataPerGameMode>();
-            _ = mock.SetupGet(c => c.Rankings).Returns(
-                EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
-                    level => level,
-                    level => Enumerable.Range(0, 10).Select(index => CreateScoreData(level, index)).ToList()
-                        as IReadOnlyList<IScoreData>));
-            return mock.Object;
+            var rankings = EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                level => level,
+                level => Enumerable.Range(0, 10).Select(index => MockScoreData(level, index)).ToList() as IReadOnlyList<IScoreData>);
+            var mock = Substitute.For<IClearDataPerGameMode>();
+            _ = mock.Rankings.Returns(rankings);
+            return mock;
         }
 
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(c => c.Chara).Returns(CharaWithTotal.Marisa);
-        _ = mock.SetupGet(c => c.GameModeData).Returns(
-            new[] { (GameMode.Pointdevice, CreateClearDataPerGameMode()) }.ToDictionary());
-        return new[] { mock.Object };
+        var gameModeData = new[] { (GameMode.Pointdevice, MockClearDataPerGameMode()) }.ToDictionary();
+        var mock = Substitute.For<IClearData>();
+        _ = mock.Chara.Returns(CharaWithTotal.Marisa);
+        _ = mock.GameModeData.Returns(gameModeData);
+        return new[] { mock };
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
@@ -79,26 +78,25 @@ public class ClearReplacerTests
     [TestMethod]
     public void ReplaceTestExtraClear()
     {
-        var dictionary = new[]
+        static IScoreData MockScoreData()
         {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
-                                        level => level,
-                                        level => new[]
-                                        {
-                                            Mock.Of<IScoreData>(
-                                                s => (s.StageProgress == StageProgress.ExtraClear)
-                                                     && (s.DateTime == 1u))
-                                        } as IReadOnlyList<IScoreData>))
-                            },
-                        }))
-        }.ToDictionary(element => element.Chara);
+            var mock = Substitute.For<IScoreData>();
+            _ = mock.StageProgress.Returns(StageProgress.ExtraClear);
+            _ = mock.DateTime.Returns(1u);
+            return mock;
+        }
+
+        var rankings = EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+            level => level,
+            level => new[] { MockScoreData() } as IReadOnlyList<IScoreData>);
+
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Rankings.Returns(rankings);
+
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
+        var dictionary = new[] { clearData }.ToDictionary(element => element.Chara);
 
         var replacer = new ClearReplacer(dictionary);
         Assert.AreEqual("All Clear", replacer.Replace("%T15CLEARPXMR"));
@@ -115,12 +113,10 @@ public class ClearReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyGameModes()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
+        _ = clearData.GameModeData.Returns(ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty);
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
         Assert.AreEqual("-------", replacer.Replace("%T15CLEARPHMR"));
@@ -129,20 +125,12 @@ public class ClearReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyRankings()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Rankings == ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty)
-                            },
-                        })
-                )
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Rankings.Returns(ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty);
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
         Assert.AreEqual("-------", replacer.Replace("%T15CLEARPHMR"));
@@ -151,21 +139,15 @@ public class ClearReplacerTests
     [TestMethod]
     public void ReplaceTestEmptyRanking()
     {
-        var dictionary = new[]
-        {
-            Mock.Of<IClearData>(
-                m => (m.Chara == CharaWithTotal.Marisa)
-                     && (m.GameModeData == new Dictionary<GameMode, IClearDataPerGameMode>
-                        {
-                            {
-                                GameMode.Pointdevice,
-                                Mock.Of<IClearDataPerGameMode>(
-                                    c => c.Rankings == EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
-                                        level => level,
-                                        level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>))
-                            },
-                        }))
-        }.ToDictionary(clearData => clearData.Chara);
+        var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
+        _ = clearDataPerGameMode.Rankings.Returns(
+            EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+                level => level,
+                level => ImmutableList<IScoreData>.Empty as IReadOnlyList<IScoreData>));
+        var clearData = Substitute.For<IClearData>();
+        _ = clearData.Chara.Returns(CharaWithTotal.Marisa);
+        _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
+        var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
         Assert.AreEqual("-------", replacer.Replace("%T15CLEARPHMR"));

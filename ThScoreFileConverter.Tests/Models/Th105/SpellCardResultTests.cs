@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -15,17 +15,23 @@ namespace ThScoreFileConverter.Tests.Models.Th105;
 [TestClass]
 public class SpellCardResultTests
 {
-    internal static Mock<ISpellCardResult<TChara>> MockSpellCardResult<TChara>()
+    internal static ISpellCardResult<TChara> MockSpellCardResult<TChara>(TChara enemy, Level level, int id, int trialCount, int gotCount, uint frames)
         where TChara : struct, Enum
     {
-        var mock = new Mock<ISpellCardResult<TChara>>();
-        _ = mock.SetupGet(m => m.Enemy).Returns(TestUtils.Cast<TChara>(1));
-        _ = mock.SetupGet(m => m.Level).Returns(Level.Hard);
-        _ = mock.SetupGet(m => m.Id).Returns(3);
-        _ = mock.SetupGet(m => m.TrialCount).Returns(67);
-        _ = mock.SetupGet(m => m.GotCount).Returns(45);
-        _ = mock.SetupGet(m => m.Frames).Returns(8901);
+        var mock = Substitute.For<ISpellCardResult<TChara>>();
+        _ = mock.Enemy.Returns(enemy);
+        _ = mock.Level.Returns(level);
+        _ = mock.Id.Returns(id);
+        _ = mock.TrialCount.Returns(trialCount);
+        _ = mock.GotCount.Returns(gotCount);
+        _ = mock.Frames.Returns(frames);
         return mock;
+    }
+
+    internal static ISpellCardResult<TChara> MockSpellCardResult<TChara>()
+        where TChara : struct, Enum
+    {
+        return MockSpellCardResult(TestUtils.Cast<TChara>(1), Level.Hard, 3, 67, 45, 8901u);
     }
 
     internal static byte[] MakeByteArray<TChara>(ISpellCardResult<TChara> properties)
@@ -54,26 +60,26 @@ public class SpellCardResultTests
     internal static void SpellCardResultTestHelper<TChara>()
         where TChara : struct, Enum
     {
-        var mock = new Mock<ISpellCardResult<TChara>>();
+        var mock = Substitute.For<ISpellCardResult<TChara>>();
         var spellCardResult = new SpellCardResult<TChara>();
 
-        Validate(mock.Object, spellCardResult);
+        Validate(mock, spellCardResult);
     }
 
     internal static void ReadFromTestHelper<TChara>()
         where TChara : struct, Enum
     {
         var mock = MockSpellCardResult<TChara>();
-        var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(mock.Object));
+        var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(mock));
 
-        Validate(mock.Object, spellCardResult);
+        Validate(mock, spellCardResult);
     }
 
     internal static void ReadFromTestShortenedHelper<TChara>()
         where TChara : struct, Enum
     {
         var mock = MockSpellCardResult<TChara>();
-        var array = MakeByteArray(mock.Object).SkipLast(1).ToArray();
+        var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
         _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<SpellCardResult<TChara>>(array));
     }
@@ -82,11 +88,11 @@ public class SpellCardResultTests
         where TChara : struct, Enum
     {
         var mock = MockSpellCardResult<TChara>();
-        var array = MakeByteArray(mock.Object).Concat(new byte[1] { 1 }).ToArray();
+        var array = MakeByteArray(mock).Concat(new byte[1] { 1 }).ToArray();
 
         var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(array);
 
-        Validate(mock.Object, spellCardResult);
+        Validate(mock, spellCardResult);
     }
 
     [TestMethod]

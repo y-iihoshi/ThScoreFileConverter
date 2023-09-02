@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Moq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -23,20 +22,17 @@ public class AllScoreDataTests
 
     internal static Properties MakeValidProperties()
     {
-        static ICardForDeck CreateCardForDeck(int id)
+        static ICardForDeck MockCardForDeck(int id)
         {
-            var mock = new Mock<ICardForDeck>();
-            _ = mock.SetupGet(c => c.Id).Returns(id);
-            _ = mock.SetupGet(c => c.MaxNumber).Returns((id % 4) + 1);
-            return mock.Object;
+            return Th105.CardForDeckTests.MockCardForDeck(id, (id % 4) + 1);
         }
 
         var charas = EnumHelper<Chara>.Enumerable.Where(chara => chara != Chara.Oonamazu);
         return new Properties()
         {
             storyClearCounts = charas.ToDictionary(chara => chara, chara => (byte)chara),
-            systemCards = Enumerable.Range(1, 5).ToDictionary(id => id, CreateCardForDeck),
-            clearData = charas.ToDictionary(chara => chara, chara => Th105.ClearDataTests.MockClearData<Chara>().Object),
+            systemCards = Enumerable.Range(1, 5).ToDictionary(id => id, MockCardForDeck),
+            clearData = charas.ToDictionary(chara => chara, chara => Th105.ClearDataTests.MockClearData<Chara>()),
         };
     }
 

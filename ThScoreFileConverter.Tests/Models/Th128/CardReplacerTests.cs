@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th128;
 
@@ -10,12 +10,20 @@ namespace ThScoreFileConverter.Tests.Models.Th128;
 [TestClass]
 public class CardReplacerTests
 {
+    private static ISpellCard MockSpellCard(int id, int trialCount, Level level, bool hasTried)
+    {
+        var mock = Substitute.For<ISpellCard>();
+        _ = mock.Id.Returns(id);
+        _ = mock.TrialCount.Returns(trialCount);
+        _ = mock.Level.Returns(level);
+        _ = mock.HasTried.Returns(hasTried);
+        return mock;
+    }
+
     internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } = new[]
     {
-        Mock.Of<ISpellCard>(
-            m => (m.Id == 3) && (m.TrialCount == 1) && (m.Level == Level.Hard) && m.HasTried),
-        Mock.Of<ISpellCard>(
-            m => (m.Id == 4) && (m.TrialCount == 0) && (m.Level == Level.Lunatic) && (!m.HasTried)),
+        MockSpellCard(3, 1, Level.Hard, true),
+        MockSpellCard(4, 0, Level.Lunatic, false),
     }.ToDictionary(card => card.Id);
 
     [TestMethod]

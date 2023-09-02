@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -14,19 +14,20 @@ namespace ThScoreFileConverter.Tests.Models.Th08;
 [TestClass]
 public class PlayStatusTests
 {
-    internal static Mock<IPlayStatus> MockPlayStatus()
+    internal static IPlayStatus MockPlayStatus()
     {
-        var mock = new Mock<IPlayStatus>();
-        _ = mock.SetupGet(m => m.Signature).Returns("PLST");
-        _ = mock.SetupGet(m => m.Size1).Returns(0x228);
-        _ = mock.SetupGet(m => m.Size2).Returns(0x228);
-        _ = mock.SetupGet(m => m.TotalRunningTime).Returns(new Time(12, 34, 56, 789, false));
-        _ = mock.SetupGet(m => m.TotalPlayTime).Returns(new Time(23, 45, 19, 876, false));
-        _ = mock.SetupGet(m => m.PlayCounts).Returns(
-            EnumHelper<Level>.Enumerable.ToDictionary(
-                level => level, level => PlayCountTests.MockPlayCount().Object));
-        _ = mock.SetupGet(m => m.TotalPlayCount).Returns(PlayCountTests.MockPlayCount().Object);
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(21));
+        var playCounts = EnumHelper<Level>.Enumerable.ToDictionary(level => level, level => PlayCountTests.MockPlayCount());
+        var totalPlayCount = PlayCountTests.MockPlayCount();
+
+        var mock = Substitute.For<IPlayStatus>();
+        _ = mock.Signature.Returns("PLST");
+        _ = mock.Size1.Returns((short)0x228);
+        _ = mock.Size2.Returns((short)0x228);
+        _ = mock.TotalRunningTime.Returns(new Time(12, 34, 56, 789, false));
+        _ = mock.TotalPlayTime.Returns(new Time(23, 45, 19, 876, false));
+        _ = mock.PlayCounts.Returns(playCounts);
+        _ = mock.TotalPlayCount.Returns(totalPlayCount);
+        _ = mock.BgmFlags.Returns(TestUtils.MakeRandomArray(21));
         return mock;
     }
 
@@ -46,7 +47,7 @@ public class PlayStatusTests
             status.TotalPlayTime.Seconds,
             status.TotalPlayTime.Milliseconds,
             status.PlayCounts.Select(pair => PlayCountTests.MakeByteArray(pair.Value)),
-            PlayCountTests.MakeByteArray(PlayCountTests.MockPlayCount().Object),
+            PlayCountTests.MakeByteArray(PlayCountTests.MockPlayCount()),
             PlayCountTests.MakeByteArray(status.TotalPlayCount),
             status.BgmFlags,
             new byte[11]);
@@ -83,20 +84,20 @@ public class PlayStatusTests
     {
         var mock = MockPlayStatus();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var playStatus = new PlayStatus(chapter);
 
-        Validate(mock.Object, playStatus);
+        Validate(mock, playStatus);
     }
 
     [TestMethod]
     public void PlayStatusTestInvalidSignature()
     {
         var mock = MockPlayStatus();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
     }
 
@@ -104,10 +105,10 @@ public class PlayStatusTests
     public void PlayStatusTestInvalidSize1()
     {
         var mock = MockPlayStatus();
-        var size = mock.Object.Size1;
-        _ = mock.SetupGet(m => m.Size1).Returns(--size);
+        var size = mock.Size1;
+        _ = mock.Size1.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
     }
 }

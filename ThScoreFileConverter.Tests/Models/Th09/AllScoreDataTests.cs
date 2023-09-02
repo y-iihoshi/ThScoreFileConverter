@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -55,26 +55,26 @@ public class AllScoreDataTests
     public void SetHighScoreTest()
     {
         var mock = HighScoreTests.MockHighScore();
-        _ = mock.SetupGet(m => m.Score).Returns(87654u);
-        _ = mock.SetupGet(m => m.Rank).Returns(2);
+        _ = mock.Score.Returns(87654u);
+        _ = mock.Rank.Returns((short)2);
 
-        var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock));
         var score = new HighScore(chapter);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        Assert.AreSame(score, allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][mock.Object.Rank]);
+        Assert.AreSame(score, allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank]);
     }
 
     [TestMethod]
     public void SetHighScoreTestTwice()
     {
         var mock = HighScoreTests.MockHighScore();
-        _ = mock.SetupGet(m => m.Score).Returns(87654u);
-        _ = mock.SetupGet(m => m.Rank).Returns(2);
+        _ = mock.Score.Returns(87654u);
+        _ = mock.Rank.Returns((short)2);
 
-        var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock));
         var score1 = new HighScore(chapter);
         var score2 = new HighScore(chapter);
 
@@ -82,8 +82,8 @@ public class AllScoreDataTests
         allScoreData.Set(score1);
         allScoreData.Set(score2);
 
-        Assert.AreNotSame(score1, allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][mock.Object.Rank]);
-        Assert.AreSame(score2, allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][mock.Object.Rank]);
+        Assert.AreNotSame(score1, allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank]);
+        Assert.AreSame(score2, allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank]);
     }
 
     [DataTestMethod]
@@ -92,25 +92,25 @@ public class AllScoreDataTests
     public void SetHighScoreTestInvalidRank(short rank)
     {
         var mock = HighScoreTests.MockHighScore();
-        _ = mock.SetupGet(m => m.Score).Returns(87654u);
-        _ = mock.SetupGet(m => m.Rank).Returns(rank);
+        _ = mock.Score.Returns(87654u);
+        _ = mock.Rank.Returns(rank);
 
-        var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(mock));
         var score = new HighScore(chapter);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        for (var index = 0; index < allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)].Count; ++index)
+        for (var index = 0; index < allScoreData.Rankings[(mock.Chara, mock.Level)].Count; ++index)
         {
-            Assert.IsNull(allScoreData.Rankings[(mock.Object.Chara, mock.Object.Level)][index]);
+            Assert.IsNull(allScoreData.Rankings[(mock.Chara, mock.Level)][index]);
         }
     }
 
     [TestMethod]
     public void SetPlayStatusTest()
     {
-        var status = Mock.Of<IPlayStatus>();
+        var status = Substitute.For<IPlayStatus>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
@@ -121,8 +121,8 @@ public class AllScoreDataTests
     [TestMethod]
     public void SetPlayStatusTestTwice()
     {
-        var status1 = Mock.Of<IPlayStatus>();
-        var status2 = Mock.Of<IPlayStatus>();
+        var status1 = Substitute.For<IPlayStatus>();
+        var status2 = Substitute.For<IPlayStatus>();
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(status1);

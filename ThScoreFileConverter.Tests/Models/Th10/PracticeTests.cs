@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -7,12 +7,12 @@ namespace ThScoreFileConverter.Tests.Models.Th10;
 [TestClass]
 public class PracticeTests
 {
-    internal static Mock<IPractice> MockPractice()
+    internal static IPractice MockPractice()
     {
-        var mock = new Mock<IPractice>();
-        _ = mock.SetupGet(m => m.Score).Returns(123456u);
-        _ = mock.SetupGet(m => m.Cleared).Returns(7);
-        _ = mock.SetupGet(m => m.Unlocked).Returns(8);
+        var mock = Substitute.For<IPractice>();
+        _ = mock.Score.Returns(123456u);
+        _ = mock.Cleared.Returns((byte)7);
+        _ = mock.Unlocked.Returns((byte)8);
         return mock;
     }
 
@@ -31,11 +31,11 @@ public class PracticeTests
     [TestMethod]
     public void PracticeTest()
     {
-        var mock = new Mock<IPractice>();
+        var mock = Substitute.For<IPractice>();
 
         var practice = new Practice();
 
-        Validate(mock.Object, practice);
+        Validate(mock, practice);
     }
 
     [TestMethod]
@@ -43,8 +43,8 @@ public class PracticeTests
     {
         var mock = MockPractice();
 
-        var practice = TestUtils.Create<Practice>(MakeByteArray(mock.Object));
+        var practice = TestUtils.Create<Practice>(MakeByteArray(mock));
 
-        Validate(mock.Object, practice);
+        Validate(mock, practice);
     }
 }

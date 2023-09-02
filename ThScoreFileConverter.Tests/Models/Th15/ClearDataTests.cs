@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
@@ -16,29 +16,30 @@ namespace ThScoreFileConverter.Tests.Models.Th15;
 [TestClass]
 public class ClearDataTests
 {
-    internal static Mock<IClearData> MockClearData()
+    internal static IClearData MockClearData()
     {
-        static IPractice CreatePractice((Level, StagePractice) pair)
+        static IPractice MockPractice((Level, StagePractice) pair)
         {
-            var mock = new Mock<IPractice>();
-            _ = mock.SetupGet(p => p.Score).Returns(123456u - ((uint)pair.Item1 * 10u));
-            _ = mock.SetupGet(p => p.Cleared).Returns((byte)((int)pair.Item2 % 2));
-            _ = mock.SetupGet(p => p.Unlocked).Returns((byte)((int)pair.Item1 % 2));
-            return mock.Object;
+            var mock = Substitute.For<IPractice>();
+            _ = mock.Score.Returns(123456u - ((uint)pair.Item1 * 10u));
+            _ = mock.Cleared.Returns((byte)((int)pair.Item2 % 2));
+            _ = mock.Unlocked.Returns((byte)((int)pair.Item1 % 2));
+            return mock;
         }
 
-        var mock = new Mock<IClearData>();
-        _ = mock.SetupGet(m => m.Signature).Returns("CR");
-        _ = mock.SetupGet(m => m.Version).Returns(1);
-        _ = mock.SetupGet(m => m.Checksum).Returns(0u);
-        _ = mock.SetupGet(m => m.Size).Returns(0xA4A0);
-        _ = mock.SetupGet(m => m.Chara).Returns(CharaWithTotal.Marisa);
-        _ = mock.SetupGet(m => m.GameModeData).Returns(
-            EnumHelper<GameMode>.Enumerable.ToDictionary(
-                mode => mode,
-                _ => ClearDataPerGameModeTests.MockClearDataPerGameMode().Object));
-        _ = mock.SetupGet(m => m.Practices).Returns(
-            EnumHelper.Cartesian<Level, StagePractice>().ToDictionary(pair => pair, CreatePractice));
+        var gameModeData = EnumHelper<GameMode>.Enumerable.ToDictionary(
+            mode => mode,
+            _ => ClearDataPerGameModeTests.MockClearDataPerGameMode());
+        var practices = EnumHelper.Cartesian<Level, StagePractice>().ToDictionary(pair => pair, MockPractice);
+
+        var mock = Substitute.For<IClearData>();
+        _ = mock.Signature.Returns("CR");
+        _ = mock.Version.Returns((ushort)1);
+        _ = mock.Checksum.Returns(0u);
+        _ = mock.Size.Returns(0xA4A0);
+        _ = mock.Chara.Returns(CharaWithTotal.Marisa);
+        _ = mock.GameModeData.Returns(gameModeData);
+        _ = mock.Practices.Returns(practices);
         return mock;
     }
 
@@ -79,10 +80,10 @@ public class ClearDataTests
     {
         var mock = MockClearData();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock.Object, clearData);
+        Validate(mock, clearData);
         Assert.IsFalse(clearData.IsValid);
     }
 
@@ -90,10 +91,10 @@ public class ClearDataTests
     public void ClearDataTestInvalidSignature()
     {
         var mock = MockClearData();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 
@@ -101,10 +102,10 @@ public class ClearDataTests
     public void ClearDataTestInvalidVersion()
     {
         var mock = MockClearData();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 
@@ -112,10 +113,10 @@ public class ClearDataTests
     public void ClearDataTestInvalidSize()
     {
         var mock = MockClearData();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(--size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
     }
 

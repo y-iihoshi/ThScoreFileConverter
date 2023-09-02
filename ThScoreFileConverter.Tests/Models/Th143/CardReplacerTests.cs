@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
 
@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Tests.Models.Th143;
 [TestClass]
 public class CardReplacerTests
 {
-    internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore().Object };
+    internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore() };
 
     [TestMethod]
     public void CardReplacerTest()
@@ -77,7 +77,9 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestZeroNumber()
     {
-        var scores = new[] { Mock.Of<IScore>(m => m.Number == 0) };
+        var score = Substitute.For<IScore>();
+        _ = score.Number.Returns(0);
+        var scores = new[] { score };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
@@ -86,7 +88,9 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestExceededNumber()
     {
-        var scores = new[] { Mock.Of<IScore>(m => m.Number == 76) };
+        var score = Substitute.For<IScore>();
+        _ = score.Number.Returns(76);
+        var scores = new[] { score };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
@@ -95,7 +99,9 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestMismatchNumber()
     {
-        var scores = new[] { Mock.Of<IScore>(m => m.Number == 70) };
+        var score = Substitute.For<IScore>();
+        _ = score.Number.Returns(70);
+        var scores = new[] { score };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
@@ -105,8 +111,8 @@ public class CardReplacerTests
     public void ReplaceTestEmptyChallengeCounts()
     {
         var mock = ScoreTests.MockScore();
-        _ = mock.SetupGet(m => m.ChallengeCounts).Returns(ImmutableDictionary<ItemWithTotal, int>.Empty);
-        var scores = new[] { mock.Object };
+        _ = mock.ChallengeCounts.Returns(ImmutableDictionary<ItemWithTotal, int>.Empty);
+        var scores = new[] { mock };
 
         var replacer = new CardReplacer(scores, true);
         Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));

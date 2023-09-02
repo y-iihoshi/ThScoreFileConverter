@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CommunityToolkit.Diagnostics;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th125;
@@ -18,41 +18,41 @@ namespace ThScoreFileConverter.Tests.Models.Th125;
 [TestClass]
 public class BestShotHeaderTests
 {
-    internal static Mock<IBestShotHeader> MockInitialBestShotHeader()
+    internal static IBestShotHeader MockInitialBestShotHeader()
     {
-        var mock = new Mock<IBestShotHeader>();
-        _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
-        _ = mock.SetupGet(m => m.CardName).Returns(Enumerable.Empty<byte>());
+        var mock = Substitute.For<IBestShotHeader>();
+        _ = mock.Signature.Returns(string.Empty);
+        _ = mock.CardName.Returns(Enumerable.Empty<byte>());
         return mock;
     }
 
-    internal static Mock<IBestShotHeader> MockBestShotHeader()
+    internal static IBestShotHeader MockBestShotHeader()
     {
-        var mock = new Mock<IBestShotHeader>();
-        _ = mock.SetupGet(m => m.Signature).Returns("BST2");
-        _ = mock.SetupGet(m => m.Level).Returns(Level.Two);
-        _ = mock.SetupGet(m => m.Scene).Returns(3);
-        _ = mock.SetupGet(m => m.Width).Returns(4);
-        _ = mock.SetupGet(m => m.Height).Returns(5);
-        _ = mock.SetupGet(m => m.Width2).Returns(6);
-        _ = mock.SetupGet(m => m.Height2).Returns(7);
-        _ = mock.SetupGet(m => m.HalfWidth).Returns(8);
-        _ = mock.SetupGet(m => m.HalfHeight).Returns(9);
-        _ = mock.SetupGet(m => m.DateTime).Returns(10u);
-        _ = mock.SetupGet(m => m.SlowRate).Returns(11f);
-        _ = mock.SetupGet(m => m.Fields).Returns(new BonusFields(12));
-        _ = mock.SetupGet(m => m.ResultScore).Returns(13);
-        _ = mock.SetupGet(m => m.BasePoint).Returns(14);
-        _ = mock.SetupGet(m => m.RiskBonus).Returns(15);
-        _ = mock.SetupGet(m => m.BossShot).Returns(16f);
-        _ = mock.SetupGet(m => m.NiceShot).Returns(17f);
-        _ = mock.SetupGet(m => m.AngleBonus).Returns(18f);
-        _ = mock.SetupGet(m => m.MacroBonus).Returns(19);
-        _ = mock.SetupGet(m => m.FrontSideBackShot).Returns(20);
-        _ = mock.SetupGet(m => m.ClearShot).Returns(21);
-        _ = mock.SetupGet(m => m.Angle).Returns(22);
-        _ = mock.SetupGet(m => m.ResultScore2).Returns(23);
-        _ = mock.SetupGet(m => m.CardName).Returns(
+        var mock = Substitute.For<IBestShotHeader>();
+        _ = mock.Signature.Returns("BST2");
+        _ = mock.Level.Returns(Level.Two);
+        _ = mock.Scene.Returns((short)3);
+        _ = mock.Width.Returns((short)4);
+        _ = mock.Height.Returns((short)5);
+        _ = mock.Width2.Returns((short)6);
+        _ = mock.Height2.Returns((short)7);
+        _ = mock.HalfWidth.Returns((short)8);
+        _ = mock.HalfHeight.Returns((short)9);
+        _ = mock.DateTime.Returns(10u);
+        _ = mock.SlowRate.Returns(11f);
+        _ = mock.Fields.Returns(new BonusFields(12));
+        _ = mock.ResultScore.Returns(13);
+        _ = mock.BasePoint.Returns(14);
+        _ = mock.RiskBonus.Returns(15);
+        _ = mock.BossShot.Returns(16f);
+        _ = mock.NiceShot.Returns(17f);
+        _ = mock.AngleBonus.Returns(18f);
+        _ = mock.MacroBonus.Returns(19);
+        _ = mock.FrontSideBackShot.Returns(20);
+        _ = mock.ClearShot.Returns(21);
+        _ = mock.Angle.Returns(22);
+        _ = mock.ResultScore2.Returns(23);
+        _ = mock.CardName.Returns(
             TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray());
         return mock;
     }
@@ -129,52 +129,52 @@ public class BestShotHeaderTests
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock.Object, header);
+        Validate(mock, header);
     }
 
     [TestMethod]
     public void ReadFromTest()
     {
         var mock = MockBestShotHeader();
-        var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
+        var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock.Object, header);
+        Validate(mock, header);
     }
 
     [TestMethod]
     public void ReadFromTestEmptySignature()
     {
         var mock = MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Signature).Returns(string.Empty);
+        _ = mock.Signature.Returns(string.Empty);
 
         _ = Assert.ThrowsException<InvalidDataException>(
-            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestShortenedSignature()
     {
         var mock = MockBestShotHeader();
-        var signature = mock.Object.Signature;
+        var signature = mock.Signature;
 #if NETFRAMEWORK
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.Substring(0, signature.Length - 1));
+        _ = mock.Signature.Returns(signature.Substring(0, signature.Length - 1));
 #else
-        _ = mock.SetupGet(m => m.Signature).Returns(signature[0..^1]);
+        _ = mock.Signature.Returns(signature[0..^1]);
 #endif
 
         _ = Assert.ThrowsException<InvalidDataException>(
-            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededSignature()
     {
         var mock = MockBestShotHeader();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns($"{signature}E");
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns($"{signature}E");
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
@@ -184,32 +184,32 @@ public class BestShotHeaderTests
     public void ReadFromTestInvalidLevel(int level)
     {
         var mock = MockBestShotHeader();
-        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
+        _ = mock.Level.Returns((Level)level);
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestShortenedCardName()
     {
         var mock = MockBestShotHeader();
-        var cardName = mock.Object.CardName;
-        _ = mock.SetupGet(m => m.CardName).Returns(cardName.SkipLast(1).ToArray());
+        var cardName = mock.CardName;
+        _ = mock.CardName.Returns(cardName.SkipLast(1).ToArray());
 
         _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededCardName()
     {
         var mock = MockBestShotHeader();
-        var cardName = mock.Object.CardName;
-        _ = mock.SetupGet(m => m.CardName).Returns(cardName.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        var cardName = mock.CardName;
+        _ = mock.CardName.Returns(cardName.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
-        var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock.Object));
+        var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(MockBestShotHeader().Object, header);
+        Validate(MockBestShotHeader(), header);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th08;
@@ -14,22 +14,21 @@ namespace ThScoreFileConverter.Tests.Models.Th08;
 [TestClass]
 public class PlayCountTests
 {
-    internal static Mock<IPlayCount> MockInitialPlayCount()
+    internal static IPlayCount MockInitialPlayCount()
     {
-        var mock = new Mock<IPlayCount>();
-        _ = mock.SetupGet(m => m.Trials).Returns(ImmutableDictionary<Chara, int>.Empty);
+        var mock = Substitute.For<IPlayCount>();
+        _ = mock.Trials.Returns(ImmutableDictionary<Chara, int>.Empty);
         return mock;
     }
 
-    internal static Mock<IPlayCount> MockPlayCount()
+    internal static IPlayCount MockPlayCount()
     {
-        var mock = new Mock<IPlayCount>();
-        _ = mock.SetupGet(m => m.TotalTrial).Returns(1);
-        _ = mock.SetupGet(m => m.Trials).Returns(
-            EnumHelper<Chara>.Enumerable.Select((chara, index) => (chara, index)).ToDictionary());
-        _ = mock.SetupGet(m => m.TotalClear).Returns(3);
-        _ = mock.SetupGet(m => m.TotalContinue).Returns(4);
-        _ = mock.SetupGet(m => m.TotalPractice).Returns(5);
+        var mock = Substitute.For<IPlayCount>();
+        _ = mock.TotalTrial.Returns(1);
+        _ = mock.Trials.Returns(EnumHelper<Chara>.Enumerable.Select((chara, index) => (chara, index)).ToDictionary());
+        _ = mock.TotalClear.Returns(3);
+        _ = mock.TotalContinue.Returns(4);
+        _ = mock.TotalPractice.Returns(5);
         return mock;
     }
 
@@ -60,7 +59,7 @@ public class PlayCountTests
 
         var playCount = new PlayCount();
 
-        Validate(mock.Object, playCount);
+        Validate(mock, playCount);
     }
 
     [TestMethod]
@@ -68,37 +67,36 @@ public class PlayCountTests
     {
         var mock = MockPlayCount();
 
-        var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
+        var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock));
 
-        Validate(mock.Object, playCount);
+        Validate(mock, playCount);
     }
 
     [TestMethod]
     public void ReadFromTestShortenedTrials()
     {
         var mock = MockPlayCount();
-        var trials = mock.Object.Trials;
-        _ = mock.SetupGet(m => m.Trials).Returns(trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary());
+        var trials = mock.Trials;
+        _ = mock.Trials.Returns(trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary());
 
         _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<PlayCount>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<PlayCount>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededTrials()
     {
         var mock = MockPlayCount();
-        var trials = mock.Object.Trials;
-        _ = mock.SetupGet(m => m.Trials).Returns(
-            trials.Concat(new[] { ((Chara)99, 99) }.ToDictionary()).ToDictionary());
+        var trials = mock.Trials;
+        _ = mock.Trials.Returns(trials.Concat(new[] { ((Chara)99, 99) }.ToDictionary()).ToDictionary());
 
-        var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock.Object));
+        var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock));
 
-        Assert.AreEqual(mock.Object.TotalTrial, playCount.TotalTrial);
-        CollectionAssert.That.AreNotEqual(mock.Object.Trials.Values, playCount.Trials.Values);
-        CollectionAssert.That.AreEqual(mock.Object.Trials.Values.SkipLast(1), playCount.Trials.Values);
-        Assert.AreNotEqual(mock.Object.TotalClear, playCount.TotalClear);
-        Assert.AreNotEqual(mock.Object.TotalContinue, playCount.TotalContinue);
-        Assert.AreNotEqual(mock.Object.TotalPractice, playCount.TotalPractice);
+        Assert.AreEqual(mock.TotalTrial, playCount.TotalTrial);
+        CollectionAssert.That.AreNotEqual(mock.Trials.Values, playCount.Trials.Values);
+        CollectionAssert.That.AreEqual(mock.Trials.Values.SkipLast(1), playCount.Trials.Values);
+        Assert.AreNotEqual(mock.TotalClear, playCount.TotalClear);
+        Assert.AreNotEqual(mock.TotalContinue, playCount.TotalContinue);
+        Assert.AreNotEqual(mock.TotalPractice, playCount.TotalPractice);
     }
 }

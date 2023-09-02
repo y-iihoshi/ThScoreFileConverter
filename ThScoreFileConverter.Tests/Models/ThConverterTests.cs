@@ -1,5 +1,5 @@
 ﻿using System;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -11,7 +11,7 @@ public class ThConverterTests
     [TestMethod]
     public void ThConverterTest()
     {
-        var converter = new Mock<ThConverter> { CallBase = true }.Object;
+        var converter = Substitute.ForPartsOf<ThConverter>();
 
         Assert.AreEqual(string.Empty, converter.SupportedVersions);
         Assert.IsFalse(converter.HasBestShotConverter);
@@ -21,7 +21,7 @@ public class ThConverterTests
     [TestMethod]
     public void ConvertTestNull()
     {
-        var converter = new Mock<ThConverter> { CallBase = true }.Object;
+        var converter = Substitute.ForPartsOf<ThConverter>();
 
         converter.ConvertFinished +=
             (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
@@ -36,7 +36,7 @@ public class ThConverterTests
     [TestMethod]
     public void ConvertTestInvalidType()
     {
-        var converter = new Mock<ThConverter> { CallBase = true }.Object;
+        var converter = Substitute.ForPartsOf<ThConverter>();
 
         converter.ConvertFinished +=
             (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
@@ -52,8 +52,8 @@ public class ThConverterTests
     public void ConvertTestNoSettings()
     {
         var settings = new SettingsPerTitle();
-        var formatter = new Mock<INumberFormatter>().Object;
-        var converter = new Mock<ThConverter> { CallBase = true }.Object;
+        var formatter = Substitute.For<INumberFormatter>();
+        var converter = Substitute.ForPartsOf<ThConverter>();
 
         converter.ConvertFinished +=
             (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");

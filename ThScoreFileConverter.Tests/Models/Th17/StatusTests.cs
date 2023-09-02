@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -10,17 +10,17 @@ namespace ThScoreFileConverter.Tests.Models.Th17;
 [TestClass]
 public class StatusTests
 {
-    internal static Mock<IStatus> MockStatus()
+    internal static IStatus MockStatus()
     {
-        var mock = new Mock<IStatus>();
-        _ = mock.SetupGet(m => m.Signature).Returns("ST");
-        _ = mock.SetupGet(m => m.Version).Returns(0x0002);
-        _ = mock.SetupGet(m => m.Checksum).Returns(0u);
-        _ = mock.SetupGet(m => m.Size).Returns(0x04B0);
-        _ = mock.SetupGet(m => m.LastName).Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"));
-        _ = mock.SetupGet(m => m.BgmFlags).Returns(TestUtils.MakeRandomArray(17));
-        _ = mock.SetupGet(m => m.TotalPlayTime).Returns(12345678);
-        _ = mock.SetupGet(m => m.Achievements).Returns(TestUtils.MakeRandomArray(40));
+        var mock = Substitute.For<IStatus>();
+        _ = mock.Signature.Returns("ST");
+        _ = mock.Version.Returns((ushort)0x0002);
+        _ = mock.Checksum.Returns(0u);
+        _ = mock.Size.Returns(0x04B0);
+        _ = mock.LastName.Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"));
+        _ = mock.BgmFlags.Returns(TestUtils.MakeRandomArray(17));
+        _ = mock.TotalPlayTime.Returns(12345678);
+        _ = mock.Achievements.Returns(TestUtils.MakeRandomArray(40));
         return mock;
     }
 
@@ -58,10 +58,10 @@ public class StatusTests
     {
         var mock = MockStatus();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var status = new Status(chapter);
 
-        Validate(mock.Object, status);
+        Validate(mock, status);
         Assert.IsFalse(status.IsValid);
     }
 
@@ -69,10 +69,10 @@ public class StatusTests
     public void StatusTestInvalidSignature()
     {
         var mock = MockStatus();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
 
         _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
     }
@@ -81,10 +81,10 @@ public class StatusTests
     public void StatusTestInvalidVersion()
     {
         var mock = MockStatus();
-        var version = mock.Object.Version;
-        _ = mock.SetupGet(m => m.Version).Returns(++version);
+        var version = mock.Version;
+        _ = mock.Version.Returns(++version);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
 
         _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
     }
@@ -93,10 +93,10 @@ public class StatusTests
     public void StatusTestInvalidSize()
     {
         var mock = MockStatus();
-        var size = mock.Object.Size;
-        _ = mock.SetupGet(m => m.Size).Returns(--size);
+        var size = mock.Size;
+        _ = mock.Size.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
 
         _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
     }

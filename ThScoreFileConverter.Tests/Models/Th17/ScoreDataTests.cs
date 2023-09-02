@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -34,9 +35,9 @@ public class ScoreDataTests
     public void ReadFromTest()
     {
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
-        var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
+        var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Th10.ScoreDataTests.Validate(mock.Object, scoreData);
+        Th10.ScoreDataTests.Validate(mock, scoreData);
     }
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
@@ -46,39 +47,39 @@ public class ScoreDataTests
     public void ReadFromTestInvalidStageProgress(int stageProgress)
     {
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
-        _ = mock.SetupGet(m => m.StageProgress).Returns((StageProgress)stageProgress);
+        _ = mock.StageProgress.Returns((StageProgress)stageProgress);
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestShortenedName()
     {
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
         _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededName()
     {
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
-        var name = mock.Object.Name;
+        var name = mock.Name;
         var validNameLength = name.Count();
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
-        var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
+        var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Assert.AreEqual(mock.Object.Score, scoreData.Score);
-        Assert.AreEqual(mock.Object.StageProgress, scoreData.StageProgress);
-        Assert.AreEqual(mock.Object.ContinueCount, scoreData.ContinueCount);
-        CollectionAssert.That.AreNotEqual(mock.Object.Name, scoreData.Name);
-        CollectionAssert.That.AreEqual(mock.Object.Name.Take(validNameLength), scoreData.Name);
-        Assert.AreNotEqual(mock.Object.DateTime, scoreData.DateTime);
-        Assert.AreNotEqual(mock.Object.SlowRate, scoreData.SlowRate);
+        Assert.AreEqual(mock.Score, scoreData.Score);
+        Assert.AreEqual(mock.StageProgress, scoreData.StageProgress);
+        Assert.AreEqual(mock.ContinueCount, scoreData.ContinueCount);
+        CollectionAssert.That.AreNotEqual(mock.Name, scoreData.Name);
+        CollectionAssert.That.AreEqual(mock.Name.Take(validNameLength), scoreData.Name);
+        Assert.AreNotEqual(mock.DateTime, scoreData.DateTime);
+        Assert.AreNotEqual(mock.SlowRate, scoreData.SlowRate);
     }
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Moq;
+using NSubstitute;
 using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
@@ -24,19 +24,19 @@ namespace ThScoreFileConverter.Tests.ViewModels;
 [TestClass]
 public class MainWindowViewModelTests
 {
-    private static Mock<IDialogService> MockDialogService()
+    private static IDialogService MockDialogService()
     {
-        return new();
+        return Substitute.For<IDialogService>();
     }
 
-    private static Mock<IDispatcherAdapter> MockDispatcherAdapter()
+    private static IDispatcherAdapter MockDispatcherAdapter()
     {
-        return new();
+        return Substitute.For<IDispatcherAdapter>();
     }
 
-    private static Mock<INumberFormatter> MockNumberFormatter()
+    private static INumberFormatter MockNumberFormatter()
     {
-        return new();
+        return Substitute.For<INumberFormatter>();
     }
 
     private static MainWindowViewModel CreateViewModel()
@@ -46,7 +46,7 @@ public class MainWindowViewModelTests
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
         return new MainWindowViewModel(
-            dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
+            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
     }
 
     private static DragEventArgs? CreateDragEventArgs(IDataObject data, RoutedEvent routedEvent)
@@ -144,7 +144,7 @@ public class MainWindowViewModelTests
         var initialLastTitle = settings.LastTitle;
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
-            dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
+            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
         Assert.AreEqual(settings.LastTitle, window.LastWorkNumber.Value);
         Assert.AreNotEqual(initialLastTitle, settings.LastTitle);
 
@@ -216,7 +216,7 @@ public class MainWindowViewModelTests
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
-            dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
+            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
         Assert.AreEqual(string.Empty, window.ImageOutputDirectory.Value);
 
         var numChanged = 0;
@@ -244,7 +244,7 @@ public class MainWindowViewModelTests
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
-            dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
+            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
         Assert.IsTrue(window.HidesUntriedCards.Value);
 
         var numChanged = 0;
@@ -1186,7 +1186,7 @@ public class MainWindowViewModelTests
         var formatterMock = MockNumberFormatter();
 
         using var window = new MainWindowViewModel(
-            dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
+            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
 
         var command = window.OpenAboutWindowCommand;
         Assert.IsNotNull(command);
@@ -1194,8 +1194,8 @@ public class MainWindowViewModelTests
         Assert.IsTrue(command.CanExecute());
 
         command.Execute();
-        dialogServiceMock.Verify(dialogService => dialogService.ShowDialog(
-            nameof(AboutWindowViewModel), It.IsAny<DialogParameters>(), It.IsAny<Action<IDialogResult>>()));
+        dialogServiceMock.Received().ShowDialog(
+            nameof(AboutWindowViewModel), Arg.Any<DialogParameters>(), Arg.Any<Action<IDialogResult>>());
     }
 
     [TestMethod]
@@ -1207,7 +1207,7 @@ public class MainWindowViewModelTests
         var formatterMock = MockNumberFormatter();
 
         using var window = new MainWindowViewModel(
-            dialogServiceMock.Object, dispatcherAdapterMock.Object, settings, formatterMock.Object);
+            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
 
         var command = window.OpenSettingWindowCommand;
         Assert.IsNotNull(command);
@@ -1215,8 +1215,8 @@ public class MainWindowViewModelTests
         Assert.IsTrue(command.CanExecute());
 
         command.Execute();
-        dialogServiceMock.Verify(dialogService => dialogService.ShowDialog(
-            nameof(SettingWindowViewModel), It.IsAny<DialogParameters>(), It.IsAny<Action<IDialogResult>>()));
+        dialogServiceMock.Received().ShowDialog(
+            nameof(SettingWindowViewModel), Arg.Any<DialogParameters>(), Arg.Any<Action<IDialogResult>>());
     }
 
     [TestMethod]

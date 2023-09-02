@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -17,16 +17,16 @@ namespace ThScoreFileConverter.Tests.Models.Th16;
 [TestClass]
 public class ScoreDataTests
 {
-    internal static Mock<IScoreData> MockScoreData()
+    internal static IScoreData MockScoreData()
     {
-        var mock = new Mock<IScoreData>();
-        _ = mock.SetupGet(m => m.Score).Returns(12u);
-        _ = mock.SetupGet(m => m.StageProgress).Returns(StageProgress.Three);
-        _ = mock.SetupGet(m => m.ContinueCount).Returns(4);
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.MakeRandomArray(10));
-        _ = mock.SetupGet(m => m.DateTime).Returns(567u);
-        _ = mock.SetupGet(m => m.SlowRate).Returns(8.9f);
-        _ = mock.SetupGet(m => m.Season).Returns(Season.Full);
+        var mock = Substitute.For<IScoreData>();
+        _ = mock.Score.Returns(12u);
+        _ = mock.StageProgress.Returns(StageProgress.Three);
+        _ = mock.ContinueCount.Returns((byte)4);
+        _ = mock.Name.Returns(TestUtils.MakeRandomArray(10));
+        _ = mock.DateTime.Returns(567u);
+        _ = mock.SlowRate.Returns(8.9f);
+        _ = mock.Season.Returns(Season.Full);
         return mock;
     }
 
@@ -57,19 +57,19 @@ public class ScoreDataTests
     [TestMethod]
     public void ScoreDataTest()
     {
-        var mock = new Mock<IScoreData>();
+        var mock = Substitute.For<IScoreData>();
         var scoreData = new ScoreData();
 
-        Validate(mock.Object, scoreData);
+        Validate(mock, scoreData);
     }
 
     [TestMethod]
     public void ReadFromTest()
     {
         var mock = MockScoreData();
-        var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock.Object));
+        var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Validate(mock.Object, scoreData);
+        Validate(mock, scoreData);
     }
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
@@ -79,32 +79,32 @@ public class ScoreDataTests
     public void ReadFromTestInvalidStageProgress(int stageProgress)
     {
         var mock = MockScoreData();
-        _ = mock.SetupGet(m => m.StageProgress).Returns((StageProgress)stageProgress);
+        _ = mock.StageProgress.Returns((StageProgress)stageProgress);
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestShortenedName()
     {
         var mock = MockScoreData();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.SkipLast(1).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
         _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
     [TestMethod]
     public void ReadFromTestExceededName()
     {
         var mock = MockScoreData();
-        var name = mock.Object.Name;
-        _ = mock.SetupGet(m => m.Name).Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        var name = mock.Name;
+        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
     public static IEnumerable<object[]> InvalidSeasons => TestUtils.GetInvalidEnumerators<Season>();
@@ -114,9 +114,9 @@ public class ScoreDataTests
     public void ReadFromTestInvalidSeason(int season)
     {
         var mock = MockScoreData();
-        _ = mock.SetupGet(m => m.Season).Returns((Season)season);
+        _ = mock.Season.Returns((Season)season);
 
         _ = Assert.ThrowsException<InvalidCastException>(
-            () => TestUtils.Create<ScoreData>(MakeByteArray(mock.Object)));
+            () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 }

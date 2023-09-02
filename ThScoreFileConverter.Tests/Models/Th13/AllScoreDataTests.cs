@@ -1,5 +1,5 @@
 ﻿using System;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th13;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Tests.Models.Th095;
@@ -78,9 +78,8 @@ public class AllScoreDataTests
         where TStatus : IStatus
     {
         var chara = TestUtils.Cast<TChWithT>(1);
-        var mock = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>();
-        _ = mock.SetupGet(m => m.Chara).Returns(chara);
-        var clearData = mock.Object;
+        var clearData = Substitute.For<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>();
+        _ = clearData.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData, TStatus>();
         allScoreData.Set(clearData);
@@ -98,12 +97,10 @@ public class AllScoreDataTests
         where TStatus : IStatus
     {
         var chara = TestUtils.Cast<TChWithT>(1);
-        var mock1 = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>();
-        _ = mock1.SetupGet(m => m.Chara).Returns(chara);
-        var clearData1 = mock1.Object;
-        var mock2 = new Mock<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>();
-        _ = mock2.SetupGet(m => m.Chara).Returns(chara);
-        var clearData2 = mock2.Object;
+        var clearData1 = Substitute.For<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>();
+        _ = clearData1.Chara.Returns(chara);
+        var clearData2 = Substitute.For<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>>();
+        _ = clearData2.Chara.Returns(chara);
 
         var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData, TStatus>();
         allScoreData.Set(clearData1);
@@ -122,7 +119,7 @@ public class AllScoreDataTests
         where TScoreData : IScoreData
         where TStatus : class, IStatus
     {
-        var status = Mock.Of<TStatus>();
+        var status = Substitute.For<TStatus>();
 
         var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData, TStatus>();
         allScoreData.Set(status);
@@ -139,8 +136,8 @@ public class AllScoreDataTests
         where TScoreData : IScoreData
         where TStatus : class, IStatus
     {
-        var status1 = Mock.Of<TStatus>();
-        var status2 = Mock.Of<TStatus>();
+        var status1 = Substitute.For<TStatus>();
+        var status2 = Substitute.For<TStatus>();
 
         var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData, TStatus>();
         allScoreData.Set(status1);

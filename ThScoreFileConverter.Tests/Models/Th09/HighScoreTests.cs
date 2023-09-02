@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Moq;
+using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th09;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -14,19 +14,19 @@ namespace ThScoreFileConverter.Tests.Models.Th09;
 [TestClass]
 public class HighScoreTests
 {
-    internal static Mock<IHighScore> MockHighScore()
+    internal static IHighScore MockHighScore()
     {
-        var mock = new Mock<IHighScore>();
-        _ = mock.SetupGet(m => m.Signature).Returns("HSCR");
-        _ = mock.SetupGet(m => m.Size1).Returns(0x2C);
-        _ = mock.SetupGet(m => m.Size2).Returns(0x2C);
-        _ = mock.SetupGet(m => m.Score).Returns(1234567u);
-        _ = mock.SetupGet(m => m.Chara).Returns(Chara.Marisa);
-        _ = mock.SetupGet(m => m.Level).Returns(Level.Hard);
-        _ = mock.SetupGet(m => m.Rank).Returns(987);
-        _ = mock.SetupGet(m => m.Name).Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0"));
-        _ = mock.SetupGet(m => m.Date).Returns(TestUtils.CP932Encoding.GetBytes("06/01/23\0"));
-        _ = mock.SetupGet(m => m.ContinueCount).Returns(2);
+        var mock = Substitute.For<IHighScore>();
+        _ = mock.Signature.Returns("HSCR");
+        _ = mock.Size1.Returns((short)0x2C);
+        _ = mock.Size2.Returns((short)0x2C);
+        _ = mock.Score.Returns(1234567u);
+        _ = mock.Chara.Returns(Chara.Marisa);
+        _ = mock.Level.Returns(Level.Hard);
+        _ = mock.Rank.Returns((short)987);
+        _ = mock.Name.Returns(TestUtils.CP932Encoding.GetBytes("Player1\0\0"));
+        _ = mock.Date.Returns(TestUtils.CP932Encoding.GetBytes("06/01/23\0"));
+        _ = mock.ContinueCount.Returns((byte)2);
         return mock;
     }
 
@@ -68,20 +68,20 @@ public class HighScoreTests
     {
         var mock = MockHighScore();
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var highScore = new HighScore(chapter);
 
-        Validate(mock.Object, highScore);
+        Validate(mock, highScore);
     }
 
     [TestMethod]
     public void HighScoreTestInvalidSignature()
     {
         var mock = MockHighScore();
-        var signature = mock.Object.Signature;
-        _ = mock.SetupGet(m => m.Signature).Returns(signature.ToLowerInvariant());
+        var signature = mock.Signature;
+        _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
     }
 
@@ -89,10 +89,10 @@ public class HighScoreTests
     public void HighScoreTestInvalidSize()
     {
         var mock = MockHighScore();
-        var size = mock.Object.Size1;
-        _ = mock.SetupGet(m => m.Size1).Returns(--size);
+        var size = mock.Size1;
+        _ = mock.Size1.Returns(--size);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
     }
 
@@ -103,9 +103,9 @@ public class HighScoreTests
     public void HighScoreTestInvalidChara(int chara)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.Chara).Returns((Chara)chara);
+        _ = mock.Chara.Returns((Chara)chara);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
     }
 
@@ -116,9 +116,9 @@ public class HighScoreTests
     public void HighScoreTestInvalidLevel(int level)
     {
         var mock = MockHighScore();
-        _ = mock.SetupGet(m => m.Level).Returns((Level)level);
+        _ = mock.Level.Returns((Level)level);
 
-        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock.Object));
+        var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
     }
 }
