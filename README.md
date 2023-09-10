@@ -6,7 +6,7 @@ Score file converter for Touhou games
 [![License](https://img.shields.io/github/license/y-iihoshi/ThScoreFileConverter.svg)](/LICENSE.txt)
 [![FOSSA Status](https://app.fossa.com/api/projects/custom%2B14712%2Fgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=shield)](https://app.fossa.com/projects/custom%2B14712%2Fgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_shield)
 [![GitHub Actions CI](https://github.com/y-iihoshi/ThScoreFileConverter/workflows/CI/badge.svg)](https://github.com/y-iihoshi/ThScoreFileConverter/actions?query=workflow%3ACI)
-[![Codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master)
+[![Codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/graph/badge.svg?token=az4E4xnhLU)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter)
 
 ## Introduction
 
