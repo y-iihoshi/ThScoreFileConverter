@@ -46,7 +46,7 @@ internal class ClearData : IBinaryReadable, IClearData  // per character, level
 
     public void ReadFrom(BinaryReader reader)
     {
-        var numbers = Enumerable.Range(1, 100);
+        var numbers = Enumerable.Range(1, 100).ToArray();
 
         this.UseCount = reader.ReadInt32();
         this.ClearCount = reader.ReadInt32();

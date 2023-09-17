@@ -25,7 +25,7 @@ internal class PracticeScore : Th06.Chapter, IPracticeScore  // per character
     public PracticeScore(Th06.Chapter chapter)
         : base(chapter, ValidSignature, ValidSize)
     {
-        var stageLevelPairs = EnumHelper.Cartesian<Stage, Level>();
+        var stageLevelPairs = EnumHelper.Cartesian<Stage, Level>().ToArray();
 
         using var stream = new MemoryStream(this.Data, false);
         using var reader = new BinaryReader(stream);

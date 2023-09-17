@@ -17,7 +17,7 @@ public class PlayStatusTests
     internal static IPlayStatus MockPlayStatus()
     {
         var characters = EnumHelper<Chara>.Enumerable;
-        var pairs = characters.Select((chara, index) => (chara, index));
+        var pairs = characters.Select((chara, index) => (chara, index)).ToArray();
         var clearCounts = characters.ToDictionary(chara => chara, _ => ClearCountTests.MockClearCount());
 
         var mock = Substitute.For<IPlayStatus>();

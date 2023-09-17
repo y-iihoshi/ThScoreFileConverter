@@ -19,7 +19,7 @@ public class PracticeScoreTests
 {
     internal static IPracticeScore MockPracticeScore()
     {
-        var pairs = EnumHelper.Cartesian<Stage, Level>();
+        var pairs = EnumHelper.Cartesian<Stage, Level>().ToArray();
         var mock = Substitute.For<IPracticeScore>();
         _ = mock.Signature.Returns("PSCR");
         _ = mock.Size1.Returns((short)0x178);

@@ -25,7 +25,7 @@ public class CardAttackCareerTests
 
     internal static ICardAttackCareer MockCardAttackCareer()
     {
-        var pairs = EnumHelper<CharaWithTotal>.Enumerable.Select((chara, index) => (chara, index));
+        var pairs = EnumHelper<CharaWithTotal>.Enumerable.Select((chara, index) => (chara, index)).ToArray();
         var mock = Substitute.For<ICardAttackCareer>();
         _ = mock.MaxBonuses.Returns(pairs.ToDictionary(pair => pair.chara, pair => (uint)pair.index));
         _ = mock.TrialCounts.Returns(pairs.ToDictionary(pair => pair.chara, pair => 20 + pair.index));

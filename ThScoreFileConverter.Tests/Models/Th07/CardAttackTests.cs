@@ -15,7 +15,7 @@ public class CardAttackTests
 {
     internal static ICardAttack MockCardAttack()
     {
-        var pairs = EnumHelper<CharaWithTotal>.Enumerable.Select((chara, index) => (chara, index));
+        var pairs = EnumHelper<CharaWithTotal>.Enumerable.Select((chara, index) => (chara, index)).ToArray();
         var mock = Substitute.For<ICardAttack>();
 
         _ = mock.Signature.Returns("CATK");
