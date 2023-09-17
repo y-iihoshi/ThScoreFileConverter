@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+#pragma warning disable CA1027 // Mark enums with FlagsAttribute
+
 namespace ThScoreFileConverter.Core.Models.Th123;
 
 /// <summary>
