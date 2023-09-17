@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
