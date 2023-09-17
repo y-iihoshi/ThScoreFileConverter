@@ -78,6 +78,7 @@ public enum CharaWithReserved
     [EnumAltName("ML")]
     Meiling,
 
+#pragma warning disable CA1700 // Do not name enum values 'Reserved'
     /// <summary>
     /// Reserved character #12.
     /// </summary>
@@ -101,4 +102,5 @@ public enum CharaWithReserved
     /// </summary>
     [EnumAltName("15")]
     Reserved15,
+#pragma warning restore CA1700 // Do not name enum values 'Reserved'
 }
