@@ -9,7 +9,7 @@ using static ThScoreFileConverter.Core.Models.Th143.Definitions;
 
 namespace TemplateGenerator.Models.Th143;
 
-public class Definitions
+public static class Definitions
 {
     private static readonly IEnumerable<(ItemWithTotal, string)> ItemWithTotalNamesImpl = new[]
     {

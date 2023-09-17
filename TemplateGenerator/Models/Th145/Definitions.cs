@@ -6,7 +6,7 @@ using ThScoreFileConverter.Core.Resources;
 
 namespace TemplateGenerator.Models.Th145;
 
-public class Definitions
+public static class Definitions
 {
     public static string Title { get; } = StringResources.TH145;
 
