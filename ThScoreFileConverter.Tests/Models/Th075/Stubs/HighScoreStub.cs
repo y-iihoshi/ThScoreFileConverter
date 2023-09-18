@@ -4,7 +4,7 @@ using ThScoreFileConverter.Models.Th075;
 
 namespace ThScoreFileConverter.Tests.Models.Th075.Stubs;
 
-internal class HighScoreStub : IHighScore
+internal sealed class HighScoreStub : IHighScore
 {
     public HighScoreStub()
     {

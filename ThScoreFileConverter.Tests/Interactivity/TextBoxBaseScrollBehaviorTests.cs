@@ -11,7 +11,7 @@ using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
-internal class Logger : INotifyPropertyChanged
+internal sealed class Logger : INotifyPropertyChanged
 {
     private string log = string.Empty;
 

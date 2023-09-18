@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
-internal class Command : ICommand
+internal sealed class Command : ICommand
 {
     private readonly Action action;
 

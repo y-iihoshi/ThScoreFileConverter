@@ -7,12 +7,12 @@ using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
-internal class DerivedAction : CommonDialogAction
+internal sealed class DerivedAction : CommonDialogAction
 {
     protected override void Invoke(object parameter) { }
 }
 
-internal class Site : ISite
+internal sealed class Site : ISite
 {
     public IComponent Component => null!;
 
