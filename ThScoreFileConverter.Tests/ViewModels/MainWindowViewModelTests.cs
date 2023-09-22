@@ -163,7 +163,9 @@ public class MainWindowViewModelTests
     {
         using var window = CreateViewModel();
         StringAssert.StartsWith(
-            window.SupportedVersions, Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)));
+            window.SupportedVersions,
+            Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)),
+            StringComparison.CurrentCulture);
     }
 
     [TestMethod]

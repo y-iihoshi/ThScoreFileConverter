@@ -58,10 +58,14 @@ public class TextBoxBaseScrollBehaviorTests
 
         static void onLayoutUpdated(object? sender, EventArgs eventArgs)
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated"));
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated",
+                StringComparison.CurrentCulture);
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}",
+                StringComparison.CurrentCulture);
         }
 
         _ = BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);

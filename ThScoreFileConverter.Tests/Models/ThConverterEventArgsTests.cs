@@ -17,9 +17,9 @@ public class ThConverterEventArgsTests
 
         var message = args.Message;
 
-        StringAssert.Contains(message, "file");
-        StringAssert.Contains(message, "2");
-        StringAssert.Contains(message, "5");
+        StringAssert.Contains(message, "file", StringComparison.CurrentCulture);
+        StringAssert.Contains(message, "2", StringComparison.CurrentCulture);
+        StringAssert.Contains(message, "5", StringComparison.CurrentCulture);
     }
 
     [TestMethod]
