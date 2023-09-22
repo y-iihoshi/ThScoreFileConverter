@@ -96,3 +96,7 @@ dotnet_diagnostic.SA1025.severity = none
 dotnet_diagnostic.SA1124.severity = none
 # SA1503: Braces should not be omitted
 dotnet_diagnostic.SA1503.severity = none
+
+[*.Tests/**.cs]
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
