@@ -18,7 +18,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128ROUTEEX[x][yy][z]
-internal class RouteExReplacer : IStringReplaceable
+internal sealed class RouteExReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}ROUTEEX({Parsers.LevelWithTotalParser.Pattern})({Parsers.RouteWithTotalParser.Pattern})([1-3])");

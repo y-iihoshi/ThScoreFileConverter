@@ -18,7 +18,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th125;
 
 // %T125SHOTEX[w][x][y][z]
-internal class ShotExReplacer : IStringReplaceable
+internal sealed class ShotExReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOTEX({Parsers.CharaParser.Pattern})({Parsers.LevelParser.Pattern})([1-9])([1-7])");
@@ -114,7 +114,7 @@ internal class ShotExReplacer : IStringReplaceable
         };
     }
 
-    private class Detail
+    private sealed class Detail
     {
         public Detail(bool outputs, string format, string value)
         {

@@ -18,7 +18,7 @@ using GameMode = ThScoreFileConverter.Core.Models.GameMode;
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08CRG[v][w][xx][yy][z]
-internal class CollectRateReplacer : IStringReplaceable
+internal sealed class CollectRateReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CRG({Parsers.GameModeParser.Pattern})({Parsers.LevelPracticeWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})([12])");

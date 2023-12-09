@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th11;
 namespace ThScoreFileConverter.Models.Th11;
 
 // %T11SCR[w][xx][y][z]
-internal class ScoreReplacer : Th10.ScoreReplacerBase<Chara>
+internal sealed class ScoreReplacer : Th10.ScoreReplacerBase<Chara>
 {
     public ScoreReplacer(
         IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,

@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th128;
 
-internal class Status : StatusBase
+internal sealed class Status : StatusBase
 {
     public const ushort ValidVersion = 0x0002;
 

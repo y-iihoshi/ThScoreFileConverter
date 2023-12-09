@@ -19,7 +19,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128CLEAR[x][yy]
-internal class ClearReplacer : IStringReplaceable
+internal sealed class ClearReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.RouteParser.Pattern})");

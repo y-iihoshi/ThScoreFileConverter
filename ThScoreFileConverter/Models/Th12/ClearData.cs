@@ -11,7 +11,7 @@ using ThScoreFileConverter.Core.Models.Th12;
 
 namespace ThScoreFileConverter.Models.Th12;
 
-internal class ClearData : Th10.ClearDataBase<CharaWithTotal, Th11.ScoreData>   // per character
+internal sealed class ClearData : Th10.ClearDataBase<CharaWithTotal, Th11.ScoreData>   // per character
 {
     public const ushort ValidVersion = 0x0002;
     public const int ValidSize = 0x000045F4;

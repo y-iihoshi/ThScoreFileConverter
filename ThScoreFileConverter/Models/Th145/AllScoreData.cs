@@ -16,7 +16,7 @@ using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models.Th145;
 
-internal class AllScoreData : IBinaryReadable
+internal sealed class AllScoreData : IBinaryReadable
 {
     private SQTable allData;
 

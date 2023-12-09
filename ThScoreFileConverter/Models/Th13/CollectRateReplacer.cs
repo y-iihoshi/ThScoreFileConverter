@@ -18,7 +18,7 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13CRG[v][w][xx][y][z]
-internal class CollectRateReplacer : CollectRateReplacerBase<
+internal sealed class CollectRateReplacer : CollectRateReplacerBase<
     GameMode,
     CharaWithTotal,
     LevelPractice,

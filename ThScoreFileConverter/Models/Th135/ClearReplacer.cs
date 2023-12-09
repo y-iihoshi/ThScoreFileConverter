@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th135;
 
 // %T135CLEAR[x][yy]
-internal class ClearReplacer : IStringReplaceable
+internal sealed class ClearReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");

@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th095;
 namespace ThScoreFileConverter.Models.Th095;
 
 // %T95CARD[x][y][z]
-internal class CardReplacer : CardReplacerBase<Level, Enemy>
+internal sealed class CardReplacer : CardReplacerBase<Level, Enemy>
 {
     public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
         : base(

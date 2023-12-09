@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075;
 
-internal class HighScore : IBinaryReadable, IHighScore
+internal sealed class HighScore : IBinaryReadable, IHighScore
 {
     public HighScore()
     {

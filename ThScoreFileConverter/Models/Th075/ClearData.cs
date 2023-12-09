@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075;
 
-internal class ClearData : IBinaryReadable, IClearData  // per character, level
+internal sealed class ClearData : IBinaryReadable, IClearData  // per character, level
 {
     public ClearData()
     {

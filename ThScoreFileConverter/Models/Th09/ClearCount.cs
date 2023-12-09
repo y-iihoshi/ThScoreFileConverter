@@ -16,7 +16,7 @@ using ThScoreFileConverter.Core.Models;
 
 namespace ThScoreFileConverter.Models.Th09;
 
-internal class ClearCount : IBinaryReadable, IClearCount
+internal sealed class ClearCount : IBinaryReadable, IClearCount
 {
     public ClearCount()
     {

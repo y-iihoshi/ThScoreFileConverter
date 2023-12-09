@@ -15,7 +15,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th10;
 
-internal class SpellCard : IBinaryReadable, ISpellCard<Level>
+internal sealed class SpellCard : IBinaryReadable, ISpellCard<Level>
 {
     public IEnumerable<byte> Name { get; private set; } = ReadOnlyCP932Bytes.Empty;
 

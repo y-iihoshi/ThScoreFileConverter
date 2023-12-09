@@ -17,7 +17,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th143;
 
-internal class AllScoreData
+internal sealed class AllScoreData
     : Th095.AllScoreDataBase<IScore, IStatus>
 {
     private readonly Dictionary<ItemWithTotal, IItemStatus> itemStatuses;

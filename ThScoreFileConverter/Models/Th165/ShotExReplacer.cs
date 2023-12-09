@@ -18,7 +18,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165SHOTEX[xx][y][z]
-internal class ShotExReplacer : IStringReplaceable
+internal sealed class ShotExReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([1-7])([1-9])");
@@ -148,7 +148,7 @@ internal class ShotExReplacer : IStringReplaceable
         return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 
-    private class Hashtag
+    private sealed class Hashtag
     {
         public Hashtag(bool outputs, string name)
         {

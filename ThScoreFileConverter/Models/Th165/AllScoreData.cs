@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th165;
 
-internal class AllScoreData
+internal sealed class AllScoreData
     : Th095.AllScoreDataBase<IScore, IStatus>
 {
     public AllScoreData()

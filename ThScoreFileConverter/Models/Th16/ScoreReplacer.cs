@@ -24,7 +24,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th16;
 
 // %T16SCR[w][xx][y][z]
-internal class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-6])");

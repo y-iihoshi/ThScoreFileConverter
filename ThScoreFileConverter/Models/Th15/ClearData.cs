@@ -19,7 +19,7 @@ using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 
 namespace ThScoreFileConverter.Models.Th15;
 
-internal class ClearData : Th10.Chapter, IClearData // per character
+internal sealed class ClearData : Th10.Chapter, IClearData // per character
 {
     public const string ValidSignature = "CR";
     public const ushort ValidVersion = 0x0001;

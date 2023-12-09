@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th145;
 
 // %T145TIMECLR[x][yy]
-internal class ClearTimeReplacer : IStringReplaceable
+internal sealed class ClearTimeReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}TIMECLR({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})");

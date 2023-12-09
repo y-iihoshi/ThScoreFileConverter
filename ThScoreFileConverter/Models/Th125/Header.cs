@@ -11,7 +11,7 @@ using System;
 
 namespace ThScoreFileConverter.Models.Th125;
 
-internal class Header : Th095.HeaderBase
+internal sealed class Header : Th095.HeaderBase
 {
     public const string ValidSignature = "T125";
 

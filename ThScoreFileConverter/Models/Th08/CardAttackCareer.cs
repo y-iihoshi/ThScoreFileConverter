@@ -16,7 +16,7 @@ using ThScoreFileConverter.Core.Models.Th08;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class CardAttackCareer : IBinaryReadable, ICardAttackCareer    // per story or practice
+internal sealed class CardAttackCareer : IBinaryReadable, ICardAttackCareer    // per story or practice
 {
     public CardAttackCareer()
     {

@@ -12,7 +12,7 @@ using ThScoreFileConverter.Core.Helpers;
 
 namespace ThScoreFileConverter.Models.Th16;
 
-internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
+internal sealed class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
 {
     public Season Season { get; private set; }
 

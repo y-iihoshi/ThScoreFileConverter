@@ -13,7 +13,7 @@ using ThScoreFileConverter.Core.Models.Th13;
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13CHARAEX[x][yy][z]
-internal class CharaExReplacer : CharaExReplacerBase<
+internal sealed class CharaExReplacer : CharaExReplacerBase<
     CharaWithTotal,
     LevelPractice,
     LevelPractice,

@@ -13,7 +13,7 @@ using ThScoreFileConverter.Core.Models.Th07;
 
 namespace ThScoreFileConverter.Models.Th07;
 
-internal class PracticeScore : Th06.Chapter, IPracticeScore // per character, level, stage
+internal sealed class PracticeScore : Th06.Chapter, IPracticeScore // per character, level, stage
 {
     public const string ValidSignature = "PSCR";
     public const short ValidSize = 0x0018;

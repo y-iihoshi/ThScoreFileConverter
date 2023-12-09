@@ -19,7 +19,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th15;
 
 // %T15C[w][xxx][yy][z]
-internal class CareerReplacer : IStringReplaceable
+internal sealed class CareerReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([12])");

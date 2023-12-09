@@ -16,7 +16,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128C[xxx][z]
-internal class CareerReplacer : IStringReplaceable
+internal sealed class CareerReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}C(\d{{3}})([1-3])");
 

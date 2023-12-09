@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th17;
 namespace ThScoreFileConverter.Models.Th17;
 
 // %T17CHARAEX[x][yy][z]
-internal class CharaExReplacer : Th13.CharaExReplacerBase<
+internal sealed class CharaExReplacer : Th13.CharaExReplacerBase<
     CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, Th10.IScoreData<Th13.StageProgress>>
 {
     public CharaExReplacer(

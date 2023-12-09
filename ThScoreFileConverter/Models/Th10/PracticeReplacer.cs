@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th10;
 namespace ThScoreFileConverter.Models.Th10;
 
 // %T10PRAC[x][yy][z]
-internal class PracticeReplacer : PracticeReplacerBase<Level, Chara, Stage>
+internal sealed class PracticeReplacer : PracticeReplacerBase<Level, Chara, Stage>
 {
     public PracticeReplacer(
         IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,

@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08PRAC[w][xx][yy][z]
-internal class PracticeReplacer : IStringReplaceable
+internal sealed class PracticeReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})([12])");

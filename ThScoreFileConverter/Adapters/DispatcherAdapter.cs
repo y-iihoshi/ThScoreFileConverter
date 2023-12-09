@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Adapters;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal class DispatcherAdapter : IDispatcherAdapter
+internal sealed class DispatcherAdapter : IDispatcherAdapter
 {
     private readonly Dispatcher dispatcher;
 

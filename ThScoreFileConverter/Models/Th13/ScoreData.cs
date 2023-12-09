@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th13;
 
-internal class ScoreData : Th10.ScoreDataBase<StageProgress>
+internal sealed class ScoreData : Th10.ScoreDataBase<StageProgress>
 {
     public override void ReadFrom(BinaryReader reader)
     {

@@ -14,7 +14,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165NICK[xx]
-internal class NicknameReplacer : IStringReplaceable
+internal sealed class NicknameReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}NICK(\d{{2}})");
 

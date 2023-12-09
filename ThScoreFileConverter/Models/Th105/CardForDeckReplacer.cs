@@ -16,7 +16,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th105;
 
 // %T105DC[ww][x][yy][z]
-internal class CardForDeckReplacer : IStringReplaceable
+internal sealed class CardForDeckReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}DC({Parsers.CharaParser.Pattern})({Parsers.CardTypeParser.Pattern})(\d{{2}})([NC])");

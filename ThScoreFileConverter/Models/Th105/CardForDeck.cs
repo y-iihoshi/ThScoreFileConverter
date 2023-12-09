@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th105;
 
-internal class CardForDeck : IBinaryReadable, ICardForDeck
+internal sealed class CardForDeck : IBinaryReadable, ICardForDeck
 {
     public CardForDeck()
     {

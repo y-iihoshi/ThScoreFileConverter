@@ -16,7 +16,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th075;
 
-internal class AllScoreData : IBinaryReadable
+internal sealed class AllScoreData : IBinaryReadable
 {
     public AllScoreData()
     {

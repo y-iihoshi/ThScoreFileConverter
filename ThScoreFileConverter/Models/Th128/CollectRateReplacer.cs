@@ -19,7 +19,7 @@ using StageWithTotal = ThScoreFileConverter.Core.Models.Th128.StageWithTotal;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128CRG[x][yyy][z]
-internal class CollectRateReplacer : IStringReplaceable
+internal sealed class CollectRateReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CRG({Parsers.LevelWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})([1-3])");

@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08PLAY[x][yy]
-internal class PlayReplacer : IStringReplaceable
+internal sealed class PlayReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}PLAY({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern}|CL|CN|PR)");

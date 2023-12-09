@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
-internal class ReadOnlyCP932Bytes : IEnumerable<byte>
+internal sealed class ReadOnlyCP932Bytes : IEnumerable<byte>
 {
     private readonly byte[] bytes;
     private string? str;

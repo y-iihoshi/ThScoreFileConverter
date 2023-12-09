@@ -13,7 +13,7 @@ using ThScoreFileConverter.Core.Models.Th123;
 namespace ThScoreFileConverter.Models.Th123;
 
 // %T123C[xx][yy][z]
-internal class CareerReplacer : Th105.CareerReplacerBase<Chara>
+internal sealed class CareerReplacer : Th105.CareerReplacerBase<Chara>
 {
     public CareerReplacer(
         IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, INumberFormatter formatter)

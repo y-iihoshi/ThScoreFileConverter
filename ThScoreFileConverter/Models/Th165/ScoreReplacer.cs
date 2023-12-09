@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165SCR[xx][y][z]
-internal class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SCR({Parsers.DayParser.Pattern})([1-7])([1-4])");

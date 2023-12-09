@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th105;
 
 namespace ThScoreFileConverter.Models.Th105;
 
-internal class SpellCardResult<TChara> : IBinaryReadable, ISpellCardResult<TChara>
+internal sealed class SpellCardResult<TChara> : IBinaryReadable, ISpellCardResult<TChara>
     where TChara : struct, Enum
 {
     public SpellCardResult()

@@ -15,7 +15,7 @@ using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th14;
 
 // %T14CLEAR[x][yy]
-internal class ClearReplacer : Th13.ClearReplacerBase<
+internal sealed class ClearReplacer : Th13.ClearReplacerBase<
     Chara, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>
 {
     public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<

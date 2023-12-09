@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th143;
 
 // %T143SHOT[x][y]
-internal class ShotReplacer : IStringReplaceable
+internal sealed class ShotReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOT({Parsers.DayParser.Pattern})([0-9])");

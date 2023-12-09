@@ -19,12 +19,12 @@ namespace ThScoreFileConverter.Models;
 /// <summary>
 /// A simplified <see cref="ResxLocalizationProvider"/>.
 /// </summary>
-internal class LocalizationProvider : ILocalizationProvider
+internal sealed class LocalizationProvider : ILocalizationProvider
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="LocalizationProvider"/> class.
     /// </summary>
-    protected LocalizationProvider()
+    private LocalizationProvider()
     {
     }
 

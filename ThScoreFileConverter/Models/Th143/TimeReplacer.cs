@@ -13,7 +13,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th143;
 
 // %T143TIMEPLY
-internal class TimeReplacer : IStringReplaceable
+internal sealed class TimeReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}TIMEPLY");
 

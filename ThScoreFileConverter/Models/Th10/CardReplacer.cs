@@ -15,7 +15,7 @@ using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th10;
 
 // %T10CARD[xxx][y]
-internal class CardReplacer : CardReplacerBase<Stage, Level>
+internal sealed class CardReplacer : CardReplacerBase<Stage, Level>
 {
     public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
         : base(

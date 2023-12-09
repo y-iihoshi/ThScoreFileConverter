@@ -17,7 +17,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th128;
 
-internal class AllScoreData
+internal sealed class AllScoreData
 {
     private readonly Dictionary<RouteWithTotal, IClearData> clearData;
 

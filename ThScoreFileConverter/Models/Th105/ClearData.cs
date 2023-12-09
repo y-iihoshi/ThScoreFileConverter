@@ -18,7 +18,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th105;
 
-internal class ClearData<TChara> : IBinaryReadable, IClearData<TChara>  // per character
+internal sealed class ClearData<TChara> : IBinaryReadable, IClearData<TChara>  // per character
     where TChara : struct, Enum
 {
     private Dictionary<int, ICardForDeck> cardsForDeck;

@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th10;
 namespace ThScoreFileConverter.Models.Th10;
 
 // %T10C[xxx][yy][z]
-internal class CareerReplacer : CareerReplacerBase<CharaWithTotal, Stage, Level>
+internal sealed class CareerReplacer : CareerReplacerBase<CharaWithTotal, Stage, Level>
 {
     public CareerReplacer(
         IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal>> clearDataDictionary,

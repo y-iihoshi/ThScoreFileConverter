@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th15;
 
-internal class ClearDataPerGameMode : IBinaryReadable, IClearDataPerGameMode
+internal sealed class ClearDataPerGameMode : IBinaryReadable, IClearDataPerGameMode
 {
     public ClearDataPerGameMode()
     {

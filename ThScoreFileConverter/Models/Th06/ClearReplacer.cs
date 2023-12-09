@@ -18,7 +18,7 @@ using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06CLEAR[x][yy]
-internal class ClearReplacer : ClearReplacerBase<Level, Chara, StageProgress>
+internal sealed class ClearReplacer : ClearReplacerBase<Level, Chara, StageProgress>
 {
     public ClearReplacer(
         IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings)

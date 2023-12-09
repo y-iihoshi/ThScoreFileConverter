@@ -16,7 +16,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th125;
 
 // %T125SCRTL[x][y][z]
-internal class ScoreTotalReplacer : IStringReplaceable
+internal sealed class ScoreTotalReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SCRTL({Parsers.CharaParser.Pattern})([12])([1-5])");

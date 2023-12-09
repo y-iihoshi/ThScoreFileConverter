@@ -19,7 +19,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08SCR[w][xx][y][z]
-internal class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([\dA-G])");
