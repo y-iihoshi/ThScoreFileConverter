@@ -9,7 +9,7 @@ using static ThScoreFileConverter.Core.Models.Th125.Definitions;
 
 namespace TemplateGenerator.Models.Th125;
 
-public class Definitions
+public static class Definitions
 {
     private static readonly IEnumerable<(Chara, IEnumerable<int>)> SpoilerScenesPerCharacterImpl = new[]
     {

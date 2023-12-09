@@ -10,7 +10,9 @@ namespace ThScoreFileConverter.Core.Models.Th123;
 /// <summary>
 /// Represents characters of Hisoutensoku.
 /// </summary>
+#pragma warning disable CA1027 // Mark enums with FlagsAttribute
 public enum Chara
+#pragma warning restore CA1027 // Mark enums with FlagsAttribute
 {
     /// <summary>
     /// Hakurei Reimu.

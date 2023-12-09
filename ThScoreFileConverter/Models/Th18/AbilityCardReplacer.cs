@@ -14,7 +14,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th18;
 
 // %T18ABIL[xx]
-internal class AbilityCardReplacer : IStringReplaceable
+internal sealed class AbilityCardReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL(\d{{2}})");
 

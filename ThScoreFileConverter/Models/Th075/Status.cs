@@ -18,7 +18,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th075;
 
-internal class Status : IBinaryReadable
+internal sealed class Status : IBinaryReadable
 {
     public Status()
     {

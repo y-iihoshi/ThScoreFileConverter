@@ -18,7 +18,7 @@ using ClearDataBase = ThScoreFileConverter.Models.Th16.ClearDataBase<
 
 namespace ThScoreFileConverter.Models.Th16;
 
-internal class ClearData : ClearDataBase    // per character
+internal sealed class ClearData : ClearDataBase    // per character
 {
     public const ushort ValidVersion = 0x0001;
     public const int ValidSize = 0x00005318;

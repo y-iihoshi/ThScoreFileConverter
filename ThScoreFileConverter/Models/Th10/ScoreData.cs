@@ -9,6 +9,6 @@
 
 namespace ThScoreFileConverter.Models.Th10;
 
-internal class ScoreData : ScoreDataBase<StageProgress>
+internal sealed class ScoreData : ScoreDataBase<StageProgress>
 {
 }

@@ -26,7 +26,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13C[w][xxx][yy][z]
-internal class CareerReplacer : IStringReplaceable
+internal sealed class CareerReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([12])");

@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal class MainWindowViewModel : BindableBase, IDisposable
+internal sealed class MainWindowViewModel : BindableBase, IDisposable
 {
     /// <summary>
     /// An <see cref="IDialogService"/>.
@@ -216,14 +216,6 @@ internal class MainWindowViewModel : BindableBase, IDisposable
             this.LastWorkNumber.Value = this.Works.First().Number;
         else
             this.LastWorkNumber.ForceNotify();
-    }
-
-    /// <summary>
-    /// Finalizes an instance of the <see cref="MainWindowViewModel"/> class.
-    /// </summary>
-    ~MainWindowViewModel()
-    {
-        this.Dispose(false);
     }
 
     #region Properties to bind a view
@@ -440,7 +432,6 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     public void Dispose()
     {
         this.Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     /// <summary>
@@ -449,7 +440,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// <param name="disposing">
     /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
     /// </param>
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (this.disposed)
         {

@@ -13,7 +13,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th07;
 
 // %T07TIME(ALL|PLY)
-internal class TimeReplacer : IStringReplaceable
+internal sealed class TimeReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}TIME(ALL|PLY)");
 

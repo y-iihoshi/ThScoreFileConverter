@@ -16,7 +16,7 @@ using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models.Th175;
 
-internal class SaveData
+internal sealed class SaveData
 {
     public SaveData()
     {

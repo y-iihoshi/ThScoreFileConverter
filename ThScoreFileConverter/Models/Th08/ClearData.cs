@@ -16,7 +16,7 @@ using ThScoreFileConverter.Core.Models.Th08;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class ClearData : Th06.Chapter, IClearData // per character-with-total
+internal sealed class ClearData : Th06.Chapter, IClearData // per character-with-total
 {
     public const string ValidSignature = "CLRD";
     public const short ValidSize = 0x0024;

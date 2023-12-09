@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models;
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06CARD[xx][y]
-internal class CardReplacer : CardReplacerBase<Stage, Level>
+internal sealed class CardReplacer : CardReplacerBase<Stage, Level>
 {
     public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
         : base(

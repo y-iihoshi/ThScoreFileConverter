@@ -16,7 +16,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th143;
 
-internal class Status : Th10.Chapter, IStatus
+internal sealed class Status : Th10.Chapter, IStatus
 {
     public const string ValidSignature = "ST";
     public const ushort ValidVersion = 0x0001;

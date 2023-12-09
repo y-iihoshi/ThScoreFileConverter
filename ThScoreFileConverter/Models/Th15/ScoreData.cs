@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th15;
 
-internal class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
+internal sealed class ScoreData : Th10.ScoreDataBase<Th13.StageProgress>, IScoreData
 {
     public uint RetryCount { get; private set; }
 

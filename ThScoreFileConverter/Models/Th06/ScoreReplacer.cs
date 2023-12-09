@@ -22,7 +22,7 @@ using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06SCR[w][xx][y][z]
-internal class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-3])");

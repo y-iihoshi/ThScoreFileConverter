@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th09;
 
-internal class FileHeader : IBinaryReadable, IBinaryWritable
+internal sealed class FileHeader : IBinaryReadable, IBinaryWritable
 {
     public const short ValidVersion = 0x0004;
     public const int ValidSize = 0x00000018;

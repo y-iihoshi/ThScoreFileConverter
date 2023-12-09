@@ -15,7 +15,7 @@ using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th17;
 
 // %T17C[w][xxx][yy][z]
-internal class CareerReplacer : Th14.CareerReplacerBase<
+internal sealed class CareerReplacer : Th14.CareerReplacerBase<
     GameMode, CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>
 {
     public CareerReplacer(

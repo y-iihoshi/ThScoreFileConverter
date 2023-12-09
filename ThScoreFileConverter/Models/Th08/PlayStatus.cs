@@ -18,7 +18,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class PlayStatus : Th06.Chapter, IPlayStatus
+internal sealed class PlayStatus : Th06.Chapter, IPlayStatus
 {
     public const string ValidSignature = "PLST";
     public const short ValidSize = 0x0228;

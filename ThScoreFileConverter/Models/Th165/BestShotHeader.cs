@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th165;
 
-internal class BestShotHeader : IBinaryReadable, IBestShotHeader
+internal sealed class BestShotHeader : IBinaryReadable, IBestShotHeader
 {
     public const string ValidSignature = "BST4";
     public const int SignatureSize = 4;

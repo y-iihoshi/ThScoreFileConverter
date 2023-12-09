@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th15;
 
 // %T15CHARAEX[w][x][yy][z]
-internal class CharaExReplacer : IStringReplaceable
+internal sealed class CharaExReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CHARAEX({Parsers.GameModeParser.Pattern})({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})([1-3])");

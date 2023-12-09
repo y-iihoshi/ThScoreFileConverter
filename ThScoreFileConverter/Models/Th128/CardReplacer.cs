@@ -14,7 +14,7 @@ using Stage = ThScoreFileConverter.Core.Models.Th128.Stage;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128CARD[xxx][y]
-internal class CardReplacer : Th10.CardReplacerBase<Stage, Level>
+internal sealed class CardReplacer : Th10.CardReplacerBase<Stage, Level>
 {
     public CardReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, bool hideUntriedCards)
         : base(

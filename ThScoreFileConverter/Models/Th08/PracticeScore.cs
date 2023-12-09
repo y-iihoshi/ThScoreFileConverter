@@ -17,7 +17,7 @@ using Level = ThScoreFileConverter.Core.Models.Level;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class PracticeScore : Th06.Chapter, IPracticeScore  // per character
+internal sealed class PracticeScore : Th06.Chapter, IPracticeScore  // per character
 {
     public const string ValidSignature = "PSCR";
     public const short ValidSize = 0x0178;
@@ -25,7 +25,7 @@ internal class PracticeScore : Th06.Chapter, IPracticeScore  // per character
     public PracticeScore(Th06.Chapter chapter)
         : base(chapter, ValidSignature, ValidSize)
     {
-        var stageLevelPairs = EnumHelper.Cartesian<Stage, Level>();
+        var stageLevelPairs = EnumHelper.Cartesian<Stage, Level>().ToArray();
 
         using var stream = new MemoryStream(this.Data, false);
         using var reader = new BinaryReader(stream);

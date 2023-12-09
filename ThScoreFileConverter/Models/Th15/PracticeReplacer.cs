@@ -14,7 +14,7 @@ using ThScoreFileConverter.Core.Models.Th15;
 namespace ThScoreFileConverter.Models.Th15;
 
 // %T15PRAC[x][yy][z]
-internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
+internal sealed class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
 {
     public PracticeReplacer(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)

@@ -163,7 +163,9 @@ public class MainWindowViewModelTests
     {
         using var window = CreateViewModel();
         StringAssert.StartsWith(
-            window.SupportedVersions, Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)));
+            window.SupportedVersions,
+            Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)),
+            StringComparison.CurrentCulture);
     }
 
     [TestMethod]
@@ -1234,17 +1236,6 @@ public class MainWindowViewModelTests
         window.Dispose();
         window.Dispose();
         Assert.IsTrue(true);
-    }
-
-    [TestMethod]
-    public void FinalizerTest()
-    {
-        {
-            _ = CreateViewModel();
-        }
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
     }
 
     [TestMethod]

@@ -12,7 +12,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th09;
 
-internal class Header : Th06.Chapter
+internal sealed class Header : Th06.Chapter
 {
     public const string ValidSignature = "TH9K";
     public const short ValidSize = 0x000C;

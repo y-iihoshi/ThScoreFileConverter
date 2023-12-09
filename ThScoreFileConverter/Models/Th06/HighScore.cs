@@ -21,7 +21,7 @@ using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
 
 namespace ThScoreFileConverter.Models.Th06;
 
-internal class HighScore : Chapter, IHighScore  // per character, level, rank
+internal sealed class HighScore : Chapter, IHighScore  // per character, level, rank
 {
     public const string ValidSignature = "HSCR";
     public const short ValidSize = 0x001C;

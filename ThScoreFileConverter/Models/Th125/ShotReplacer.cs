@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th125;
 
 // %T125SHOT[x][y][z]
-internal class ShotReplacer : IStringReplaceable
+internal sealed class ShotReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOT({Parsers.CharaParser.Pattern})({Parsers.LevelParser.Pattern})([1-9])");

@@ -27,7 +27,7 @@ namespace ThScoreFileConverter.Models.Th165;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Converter : ThConverter
+internal sealed class Converter : ThConverter
 {
     private readonly Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots =
         new(Definitions.SpellCards.Count);

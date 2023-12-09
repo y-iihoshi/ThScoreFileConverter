@@ -16,7 +16,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th143;
 
 // %T143SHOTEX[w][x][y]
-internal class ShotExReplacer : IStringReplaceable
+internal sealed class ShotExReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([0-9])([1-4])");

@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th10;
 
-internal class Practice : IBinaryReadable, IPractice
+internal sealed class Practice : IBinaryReadable, IPractice
 {
     public uint Score { get; private set; }     // Divided by 10
 

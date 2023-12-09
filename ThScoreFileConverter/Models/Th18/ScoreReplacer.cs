@@ -21,7 +21,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th18;
 
 // %T18SCR[w][xx][y][z]
-internal class ScoreReplacer : Th13.ScoreReplacerBase<Chara>
+internal sealed class ScoreReplacer : Th13.ScoreReplacerBase<Chara>
 {
     public ScoreReplacer(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)

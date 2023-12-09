@@ -12,7 +12,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class FLSP : Th06.Chapter  // FIXME
+internal sealed class FLSP : Th06.Chapter  // FIXME
 {
     public const string ValidSignature = "FLSP";
     public const short ValidSize = 0x0020;

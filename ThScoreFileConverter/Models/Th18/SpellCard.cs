@@ -11,7 +11,7 @@ using ThScoreFileConverter.Core.Models;
 
 namespace ThScoreFileConverter.Models.Th18;
 
-internal class SpellCard : Th13.SpellCardBase<Level>
+internal sealed class SpellCard : Th13.SpellCardBase<Level>
 {
     public SpellCard()
         : base(0xC0)

@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128ROUTE[xx][y]
-internal class RouteReplacer : IStringReplaceable
+internal sealed class RouteReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}ROUTE({Parsers.RouteWithTotalParser.Pattern})([1-3])");

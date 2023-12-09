@@ -9,7 +9,9 @@ using static ThScoreFileConverter.Core.Models.Th105.Definitions;
 
 namespace TemplateGenerator.Models.Th105;
 
+#pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
 public class Definitions
+#pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
 {
     private static readonly IEnumerable<(Chara, CardType, int)> NumCardsPerCharacterAndTypeImpl =
         EnumHelper.Cartesian<Chara, CardType>().Select(

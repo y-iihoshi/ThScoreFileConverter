@@ -7,7 +7,9 @@ using static ThScoreFileConverter.Core.Models.Definitions;
 
 namespace TemplateGenerator.Models;
 
+#pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
 public class Definitions
+#pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
 {
     private static readonly IEnumerable<(Stage, string)> StageNamesImpl = new[]
     {

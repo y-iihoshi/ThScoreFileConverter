@@ -21,7 +21,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th16;
 
 // %T16PRAC[x][yy][z]
-internal class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
+internal sealed class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
 {
     public PracticeReplacer(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)

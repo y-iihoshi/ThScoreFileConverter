@@ -18,7 +18,7 @@ public class ClearDataTests
 {
     internal static IClearData MockClearData()
     {
-        var pairs = EnumHelper<Level>.Enumerable.Select((level, index) => (level, index));
+        var pairs = EnumHelper<Level>.Enumerable.Select((level, index) => (level, index)).ToArray();
         var mock = Substitute.For<IClearData>();
         _ = mock.Signature.Returns("CLRD");
         _ = mock.Size1.Returns((short)0x24);

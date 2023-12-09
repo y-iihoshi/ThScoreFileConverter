@@ -13,7 +13,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th07;
 
-internal class LastName : Th06.Chapter
+internal sealed class LastName : Th06.Chapter
 {
     public const string ValidSignature = "LSNM";
     public const short ValidSize = 0x0018;

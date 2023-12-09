@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
-internal class Command : ICommand
+internal sealed class Command : ICommand
 {
     private readonly Action action;
 
@@ -83,8 +83,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnDragEnter"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnDragEnter",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -105,8 +107,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnDragLeave"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnDragLeave",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -127,8 +131,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnDragOver"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnDragOver",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -149,8 +155,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnDrop"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnDrop",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -171,8 +179,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragEnter"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragEnter",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -193,8 +203,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragLeave"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragLeave",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -215,8 +227,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragOver"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragOver",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {
@@ -237,8 +251,10 @@ public class UIElementDropBehaviorTests
         var element = new UIElement();
         var command = new Command(() =>
         {
-            Assert.IsTrue(Environment.StackTrace.Contains(
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDrop"));
+            StringAssert.Contains(
+                Environment.StackTrace,
+                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDrop",
+                StringComparison.CurrentCulture);
         });
         var behavior = new UIElementDropBehavior
         {

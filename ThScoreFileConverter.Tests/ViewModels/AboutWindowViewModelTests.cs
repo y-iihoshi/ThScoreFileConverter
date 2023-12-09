@@ -53,7 +53,10 @@ public class AboutWindowViewModelTests
     public void VersionTest()
     {
         var window = new AboutWindowViewModel();
-        StringAssert.StartsWith(window.Version, Utils.GetLocalizedValues<string>(nameof(Resources.VersionPrefix)));
+        StringAssert.StartsWith(
+            window.Version,
+            Utils.GetLocalizedValues<string>(nameof(Resources.VersionPrefix)),
+            StringComparison.CurrentCulture);
     }
 
     [TestMethod]

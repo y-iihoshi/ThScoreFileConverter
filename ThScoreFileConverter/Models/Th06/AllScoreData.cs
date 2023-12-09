@@ -26,7 +26,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th06;
 
-internal class AllScoreData
+internal sealed class AllScoreData
 {
     private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
     private readonly Dictionary<Chara, IClearData> clearData;

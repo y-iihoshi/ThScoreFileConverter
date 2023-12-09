@@ -9,7 +9,7 @@ using static ThScoreFileConverter.Core.Models.Th095.Definitions;
 
 namespace TemplateGenerator.Models.Th095;
 
-public class Definitions
+public static class Definitions
 {
     public static string Title { get; } = StringResources.TH095;
 

@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal class AboutWindowViewModel : BindableBase, IDialogAware
+internal sealed class AboutWindowViewModel : BindableBase, IDialogAware
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AboutWindowViewModel"/> class.

@@ -13,7 +13,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th07;
 
-internal class VersionInfo : Th06.Chapter
+internal sealed class VersionInfo : Th06.Chapter
 {
     public const string ValidSignature = "VRSM";
     public const short ValidSize = 0x001C;

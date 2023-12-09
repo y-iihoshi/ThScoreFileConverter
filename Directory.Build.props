@@ -3,6 +3,8 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest-All</AnalysisLevel>
     <TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net48;net6.0-windows</TargetFrameworks>
   </PropertyGroup>
 

@@ -17,7 +17,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th10;
 
-internal class AllScoreData<TCharaWithTotal>
+internal sealed class AllScoreData<TCharaWithTotal>
     where TCharaWithTotal : struct, Enum
 {
     private readonly Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearData;

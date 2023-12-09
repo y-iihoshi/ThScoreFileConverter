@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th07;
 
-internal class Header : Th06.Chapter
+internal sealed class Header : Th06.Chapter
 {
     public const string ValidSignature = "TH7K";
     public const short ValidSize = 0x000C;

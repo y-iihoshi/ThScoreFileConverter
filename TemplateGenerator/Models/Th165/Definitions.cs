@@ -8,7 +8,7 @@ using static ThScoreFileConverter.Core.Models.Th165.Definitions;
 
 namespace TemplateGenerator.Models.Th165;
 
-public class Definitions
+public static class Definitions
 {
     public static string Title { get; } = StringResources.TH165;
 

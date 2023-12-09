@@ -20,7 +20,7 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13CHARA[xx][y]
-internal class CharaReplacer : CharaReplacerBase<
+internal sealed class CharaReplacer : CharaReplacerBase<
     CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, Th10.IScoreData<StageProgress>>
 {
     public CharaReplacer(

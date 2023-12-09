@@ -11,7 +11,7 @@ using ThScoreFileConverter.Core.Models;
 
 namespace ThScoreFileConverter.Models.Th15;
 
-internal class SpellCard : Th13.SpellCard<Level>
+internal sealed class SpellCard : Th13.SpellCard<Level>
 {
     public override bool HasTried => this.TrialCount > 0;
 }

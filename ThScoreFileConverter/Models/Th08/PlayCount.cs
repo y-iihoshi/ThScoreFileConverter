@@ -16,7 +16,7 @@ using ThScoreFileConverter.Core.Models.Th08;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class PlayCount : IBinaryReadable, IPlayCount  // per level-with-total
+internal sealed class PlayCount : IBinaryReadable, IPlayCount  // per level-with-total
 {
     public PlayCount()
     {

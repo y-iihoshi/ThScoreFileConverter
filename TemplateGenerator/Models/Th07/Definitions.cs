@@ -9,7 +9,7 @@ using static ThScoreFileConverter.Core.Models.Th07.Definitions;
 
 namespace TemplateGenerator.Models.Th07;
 
-public class Definitions
+public static class Definitions
 {
     private static readonly IEnumerable<(Stage, string)> StageNamesImpl = new[]
     {

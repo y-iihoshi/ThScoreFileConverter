@@ -15,7 +15,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th125;
 
-internal class Score : Th095.Chapter, IScore    // per scene
+internal sealed class Score : Th095.Chapter, IScore    // per scene
 {
     public const string ValidSignature = "SC";
     public const ushort ValidVersion = 0x0000;

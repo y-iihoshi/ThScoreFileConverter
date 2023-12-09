@@ -182,7 +182,7 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
+        using var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
         var color = default(SysDraw.Color);
         var result = new FontDialogActionResult(newFont, color);
         Assert.IsTrue(command.CanExecute(result));
@@ -248,7 +248,7 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
+        using var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
         var color = default(SysDraw.Color);
         var result = new FontDialogActionResult(newFont, color);
         Assert.IsTrue(command.CanExecute(result));
@@ -314,7 +314,7 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
+        using var newFont = new SysDraw.Font(font.FontFamily.Name, font.Size + 2);
         var color = default(SysDraw.Color);
         var result = new FontDialogActionResult(newFont, color);
         Assert.IsTrue(command.CanExecute(result));
@@ -446,16 +446,5 @@ public class SettingWindowViewModelTests
         window.Dispose();
         window.Dispose();
         Assert.IsTrue(true);
-    }
-
-    [TestMethod]
-    public void FinalizerTest()
-    {
-        {
-            _ = CreateViewModel();
-        }
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
     }
 }

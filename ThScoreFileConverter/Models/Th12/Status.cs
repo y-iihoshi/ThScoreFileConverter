@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th12;
 
-internal class Status : Th10.StatusBase
+internal sealed class Status : Th10.StatusBase
 {
     public const ushort ValidVersion = 0x0002;
     public const int NumBgms = 17;

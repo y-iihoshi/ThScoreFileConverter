@@ -19,7 +19,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th08;
 
-internal class AllScoreData
+internal sealed class AllScoreData
 {
     private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
     private readonly Dictionary<CharaWithTotal, IClearData> clearData;

@@ -15,7 +15,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128;
 
-internal class CardData : Th10.Chapter, ICardData
+internal sealed class CardData : Th10.Chapter, ICardData
 {
     public const string ValidSignature = "CD";
     public const ushort ValidVersion = 0x0001;

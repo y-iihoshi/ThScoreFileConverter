@@ -101,12 +101,14 @@ public class LocalizationProviderTests
     {
         var numInvoked = 0;
 
+#pragma warning disable CA2201 // Do not raise reserved exception types
         void OnError(object sender, ProviderErrorEventArgs args)
         {
             ++numInvoked;
             if (numInvoked == 1)
                 throw new Exception(nameof(OnError));
         }
+#pragma warning restore CA2201 // Do not raise reserved exception types
 
         LocalizationProvider.Instance.ProviderError += OnError;
         try

@@ -16,7 +16,7 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th075;
 
 // %T75CARD[xxx][yy][z]
-internal class CardReplacer : IStringReplaceable
+internal sealed class CardReplacer : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}CARD(\d{{3}})({Parsers.CharaParser.Pattern})([NR])");

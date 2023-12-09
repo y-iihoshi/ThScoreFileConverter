@@ -13,7 +13,7 @@ using ThScoreFileConverter.Core.Models.Th12;
 namespace ThScoreFileConverter.Models.Th12;
 
 // %T12CRG[w][xx][y][z]
-internal class CollectRateReplacer : Th10.CollectRateReplacerBase<CharaWithTotal>
+internal sealed class CollectRateReplacer : Th10.CollectRateReplacerBase<CharaWithTotal>
 {
     public CollectRateReplacer(
         IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,

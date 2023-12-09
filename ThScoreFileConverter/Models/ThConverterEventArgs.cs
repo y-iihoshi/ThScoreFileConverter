@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Models;
 /// <summary>
 /// Represents the event data issued by the <see cref="ThConverter"/> class.
 /// </summary>
-internal class ThConverterEventArgs : EventArgs
+internal sealed class ThConverterEventArgs : EventArgs
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class.

@@ -13,7 +13,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th06;
 
-internal class CardAttack : Chapter, ICardAttack    // per card
+internal sealed class CardAttack : Chapter, ICardAttack    // per card
 {
     public const string ValidSignature = "CATK";
     public const short ValidSize = 0x0040;

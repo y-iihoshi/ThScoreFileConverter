@@ -18,7 +18,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th128;
 
-internal class ClearData : Th10.Chapter, IClearData // per route
+internal sealed class ClearData : Th10.Chapter, IClearData // per route
 {
     public const string ValidSignature = "CR";
     public const ushort ValidVersion = 0x0003;

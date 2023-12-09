@@ -17,7 +17,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th13;
 
-internal class AllScoreData<
+internal sealed class AllScoreData<
     TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TScoreData, TStatus>
     where TCharaWithTotal : struct, Enum
     where TLevel : struct, Enum

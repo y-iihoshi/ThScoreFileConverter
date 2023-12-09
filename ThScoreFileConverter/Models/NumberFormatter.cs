@@ -16,7 +16,7 @@ namespace ThScoreFileConverter.Models;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal class NumberFormatter : INumberFormatter
+internal sealed class NumberFormatter : INumberFormatter
 {
     private readonly ISettings settings;
 

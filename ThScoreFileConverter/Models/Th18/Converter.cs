@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models.Th18;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by ThConverterFactory.")]
 #endif
-internal class Converter : ThConverter
+internal sealed class Converter : ThConverter
 {
     private AllScoreData? allScoreData;
 

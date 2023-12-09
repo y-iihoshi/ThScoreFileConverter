@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Adapters;
 /// <summary>
 /// The adapter for <see cref="ResourceDictionary"/>.
 /// </summary>
-internal class ResourceDictionaryAdapter : IResourceDictionaryAdapter
+internal sealed class ResourceDictionaryAdapter : IResourceDictionaryAdapter
 {
     private readonly ResourceDictionary dictionary;
 

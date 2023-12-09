@@ -28,7 +28,7 @@ using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConver
 
 namespace ThScoreFileConverter.Models.Th18;
 
-internal class ClearData : Th10.Chapter, IClearData // per character
+internal sealed class ClearData : Th10.Chapter, IClearData // per character
 {
     public const string ValidSignature = "CR";
     public const ushort ValidVersion = 0x0003;

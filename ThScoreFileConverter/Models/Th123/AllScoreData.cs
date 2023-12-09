@@ -17,7 +17,7 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th123;
 
-internal class AllScoreData : IBinaryReadable
+internal sealed class AllScoreData : IBinaryReadable
 {
     private readonly Dictionary<Chara, byte> storyClearCounts;
     private readonly Dictionary<int, Th105.ICardForDeck> systemCards;
