@@ -1,8 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
+
+#if !NET8_0_OR_GREATER
+using System.Collections.Generic;
+using System.Linq;
+#endif
 
 namespace ThScoreFileConverter.Core.Tests.Extensions;
 
@@ -94,6 +97,7 @@ public class EnumerableExtensionsTests
     }
 #endif
 
+#if !NET8_0_OR_GREATER
     [TestMethod]
     public void ToDictionaryKeyValuePairTest()
     {
@@ -147,6 +151,7 @@ public class EnumerableExtensionsTests
 
         _ = Assert.ThrowsException<ArgumentNullException>(() => pairs.ToDictionary());
     }
+#endif
 
     [TestMethod]
     public void CartesianTest()

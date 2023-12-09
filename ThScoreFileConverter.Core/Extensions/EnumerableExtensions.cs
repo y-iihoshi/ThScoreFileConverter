@@ -53,6 +53,7 @@ public static class EnumerableExtensions
     }
 #endif
 
+#if !NET8_0_OR_GREATER
     /// <summary>
     /// Creates a <see cref="Dictionary{TKey, TValue}"/> from an <see cref="IEnumerable{T}"/> of
     /// <see cref="KeyValuePair{TKey, TValue}"/>.
@@ -96,6 +97,7 @@ public static class EnumerableExtensions
 
         return source.ToDictionary(static pair => pair.Key, static pair => pair.Value);
     }
+#endif
 
     /// <summary>
     /// Creates the Cartesian product of two sequences.
