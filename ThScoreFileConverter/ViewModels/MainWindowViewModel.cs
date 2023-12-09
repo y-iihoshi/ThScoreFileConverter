@@ -218,14 +218,6 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
             this.LastWorkNumber.ForceNotify();
     }
 
-    /// <summary>
-    /// Finalizes an instance of the <see cref="MainWindowViewModel"/> class.
-    /// </summary>
-    ~MainWindowViewModel()
-    {
-        this.Dispose(false);
-    }
-
     #region Properties to bind a view
 
     /// <summary>
@@ -440,7 +432,6 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     public void Dispose()
     {
         this.Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     /// <summary>

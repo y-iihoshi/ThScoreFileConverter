@@ -78,14 +78,6 @@ internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisp
                 .Subscribe(_ => this.RaisePropertyChanged(nameof(this.Title))));
     }
 
-    /// <summary>
-    /// Finalizes an instance of the <see cref="SettingWindowViewModel"/> class.
-    /// </summary>
-    ~SettingWindowViewModel()
-    {
-        this.Dispose(false);
-    }
-
     /// <inheritdoc/>
 #pragma warning disable CS0067
     public event Action<IDialogResult>? RequestClose;
@@ -212,7 +204,6 @@ internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisp
     public void Dispose()
     {
         this.Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     /// <summary>

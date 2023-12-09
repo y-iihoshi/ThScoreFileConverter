@@ -1239,19 +1239,6 @@ public class MainWindowViewModelTests
     }
 
     [TestMethod]
-    public void FinalizerTest()
-    {
-        {
-#pragma warning disable CA2000 // Dispose objects before losing scope
-            _ = CreateViewModel();
-#pragma warning restore CA2000 // Dispose objects before losing scope
-        }
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-    }
-
-    [TestMethod]
     public void CultureTest()
     {
         var backupCulture = LocalizeDictionary.Instance.Culture;
