@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal class MainWindowViewModel : BindableBase, IDisposable
+internal sealed class MainWindowViewModel : BindableBase, IDisposable
 {
     /// <summary>
     /// An <see cref="IDialogService"/>.
@@ -449,7 +449,7 @@ internal class MainWindowViewModel : BindableBase, IDisposable
     /// <param name="disposing">
     /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
     /// </param>
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (this.disposed)
         {
