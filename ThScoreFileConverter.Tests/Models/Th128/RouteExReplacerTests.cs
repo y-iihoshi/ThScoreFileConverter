@@ -12,7 +12,7 @@ namespace ThScoreFileConverter.Tests.Models.Th128;
 [TestClass]
 public class RouteExReplacerTests
 {
-    private static IEnumerable<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         var levels = EnumHelper<Level>.Enumerable;
 
@@ -28,7 +28,7 @@ public class RouteExReplacerTests
         _ = clearData2.PlayTime.Returns(3456789);
         _ = clearData2.ClearCounts.Returns(levels.ToDictionary(level => level, level => 50 - (int)level));
 
-        return new[] { clearData1, clearData2 };
+        return [clearData1, clearData2];
     }
 
     internal static IReadOnlyDictionary<RouteWithTotal, IClearData> ClearDataDictionary { get; } =

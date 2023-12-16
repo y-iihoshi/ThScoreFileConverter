@@ -15,7 +15,7 @@ namespace ThScoreFileConverter.Tests.Models.Th15;
 [TestClass]
 public class CharaReplacerTests
 {
-    private static IEnumerable<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         var levels = EnumHelper<LevelWithTotal>.Enumerable;
 
@@ -45,7 +45,7 @@ public class CharaReplacerTests
         _ = clearData2.Chara.Returns(CharaWithTotal.Sanae);
         _ = clearData2.GameModeData.Returns(gameModeData2);
 
-        return new[] { clearData1, clearData2 };
+        return [clearData1, clearData2];
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =

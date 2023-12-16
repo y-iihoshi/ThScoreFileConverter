@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Tests.Models.Th13;
 [TestClass]
 public class CharaExReplacerTests
 {
-    private static IEnumerable<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         var levels = EnumHelper<LevelPracticeWithTotal>.Enumerable;
 
@@ -34,7 +34,7 @@ public class CharaExReplacerTests
         _ = clearData2.PlayTime.Returns(3456789);
         _ = clearData2.ClearCounts.Returns(levels.ToDictionary(level => level, level => 50 - (int)level));
 
-        return new[] { clearData1, clearData2 };
+        return [clearData1, clearData2];
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =

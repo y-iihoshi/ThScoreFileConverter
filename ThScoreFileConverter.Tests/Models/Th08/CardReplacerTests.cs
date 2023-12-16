@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Tests.Models.Th08;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IEnumerable<ICardAttack> CreateCardAttacks()
+    private static ICardAttack[] CreateCardAttacks()
     {
         var storyCareerMock = CardAttackCareerTests.MockCardAttackCareer();
         var trialCounts = storyCareerMock.TrialCounts;
@@ -32,7 +32,7 @@ public class CardReplacerTests
         _ = attack2Mock.PracticeCareer.Returns(practiceCareerMock);
         CardAttackTests.SetupHasTried(attack2Mock);
 
-        return new[] { attack1Mock, attack2Mock };
+        return [attack1Mock, attack2Mock];
     }
 
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =

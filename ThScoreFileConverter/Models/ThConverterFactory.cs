@@ -19,7 +19,7 @@ internal static class ThConverterFactory
     /// <summary>
     /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
     /// </summary>
-    private static readonly IReadOnlyDictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
+    private static readonly Dictionary<string, Type> ConverterTypes = new()
     {
         { nameof(StringResources.TH06),  typeof(Th06.Converter)  },
         { nameof(StringResources.TH07),  typeof(Th07.Converter)  },

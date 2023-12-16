@@ -11,7 +11,7 @@ namespace ThScoreFileConverter.Tests.Models.Th095;
 [TestClass]
 public class ShotExReplacerTests
 {
-    private static IReadOnlyList<IScore> CreateScores()
+    private static IScore[] CreateScores()
     {
         var headerMock = BestShotHeaderTests.MockBestShotHeader();
 
@@ -19,7 +19,7 @@ public class ShotExReplacerTests
         var scoreMock = ScoreTests.MockScore();
         _ = scoreMock.LevelScene.Returns(levelScene);
 
-        return new[] { scoreMock };
+        return [scoreMock];
     }
 
     internal static IReadOnlyDictionary<(Level, int), (string, IBestShotHeader<Level>)> BestShots { get; } =

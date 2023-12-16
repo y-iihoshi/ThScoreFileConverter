@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Tests.Models.Th07;
 [TestClass]
 public class ScoreReplacerTests
 {
-    private static IEnumerable<IReadOnlyList<IHighScore>> CreateRankings()
+    private static IReadOnlyList<IHighScore>[] CreateRankings()
     {
         return new[] { new[] { HighScoreTests.MockHighScore() } };
     }

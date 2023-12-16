@@ -29,7 +29,7 @@ namespace ThScoreFileConverter;
 /// </summary>
 public partial class App : PrismApplication
 {
-    private readonly IResourceDictionaryAdapter adapter;
+    private readonly ResourceDictionaryAdapter adapter;
     private readonly Settings settings;
 
     /// <summary>
@@ -49,7 +49,7 @@ public partial class App : PrismApplication
             container.EnableDebugDiagnostic();
 #endif
 
-        _ = containerRegistry.RegisterInstance(this.adapter);
+        _ = containerRegistry.RegisterInstance<IResourceDictionaryAdapter>(this.adapter);
         _ = containerRegistry.RegisterInstance(this.settings);
         _ = containerRegistry.RegisterInstance<ISettings>(this.settings);
         _ = containerRegistry.Register<INumberFormatter, NumberFormatter>();

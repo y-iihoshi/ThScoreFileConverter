@@ -8,12 +8,12 @@ namespace ThScoreFileConverter.Tests.Models.Th165;
 [TestClass]
 public class ScoreTotalReplacerTests
 {
-    private static IReadOnlyList<IScore> CreateScores()
+    private static IScore[] CreateScores()
     {
         var mock1 = ScoreTests.MockScore();
         var mock2 = ScoreTests.MockScore();
         _ = mock2.Number.Returns(mock1.Number + 1);
-        return new[] { mock1, mock2 };
+        return [mock1, mock2];
     }
 
     internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();
