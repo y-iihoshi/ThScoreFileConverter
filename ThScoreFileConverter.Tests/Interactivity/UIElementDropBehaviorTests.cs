@@ -11,14 +11,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
-internal sealed class Command : ICommand
+internal sealed class Command(Action action) : ICommand
 {
-    private readonly Action action;
-
-    public Command(Action action)
-    {
-        this.action = action;
-    }
+    private readonly Action action = action;
 
 #pragma warning disable CS0067
     public event EventHandler? CanExecuteChanged;

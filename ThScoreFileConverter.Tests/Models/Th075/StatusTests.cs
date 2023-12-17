@@ -13,18 +13,11 @@ namespace ThScoreFileConverter.Tests.Models.Th075;
 [TestClass]
 public class StatusTests
 {
-    internal struct Properties
+    internal struct Properties(in Properties properties)
     {
-        public byte[] encodedLastName;
-        public string decodedLastName;
-        public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> arcadeScores;
-
-        public Properties(in Properties properties)
-        {
-            this.encodedLastName = [.. properties.encodedLastName];
-            this.decodedLastName = properties.decodedLastName;
-            this.arcadeScores = properties.arcadeScores.ToDictionary();
-        }
+        public byte[] encodedLastName = [.. properties.encodedLastName];
+        public string decodedLastName = properties.decodedLastName;
+        public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> arcadeScores = properties.arcadeScores.ToDictionary();
     }
 
     internal static Properties ValidProperties { get; } = new Properties()
