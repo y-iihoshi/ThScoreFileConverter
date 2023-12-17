@@ -137,21 +137,25 @@ public class ShotExReplacerTests
     [TestMethod]
     public void ReplaceTestDetailInfo()
     {
+        static string[] GetExpectedStringArray()
+        {
+            return [
+                @"Base Point           14",
+                @"",
+                @"Boss Shot!      * 16.00",
+                @"Two Shot!        * 1.50",
+                @"Nice Shot!      * 17.00",
+                @"Angle Bonus     * 18.00",
+                @"",
+                @"Result Score         13",
+            ];
+        }
+
         /// NOTE: Should not use <see cref="NumberFormatterTests.Mock"/> here
         var formatterMock = Substitute.For<INumberFormatter>();
         _ = formatterMock.FormatNumber(Arg.Any<int>()).Returns(callInfo => callInfo[0].ToString() ?? string.Empty);
         var replacer = new ShotExReplacer(BestShots, Scores, formatterMock, @"C:\path\to\output\");
-        var expected = string.Join(Environment.NewLine, new string[]
-        {
-            @"Base Point           14",
-            @"",
-            @"Boss Shot!      * 16.00",
-            @"Two Shot!        * 1.50",
-            @"Nice Shot!      * 17.00",
-            @"Angle Bonus     * 18.00",
-            @"",
-            @"Result Score         13",
-        });
+        var expected = string.Join(Environment.NewLine, GetExpectedStringArray());
         Assert.AreEqual(expected, replacer.Replace("%T125SHOTEXH237"));
     }
 

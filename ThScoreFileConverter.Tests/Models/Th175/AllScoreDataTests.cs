@@ -84,7 +84,12 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestChildArray()
     {
-        var bytes = MakeByteArray("0", new int[] { 12 }).Concat(NullChar).ToArray();
+        static int[] GetChildArray()
+        {
+            return [12];
+        }
+
+        var bytes = MakeByteArray("0", GetChildArray()).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
         Assert.IsNotNull(allScoreData);

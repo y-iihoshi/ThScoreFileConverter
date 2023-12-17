@@ -28,6 +28,7 @@ public class SQTableTests
     }
 
     [DataTestMethod]
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
     [DataRow(
         new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
         new[] { 123 },
@@ -42,6 +43,7 @@ public class SQTableTests
         new[] { 123, 78 },
         new[] { 456, 90 },
         DisplayName = "two pairs")]
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
     public void CreateTest(int[] array, int[] expectedKeys, int[] expectedValues)
     {
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));

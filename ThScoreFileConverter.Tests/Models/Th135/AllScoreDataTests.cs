@@ -163,9 +163,14 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryClearValue()
     {
+        static float[] GetInvalidStoryClear()
+        {
+            return [123f];
+        }
+
         var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
             // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("story_clear", new float[] { 123f }))
+            .Concat(SquirrelHelper.MakeByteArray("story_clear", GetInvalidStoryClear()))
             .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
             .ToArray());
 

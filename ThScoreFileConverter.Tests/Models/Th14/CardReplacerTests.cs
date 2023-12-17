@@ -27,7 +27,12 @@ public class CardReplacerTests
             return mock;
         }
 
-        var cards = new[] { 3, 4 }.ToDictionary(index => index, MockSpellCard);
+        static int[] GetCardIndices()
+        {
+            return [3, 4];
+        }
+
+        var cards = GetCardIndices().ToDictionary(index => index, MockSpellCard);
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
         _ = clearData.Cards.Returns(cards);

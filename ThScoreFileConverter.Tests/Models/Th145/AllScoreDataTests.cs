@@ -211,9 +211,14 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryClearValue()
     {
+        static float[] GetInvalidValue()
+        {
+            return [123f];
+        }
+
         var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
             // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("story_clear", new float[] { 123f }))
+            .Concat(SquirrelHelper.MakeByteArray("story_clear", GetInvalidValue()))
             .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
             .ToArray());
 
@@ -247,9 +252,14 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearRankValuePerLevel()
     {
+        static float[] GetInvalidValue()
+        {
+            return [123f];
+        }
+
         var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
             // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_rank", new float[] { 123f }))
+            .Concat(SquirrelHelper.MakeByteArray("clear_rank", GetInvalidValue()))
             .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
             .ToArray());
 
@@ -259,9 +269,14 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearRankValuePerChara()
     {
+        static float[][] GetInvalidValue()
+        {
+            return [[123f]];
+        }
+
         var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
             // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_rank", new float[][] { new float[] { 123f } }))
+            .Concat(SquirrelHelper.MakeByteArray("clear_rank", GetInvalidValue()))
             .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
             .ToArray());
 
@@ -285,9 +300,14 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearTimeValuePerLevel()
     {
+        static float[] GetInvalidValue()
+        {
+            return [123f];
+        }
+
         var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
             // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_time", new float[] { 123f }))
+            .Concat(SquirrelHelper.MakeByteArray("clear_time", GetInvalidValue()))
             .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
             .ToArray());
 
@@ -297,9 +317,14 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearTimeValuePerChara()
     {
+        static float[][] GetInvalidValue()
+        {
+            return [[123f]];
+        }
+
         var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
             // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_time", new float[][] { new float[] { 123f } }))
+            .Concat(SquirrelHelper.MakeByteArray("clear_time", GetInvalidValue()))
             .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
             .ToArray());
 

@@ -64,16 +64,20 @@ public class ShotReplacerTests
     [TestMethod]
     public void ReplaceTest()
     {
+        static string[] GetExpectedStringArray()
+        {
+            return [
+                @"<img src=""bestshots/bs_02_3.png"" alt=""ClearData: invoked: 6",
+                @"Slow: invoked: 7.000000%",
+                @"SpellName: abcde"" title=""ClearData: invoked: 6",
+                @"Slow: invoked: 7.000000%",
+                @"SpellName: abcde"" border=0>",
+            ];
+        }
+
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        var expected = string.Join(Environment.NewLine, new string[]
-        {
-            @"<img src=""bestshots/bs_02_3.png"" alt=""ClearData: invoked: 6",
-            @"Slow: invoked: 7.000000%",
-            @"SpellName: abcde"" title=""ClearData: invoked: 6",
-            @"Slow: invoked: 7.000000%",
-            @"SpellName: abcde"" border=0>",
-        });
+        var expected = string.Join(Environment.NewLine, GetExpectedStringArray());
 
         Assert.AreEqual(expected, replacer.Replace("%T95SHOT23"));
     }

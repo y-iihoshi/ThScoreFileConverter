@@ -58,13 +58,17 @@ public class ShotReplacerTests
     [TestMethod]
     public void ReplaceTest()
     {
-        var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        var expected = string.Join(" ", new string[]
+        static string[] GetExpectedStringArray()
         {
-            @"<img src=""bestshots/bs02_03.png""",
-            @"alt=""SpellName: 弾符「ラビットファルコナー」""",
-            @"title=""SpellName: 弾符「ラビットファルコナー」"" border=0>",
-        });
+            return [
+                @"<img src=""bestshots/bs02_03.png""",
+                @"alt=""SpellName: 弾符「ラビットファルコナー」""",
+                @"title=""SpellName: 弾符「ラビットファルコナー」"" border=0>",
+            ];
+        }
+
+        var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
+        var expected = string.Join(" ", GetExpectedStringArray());
 
         Assert.AreEqual(expected, replacer.Replace("%T165SHOT023"));
     }
