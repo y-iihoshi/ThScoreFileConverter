@@ -24,7 +24,7 @@ internal class Chapter : IBinaryReadable, IChapter
         this.Signature = string.Empty;
         this.Size1 = 0;
         this.Size2 = 0;
-        this.Data = Array.Empty<byte>();
+        this.Data = [];
     }
 
     protected Chapter(Chapter chapter)

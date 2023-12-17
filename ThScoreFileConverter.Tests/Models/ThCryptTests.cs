@@ -118,7 +118,7 @@ public class ThCryptTests
     public void DecryptTestUnwritableOutput()
     {
         using var input = new MemoryStream(this.encryptedBySmallBlock);
-        using var output = new MemoryStream(Array.Empty<byte>(), false);
+        using var output = new MemoryStream([], false);
 
         _ = Assert.ThrowsException<NotSupportedException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));

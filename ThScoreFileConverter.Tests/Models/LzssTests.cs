@@ -119,7 +119,7 @@ public class LzssTests
     public void DecompressTestUnwritableOutput()
     {
         using var input = new MemoryStream(this.compressed);
-        using var output = new MemoryStream(Array.Empty<byte>(), false);
+        using var output = new MemoryStream([], false);
 
         _ = Assert.ThrowsException<NotSupportedException>(() => Lzss.Decompress(input, output));
     }

@@ -153,8 +153,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestEmpty()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<AllScoreData>(Array.Empty<byte>()));
+        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
     }
 
     [TestMethod]
