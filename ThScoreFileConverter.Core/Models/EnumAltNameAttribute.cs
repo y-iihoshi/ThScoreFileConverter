@@ -16,7 +16,6 @@ namespace ThScoreFileConverter.Core.Models;
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
 public sealed class EnumAltNameAttribute(string shortName) : Attribute
 {
-
     /// <summary>
     /// Gets a short name of the enumeration field.
     /// </summary>

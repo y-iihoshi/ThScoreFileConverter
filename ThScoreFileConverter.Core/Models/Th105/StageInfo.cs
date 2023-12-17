@@ -21,7 +21,6 @@ namespace ThScoreFileConverter.Core.Models.Th105;
 public class StageInfo<TChara>(Stage stage, TChara enemy, IEnumerable<int> cardIds)
     where TChara : struct, Enum
 {
-
     /// <summary>
     /// Gets the stage.
     /// </summary>

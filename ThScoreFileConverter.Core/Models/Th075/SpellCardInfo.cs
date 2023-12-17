@@ -15,7 +15,6 @@ namespace ThScoreFileConverter.Core.Models.Th075;
 /// <param name="level">The level which the spell card is used.</param>
 public class SpellCardInfo(string name, Chara enemy, Level level)
 {
-
     /// <summary>
     /// Gets a name of the current spell card.
     /// </summary>
