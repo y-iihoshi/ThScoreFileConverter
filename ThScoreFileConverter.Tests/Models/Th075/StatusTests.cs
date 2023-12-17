@@ -29,7 +29,7 @@ public class StatusTests
 
     internal static Properties ValidProperties { get; } = new Properties()
     {
-        encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
+        encodedLastName = [15, 37, 26, 50, 30, 43, 53, 103],
         decodedLastName = "Player1 ",
         arcadeScores = EnumHelper.Cartesian<CharaWithReserved, CharaWithReserved>()
             .ToDictionary(pair => pair, pair => ((int)pair.First * 100) + (int)pair.Second),

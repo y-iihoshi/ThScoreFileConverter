@@ -36,7 +36,7 @@ public class ChapterTests
         version = 1234,
         checksum = 0xE0u,
         size = 16,
-        data = new byte[] { 0x01, 0x23, 0x45, 0x67 },
+        data = [0x01, 0x23, 0x45, 0x67],
     };
 
     internal static byte[] MakeByteArray(in Properties properties)

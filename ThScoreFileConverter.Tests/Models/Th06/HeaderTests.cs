@@ -21,7 +21,7 @@ public class HeaderTests
         signature = "TH6K",
         size1 = 12,
         size2 = 12,
-        data = new byte[] { 0x10, 0x00, 0x00, 0x00 },
+        data = [0x10, 0x00, 0x00, 0x00],
     };
 
     internal static byte[] MakeByteArray(in Properties properties)

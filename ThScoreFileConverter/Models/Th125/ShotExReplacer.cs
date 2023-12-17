@@ -84,8 +84,8 @@ internal sealed class ShotExReplacer : IStringReplaceable
     {
         Func<int, string> str = formatter.FormatNumber;
 
-        return new Detail[]
-        {
+        return
+        [
             new(true,                       "Base Point    {0,9}", str(header.BasePoint)),
             new(header.Fields.ClearShot,    "Clear Shot!   {0,9}", StringHelper.Create($"+ {header.ClearShot}")),
             new(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
@@ -111,7 +111,7 @@ internal sealed class ShotExReplacer : IStringReplaceable
             new(true,                       "Angle Bonus   {0,9}", StringHelper.Create($"* {header.AngleBonus:F2}")),
             new(true,                       string.Empty,          string.Empty),
             new(true,                       "Result Score  {0,9}", str(header.ResultScore)),
-        };
+        ];
     }
 
     private sealed class Detail

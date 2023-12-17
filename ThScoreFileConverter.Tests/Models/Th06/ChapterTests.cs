@@ -32,7 +32,7 @@ public class ChapterTests
         signature = "ABCD",
         size1 = 12,
         size2 = 34,
-        data = new byte[] { 0x56, 0x78, 0x9A, 0xBC },
+        data = [0x56, 0x78, 0x9A, 0xBC],
     };
 
     internal static byte[] MakeByteArray(in Properties properties)

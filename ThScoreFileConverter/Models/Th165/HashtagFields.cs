@@ -33,7 +33,7 @@ internal readonly struct HashtagFields
 
     public HashtagFields(int data1, int data2, int data3)
     {
-        this.data = new[] { new BitVector32(data1), new BitVector32(data2), new BitVector32(data3) };
+        this.data = [new BitVector32(data1), new BitVector32(data2), new BitVector32(data3)];
     }
 
     public IEnumerable<int> Data => this.data?.Select(vector => vector.Data) ?? Enumerable.Empty<int>();
