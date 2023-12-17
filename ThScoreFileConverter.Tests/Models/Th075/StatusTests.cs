@@ -21,7 +21,7 @@ public class StatusTests
 
         public Properties(in Properties properties)
         {
-            this.encodedLastName = properties.encodedLastName.ToArray();
+            this.encodedLastName = [.. properties.encodedLastName];
             this.decodedLastName = properties.decodedLastName;
             this.arcadeScores = properties.arcadeScores.ToDictionary();
         }
@@ -83,7 +83,7 @@ public class StatusTests
     public void ReadFromTestExceededName()
     {
         var properties = ValidProperties;
-        properties.encodedLastName = properties.encodedLastName.Concat(new byte[1] { 1 }).ToArray();
+        properties.encodedLastName = [.. properties.encodedLastName, .. new byte[] { 1 }];
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));
 

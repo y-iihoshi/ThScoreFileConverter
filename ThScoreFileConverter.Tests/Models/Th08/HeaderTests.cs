@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -65,7 +64,7 @@ public class HeaderTests
     {
         var properties = ValidProperties;
         ++properties.size1;
-        properties.data = properties.data.Concat(new byte[] { default }).ToArray();
+        properties.data = [.. properties.data, .. new byte[] { default }];
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
