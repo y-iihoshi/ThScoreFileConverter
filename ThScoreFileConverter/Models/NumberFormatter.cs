@@ -13,21 +13,13 @@ namespace ThScoreFileConverter.Models;
 /// <summary>
 /// Provides several methods for formatting numbers.
 /// </summary>
+/// <param name="settings">The settings of this application.</param>
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed class NumberFormatter : INumberFormatter
+internal sealed class NumberFormatter(ISettings settings) : INumberFormatter
 {
-    private readonly ISettings settings;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NumberFormatter"/> class.
-    /// </summary>
-    /// <param name="settings">The settings of this application.</param>
-    public NumberFormatter(ISettings settings)
-    {
-        this.settings = settings;
-    }
+    private readonly ISettings settings = settings;
 
     /// <inheritdoc/>
     public string FormatNumber<T>(T number)

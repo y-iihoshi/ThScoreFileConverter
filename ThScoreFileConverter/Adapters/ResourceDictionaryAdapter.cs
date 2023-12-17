@@ -13,18 +13,10 @@ namespace ThScoreFileConverter.Adapters;
 /// <summary>
 /// The adapter for <see cref="ResourceDictionary"/>.
 /// </summary>
-internal sealed class ResourceDictionaryAdapter : IResourceDictionaryAdapter
+/// <param name="dictionary">A resource dictionary to be adapted.</param>
+internal sealed class ResourceDictionaryAdapter(ResourceDictionary dictionary) : IResourceDictionaryAdapter
 {
-    private readonly ResourceDictionary dictionary;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ResourceDictionaryAdapter"/> class.
-    /// </summary>
-    /// <param name="dictionary">A resource dictionary to be adapted.</param>
-    public ResourceDictionaryAdapter(ResourceDictionary dictionary)
-    {
-        this.dictionary = dictionary;
-    }
+    private readonly ResourceDictionary dictionary = dictionary;
 
     /// <summary>
     /// Gets a key of the font family.

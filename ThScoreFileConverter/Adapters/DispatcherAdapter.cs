@@ -14,24 +14,16 @@ namespace ThScoreFileConverter.Adapters;
 /// <summary>
 /// Wrapper of <see cref="Dispatcher"/>.
 /// </summary>
+/// <param name="dispatcher">
+/// <see cref="Dispatcher"/> to be wrapped;
+/// if <see langword="null"/>, <see cref="Application.Current"/>.Dispatcher is used.
+/// </param>
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed class DispatcherAdapter : IDispatcherAdapter
+internal sealed class DispatcherAdapter(Dispatcher? dispatcher = null) : IDispatcherAdapter
 {
-    private readonly Dispatcher dispatcher;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DispatcherAdapter"/> class.
-    /// </summary>
-    /// <param name="dispatcher">
-    /// <see cref="Dispatcher"/> to be wrapped;
-    /// if <see langword="null"/>, <see cref="Application.Current"/>.Dispatcher is used.
-    /// </param>
-    public DispatcherAdapter(Dispatcher? dispatcher = null)
-    {
-        this.dispatcher = dispatcher ?? Application.Current.Dispatcher;
-    }
+    private readonly Dispatcher dispatcher = dispatcher ?? Application.Current.Dispatcher;
 
     /// <inheritdoc/>
     public void Invoke(Action callback)
