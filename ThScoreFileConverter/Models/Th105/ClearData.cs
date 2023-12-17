@@ -26,8 +26,8 @@ internal sealed class ClearData<TChara> : IBinaryReadable, IClearData<TChara>  /
 
     public ClearData()
     {
-        this.cardsForDeck = new Dictionary<int, ICardForDeck>();
-        this.spellCardResults = new Dictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>>();
+        this.cardsForDeck = [];
+        this.spellCardResults = [];
     }
 
     public IReadOnlyDictionary<int, ICardForDeck> CardsForDeck => this.cardsForDeck;

@@ -52,7 +52,7 @@ internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisp
         Guard.IsTrue(settings.OutputCodePageId.HasValue, nameof(settings), $"{nameof(settings.OutputCodePageId)} has no value");
 
         this.resourceDictionaryAdapter = adapter;
-        this.disposables = new CompositeDisposable();
+        this.disposables = [];
         this.disposed = false;
         this.font = null;
 

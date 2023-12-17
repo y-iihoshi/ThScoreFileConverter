@@ -88,7 +88,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
         this.dispatcher = dispatcher;
         this.settings = settings;
         this.formatter = formatter;
-        this.disposables = new CompositeDisposable();
+        this.disposables = [];
         this.disposed = false;
         this.converter = null;
 

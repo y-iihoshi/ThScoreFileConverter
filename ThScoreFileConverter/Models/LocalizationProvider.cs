@@ -47,11 +47,11 @@ internal sealed class LocalizationProvider : ILocalizationProvider
     public static LocalizationProvider Instance { get; } = new LocalizationProvider();
 
     /// <inheritdoc/>
-    public ObservableCollection<CultureInfo> AvailableCultures { get; } = new ObservableCollection<CultureInfo>
-    {
+    public ObservableCollection<CultureInfo> AvailableCultures { get; } =
+    [
         CultureInfo.GetCultureInfo("en-US"),
         CultureInfo.GetCultureInfo("ja-JP"),
-    };
+    ];
 
     /// <inheritdoc/>
     public FullyQualifiedResourceKeyBase GetFullyQualifiedResourceKey(string key, DependencyObject target)

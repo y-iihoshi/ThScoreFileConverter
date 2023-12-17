@@ -129,7 +129,7 @@ internal sealed class SaveData
     {
         return table.Value.TryGetValue(new SQString(key), out var value) && (value is SQTable valueTable)
             ? valueTable.ToDictionary(keyPredicate, valuePredicate, keyConverter, valueConverter)
-            : new Dictionary<TKey, TValue>();
+            : [];
     }
 
     private static Dictionary<Chara, int> GetCharaIntDictionary(SQTable table, string key)

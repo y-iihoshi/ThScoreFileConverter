@@ -23,7 +23,7 @@ public static class EncodingHelper
         Default = Encoding.Default;
         UTF8 = Encoding.UTF8;
         UTF8NoBOM = new UTF8Encoding(false);
-        Encodings = new Dictionary<int, Encoding>();
+        Encodings = [];
     }
 
     /// <summary>

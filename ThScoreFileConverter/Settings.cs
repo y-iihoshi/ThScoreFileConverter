@@ -50,7 +50,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     public Settings()
     {
         this.lastTitle = string.Empty;
-        this.Dictionary = new Dictionary<string, SettingsPerTitle>();
+        this.Dictionary = [];
         this.fontFamilyName = SystemFonts.MessageFontFamily.Source;
         this.fontSize = SystemFonts.MessageFontSize;
         this.outputNumberGroupSeparator = true;
