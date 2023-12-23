@@ -16,41 +16,37 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128C[xxx][z]
-internal sealed class CareerReplacer : IStringReplaceable
+internal sealed class CareerReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}C(\d{{3}})([1-3])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CareerReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var type = IntegerHelper.Parse(match.Groups[2].Value);
+
+        Func<ISpellCard, int> getCount = type switch
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
-            var type = IntegerHelper.Parse(match.Groups[2].Value);
+            1 => card => card.NoIceCount,
+            2 => card => card.NoMissCount,
+            _ => card => card.TrialCount,
+        };
 
-            Func<ISpellCard, int> getCount = type switch
-            {
-                1 => card => card.NoIceCount,
-                2 => card => card.NoMissCount,
-                _ => card => card.TrialCount,
-            };
-
-            if (number == 0)
-            {
-                return formatter.FormatNumber(spellCards.Values.Sum(getCount));
-            }
-            else if (Definitions.CardTable.ContainsKey(number))
-            {
-                return formatter.FormatNumber(
-                    spellCards.TryGetValue(number, out var card) ? getCount(card) : default);
-            }
-            else
-            {
-                return match.ToString();
-            }
-        });
-    }
+        if (number == 0)
+        {
+            return formatter.FormatNumber(spellCards.Values.Sum(getCount));
+        }
+        else if (Definitions.CardTable.ContainsKey(number))
+        {
+            return formatter.FormatNumber(
+                spellCards.TryGetValue(number, out var card) ? getCount(card) : default);
+        }
+        else
+        {
+            return match.ToString();
+        }
+    });
 
     public string Replace(string input)
     {

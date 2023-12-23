@@ -11,14 +11,9 @@ using System.Collections.Specialized;
 
 namespace ThScoreFileConverter.Models.Th125;
 
-internal struct BonusFields
+internal struct BonusFields(int data)
 {
-    private BitVector32 data;
-
-    public BonusFields(int data)
-    {
-        this.data = new BitVector32(data);
-    }
+    private BitVector32 data = new(data);
 
     public int Data => this.data.Data;
 

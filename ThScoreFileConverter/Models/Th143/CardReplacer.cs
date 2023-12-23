@@ -17,48 +17,43 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th143;
 
 // %T143CARD[x][y][z]
-internal sealed class CardReplacer : IStringReplaceable
+internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CARD({Parsers.DayParser.Pattern})([0-9])([12])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+        scene = (scene == 0) ? 10 : scene;
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        var key = (day, scene);
+        if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
+            return match.ToString();
+
+        if (hideUntriedCards)
         {
-            var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-            scene = (scene == 0) ? 10 : scene;
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var score = scores.FirstOrDefault(elem =>
+                (elem?.Number > 0) &&
+                (elem.Number <= Definitions.SpellCards.Count) &&
+                Definitions.SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
+            if ((score is null) ||
+                !score.ChallengeCounts.TryGetValue(ItemWithTotal.Total, out var count) ||
+                (count <= 0))
+                return "??????????";
+        }
 
-            var key = (day, scene);
-            if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
-                return match.ToString();
-
-            if (hideUntriedCards)
-            {
-                var score = scores.FirstOrDefault(elem =>
-                    (elem?.Number > 0) &&
-                    (elem.Number <= Definitions.SpellCards.Count) &&
-                    Definitions.SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
-                if ((score is null) ||
-                    !score.ChallengeCounts.TryGetValue(ItemWithTotal.Total, out var count) ||
-                    (count <= 0))
-                    return "??????????";
-            }
-
-            if (type == 1)
-            {
-                return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
-            }
-            else
-            {
-                return enemyCardPair.Card;
-            }
-        });
-    }
+        if (type == 1)
+        {
+            return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
+        }
+        else
+        {
+            return enemyCardPair.Card;
+        }
+    });
 
     public string Replace(string input)
     {

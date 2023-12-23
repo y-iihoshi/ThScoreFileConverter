@@ -14,22 +14,18 @@ using ThScoreFileConverter.Core.Models.Th15;
 namespace ThScoreFileConverter.Models.Th15;
 
 // %T15PRAC[x][yy][z]
-internal sealed class PracticeReplacer : Th10.PracticeReplacerBase<Level, Chara, Stage>
+internal sealed class PracticeReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    : Th10.PracticeReplacerBase<Level, Chara, Stage>(
+        Definitions.FormatPrefix,
+        Parsers.LevelParser,
+        Parsers.CharaParser,
+        Parsers.StageParser,
+        Core.Models.Definitions.CanPractice,
+        Core.Models.Definitions.CanPractice,
+        (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
+        formatter)
 {
-    public PracticeReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelParser,
-              Parsers.CharaParser,
-              Parsers.StageParser,
-              Core.Models.Definitions.CanPractice,
-              Core.Models.Definitions.CanPractice,
-              (level, chara, stage) => GetPractice(clearDataDictionary, level, chara, stage),
-              formatter)
-    {
-    }
-
     private static Th10.IPractice? GetPractice(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, Level level, Chara chara, Stage stage)
     {

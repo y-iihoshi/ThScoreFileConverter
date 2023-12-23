@@ -15,25 +15,17 @@ using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th14;
 
 // %T14C[w][xxx][yy][z]
-internal sealed class CareerReplacer : CareerReplacerBase<
-    GameMode, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>
+internal sealed class CareerReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+        CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>> clearDataDictionary,
+    INumberFormatter formatter)
+    : CareerReplacerBase<
+        GameMode, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>(
+        Definitions.FormatPrefix,
+        Parsers.GameModeParser,
+        Parsers.CharaWithTotalParser,
+        Definitions.CardTable.Keys,
+        clearDataDictionary,
+        formatter)
 {
-    public CareerReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-            CharaWithTotal,
-            Level,
-            LevelPractice,
-            LevelPracticeWithTotal,
-            StagePractice,
-            IScoreData>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.GameModeParser,
-              Parsers.CharaWithTotalParser,
-              Definitions.CardTable.Keys,
-              clearDataDictionary,
-              formatter)
-    {
-    }
 }

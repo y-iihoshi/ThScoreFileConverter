@@ -18,7 +18,11 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165SHOTEX[xx][y][z]
-internal sealed class ShotExReplacer : IStringReplaceable
+internal sealed class ShotExReplacer(
+    IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
+    INumberFormatter formatter,
+    string outputFilePath)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([1-7])([1-9])");
@@ -89,75 +93,61 @@ internal sealed class ShotExReplacer : IStringReplaceable
             new(header.Fields.IsSumireko, "＃私こそが宇佐見菫子だ！"),
         };
 
-    private readonly MatchEvaluator evaluator;
-
-    public ShotExReplacer(
-        IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
-        INumberFormatter formatter,
-        string outputFilePath)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        var key = (day, scene);
+        if (!Definitions.SpellCards.ContainsKey(key))
+            return match.ToString();
+
+        if (bestshots.TryGetValue(key, out var bestshot))
         {
-            var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
-
-            var key = (day, scene);
-            if (!Definitions.SpellCards.ContainsKey(key))
-                return match.ToString();
-
-            if (bestshots.TryGetValue(key, out var bestshot))
+            return type switch
             {
-                return type switch
-                {
-                    1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
-                    2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
-                    3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
-                    4 => DateTimeHelper.GetString(bestshot.Header.DateTime),
-                    5 => string.Join(
-                        Environment.NewLine,
-                        HashtagList(bestshot.Header).Where(hashtag => hashtag.Outputs).Select(hashtag => hashtag.Name)),
-                    6 => formatter.FormatNumber(bestshot.Header.NumViewed),
-                    7 => formatter.FormatNumber(bestshot.Header.NumLikes),
-                    8 => formatter.FormatNumber(bestshot.Header.NumFavs),
-                    9 => formatter.FormatNumber(bestshot.Header.Score),
-                    _ => match.ToString(),
-                };
-            }
-            else
+                1 => UriHelper.GetRelativePath(outputFilePath, bestshot.Path),
+                2 => bestshot.Header.Width.ToString(CultureInfo.InvariantCulture),
+                3 => bestshot.Header.Height.ToString(CultureInfo.InvariantCulture),
+                4 => DateTimeHelper.GetString(bestshot.Header.DateTime),
+                5 => string.Join(
+                    Environment.NewLine,
+                    HashtagList(bestshot.Header).Where(hashtag => hashtag.Outputs).Select(hashtag => hashtag.Name)),
+                6 => formatter.FormatNumber(bestshot.Header.NumViewed),
+                7 => formatter.FormatNumber(bestshot.Header.NumLikes),
+                8 => formatter.FormatNumber(bestshot.Header.NumFavs),
+                9 => formatter.FormatNumber(bestshot.Header.Score),
+                _ => match.ToString(),
+            };
+        }
+        else
+        {
+            return type switch
             {
-                return type switch
-                {
-                    1 => string.Empty,
-                    2 => "0",
-                    3 => "0",
-                    4 => DateTimeHelper.GetString(null),
-                    5 => string.Empty,
-                    6 => formatter.FormatNumber(0),
-                    7 => formatter.FormatNumber(0),
-                    8 => formatter.FormatNumber(0),
-                    9 => formatter.FormatNumber(0),
-                    _ => match.ToString(),
-                };
-            }
-        });
-    }
+                1 => string.Empty,
+                2 => "0",
+                3 => "0",
+                4 => DateTimeHelper.GetString(null),
+                5 => string.Empty,
+                6 => formatter.FormatNumber(0),
+                7 => formatter.FormatNumber(0),
+                8 => formatter.FormatNumber(0),
+                9 => formatter.FormatNumber(0),
+                _ => match.ToString(),
+            };
+        }
+    });
 
     public string Replace(string input)
     {
         return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
 
-    private sealed class Hashtag
+    private sealed class Hashtag(bool outputs, string name)
     {
-        public Hashtag(bool outputs, string name)
-        {
-            this.Outputs = outputs;
-            this.Name = name;
-        }
+        public bool Outputs { get; } = outputs;
 
-        public bool Outputs { get; }
-
-        public string Name { get; }
+        public string Name { get; } = name;
     }
 }

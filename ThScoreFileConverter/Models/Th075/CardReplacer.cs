@@ -16,45 +16,41 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th075;
 
 // %T75CARD[xxx][yy][z]
-internal sealed class CardReplacer : IStringReplaceable
+internal sealed class CardReplacer(
+    IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData, bool hideUntriedCards)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}CARD(\d{{3}})({Parsers.CharaParser.Pattern})([NR])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CardReplacer(
-        IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData, bool hideUntriedCards)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var type = match.Groups[3].Value.ToUpperInvariant();
+
+        if (chara == Chara.Meiling)
+            return match.ToString();
+
+        if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var type = match.Groups[3].Value.ToUpperInvariant();
-
-            if (chara == Chara.Meiling)
-                return match.ToString();
-
-            if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
+            if (hideUntriedCards)
             {
-                if (hideUntriedCards)
-                {
-                    var dataList = clearData
-                        .Where(pair => pair.Key.Chara == (CharaWithReserved)chara).Select(pair => pair.Value);
-                    if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
-                        return (type == "N") ? "??????????" : "?????";
-                }
+                var dataList = clearData
+                    .Where(pair => pair.Key.Chara == (CharaWithReserved)chara).Select(pair => pair.Value);
+                if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
+                    return (type == "N") ? "??????????" : "?????";
+            }
 
-                var cardId = Definitions.CardIdTable[chara].ElementAt(number - 1);
-                return (type == "N")
-                    ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToString();
-            }
-            else
-            {
-                return match.ToString();
-            }
-        });
-    }
+            var cardId = Definitions.CardIdTable[chara].ElementAt(number - 1);
+            return (type == "N")
+                ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToString();
+        }
+        else
+        {
+            return match.ToString();
+        }
+    });
 
     public string Replace(string input)
     {

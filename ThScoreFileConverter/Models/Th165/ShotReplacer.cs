@@ -15,39 +15,34 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165SHOT[xx][y]
-internal sealed class ShotReplacer : IStringReplaceable
+internal sealed class ShotReplacer(
+    IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOT({Parsers.DayParser.Pattern})([1-7])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ShotReplacer(
-        IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
-        string outputFilePath)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+
+        var key = (day, scene);
+        if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
+            return match.ToString();
+
+        if (bestshots.TryGetValue(key, out var bestshot) &&
+            UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
         {
-            var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-
-            var key = (day, scene);
-            if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
-                return match.ToString();
-
-            if (bestshots.TryGetValue(key, out var bestshot) &&
-                UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
-            {
-                var alternativeString = StringHelper.Create($"SpellName: {enemyCardPair.Card}");
-                return StringHelper.Create(
-                    $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
-            }
-            else
-            {
-                return string.Empty;
-            }
-        });
-    }
+            var alternativeString = StringHelper.Create($"SpellName: {enemyCardPair.Card}");
+            return StringHelper.Create(
+                $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
+        }
+        else
+        {
+            return string.Empty;
+        }
+    });
 
     public string Replace(string input)
     {

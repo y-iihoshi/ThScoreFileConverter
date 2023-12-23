@@ -18,15 +18,11 @@ using ClearDataBase = ThScoreFileConverter.Models.Th16.ClearDataBase<
 
 namespace ThScoreFileConverter.Models.Th17;
 
-internal sealed class ClearData : ClearDataBase    // per character
+internal sealed class ClearData(Th10.Chapter chapter) // per character
+    : ClearDataBase(chapter, ValidVersion, ValidSize, Definitions.CardTable.Count)
 {
     public const ushort ValidVersion = 0x0002;
     public const int ValidSize = 0x00004820;
-
-    public ClearData(Th10.Chapter chapter)
-        : base(chapter, ValidVersion, ValidSize, Definitions.CardTable.Count)
-    {
-    }
 
     public static new bool CanInitialize(Th10.Chapter chapter)
     {

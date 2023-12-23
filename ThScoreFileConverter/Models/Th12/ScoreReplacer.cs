@@ -14,20 +14,16 @@ using ThScoreFileConverter.Core.Models.Th12;
 namespace ThScoreFileConverter.Models.Th12;
 
 // %T12SCR[w][xx][y][z]
-internal sealed class ScoreReplacer : Th10.ScoreReplacerBase<Chara>
+internal sealed class ScoreReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
+    INumberFormatter formatter)
+    : Th10.ScoreReplacerBase<Chara>(
+        Definitions.FormatPrefix,
+        Parsers.LevelParser,
+        Parsers.CharaParser,
+        (level, chara, rank) => GetScore(clearDataDictionary, level, chara, rank),
+        formatter)
 {
-    public ScoreReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelParser,
-              Parsers.CharaParser,
-              (level, chara, rank) => GetScore(clearDataDictionary, level, chara, rank),
-              formatter)
-    {
-    }
-
     private static Th10.IScoreData<Th10.StageProgress> GetScore(
         IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
         Level level,

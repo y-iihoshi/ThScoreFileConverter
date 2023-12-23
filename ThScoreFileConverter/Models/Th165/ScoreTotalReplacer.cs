@@ -15,30 +15,26 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165SCRTL[x]
-internal sealed class ScoreTotalReplacer : IStringReplaceable
+internal sealed class ScoreTotalReplacer(IReadOnlyList<IScore> scores, IStatus status, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}SCRTL([1-6])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ScoreTotalReplacer(IReadOnlyList<IScore> scores, IStatus status, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var type = IntegerHelper.Parse(match.Groups[1].Value);
+        var type = IntegerHelper.Parse(match.Groups[1].Value);
 
-            return type switch
-            {
-                1 => formatter.FormatNumber(scores.Sum(score => (long)(score?.HighScore ?? default))),
-                2 => formatter.FormatNumber(scores.Sum(score => (long)(score?.ChallengeCount ?? default))),
-                3 => formatter.FormatNumber(scores.Sum(score => (long)(score?.ClearCount ?? default))),
-                4 => formatter.FormatNumber(scores.Count(score => score?.ClearCount > 0)),
-                5 => formatter.FormatNumber(scores.Sum(score => (long)(score?.NumPhotos ?? default))),
-                6 => formatter.FormatNumber(status.NicknameFlags.Count(flag => flag > 0)),
-                _ => match.ToString(),  // unreachable
-            };
-        });
-    }
+        return type switch
+        {
+            1 => formatter.FormatNumber(scores.Sum(score => (long)(score?.HighScore ?? default))),
+            2 => formatter.FormatNumber(scores.Sum(score => (long)(score?.ChallengeCount ?? default))),
+            3 => formatter.FormatNumber(scores.Sum(score => (long)(score?.ClearCount ?? default))),
+            4 => formatter.FormatNumber(scores.Count(score => score?.ClearCount > 0)),
+            5 => formatter.FormatNumber(scores.Sum(score => (long)(score?.NumPhotos ?? default))),
+            6 => formatter.FormatNumber(status.NicknameFlags.Count(flag => flag > 0)),
+            _ => match.ToString(),  // unreachable
+        };
+    });
 
     public string Replace(string input)
     {

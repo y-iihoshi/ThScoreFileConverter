@@ -18,23 +18,16 @@ using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06CLEAR[x][yy]
-internal sealed class ClearReplacer : ClearReplacerBase<Level, Chara, StageProgress>
+internal sealed class ClearReplacer(IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings)
+    : ClearReplacerBase<Level, Chara, StageProgress>(
+        Definitions.FormatPrefix,
+        Parsers.LevelParser,
+        Parsers.CharaParser,
+        (level, chara) => GetRanking(rankings, level, chara),
+        static stageProgress => stageProgress == StageProgress.Extra)
 {
-    public ClearReplacer(
-        IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelParser,
-              Parsers.CharaParser,
-              (level, chara) => GetRanking(rankings, level, chara),
-              static stageProgress => stageProgress == StageProgress.Extra)
-    {
-    }
-
     private static IReadOnlyList<IHighScore>? GetRanking(
-        IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
-        Level level,
-        Chara chara)
+        IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings, Level level, Chara chara)
     {
         return rankings.TryGetValue((chara, level), out var ranking) ? ranking : null;
     }

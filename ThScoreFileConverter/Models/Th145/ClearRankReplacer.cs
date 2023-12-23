@@ -15,37 +15,33 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th145;
 
 // %T145CLEAR[x][yy]
-internal sealed class ClearRankReplacer : IStringReplaceable
+internal sealed class ClearRankReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearRanks)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ClearRankReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearRanks)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
-            if (clearRanks.TryGetValue(level, out var ranks) && ranks.TryGetValue(chara, out var rank))
+        if (clearRanks.TryGetValue(level, out var ranks) && ranks.TryGetValue(chara, out var rank))
+        {
+            // FIXME
+            return rank switch
             {
-                // FIXME
-                return rank switch
-                {
-                    1 => "Bronze",
-                    2 => "Silver",
-                    3 => "Gold",
-                    _ => "Not Clear",
-                };
-            }
-            else
-            {
-                return "Not Clear";
-            }
-        });
-    }
+                1 => "Bronze",
+                2 => "Silver",
+                3 => "Gold",
+                _ => "Not Clear",
+            };
+        }
+        else
+        {
+            return "Not Clear";
+        }
+    });
 
     public string Replace(string input)
     {

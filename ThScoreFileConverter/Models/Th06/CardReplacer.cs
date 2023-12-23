@@ -14,18 +14,14 @@ using ThScoreFileConverter.Core.Models;
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06CARD[xx][y]
-internal sealed class CardReplacer : CardReplacerBase<Stage, Level>
+internal sealed class CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
+    : CardReplacerBase<Stage, Level>(
+        Definitions.FormatPrefix,
+        Definitions.CardTable,
+        hideUntriedCards,
+        cardNumber => CardHasTried(cardAttacks, cardNumber),
+        CardLevelToString)
 {
-    public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
-        : base(
-              Definitions.FormatPrefix,
-              Definitions.CardTable,
-              hideUntriedCards,
-              cardNumber => CardHasTried(cardAttacks, cardNumber),
-              CardLevelToString)
-    {
-    }
-
     private static bool CardHasTried(IReadOnlyDictionary<int, ICardAttack> cardAttacks, int cardNumber)
     {
         return cardAttacks.TryGetValue(cardNumber, out var attack) && attack.HasTried;

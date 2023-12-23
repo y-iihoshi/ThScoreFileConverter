@@ -14,24 +14,19 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th18;
 
 // %T18ABIL[xx]
-internal sealed class AbilityCardReplacer : IStringReplaceable
+internal sealed class AbilityCardReplacer(IAbilityCardHolder holder) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL(\d{{2}})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public AbilityCardReplacer(IAbilityCardHolder holder)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = IntegerHelper.Parse(match.Groups[1].Value);
 
-            if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
-                return match.ToString();
+        if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
+            return match.ToString();
 
-            return (holder.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
-        });
-    }
+        return (holder.AbilityCards.ElementAt(card.Id) > 0) ? card.Name : "??????????";
+    });
 
     public string Replace(string input)
     {

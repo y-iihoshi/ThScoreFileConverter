@@ -18,54 +18,50 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128SCR[w][xx][y][z]
-internal sealed class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer(
+    IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.RouteParser.Pattern})(\d)([1-5])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ScoreReplacer(
-        IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
+        var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
+        var type = IntegerHelper.Parse(match.Groups[4].Value);
+
+        if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
+            return match.ToString();
+        if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
+            return match.ToString();
+
+        var ranking = clearDataDictionary.TryGetValue(route, out var clearData)
+            && clearData.Rankings.TryGetValue(level, out var rankings)
+            && (rank < rankings.Count)
+            ? rankings[rank] : new ScoreData();
+        switch (type)
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
-            var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
-
-            if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
+            case 1:     // name
+                return ranking.Name.Any()
+                    ? EncodingHelper.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
+            case 2:     // score
+                return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
+            case 3:     // stage
+                if (ranking.DateTime == 0)
+                    return StageProgress.None.ToShortName();
+                return ranking.StageProgress.ToShortName();
+            case 4:     // date & time
+                return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
+            case 5:     // slow
+                if (ranking.DateTime == 0)
+                    return "-----%";
+                return formatter.FormatPercent(ranking.SlowRate, 3);
+            default:    // unreachable
                 return match.ToString();
-            if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
-                return match.ToString();
-
-            var ranking = clearDataDictionary.TryGetValue(route, out var clearData)
-                && clearData.Rankings.TryGetValue(level, out var rankings)
-                && (rank < rankings.Count)
-                ? rankings[rank] : new ScoreData();
-            switch (type)
-            {
-                case 1:     // name
-                    return ranking.Name.Any()
-                        ? EncodingHelper.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
-                case 2:     // score
-                    return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
-                case 3:     // stage
-                    if (ranking.DateTime == 0)
-                        return StageProgress.None.ToShortName();
-                    return ranking.StageProgress.ToShortName();
-                case 4:     // date & time
-                    return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
-                case 5:     // slow
-                    if (ranking.DateTime == 0)
-                        return "-----%";
-                    return formatter.FormatPercent(ranking.SlowRate, 3);
-                default:    // unreachable
-                    return match.ToString();
-            }
-        });
-    }
+        }
+    });
 
     public string Replace(string input)
     {

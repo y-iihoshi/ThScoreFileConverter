@@ -15,38 +15,34 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th075;
 
 // %T75CHR[x][yy][z]
-internal sealed class CharaReplacer : IStringReplaceable
+internal sealed class CharaReplacer(
+    IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
+    INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CHR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})([1-4])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CharaReplacer(
-        IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
-        INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        if (chara == Chara.Meiling)
+            return match.ToString();
+
+        var data = clearData.TryGetValue(((CharaWithReserved)chara, level), out var value)
+            ? value : new ClearData();
+        return type switch
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
-
-            if (chara == Chara.Meiling)
-                return match.ToString();
-
-            var data = clearData.TryGetValue(((CharaWithReserved)chara, level), out var value)
-                ? value : new ClearData();
-            return type switch
-            {
-                1 => formatter.FormatNumber(data.UseCount),
-                2 => formatter.FormatNumber(data.ClearCount),
-                3 => formatter.FormatNumber(data.MaxCombo),
-                4 => formatter.FormatNumber(data.MaxDamage),
-                _ => match.ToString(),  // unreachable
-            };
-        });
-    }
+            1 => formatter.FormatNumber(data.UseCount),
+            2 => formatter.FormatNumber(data.ClearCount),
+            3 => formatter.FormatNumber(data.MaxCombo),
+            4 => formatter.FormatNumber(data.MaxDamage),
+            _ => match.ToString(),  // unreachable
+        };
+    });
 
     public string Replace(string input)
     {

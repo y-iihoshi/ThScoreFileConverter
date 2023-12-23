@@ -13,18 +13,15 @@ using ThScoreFileConverter.Core.Models.Th123;
 namespace ThScoreFileConverter.Models.Th123;
 
 // %T123CARD[xx][yy][z]
-internal sealed class CardReplacer : Th105.CardReplacerBase<Chara>
+internal sealed class CardReplacer(
+    IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, bool hideUntriedCards)
+    : Th105.CardReplacerBase<Chara>(
+        Definitions.FormatPrefix,
+        Parsers.CharaParser,
+        Core.Models.Th123.Definitions.HasStory,
+        Definitions.EnemyCardIdTable,
+        Definitions.CardNameTable,
+        clearDataDictionary,
+        hideUntriedCards)
 {
-    public CardReplacer(
-        IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, bool hideUntriedCards)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.CharaParser,
-              Core.Models.Th123.Definitions.HasStory,
-              Definitions.EnemyCardIdTable,
-              Definitions.CardNameTable,
-              clearDataDictionary,
-              hideUntriedCards)
-    {
-    }
 }

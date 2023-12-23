@@ -17,44 +17,40 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th095;
 
 // %T95SHOT[x][y]
-internal sealed class ShotReplacer : IStringReplaceable
+internal sealed class ShotReplacer(
+    IReadOnlyDictionary<(Level Level, int Scene), (string Path, IBestShotHeader<Level> Header)> bestshots,
+    INumberFormatter formatter,
+    string outputFilePath)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SHOT({Parsers.LevelParser.Pattern})([1-9])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ShotReplacer(
-        IReadOnlyDictionary<(Level Level, int Scene), (string Path, IBestShotHeader<Level> Header)> bestshots,
-        INumberFormatter formatter,
-        string outputFilePath)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+
+        var key = (level, scene);
+        if (!Definitions.SpellCards.ContainsKey(key))
+            return match.ToString();
+
+        if (bestshots.TryGetValue(key, out var bestshot) &&
+            UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-
-            var key = (level, scene);
-            if (!Definitions.SpellCards.ContainsKey(key))
-                return match.ToString();
-
-            if (bestshots.TryGetValue(key, out var bestshot) &&
-                UriHelper.TryGetRelativePath(outputFilePath, bestshot.Path, out var relativePath))
-            {
-                var resultScore = formatter.FormatNumber(bestshot.Header.ResultScore);
-                var slowRate = formatter.FormatPercent(bestshot.Header.SlowRate, 6);
-                var cardName = EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0');
-                var alternativeString = StringHelper.Create(
-                    $"ClearData: {resultScore}{Environment.NewLine}Slow: {slowRate}{Environment.NewLine}SpellName: {cardName}");
-                return StringHelper.Create(
-                    $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
-            }
-            else
-            {
-                return string.Empty;
-            }
-        });
-    }
+            var resultScore = formatter.FormatNumber(bestshot.Header.ResultScore);
+            var slowRate = formatter.FormatPercent(bestshot.Header.SlowRate, 6);
+            var cardName = EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0');
+            var alternativeString = StringHelper.Create(
+                $"ClearData: {resultScore}{Environment.NewLine}Slow: {slowRate}{Environment.NewLine}SpellName: {cardName}");
+            return StringHelper.Create(
+                $"""<img src="{relativePath}" alt="{alternativeString}" title="{alternativeString}" border=0>""");
+        }
+        else
+        {
+            return string.Empty;
+        }
+    });
 
     public string Replace(string input)
     {

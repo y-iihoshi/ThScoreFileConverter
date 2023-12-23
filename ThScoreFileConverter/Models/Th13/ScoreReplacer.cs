@@ -21,19 +21,15 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13SCR[w][xx][y][z]
-internal sealed class ScoreReplacer : ScoreReplacerBase<Chara>
+internal sealed class ScoreReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    : ScoreReplacerBase<Chara>(
+        Definitions.FormatPrefix,
+        Parsers.LevelParser,
+        Parsers.CharaParser,
+        (level, chara, rank) => GetScore(clearDataDictionary, level, chara, rank),
+        formatter)
 {
-    public ScoreReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelParser,
-              Parsers.CharaParser,
-              (level, chara, rank) => GetScore(clearDataDictionary, level, chara, rank),
-              formatter)
-    {
-    }
-
     private static Th10.IScoreData<StageProgress> GetScore(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, Level level, Chara chara, int rank)
     {

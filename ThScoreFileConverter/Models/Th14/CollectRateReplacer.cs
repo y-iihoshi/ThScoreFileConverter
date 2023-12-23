@@ -18,40 +18,24 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th14;
 
 // %T14CRG[v][w][xx][y][z]
-internal sealed class CollectRateReplacer : Th13.CollectRateReplacerBase<
-    GameMode,
-    CharaWithTotal,
-    Level,
-    LevelWithTotal,
-    LevelPractice,
-    LevelPracticeWithTotal,
-    StagePractice,
-    IScoreData>
+internal sealed class CollectRateReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+        CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>> clearDataDictionary,
+    INumberFormatter formatter)
+    : Th13.CollectRateReplacerBase<
+        GameMode, CharaWithTotal, Level, LevelWithTotal, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>(
+        Definitions.FormatPrefix,
+        Parsers.GameModeParser,
+        Parsers.LevelWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Parsers.StageWithTotalParser,
+        CanReplace,
+        FindCardByModeType,
+        FindCardByLevel,
+        FindCardByLevelStage,
+        clearDataDictionary,
+        formatter)
 {
-    public CollectRateReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-            CharaWithTotal,
-            Level,
-            LevelPractice,
-            LevelPracticeWithTotal,
-            StagePractice,
-            IScoreData>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.GameModeParser,
-              Parsers.LevelWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Parsers.StageWithTotalParser,
-              CanReplace,
-              FindCardByModeType,
-              FindCardByLevel,
-              FindCardByLevelStage,
-              clearDataDictionary,
-              formatter)
-    {
-    }
-
     private static bool CanReplace(
         GameMode mode, LevelWithTotal level, CharaWithTotal chara, StageWithTotal stage)
     {

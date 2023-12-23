@@ -20,19 +20,15 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13CHARA[xx][y]
-internal sealed class CharaReplacer : CharaReplacerBase<
-    CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, Th10.IScoreData<StageProgress>>
+internal sealed class CharaReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    : CharaReplacerBase<CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, Th10.IScoreData<StageProgress>>(
+        Definitions.FormatPrefix,
+        Parsers.CharaWithTotalParser,
+        Definitions.IsTotal,
+        Definitions.IsToBeSummed,
+        static frames => new Time(frames),
+        clearDataDictionary,
+        formatter)
 {
-    public CharaReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.CharaWithTotalParser,
-              Definitions.IsTotal,
-              Definitions.IsToBeSummed,
-              static frames => new Time(frames),
-              clearDataDictionary,
-              formatter)
-    {
-    }
 }

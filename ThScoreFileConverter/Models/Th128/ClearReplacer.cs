@@ -19,35 +19,31 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th128;
 
 // %T128CLEAR[x][yy]
-internal sealed class ClearReplacer : IStringReplaceable
+internal sealed class ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.RouteParser.Pattern})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
 
-            if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
-                return match.ToString();
-            if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
-                return match.ToString();
+        if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
+            return match.ToString();
+        if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
+            return match.ToString();
 
-            var scores = clearDataDictionary.TryGetValue(route, out var clearData)
-                && clearData.Rankings.TryGetValue(level, out var ranking)
-                ? ranking.Where(score => score.DateTime > 0)
-                : ImmutableList<Th10.IScoreData<StageProgress>>.Empty;
-            var stageProgress = scores.Any()
-                ? scores.Max(score => score.StageProgress) : StageProgress.None;
+        var scores = clearDataDictionary.TryGetValue(route, out var clearData)
+            && clearData.Rankings.TryGetValue(level, out var ranking)
+            ? ranking.Where(score => score.DateTime > 0)
+            : ImmutableList<Th10.IScoreData<StageProgress>>.Empty;
+        var stageProgress = scores.Any()
+            ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
-            return stageProgress.ToShortName();
-        });
-    }
+        return stageProgress.ToShortName();
+    });
 
     public string Replace(string input)
     {
