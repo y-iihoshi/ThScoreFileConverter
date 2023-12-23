@@ -9,14 +9,9 @@
 
 namespace ThScoreFileConverter.Models.Th128;
 
-internal sealed class Status : StatusBase
+internal sealed class Status(Th10.Chapter chapter) : StatusBase(chapter, ValidVersion, 10, 0x18)
 {
     public const ushort ValidVersion = 0x0002;
-
-    public Status(Th10.Chapter chapter)
-        : base(chapter, ValidVersion, 10, 0x18)
-    {
-    }
 
     public static new bool CanInitialize(Th10.Chapter chapter)
     {

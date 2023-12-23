@@ -18,40 +18,31 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13CRG[v][w][xx][y][z]
-internal sealed class CollectRateReplacer : CollectRateReplacerBase<
-    GameMode,
-    CharaWithTotal,
-    LevelPractice,
-    LevelPracticeWithTotal,
-    LevelPractice,
-    LevelPracticeWithTotal,
-    StagePractice,
-    IScoreData>
+internal sealed class CollectRateReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData<
+        CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice, IScoreData>> clearDataDictionary,
+    INumberFormatter formatter)
+    : CollectRateReplacerBase<
+        GameMode,
+        CharaWithTotal,
+        LevelPractice,
+        LevelPracticeWithTotal,
+        LevelPractice,
+        LevelPracticeWithTotal,
+        StagePractice,
+        IScoreData>(
+        Definitions.FormatPrefix,
+        Parsers.GameModeParser,
+        Parsers.LevelPracticeWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Parsers.StageWithTotalParser,
+        CanReplace,
+        FindCardByModeType,
+        FindCardByLevel,
+        FindCardByLevelStage,
+        clearDataDictionary,
+        formatter)
 {
-    public CollectRateReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData<
-            CharaWithTotal,
-            LevelPractice,
-            LevelPractice,
-            LevelPracticeWithTotal,
-            StagePractice,
-            IScoreData>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.GameModeParser,
-              Parsers.LevelPracticeWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Parsers.StageWithTotalParser,
-              CanReplace,
-              FindCardByModeType,
-              FindCardByLevel,
-              FindCardByLevelStage,
-              clearDataDictionary,
-              formatter)
-    {
-    }
-
     private static bool CanReplace(
         GameMode mode, LevelPracticeWithTotal level, CharaWithTotal chara, StageWithTotal stage)
     {

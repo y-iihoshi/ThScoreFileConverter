@@ -10,7 +10,7 @@ namespace ThScoreFileConverter.Tests.Models.Th07;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IEnumerable<ICardAttack> CreateCardAttacks()
+    private static ICardAttack[] CreateCardAttacks()
     {
         var mock1 = CardAttackTests.MockCardAttack();
         var maxBonuses = mock1.MaxBonuses;
@@ -26,7 +26,7 @@ public class CardReplacerTests
         _ = mock2.ClearCounts.Returns(clearCounts.ToDictionary(pair => pair.Key, pair => (ushort)0));
         _ = mock2.HasTried.Returns(false);
 
-        return new[] { mock1, mock2 };
+        return [mock1, mock2];
     }
 
     internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =

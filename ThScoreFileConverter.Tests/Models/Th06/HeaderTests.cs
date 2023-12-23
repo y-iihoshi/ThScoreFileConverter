@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
 
@@ -21,7 +20,7 @@ public class HeaderTests
         signature = "TH6K",
         size1 = 12,
         size2 = 12,
-        data = new byte[] { 0x10, 0x00, 0x00, 0x00 },
+        data = [0x10, 0x00, 0x00, 0x00],
     };
 
     internal static byte[] MakeByteArray(in Properties properties)
@@ -64,7 +63,7 @@ public class HeaderTests
     {
         var properties = ValidProperties;
         ++properties.size1;
-        properties.data = properties.data.Concat(new byte[] { default }).ToArray();
+        properties.data = [.. properties.data, .. new byte[] { default }];
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));

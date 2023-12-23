@@ -12,7 +12,7 @@ namespace ThScoreFileConverter.Tests.Models.Th175;
 [TestClass]
 public class AllScoreDataTests
 {
-    private static readonly byte[] NullChar = new byte[] { 0 };
+    private static readonly byte[] NullChar = [0];
     private static readonly BindingFlags BindingAttribute = BindingFlags.NonPublic | BindingFlags.Static;
     private static readonly MethodInfo FromArrayMethodInfo =
         typeof(AllScoreDataTests).GetMethod(nameof(MakeByteArrayFromArray), BindingAttribute)!;
@@ -84,7 +84,12 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestChildArray()
     {
-        var bytes = MakeByteArray("0", new int[] { 12 }).Concat(NullChar).ToArray();
+        static int[] GetChildArray()
+        {
+            return [12];
+        }
+
+        var bytes = MakeByteArray("0", GetChildArray()).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
         Assert.IsNotNull(allScoreData);

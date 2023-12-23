@@ -13,24 +13,14 @@ namespace ThScoreFileConverter.Tests.Models.Th07;
 [TestClass]
 public class PlayCountTests
 {
-    internal struct Properties
+    internal struct Properties(in Properties properties)
     {
-        public int totalTrial;
-        public Dictionary<Chara, int> trials;
-        public int totalRetry;
-        public int totalClear;
-        public int totalContinue;
-        public int totalPractice;
-
-        public Properties(in Properties properties)
-        {
-            this.totalTrial = properties.totalTrial;
-            this.trials = new Dictionary<Chara, int>(properties.trials);
-            this.totalRetry = properties.totalRetry;
-            this.totalClear = properties.totalClear;
-            this.totalContinue = properties.totalContinue;
-            this.totalPractice = properties.totalPractice;
-        }
+        public int totalTrial = properties.totalTrial;
+        public Dictionary<Chara, int> trials = new(properties.trials);
+        public int totalRetry = properties.totalRetry;
+        public int totalClear = properties.totalClear;
+        public int totalContinue = properties.totalContinue;
+        public int totalPractice = properties.totalPractice;
     }
 
     internal static Properties ValidProperties { get; } = new Properties()

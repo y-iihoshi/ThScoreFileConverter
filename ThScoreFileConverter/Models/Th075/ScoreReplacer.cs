@@ -15,40 +15,36 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th075;
 
 // %T75SCR[w][xx][y][z]
-internal sealed class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer(
+    IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
+    INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-3])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ScoreReplacer(
-        IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
-        INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
+        var type = IntegerHelper.Parse(match.Groups[4].Value);
+
+        if (chara == Chara.Meiling)
+            return match.ToString();
+
+        var key = ((CharaWithReserved)chara, level);
+        var score = clearData.TryGetValue(key, out var data) && rank < data.Ranking.Count
+            ? data.Ranking[rank] : new HighScore();
+
+        return type switch
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
-
-            if (chara == Chara.Meiling)
-                return match.ToString();
-
-            var key = ((CharaWithReserved)chara, level);
-            var score = clearData.TryGetValue(key, out var data) && rank < data.Ranking.Count
-                ? data.Ranking[rank] : new HighScore();
-
-            return type switch
-            {
-                1 => score.Name,
-                2 => formatter.FormatNumber(score.Score),
-                3 => StringHelper.Create($"{score.Month:D2}/{score.Day:D2}"),
-                _ => match.ToString(),  // unreachable
-            };
-        });
-    }
+            1 => score.Name,
+            2 => formatter.FormatNumber(score.Score),
+            3 => StringHelper.Create($"{score.Month:D2}/{score.Day:D2}"),
+            _ => match.ToString(),  // unreachable
+        };
+    });
 
     public string Replace(string input)
     {

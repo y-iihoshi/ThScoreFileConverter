@@ -12,7 +12,7 @@ namespace ThScoreFileConverter.Tests.Models.Th15;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IReadOnlyList<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         static ISpellCard MockSpellCard(int index)
         {
@@ -21,14 +21,19 @@ public class CardReplacerTests
             return mock;
         }
 
-        var cards = new[] { 3, 4 }.ToDictionary(index => index, MockSpellCard);
+        static int[] GetCardIndices()
+        {
+            return [3, 4];
+        }
+
+        var cards = GetCardIndices().ToDictionary(index => index, MockSpellCard);
         var clearDataPerGameMode = Substitute.For<IClearDataPerGameMode>();
         _ = clearDataPerGameMode.Cards.Returns(cards);
 
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
         _ = clearData.GameModeData.Returns(new[] { (GameMode.Pointdevice, clearDataPerGameMode) }.ToDictionary());
-        return new[] { clearData };
+        return [clearData];
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =

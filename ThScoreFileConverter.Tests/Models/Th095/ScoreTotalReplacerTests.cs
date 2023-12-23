@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Tests.Models.Th095;
 [TestClass]
 public class ScoreTotalReplacerTests
 {
-    private static IReadOnlyList<IScore> CreateScores()
+    private static IScore[] CreateScores()
     {
         var mock1 = ScoreTests.MockScore();
 
@@ -17,7 +17,7 @@ public class ScoreTotalReplacerTests
         _ = mock2.LevelScene.Returns((Level.Nine, 7));
         _ = mock2.HighScore.Returns(0);
 
-        return new[] { mock1, mock2 };
+        return [mock1, mock2];
     }
 
     internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();

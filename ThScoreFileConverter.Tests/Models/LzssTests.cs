@@ -17,8 +17,8 @@ public class LzssTests
     // f <--- offset ---> len>
     // 0 0_0000_0000_0001 0000
     // 0 0_0000_0000_0000
-    private readonly byte[] compressed = new byte[]
-    {
+    private readonly byte[] compressed =
+    [
         0b_1010_0000,
         0b_1101_1000,
         0b_1010_1100,
@@ -27,7 +27,7 @@ public class LzssTests
         0b_1000_0000,
         0b_0000_0000,
         0b_0000_0000,
-    };
+    ];
 
     [TestMethod]
     public void CompressTest()
@@ -119,7 +119,7 @@ public class LzssTests
     public void DecompressTestUnwritableOutput()
     {
         using var input = new MemoryStream(this.compressed);
-        using var output = new MemoryStream(Array.Empty<byte>(), false);
+        using var output = new MemoryStream([], false);
 
         _ = Assert.ThrowsException<NotSupportedException>(() => Lzss.Decompress(input, output));
     }

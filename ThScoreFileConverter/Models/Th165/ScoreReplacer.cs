@@ -15,40 +15,35 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165SCR[xx][y][z]
-internal sealed class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}SCR({Parsers.DayParser.Pattern})([1-7])([1-4])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        var key = (day, scene);
+        if (!Definitions.SpellCards.ContainsKey(key))
+            return match.ToString();
+
+        var score = scores.FirstOrDefault(elem =>
+            (elem?.Number >= 0) &&
+            (elem.Number < Definitions.SpellCards.Count) &&
+            Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
+
+        return type switch
         {
-            var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
-
-            var key = (day, scene);
-            if (!Definitions.SpellCards.ContainsKey(key))
-                return match.ToString();
-
-            var score = scores.FirstOrDefault(elem =>
-                (elem?.Number >= 0) &&
-                (elem.Number < Definitions.SpellCards.Count) &&
-                Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
-
-            return type switch
-            {
-                1 => formatter.FormatNumber(score?.HighScore ?? default),
-                2 => formatter.FormatNumber(score?.ChallengeCount ?? default),
-                3 => formatter.FormatNumber(score?.ClearCount ?? default),
-                4 => formatter.FormatNumber(score?.NumPhotos ?? default),
-                _ => match.ToString(),  // unreachable
-            };
-        });
-    }
+            1 => formatter.FormatNumber(score?.HighScore ?? default),
+            2 => formatter.FormatNumber(score?.ChallengeCount ?? default),
+            3 => formatter.FormatNumber(score?.ClearCount ?? default),
+            4 => formatter.FormatNumber(score?.NumPhotos ?? default),
+            _ => match.ToString(),  // unreachable
+        };
+    });
 
     public string Replace(string input)
     {

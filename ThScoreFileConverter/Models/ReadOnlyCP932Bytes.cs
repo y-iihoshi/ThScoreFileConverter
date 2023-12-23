@@ -15,16 +15,10 @@ using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
 
-internal sealed class ReadOnlyCP932Bytes : IEnumerable<byte>
+internal sealed class ReadOnlyCP932Bytes(IEnumerable<byte> bytes) : IEnumerable<byte>
 {
-    private readonly byte[] bytes;
+    private readonly byte[] bytes = bytes.ToArray();
     private string? str;
-
-    public ReadOnlyCP932Bytes(IEnumerable<byte> bytes)
-    {
-        this.bytes = bytes.ToArray();
-        this.str = default;
-    }
 
     public static ReadOnlyCP932Bytes Empty { get; } = new ReadOnlyCP932Bytes(Array.Empty<byte>());
 

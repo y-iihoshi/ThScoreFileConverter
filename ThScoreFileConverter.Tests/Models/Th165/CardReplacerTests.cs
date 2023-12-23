@@ -8,11 +8,11 @@ namespace ThScoreFileConverter.Tests.Models.Th165;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IReadOnlyList<IScore> CreateScores()
+    private static IScore[] CreateScores()
     {
         var mock = ScoreTests.MockScore();
         _ = mock.Number.Returns(57);
-        return new[] { mock };
+        return [mock];
     }
 
     internal static IReadOnlyList<IScore> Scores { get; } = CreateScores();

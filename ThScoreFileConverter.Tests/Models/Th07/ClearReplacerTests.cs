@@ -15,7 +15,7 @@ namespace ThScoreFileConverter.Tests.Models.Th07;
 [TestClass]
 public class ClearReplacerTests
 {
-    private static IEnumerable<IReadOnlyList<IHighScore>> CreateRankings()
+    private static IReadOnlyList<IHighScore>[] CreateRankings()
     {
         var mock1 = HighScoreTests.MockHighScore();
         var stageProgress = mock1.StageProgress;

@@ -65,7 +65,7 @@ public static class EnumExtensions
         /// Initializes the cache.
         /// </summary>
         /// <returns>The cache of attribute information.</returns>
-        private static IReadOnlyDictionary<TEnum, TAttribute> InitializeCache()
+        private static Dictionary<TEnum, TAttribute> InitializeCache()
         {
             var type = typeof(TEnum);
             Debug.Assert(type.IsEnum, $"{nameof(TEnum)} must be an enum type.");

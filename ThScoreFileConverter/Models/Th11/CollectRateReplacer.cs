@@ -13,19 +13,16 @@ using ThScoreFileConverter.Core.Models.Th11;
 namespace ThScoreFileConverter.Models.Th11;
 
 // %T11CRG[w][xx][y][z]
-internal sealed class CollectRateReplacer : Th10.CollectRateReplacerBase<CharaWithTotal>
+internal sealed class CollectRateReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
+    INumberFormatter formatter)
+    : Th10.CollectRateReplacerBase<CharaWithTotal>(
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Parsers.StageWithTotalParser,
+        Definitions.CardTable,
+        clearDataDictionary,
+        formatter)
 {
-    public CollectRateReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Parsers.StageWithTotalParser,
-              Definitions.CardTable,
-              clearDataDictionary,
-              formatter)
-    {
-    }
 }

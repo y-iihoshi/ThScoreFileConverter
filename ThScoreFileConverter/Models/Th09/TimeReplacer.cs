@@ -13,16 +13,11 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th09;
 
 // %T09TIMEALL
-internal sealed class TimeReplacer : IStringReplaceable
+internal sealed class TimeReplacer(IPlayStatus playStatus) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}TIMEALL");
 
-    private readonly MatchEvaluator evaluator;
-
-    public TimeReplacer(IPlayStatus playStatus)
-    {
-        this.evaluator = new MatchEvaluator(match => playStatus.TotalRunningTime.ToLongString());
-    }
+    private readonly MatchEvaluator evaluator = new(match => playStatus.TotalRunningTime.ToLongString());
 
     public string Replace(string input)
     {

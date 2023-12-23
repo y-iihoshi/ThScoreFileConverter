@@ -24,57 +24,53 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th16;
 
 // %T16SCR[w][xx][y][z]
-internal sealed class ScoreReplacer : IStringReplaceable
+internal sealed class ScoreReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-6])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ScoreReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var level = (Core.Models.Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+        var level = (Core.Models.Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
+        var type = IntegerHelper.Parse(match.Groups[4].Value);
 
-            var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
-                && clearData.Rankings.TryGetValue(level, out var rankings)
-                && (rank < rankings.Count)
-                ? rankings[rank] : new ScoreData();
-            switch (type)
-            {
-                case 1:     // name
-                    return ranking.Name.Any()
-                        ? EncodingHelper.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
-                case 2:     // score
-                    return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
-                case 3:     // stage
-                    if (ranking.DateTime == 0)
-                        return Th13.StageProgress.None.ToShortName();
-                    if (ranking.StageProgress == Th13.StageProgress.Extra)
-                        return "Not Clear";
-                    if (ranking.StageProgress == Th13.StageProgress.ExtraClear)
-                        return Th13.StageProgress.Clear.ToShortName();
-                    return ranking.StageProgress.ToShortName();
-                case 4:     // date & time
-                    return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
-                case 5:     // slow
-                    if (ranking.DateTime == 0)
-                        return "-----%";
-                    return formatter.FormatPercent(ranking.SlowRate, 3);
-                case 6:     // season
-                    if (ranking.DateTime == 0)
-                        return "-----";
-                    return ranking.Season.ToShortName();
-                default:    // unreachable
-                    return match.ToString();
-            }
-        });
-    }
+        var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
+            && clearData.Rankings.TryGetValue(level, out var rankings)
+            && (rank < rankings.Count)
+            ? rankings[rank] : new ScoreData();
+        switch (type)
+        {
+            case 1:     // name
+                return ranking.Name.Any()
+                    ? EncodingHelper.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
+            case 2:     // score
+                return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
+            case 3:     // stage
+                if (ranking.DateTime == 0)
+                    return Th13.StageProgress.None.ToShortName();
+                if (ranking.StageProgress == Th13.StageProgress.Extra)
+                    return "Not Clear";
+                if (ranking.StageProgress == Th13.StageProgress.ExtraClear)
+                    return Th13.StageProgress.Clear.ToShortName();
+                return ranking.StageProgress.ToShortName();
+            case 4:     // date & time
+                return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
+            case 5:     // slow
+                if (ranking.DateTime == 0)
+                    return "-----%";
+                return formatter.FormatPercent(ranking.SlowRate, 3);
+            case 6:     // season
+                if (ranking.DateTime == 0)
+                    return "-----";
+                return ranking.Season.ToShortName();
+            default:    // unreachable
+                return match.ToString();
+        }
+    });
 
     public string Replace(string input)
     {

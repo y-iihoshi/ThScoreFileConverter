@@ -23,7 +23,7 @@ public static class EncodingHelper
         Default = Encoding.Default;
         UTF8 = Encoding.UTF8;
         UTF8NoBOM = new UTF8Encoding(false);
-        Encodings = new Dictionary<int, Encoding>();
+        Encodings = [];
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public static class EncodingHelper
     /// <summary>
     /// Gets the dictionary caching <see cref="Encoding"/> instances.
     /// </summary>
-    private static IDictionary<int, Encoding> Encodings { get; }
+    private static Dictionary<int, Encoding> Encodings { get; }
 
     /// <summary>
     /// Returns the encoding associated with the specified code page identifier.

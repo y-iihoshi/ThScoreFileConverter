@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Tests.Models.Th10;
 [TestClass]
 public class ClearReplacerTests
 {
-    private static IEnumerable<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         static IScoreData MockScoreData(Level level, int index)
         {
@@ -31,7 +31,7 @@ public class ClearReplacerTests
         var mock = Substitute.For<IClearData>();
         _ = mock.Chara.Returns(CharaWithTotal.ReimuB);
         _ = mock.Rankings.Returns(rankings);
-        return new[] { mock };
+        return [mock];
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =

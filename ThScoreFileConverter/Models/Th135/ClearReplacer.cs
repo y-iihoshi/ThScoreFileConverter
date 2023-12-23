@@ -15,45 +15,40 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th135;
 
 // %T135CLEAR[x][yy]
-internal sealed class ClearReplacer : IStringReplaceable
+internal sealed class ClearReplacer(IReadOnlyDictionary<Chara, Levels> storyClearFlags) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ClearReplacer(IReadOnlyDictionary<Chara, Levels> storyClearFlags)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+
+        var cleared = false;
+        if (storyClearFlags.TryGetValue(chara, out var flags))
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-
-            var cleared = false;
-            if (storyClearFlags.TryGetValue(chara, out var flags))
+            switch (level)
             {
-                switch (level)
-                {
-                    case Level.Easy:
-                        cleared = (flags & Levels.Easy) == Levels.Easy;
-                        break;
-                    case Level.Normal:
-                        cleared = (flags & Levels.Normal) == Levels.Normal;
-                        break;
-                    case Level.Hard:
-                        cleared = (flags & Levels.Hard) == Levels.Hard;
-                        break;
-                    case Level.Lunatic:
-                        cleared = (flags & Levels.Lunatic) == Levels.Lunatic;
-                        break;
-                    default:    // unreachable
-                        break;
-                }
+                case Level.Easy:
+                    cleared = (flags & Levels.Easy) == Levels.Easy;
+                    break;
+                case Level.Normal:
+                    cleared = (flags & Levels.Normal) == Levels.Normal;
+                    break;
+                case Level.Hard:
+                    cleared = (flags & Levels.Hard) == Levels.Hard;
+                    break;
+                case Level.Lunatic:
+                    cleared = (flags & Levels.Lunatic) == Levels.Lunatic;
+                    break;
+                default:    // unreachable
+                    break;
             }
+        }
 
-            return cleared ? "Clear" : "Not Clear";
-        });
-    }
+        return cleared ? "Clear" : "Not Clear";
+    });
 
     public string Replace(string input)
     {

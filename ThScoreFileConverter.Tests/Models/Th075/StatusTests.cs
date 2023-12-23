@@ -13,23 +13,16 @@ namespace ThScoreFileConverter.Tests.Models.Th075;
 [TestClass]
 public class StatusTests
 {
-    internal struct Properties
+    internal struct Properties(in Properties properties)
     {
-        public byte[] encodedLastName;
-        public string decodedLastName;
-        public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> arcadeScores;
-
-        public Properties(in Properties properties)
-        {
-            this.encodedLastName = properties.encodedLastName.ToArray();
-            this.decodedLastName = properties.decodedLastName;
-            this.arcadeScores = properties.arcadeScores.ToDictionary();
-        }
+        public byte[] encodedLastName = [.. properties.encodedLastName];
+        public string decodedLastName = properties.decodedLastName;
+        public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> arcadeScores = properties.arcadeScores.ToDictionary();
     }
 
     internal static Properties ValidProperties { get; } = new Properties()
     {
-        encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
+        encodedLastName = [15, 37, 26, 50, 30, 43, 53, 103],
         decodedLastName = "Player1 ",
         arcadeScores = EnumHelper.Cartesian<CharaWithReserved, CharaWithReserved>()
             .ToDictionary(pair => pair, pair => ((int)pair.First * 100) + (int)pair.Second),
@@ -83,7 +76,7 @@ public class StatusTests
     public void ReadFromTestExceededName()
     {
         var properties = ValidProperties;
-        properties.encodedLastName = properties.encodedLastName.Concat(new byte[1] { 1 }).ToArray();
+        properties.encodedLastName = [.. properties.encodedLastName, .. new byte[] { 1 }];
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));
 

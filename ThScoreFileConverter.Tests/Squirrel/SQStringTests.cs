@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverter.Tests.UnitTesting;
@@ -51,7 +50,7 @@ public class SQStringTests
     [DataRow(-1, null)]
     public void CreateTestEmpty(int size, string value)
     {
-        var bytes = (value is null) ? Array.Empty<byte>() : TestUtils.CP932Encoding.GetBytes(value);
+        var bytes = (value is null) ? [] : TestUtils.CP932Encoding.GetBytes(value);
         var sqstring = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, size, bytes));
 
         Assert.AreEqual(SQObjectType.String, sqstring.Type);

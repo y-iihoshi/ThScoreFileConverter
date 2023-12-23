@@ -9,14 +9,14 @@ namespace ThScoreFileConverter.Tests.Models.Th128;
 [TestClass]
 public class CareerReplacerTests
 {
-    private static IEnumerable<ISpellCard> CreateSpellCards()
+    private static ISpellCard[] CreateSpellCards()
     {
         var mock1 = SpellCardTests.MockSpellCard();
 
         var mock2 = SpellCardTests.MockSpellCard();
         _ = mock2.Id.Returns(mock1.Id + 1);
 
-        return new[] { mock1, mock2 };
+        return [mock1, mock2];
     }
 
     internal static IReadOnlyDictionary<int, ISpellCard> SpellCards { get; } =

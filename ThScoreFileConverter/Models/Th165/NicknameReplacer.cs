@@ -14,29 +14,24 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165NICK[xx]
-internal sealed class NicknameReplacer : IStringReplaceable
+internal sealed class NicknameReplacer(IStatus status) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}NICK(\d{{2}})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public NicknameReplacer(IStatus status)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = IntegerHelper.Parse(match.Groups[1].Value);
 
-            if ((number > 0) && (number <= Definitions.Nicknames.Count))
-            {
-                return (status.NicknameFlags.ElementAt(number) > 0)
-                    ? Definitions.Nicknames[number - 1] : "??????????";
-            }
-            else
-            {
-                return match.ToString();
-            }
-        });
-    }
+        if ((number > 0) && (number <= Definitions.Nicknames.Count))
+        {
+            return (status.NicknameFlags.ElementAt(number) > 0)
+                ? Definitions.Nicknames[number - 1] : "??????????";
+        }
+        else
+        {
+            return match.ToString();
+        }
+    });
 
     public string Replace(string input)
     {

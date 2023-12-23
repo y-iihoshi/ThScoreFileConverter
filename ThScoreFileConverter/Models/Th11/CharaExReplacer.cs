@@ -13,19 +13,16 @@ using ThScoreFileConverter.Core.Models.Th11;
 namespace ThScoreFileConverter.Models.Th11;
 
 // %T11CHARAEX[x][yy][z]
-internal sealed class CharaExReplacer : Th10.CharaExReplacerBase<CharaWithTotal>
+internal sealed class CharaExReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
+    INumberFormatter formatter)
+    : Th10.CharaExReplacerBase<CharaWithTotal>(
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Models.Definitions.IsTotal,
+        Definitions.IsTotal,
+        clearDataDictionary,
+        formatter)
 {
-    public CharaExReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Models.Definitions.IsTotal,
-              Definitions.IsTotal,
-              clearDataDictionary,
-              formatter)
-    {
-    }
 }

@@ -14,18 +14,14 @@ using ThScoreFileConverter.Core.Models.Th125;
 namespace ThScoreFileConverter.Models.Th125;
 
 // %T125CARD[x][y][z]
-internal sealed class CardReplacer : Th095.CardReplacerBase<Level, Enemy>
+internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
+    : Th095.CardReplacerBase<Level, Enemy>(
+        Definitions.FormatPrefix,
+        Parsers.LevelParser,
+        Definitions.SpellCards,
+        hideUntriedCards,
+        (level, scene) => HasTried(scores, level, scene))
 {
-    public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelParser,
-              Definitions.SpellCards,
-              hideUntriedCards,
-              (level, scene) => HasTried(scores, level, scene))
-    {
-    }
-
     private static bool HasTried(IReadOnlyList<IScore> scores, Level level, int scene)
     {
         return scores.FirstOrDefault(

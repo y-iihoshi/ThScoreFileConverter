@@ -18,54 +18,50 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08CLEAR[x][yy]
-internal sealed class ClearReplacer : IStringReplaceable
+internal sealed class ClearReplacer(
+    IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
+    IReadOnlyDictionary<CharaWithTotal, IClearData> clearData)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ClearReplacer(
-        IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
-        IReadOnlyDictionary<CharaWithTotal, IClearData> clearData)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
-            var key = (chara, level);
-            if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
+        var key = (chara, level);
+        if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
+        {
+            var stageProgress = ranking.Max(rank => rank.StageProgress);
+            if (stageProgress is StageProgress.FourUncanny or StageProgress.FourPowerful)
             {
-                var stageProgress = ranking.Max(rank => rank.StageProgress);
-                if (stageProgress is StageProgress.FourUncanny or StageProgress.FourPowerful)
-                {
-                    return "Stage 4";
-                }
-                else if (stageProgress == StageProgress.Extra)
-                {
-                    return "Not Clear";
-                }
-                else if (stageProgress == StageProgress.Clear)
-                {
-                    if ((level != Level.Extra) &&
-                        ((clearData[(CharaWithTotal)chara].StoryFlags[level]
-                            & PlayableStages.Stage6B) != PlayableStages.Stage6B))
-                        return "FinalA Clear";
-                    else
-                        return stageProgress.ToShortName();
-                }
+                return "Stage 4";
+            }
+            else if (stageProgress == StageProgress.Extra)
+            {
+                return "Not Clear";
+            }
+            else if (stageProgress == StageProgress.Clear)
+            {
+                if ((level != Level.Extra) &&
+                    ((clearData[(CharaWithTotal)chara].StoryFlags[level]
+                        & PlayableStages.Stage6B) != PlayableStages.Stage6B))
+                    return "FinalA Clear";
                 else
-                {
                     return stageProgress.ToShortName();
-                }
             }
             else
             {
-                return "-------";
+                return stageProgress.ToShortName();
             }
-        });
-    }
+        }
+        else
+        {
+            return "-------";
+        }
+    });
 
     public string Replace(string input)
     {

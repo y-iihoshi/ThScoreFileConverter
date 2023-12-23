@@ -24,7 +24,7 @@ public class ChapterTests
         signature = string.Empty,
         size1 = default,
         size2 = default,
-        data = Array.Empty<byte>(),
+        data = [],
     };
 
     internal static Properties ValidProperties { get; } = new Properties()
@@ -32,7 +32,7 @@ public class ChapterTests
         signature = "ABCD",
         size1 = 12,
         size2 = 34,
-        data = new byte[] { 0x56, 0x78, 0x9A, 0xBC },
+        data = [0x56, 0x78, 0x9A, 0xBC],
     };
 
     internal static byte[] MakeByteArray(in Properties properties)
@@ -251,7 +251,7 @@ public class ChapterTests
     public void ReadFromTestEmptyData()
     {
         var properties = ValidProperties;
-        properties.data = Array.Empty<byte>();
+        properties.data = [];
 
         _ = Assert.ThrowsException<EndOfStreamException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));

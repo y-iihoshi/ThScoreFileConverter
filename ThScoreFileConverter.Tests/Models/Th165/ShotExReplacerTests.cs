@@ -99,16 +99,20 @@ public class ShotExReplacerTests
     [TestMethod]
     public void ReplaceTestHashtags()
     {
+        static string[] GetHashtags()
+        {
+            return [
+                "＃敵が見切れてる",
+                "＃敵を収めたよ",
+                "＃敵がど真ん中",
+                "＃敵が丸見えｗ",
+                "＃動物園！",
+            ];
+        }
+
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotExReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual(string.Join(Environment.NewLine, new[]
-        {
-            "＃敵が見切れてる",
-            "＃敵を収めたよ",
-            "＃敵がど真ん中",
-            "＃敵が丸見えｗ",
-            "＃動物園！",
-        }), replacer.Replace("%T165SHOTEX0235"));
+        Assert.AreEqual(string.Join(Environment.NewLine, GetHashtags()), replacer.Replace("%T165SHOTEX0235"));
     }
 
     [TestMethod]

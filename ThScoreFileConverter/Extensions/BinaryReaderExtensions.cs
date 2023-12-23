@@ -81,6 +81,6 @@ public static class BinaryReaderExtensions
             b = reader.ReadByte();
         }
 
-        return encoding.GetString(bytes.ToArray());
+        return encoding.GetString([.. bytes]);
     }
 }

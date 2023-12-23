@@ -36,9 +36,7 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestOneBit()
     {
-#pragma warning disable IDE0230 // Use UTF-8 string literal
-        using var stream = new MemoryStream(new byte[] { 0b_0101_0011 });
-#pragma warning restore IDE0230 // Use UTF-8 string literal
+        using var stream = new MemoryStream([0b_0101_0011]);
 
         var reader = new BitReader(stream);
 
@@ -56,7 +54,7 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestZeroBit()
     {
-        using var stream = new MemoryStream(new byte[] { 0xFF });
+        using var stream = new MemoryStream([0xFF]);
         var reader = new BitReader(stream);
 
         Assert.AreEqual(0, reader.ReadBits(0));
@@ -101,9 +99,7 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestNegativeNumBits()
     {
-#pragma warning disable IDE0230 // Use UTF-8 string literal
-        using var stream = new MemoryStream(new byte[] { 0x53 });
-#pragma warning restore IDE0230 // Use UTF-8 string literal
+        using var stream = new MemoryStream([0x53]);
 
         var reader = new BitReader(stream);
 
@@ -133,9 +129,7 @@ public class BitReaderTests
     [TestMethod]
     public void ReadBitsTestEndOfStream()
     {
-#pragma warning disable IDE0230 // Use UTF-8 string literal
-        using var stream = new MemoryStream(new byte[] { 0x53 });
-#pragma warning restore IDE0230 // Use UTF-8 string literal
+        using var stream = new MemoryStream([0x53]);
 
         var reader = new BitReader(stream);
 

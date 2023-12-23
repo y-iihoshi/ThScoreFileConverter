@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
@@ -63,9 +62,10 @@ public class AllScoreDataTests
 
     internal static byte[] MakeByteArray(in Properties properties)
     {
-        return Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray(
+        return
+        [
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray(
                 "story_progress", properties.storyProgress,
                 "story_clear", properties.storyClearFlags.Select(pair => (int)pair.Value).ToArray(),
                 "ed_count", properties.endingCount,
@@ -83,9 +83,9 @@ public class AllScoreDataTests
                         perCharaPair => perCharaPair.Value).ToArray()).ToArray(),
                 "clear_time", properties.clearTimes.Select(
                     perLevelPair => perLevelPair.Value.Select(
-                        perCharaPair => perCharaPair.Value).ToArray()).ToArray()))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray();
+                        perCharaPair => perCharaPair.Value).ToArray()).ToArray()),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ];
     }
 
     internal static void Validate(in Properties expected, in AllScoreData actual)
@@ -153,8 +153,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestEmpty()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<AllScoreData>(Array.Empty<byte>()));
+        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
     }
 
     [TestMethod]
@@ -183,11 +182,11 @@ public class AllScoreDataTests
     {
         var storyProgressValue = 1;
 
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("story_progress", storyProgressValue))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("story_progress", storyProgressValue),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(storyProgressValue, allScoreData.StoryProgress);
         Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
@@ -199,11 +198,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryClear()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("story_clear", 1))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("story_clear", 1),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
     }
@@ -211,11 +210,16 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryClearValue()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("story_clear", new float[] { 123f }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        static float[] GetInvalidValue()
+        {
+            return [123f];
+        }
+
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("story_clear", GetInvalidValue()),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
     }
@@ -223,11 +227,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidEnableBgm()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("enable_bgm", 1))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("enable_bgm", 1),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.BgmFlags.Count);
     }
@@ -235,11 +239,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearRank()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_rank", 1))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("clear_rank", 1),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.ClearRanks.Count);
     }
@@ -247,11 +251,16 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearRankValuePerLevel()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_rank", new float[] { 123f }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        static float[] GetInvalidValue()
+        {
+            return [123f];
+        }
+
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("clear_rank", GetInvalidValue()),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.ClearRanks.Count);
     }
@@ -259,11 +268,16 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearRankValuePerChara()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_rank", new float[][] { new float[] { 123f } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        static float[][] GetInvalidValue()
+        {
+            return [[123f]];
+        }
+
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("clear_rank", GetInvalidValue()),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(1, allScoreData.ClearRanks.Count);
         Assert.IsNotNull(allScoreData.ClearRanks.First().Value);
@@ -273,11 +287,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearTime()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_time", 1))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("clear_time", 1),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.ClearTimes.Count);
     }
@@ -285,11 +299,16 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearTimeValuePerLevel()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_time", new float[] { 123f }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        static float[] GetInvalidValue()
+        {
+            return [123f];
+        }
+
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("clear_time", GetInvalidValue()),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.ClearTimes.Count);
     }
@@ -297,11 +316,16 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidClearTimeValuePerChara()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
-            .Concat(SquirrelHelper.MakeByteArray("clear_time", new float[][] { new float[] { 123f } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        static float[][] GetInvalidValue()
+        {
+            return [[123f]];
+        }
+
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("clear_time", GetInvalidValue()),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(1, allScoreData.ClearTimes.Count);
         Assert.IsNotNull(allScoreData.ClearTimes.First().Value);

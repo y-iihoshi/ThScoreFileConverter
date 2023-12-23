@@ -18,28 +18,24 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 namespace ThScoreFileConverter.Models.Th18;
 
 // %T18CRG[v][w][xx][y][z]
-internal sealed class CollectRateReplacer : Th13.CollectRateReplacerBase<
-    GameMode, CharaWithTotal, Level, LevelWithTotal, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, IScoreData>
+internal sealed class CollectRateReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+        CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, IScoreData>> clearDataDictionary,
+    INumberFormatter formatter)
+    : Th13.CollectRateReplacerBase<
+        GameMode, CharaWithTotal, Level, LevelWithTotal, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, IScoreData>(
+        Definitions.FormatPrefix,
+        Parsers.GameModeParser,
+        Parsers.LevelWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Parsers.StageWithTotalParser,
+        CanReplace,
+        FindCardByModeType,
+        FindCardByLevel,
+        FindCardByLevelStage,
+        clearDataDictionary,
+        formatter)
 {
-    public CollectRateReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-            CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Stage, IScoreData>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.GameModeParser,
-              Parsers.LevelWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Parsers.StageWithTotalParser,
-              CanReplace,
-              FindCardByModeType,
-              FindCardByLevel,
-              FindCardByLevelStage,
-              clearDataDictionary,
-              formatter)
-    {
-    }
-
     private static bool CanReplace(
         GameMode mode, LevelWithTotal level, CharaWithTotal chara, StageWithTotal stage)
     {

@@ -27,7 +27,7 @@ internal class Chapter : IBinaryReadable, Th095.IChapter
         this.Version = 0;
         this.Checksum = 0;
         this.Size = 0;
-        this.Data = Array.Empty<byte>();
+        this.Data = [];
     }
 
     protected Chapter(Chapter chapter)

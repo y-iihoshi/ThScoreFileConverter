@@ -8,20 +8,9 @@ namespace ThScoreFileConverter.Tests.Models;
 [TestClass]
 public class ThCryptTests
 {
-    private readonly byte[] decrypted = new byte[]
-    {
-        0x01, 0x04, 0x09, 0x10, 0x19, 0x24, 0x31, 0x40,
-    };
-
-    private readonly byte[] encryptedBySmallBlock = new byte[]
-    {
-        0x02, 0x42, 0x73, 0xAF, 0xA2, 0x32, 0x7B, 0x67,
-    };
-
-    private readonly byte[] encryptedByLargeBlock = new byte[]
-    {
-        0x52, 0x62, 0x6A, 0xAA, 0xD3, 0x0F, 0x43, 0x7F,
-    };
+    private readonly byte[] decrypted = [0x01, 0x04, 0x09, 0x10, 0x19, 0x24, 0x31, 0x40];
+    private readonly byte[] encryptedBySmallBlock = [0x02, 0x42, 0x73, 0xAF, 0xA2, 0x32, 0x7B, 0x67];
+    private readonly byte[] encryptedByLargeBlock = [0x52, 0x62, 0x6A, 0xAA, 0xD3, 0x0F, 0x43, 0x7F];
 
     private const int KEY = 0x12;
     private const int STEP = 0x34;
@@ -129,7 +118,7 @@ public class ThCryptTests
     public void DecryptTestUnwritableOutput()
     {
         using var input = new MemoryStream(this.encryptedBySmallBlock);
-        using var output = new MemoryStream(Array.Empty<byte>(), false);
+        using var output = new MemoryStream([], false);
 
         _ = Assert.ThrowsException<NotSupportedException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));

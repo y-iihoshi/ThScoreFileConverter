@@ -13,11 +13,11 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th165;
 
-internal readonly struct HashtagFields
+internal readonly struct HashtagFields(int data1, int data2, int data3)
 {
     private static readonly int[] Masks;
 
-    private readonly BitVector32[] data;
+    private readonly BitVector32[] data = [new BitVector32(data1), new BitVector32(data2), new BitVector32(data3)];
 
 #pragma warning disable CA2207 // Initialize value type static fields inline
     static HashtagFields()
@@ -28,12 +28,6 @@ internal readonly struct HashtagFields
         {
             Masks[i] = BitVector32.CreateMask(Masks[i - 1]);
         }
-    }
-#pragma warning restore CA2207 // Initialize value type static fields inline
-
-    public HashtagFields(int data1, int data2, int data3)
-    {
-        this.data = new[] { new BitVector32(data1), new BitVector32(data2), new BitVector32(data3) };
     }
 
     public IEnumerable<int> Data => this.data?.Select(vector => vector.Data) ?? Enumerable.Empty<int>();

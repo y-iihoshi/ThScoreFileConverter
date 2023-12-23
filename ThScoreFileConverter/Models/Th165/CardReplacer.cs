@@ -16,42 +16,37 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th165;
 
 // %T165CARD[xx][y][z]
-internal sealed class CardReplacer : IStringReplaceable
+internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CARD({Parsers.DayParser.Pattern})([1-7])([12])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        var key = (day, scene);
+        if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
+            return match.ToString();
+
+        if (hideUntriedCards)
         {
-            var day = Parsers.DayParser.Parse(match.Groups[1].Value);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var score = scores.FirstOrDefault(elem =>
+                (elem is not null) &&
+                (elem.Number >= 0) &&
+                (elem.Number < Definitions.SpellCards.Count) &&
+                Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
+            if ((score is null) || (score.ChallengeCount <= 0))
+                return "??????????";
+        }
 
-            var key = (day, scene);
-            if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
-                return match.ToString();
-
-            if (hideUntriedCards)
-            {
-                var score = scores.FirstOrDefault(elem =>
-                    (elem is not null) &&
-                    (elem.Number >= 0) &&
-                    (elem.Number < Definitions.SpellCards.Count) &&
-                    Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
-                if ((score is null) || (score.ChallengeCount <= 0))
-                    return "??????????";
-            }
-
-            if (type == 1)
-                return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
-            else
-                return enemyCardPair.Card;
-        });
-    }
+        if (type == 1)
+            return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
+        else
+            return enemyCardPair.Card;
+    });
 
     public string Replace(string input)
     {

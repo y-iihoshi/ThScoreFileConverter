@@ -16,29 +16,25 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th06;
 
 // %T06PRAC[x][yy][z]
-internal sealed class PracticeReplacer : IStringReplaceable
+internal sealed class PracticeReplacer(
+    IReadOnlyDictionary<(Chara Chara, Level Level, Stage Stage), IPracticeScore> practiceScores,
+    INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})");
 
-    private readonly MatchEvaluator evaluator;
-
-    public PracticeReplacer(
-        IReadOnlyDictionary<(Chara Chara, Level Level, Stage Stage), IPracticeScore> practiceScores,
-        INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
 
-            return Core.Models.Definitions.CanPractice(level) && Core.Models.Definitions.CanPractice(stage)
-                ? formatter.FormatNumber(
-                    practiceScores.TryGetValue((chara, level, stage), out var score) ? score.HighScore : default)
-                : match.ToString();
-        });
-    }
+        return Core.Models.Definitions.CanPractice(level) && Core.Models.Definitions.CanPractice(stage)
+            ? formatter.FormatNumber(
+                practiceScores.TryGetValue((chara, level, stage), out var score) ? score.HighScore : default)
+            : match.ToString();
+    });
 
     public string Replace(string input)
     {

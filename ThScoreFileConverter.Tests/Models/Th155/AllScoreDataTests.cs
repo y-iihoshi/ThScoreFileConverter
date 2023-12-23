@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
@@ -98,21 +97,22 @@ public class AllScoreDataTests
         var sqTable = TestUtils.MakeByteArray((int)SQOT.Table);
         var sqNull = TestUtils.MakeByteArray((int)SQOT.Null);
 
-        return Array.Empty<byte>()
-            // .Concat(sqTable)
-            .Concat(SquirrelHelper.MakeByteArray("story"))
-            .Concat(sqTable)
-            .Concat(properties.storyDictionary.SelectMany(
-                pair => SquirrelHelper.MakeByteArray(ToString(pair.Key)).Concat(MakeSQByteArray(pair.Value))))
-            .Concat(sqNull)
-            .Concat(SquirrelHelper.MakeByteArray(
+        return
+        [
+            // .. sqTable,
+            .. SquirrelHelper.MakeByteArray("story"),
+            .. sqTable,
+            .. properties.storyDictionary.SelectMany(
+                    pair => SquirrelHelper.MakeByteArray(ToString(pair.Key)).Concat(MakeSQByteArray(pair.Value))),
+            .. sqNull,
+            .. SquirrelHelper.MakeByteArray(
                 "character", properties.characterDictionary,
                 "bgm", properties.bgmDictionary,
                 "ed", properties.endingDictionary,
                 "stage", properties.stageDictionary,
-                "version", properties.version))
-            .Concat(sqNull)
-            .ToArray();
+                "version", properties.version),
+            .. sqNull,
+        ];
     }
 
     internal static void Validate(in Properties expected, in AllScoreData actual)
@@ -167,8 +167,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestEmpty()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(
-            () => TestUtils.Create<AllScoreData>(Array.Empty<byte>()));
+        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
     }
 
     [TestMethod]
@@ -205,11 +204,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryDictionary()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("story", 123))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("story", 123),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
     }
@@ -217,11 +216,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryKey()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("story", new Dictionary<int, int> { { 123, 456 } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("story", new Dictionary<int, int> { { 123, 456 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
     }
@@ -229,11 +228,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryChara()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("story", new Dictionary<string, int> { { "abc", 123 } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("story", new Dictionary<string, int> { { "abc", 123 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
     }
@@ -241,16 +240,13 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStory()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray(
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray(
                 "story",
-                new Dictionary<string, int>
-                {
-                    { ToString(StoryChara.ReimuKasen), 123 },
-                }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+                new Dictionary<string, int> { { ToString(StoryChara.ReimuKasen), 123 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
         var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
@@ -264,9 +260,9 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryFieldName()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray(
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray(
                 "story",
                 new Dictionary<string, Dictionary<int, int>>
                 {
@@ -274,9 +270,9 @@ public class AllScoreDataTests
                         ToString(StoryChara.ReimuKasen),
                         new Dictionary<int, int> { { 123, 456 } }
                     },
-                }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+                }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
         var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
@@ -290,9 +286,9 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStoryFieldValue()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray(
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray(
                 "story",
                 new Dictionary<string, Dictionary<string, float>>
                 {
@@ -307,9 +303,9 @@ public class AllScoreDataTests
                             { "stage_overdrive", 90f },
                         }
                     },
-                }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+                }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
         var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
@@ -323,11 +319,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidCharacterDictionary()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("character", 123))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("character", 123),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
     }
@@ -335,11 +331,12 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidCharacterKey()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("character", new Dictionary<int, int> { { 123, 456 } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("character", new Dictionary<int, int> { { 123, 456 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
     }
@@ -347,11 +344,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidCharacterValue()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("character", new Dictionary<string, string> { { "abc", "def" } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("character", new Dictionary<string, string> { { "abc", "def" } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
     }
@@ -359,11 +356,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidBgmDictionary()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("bgm", 123))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("bgm", 123),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
     }
@@ -371,11 +368,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidBgmKey()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("bgm", new Dictionary<int, int> { { 123, 456 } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("bgm", new Dictionary<int, int> { { 123, 456 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
     }
@@ -383,11 +380,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidBgmValue()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("bgm", new Dictionary<bool, bool> { { true, false } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("bgm", new Dictionary<bool, bool> { { true, false } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
     }
@@ -395,11 +392,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidEndingDictionary()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("ed", 123))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("ed", 123),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
     }
@@ -407,11 +404,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidEndingKey()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("ed", new Dictionary<int, int> { { 123, 456 } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("ed", new Dictionary<int, int> { { 123, 456 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
     }
@@ -419,11 +416,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidEndingValue()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("ed", new Dictionary<string, string> { { "abc", "def" } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("ed", new Dictionary<string, string> { { "abc", "def" } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
     }
@@ -431,11 +428,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStageDictionary()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("stage", 123))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("stage", 123),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StageDictionary.Count);
     }
@@ -443,11 +440,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStageKey()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("stage", new Dictionary<string, int> { { "abc", 123 } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("stage", new Dictionary<string, int> { { "abc", 123 } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StageDictionary.Count);
     }
@@ -455,11 +452,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidStageValue()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("stage", new Dictionary<int, string> { { 123, "abc" } }))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("stage", new Dictionary<int, string> { { 123, "abc" } }),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(0, allScoreData.StageDictionary.Count);
     }
@@ -467,11 +464,11 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestInvalidVersion()
     {
-        var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
-            // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
-            .Concat(SquirrelHelper.MakeByteArray("version", 123f))
-            .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
-            .ToArray());
+        var allScoreData = TestUtils.Create<AllScoreData>([
+            // .. TestUtils.MakeByteArray((int)SQOT.Table),
+            .. SquirrelHelper.MakeByteArray("version", 123f),
+            .. TestUtils.MakeByteArray((int)SQOT.Null),
+        ]);
 
         Assert.AreEqual(default, allScoreData.Version);
     }

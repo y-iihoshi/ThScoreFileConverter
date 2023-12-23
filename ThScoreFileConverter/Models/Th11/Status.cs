@@ -9,15 +9,10 @@
 
 namespace ThScoreFileConverter.Models.Th11;
 
-internal sealed class Status : Th10.StatusBase
+internal sealed class Status(Th10.Chapter chapter) : Th10.StatusBase(chapter, ValidVersion, NumBgms)
 {
     public const ushort ValidVersion = 0x0000;
     public const int NumBgms = 17;
-
-    public Status(Th10.Chapter chapter)
-        : base(chapter, ValidVersion, NumBgms)
-    {
-    }
 
     public static new bool CanInitialize(Th10.Chapter chapter)
     {

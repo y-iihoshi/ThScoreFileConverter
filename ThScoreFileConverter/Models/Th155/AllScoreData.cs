@@ -65,7 +65,7 @@ internal sealed class AllScoreData : IBinaryReadable
     {
         return table.Value.TryGetValue(new SQString(key), out var value) && (value is SQTable valueTable)
             ? valueTable.ToDictionary(keyPredicate, valuePredicate, keyConverter, valueConverter)
-            : new Dictionary<TKey, TValue>();
+            : [];
     }
 
     private static StoryChara? ParseStoryChara(SQObject obj)

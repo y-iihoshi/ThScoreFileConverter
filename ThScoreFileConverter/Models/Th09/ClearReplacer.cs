@@ -17,48 +17,44 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th09;
 
 // %T09CLEAR[x][yy][z]
-internal sealed class ClearReplacer : IStringReplaceable
+internal sealed class ClearReplacer(
+    IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
+    IReadOnlyDictionary<Chara, IClearCount> clearCounts,
+    INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}CLEAR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})([12])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public ClearReplacer(
-        IReadOnlyDictionary<(Chara Chara, Level Level), IReadOnlyList<IHighScore>> rankings,
-        IReadOnlyDictionary<Chara, IClearCount> clearCounts,
-        INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        var count = clearCounts.TryGetValue(chara, out var clearCount)
+            && clearCount.Counts.TryGetValue(level, out var c) ? c : default;
+
+        if (type == 1)
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
-
-            var count = clearCounts.TryGetValue(chara, out var clearCount)
-                && clearCount.Counts.TryGetValue(level, out var c) ? c : default;
-
-            if (type == 1)
+            return formatter.FormatNumber(count);
+        }
+        else
+        {
+            if (count > 0)
             {
-                return formatter.FormatNumber(count);
+                return "Cleared";
             }
             else
             {
-                if (count > 0)
-                {
-                    return "Cleared";
-                }
-                else
-                {
-                    var score = rankings.TryGetValue((chara, level), out var ranking) && (ranking.Count > 0)
-                        ? ranking[0] : null;
-                    var date = (score is not null)
-                        ? EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0') : "--/--";
-                    return (date != "--/--") ? "Not Cleared" : "-------";
-                }
+                var score = rankings.TryGetValue((chara, level), out var ranking) && (ranking.Count > 0)
+                    ? ranking[0] : null;
+                var date = (score is not null)
+                    ? EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0') : "--/--";
+                return (date != "--/--") ? "Not Cleared" : "-------";
             }
-        });
-    }
+        }
+    });
 
     public string Replace(string input)
     {

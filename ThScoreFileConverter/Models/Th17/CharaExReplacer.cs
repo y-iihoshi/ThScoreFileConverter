@@ -14,28 +14,25 @@ using ThScoreFileConverter.Core.Models.Th17;
 namespace ThScoreFileConverter.Models.Th17;
 
 // %T17CHARAEX[x][yy][z]
-internal sealed class CharaExReplacer : Th13.CharaExReplacerBase<
-    CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, Th10.IScoreData<Th13.StageProgress>>
+internal sealed class CharaExReplacer(
+    IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
+        CharaWithTotal,
+        Level,
+        Level,
+        Core.Models.Th14.LevelPracticeWithTotal,
+        Core.Models.Th14.StagePractice,
+        Th10.IScoreData<Th13.StageProgress>>> clearDataDictionary,
+    INumberFormatter formatter)
+    : Th13.CharaExReplacerBase<
+        CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, Th10.IScoreData<Th13.StageProgress>>(
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Models.Definitions.IsTotal,
+        Definitions.IsTotal,
+        Th14.Definitions.IsToBeSummed,
+        static centiseconds => new Time(centiseconds * 10, false),
+        clearDataDictionary,
+        formatter)
 {
-    public CharaExReplacer(
-        IReadOnlyDictionary<CharaWithTotal, Th13.IClearData<
-            CharaWithTotal,
-            Level,
-            Level,
-            Core.Models.Th14.LevelPracticeWithTotal,
-            Core.Models.Th14.StagePractice,
-            Th10.IScoreData<Th13.StageProgress>>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Models.Definitions.IsTotal,
-              Definitions.IsTotal,
-              Th14.Definitions.IsToBeSummed,
-              static centiseconds => new Time(centiseconds * 10, false),
-              clearDataDictionary,
-              formatter)
-    {
-    }
 }

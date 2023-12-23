@@ -27,6 +27,7 @@ public class SQArrayTests
     }
 
     [DataTestMethod]
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
     [DataRow(
         new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
         new[] { 123 },
@@ -39,6 +40,7 @@ public class SQArrayTests
             (int)SQOT.Null },
         new[] { 123, 456 },
         DisplayName = "two elements")]
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
     public void CreateTest(int[] array, int[] expected)
     {
         var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));

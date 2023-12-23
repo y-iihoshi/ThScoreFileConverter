@@ -19,46 +19,42 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th15;
 
 // %T15C[w][xxx][yy][z]
-internal sealed class CareerReplacer : IStringReplaceable
+internal sealed class CareerReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([12])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CareerReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+        var number = IntegerHelper.Parse(match.Groups[2].Value);
+        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
+        var type = IntegerHelper.Parse(match.Groups[4].Value);
+
+        Func<Th13.ISpellCard<Level>, int> getCount = type switch
         {
-            var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
-            var number = IntegerHelper.Parse(match.Groups[2].Value);
-            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            1 => card => card.ClearCount,
+            _ => card => card.TrialCount,
+        };
 
-            Func<Th13.ISpellCard<Level>, int> getCount = type switch
-            {
-                1 => card => card.ClearCount,
-                _ => card => card.TrialCount,
-            };
-
-            var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
-                && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
-                ? clearDataPerGameMode.Cards : ImmutableDictionary<int, Th13.ISpellCard<Level>>.Empty;
-            if (number == 0)
-            {
-                return formatter.FormatNumber(cards.Values.Sum(getCount));
-            }
-            else if (Definitions.CardTable.ContainsKey(number))
-            {
-                return formatter.FormatNumber(cards.TryGetValue(number, out var card) ? getCount(card) : default);
-            }
-            else
-            {
-                return match.ToString();
-            }
-        });
-    }
+        var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
+            && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
+            ? clearDataPerGameMode.Cards : ImmutableDictionary<int, Th13.ISpellCard<Level>>.Empty;
+        if (number == 0)
+        {
+            return formatter.FormatNumber(cards.Values.Sum(getCount));
+        }
+        else if (Definitions.CardTable.ContainsKey(number))
+        {
+            return formatter.FormatNumber(cards.TryGetValue(number, out var card) ? getCount(card) : default);
+        }
+        else
+        {
+            return match.ToString();
+        }
+    });
 
     public string Replace(string input)
     {

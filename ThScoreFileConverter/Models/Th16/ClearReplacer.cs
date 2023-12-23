@@ -23,18 +23,14 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
 namespace ThScoreFileConverter.Models.Th16;
 
 // %T16CLEAR[x][yy]
-internal sealed class ClearReplacer : Th13.ClearReplacerBase<
-    Chara, CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>
+internal sealed class ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+    : Th13.ClearReplacerBase<
+        Chara, CharaWithTotal, Level, Level, Core.Models.Th14.LevelPracticeWithTotal, Core.Models.Th14.StagePractice, IScoreData>(
+        Definitions.FormatPrefix,
+        Parsers.LevelParser,
+        Parsers.CharaParser,
+        (level, chara) => GetRanking(clearDataDictionary, level, chara))
 {
-    public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelParser,
-              Parsers.CharaParser,
-              (level, chara) => GetRanking(clearDataDictionary, level, chara))
-    {
-    }
-
     private static IReadOnlyList<Th10.IScoreData<Th13.StageProgress>> GetRanking(
         IReadOnlyDictionary<CharaWithTotal, IClearData> dictionary, Level level, Chara chara)
     {

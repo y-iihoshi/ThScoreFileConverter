@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Tests.Models.Th10;
 [TestClass]
 public class CollectRateReplacerTests
 {
-    private static IEnumerable<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         static ISpellCard<Level> MockSpellCard(int clearCount, int trialCount, int id, Level level)
         {
@@ -39,7 +39,7 @@ public class CollectRateReplacerTests
         _ = mock2.Chara.Returns(CharaWithTotal.Total);
         _ = mock2.Cards.Returns(cards2);
 
-        return new[] { mock1, mock2 };
+        return [mock1, mock2];
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =

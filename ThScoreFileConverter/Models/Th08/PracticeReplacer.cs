@@ -15,36 +15,33 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th08;
 
 // %T08PRAC[w][xx][yy][z]
-internal sealed class PracticeReplacer : IStringReplaceable
+internal sealed class PracticeReplacer(
+    IReadOnlyDictionary<Chara, IPracticeScore> practiceScores, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})([12])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public PracticeReplacer(IReadOnlyDictionary<Chara, IPracticeScore> practiceScores, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
+        var type = IntegerHelper.Parse(match.Groups[4].Value);
+
+        int GetValue(IPracticeScore score)
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-            var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var key = (stage, level);
+            return (type == 1)
+                ? (score.HighScores.TryGetValue(key, out var highScore) ? (highScore * 10) : default)
+                : (score.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
+        }
 
-            int GetValue(IPracticeScore score)
-            {
-                var key = (stage, level);
-                return (type == 1)
-                    ? (score.HighScores.TryGetValue(key, out var highScore) ? (highScore * 10) : default)
-                    : (score.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
-            }
-
-            return Core.Models.Definitions.CanPractice(level) && Core.Models.Th08.Definitions.CanPractice(stage)
-                ? formatter.FormatNumber(
-                    practiceScores.TryGetValue(chara, out var score) ? GetValue(score) : default)
-                : match.ToString();
-        });
-    }
+        return Core.Models.Definitions.CanPractice(level) && Core.Models.Th08.Definitions.CanPractice(stage)
+            ? formatter.FormatNumber(
+                practiceScores.TryGetValue(chara, out var score) ? GetValue(score) : default)
+            : match.ToString();
+    });
 
     public string Replace(string input)
     {

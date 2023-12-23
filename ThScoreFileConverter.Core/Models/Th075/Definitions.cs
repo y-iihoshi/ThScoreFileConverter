@@ -204,7 +204,7 @@ public static class Definitions
     /// </summary>
     public static IReadOnlyDictionary<Chara, IEnumerable<int>> CardIdTable { get; } = InitializeCardIdTable();
 
-    private static IReadOnlyDictionary<Chara, IEnumerable<int>> InitializeCardIdTable()
+    private static Dictionary<Chara, IEnumerable<int>> InitializeCardIdTable()
     {
         var charaStageEnemyTable = new Dictionary<Chara, IEnumerable<(Stage Stage, Chara Enemy)>>
         {

@@ -14,40 +14,35 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th07;
 
 // %T07PLAY[x][yy]
-internal sealed class PlayReplacer : IStringReplaceable
+internal sealed class PlayReplacer(PlayStatus playStatus, INumberFormatter formatter) : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $"{Definitions.FormatPrefix}PLAY({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern}|CL|CN|PR|RT)");
 
-    private readonly MatchEvaluator evaluator;
-
-    public PlayReplacer(PlayStatus playStatus, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
-        {
-            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
-            var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
+        var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+        var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
-            var playCount = playStatus.PlayCounts[level];
-            switch (charaAndMore)
-            {
-                case "CL":  // clear count
-                    return formatter.FormatNumber(playCount.TotalClear);
-                case "CN":  // continue count
-                    return formatter.FormatNumber(playCount.TotalContinue);
-                case "PR":  // practice count
-                    return formatter.FormatNumber(playCount.TotalPractice);
-                case "RT":  // retry count
-                    return formatter.FormatNumber(playCount.TotalRetry);
-                default:
-                    {
-                        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-                        return formatter.FormatNumber((chara == CharaWithTotal.Total)
-                            ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
-                    }
-            }
-        });
-    }
+        var playCount = playStatus.PlayCounts[level];
+        switch (charaAndMore)
+        {
+            case "CL":  // clear count
+                return formatter.FormatNumber(playCount.TotalClear);
+            case "CN":  // continue count
+                return formatter.FormatNumber(playCount.TotalContinue);
+            case "PR":  // practice count
+                return formatter.FormatNumber(playCount.TotalPractice);
+            case "RT":  // retry count
+                return formatter.FormatNumber(playCount.TotalRetry);
+            default:
+                {
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+                    return formatter.FormatNumber((chara == CharaWithTotal.Total)
+                        ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
+                }
+        }
+    });
 
     public string Replace(string input)
     {

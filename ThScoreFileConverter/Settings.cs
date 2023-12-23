@@ -50,7 +50,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     public Settings()
     {
         this.lastTitle = string.Empty;
-        this.Dictionary = new Dictionary<string, SettingsPerTitle>();
+        this.Dictionary = [];
         this.fontFamilyName = SystemFonts.MessageFontFamily.Source;
         this.fontSize = SystemFonts.MessageFontSize;
         this.outputNumberGroupSeparator = true;
@@ -310,7 +310,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     /// <param name="file">A path of the file that may be broken.</param>
     /// <param name="innerException">The exception that is the cause of the current exception.</param>
     /// <returns>A new <see cref="Exception"/> object.</returns>
-    private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
+    private static InvalidDataException NewFileMayBeBrokenException(string file, Exception? innerException = null)
     {
         return new InvalidDataException(
             StringHelper.Format(ExceptionMessages.InvalidDataExceptionFileMayBeBroken, file), innerException);

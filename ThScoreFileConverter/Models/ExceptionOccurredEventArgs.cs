@@ -12,19 +12,11 @@ namespace ThScoreFileConverter.Models;
 /// <summary>
 /// Represents the event data that indicates occurring of an exception.
 /// </summary>
-internal sealed class ExceptionOccurredEventArgs : EventArgs
+/// <param name="ex">The exception data.</param>
+internal sealed class ExceptionOccurredEventArgs(Exception ex) : EventArgs
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
-    /// </summary>
-    /// <param name="ex">The exception data.</param>
-    public ExceptionOccurredEventArgs(Exception ex)
-    {
-        this.Exception = ex;
-    }
-
     /// <summary>
     /// Gets the exception data.
     /// </summary>
-    public Exception Exception { get; }
+    public Exception Exception { get; } = ex;
 }

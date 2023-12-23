@@ -13,33 +13,30 @@ using ThScoreFileConverter.Core.Models.Th13;
 namespace ThScoreFileConverter.Models.Th13;
 
 // %T13CHARAEX[x][yy][z]
-internal sealed class CharaExReplacer : CharaExReplacerBase<
-    CharaWithTotal,
-    LevelPractice,
-    LevelPractice,
-    LevelPracticeWithTotal,
-    StagePractice,
-    Th10.IScoreData<StageProgress>>
+internal sealed class CharaExReplacer(
+    IReadOnlyDictionary<CharaWithTotal, IClearData<
+        CharaWithTotal,
+        LevelPractice,
+        LevelPractice,
+        LevelPracticeWithTotal,
+        StagePractice,
+        Th10.IScoreData<StageProgress>>> clearDataDictionary,
+    INumberFormatter formatter)
+    : CharaExReplacerBase<
+        CharaWithTotal,
+        LevelPractice,
+        LevelPractice,
+        LevelPracticeWithTotal,
+        StagePractice,
+        Th10.IScoreData<StageProgress>>(
+        Definitions.FormatPrefix,
+        Parsers.LevelWithTotalParser,
+        Parsers.CharaWithTotalParser,
+        Models.Definitions.IsTotal,
+        Definitions.IsTotal,
+        Definitions.IsToBeSummed,
+        static frames => new Time(frames),
+        clearDataDictionary,
+        formatter)
 {
-    public CharaExReplacer(
-        IReadOnlyDictionary<CharaWithTotal, IClearData<
-            CharaWithTotal,
-            LevelPractice,
-            LevelPractice,
-            LevelPracticeWithTotal,
-            StagePractice,
-            Th10.IScoreData<StageProgress>>> clearDataDictionary,
-        INumberFormatter formatter)
-        : base(
-              Definitions.FormatPrefix,
-              Parsers.LevelWithTotalParser,
-              Parsers.CharaWithTotalParser,
-              Models.Definitions.IsTotal,
-              Definitions.IsTotal,
-              Definitions.IsToBeSummed,
-              static frames => new Time(frames),
-              clearDataDictionary,
-              formatter)
-    {
-    }
 }

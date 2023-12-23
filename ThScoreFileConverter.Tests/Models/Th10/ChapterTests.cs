@@ -27,7 +27,7 @@ public class ChapterTests
         version = default,
         checksum = default,
         size = default,
-        data = Array.Empty<byte>(),
+        data = [],
     };
 
     internal static Properties ValidProperties { get; } = new Properties()
@@ -36,7 +36,7 @@ public class ChapterTests
         version = 1234,
         checksum = 0xE0u,
         size = 16,
-        data = new byte[] { 0x01, 0x23, 0x45, 0x67 },
+        data = [0x01, 0x23, 0x45, 0x67],
     };
 
     internal static byte[] MakeByteArray(in Properties properties)
@@ -236,7 +236,7 @@ public class ChapterTests
     public void ReadFromTestEmptyData()
     {
         var properties = ValidProperties;
-        properties.data = Array.Empty<byte>();
+        properties.data = [];
 
         _ = Assert.ThrowsException<EndOfStreamException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));

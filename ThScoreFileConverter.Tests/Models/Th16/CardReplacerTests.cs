@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Tests.Models.Th16;
 [TestClass]
 public class CardReplacerTests
 {
-    private static IReadOnlyList<IClearData> CreateClearDataList()
+    private static IClearData[] CreateClearDataList()
     {
         static ISpellCard MockSpellCard(int index)
         {
@@ -27,11 +27,16 @@ public class CardReplacerTests
             return mock;
         }
 
-        var cards = new[] { 1, 2 }.ToDictionary(index => index, MockSpellCard);
+        static int[] GetCardIndices()
+        {
+            return [1, 2];
+        }
+
+        var cards = GetCardIndices().ToDictionary(index => index, MockSpellCard);
         var clearData = Substitute.For<IClearData>();
         _ = clearData.Chara.Returns(CharaWithTotal.Total);
         _ = clearData.Cards.Returns(cards);
-        return new[] { clearData };
+        return [clearData];
     }
 
     internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =

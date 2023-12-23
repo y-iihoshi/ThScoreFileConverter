@@ -16,43 +16,39 @@ using ThScoreFileConverter.Helpers;
 namespace ThScoreFileConverter.Models.Th07;
 
 // %T07C[xxx][yy][z]
-internal sealed class CareerReplacer : IStringReplaceable
+internal sealed class CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
+    : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
         $@"{Definitions.FormatPrefix}C(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([1-3])");
 
-    private readonly MatchEvaluator evaluator;
-
-    public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
+    private readonly MatchEvaluator evaluator = new(match =>
     {
-        this.evaluator = new MatchEvaluator(match =>
+        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+        var type = IntegerHelper.Parse(match.Groups[3].Value);
+
+        Func<ICardAttack, long> getValue = type switch
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
-            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            1 => attack => attack.MaxBonuses[chara],
+            2 => attack => attack.ClearCounts[chara],
+            _ => attack => attack.TrialCounts[chara],
+        };
 
-            Func<ICardAttack, long> getValue = type switch
-            {
-                1 => attack => attack.MaxBonuses[chara],
-                2 => attack => attack.ClearCounts[chara],
-                _ => attack => attack.TrialCounts[chara],
-            };
-
-            if (number == 0)
-            {
-                return formatter.FormatNumber(cardAttacks.Values.Sum(getValue));
-            }
-            else if (Definitions.CardTable.ContainsKey(number))
-            {
-                return formatter.FormatNumber(
-                    cardAttacks.TryGetValue(number, out var attack) ? getValue(attack) : default);
-            }
-            else
-            {
-                return match.ToString();
-            }
-        });
-    }
+        if (number == 0)
+        {
+            return formatter.FormatNumber(cardAttacks.Values.Sum(getValue));
+        }
+        else if (Definitions.CardTable.ContainsKey(number))
+        {
+            return formatter.FormatNumber(
+                cardAttacks.TryGetValue(number, out var attack) ? getValue(attack) : default);
+        }
+        else
+        {
+            return match.ToString();
+        }
+    });
 
     public string Replace(string input)
     {
