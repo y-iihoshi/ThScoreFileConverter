@@ -8,6 +8,7 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using DependencyPropertyGenerator;
 using Microsoft.Xaml.Behaviors;
 
 namespace ThScoreFileConverter.Interactivity;
@@ -15,22 +16,9 @@ namespace ThScoreFileConverter.Interactivity;
 /// <summary>
 /// Encapsulates state information into a <see cref="TextBoxBase"/> object.
 /// </summary>
-public class TextBoxBaseScrollBehavior : Behavior<TextBoxBase>
+[DependencyProperty<bool>("AutoScrollToEnd")]
+public partial class TextBoxBaseScrollBehavior : Behavior<TextBoxBase>
 {
-    /// <summary>Identifies the <see cref="AutoScrollToEnd"/> dependency property.</summary>
-    public static readonly DependencyProperty AutoScrollToEndProperty =
-        DependencyProperty.Register(
-            nameof(AutoScrollToEnd), typeof(bool), typeof(TextBoxBaseScrollBehavior));
-
-    /// <summary>
-    /// Gets or sets a value indicating whether it scrolls to end automatically.
-    /// </summary>
-    public bool AutoScrollToEnd
-    {
-        get => (bool)this.GetValue(AutoScrollToEndProperty);
-        set => this.SetValue(AutoScrollToEndProperty, value);
-    }
-
     /// <summary>
     /// Called after the behavior is attached to a <see cref="Behavior{T}.AssociatedObject"/>.
     /// </summary>

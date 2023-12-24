@@ -6,105 +6,32 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Windows;
+using System.Windows.Forms;
+using DependencyPropertyGenerator;
 using ThScoreFileConverter.Core.Resources;
-using WinForms = System.Windows.Forms;
 
 namespace ThScoreFileConverter.Interactivity;
 
 /// <summary>
-/// Encapsulates the handling of <see cref="WinForms.FolderBrowserDialog"/>.
+/// Encapsulates the handling of <see cref="FolderBrowserDialog"/>.
 /// </summary>
-public class FolderBrowserDialogAction : CommonDialogAction
+[DependencyProperty<string>(nameof(FolderBrowserDialog.Description), DefaultValue = "")]
+[DependencyProperty<Environment.SpecialFolder>(nameof(FolderBrowserDialog.RootFolder), DefaultValue = Environment.SpecialFolder.Desktop)]
+[DependencyProperty<string>(nameof(FolderBrowserDialog.SelectedPath), DefaultValue = "")]
+[DependencyProperty<bool>(nameof(FolderBrowserDialog.ShowNewFolderButton), DefaultValue = true)]
+public partial class FolderBrowserDialogAction : CommonDialogAction
 {
-    #region Dependency properties
-
-    /// <summary>Identifies the <see cref="Description"/> dependency property.</summary>
-    public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register(
-            nameof(Description),
-            typeof(string),
-            typeof(FolderBrowserDialogAction),
-            new UIPropertyMetadata(string.Empty));
-
-    /// <summary>Identifies the <see cref="RootFolder"/> dependency property.</summary>
-    public static readonly DependencyProperty RootFolderProperty =
-        DependencyProperty.Register(
-            nameof(RootFolder),
-            typeof(Environment.SpecialFolder),
-            typeof(FolderBrowserDialogAction),
-            new UIPropertyMetadata(Environment.SpecialFolder.Desktop));
-
-    /// <summary>Identifies the <see cref="SelectedPath"/> dependency property.</summary>
-    public static readonly DependencyProperty SelectedPathProperty =
-        DependencyProperty.Register(
-            nameof(SelectedPath),
-            typeof(string),
-            typeof(FolderBrowserDialogAction),
-            new UIPropertyMetadata(string.Empty));
-
-    /// <summary>Identifies the <see cref="ShowNewFolderButton"/> dependency property.</summary>
-    public static readonly DependencyProperty ShowNewFolderButtonProperty =
-        DependencyProperty.Register(
-            nameof(ShowNewFolderButton),
-            typeof(bool),
-            typeof(FolderBrowserDialogAction),
-            new UIPropertyMetadata(true));
-
-    #endregion
-
-    #region CLR properties
-
     /// <summary>
-    /// Gets or sets the descriptive text displayed above the tree view control in the dialog box.
+    /// Creates a new <see cref="FolderBrowserDialog"/> instance.
     /// </summary>
-    public string Description
+    /// <returns>A created <see cref="FolderBrowserDialog"/> instance.</returns>
+    internal FolderBrowserDialog CreateDialog()
     {
-        get => (string)this.GetValue(DescriptionProperty);
-        set => this.SetValue(DescriptionProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the root folder where the browsing starts from.
-    /// </summary>
-    public Environment.SpecialFolder RootFolder
-    {
-        get => (Environment.SpecialFolder)this.GetValue(RootFolderProperty);
-        set => this.SetValue(RootFolderProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the path selected by the user.
-    /// </summary>
-    public string SelectedPath
-    {
-        get => (string)this.GetValue(SelectedPathProperty);
-        set => this.SetValue(SelectedPathProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the <c>New Folder</c> button appears in the folder
-    /// browsing dialog box.
-    /// </summary>
-    public bool ShowNewFolderButton
-    {
-        get => (bool)this.GetValue(ShowNewFolderButtonProperty);
-        set => this.SetValue(ShowNewFolderButtonProperty, value);
-    }
-
-    #endregion
-
-    /// <summary>
-    /// Creates a new <see cref="WinForms.FolderBrowserDialog"/> instance.
-    /// </summary>
-    /// <returns>A created <see cref="WinForms.FolderBrowserDialog"/> instance.</returns>
-    internal WinForms.FolderBrowserDialog CreateDialog()
-    {
-        return new WinForms.FolderBrowserDialog
+        return new FolderBrowserDialog
         {
-            Description = this.Description,
+            Description = this.Description ?? string.Empty,
             RootFolder = this.RootFolder,
-            SelectedPath = this.SelectedPath,
+            SelectedPath = this.SelectedPath ?? string.Empty,
             ShowNewFolderButton = this.ShowNewFolderButton,
             Site = this.Site,
             Tag = this.Tag,
@@ -123,7 +50,7 @@ public class FolderBrowserDialogAction : CommonDialogAction
 #pragma warning disable IDE0010 // Add missing cases to switch statement
         switch (dialogResult)
         {
-            case WinForms.DialogResult.OK:
+            case DialogResult.OK:
                 if (this.OkCommand is not null)
                 {
                     var result = new FolderBrowserDialogActionResult(dialog.SelectedPath);
@@ -133,7 +60,7 @@ public class FolderBrowserDialogAction : CommonDialogAction
 
                 break;
 
-            case WinForms.DialogResult.Cancel:
+            case DialogResult.Cancel:
                 if (this.CancelCommand is not null)
                 {
                     if (this.CancelCommand.CanExecute(null))
