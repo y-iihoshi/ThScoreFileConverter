@@ -184,11 +184,11 @@
                         VerticalAlignment="Center">
                     <xb:Interaction.Triggers>
                         <xb:EventTrigger EventName="Click">
-                            <i:FolderBrowserDialogAction Description="{lex:Loc MessageSelectBestShotDirectory}"
-                                                         OkCommand="{Binding SelectBestShotDirectoryCommand}"
-                                                         Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                         SelectedPath="{Binding Text, ElementName=BestShotTextBox}"
-                                                         ShowNewFolderButton="False"/>
+                            <i:OpenFolderDialogAction FolderName="{Binding Text, ElementName=BestShotTextBox}"
+                                                      InitialDirectory="{Binding Text, ElementName=BestShotTextBox}"
+                                                      OkCommand="{Binding SelectBestShotDirectoryCommand}"
+                                                      Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                      Title="{lex:Loc MessageSelectBestShotDirectory}"/>
                         </xb:EventTrigger>
                     </xb:Interaction.Triggers>
                 </Button>
@@ -262,10 +262,11 @@
                         VerticalAlignment="Center">
                     <xb:Interaction.Triggers>
                         <xb:EventTrigger EventName="Click">
-                            <i:FolderBrowserDialogAction Description="{lex:Loc MessageSelectOutputDirectory}"
-                                                         OkCommand="{Binding SelectOutputDirectoryCommand}"
-                                                         Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                         SelectedPath="{Binding Text, ElementName=OutputTextBox}"/>
+                            <i:OpenFolderDialogAction FolderName="{Binding Text, ElementName=OutputTextBox}"
+                                                      InitialDirectory="{Binding Text, ElementName=OutputTextBox}"
+                                                      OkCommand="{Binding SelectOutputDirectoryCommand}"
+                                                      Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                      Title="{lex:Loc MessageSelectOutputDirectory}"/>
                         </xb:EventTrigger>
                     </xb:Interaction.Triggers>
                 </Button>
