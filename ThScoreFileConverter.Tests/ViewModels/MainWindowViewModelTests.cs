@@ -346,7 +346,7 @@ public class MainWindowViewModelTests
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var path = Path.GetTempPath();
-        var result = new FolderBrowserDialogActionResult(path);
+        var result = new OpenFolderDialogActionResult(path);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -367,7 +367,7 @@ public class MainWindowViewModelTests
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var path = window.BestShotDirectory.Value;
-        var result = new FolderBrowserDialogActionResult(path);
+        var result = new OpenFolderDialogActionResult(path);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -387,7 +387,7 @@ public class MainWindowViewModelTests
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var path = "nonexistent";
-        var result = new FolderBrowserDialogActionResult(path);
+        var result = new OpenFolderDialogActionResult(path);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -723,7 +723,7 @@ public class MainWindowViewModelTests
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var path = Path.GetTempPath();
-        var result = new FolderBrowserDialogActionResult(path);
+        var result = new OpenFolderDialogActionResult(path);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -744,7 +744,7 @@ public class MainWindowViewModelTests
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var path = window.OutputDirectory.Value;
-        var result = new FolderBrowserDialogActionResult(path);
+        var result = new OpenFolderDialogActionResult(path);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -764,7 +764,7 @@ public class MainWindowViewModelTests
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var path = "nonexistent";
-        var result = new FolderBrowserDialogActionResult(path);
+        var result = new OpenFolderDialogActionResult(path);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 

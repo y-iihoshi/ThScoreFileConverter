@@ -139,7 +139,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
         this.SelectScoreFileCommand =
             new DelegateCommand<OpenFileDialogActionResult>(this.SelectScoreFile);
         this.SelectBestShotDirectoryCommand =
-            new DelegateCommand<FolderBrowserDialogActionResult>(this.SelectBestShotDirectory);
+            new DelegateCommand<OpenFolderDialogActionResult>(this.SelectBestShotDirectory);
         this.TemplateFilesSelectionChangedCommand =
             new DelegateCommand(this.OnTemplateFilesSelectionChanged);
         this.AddTemplateFilesCommand =
@@ -149,7 +149,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
         this.DeleteAllTemplateFilesCommand =
             new DelegateCommand(this.DeleteAllTemplateFiles, this.CanDeleteAllTemplateFiles);
         this.SelectOutputDirectoryCommand =
-            new DelegateCommand<FolderBrowserDialogActionResult>(this.SelectOutputDirectory);
+            new DelegateCommand<OpenFolderDialogActionResult>(this.SelectOutputDirectory);
         this.ConvertCommand =
             new DelegateCommand(this.Convert, this.CanConvert);
 
@@ -352,7 +352,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Gets the command to select a best shot directory.
     /// </summary>
-    public DelegateCommand<FolderBrowserDialogActionResult> SelectBestShotDirectoryCommand { get; }
+    public DelegateCommand<OpenFolderDialogActionResult> SelectBestShotDirectoryCommand { get; }
 
     /// <summary>
     /// Gets the command invoked when the selection of template files is changed.
@@ -377,7 +377,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Gets the command to select an output directory.
     /// </summary>
-    public DelegateCommand<FolderBrowserDialogActionResult> SelectOutputDirectoryCommand { get; }
+    public DelegateCommand<OpenFolderDialogActionResult> SelectOutputDirectoryCommand { get; }
 
     /// <summary>
     /// Gets the command to convert the score file.
@@ -495,11 +495,11 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Selects a best shot directory.
     /// </summary>
-    /// <param name="result">A result of <see cref="FolderBrowserDialogAction"/>.</param>
-    private void SelectBestShotDirectory(FolderBrowserDialogActionResult result)
+    /// <param name="result">A result of <see cref="OpenFolderDialogAction"/>.</param>
+    private void SelectBestShotDirectory(OpenFolderDialogActionResult result)
     {
-        if (Directory.Exists(result.SelectedPath))
-            this.BestShotDirectory.Value = result.SelectedPath;
+        if (Directory.Exists(result.FolderName))
+            this.BestShotDirectory.Value = result.FolderName;
     }
 
     /// <summary>
@@ -563,11 +563,11 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Selects an output directory.
     /// </summary>
-    /// <param name="result">A result of <see cref="FolderBrowserDialogAction"/>.</param>
-    private void SelectOutputDirectory(FolderBrowserDialogActionResult result)
+    /// <param name="result">A result of <see cref="OpenFolderDialogAction"/>.</param>
+    private void SelectOutputDirectory(OpenFolderDialogActionResult result)
     {
-        if (Directory.Exists(result.SelectedPath))
-            this.OutputDirectory.Value = result.SelectedPath;
+        if (Directory.Exists(result.FolderName))
+            this.OutputDirectory.Value = result.FolderName;
     }
 
     /// <summary>
