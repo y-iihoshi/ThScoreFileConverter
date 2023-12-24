@@ -8,6 +8,7 @@
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Diagnostics;
+using DependencyPropertyGenerator;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Core.Resources;
 
@@ -17,131 +18,16 @@ namespace ThScoreFileConverter.Interactivity;
 /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into a
 /// <see cref="UIElement"/> object.
 /// </summary>
-public class UIElementDropBehavior : Behavior<UIElement>
+[DependencyProperty<ICommand>("DragEnterCommand")]
+[DependencyProperty<ICommand>("DragLeaveCommand")]
+[DependencyProperty<ICommand>("DragOverCommand")]
+[DependencyProperty<ICommand>("DropCommand")]
+[DependencyProperty<ICommand>("PreviewDragEnterCommand")]
+[DependencyProperty<ICommand>("PreviewDragLeaveCommand")]
+[DependencyProperty<ICommand>("PreviewDragOverCommand")]
+[DependencyProperty<ICommand>("PreviewDropCommand")]
+public partial class UIElementDropBehavior : Behavior<UIElement>
 {
-    #region Dependency properties
-
-    /// <summary>Identifies the <see cref="DragEnterCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty DragEnterCommandProperty =
-        DependencyProperty.Register(
-            nameof(DragEnterCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="DragLeaveCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty DragLeaveCommandProperty =
-        DependencyProperty.Register(
-            nameof(DragLeaveCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="DragOverCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty DragOverCommandProperty =
-        DependencyProperty.Register(
-            nameof(DragOverCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="DropCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty DropCommandProperty =
-        DependencyProperty.Register(
-            nameof(DropCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="PreviewDragEnterCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty PreviewDragEnterCommandProperty =
-        DependencyProperty.Register(
-            nameof(PreviewDragEnterCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="PreviewDragLeaveCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty PreviewDragLeaveCommandProperty =
-        DependencyProperty.Register(
-            nameof(PreviewDragLeaveCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="PreviewDragOverCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty PreviewDragOverCommandProperty =
-        DependencyProperty.Register(
-            nameof(PreviewDragOverCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    /// <summary>Identifies the <see cref="PreviewDropCommand"/> dependency property.</summary>
-    public static readonly DependencyProperty PreviewDropCommandProperty =
-        DependencyProperty.Register(
-            nameof(PreviewDropCommand), typeof(ICommand), typeof(UIElementDropBehavior));
-
-    #endregion
-
-    #region Commands
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.DragEnter"/> event is occurred.
-    /// </summary>
-    public ICommand? DragEnterCommand
-    {
-        get => this.GetValue(DragEnterCommandProperty) as ICommand;
-        set => this.SetValue(DragEnterCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.DragLeave"/> event is occurred.
-    /// </summary>
-    public ICommand? DragLeaveCommand
-    {
-        get => this.GetValue(DragLeaveCommandProperty) as ICommand;
-        set => this.SetValue(DragLeaveCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.DragOver"/> event is occurred.
-    /// </summary>
-    public ICommand? DragOverCommand
-    {
-        get => this.GetValue(DragOverCommandProperty) as ICommand;
-        set => this.SetValue(DragOverCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.Drop"/> event is occurred.
-    /// </summary>
-    public ICommand? DropCommand
-    {
-        get => this.GetValue(DropCommandProperty) as ICommand;
-        set => this.SetValue(DropCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDragEnter"/> event is
-    /// occurred.
-    /// </summary>
-    public ICommand? PreviewDragEnterCommand
-    {
-        get => this.GetValue(PreviewDragEnterCommandProperty) as ICommand;
-        set => this.SetValue(PreviewDragEnterCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDragLeave"/> event is
-    /// occurred.
-    /// </summary>
-    public ICommand? PreviewDragLeaveCommand
-    {
-        get => this.GetValue(PreviewDragLeaveCommandProperty) as ICommand;
-        set => this.SetValue(PreviewDragLeaveCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDragOver"/> event is
-    /// occurred.
-    /// </summary>
-    public ICommand? PreviewDragOverCommand
-    {
-        get => this.GetValue(PreviewDragOverCommandProperty) as ICommand;
-        set => this.SetValue(PreviewDragOverCommandProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDrop"/> event is occurred.
-    /// </summary>
-    public ICommand? PreviewDropCommand
-    {
-        get => this.GetValue(PreviewDropCommandProperty) as ICommand;
-        set => this.SetValue(PreviewDropCommandProperty, value);
-    }
-
-    #endregion
-
     /// <summary>
     /// Called after the behavior is attached to a <see cref="Behavior{T}.AssociatedObject"/>.
     /// </summary>
