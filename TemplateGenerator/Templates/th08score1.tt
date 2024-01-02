@@ -1,6 +1,7 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th08.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th08" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -8,7 +9,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -37,7 +38,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -49,7 +50,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -68,7 +69,7 @@
     <h2>難易度別スコア</h2>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
     <table class="score_per_level">
@@ -93,10 +94,10 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
-            var cards = cardsPerLevel[level.Key]
-                - cardsPerStage4Level[(unreachableStagesPerChara[chara.Key], level.Key)];
+            var cards = Definitions.NumCardsPerLevel[level.Key]
+                - Definitions.NumCardsPerStage4Level[(Definitions.UnreachableStagesPerCharacter[chara.Key], level.Key)];
 #>
       <tr>
        <td class="character"><#= chara.Value.LongName #></td>
@@ -149,10 +150,10 @@
        <th></th>
        <th class="character">Character</th>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
-       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
 <#
     }
 #>
@@ -160,21 +161,21 @@
      </thead>
      <tbody>
 <#
-    foreach (var charaKey in charaKeyOrderTotalLast)
+    foreach (var charaKey in Definitions.CharacterKeysTotalLast)
     {
 #>
       <tr>
 <#
-        if (charaKey == charaKeyOrderTotalLast.First())
+        if (charaKey == Definitions.CharacterKeysTotalLast.First())
         {
 #>
        <th scope="row" class="vertical" rowspan="13">プレイ回数</th>
 <#
         }
 #>
-       <td class="character"><#= charactersWithTotal[charaKey].LongName #></td>
+       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKey].LongName #></td>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
 #>
        <td class="count">%T08PLAY<#= levelKey #><#= charaKey #></td>
@@ -189,7 +190,7 @@
       <tr>
        <th scope="row" colspan="2">クリア回数</th>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
        <td class="count">%T08PLAY<#= levelKey #>CL</td>
@@ -200,7 +201,7 @@
       <tr>
        <th scope="row" colspan="2">コンティニュー回数</th>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
        <td class="count">%T08PLAY<#= levelKey #>CN</td>
@@ -211,7 +212,7 @@
       <tr>
        <th scope="row" colspan="2">プラクティス回数</th>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
        <td class="count">%T08PLAY<#= levelKey #>PR</td>
@@ -233,7 +234,7 @@
       <tr>
        <th class="character">Character</th>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
        <th class="level"><#= level.Value #></th>
@@ -244,13 +245,13 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
        <td class="character"><#= chara.Value.LongName #></td>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
 #>
        <td class="stage">%T08CLEAR<#= level.Key #><#= chara.Key #></td>

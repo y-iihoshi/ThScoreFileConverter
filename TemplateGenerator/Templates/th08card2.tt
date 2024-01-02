@@ -1,14 +1,19 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th08.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th08" #>
 <#@ output extension=".html" encoding="utf-8" #>
+<#
+    var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
+    var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
+#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スペルカードデータ</title>
+  <title><#= Definitions.Title #> スペルカードデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -31,7 +36,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スペルカードデータ</h1>
+   <h1><#= Definitions.Title #> スペルカードデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -61,10 +66,10 @@
        <th class="number">No.</th>
        <th class="card">スペルカード名<br />（難易度）</th>
 <#
-    foreach (var charaKey in charaKeyOrderTotalFirst)
+    foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
     {
 #>
-       <th class="character"><#= charactersWithTotal[charaKey].ShortName #></th>
+       <th class="character"><#= Definitions.CharacterWithTotalNames[charaKey].ShortName #></th>
 <#
     }
 #>
@@ -72,7 +77,7 @@
      </thead>
      <tbody>
 <#
-    foreach (var card in Enumerable.Range(1, numCardsSpellPractice))
+    foreach (var card in Enumerable.Range(1, Definitions.NumCardsWithLastWord))
     {
         var cardStr = card.ToString("D2");
         var cardKey = card.ToString("D3");
@@ -81,7 +86,7 @@
        <td class="number">No.<#= cardStr #></td>
        <td class="card">%T08CARD<#= cardKey #>N<br />(%T08CARD<#= cardKey #>R)</td>
 <#
-        foreach (var charaKey in charaKeyOrderTotalFirst)
+        foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
         {
 #>
        <td class="rate"><#
@@ -108,7 +113,7 @@
       <tr>
        <td colspan="2"><#= cardStrTotal #></td>
 <#
-        foreach (var charaKey in charaKeyOrderTotalFirst)
+        foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
         {
 #>
        <td class="rate"><#
@@ -132,10 +137,10 @@
       <tr>
        <th class="level">難易度</th>
 <#
-    foreach (var charaKey in charaKeyOrderTotalFirst)
+    foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
     {
 #>
-       <th class="character"><#= charactersWithTotal[charaKey].ShortName #></th>
+       <th class="character"><#= Definitions.CharacterWithTotalNames[charaKey].ShortName #></th>
 <#
     }
 #>
@@ -143,19 +148,19 @@
      </thead>
      <tbody>
 <#
-    foreach (var level in levelsSpellPractice)
+    foreach (var level in Definitions.LevelSpellPracticeNames)
     {
 #>
       <tr>
        <td class="level"><#= level.Value #></td>
 <#
-        foreach (var charaKey in charaKeyOrderTotalFirst)
+        foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
         {
 #>
        <td class="rate"><#
        #>%T08CRGP<#= level.Key #><#= charaKey #><#= stageKeyTotal #>1 / <#
        #>%T08CRGP<#= level.Key #><#= charaKey #><#= stageKeyTotal #>2 / <#
-       #><#= cardsPerLevel[level.Key] #><#
+       #><#= Definitions.NumCardsPerLevel[level.Key] #><#
        #></td>
 <#
         }
@@ -167,15 +172,15 @@
      </tbody>
      <tfoot>
       <tr>
-       <td><#= levelsWithTotal[levelKeyTotal] #></td>
+       <td><#= Definitions.LevelWithTotalNames[levelKeyTotal] #></td>
 <#
-    foreach (var charaKey in charaKeyOrderTotalFirst)
+    foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
     {
 #>
        <td class="rate"><#
        #>%T08CRGP<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>1 / <#
        #>%T08CRGP<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>2 / <#
-       #><#= numCardsSpellPractice #><#
+       #><#= Definitions.NumCardsWithLastWord #><#
        #></td>
 <#
     }
@@ -190,10 +195,10 @@
       <tr>
        <th class="stage">ステージ</th>
 <#
-    foreach (var charaKey in charaKeyOrderTotalFirst)
+    foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
     {
 #>
-       <th class="character"><#= charactersWithTotal[charaKey].ShortName #></th>
+       <th class="character"><#= Definitions.CharacterWithTotalNames[charaKey].ShortName #></th>
 <#
     }
 #>
@@ -201,7 +206,7 @@
      </thead>
      <tbody>
 <#
-    foreach (var stage in stagesSpellPractice)
+    foreach (var stage in Definitions.StageSpellPracticeNames)
     {
         var levelKey = (stage.Key == "EX") ? "X" : ((stage.Key == "LW") ? "W" : levelKeyTotal);
         var stageKey = ((stage.Key == "EX") || (stage.Key == "LW")) ? stageKeyTotal : stage.Key;
@@ -209,13 +214,13 @@
       <tr>
        <td class="stage"><#= stage.Value #></td>
 <#
-        foreach (var charaKey in charaKeyOrderTotalFirst)
+        foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
         {
 #>
        <td class="rate"><#
        #>%T08CRGP<#= levelKey #><#= charaKey #><#= stageKey #>1 / <#
        #>%T08CRGP<#= levelKey #><#= charaKey #><#= stageKey #>2 / <#
-       #><#= cardsPerStage[stage.Key] #><#
+       #><#= Definitions.NumCardsPerStage[stage.Key] #><#
        #></td>
 <#
         }
@@ -227,15 +232,15 @@
      </tbody>
      <tfoot>
       <tr>
-       <td class="stage"><#= stagesWithTotal[stageKeyTotal] #></td>
+       <td class="stage"><#= Definitions.StageWithTotalNames[stageKeyTotal] #></td>
 <#
-    foreach (var charaKey in charaKeyOrderTotalFirst)
+    foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
     {
 #>
        <td class="rate"><#
        #>%T08CRGP<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>1 / <#
        #>%T08CRGP<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>2 / <#
-       #><#= numCardsSpellPractice #><#
+       #><#= Definitions.NumCardsWithLastWord #><#
        #></td>
 <#
     }
