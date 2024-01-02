@@ -1,6 +1,7 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th125.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th125" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -8,7 +9,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> ベストショット一覧</title>
+  <title><#= Definitions.Title #> ベストショット一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -25,7 +26,7 @@
  <body>
 
   <header>
-   <h1><#= title #> ベストショット一覧</h1>
+   <h1><#= Definitions.Title #> ベストショット一覧</h1>
    <hr />
    <nav>
     <ul>
@@ -36,7 +37,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value.Id #>"><#= level.Value.LongName #></a></li>
@@ -51,14 +52,15 @@
 
 <#
     var charaKey = "A";
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
    <section>
     <h2 id="<#= level.Value.Id #>"><#= level.Value.LongName #></h2>
 <#
-        var scenes =
-            (level.Key == "S") ? spoilerScenesPerChara[charaKey] : Enumerable.Range(1, scenesPerLevel[level.Key]);
+        var scenes = (level.Key == "S")
+            ? Definitions.SpoilerScenesPerCharacter[charaKey]
+            : Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]);
         foreach (var scene in scenes)
         {
 #>
@@ -89,7 +91,7 @@
    </section>
 
 <#
-        if (level.Key != levels.Last().Key)
+        if (level.Key != Definitions.LevelNames.Last().Key)
         {
 #>
    <hr />
