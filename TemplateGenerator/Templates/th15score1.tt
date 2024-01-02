@@ -1,14 +1,18 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th15.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th15" #>
 <#@ output extension=".html" encoding="utf-8" #>
+<#
+    var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
+#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -29,19 +33,19 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
      <li>スコアデータ全般</li>
      <li><a href="th15score2.html">個別ランキング</a></li>
      <li><a href="th15score3.html">プラクティス</a></li>
-     <li><a href="th15card1.html">御札戦歴（<#= gameModes["P"] #>）</a></li>
-     <li><a href="th15card2.html">御札戦歴（<#= gameModes["L"] #>）</a></li>
+     <li><a href="th15card1.html">御札戦歴（<#= Definitions.GameModes["P"] #>）</a></li>
+     <li><a href="th15card2.html">御札戦歴（<#= Definitions.GameModes["L"] #>）</a></li>
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -60,7 +64,7 @@
     <h2>難易度別スコア</h2>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
     <table class="score_per_level">
@@ -78,9 +82,9 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
-            foreach (var gameMode in gameModes)
+            foreach (var gameMode in Definitions.GameModes)
             {
 #>
       <tr>
@@ -110,7 +114,7 @@
     <h2 id="Other">その他の状態一覧</h2>
 
 <#
-    foreach (var gameMode in gameModes)
+    foreach (var gameMode in Definitions.GameModes)
     {
 #>
     <table class="count">
@@ -124,10 +128,10 @@
       </tr>
       <tr>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
 #>
-       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
 <#
         }
 #>
@@ -135,7 +139,7 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
 #>
       <tr>
@@ -143,7 +147,7 @@
        <td class="count">%T15CHARA<#= gameMode.Key #><#= chara.Key #>1</td>
        <td class="time">%T15CHARA<#= gameMode.Key #><#= chara.Key #>2</td>
 <#
-            foreach (var levelKey in levelKeyOrderTotalLast)
+            foreach (var levelKey in Definitions.LevelKeysTotalLast)
             {
 #>
        <td class="level">%T15CHARAEX<#= gameMode.Key #><#= levelKey #><#= chara.Key #>3</td>
@@ -157,11 +161,11 @@
      </tbody>
      <tfoot>
       <tr>
-       <td class="character"><#= charactersWithTotal[charaKeyTotal] #></td>
+       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKeyTotal] #></td>
        <td class="count">%T15CHARA<#= gameMode.Key #><#= charaKeyTotal #>1</td>
        <td class="time">%T15CHARA<#= gameMode.Key #><#= charaKeyTotal #>2</td>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
 #>
        <td class="level">%T15CHARAEX<#= gameMode.Key #><#= levelKey #><#= charaKeyTotal #>3</td>
@@ -172,7 +176,7 @@
      </tfoot>
     </table>
 <#
-        if (gameMode.Key != gameModes.Last().Key)
+        if (gameMode.Key != Definitions.GameModes.Last().Key)
             WriteLine(string.Empty);
     }
 #>
@@ -184,7 +188,7 @@
     <h2 id="Clear">クリア達成度</h2>
 
 <#
-    foreach (var gameMode in gameModes)
+    foreach (var gameMode in Definitions.GameModes)
     {
 #>
     <table class="clear">
@@ -193,7 +197,7 @@
       <tr>
        <th class="character">Character</th>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
 #>
        <th class="level"><#= level.Value #></th>
@@ -204,13 +208,13 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
 #>
       <tr>
        <td class="character"><#= chara.Value #></td>
 <#
-            foreach (var level in levels)
+            foreach (var level in Definitions.LevelNames)
             {
 #>
        <td class="stage">%T15CLEAR<#= gameMode.Key #><#= level.Key #><#= chara.Key #></td>
@@ -224,7 +228,7 @@
      </tbody>
     </table>
 <#
-        if (gameMode.Key != gameModes.Last().Key)
+        if (gameMode.Key != Definitions.GameModes.Last().Key)
             WriteLine(string.Empty);
     }
 #>
