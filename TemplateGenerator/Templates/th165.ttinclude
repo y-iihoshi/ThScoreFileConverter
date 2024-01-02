@@ -1,9 +1,0 @@
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th165" #>
-<#
-    var title = Definitions.Title;
-    var days = Definitions.DayNames;
-    var dreamsPerDay = Definitions.NumDreamsPerDay;
-    var numDreams = dreamsPerDay.Values.Sum();
-    var numNicknames = Definitions.NumNicknames;
-#>

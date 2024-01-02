@@ -1,6 +1,7 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th165.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th165" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -8,7 +9,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> ベストショット一覧</title>
+  <title><#= Definitions.Title #> ベストショット一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -28,7 +29,7 @@
  <body>
 
   <header>
-   <h1><#= title #> ベストショット一覧</h1>
+   <h1><#= Definitions.Title #> ベストショット一覧</h1>
    <hr />
    <nav>
     <ul>
@@ -37,7 +38,7 @@
     </ul>
     <ul>
 <#
-    foreach (var day in days)
+    foreach (var day in Definitions.DayNames)
     {
 #>
      <li><a href="#<#= day.Value.Id #>"><#= day.Value.Name #></a></li>
@@ -51,13 +52,13 @@
   <main>
 
 <#
-    foreach (var day in days)
+    foreach (var day in Definitions.DayNames)
     {
 #>
    <section>
     <h2 id="<#= day.Value.Id #>"><#= day.Value.Name #></h2>
 <#
-        foreach (var dream in Enumerable.Range(1, dreamsPerDay[day.Key]))
+        foreach (var dream in Enumerable.Range(1, Definitions.NumDreamsPerDay[day.Key]))
         {
 #>
     <table class="bestshot">
@@ -90,7 +91,7 @@
    </section>
 
 <#
-        if (day.Key != days.Last().Key)
+        if (day.Key != Definitions.DayNames.Last().Key)
         {
 #>
    <hr />
