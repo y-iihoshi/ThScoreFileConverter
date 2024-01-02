@@ -1,6 +1,7 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th13.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th13" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -8,7 +9,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -26,7 +27,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -38,7 +39,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -52,14 +53,14 @@
   <main>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
    <section>
     <h2 id="<#= level.Value #>"><#= level.Value #></h2>
 
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
 #>
     <table class="score_per_level">
@@ -100,7 +101,7 @@
    </section>
 
 <#
-        if (level.Key != levels.Last().Key)
+        if (level.Key != Definitions.LevelNames.Last().Key)
         {
 #>
    <hr />
