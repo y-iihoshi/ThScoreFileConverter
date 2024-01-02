@@ -1,14 +1,18 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th10.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th10" #>
 <#@ output extension=".html" encoding="utf-8" #>
+<#
+    var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
+#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -28,7 +32,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -39,7 +43,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -58,7 +62,7 @@
     <h2>難易度別スコア</h2>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
     <table class="score_per_level">
@@ -75,7 +79,7 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
 #>
       <tr>
@@ -112,10 +116,10 @@
       </tr>
       <tr>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
-       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
 <#
     }
 #>
@@ -123,7 +127,7 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
@@ -131,7 +135,7 @@
        <td class="count">%T10CHARA<#= chara.Key #>1</td>
        <td class="time">%T10CHARA<#= chara.Key #>2</td>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
 #>
        <td class="level">%T10CHARAEX<#= levelKey #><#= chara.Key #>3</td>
@@ -145,11 +149,11 @@
      </tbody>
      <tfoot>
       <tr>
-       <td class="character"><#= charactersWithTotal[charaKeyTotal].Name #></td>
+       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKeyTotal].Name #></td>
        <td class="count">%T10CHARATL1</td>
        <td class="time">%T10CHARATL2</td>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
        <td class="level">%T10CHARAEX<#= levelKey #><#= charaKeyTotal #>3</td>
@@ -171,7 +175,7 @@
       <tr>
        <th class="character">Character</th>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
        <th class="level"><#= level.Value #></th>
@@ -182,13 +186,13 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
        <td class="character"><#= chara.Value.Name #><br /><#= chara.Value.Equip #></td>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
 #>
        <td class="stage">%T10CLEAR<#= level.Key #><#= chara.Key #></td>
