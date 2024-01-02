@@ -1,8 +1,4 @@
-<#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.Linq" #>
 <#@ import namespace="TemplateGenerator.Models.Th09" #>
 <#
     var title = Definitions.Title;

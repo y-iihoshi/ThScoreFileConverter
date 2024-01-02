@@ -1,4 +1,3 @@
-<#@ assembly name="$(TargetPath)" #>
 <#@ include file="footer.ttinclude" once="true" #>
 <#@ import namespace="TemplateGenerator.Models.Th135" #>
 <#
