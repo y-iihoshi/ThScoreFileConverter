@@ -1,14 +1,19 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th06.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th06" #>
 <#@ output extension=".html" encoding="utf-8" #>
+<#
+    var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
+    var numCards = Definitions.NumCardsPerStage.Values.Sum();
+#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -28,7 +33,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -38,7 +43,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -57,7 +62,7 @@
     <h2>難易度別スコア</h2>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
     <table class="score_per_level">
@@ -72,7 +77,7 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
 #>
       <tr>
@@ -147,7 +152,7 @@
      </thead>
      <tbody>
 <#
-    foreach (var stage in stages)
+    foreach (var stage in Definitions.StageNames)
     {
 #>
       <tr>
@@ -155,14 +160,14 @@
        <td class="rate"><#
        #>%T06CRG<#= stage.Key #>1 / <#
        #>%T06CRG<#= stage.Key #>2 / <#
-       #><#= cardsPerStage[stage.Key] #><#
+       #><#= Definitions.NumCardsPerStage[stage.Key] #><#
        #></td>
       </tr>
 <#
     }
 #>
       <tr>
-       <td><#= stagesWithTotal[stageKeyTotal] #></td>
+       <td><#= Definitions.StageWithTotalNames[stageKeyTotal] #></td>
        <td class="rate"><#
        #>%T06CRG<#= stageKeyTotal #>1 / <#
        #>%T06CRG<#= stageKeyTotal #>2 / <#
@@ -183,7 +188,7 @@
       <tr>
        <th class="character">Character</th>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
        <th class="level"><#= level.Value #></th>
@@ -194,13 +199,13 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
        <td class="character"><#= chara.Value #></td>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
 #>
        <td class="stage">%T06CLEAR<#= level.Key #><#= chara.Key #></td>
