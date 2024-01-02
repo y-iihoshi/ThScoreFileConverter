@@ -1,14 +1,18 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th128.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th128" #>
 <#@ output extension=".html" encoding="utf-8" #>
+<#
+    var routeKeyTotal = Definitions.RouteKeysTotalFirst.First();
+#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -28,7 +32,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -38,7 +42,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -57,7 +61,7 @@
     <h2>難易度別スコア</h2>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
     <table class="score_per_level">
@@ -74,7 +78,7 @@
      </thead>
      <tbody>
 <#
-        foreach (var route in routes.Where(pair => (level.Key == "X") ^ (pair.Key != "EX")))
+        foreach (var route in Definitions.RouteNames.Where(pair => (level.Key == "X") ^ (pair.Key != "EX")))
         {
 #>
       <tr>
@@ -111,10 +115,10 @@
       </tr>
       <tr>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
-       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
 <#
     }
 #>
@@ -122,7 +126,8 @@
      </thead>
      <tbody>
 <#
-    foreach (var route in routes)
+    var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
+    foreach (var route in Definitions.RouteNames)
     {
 #>
       <tr>
@@ -130,7 +135,7 @@
        <td class="count">%T128ROUTE<#= route.Key #>1</td>
        <td class="time">%T128ROUTE<#= route.Key #>2</td>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
             var routeExFormat = string.Format("%T128ROUTEEX{0}{1}3", levelKey, route.Key);
             if ((levelKey != levelKeyTotal) && ((levelKey == "X") ^ (route.Key == "EX")))
@@ -147,12 +152,12 @@
      </tbody>
      <tfoot>
       <tr>
-       <td class="route"><#= routesWithTotal[routeKeyTotal] #></td>
+       <td class="route"><#= Definitions.RouteWithTotalNames[routeKeyTotal] #></td>
        <td class="count">%T128ROUTE<#= routeKeyTotal #>1</td>
        <!-- <td class="time">%T128ROUTE<#= routeKeyTotal #>2</td> -->
        <td class="time">%T128TIMEPLY</td>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
        <td class="level">%T128ROUTEEX<#= levelKey #><#= routeKeyTotal #>3</td>
@@ -174,7 +179,7 @@
       <tr>
        <th class="route">Route</th>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
        <th class="level"><#= level.Value #></th>
@@ -185,13 +190,13 @@
      </thead>
      <tbody>
 <#
-    foreach (var route in routes)
+    foreach (var route in Definitions.RouteNames)
     {
 #>
       <tr>
        <td class="route"><#= route.Value #></td>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
             var clearFormat = string.Format("%T128CLEAR{0}{1}", level.Key, route.Key);
             if ((level.Key == "X") ^ (route.Key == "EX"))
