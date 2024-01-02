@@ -1,6 +1,7 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th155.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th155" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -8,7 +9,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -22,7 +23,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
   </header>
 
   <main>
@@ -35,7 +36,7 @@
       <tr>
        <th class="character">Character</th>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
        <th class="level"><#= level.Value #></th>
@@ -46,13 +47,13 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.StoryCharacterNames)
     {
 #>
       <tr>
        <td class="character"><#= chara.Value #></td>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
 #>
        <td class="clear">%T155CLEAR<#= level.Key #><#= chara.Key #></td>
