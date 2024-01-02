@@ -1,8 +1,0 @@
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th09" #>
-<#
-    var title = Definitions.Title;
-    var levels = Definitions.LevelNames;
-    var characters = Definitions.CharacterNames;
-    var rankOrdinals = Definitions.RankOrdinals;
-#>
