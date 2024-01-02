@@ -1,14 +1,18 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th17.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th17" #>
 <#@ output extension=".html" encoding="utf-8" #>
+<#
+    var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
+#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スコアデータ</title>
+  <title><#= Definitions.Title #> スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -32,19 +36,19 @@
  <body>
 
   <header>
-   <h1><#= title #> スコアデータ</h1>
+   <h1><#= Definitions.Title #> スコアデータ</h1>
    <hr />
    <nav>
     <ul>
      <li>スコアデータ全般</li>
      <li><a href="th17score2.html">個別ランキング</a></li>
      <li><a href="th17score3.html">プラクティス</a></li>
-     <li><a href="th17card1.html">御札戦歴（<#= careerKinds["S"] #>）</a></li>
-     <li><a href="th17card2.html">御札戦歴（<#= careerKinds["P"] #>）</a></li>
+     <li><a href="th17card1.html">御札戦歴（<#= Definitions.CareerKinds["S"] #>）</a></li>
+     <li><a href="th17card2.html">御札戦歴（<#= Definitions.CareerKinds["P"] #>）</a></li>
     </ul>
     <ul>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -64,7 +68,7 @@
     <h2>難易度別スコア</h2>
 
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
     <table class="score_per_level">
@@ -81,7 +85,7 @@
      </thead>
      <tbody>
 <#
-        foreach (var chara in characters)
+        foreach (var chara in Definitions.CharacterNames)
         {
 #>
       <tr>
@@ -118,10 +122,10 @@
       </tr>
       <tr>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
-       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
 <#
     }
 #>
@@ -129,7 +133,7 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
@@ -137,7 +141,7 @@
        <td class="count">%T17CHARA<#= chara.Key #>1</td>
        <td class="time">%T17CHARA<#= chara.Key #>2</td>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
 #>
        <td class="level">%T17CHARAEX<#= levelKey #><#= chara.Key #>3</td>
@@ -151,11 +155,11 @@
      </tbody>
      <tfoot>
       <tr>
-       <td class="character"><#= charactersWithTotal[charaKeyTotal] #></td>
+       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKeyTotal] #></td>
        <td class="count">%T17CHARA<#= charaKeyTotal #>1</td>
        <td class="time">%T17CHARA<#= charaKeyTotal #>2</td>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
        <td class="level">%T17CHARAEX<#= levelKey #><#= charaKeyTotal #>3</td>
@@ -177,7 +181,7 @@
       <tr>
        <th class="character">Character</th>
 <#
-    foreach (var level in levels)
+    foreach (var level in Definitions.LevelNames)
     {
 #>
        <th class="level"><#= level.Value #></th>
@@ -188,13 +192,13 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
        <td class="character"><#= chara.Value #></td>
 <#
-        foreach (var level in levels)
+        foreach (var level in Definitions.LevelNames)
         {
 #>
        <td class="stage">%T17CLEAR<#= level.Key #><#= chara.Key #></td>
@@ -215,7 +219,7 @@
     <h2 id="Achievement">実績</h2>
 
 <#
-    foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(numAchievements / 10f)))
+    foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumAchievements / 10f)))
     {
 #>
     <table class="achievement">
