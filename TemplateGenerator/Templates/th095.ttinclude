@@ -1,8 +1,0 @@
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th095" #>
-<#
-    var title = Definitions.Title;
-    var levels = Definitions.LevelNames;
-    var scenesPerLevel = Definitions.NumScenesPerLevel;
-    var numScenes = scenesPerLevel.Values.Sum();
-#>
