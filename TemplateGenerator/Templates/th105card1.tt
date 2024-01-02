@@ -1,6 +1,7 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="th105.ttinclude" once="true" #>
+<#@ include file="footer.ttinclude" once="true" #>
+<#@ import namespace="TemplateGenerator.Models.Th105" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -8,7 +9,7 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= title #> スペルカードデータ</title>
+  <title><#= Definitions.Title #> スペルカードデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -29,7 +30,7 @@
  <body>
 
   <header>
-   <h1><#= title #> スペルカードデータ</h1>
+   <h1><#= Definitions.Title #> スペルカードデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -38,7 +39,7 @@
     </ul>
     <ul>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
      <li><a href="#<#= chara.Value.Id #>"><#= chara.Value.ShortName #></a></li>
@@ -56,7 +57,7 @@
     <h2 id="Card">御札戦歴</h2>
 
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
     <table class="rate_per_chara">
@@ -71,7 +72,7 @@
      </thead>
      <tbody>
 <#
-        var numCards = cardsPerChara[chara.Key];
+        var numCards = Definitions.NumCardsPerCharacter[chara.Key];
         foreach (var card in Enumerable.Range(1, numCards))
         {
             var cardStr = card.ToString("D2");
@@ -122,10 +123,10 @@
       <tr>
        <th></th>
 <#
-    foreach (var levelKey in levelKeyOrderTotalLast)
+    foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
 #>
-       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
 <#
     }
 #>
@@ -133,17 +134,18 @@
      </thead>
      <tbody>
 <#
-    foreach (var chara in characters)
+    foreach (var chara in Definitions.CharacterNames)
     {
 #>
       <tr>
        <td class="character"><#= chara.Value.LongName #></td>
 <#
-        foreach (var levelKey in levelKeyOrderTotalLast)
+        var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
+        foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
-            var numCards = cardsPerChara[chara.Key];
+            var numCards = Definitions.NumCardsPerCharacter[chara.Key];
             if (levelKey != levelKeyTotal)
-                numCards /= levels.Count;
+                numCards /= Definitions.LevelNames.Count;
 #>
        <td class="rate"><#
        #>%T105CRG<#= levelKey #><#= chara.Key #>1 / <#
