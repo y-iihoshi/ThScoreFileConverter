@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Templates\style.css" />
+    <Content Include="input\style.css" />
   </ItemGroup>
 
   <ItemGroup>

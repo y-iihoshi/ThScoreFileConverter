@@ -35,3 +35,12 @@ $Arguments = @{
     Recurse = $True
 }
 Copy-Item @Arguments
+
+$Arguments = @{
+    Path = 'TemplateGenerator\output\*'
+    Destination = Join-Path $OutputDir 'template'
+    Recurse = $True
+}
+if (Test-Path $Arguments.Path) {
+    Copy-Item @Arguments
+}

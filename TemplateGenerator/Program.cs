@@ -11,6 +11,9 @@ using Statiq.App;
 return await Bootstrapper
     .Factory
     .CreateDefault(args)
+    .BuildPipeline("Copy Assets", builder => builder
+        .WithInputReadFiles("**/*.css")
+        .WithOutputWriteFiles())
     .RunAsync();
 
 #endif
