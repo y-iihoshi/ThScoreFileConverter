@@ -11,7 +11,7 @@ using Statiq.Razor;
 
 return await Bootstrapper
     .Factory
-    .CreateDefault(args)
+    .CreateDefaultWithout(args, DefaultFeatures.Namespaces)
     .BuildPipeline("Render Razor", builder => builder
         .WithInputReadFiles("**/*.cshtml")
         .WithProcessModules(new RenderRazor())
