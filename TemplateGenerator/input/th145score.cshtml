@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th145" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th145
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -24,7 +20,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -43,35 +39,23 @@
      <thead>
       <tr>
        <th class="character">Character</th>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-       <th class="level"><#= level.Value #></th>
-<#
+       <th class="level">@Html.Raw(level.Value)</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-<#
-        foreach (var level in Definitions.LevelNames)
+       <td class="character">@Html.Raw(chara.Value)</td>
+        @foreach (var level in Definitions.LevelNames)
         {
-#>
-       <td class="clear">%T145CLEAR<#= level.Key #><#= chara.Key #></td>
-<#
+       <td class="clear">%T145CLEAR@(level.Key)@(chara.Key)</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
     </table>
    </section>
@@ -85,35 +69,23 @@
      <thead>
       <tr>
        <th class="character">Character</th>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
-<#
+       <th class="level">@Html.Raw(Definitions.LevelWithTotalNames[levelKey])</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var charaKey in Definitions.CharacterKeysTotalLast)
+    @foreach (var charaKey in Definitions.CharacterKeysTotalLast)
     {
-#>
       <tr>
-       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKey] #></td>
-<#
-        foreach (var levelKey in Definitions.LevelKeysTotalLast)
+       <td class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKey])</td>
+        @foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
-#>
-       <td class="time">%T145TIMECLR<#= levelKey #><#= charaKey #></td>
-<#
+       <td class="time">%T145TIMECLR@(levelKey)@(charaKey)</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
     </table>
    </section>
@@ -121,14 +93,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
