@@ -1,18 +1,14 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th18" #>
-<#@ output extension=".html" encoding="utf-8" #>
-<#
+@using TemplateGenerator.Models.Th18
+@{
     var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
-#>
+}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -40,25 +36,21 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
      <li>スコアデータ全般</li>
      <li><a href="th18score2.html">個別ランキング</a></li>
      <li><a href="th18score3.html">プラクティス</a></li>
-     <li><a href="th18card1.html">御札戦歴（<#= Definitions.CareerKinds["S"] #>）</a></li>
-     <li><a href="th18card2.html">御札戦歴（<#= Definitions.CareerKinds["P"] #>）</a></li>
+     <li><a href="th18card1.html">御札戦歴（@Html.Raw(Definitions.CareerKinds["S"])）</a></li>
+     <li><a href="th18card2.html">御札戦歴（@Html.Raw(Definitions.CareerKinds["P"])）</a></li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
-<#
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
-#>
      <li><a href="#Other">その他の状態一覧</a></li>
      <li><a href="#Clear">クリア達成度</a></li>
      <li><a href="#Ability">発見済みアビリティカード一覧</a></li>
@@ -72,12 +64,10 @@
    <section>
     <h2>難易度別スコア</h2>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
      <thead>
       <tr>
        <th class="character">Character</th>
@@ -89,27 +79,21 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var chara in Definitions.CharacterNames)
+        @foreach (var chara in Definitions.CharacterNames)
         {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-       <td class="name">%T18SCR<#= level.Key #><#= chara.Key #>11</td>
-       <td class="score">%T18SCR<#= level.Key #><#= chara.Key #>12</td>
-       <td class="date">%T18SCR<#= level.Key #><#= chara.Key #>14</td>
-       <td class="stage">%T18SCR<#= level.Key #><#= chara.Key #>13</td>
-       <td class="slow">%T18SCR<#= level.Key #><#= chara.Key #>15</td>
+       <td class="character">@Html.Raw(chara.Value)</td>
+       <td class="name">%T18SCR@(level.Key)@(chara.Key)11</td>
+       <td class="score">%T18SCR@(level.Key)@(chara.Key)12</td>
+       <td class="date">%T18SCR@(level.Key)@(chara.Key)14</td>
+       <td class="stage">%T18SCR@(level.Key)@(chara.Key)13</td>
+       <td class="slow">%T18SCR@(level.Key)@(chara.Key)15</td>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
    </section>
 
    <hr />
@@ -126,51 +110,35 @@
        <th colspan="6">クリア回数</th>
       </tr>
       <tr>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
-<#
+       <th class="level">@Html.Raw(Definitions.LevelWithTotalNames[levelKey])</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-       <td class="count">%T18CHARA<#= chara.Key #>1</td>
-       <td class="time">%T18CHARA<#= chara.Key #>2</td>
-<#
-        foreach (var levelKey in Definitions.LevelKeysTotalLast)
+       <td class="character">@Html.Raw(chara.Value)</td>
+       <td class="count">%T18CHARA@(chara.Key)1</td>
+       <td class="time">%T18CHARA@(chara.Key)2</td>
+        @foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
-#>
-       <td class="level">%T18CHARAEX<#= levelKey #><#= chara.Key #>3</td>
-<#
+       <td class="level">%T18CHARAEX@(levelKey)@(chara.Key)3</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
      <tfoot>
       <tr>
-       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKeyTotal] #></td>
-       <td class="count">%T18CHARA<#= charaKeyTotal #>1</td>
-       <td class="time">%T18CHARA<#= charaKeyTotal #>2</td>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+       <td class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKeyTotal])</td>
+       <td class="count">%T18CHARA@(charaKeyTotal)1</td>
+       <td class="time">%T18CHARA@(charaKeyTotal)2</td>
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <td class="level">%T18CHARAEX<#= levelKey #><#= charaKeyTotal #>3</td>
-<#
+       <td class="level">%T18CHARAEX@(levelKey)@(charaKeyTotal)3</td>
     }
-#>
       </tr>
      </tfoot>
     </table>
@@ -185,35 +153,23 @@
      <thead>
       <tr>
        <th class="character">Character</th>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-       <th class="level"><#= level.Value #></th>
-<#
+       <th class="level">@Html.Raw(level.Value)</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-<#
-        foreach (var level in Definitions.LevelNames)
+       <td class="character">@Html.Raw(chara.Value)</td>
+        @foreach (var level in Definitions.LevelNames)
         {
-#>
-       <td class="stage">%T18CLEAR<#= level.Key #><#= chara.Key #></td>
-<#
+       <td class="stage">%T18CLEAR@(level.Key)@(chara.Key)</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
     </table>
    </section>
@@ -223,10 +179,8 @@
    <section>
     <h2 id="Ability">発見済みアビリティカード一覧</h2>
 
-<#
-    foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumAbilityCards / 10f)))
+    @foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumAbilityCards / 10f)))
     {
-#>
     <table class="ability">
      <thead>
       <tr>
@@ -235,24 +189,18 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var place1 in Enumerable.Range(0, 10))
+        @foreach (var place1 in Enumerable.Range(0, 10))
         {
             var abilityCard = place10 * 10 + place1 + 1;
             if (abilityCard > Definitions.NumAbilityCards)
                 break;
 
             var abilityCardKey = abilityCard.ToString("D2");
-#>
-      <tr><td class="number"><#= abilityCard #></td><td class="name">%T18ABIL<#= abilityCardKey #></td></tr>
-<#
+      <tr><td class="number">@(abilityCard)</td><td class="name">%T18ABIL@(abilityCardKey)</td></tr>
         }
-#>
      </tbody>
     </table>
-<#
     }
-#>
    </section>
 
    <hr />
@@ -260,10 +208,8 @@
    <section>
     <h2 id="Achievement">実績</h2>
 
-<#
-    foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumAchievements / 10f)))
+    @foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumAchievements / 10f)))
     {
-#>
     <table class="achievement">
      <thead>
       <tr>
@@ -272,34 +218,21 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var place1 in Enumerable.Range(0, 10))
+        @foreach (var place1 in Enumerable.Range(0, 10))
         {
             var achievement = place10 * 10 + place1 + 1;
             var achievementKey = achievement.ToString("D2");
-#>
-      <tr><td class="number"><#= achievement #></td><td class="achievement">%T18ACHV<#= achievementKey #></td></tr>
-<#
+      <tr><td class="number">@(achievement)</td><td class="achievement">%T18ACHV@(achievementKey)</td></tr>
         }
-#>
      </tbody>
     </table>
-<#
     }
-#>
    </section>
 
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
