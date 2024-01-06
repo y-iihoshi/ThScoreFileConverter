@@ -1,19 +1,15 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th06" #>
-<#@ output extension=".html" encoding="utf-8" #>
-<#
+@using TemplateGenerator.Models.Th06
+@{
     var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
     var numCards = Definitions.NumCardsPerStage.Values.Sum();
-#>
+}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -33,7 +29,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -42,14 +38,10 @@
      <li><a href="th06score3.html">プラクティス</a></li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
-<#
+     <li><a href="#@(level.Value)">@(level.Value)</a></li>
     }
-#>
      <li><a href="#Card">御札戦歴</a></li>
      <li><a href="#Clear">クリア達成度</a></li>
     </ul>
@@ -61,12 +53,10 @@
    <section>
     <h2>難易度別スコア</h2>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
      <thead>
       <tr>
        <th class="character">Character</th>
@@ -76,25 +66,19 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var chara in Definitions.CharacterNames)
+        @foreach (var chara in Definitions.CharacterNames)
         {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-       <td class="name">%T06SCR<#= level.Key #><#= chara.Key #>11</td>
-       <td class="score">%T06SCR<#= level.Key #><#= chara.Key #>12</td>
-       <td class="stage">%T06SCR<#= level.Key #><#= chara.Key #>13</td>
+       <td class="character">@Html.Raw(chara.Value)</td>
+       <td class="name">%T06SCR@(level.Key)@(chara.Key)11</td>
+       <td class="score">%T06SCR@(level.Key)@(chara.Key)12</td>
+       <td class="stage">%T06SCR@(level.Key)@(chara.Key)13</td>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
    </section>
 
    <hr />
@@ -112,33 +96,25 @@
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var card in Enumerable.Range(1, numCards))
+    @foreach (var card in Enumerable.Range(1, numCards))
     {
         var cardKey = card.ToString("D2");
-#>
       <tr>
-       <td class="number">No.<#= cardKey #></td>
-       <td class="card">%T06CARD<#= cardKey #>N<br />(%T06CARD<#= cardKey #>R)</td>
-       <td class="rate">%T06C<#= cardKey #>1 / %T06C<#= cardKey #>2</td>
+       <td class="number">No.@(cardKey)</td>
+       <td class="card">%T06CARD@(cardKey)N<br />(%T06CARD@(cardKey)R)</td>
+       <td class="rate">%T06C@(cardKey)1 / %T06C@(cardKey)2</td>
       </tr>
-<#
     }
-#>
      </tbody>
      <tfoot>
-<#
-    {
+    @{
         var cardStrTotal = "Total";
         var cardKeyTotal = 0.ToString("D2");
-#>
       <tr>
-       <td colspan="2"><#= cardStrTotal #></td>
-       <td class="rate">%T06C<#= cardKeyTotal #>1 / %T06C<#= cardKeyTotal #>2</td>
+       <td colspan="2">@(cardStrTotal)</td>
+       <td class="rate">%T06C@(cardKeyTotal)1 / %T06C@(cardKeyTotal)2</td>
       </tr>
-<#
     }
-#>
      </tfoot>
     </table>
 
@@ -151,28 +127,16 @@
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var stage in Definitions.StageNames)
+    @foreach (var stage in Definitions.StageNames)
     {
-#>
       <tr>
-       <td class="stage"><#= stage.Value #></td>
-       <td class="rate"><#
-       #>%T06CRG<#= stage.Key #>1 / <#
-       #>%T06CRG<#= stage.Key #>2 / <#
-       #><#= Definitions.NumCardsPerStage[stage.Key] #><#
-       #></td>
+       <td class="stage">@Html.Raw(stage.Value)</td>
+       <td class="rate">%T06CRG@(stage.Key)1 / %T06CRG@(stage.Key)2 / @(Definitions.NumCardsPerStage[stage.Key])</td>
       </tr>
-<#
     }
-#>
       <tr>
-       <td><#= Definitions.StageWithTotalNames[stageKeyTotal] #></td>
-       <td class="rate"><#
-       #>%T06CRG<#= stageKeyTotal #>1 / <#
-       #>%T06CRG<#= stageKeyTotal #>2 / <#
-       #><#= numCards #><#
-       #></td>
+       <td>@(Definitions.StageWithTotalNames[stageKeyTotal])</td>
+       <td class="rate">%T06CRG@(stageKeyTotal)1 / %T06CRG@(stageKeyTotal)2 / @(numCards)</td>
       </tr>
      </tbody>
     </table>
@@ -187,35 +151,23 @@
      <thead>
       <tr>
        <th class="character">Character</th>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-       <th class="level"><#= level.Value #></th>
-<#
+       <th class="level">@(level.Value)</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-<#
-        foreach (var level in Definitions.LevelNames)
+       <td class="character">@Html.Raw(chara.Value)</td>
+        @foreach (var level in Definitions.LevelNames)
         {
-#>
-       <td class="stage">%T06CLEAR<#= level.Key #><#= chara.Key #></td>
-<#
+       <td class="stage">%T06CLEAR@(level.Key)@(chara.Key)</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
     </table>
    </section>
@@ -223,14 +175,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
