@@ -1,18 +1,14 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th175" #>
-<#@ output extension=".html" encoding="utf-8" #>
-<#
+@using TemplateGenerator.Models.Th175
+@{
     var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
-#>
+}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -28,7 +24,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -36,14 +32,10 @@
      <li><a href="th175score2.html">個別ランキング</a></li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
-<#
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
-#>
      <li><a href="#Other">その他の状態一覧</a></li>
     </ul>
    </nav>
@@ -54,12 +46,10 @@
    <section>
     <h2>難易度別スコア</h2>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
      <thead>
       <tr>
        <th class="character">Character</th>
@@ -68,24 +58,18 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var chara in Definitions.CharacterNames)
+        @foreach (var chara in Definitions.CharacterNames)
         {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-       <td class="score">%T175SCR<#= level.Key #><#= chara.Key #>11</td>
-       <td class="time">%T175SCR<#= level.Key #><#= chara.Key #>12</td>
+       <td class="character">@Html.Raw(chara.Value)</td>
+       <td class="score">%T175SCR@(level.Key)@(chara.Key)11</td>
+       <td class="time">%T175SCR@(level.Key)@(chara.Key)12</td>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
    </section>
 
    <hr />
@@ -104,28 +88,24 @@
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-       <td class="count">%T175CHR<#= chara.Key #>1</td>
-       <td class="count">%T175CHR<#= chara.Key #>2</td>
-       <td class="count">%T175CHR<#= chara.Key #>3</td>
-       <td class="count">%T175CHR<#= chara.Key #>4</td>
+       <td class="character">@Html.Raw(chara.Value)</td>
+       <td class="count">%T175CHR@(chara.Key)1</td>
+       <td class="count">%T175CHR@(chara.Key)2</td>
+       <td class="count">%T175CHR@(chara.Key)3</td>
+       <td class="count">%T175CHR@(chara.Key)4</td>
       </tr>
-<#
     }
-#>
      </tbody>
      <tfoot>
       <tr>
-       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKeyTotal] #></td>
-       <td class="count">%T175CHR<#= charaKeyTotal #>1</td>
-       <td class="count">%T175CHR<#= charaKeyTotal #>2</td>
-       <td class="count">%T175CHR<#= charaKeyTotal #>3</td>
-       <td class="count">%T175CHR<#= charaKeyTotal #>4</td>
+       <td class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKeyTotal])</td>
+       <td class="count">%T175CHR@(charaKeyTotal)1</td>
+       <td class="count">%T175CHR@(charaKeyTotal)2</td>
+       <td class="count">%T175CHR@(charaKeyTotal)3</td>
+       <td class="count">%T175CHR@(charaKeyTotal)4</td>
       </tr>
      </tfoot>
     </table>
@@ -134,14 +114,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>

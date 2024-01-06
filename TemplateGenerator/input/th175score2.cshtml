@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th175" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th175
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -24,7 +20,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -32,33 +28,25 @@
      <li>個別ランキング</li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
-<#
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
 
   <main>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
    <section>
-    <h2 id="<#= level.Value #>"><#= level.Value #></h2>
+    <h2 id="@(level.Value)">@Html.Raw(level.Value)</h2>
 
-<#
-        foreach (var chara in Definitions.CharacterNames)
+        @foreach (var chara in Definitions.CharacterNames)
         {
-#>
     <table class="score_per_level">
-     <caption><#= chara.Value #></caption>
+     <caption>@Html.Raw(chara.Value)</caption>
      <thead>
       <tr>
        <th class="number">No.</th>
@@ -67,48 +55,31 @@
       </tr>
      </thead>
      <tbody>
-<#
-            foreach (var rank in Enumerable.Range(1, 10))
+            @foreach (var rank in Enumerable.Range(1, 10))
             {
                 var rankKey = rank % 10;
-#>
       <tr>
-       <td class="number"><#= rank #></td>
-       <td class="score">%T175SCR<#= level.Key #><#= chara.Key #><#= rankKey #>1</td>
-       <td class="time">%T175SCR<#= level.Key #><#= chara.Key #><#= rankKey #>2</td>
+       <td class="number">@(rank)</td>
+       <td class="score">%T175SCR@(level.Key)@(chara.Key)@(rankKey)1</td>
+       <td class="time">%T175SCR@(level.Key)@(chara.Key)@(rankKey)2</td>
       </tr>
-<#
             }
-#>
      </tbody>
     </table>
-
-<#
+@:
         }
-#>
    </section>
-
-<#
-        if (level.Key != Definitions.LevelNames.Last().Key)
+@:
+        @if (level.Key != Definitions.LevelNames.Last().Key)
         {
-#>
    <hr />
-
-<#
+@:
         }
     }
-#>
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
