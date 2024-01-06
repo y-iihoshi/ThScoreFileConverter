@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th165" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th165
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> ベストショット一覧</title>
+  <title>@Html.Raw(Definitions.Title) ベストショット一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -29,7 +25,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> ベストショット一覧</h1>
+   <h1>@Html.Raw(Definitions.Title) ベストショット一覧</h1>
    <hr />
    <nav>
     <ul>
@@ -37,80 +33,57 @@
      <li>ベストショット一覧</li>
     </ul>
     <ul>
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
-     <li><a href="#<#= day.Value.Id #>"><#= day.Value.Name #></a></li>
-<#
+     <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
 
   <main>
 
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
    <section>
-    <h2 id="<#= day.Value.Id #>"><#= day.Value.Name #></h2>
-<#
-        foreach (var dream in Enumerable.Range(1, Definitions.NumDreamsPerDay[day.Key]))
+    <h2 id="@(day.Value.Id)">@Html.Raw(day.Value.Name)</h2>
+        @foreach (var dream in Enumerable.Range(1, Definitions.NumDreamsPerDay[day.Key]))
         {
-#>
     <table class="bestshot">
-     <caption>弾幕夢 <#= dream #></caption>
+     <caption>弾幕夢 @(dream)</caption>
      <tbody>
       <tr>
        <td class="bestshot">
-        <img src="%T165SHOTEX<#= day.Key #><#= dream #>1" <#
-             #>width="%T165SHOTEX<#= day.Key #><#= dream #>2" <#
-             #>height="%T165SHOTEX<#= day.Key #><#= dream #>3"
-             alt="<#= day.Value.Name #> 弾幕夢 <#= dream #> のベストショット" />
+        <img src="%T165SHOTEX@(day.Key)@(dream)1" width="%T165SHOTEX@(day.Key)@(dream)2" height="%T165SHOTEX@(day.Key)@(dream)3"
+             alt="@Html.Raw(day.Value.Name) 弾幕夢 @(dream) のベストショット" />
        </td>
        <td class="info">
         <dl>
-         <dt>スペルカード名</dt><dd class="card">%T165CARD<#= day.Key #><#= dream #>2</dd>
-         <dt>撮影日時</dt><dd class="datetime">%T165SHOTEX<#= day.Key #><#= dream #>4</dd>
-         <dt>ハッシュタグ</dt><dd class="hashtags">%T165SHOTEX<#= day.Key #><#= dream #>5</dd>
-         <dt>この写真を見た回数</dt><dd class="views">%T165SHOTEX<#= day.Key #><#= dream #>6</dd>
-         <dt>&#x1f44d; イイッすね！</dt><dd class="likes">%T165SHOTEX<#= day.Key #><#= dream #>7</dd>
-         <dt>&#x2764;&#xfe0f; お気に入り！</dt><dd class="favs">%T165SHOTEX<#= day.Key #><#= dream #>8</dd>
-         <dt>総合評価点</dt><dd class="score">%T165SHOTEX<#= day.Key #><#= dream #>9</dd>
+         <dt>スペルカード名</dt><dd class="card">%T165CARD@(day.Key)@(dream)2</dd>
+         <dt>撮影日時</dt><dd class="datetime">%T165SHOTEX@(day.Key)@(dream)4</dd>
+         <dt>ハッシュタグ</dt><dd class="hashtags">%T165SHOTEX@(day.Key)@(dream)5</dd>
+         <dt>この写真を見た回数</dt><dd class="views">%T165SHOTEX@(day.Key)@(dream)6</dd>
+         <dt>&#x1f44d; イイッすね！</dt><dd class="likes">%T165SHOTEX@(day.Key)@(dream)7</dd>
+         <dt>&#x2764;&#xfe0f; お気に入り！</dt><dd class="favs">%T165SHOTEX@(day.Key)@(dream)8</dd>
+         <dt>総合評価点</dt><dd class="score">%T165SHOTEX@(day.Key)@(dream)9</dd>
         </dl>
        </td>
       </tr>
      </tbody>
     </table>
-<#
         }
-#>
    </section>
-
-<#
-        if (day.Key != Definitions.DayNames.Last().Key)
+@:
+        @if (day.Key != Definitions.DayNames.Last().Key)
         {
-#>
    <hr />
-
-<#
+@:
         }
     }
-#>
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
