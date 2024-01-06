@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th075" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th075
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -28,7 +24,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -37,14 +33,10 @@
      <li><a href="th075card.html">御札戦歴</a></li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
-<#
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
@@ -54,12 +46,10 @@
    <section>
     <h2>難易度別スコア</h2>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
      <thead>
       <tr>
        <th class="character">Chara</th>
@@ -73,42 +63,29 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var chara in Definitions.CharacterNames)
+        @foreach (var chara in Definitions.CharacterNames)
         {
-#>
       <tr>
-       <td class="character"><#= chara.Value.LongName #></td>
-       <td class="name">%T75SCR<#= level.Key #><#= chara.Key #>11</td>
-       <td class="score">%T75SCR<#= level.Key #><#= chara.Key #>12</td>
-       <td class="date">%T75SCR<#= level.Key #><#= chara.Key #>13</td>
-       <td class="use">%T75CHR<#= level.Key #><#= chara.Key #>1</td>
-       <td class="clear">%T75CHR<#= level.Key #><#= chara.Key #>2</td>
-       <td class="combo">%T75CHR<#= level.Key #><#= chara.Key #>3</td>
-       <td class="damage">%T75CHR<#= level.Key #><#= chara.Key #>4</td>
+       <td class="character">@Html.Raw(chara.Value.LongName)</td>
+       <td class="name">%T75SCR@(level.Key)@(chara.Key)11</td>
+       <td class="score">%T75SCR@(level.Key)@(chara.Key)12</td>
+       <td class="date">%T75SCR@(level.Key)@(chara.Key)13</td>
+       <td class="use">%T75CHR@(level.Key)@(chara.Key)1</td>
+       <td class="clear">%T75CHR@(level.Key)@(chara.Key)2</td>
+       <td class="combo">%T75CHR@(level.Key)@(chara.Key)3</td>
+       <td class="damage">%T75CHR@(level.Key)@(chara.Key)4</td>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
    </section>
 
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
