@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th095" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th095
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -27,7 +23,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ全般</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ全般</h1>
    <hr />
    <nav>
     <ul>
@@ -35,14 +31,10 @@
      <li><a href="th095bestshot.html">ベストショット一覧</a></li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value.Id #>"><#= level.Value.Name #></a></li>
-<#
+     <li><a href="#@(level.Value.Id)">@Html.Raw(level.Value.Name)</a></li>
     }
-#>
      <li><a href="#Total">Total</a></li>
     </ul>
    </nav>
@@ -53,12 +45,10 @@
    <section>
     <h2>レベル別スコア</h2>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= level.Value.Id #>"><#= level.Value.Name #></caption>
+     <caption id="@(level.Value.Id)">@Html.Raw(level.Value.Name)</caption>
      <thead>
       <tr>
        <th class="scene">Scene</th>
@@ -70,27 +60,21 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]))
         {
-#>
       <tr>
-       <td class="scene">Scene <#= scene #></td>
-       <td class="target">%T95CARD<#= level.Key #><#= scene #>2<br />（%T95CARD<#= level.Key #><#= scene #>1）</td>
-       <td class="score">%T95SCR<#= level.Key #><#= scene #>1</td>
-       <td class="bestshot">%T95SCR<#= level.Key #><#= scene #>2</td>
-       <td class="number">%T95SCR<#= level.Key #><#= scene #>3</td>
-       <td class="slow">%T95SCR<#= level.Key #><#= scene #>4</td>
+       <td class="scene">Scene @(scene)</td>
+       <td class="target">%T95CARD@(level.Key)@(scene)2<br />（%T95CARD@(level.Key)@(scene)1）</td>
+       <td class="score">%T95SCR@(level.Key)@(scene)1</td>
+       <td class="bestshot">%T95SCR@(level.Key)@(scene)2</td>
+       <td class="number">%T95SCR@(level.Key)@(scene)3</td>
+       <td class="slow">%T95SCR@(level.Key)@(scene)4</td>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
     <table class="score_total">
      <caption id="Total">Total</caption>
      <tbody>
@@ -108,7 +92,7 @@
       </tr>
       <tr>
        <th scope="row">撮影に成功した総シーン数</th>
-       <td class="rate">%T95SCRTL4 / <#= Definitions.NumScenesPerLevel.Values.Sum() #></td>
+       <td class="rate">%T95SCRTL4 / @(Definitions.NumScenesPerLevel.Values.Sum())</td>
       </tr>
      </tbody>
     </table>
@@ -117,14 +101,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>

@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th095" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th095
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> ベストショット一覧</title>
+  <title>@Html.Raw(Definitions.Title) ベストショット一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -23,7 +19,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> ベストショット一覧</h1>
+   <h1>@Html.Raw(Definitions.Title) ベストショット一覧</h1>
    <hr />
    <nav>
     <ul>
@@ -31,75 +27,48 @@
      <li>ベストショット一覧</li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value.Id #>"><#= level.Value.Name #></a></li>
-<#
+     <li><a href="#@(level.Value.Id)">@Html.Raw(level.Value.Name)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
 
   <main>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
    <section>
-    <h2 id="<#= level.Value.Id #>"><#= level.Value.Name #></h2>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]))
+    <h2 id="@(level.Value.Id)">@Html.Raw(level.Value.Name)</h2>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]))
         {
-#>
     <table class="bestshot">
-     <caption>Scene <#= scene #></caption>
+     <caption>Scene @(scene)</caption>
      <tbody>
       <tr>
        <td class="bestshot">
-        <img src="%T95SHOTEX<#= level.Key #><#= scene #>1" <#
-             #>width="%T95SHOTEX<#= level.Key #><#= scene #>2" <#
-             #>height="%T95SHOTEX<#= level.Key #><#= scene #>3"
-             alt="Score: %T95SHOTEX<#= level.Key #><#= scene #>4, <#
-             #>Slow: %T95SHOTEX<#= level.Key #><#= scene #>5, <#
-             #>DateTime: %T95SHOTEX<#= level.Key #><#= scene #>6"
-             title="Score: %T95SHOTEX<#= level.Key #><#= scene #>4, <#
-             #>Slow: %T95SHOTEX<#= level.Key #><#= scene #>5, <#
-             #>DateTime: %T95SHOTEX<#= level.Key #><#= scene #>6" />
+        <img src="%T95SHOTEX@(level.Key)@(scene)1" width="%T95SHOTEX@(level.Key)@(scene)2" height="%T95SHOTEX@(level.Key)@(scene)3"
+             alt="Score: %T95SHOTEX@(level.Key)@(scene)4, Slow: %T95SHOTEX@(level.Key)@(scene)5, DateTime: %T95SHOTEX@(level.Key)@(scene)6"
+             title="Score: %T95SHOTEX@(level.Key)@(scene)4, Slow: %T95SHOTEX@(level.Key)@(scene)5, DateTime: %T95SHOTEX@(level.Key)@(scene)6" />
        </td>
       </tr>
-      <tr><td class="spell">%T95CARD<#= level.Key #><#= scene #>2</td></tr>
+      <tr><td class="spell">%T95CARD@(level.Key)@(scene)2</td></tr>
      </tbody>
     </table>
-<#
         }
-#>
    </section>
-
-<#
-        if (level.Key != Definitions.LevelNames.Last().Key)
+@:
+        @if (level.Key != Definitions.LevelNames.Last().Key)
         {
-#>
    <hr />
-
-<#
+@:
         }
     }
-#>
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
