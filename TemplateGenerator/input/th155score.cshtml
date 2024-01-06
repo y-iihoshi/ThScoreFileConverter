@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th155" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th155
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -23,7 +19,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
   </header>
 
   <main>
@@ -35,35 +31,23 @@
      <thead>
       <tr>
        <th class="character">Character</th>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-       <th class="level"><#= level.Value #></th>
-<#
+       <th class="level">@Html.Raw(level.Value)</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.StoryCharacterNames)
+    @foreach (var chara in Definitions.StoryCharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value #></td>
-<#
-        foreach (var level in Definitions.LevelNames)
+       <td class="character">@Html.Raw(chara.Value)</td>
+        @foreach (var level in Definitions.LevelNames)
         {
-#>
-       <td class="clear">%T155CLEAR<#= level.Key #><#= chara.Key #></td>
-<#
+       <td class="clear">%T155CLEAR@(level.Key)@(chara.Key)</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
     </table>
    </section>
@@ -71,14 +55,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
