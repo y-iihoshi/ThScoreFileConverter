@@ -1,19 +1,15 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th143" #>
-<#@ output extension=".html" encoding="utf-8" #>
-<#
+@using TemplateGenerator.Models.Th143
+@{
     var numScenes = Definitions.NumScenesPerDay.Values.Sum();
     var itemKeyTotal = Definitions.ItemKeysTotalFirst.First();
-#>
+}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -33,7 +29,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ全般</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ全般</h1>
    <hr />
    <nav>
     <ul>
@@ -42,14 +38,10 @@
      <li><a href="th143screenshot.html">スクリーンショット一覧</a></li>
     </ul>
     <ul>
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
-     <li><a href="#<#= day.Value.Id #>"><#= day.Value.Name #></a></li>
-<#
+     <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
     }
-#>
      <li><a href="#Total">Total</a></li>
      <li><a href="#Nickname">異名取得状況</a></li>
     </ul>
@@ -61,12 +53,10 @@
    <section>
     <h2>日付別スコア</h2>
 
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= day.Value.Id #>"><#= day.Value.Name #></caption>
+     <caption id="@(day.Value.Id)">@Html.Raw(day.Value.Name)</caption>
      <thead>
       <tr>
        <th rowspan="2" class="scene">シーン</th>
@@ -75,91 +65,59 @@
        <th colspan="11">クリア回数 / 挑戦回数</th>
       </tr>
       <tr>
-<#
-        foreach (var itemKey in Definitions.ItemKeysTotalLast)
+        @foreach (var itemKey in Definitions.ItemKeysTotalLast)
         {
-#>
-       <th class="count"><#= Definitions.ItemWithTotalNames[itemKey].ShortName #></th>
-<#
+       <th class="count">@Html.Raw(Definitions.ItemWithTotalNames[itemKey].ShortName)</th>
         }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
-#>
       <tr>
-       <td class="scene">シーン <#= scene #></td>
-       <td class="target"><#
-       #>%T143CARD<#= day.Key #><#= sceneKey #>2<br /><#
-       #>（%T143CARD<#= day.Key #><#= sceneKey #>1）<#
-       #></td>
-       <td class="score">%T143SCR<#= day.Key #><#= sceneKey #><#= itemKeyTotal #>1</td>
-<#
-            foreach (var itemKey in Definitions.ItemKeysTotalLast)
+       <td class="scene">シーン @(scene)</td>
+       <td class="target">%T143CARD@(day.Key)@(sceneKey)2<br />（%T143CARD@(day.Key)@(sceneKey)1）</td>
+       <td class="score">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)1</td>
+            @foreach (var itemKey in Definitions.ItemKeysTotalLast)
             {
-#>
-       <td class="count"><#
-       #>%T143SCR<#= day.Key #><#= sceneKey #><#= itemKey #>3 / <#
-       #>%T143SCR<#= day.Key #><#= sceneKey #><#= itemKey #>2<#
-       #></td>
-<#
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKey)3 / %T143SCR@(day.Key)@(sceneKey)@(itemKey)2</td>
             }
-#>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
     <table class="score_total">
      <caption id="Total">Total</caption>
      <thead>
       <tr>
        <th><br /></th>
-<#
-    foreach (var itemKey in Definitions.ItemKeysTotalLast)
+    @foreach (var itemKey in Definitions.ItemKeysTotalLast)
     {
-#>
-       <th class="count"><#= Definitions.ItemWithTotalNames[itemKey].ShortName #></th>
-<#
+       <th class="count">@Html.Raw(Definitions.ItemWithTotalNames[itemKey].ShortName)</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
       <tr>
        <th scope="row">クリア回数 / 挑戦回数</th>
-<#
-    foreach (var itemKey in Definitions.ItemKeysTotalLast)
+    @foreach (var itemKey in Definitions.ItemKeysTotalLast)
     {
-#>
-       <td class="count">%T143SCRTL<#= itemKey #>3 / %T143SCRTL<#= itemKey #>2</td>
-<#
+       <td class="count">%T143SCRTL@(itemKey)3 / %T143SCRTL@(itemKey)2</td>
     }
-#>
       </tr>
       <tr>
        <th scope="row">クリアシーン数</th>
-<#
-    foreach (var itemKey in Definitions.ItemKeysTotalLast)
+    @foreach (var itemKey in Definitions.ItemKeysTotalLast)
     {
-#>
-       <td class="count">%T143SCRTL<#= itemKey #>4 / <#= numScenes #></td>
-<#
+       <td class="count">%T143SCRTL@(itemKey)4 / @(numScenes)</td>
     }
-#>
       </tr>
       <tr>
        <th scope="row">得点の合計</th>
-       <td class="score" colspan="11">%T143SCRTL<#= itemKeyTotal #>1</td>
+       <td class="score" colspan="11">%T143SCRTL@(itemKeyTotal)1</td>
       </tr>
       <tr>
        <th scope="row">総プレイ時間</th>
@@ -174,10 +132,8 @@
    <section>
     <h2 id="Nickname">異名取得状況</h2>
 
-<#
-    foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumNicknames / 10f)))
+    @foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(Definitions.NumNicknames / 10f)))
     {
-#>
     <table class="nickname">
      <thead>
       <tr>
@@ -186,34 +142,21 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var place1 in Enumerable.Range(0, 10))
+        @foreach (var place1 in Enumerable.Range(0, 10))
         {
             var nickname = place10 * 10 + place1 + 1;
             var nicknameKey = nickname.ToString("D2");
-#>
-      <tr><td class="number"><#= nickname #></td><td class="nickname">%T143NICK<#= nicknameKey #></td></tr>
-<#
+      <tr><td class="number">@(nickname)</td><td class="nickname">%T143NICK@(nicknameKey)</td></tr>
         }
-#>
      </tbody>
     </table>
-<#
     }
-#>
    </section>
 
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>

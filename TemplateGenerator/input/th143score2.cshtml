@@ -1,19 +1,15 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th143" #>
-<#@ import namespace="System.Text" #>
-<#@ output extension=".html" encoding="utf-8" #>
-<#
+@using System.Text
+@using TemplateGenerator.Models.Th143
+@{
     var itemKeyTotal = Definitions.ItemKeysTotalFirst.First();
-#>
+}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> クリア状況一覧</title>
+  <title>@Html.Raw(Definitions.Title) クリア状況一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -92,15 +88,14 @@
 				});
 		};
 
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
 
             var builder = new StringBuilder(1024);
-            foreach (var item in Definitions.ItemNames)
+            @foreach (var item in Definitions.ItemNames)
             {
                 builder.AppendFormat("'%T143SCR{0}{1}{2}3'", day.Key, sceneKey, item.Key);
                 if (item.Key != Definitions.ItemNames.Last().Key)
@@ -108,18 +103,16 @@
             }
 
             var clearCountsFormat = builder.ToString();
-#>
-		drawGraph({
-			id: '#T143GRAPH<#= day.Key #><#= sceneKey #>',
-			clearCounts: [ <#= clearCountsFormat #> ]
+<text>		drawGraph({
+			id: '#T143GRAPH@(day.Key)@(sceneKey)',
+			clearCounts: [ @Html.Raw(clearCountsFormat) ]
 		});
-<#
+</text>
         }
 
-        if (day.Key != Definitions.DayNames.Last().Key)
-            WriteLine(string.Empty);
+        @if (day.Key != Definitions.DayNames.Last().Key)
+            @Html.Raw(Environment.NewLine)
     }
-#>
 	});
 // ]]>
 </script>
@@ -128,7 +121,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> クリア状況一覧</h1>
+   <h1>@Html.Raw(Definitions.Title) クリア状況一覧</h1>
    <hr />
    <nav>
     <ul>
@@ -137,14 +130,10 @@
      <li><a href="th143screenshot.html">スクリーンショット一覧</a></li>
     </ul>
     <ul>
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
-     <li><a href="#<#= day.Value.Id #>"><#= day.Value.Name #></a></li>
-<#
+     <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
@@ -154,91 +143,60 @@
    <section>
     <h2>日付別スコア</h2>
 
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= day.Value.Id #>"><#= day.Value.Name #></caption>
+     <caption id="@(day.Value.Id)">@Html.Raw(day.Value.Name)</caption>
      <tbody>
       <tr>
        <th scope="row">シーン</th>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
-#>
-       <td class="scene">シーン <#= scene #></td>
-<#
+       <td class="scene">シーン @(scene)</td>
         }
-#>
       </tr>
       <tr>
        <th scope="row">Clear</th>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
-#>
-       <td class="count">%T143SCR<#= day.Key #><#= sceneKey #><#= itemKeyTotal #>3</td>
-<#
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)3</td>
         }
-#>
       </tr>
       <tr>
        <th scope="row">Challenge</th>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
-#>
-       <td class="count">%T143SCR<#= day.Key #><#= sceneKey #><#= itemKeyTotal #>2</td>
-<#
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)2</td>
         }
-#>
       </tr>
       <tr>
        <th scope="row">Score</th>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
-#>
-       <td class="count">%T143SCR<#= day.Key #><#= sceneKey #><#= itemKeyTotal #>1</td>
-<#
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)1</td>
         }
-#>
       </tr>
       <tr>
        <th scope="row">クリア状況</th>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
-#>
-       <td><canvas id="T143GRAPH<#= day.Key #><#= sceneKey #>" width="110" height="110"></canvas></td>
-<#
+       <td><canvas id="T143GRAPH@(day.Key)@(sceneKey)" width="110" height="110"></canvas></td>
         }
-#>
       </tr>
      </tbody>
     </table>
-
-<#
+@:
         }
-#>
    </section>
 
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>

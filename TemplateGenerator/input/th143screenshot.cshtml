@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th143" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th143
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スクリーンショット一覧</title>
+  <title>@Html.Raw(Definitions.Title) スクリーンショット一覧</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -23,7 +19,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スクリーンショット一覧</h1>
+   <h1>@Html.Raw(Definitions.Title) スクリーンショット一覧</h1>
    <hr />
    <nav>
     <ul>
@@ -32,72 +28,48 @@
      <li>スクリーンショット一覧</li>
     </ul>
     <ul>
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
-     <li><a href="#<#= day.Value.Id #>"><#= day.Value.Name #></a></li>
-<#
+     <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
 
   <main>
 
-<#
-    foreach (var day in Definitions.DayNames)
+    @foreach (var day in Definitions.DayNames)
     {
-#>
    <section>
-    <h2 id="<#= day.Value.Id #>"><#= day.Value.Name #></h2>
-<#
-        foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+    <h2 id="@(day.Value.Id)">@Html.Raw(day.Value.Name)</h2>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
         {
             var sceneKey = scene % 10;
-#>
     <table class="screenshot">
-     <caption>シーン <#= scene #></caption>
+     <caption>シーン @(scene)</caption>
      <tbody>
       <tr>
        <td class="screenshot">
-        <img src="%T143SHOTEX<#= day.Key #><#= sceneKey #>1" <#
-             #>width="%T143SHOTEX<#= day.Key #><#= sceneKey #>2" <#
-             #>height="%T143SHOTEX<#= day.Key #><#= sceneKey #>3"
-             alt="DateTime: %T143SHOTEX<#= day.Key #><#= sceneKey #>4" <#
-             #>title="DateTime: %T143SHOTEX<#= day.Key #><#= sceneKey #>4" />
+        <img src="%T143SHOTEX@(day.Key)@(sceneKey)1" width="%T143SHOTEX@(day.Key)@(sceneKey)2" height="%T143SHOTEX@(day.Key)@(sceneKey)3"
+             alt="DateTime: %T143SHOTEX@(day.Key)@(sceneKey)4" title="DateTime: %T143SHOTEX@(day.Key)@(sceneKey)4" />
        </td>
       </tr>
-      <tr><td class="spell">%T143CARD<#= day.Key #><#= sceneKey #>2</td></tr>
+      <tr><td class="spell">%T143CARD@(day.Key)@(sceneKey)2</td></tr>
      </tbody>
     </table>
-<#
         }
-#>
    </section>
-
-<#
-        if (day.Key != Definitions.DayNames.Last().Key)
+@:
+        @if (day.Key != Definitions.DayNames.Last().Key)
         {
-#>
    <hr />
-
-<#
+@:
         }
     }
-#>
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
