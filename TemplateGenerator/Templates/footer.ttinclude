@@ -1,6 +1,0 @@
-<#@ assembly name="$(TargetDir)\ThScoreFileConverter.Core.dll" #>
-<#@ import namespace="ThScoreFileConverter.Core.Resources" #>
-<#
-    var projectName = StringResources.ProductName;
-    var projectUrl = StringResources.ProjectUrl;
-#>

@@ -24,40 +24,4 @@
     <Content Include="input\style.css" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="**\*.ttinclude" />
-    <None Update="**\*.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>%(Filename).html</LastGenOutput>
-    </None>
-    <None Update="**\*.html">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>%(Filename).tt</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <T4TargetsPath>$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets</T4TargetsPath>
-  </PropertyGroup>
-
-  <Import Project="$(T4TargetsPath)" Condition="Exists('$(T4TargetsPath)')" />
-
-  <ItemGroup Condition="Exists('$(T4TargetsPath)')">
-    <T4ParameterValues Include="TargetDir">
-      <Value>$(TargetDir)</Value>
-    </T4ParameterValues>
-    <T4ParameterValues Include="TargetPath">
-      <Value>$(TargetPath)</Value>
-    </T4ParameterValues>
-  </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="Exists('$(T4TargetsPath)') And '$(TargetFramework)' == 'net48'">
-    <CallTarget Targets="TransformAll" ContinueOnError="true" />
-  </Target>
-
 </Project>

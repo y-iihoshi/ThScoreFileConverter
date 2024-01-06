@@ -1,3 +1,0 @@
-<#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
-<#@ import namespace="System.Linq" #>
