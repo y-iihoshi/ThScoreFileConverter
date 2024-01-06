@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th08" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th08
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -38,7 +34,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -49,14 +45,10 @@
      <li><a href="th08card2.html">御札戦歴（スペルプラクティス）</a></li>
     </ul>
     <ul>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
-<#
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
-#>
      <li><a href="#Other">その他の状態一覧</a></li>
      <li><a href="#Clear">クリア達成度</a></li>
     </ul>
@@ -68,12 +60,10 @@
    <section>
     <h2>難易度別スコア</h2>
 
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
     <table class="score_per_level">
-     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
      <thead>
       <tr>
        <th class="character">Character</th>
@@ -93,37 +83,31 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var chara in Definitions.CharacterNames)
+        @foreach (var chara in Definitions.CharacterNames)
         {
             var cards = Definitions.NumCardsPerLevel[level.Key]
                 - Definitions.NumCardsPerStage4Level[(Definitions.UnreachableStagesPerCharacter[chara.Key], level.Key)];
-#>
       <tr>
-       <td class="character"><#= chara.Value.LongName #></td>
-       <td class="name">%T08SCR<#= level.Key #><#= chara.Key #>11</td>
-       <td class="score">%T08SCR<#= level.Key #><#= chara.Key #>12</td>
-       <td class="stage">%T08SCR<#= level.Key #><#= chara.Key #>13</td>
-       <td class="date">%T08SCR<#= level.Key #><#= chara.Key #>14</td>
-       <td class="slow">%T08SCR<#= level.Key #><#= chara.Key #>15</td>
-       <td class="playtime">%T08SCR<#= level.Key #><#= chara.Key #>16</td>
-       <td class="point">%T08SCR<#= level.Key #><#= chara.Key #>18</td>
-       <td class="time">%T08SCR<#= level.Key #><#= chara.Key #>19</td>
-       <td class="miss">%T08SCR<#= level.Key #><#= chara.Key #>10</td>
-       <td class="bomb">%T08SCR<#= level.Key #><#= chara.Key #>1A</td>
-       <td class="last_spell">%T08SCR<#= level.Key #><#= chara.Key #>1B</td>
-       <td class="human">%T08SCR<#= level.Key #><#= chara.Key #>1E</td>
-       <td class="rate">%T08SCR<#= level.Key #><#= chara.Key #>1G / <#= cards #></td>
+       <td class="character">@Html.Raw(chara.Value.LongName)</td>
+       <td class="name">%T08SCR@(level.Key)@(chara.Key)11</td>
+       <td class="score">%T08SCR@(level.Key)@(chara.Key)12</td>
+       <td class="stage">%T08SCR@(level.Key)@(chara.Key)13</td>
+       <td class="date">%T08SCR@(level.Key)@(chara.Key)14</td>
+       <td class="slow">%T08SCR@(level.Key)@(chara.Key)15</td>
+       <td class="playtime">%T08SCR@(level.Key)@(chara.Key)16</td>
+       <td class="point">%T08SCR@(level.Key)@(chara.Key)18</td>
+       <td class="time">%T08SCR@(level.Key)@(chara.Key)19</td>
+       <td class="miss">%T08SCR@(level.Key)@(chara.Key)10</td>
+       <td class="bomb">%T08SCR@(level.Key)@(chara.Key)1A</td>
+       <td class="last_spell">%T08SCR@(level.Key)@(chara.Key)1B</td>
+       <td class="human">%T08SCR@(level.Key)@(chara.Key)1E</td>
+       <td class="rate">%T08SCR@(level.Key)@(chara.Key)1G / @(cards)</td>
       </tr>
-<#
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
    </section>
 
    <hr />
@@ -149,76 +133,48 @@
       <tr>
        <th></th>
        <th class="character">Character</th>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <th class="level"><#= Definitions.LevelWithTotalNames[levelKey] #></th>
-<#
+       <th class="level">@Html.Raw(Definitions.LevelWithTotalNames[levelKey])</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var charaKey in Definitions.CharacterKeysTotalLast)
+    @foreach (var charaKey in Definitions.CharacterKeysTotalLast)
     {
-#>
       <tr>
-<#
-        if (charaKey == Definitions.CharacterKeysTotalLast.First())
+        @if (charaKey == Definitions.CharacterKeysTotalLast.First())
         {
-#>
        <th scope="row" class="vertical" rowspan="13">プレイ回数</th>
-<#
         }
-#>
-       <td class="character"><#= Definitions.CharacterWithTotalNames[charaKey].LongName #></td>
-<#
-        foreach (var levelKey in Definitions.LevelKeysTotalLast)
+       <td class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKey].LongName)</td>
+        @foreach (var levelKey in Definitions.LevelKeysTotalLast)
         {
-#>
-       <td class="count">%T08PLAY<#= levelKey #><#= charaKey #></td>
-<#
+       <td class="count">%T08PLAY@(levelKey)@(charaKey)</td>
         }
-#>
       </tr>
-<#
     }
-#>
 
       <tr>
        <th scope="row" colspan="2">クリア回数</th>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <td class="count">%T08PLAY<#= levelKey #>CL</td>
-<#
+       <td class="count">%T08PLAY@(levelKey)CL</td>
     }
-#>
       </tr>
       <tr>
        <th scope="row" colspan="2">コンティニュー回数</th>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <td class="count">%T08PLAY<#= levelKey #>CN</td>
-<#
+       <td class="count">%T08PLAY@(levelKey)CN</td>
     }
-#>
       </tr>
       <tr>
        <th scope="row" colspan="2">プラクティス回数</th>
-<#
-    foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
     {
-#>
-       <td class="count">%T08PLAY<#= levelKey #>PR</td>
-<#
+       <td class="count">%T08PLAY@(levelKey)PR</td>
     }
-#>
       </tr>
      </tbody>
     </table>
@@ -233,35 +189,23 @@
      <thead>
       <tr>
        <th class="character">Character</th>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
-       <th class="level"><#= level.Value #></th>
-<#
+       <th class="level">@Html.Raw(level.Value)</th>
     }
-#>
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
       <tr>
-       <td class="character"><#= chara.Value.LongName #></td>
-<#
-        foreach (var level in Definitions.LevelNames)
+       <td class="character">@Html.Raw(chara.Value.LongName)</td>
+        @foreach (var level in Definitions.LevelNames)
         {
-#>
-       <td class="stage">%T08CLEAR<#= level.Key #><#= chara.Key #></td>
-<#
+       <td class="stage">%T08CLEAR@(level.Key)@(chara.Key)</td>
         }
-#>
       </tr>
-<#
     }
-#>
      </tbody>
     </table>
    </section>
@@ -269,14 +213,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
