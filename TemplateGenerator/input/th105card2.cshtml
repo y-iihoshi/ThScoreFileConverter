@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th105" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th105
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スペルカードデータ</title>
+  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -26,7 +22,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スペルカードデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -34,14 +30,10 @@
      <li>デッキ用カード蒐集歴</li>
     </ul>
     <ul>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
-     <li><a href="#<#= chara.Value.Id #>"><#= chara.Value.ShortName #></a></li>
-<#
+     <li><a href="#@(chara.Value.Id)">@Html.Raw(chara.Value.ShortName)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
@@ -51,12 +43,10 @@
    <section>
     <h2 id="Deck">デッキ用カード蒐集歴</h2>
 
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
     <table class="deck_per_chara">
-     <caption id="<#= chara.Value.Id #>"><#= chara.Value.LongName #></caption>
+     <caption id="@(chara.Value.Id)">@Html.Raw(chara.Value.LongName)</caption>
      <thead>
       <tr>
        <th class="type">種別</th>
@@ -66,66 +56,44 @@
       </tr>
      </thead>
      <tbody>
-<#
-        foreach (var cardType in Definitions.CardTypeNames)
+        @foreach (var cardType in Definitions.CardTypeNames)
         {
-            foreach (var card in Enumerable.Range(1, Definitions.MaxNumCardsPerType[cardType.Key]))
+            @foreach (var card in Enumerable.Range(1, Definitions.MaxNumCardsPerType[cardType.Key]))
             {
                 var cardKey = card.ToString("D2");
-#>
       <tr>
-<#
-                if (card == 1)
+                @if (card == 1)
                 {
-#>
-       <td class="type" rowspan="<#= Definitions.MaxNumCardsPerType[cardType.Key] #>"><#= cardType.Value #></td>
-<#
+       <td class="type" rowspan="@(Definitions.MaxNumCardsPerType[cardType.Key])">@Html.Raw(cardType.Value)</td>
                 }
-
-                if (card <= Definitions.NumCardsPerCharacterAndType[(chara.Key, cardType.Key)])
+                @if (card <= Definitions.NumCardsPerCharacterAndType[(chara.Key, cardType.Key)])
                 {
-#>
-       <td class="number">No.<#= cardKey #></td>
-       <td class="card">%T105DC<#= chara.Key #><#= cardType.Key #><#= cardKey #>N</td>
-       <td class="collect">%T105DC<#= chara.Key #><#= cardType.Key #><#= cardKey #>C</td>
-<#
+       <td class="number">No.@(cardKey)</td>
+       <td class="card">%T105DC@(chara.Key)@(cardType.Key)@(cardKey)N</td>
+       <td class="collect">%T105DC@(chara.Key)@(cardType.Key)@(cardKey)C</td>
                 }
                 else
                 {
-#>
        <td class="number">&nbsp;</td>
        <td class="card">&nbsp;</td>
        <td class="collect">&nbsp;</td>
-<#
                 }
-#>
       </tr>
-<#
             }
 
-            if (cardType.Key != Definitions.CardTypeNames.Last().Key)
-                WriteLine(string.Empty);
+            @if (cardType.Key != Definitions.CardTypeNames.Last().Key)
+                @Html.Raw(Environment.NewLine)
         }
-#>
      </tbody>
     </table>
-
-<#
+@:
     }
-#>
    </section>
 
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
