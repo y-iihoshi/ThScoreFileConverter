@@ -1,15 +1,11 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th09" #>
-<#@ output extension=".html" encoding="utf-8" #>
+@using TemplateGenerator.Models.Th09
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スコアデータ</title>
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -25,7 +21,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スコアデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -33,33 +29,25 @@
      <li>個別ランキング</li>
     </ul>
     <ul>
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
-     <li><a href="#<#= chara.Value.Id #>"><#= chara.Value.ShortName #></a></li>
-<#
+     <li><a href="#@(chara.Value.Id)">@Html.Raw(chara.Value.ShortName)</a></li>
     }
-#>
     </ul>
    </nav>
   </header>
 
   <main>
 
-<#
-    foreach (var chara in Definitions.CharacterNames)
+    @foreach (var chara in Definitions.CharacterNames)
     {
-#>
    <section>
-    <h2 id="<#= chara.Value.Id #>"><#= chara.Value.LongName #></h2>
+    <h2 id="@(chara.Value.Id)">@Html.Raw(chara.Value.LongName)</h2>
 
-<#
-        foreach (var level in Definitions.LevelNames)
+        @foreach (var level in Definitions.LevelNames)
         {
-#>
     <table class="score_per_level">
-     <caption><#= level.Value #></caption>
+     <caption>@Html.Raw(level.Value)</caption>
      <thead>
       <tr>
        <th class="number">No.</th>
@@ -69,48 +57,31 @@
       </tr>
      </thead>
      <tbody>
-<#
-            foreach (var rank in Enumerable.Range(1, 5))
+            @foreach (var rank in Enumerable.Range(1, 5))
             {
-#>
       <tr>
-       <td class="number"><#= Definitions.RankOrdinals[rank] #></td>
-       <td class="name">%T09SCR<#= level.Key #><#= chara.Key #><#= rank #>1</td>
-       <td class="score">%T09SCR<#= level.Key #><#= chara.Key #><#= rank #>2</td>
-       <td class="date">%T09SCR<#= level.Key #><#= chara.Key #><#= rank #>3</td>
+       <td class="number">@(Definitions.RankOrdinals[rank])</td>
+       <td class="name">%T09SCR@(level.Key)@(chara.Key)@(rank)1</td>
+       <td class="score">%T09SCR@(level.Key)@(chara.Key)@(rank)2</td>
+       <td class="date">%T09SCR@(level.Key)@(chara.Key)@(rank)3</td>
       </tr>
-<#
             }
-#>
      </tbody>
     </table>
-
-<#
+@:
         }
-#>
    </section>
-
-<#
-        if (chara.Key != Definitions.CharacterNames.Last().Key)
+@:
+        @if (chara.Key != Definitions.CharacterNames.Last().Key)
         {
-#>
    <hr />
-
-<#
+@:
         }
     }
-#>
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
