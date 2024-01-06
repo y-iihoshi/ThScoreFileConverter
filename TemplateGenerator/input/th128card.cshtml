@@ -1,20 +1,16 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="imports.ttinclude" once="true" #>
-<#@ include file="footer.ttinclude" once="true" #>
-<#@ import namespace="TemplateGenerator.Models.Th128" #>
-<#@ output extension=".html" encoding="utf-8" #>
-<#
+@using TemplateGenerator.Models.Th128
+@{
     var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
     var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
     var numCards = Definitions.NumCardsPerLevel.Values.Sum();
-#>
+}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><#= Definitions.Title #> スペルカードデータ</title>
+  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
   <link rel="stylesheet" href="style.css" />
 <style>
 /* <![CDATA[ */
@@ -32,7 +28,7 @@
  <body>
 
   <header>
-   <h1><#= Definitions.Title #> スペルカードデータ</h1>
+   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
    <hr />
    <nav>
     <ul>
@@ -65,40 +61,32 @@
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var card in Enumerable.Range(1, numCards))
+    @foreach (var card in Enumerable.Range(1, numCards))
     {
         var cardStr = card.ToString("D2");
         var cardKey = card.ToString("D3");
-#>
       <tr>
-       <td class="number">No.<#= cardStr #></td>
-       <td class="card">%T128CARD<#= cardKey #>N<br />(%T128CARD<#= cardKey #>R)</td>
-       <td class="count">%T128C<#= cardKey #>1</td>
-       <td class="count">%T128C<#= cardKey #>2</td>
-       <td class="count">%T128C<#= cardKey #>3</td>
+       <td class="number">No.@(cardStr)</td>
+       <td class="card">%T128CARD@(cardKey)N<br />(%T128CARD@(cardKey)R)</td>
+       <td class="count">%T128C@(cardKey)1</td>
+       <td class="count">%T128C@(cardKey)2</td>
+       <td class="count">%T128C@(cardKey)3</td>
       </tr>
-<#
-        if ((card < numCards) && (card % 10 == 0))
-            WriteLine(string.Empty);
+        @if ((card < numCards) && (card % 10 == 0))
+            @Html.Raw(Environment.NewLine)
     }
-#>
      </tbody>
      <tfoot>
-<#
-    {
+    @{
         var cardStrTotal = "Total";
         var cardKeyTotal = 0.ToString("D3");
-#>
       <tr>
-       <td colspan="2"><#= cardStrTotal #></td>
-       <td class="count">%T128C<#= cardKeyTotal #>1</td>
-       <td class="count">%T128C<#= cardKeyTotal #>2</td>
-       <td class="count">%T128C<#= cardKeyTotal #>3</td>
+       <td colspan="2">@(cardStrTotal)</td>
+       <td class="count">%T128C@(cardKeyTotal)1</td>
+       <td class="count">%T128C@(cardKeyTotal)2</td>
+       <td class="count">%T128C@(cardKeyTotal)3</td>
       </tr>
-<#
     }
-#>
      </tfoot>
     </table>
 
@@ -114,28 +102,24 @@
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var level in Definitions.LevelNames)
+    @foreach (var level in Definitions.LevelNames)
     {
-#>
       <tr>
-       <td class="level"><#= level.Value #></td>
-       <td class="count">%T128CRG<#= level.Key #><#= stageKeyTotal #>1</td>
-       <td class="count">%T128CRG<#= level.Key #><#= stageKeyTotal #>2</td>
-       <td class="count">%T128CRG<#= level.Key #><#= stageKeyTotal #>3</td>
-       <td class="count"><#= Definitions.NumCardsPerLevel[level.Key] #></td>
+       <td class="level">@Html.Raw(level.Value)</td>
+       <td class="count">%T128CRG@(level.Key)@(stageKeyTotal)1</td>
+       <td class="count">%T128CRG@(level.Key)@(stageKeyTotal)2</td>
+       <td class="count">%T128CRG@(level.Key)@(stageKeyTotal)3</td>
+       <td class="count">@(Definitions.NumCardsPerLevel[level.Key])</td>
       </tr>
-<#
     }
-#>
      </tbody>
      <tfoot>
       <tr>
-       <td><#= Definitions.LevelWithTotalNames[levelKeyTotal] #></td>
-       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>1</td>
-       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>2</td>
-       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>3</td>
-       <td class="count"><#= numCards #></td>
+       <td>@Html.Raw(Definitions.LevelWithTotalNames[levelKeyTotal])</td>
+       <td class="count">%T128CRG@(levelKeyTotal)@(stageKeyTotal)1</td>
+       <td class="count">%T128CRG@(levelKeyTotal)@(stageKeyTotal)2</td>
+       <td class="count">%T128CRG@(levelKeyTotal)@(stageKeyTotal)3</td>
+       <td class="count">@(numCards)</td>
       </tr>
      </tfoot>
     </table>
@@ -152,30 +136,26 @@
       </tr>
      </thead>
      <tbody>
-<#
-    foreach (var stage in Definitions.StageNames)
+    @foreach (var stage in Definitions.StageNames)
     {
         var stageKey = (stage.Key == "EXT") ? stageKeyTotal : stage.Key;
         var levelKey = (stage.Key == "EXT") ? "X" : levelKeyTotal;
-#>
       <tr>
-       <td class="stage"><#= stage.Value #></td>
-       <td class="count">%T128CRG<#= levelKey #><#= stageKey #>1</td>
-       <td class="count">%T128CRG<#= levelKey #><#= stageKey #>2</td>
-       <td class="count">%T128CRG<#= levelKey #><#= stageKey #>3</td>
-       <td class="count"><#= Definitions.NumCardsPerStage[stage.Key] #></td>
+       <td class="stage">@Html.Raw(stage.Value)</td>
+       <td class="count">%T128CRG@(levelKey)@(stageKey)1</td>
+       <td class="count">%T128CRG@(levelKey)@(stageKey)2</td>
+       <td class="count">%T128CRG@(levelKey)@(stageKey)3</td>
+       <td class="count">@(Definitions.NumCardsPerStage[stage.Key])</td>
       </tr>
-<#
     }
-#>
      </tbody>
      <tfoot>
       <tr>
-       <td><#= Definitions.StageWithTotalNames[stageKeyTotal] #></td>
-       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>1</td>
-       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>2</td>
-       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>3</td>
-       <td class="count"><#= numCards #></td>
+       <td>@Html.Raw(Definitions.StageWithTotalNames[stageKeyTotal])</td>
+       <td class="count">%T128CRG@(levelKeyTotal)@(stageKeyTotal)1</td>
+       <td class="count">%T128CRG@(levelKeyTotal)@(stageKeyTotal)2</td>
+       <td class="count">%T128CRG@(levelKeyTotal)@(stageKeyTotal)3</td>
+       <td class="count">@(numCards)</td>
       </tr>
      </tfoot>
     </table>
@@ -185,14 +165,7 @@
   </main>
 
   <footer>
-   <p>
-    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
-<script>
-// <![CDATA[
-    document.write("Last updated: ", document.lastModified, ".");
-// ]]>
-</script>
-   </p>
+@await Html.PartialAsync("_Footer")
   </footer>
 
  </body>
