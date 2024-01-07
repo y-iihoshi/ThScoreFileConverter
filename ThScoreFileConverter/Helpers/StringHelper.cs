@@ -7,10 +7,7 @@
 
 using System;
 using System.Globalization;
-
-#if NET6_0_OR_GREATER
 using System.Runtime.CompilerServices;
-#endif
 
 namespace ThScoreFileConverter.Helpers;
 
@@ -19,7 +16,6 @@ namespace ThScoreFileConverter.Helpers;
 /// </summary>
 public static class StringHelper
 {
-#if NET6_0_OR_GREATER
     /// <summary>
     /// Wraps the <see cref="string.Create(IFormatProvider, ref DefaultInterpolatedStringHandler)"/>
     /// to specify an <see cref="IFormatProvider"/> instance.
@@ -33,18 +29,6 @@ public static class StringHelper
     {
         return string.Create(CultureInfo.CurrentCulture, ref handler);
     }
-#else
-    /// <summary>
-    /// Returns the specified interpolated string itself.
-    /// The aim of this method is to simulate the <c>string.Create()</c> method added in .NET 6.
-    /// </summary>
-    /// <param name="interpolated">The interpolated string.</param>
-    /// <returns><paramref name="interpolated"/> itself.</returns>
-    public static string Create(string interpolated)
-    {
-        return interpolated;
-    }
-#endif
 
     /// <summary>
     /// Wraps the <see cref="string.Format(IFormatProvider, string, object[])"/> to specify an <see cref="IFormatProvider"/> instance.

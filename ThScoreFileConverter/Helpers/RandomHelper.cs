@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace ThScoreFileConverter.Helpers;
 
 /// <summary>
@@ -25,7 +27,7 @@ public static class RandomHelper
         const int Q = M / A;   // 0xADC8
         const int R = M % A;   // 0x0D47
 
-        var (div, rem) = MathHelper.DivRem(state, Q);
+        var (div, rem) = Math.DivRem(state, Q);
         var diff = (rem * A) - (div * R);
         return diff < 0 ? diff + M : diff;
     }

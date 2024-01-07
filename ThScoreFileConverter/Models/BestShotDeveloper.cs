@@ -13,10 +13,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using ThScoreFileConverter.Helpers;
 
-#if !NET5_0_OR_GREATER
-using System.Security.Permissions;
-#endif
-
 namespace ThScoreFileConverter.Models;
 
 /// <summary>
@@ -51,11 +47,6 @@ internal static class BestShotDeveloper
 
         try
         {
-#if !NET5_0_OR_GREATER
-            var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-            permission.Demand();
-#endif
-
             var bitmapData = bitmap.LockBits(
                 new Rectangle(0, 0, header.Width, header.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
             var source = decoded.ToArray();
