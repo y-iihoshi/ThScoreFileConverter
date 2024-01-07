@@ -42,11 +42,7 @@ internal sealed class SQNull : SQObject, IEquatable<SQNull>
 
     public override int GetHashCode()
     {
-#if NETFRAMEWORK
-        return this.Type.GetHashCode();
-#else
         return HashCode.Combine(this.Type);
-#endif
     }
 
     public bool Equals(SQNull? other)

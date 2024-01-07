@@ -15,10 +15,6 @@ using ThScoreFileConverter.Properties;
 using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Core.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.ViewModels;
 
 [TestClass]
