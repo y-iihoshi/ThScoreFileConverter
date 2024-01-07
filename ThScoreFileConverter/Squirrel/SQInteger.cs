@@ -52,11 +52,7 @@ internal sealed class SQInteger : SQObject, IEquatable<SQInteger>
 
     public override int GetHashCode()
     {
-#if NETFRAMEWORK
-        return this.Type.GetHashCode() ^ this.Value.GetHashCode();
-#else
         return HashCode.Combine(this.Type, this.Value);
-#endif
     }
 
     public bool Equals(SQInteger? other)

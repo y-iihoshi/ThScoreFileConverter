@@ -18,10 +18,6 @@ using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Models.Th143;
 
 #if !DEBUG

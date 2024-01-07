@@ -20,10 +20,6 @@ using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
     ThScoreFileConverter.Core.Models.Level,
     ThScoreFileConverter.Models.Th06.StageProgress>;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Models.Th06;
 
 internal sealed class AllScoreData

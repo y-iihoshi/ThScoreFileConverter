@@ -145,11 +145,7 @@ public class ChapterTests
     public void ReadFromTestShortenedSignature()
     {
         var properties = ValidProperties;
-#if NETFRAMEWORK
-        properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
-#else
         properties.signature = properties.signature[0..^1];
-#endif
 
         // <sig> <ver> < chksum -> <- size --> <- data -->
         // __ 41 d2 04 E0 00 00 00 10 00 00 00 01 23 45 67

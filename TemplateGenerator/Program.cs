@@ -1,10 +1,4 @@
-﻿#if NETFRAMEWORK
-
-return;
-
-#else
-
-#pragma warning disable CA2007 // Do not directly await a Task
+﻿#pragma warning disable CA2007 // Do not directly await a Task
 
 using System.Globalization;
 using Statiq.App;
@@ -25,5 +19,3 @@ return await Bootstrapper
         .WithInputReadFiles("**/*.css")
         .WithOutputWriteFiles())
     .RunAsync();
-
-#endif

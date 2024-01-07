@@ -8,10 +8,6 @@ using ThScoreFileConverter.Models.Th18;
 using ThScoreFileConverter.Tests.UnitTesting;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Core.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.Models.Th18;
 
 [TestClass]

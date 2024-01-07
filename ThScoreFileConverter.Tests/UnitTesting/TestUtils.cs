@@ -24,19 +24,12 @@ public static class TestUtils
     static TestUtils()
     {
         Unreachable = nameof(Unreachable);
-#if NETFRAMEWORK
-        RandomNumberGenerator = RandomNumberGenerator.Create();
-#endif
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         CP932Encoding = Encoding.GetEncoding(932);
     }
 
     public static string Unreachable { get; }
-
-#if NETFRAMEWORK
-    public static RandomNumberGenerator RandomNumberGenerator { get; }
-#endif
 
     public static Encoding CP932Encoding { get; }
 
@@ -93,13 +86,7 @@ public static class TestUtils
 
     public static byte[] MakeRandomArray(int length)
     {
-#if NETFRAMEWORK
-        var bytes = new byte[length];
-        RandomNumberGenerator.GetBytes(bytes);
-        return bytes;
-#else
         return RandomNumberGenerator.GetBytes(length);
-#endif
     }
 
     public static T Create<T>(byte[] array)

@@ -17,42 +17,6 @@ namespace ThScoreFileConverter.Core.Extensions;
 /// </summary>
 public static class EnumerableExtensions
 {
-#if NETFRAMEWORK
-    /// <summary>
-    /// Bypasses a specified number of elements from the end of a sequence and then returns the remaining elements.
-    /// </summary>
-    /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
-    /// <param name="source">An <see cref="IEnumerable{T}"/> to return elements from.</param>
-    /// <param name="count">The number of elements to skip before returning the remaining elements.</param>
-    /// <returns>
-    /// An <see cref="IEnumerable{T}"/> that contains the elements that occur before the specified index in the
-    /// input sequence.
-    /// </returns>
-    public static IEnumerable<TSource> SkipLast<TSource>(this IEnumerable<TSource> source, int count)
-    {
-        Guard.IsNotNull(source);
-
-        return source.Take(source.Count() - count);
-    }
-
-    /// <summary>
-    /// Returns a specified number of contiguous elements from the end of a sequence.
-    /// </summary>
-    /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
-    /// <param name="source">The sequence to return elements from.</param>
-    /// <param name="count">The number of elements to return.</param>
-    /// <returns>
-    /// An <see cref="IEnumerable{T}"/> that contains the specified number of elements from the end of the input
-    /// sequence.
-    /// </returns>
-    public static IEnumerable<TSource> TakeLast<TSource>(this IEnumerable<TSource> source, int count)
-    {
-        Guard.IsNotNull(source);
-
-        return source.Skip(source.Count() - count);
-    }
-#endif
-
 #if !NET8_0_OR_GREATER
     /// <summary>
     /// Creates a <see cref="Dictionary{TKey, TValue}"/> from an <see cref="IEnumerable{T}"/> of

@@ -94,11 +94,7 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var signature = mock.Signature;
-#if NETFRAMEWORK
-        _ = mock.Signature.Returns(signature.Substring(0, signature.Length - 1));
-#else
         _ = mock.Signature.Returns(signature[0..^1]);
-#endif
 
         _ = Assert.ThrowsException<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));

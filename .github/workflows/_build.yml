@@ -14,11 +14,11 @@ on:
       dotnet-target-framework:
         required: true
         type: string
-        default: 'net48'
+        default: 'net6.0-windows'
       artifact-name:
         required: true
         type: string
-        default: 'ThScoreFileConverter.Debug.net48'
+        default: 'ThScoreFileConverter.Debug.net6.0-windows'
 
 jobs:
   build:

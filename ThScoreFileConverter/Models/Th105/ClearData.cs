@@ -12,10 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Helpers;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Models.Th105;
 
 internal sealed class ClearData<TChara> : IBinaryReadable, IClearData<TChara>  // per character

@@ -18,12 +18,7 @@ public static class DateTimeHelper
     /// <summary>
     /// Gets the point in time when Unix time is equal to 0 (i.e. 1970-01-01T00:00:00Z).
     /// </summary>
-    public static DateTime UnixEpoch { get; } =
-#if NETFRAMEWORK
-        new DateTime(1970, 1, 1);
-#else
-        DateTime.UnixEpoch;
-#endif
+    public static DateTime UnixEpoch { get; } = DateTime.UnixEpoch;
 
     /// <summary>
     /// Gets the date and time format string used by <see cref="GetString(double?)"/>.

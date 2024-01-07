@@ -9,10 +9,6 @@ using ThScoreFileConverter.Tests.UnitTesting;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Core.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.Models.Th17;
 
 [TestClass]

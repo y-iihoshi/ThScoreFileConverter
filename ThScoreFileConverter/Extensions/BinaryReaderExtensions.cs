@@ -5,10 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#if NETFRAMEWORK
-#pragma warning disable CA1062 // Validate arguments of public methods
-#endif
-
 using System;
 using System.Collections.Generic;
 using System.IO;

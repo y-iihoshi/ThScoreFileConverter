@@ -9,10 +9,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\ThScoreFileConverter.Core.Tests\ThScoreFileConverter.Core.Tests.csproj" />
     <ProjectReference Include="..\ThScoreFileConverter\ThScoreFileConverter.csproj" />
