@@ -1,0 +1,76 @@
+@using TemplateGenerator.Models.Th143
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スクリーンショット一覧</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    table.screenshot { float: left; }
+    table.screenshot td.screenshot { padding: 2px; width: 292px; height: 340px; }
+    table.screenshot td.spell { height: 1em; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スクリーンショット一覧</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th143score1.html">スコアデータ全般</a></li>
+     <li><a href="th143score2.html">クリア状況一覧</a></li>
+     <li>スクリーンショット一覧</li>
+    </ul>
+    <ul>
+    @foreach (var day in Definitions.DayNames)
+    {
+     <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
+    }
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+    @foreach (var day in Definitions.DayNames)
+    {
+   <section>
+    <h2 id="@(day.Value.Id)">@Html.Raw(day.Value.Name)</h2>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+            var sceneKey = scene % 10;
+    <table class="screenshot">
+     <caption>シーン @(scene)</caption>
+     <tbody>
+      <tr>
+       <td class="screenshot">
+        <img src="%T143SHOTEX@(day.Key)@(sceneKey)1" width="%T143SHOTEX@(day.Key)@(sceneKey)2" height="%T143SHOTEX@(day.Key)@(sceneKey)3"
+             alt="DateTime: %T143SHOTEX@(day.Key)@(sceneKey)4" title="DateTime: %T143SHOTEX@(day.Key)@(sceneKey)4" />
+       </td>
+      </tr>
+      <tr><td class="spell">%T143CARD@(day.Key)@(sceneKey)2</td></tr>
+     </tbody>
+    </table>
+        }
+   </section>
+@:
+        @if (day.Key != Definitions.DayNames.Last().Key)
+        {
+   <hr />
+@:
+        }
+    }
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

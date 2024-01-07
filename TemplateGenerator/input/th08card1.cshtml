@@ -1,0 +1,193 @@
+@using TemplateGenerator.Models.Th08
+@{
+    var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
+    var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
+    var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.level { min-width: 70px; }
+    td.stage { min-width: 100px; }
+    table.rate_per_card td.number { min-width: 50px; }
+    table.rate_per_card td.card { min-width: 150px; }
+    table.rate_per_card td.character { min-width: 80px; }
+    table.rate_per_card td.rate { min-width: 80px; }
+    table.rate_per_level td.character { min-width: 100px; }
+    table.rate_per_level td.rate { min-width: 100px; }
+    table.rate_per_stage td.stage { min-width: 70px; }
+    table.rate_per_stage td.character { min-width: 100px; }
+    table.rate_per_stage td.rate { min-width: 100px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th08score1.html">スコアデータ全般</a></li>
+     <li><a href="th08score2.html">キャラ別スコア</a></li>
+     <li><a href="th08score3.html">プラクティス</a></li>
+     <li>御札戦歴（ゲーム本編）</li>
+     <li><a href="th08card2.html">御札戦歴（スペルプラクティス）</a></li>
+    </ul>
+    <ul>
+     <li><a href="#rate_per_card">スペルカード別</a></li>
+     <li><a href="#rate_per_level">難易度別</a></li>
+     <li><a href="#rate_per_stage">ステージ別</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="Card">御札戦歴（ゲーム本編）</h2>
+
+    <table class="rate_per_card">
+     <caption id="rate_per_card">スペルカード別取得率 （上段： MaxBonus、下段： 取得回数 / 遭遇回数）</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名<br />（難易度）</th>
+    @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+    {
+       <th class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKey].ShortName)</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var card in Enumerable.Range(1, Definitions.NumCardsWithoutLastWord))
+    {
+        var cardStr = card.ToString("D2");
+        var cardKey = card.ToString("D3");
+      <tr>
+       <td class="number">No.@(cardStr)</td>
+       <td class="card">%T08CARD@(cardKey)N<br />(%T08CARD@(cardKey)R)</td>
+        @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+        {
+       <td class="rate">%T08CS@(cardKey)@(charaKey)1<br />%T08CS@(cardKey)@(charaKey)2 / %T08CS@(cardKey)@(charaKey)3</td>
+        }
+      </tr>
+        @if (card % 10 == 0)
+            @Html.Raw(Environment.NewLine)
+    }
+     </tbody>
+     <tfoot>
+    @{
+        var cardStrTotal = "Total";
+        var cardKeyTotal = 0.ToString("D3");
+      <tr>
+       <td colspan="2">@(cardStrTotal)</td>
+        @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+        {
+       <td class="rate">%T08CS@(cardKeyTotal)@(charaKey)1<br />%T08CS@(cardKeyTotal)@(charaKey)2 / %T08CS@(cardKeyTotal)@(charaKey)3</td>
+        }
+      </tr>
+    }
+     </tfoot>
+    </table>
+
+    <table class="rate_per_level">
+     <caption id="rate_per_level">難易度別スペルカード蒐集率 （取得回数 / 遭遇回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="level">難易度</th>
+    @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+    {
+       <th class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKey].ShortName)</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var level in Definitions.LevelNames)
+    {
+      <tr>
+       <td class="level">@Html.Raw(level.Value)</td>
+        @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+        {
+       <td class="rate">%T08CRGS@(level.Key)@(charaKey)@(stageKeyTotal)1 / %T08CRGS@(level.Key)@(charaKey)@(stageKeyTotal)2 / @(Definitions.NumCardsPerLevel[level.Key])</td>
+        }
+      </tr>
+    }
+     </tbody>
+     <tfoot>
+      <tr>
+       <td>@Html.Raw(Definitions.LevelWithTotalNames[levelKeyTotal])</td>
+    @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+    {
+       <td class="rate">%T08CRGS@(levelKeyTotal)@(charaKey)@(stageKeyTotal)1 / %T08CRGS@(levelKeyTotal)@(charaKey)@(stageKeyTotal)2 / @(Definitions.NumCardsWithoutLastWord)</td>
+    }
+      </tr>
+     </tfoot>
+    </table>
+
+    <table class="rate_per_stage">
+     <caption id="rate_per_stage">ステージ別スペルカード蒐集率 （取得回数 / 遭遇回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="stage">ステージ</th>
+    @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+    {
+       <th class="character">@Html.Raw(Definitions.CharacterWithTotalNames[charaKey].ShortName)</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var stage in Definitions.StageNames)
+    {
+        var levelKey = (stage.Key == "EX") ? "X" : levelKeyTotal;
+        var stageKey = (stage.Key == "EX") ? stageKeyTotal : stage.Key;
+      <tr>
+       <td class="stage">@Html.Raw(stage.Value)</td>
+        @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+        {
+            if (((stageKey == "4A") || (stageKey == "4B")) &&
+                (charaKey != charaKeyTotal) &&
+                (Definitions.UnreachableStagesPerCharacter[charaKey] == stageKey))
+            {
+       <td class="rate"></td>
+            }
+            else
+            {
+       <td class="rate">%T08CRGS@(levelKey)@(charaKey)@(stageKey)1 / %T08CRGS@(levelKey)@(charaKey)@(stageKey)2 / @(Definitions.NumCardsPerStage[stage.Key])</td>
+            }
+        }
+      </tr>
+    }
+     </tbody>
+     <tfoot>
+      <tr>
+       <td class="stage">@Html.Raw(Definitions.StageWithTotalNames[stageKeyTotal])</td>
+    @foreach (var charaKey in Definitions.CharacterKeysTotalFirst)
+    {
+        var cards = Definitions.NumCardsWithoutLastWord;
+        if (charaKey != charaKeyTotal)
+            cards -= Definitions.NumCardsPerStage[Definitions.UnreachableStagesPerCharacter[charaKey]];
+       <td class="rate">%T08CRGS@(levelKeyTotal)@(charaKey)@(stageKeyTotal)1 / %T08CRGS@(levelKeyTotal)@(charaKey)@(stageKeyTotal)2 / @(cards)</td>
+    }
+      </tr>
+     </tfoot>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

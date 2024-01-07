@@ -1,0 +1,108 @@
+@using TemplateGenerator.Models.Th095
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.scene { min-width: 70px; }
+    td.target { min-width: 240px; }
+    td.number { min-width: 70px; }
+    td.slow { min-width: 70px; }
+    table.score_per_level td.bestshot { min-width: 110px; }
+    table.score_per_level tbody td.bestshot { text-align: right; }
+    table.score_total tbody td.bestshot { text-align: right; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ全般</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th095bestshot.html">ベストショット一覧</a></li>
+    </ul>
+    <ul>
+    @foreach (var level in Definitions.LevelNames)
+    {
+     <li><a href="#@(level.Value.Id)">@Html.Raw(level.Value.Name)</a></li>
+    }
+     <li><a href="#Total">Total</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>レベル別スコア</h2>
+
+    @foreach (var level in Definitions.LevelNames)
+    {
+    <table class="score_per_level">
+     <caption id="@(level.Value.Id)">@Html.Raw(level.Value.Name)</caption>
+     <thead>
+      <tr>
+       <th class="scene">Scene</th>
+       <th class="target">撮影対象</th>
+       <th class="score">ハイスコア</th>
+       <th class="bestshot">ベストショットスコア</th>
+       <th class="number">撮影枚数</th>
+       <th class="slow">処理落ち率</th>
+      </tr>
+     </thead>
+     <tbody>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]))
+        {
+      <tr>
+       <td class="scene">Scene @(scene)</td>
+       <td class="target">%T95CARD@(level.Key)@(scene)2<br />（%T95CARD@(level.Key)@(scene)1）</td>
+       <td class="score">%T95SCR@(level.Key)@(scene)1</td>
+       <td class="bestshot">%T95SCR@(level.Key)@(scene)2</td>
+       <td class="number">%T95SCR@(level.Key)@(scene)3</td>
+       <td class="slow">%T95SCR@(level.Key)@(scene)4</td>
+      </tr>
+        }
+     </tbody>
+    </table>
+@:
+    }
+    <table class="score_total">
+     <caption id="Total">Total</caption>
+     <tbody>
+      <tr>
+       <th scope="row">撮影総合評価点</th>
+       <td class="score">%T95SCRTL1</td>
+      </tr>
+      <tr>
+       <th scope="row">登録済みベストショットの総スコア</th>
+       <td class="bestshot">%T95SCRTL2</td>
+      </tr>
+      <tr>
+       <th scope="row">総撮影枚数</th>
+       <td class="number">%T95SCRTL3</td>
+      </tr>
+      <tr>
+       <th scope="row">撮影に成功した総シーン数</th>
+       <td class="rate">%T95SCRTL4 / @(Definitions.NumScenesPerLevel.Values.Sum())</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

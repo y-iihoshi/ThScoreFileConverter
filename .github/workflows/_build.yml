@@ -68,6 +68,13 @@ jobs:
         /p:Configuration=${{ inputs.dotnet-configuration }}
         /p:TargetFrameworks=${{ inputs.dotnet-target-framework }}
 
+    - name: Generate template files
+      run: >
+        dotnet run --project TemplateGenerator
+        --configuration ${{ inputs.dotnet-configuration }}
+        --framework ${{ inputs.dotnet-target-framework }}
+        --no-build -- --nocache
+
     - name: Dump version
       run: dotnet gitversion
 

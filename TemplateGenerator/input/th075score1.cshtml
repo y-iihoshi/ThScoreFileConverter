@@ -1,0 +1,92 @@
+@using TemplateGenerator.Models.Th075
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.name { min-width: 70px; }
+    td.score { min-width: 70px; }
+    td.date { min-width: 40px; }
+    table.score_per_level td.use { min-width: 60px; }
+    table.score_per_level td.clear { min-width: 60px; }
+    table.score_per_level td.combo { min-width: 80px; }
+    table.score_per_level td.damage { min-width: 80px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th075score2.html">個別ランキング</a></li>
+     <li><a href="th075card.html">御札戦歴</a></li>
+    </ul>
+    <ul>
+    @foreach (var level in Definitions.LevelNames)
+    {
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
+    }
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>難易度別スコア</h2>
+
+    @foreach (var level in Definitions.LevelNames)
+    {
+    <table class="score_per_level">
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
+     <thead>
+      <tr>
+       <th class="character">Chara</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="use">使用回数</th>
+       <th class="clear">クリア回数</th>
+       <th class="combo">最大連続技数</th>
+       <th class="damage">最大ダメージ</th>
+      </tr>
+     </thead>
+     <tbody>
+        @foreach (var chara in Definitions.CharacterNames)
+        {
+      <tr>
+       <td class="character">@Html.Raw(chara.Value.LongName)</td>
+       <td class="name">%T75SCR@(level.Key)@(chara.Key)11</td>
+       <td class="score">%T75SCR@(level.Key)@(chara.Key)12</td>
+       <td class="date">%T75SCR@(level.Key)@(chara.Key)13</td>
+       <td class="use">%T75CHR@(level.Key)@(chara.Key)1</td>
+       <td class="clear">%T75CHR@(level.Key)@(chara.Key)2</td>
+       <td class="combo">%T75CHR@(level.Key)@(chara.Key)3</td>
+       <td class="damage">%T75CHR@(level.Key)@(chara.Key)4</td>
+      </tr>
+        }
+     </tbody>
+    </table>
+@:
+    }
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>
