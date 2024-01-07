@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        target-framework: [net6.0-windows]
+        target-framework: [net6.0-windows, net8.0-windows]
 
     uses: ./.github/workflows/_build.yml
     with:
@@ -29,9 +29,15 @@ jobs:
         with:
           name: 'ThScoreFileConverter-${{ github.ref_name }}-net6.0-windows'
           path: 'artifacts/net6.0'
+      - name: Download artifact (net8.0)
+        uses: actions/download-artifact@v4
+        with:
+          name: 'ThScoreFileConverter-${{ github.ref_name }}-net8.0-windows'
+          path: 'artifacts/net8.0'
       - name: Zip artifacts
         run: |
           7z a ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip -r ./artifacts/net6.0/*
+          7z a ThScoreFileConverter-${{ github.ref_name }}-net8.0.zip -r ./artifacts/net8.0/*
       - name: Create GitHub release as draft
         uses: softprops/action-gh-release@v1
         with:
@@ -39,3 +45,4 @@ jobs:
           draft: true
           files: |
             ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip
+            ThScoreFileConverter-${{ github.ref_name }}-net8.0.zip
