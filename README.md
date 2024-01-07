@@ -54,7 +54,6 @@ format from best shot files.
 
 ### Development environment
 * Windows 11 Pro Version 23H2
-* .NET Framework 4.8
 * .NET 6
 * .NET 8
 * Visual Studio Community 2022 17.8
