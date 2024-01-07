@@ -9,9 +9,10 @@ return;
 using System.Globalization;
 using Statiq.App;
 using Statiq.Razor;
+using ThScoreFileConverter.Core.Resources;
 
 // Currently, HTML templates are only written in Japanese.
-CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+StringResources.Culture = CultureInfo.GetCultureInfo("ja-JP");
 
 return await Bootstrapper
     .Factory
