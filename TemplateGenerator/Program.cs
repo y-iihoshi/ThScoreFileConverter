@@ -6,8 +6,12 @@ return;
 
 #pragma warning disable CA2007 // Do not directly await a Task
 
+using System.Globalization;
 using Statiq.App;
 using Statiq.Razor;
+
+// Currently, HTML templates are only written in Japanese.
+CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
 
 return await Bootstrapper
     .Factory
