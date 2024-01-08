@@ -1,0 +1,43 @@
+@using ThScoreFileConverter.Core.Resources
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(ViewData["Title"])</title>
+  <link rel="stylesheet" href="style.css" />
+@RenderSection("Styles", required: false)
+@RenderSection("Scripts", required: false)
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(ViewData["Title"])</h1>
+@if (IsSectionDefined("Navigation"))
+{
+   <hr />
+   <nav>
+@RenderSection("Navigation", required: true)
+   </nav>
+}
+  </header>
+
+  <main>
+@RenderBody()
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="@StringResources.ProjectUrl">@StringResources.ProductName</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>

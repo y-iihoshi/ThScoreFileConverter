@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th165
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} スコアデータ";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.scene { min-width: 5em; }
@@ -23,14 +19,8 @@
     table.nickname td.nickname { min-width: 12em; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スコアデータ全般</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li>スコアデータ全般</li>
      <li><a href="th165bestshot.html">ベストショット一覧</a></li>
@@ -43,10 +33,7 @@
      <li><a href="#TotalScore">合計</a></li>
      <li><a href="#Nickname">異名取得状況</a></li>
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2 id="ScorePerDayOfWeek">曜日別スコア</h2>
@@ -142,12 +129,3 @@
     </table>
     }
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

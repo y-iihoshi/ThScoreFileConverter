@@ -1,15 +1,9 @@
 @using TemplateGenerator.Models.Th123
 @{
+    ViewData["Title"] = $"{Definitions.Title} スペルカードデータ";
     var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
 }
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.character { min-width: 120px; }
@@ -24,14 +18,8 @@
     table.rate_per_level td.rate { min-width: 100px; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li>御札戦歴</li>
      <li><a href="th123card2.html">デッキ用カード蒐集歴</a></li>
@@ -43,10 +31,7 @@
     }
      <li><a href="#CardGet">スペルカード蒐集率</a></li>
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2 id="Card">御札戦歴</h2>
@@ -126,12 +111,3 @@
      </tbody>
     </table>
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

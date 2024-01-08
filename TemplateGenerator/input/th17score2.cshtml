@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th17
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} スコアデータ";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.name { min-width: 70px; }
@@ -18,14 +14,8 @@
     table.score_per_level td.number { min-width: 20px; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th17score1.html">スコアデータ全般</a></li>
      <li>個別ランキング</li>
@@ -39,10 +29,7 @@
      <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
     @foreach (var level in Definitions.LevelNames)
     {
@@ -81,18 +68,10 @@
 @:
         }
    </section>
-@:
         @if (level.Key != Definitions.LevelNames.Last().Key)
         {
+@:
    <hr />
 @:
         }
     }
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

@@ -1,15 +1,9 @@
 @using TemplateGenerator.Models.Th125
 @{
+    ViewData["Title"] = $"{Definitions.Title} ベストショット一覧";
     var charaKey = "H";
 }
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) ベストショット一覧</title>
-  <link rel="stylesheet" href="style.css" />
+@section Styles {
 <style>
 /* <![CDATA[ */
     table.bestshot { float: left; }
@@ -20,14 +14,8 @@
     table.bestshot td.info dd { min-height: 1em; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) ベストショット一覧</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th125score1.html">文 スコアデータ全般</a></li>
      <li><a href="th125bestshot1.html">文 ベストショット一覧</a></li>
@@ -40,10 +28,7 @@
      <li><a href="#@(level.Value.Id)">@Html.Raw(level.Value.LongName)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
     @foreach (var level in Definitions.LevelNames)
     {
@@ -75,18 +60,10 @@
     </table>
         }
    </section>
-@:
         @if (level.Key != Definitions.LevelNames.Last().Key)
         {
+@:
    <hr />
 @:
         }
     }
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

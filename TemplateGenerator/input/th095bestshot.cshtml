@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th095
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) ベストショット一覧</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} ベストショット一覧";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     table.bestshot { float: left; }
@@ -14,14 +10,8 @@
     table.bestshot td.spell { height: 1em; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) ベストショット一覧</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th095score.html">スコアデータ全般</a></li>
      <li>ベストショット一覧</li>
@@ -32,10 +22,7 @@
      <li><a href="#@(level.Value.Id)">@Html.Raw(level.Value.Name)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
     @foreach (var level in Definitions.LevelNames)
     {
@@ -58,18 +45,10 @@
     </table>
         }
    </section>
-@:
         @if (level.Key != Definitions.LevelNames.Last().Key)
         {
+@:
    <hr />
 @:
         }
     }
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

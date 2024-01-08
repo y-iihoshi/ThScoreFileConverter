@@ -1,15 +1,9 @@
 @using TemplateGenerator.Models.Th17
 @{
+    ViewData["Title"] = $"{Definitions.Title} スコアデータ";
     var charaKeyTotal = Definitions.CharacterKeysTotalFirst.First();
 }
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.character { min-width: 100px; }
@@ -27,14 +21,8 @@
     table.achievement td.achievement { min-width: 12em; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li>スコアデータ全般</li>
      <li><a href="th17score2.html">個別ランキング</a></li>
@@ -51,10 +39,7 @@
      <li><a href="#Clear">クリア達成度</a></li>
      <li><a href="#Achievement">実績</a></li>
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2>難易度別スコア</h2>
@@ -194,12 +179,3 @@
     </table>
     }
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

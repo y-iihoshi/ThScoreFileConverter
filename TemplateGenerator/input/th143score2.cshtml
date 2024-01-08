@@ -1,16 +1,10 @@
 @using System.Text
 @using TemplateGenerator.Models.Th143
 @{
+    ViewData["Title"] = $"{Definitions.Title} クリア状況一覧";
     var itemKeyTotal = Definitions.ItemKeysTotalFirst.First();
 }
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) クリア状況一覧</title>
-  <link rel="stylesheet" href="style.css" />
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.scene { min-width: 60px; }
@@ -20,6 +14,8 @@
     table.score_per_level th { min-width: 70px; }
 /* ]]> */
 </style>
+}
+@section Scripts {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/21.0.1/min/jcanvas.min.js" integrity="sha512-pu2L+33GBCuTrTU3mNJphG2Hm2JKlLA01280LIiz29D40f/UFOU5dEVxVuW46p+HZeZhXvQsUxtVFxPabX9S9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
@@ -116,14 +112,8 @@
 	});
 // ]]>
 </script>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) クリア状況一覧</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th143score1.html">スコアデータ全般</a></li>
      <li>クリア状況一覧</li>
@@ -135,10 +125,7 @@
      <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2>日付別スコア</h2>
@@ -192,12 +179,3 @@
 @:
         }
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

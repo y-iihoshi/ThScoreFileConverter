@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th105
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} スペルカードデータ";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     table.deck_per_chara { float: left; }
@@ -17,14 +13,8 @@
     table.deck_per_chara td.collect { min-width: 60px; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th105card1.html">御札戦歴</a></li>
      <li>デッキ用カード蒐集歴</li>
@@ -35,10 +25,7 @@
      <li><a href="#@(chara.Value.Id)">@Html.Raw(chara.Value.ShortName)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2 id="Deck">デッキ用カード蒐集歴</h2>
@@ -89,12 +76,3 @@
 @:
     }
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

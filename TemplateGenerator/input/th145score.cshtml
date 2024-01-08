@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th145
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} スコアデータ";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.character { min-width: 120px; }
@@ -15,22 +11,13 @@
     table.time td.time { min-width: 70px; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="#Clear">クリア達成度</a></li>
      <li><a href="#Time">クリア時間</a></li>
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2 id="Clear">クリア達成度</h2>
@@ -89,12 +76,3 @@
      </tbody>
     </table>
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

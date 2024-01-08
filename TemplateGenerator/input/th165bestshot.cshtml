@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th165
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) ベストショット一覧</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} ベストショット一覧";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     table.bestshot td.bestshot { background-color: #eee; padding: 2px; width: 620px; }
@@ -20,14 +16,8 @@
     table.bestshot td.info dd.score { text-align: right; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) ベストショット一覧</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th165score.html">スコアデータ全般</a></li>
      <li>ベストショット一覧</li>
@@ -38,10 +28,7 @@
      <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
     @foreach (var day in Definitions.DayNames)
     {
@@ -73,18 +60,10 @@
     </table>
         }
    </section>
-@:
         @if (day.Key != Definitions.DayNames.Last().Key)
         {
+@:
    <hr />
 @:
         }
     }
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

@@ -1,12 +1,8 @@
 @using TemplateGenerator.Models.Th13
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@{
+    ViewData["Title"] = $"{Definitions.Title} スコアデータ";
+}
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.score { min-width: 70px; }
@@ -14,14 +10,8 @@
     table.practice { float: left; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th13score1.html">スコアデータ全般</a></li>
      <li><a href="th13score2.html">個別ランキング</a></li>
@@ -35,10 +25,7 @@
      <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
     }
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
     @foreach (var level in Definitions.LevelPracticeNames)
     {
@@ -68,18 +55,10 @@
 @:
         }
    </section>
-@:
         @if (level.Key != Definitions.LevelPracticeNames.Last().Key)
         {
+@:
    <hr />
 @:
         }
     }
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

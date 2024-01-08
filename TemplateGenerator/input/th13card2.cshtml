@@ -1,16 +1,10 @@
 @using TemplateGenerator.Models.Th13
 @{
+    ViewData["Title"] = $"{Definitions.Title} スペルカードデータ";
     var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
     var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
 }
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.character { min-width: 100px; }
@@ -23,14 +17,8 @@
     table.rate_per_stage td.rate { min-width: 100px; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li><a href="th13score1.html">スコアデータ全般</a></li>
      <li><a href="th13score2.html">個別ランキング</a></li>
@@ -43,10 +31,7 @@
      <li><a href="#rate_per_level">難易度別</a></li>
      <li><a href="#rate_per_stage">ステージ別</a></li>
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2 id="Card">御札戦歴（スペルプラクティス）</h2>
@@ -166,12 +151,3 @@
     </table>
 
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>

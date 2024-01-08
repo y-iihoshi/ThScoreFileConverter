@@ -1,15 +1,9 @@
 @using TemplateGenerator.Models.Th125
 @{
+    ViewData["Title"] = $"{Definitions.Title} スコアデータ";
     var charaKey = "A";
 }
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
-  <link rel="stylesheet" href="style.css" />
+@section Styles {
 <style>
 /* <![CDATA[ */
     td.scene { min-width: 50px; }
@@ -23,14 +17,8 @@
     table.score_total td.playtime { min-width: 100px; }
 /* ]]> */
 </style>
- </head>
-
- <body>
-
-  <header>
-   <h1>@Html.Raw(Definitions.Title) スコアデータ全般</h1>
-   <hr />
-   <nav>
+}
+@section Navigation {
     <ul>
      <li>文 スコアデータ全般</li>
      <li><a href="th125bestshot1.html">文 ベストショット一覧</a></li>
@@ -44,10 +32,7 @@
     }
      <li><a href="#Total">Total</a></li>
     </ul>
-   </nav>
-  </header>
-
-  <main>
+}
 
    <section>
     <h2>レベル別スコア</h2>
@@ -130,12 +115,3 @@
      </tbody>
     </table>
    </section>
-
-  </main>
-
-  <footer>
-@await Html.PartialAsync("_Footer")
-  </footer>
-
- </body>
-</html>
