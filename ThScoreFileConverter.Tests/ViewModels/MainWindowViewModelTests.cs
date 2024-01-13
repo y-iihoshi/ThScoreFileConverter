@@ -403,10 +403,10 @@ public class MainWindowViewModelTests
         using var disposed = window.DeleteTemplateFilesCommand
             .CanExecuteChangedAsObservable().Subscribe(_ => ++numChanged);
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        command.Execute();
+        command.Execute(null);
         Assert.AreEqual(1, numChanged);
     }
 
@@ -674,10 +674,10 @@ public class MainWindowViewModelTests
             Assert.AreEqual(1, numChanged);
             CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
 
-            Assert.IsTrue(command.CanExecute());
+            Assert.IsTrue(command.CanExecute(null));
             Assert.AreEqual(1, numChanged);
 
-            command.Execute();
+            command.Execute(null);
             Assert.AreEqual(2, numChanged);
             Assert.AreEqual(0, window.TemplateFiles.Value.Count());
         }
@@ -699,10 +699,10 @@ public class MainWindowViewModelTests
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
-        Assert.IsFalse(command.CanExecute());
+        Assert.IsFalse(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        command.Execute();
+        command.Execute(null);
         Assert.AreEqual(1, numChanged);
         Assert.AreEqual(0, window.TemplateFiles.Value.Count());
     }
@@ -776,9 +776,9 @@ public class MainWindowViewModelTests
         var command = window.ConvertCommand;
         Assert.IsNotNull(command);
 
-        Assert.IsFalse(command.CanExecute());
+        Assert.IsFalse(command.CanExecute(null));
 
-        command.Execute();
+        command.Execute(null);
         Assert.IsTrue(window.IsIdle.Value);
         Assert.AreEqual(string.Empty, window.Log.Value);
     }
@@ -794,10 +794,10 @@ public class MainWindowViewModelTests
         var args = CreateDragEventArgs(
             new DataObject(DataFormats.FileDrop, new object()), UIElement.PreviewDragEnterEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
-        Assert.AreEqual(DragDropEffects.Copy, args!.Effects);
+        command.Execute(args);
+        Assert.AreEqual(DragDropEffects.Copy, args.Effects);
         Assert.IsTrue(args.Handled);
     }
 
@@ -812,10 +812,10 @@ public class MainWindowViewModelTests
         var args = CreateDragEventArgs(
             new DataObject(DataFormats.Text, new object()), UIElement.PreviewDragEnterEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
-        Assert.AreEqual(DragDropEffects.None, args!.Effects);
+        command.Execute(args);
+        Assert.AreEqual(DragDropEffects.None, args.Effects);
         Assert.IsFalse(args.Handled);
     }
 
@@ -835,9 +835,9 @@ public class MainWindowViewModelTests
         {
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, fileNames), UIElement.DropEvent);
             Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args!));
+            Assert.IsTrue(command.CanExecute(args));
 
-            command.Execute(args!);
+            command.Execute(args);
             Assert.AreEqual(1, numChanged);
             Assert.AreEqual(fileNames[0], window.ScoreFile.Value);
         }
@@ -863,9 +863,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, fileNames), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.ScoreFile.Value);
     }
@@ -883,9 +883,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.ScoreFile.Value);
     }
@@ -903,9 +903,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.ScoreFile.Value);
     }
@@ -932,9 +932,9 @@ public class MainWindowViewModelTests
         {
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
             Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args!));
+            Assert.IsTrue(command.CanExecute(args));
 
-            command.Execute(args!);
+            command.Execute(args);
             Assert.AreEqual(1, numChanged);
             Assert.AreEqual(dirNames[0], window.BestShotDirectory.Value);
         }
@@ -960,9 +960,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
     }
@@ -980,9 +980,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
     }
@@ -1000,9 +1000,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
     }
@@ -1025,9 +1025,9 @@ public class MainWindowViewModelTests
                 new DataObject(DataFormats.FileDrop, fileNames.Append("nonexistent.txt").ToArray()),
                 UIElement.DropEvent);
             Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args!));
+            Assert.IsTrue(command.CanExecute(args));
 
-            command.Execute(args!);
+            command.Execute(args);
             Assert.AreEqual(1, numChanged);
             CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
         }
@@ -1051,9 +1051,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(0, window.TemplateFiles.Value.Count());
     }
@@ -1071,9 +1071,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(0, window.TemplateFiles.Value.Count());
     }
@@ -1100,9 +1100,9 @@ public class MainWindowViewModelTests
         {
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
             Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args!));
+            Assert.IsTrue(command.CanExecute(args));
 
-            command.Execute(args!);
+            command.Execute(args);
             Assert.AreEqual(1, numChanged);
             Assert.AreEqual(dirNames[0], window.OutputDirectory.Value);
         }
@@ -1128,9 +1128,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
     }
@@ -1148,9 +1148,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
     }
@@ -1168,9 +1168,9 @@ public class MainWindowViewModelTests
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
         Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args!));
+        Assert.IsTrue(command.CanExecute(args));
 
-        command.Execute(args!);
+        command.Execute(args);
         Assert.AreEqual(0, numChanged);
         Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
     }
@@ -1189,9 +1189,9 @@ public class MainWindowViewModelTests
         var command = window.OpenAboutWindowCommand;
         Assert.IsNotNull(command);
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
 
-        command.Execute();
+        command.Execute(null);
         dialogServiceMock.Received().ShowDialog(
             nameof(AboutWindowViewModel), Arg.Any<DialogParameters>(), Arg.Any<Action<IDialogResult>>());
     }
@@ -1210,9 +1210,9 @@ public class MainWindowViewModelTests
         var command = window.OpenSettingWindowCommand;
         Assert.IsNotNull(command);
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
 
-        command.Execute();
+        command.Execute(null);
         dialogServiceMock.Received().ShowDialog(
             nameof(SettingWindowViewModel), Arg.Any<DialogParameters>(), Arg.Any<Action<IDialogResult>>());
     }

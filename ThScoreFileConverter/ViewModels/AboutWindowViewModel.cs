@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed class AboutWindowViewModel : BindableBase, IDialogAware
+internal sealed class AboutWindowViewModel : ObservableObject, IDialogAware
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AboutWindowViewModel"/> class.

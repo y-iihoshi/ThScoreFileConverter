@@ -12,8 +12,8 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Windows;
 using CommunityToolkit.Diagnostics;
-using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Prism.Services.Dialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
+internal sealed partial class SettingWindowViewModel : ObservableObject, IDialogAware, IDisposable
 {
     private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
     private readonly CompositeDisposable disposables;
@@ -68,14 +68,9 @@ internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisp
         this.InputEncodings = encodings;
         this.OutputEncodings = encodings;
 
-        this.FontDialogOkCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
-        this.FontDialogApplyCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
-        this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
-        this.ResetFontCommand = new DelegateCommand(this.ResetFont);
-
         this.disposables.Add(
             LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
-                .Subscribe(_ => this.RaisePropertyChanged(nameof(this.Title))));
+                .Subscribe(_ => this.OnPropertyChanged(nameof(this.Title))));
     }
 
     /// <inheritdoc/>
@@ -152,34 +147,10 @@ internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisp
             if (!LocalizeDictionary.Instance.Culture.Equals(value))
             {
                 LocalizeDictionary.Instance.Culture = value;
-                this.RaisePropertyChanged(nameof(this.Culture));
+                this.OnPropertyChanged(nameof(this.Culture));
             }
         }
     }
-
-    #region Commands
-
-    /// <summary>
-    /// Gets the command invoked when the user clicks an <c>OK</c> button of the font dialog box.
-    /// </summary>
-    public DelegateCommand<FontDialogActionResult> FontDialogOkCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when the user clicks an <c>Apply</c> button of the font dialog box.
-    /// </summary>
-    public DelegateCommand<FontDialogActionResult> FontDialogApplyCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when the user cancels the font choice.
-    /// </summary>
-    public DelegateCommand<FontDialogActionResult> FontDialogCancelCommand { get; }
-
-    /// <summary>
-    /// Gets the command to reset the UI font.
-    /// </summary>
-    public DelegateCommand ResetFontCommand { get; }
-
-    #endregion
 
     #endregion
 
@@ -253,17 +224,48 @@ internal sealed class SettingWindowViewModel : BindableBase, IDialogAware, IDisp
     {
         this.ThrowIfDisposed();
         this.resourceDictionaryAdapter.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
-        this.RaisePropertyChanged(nameof(this.Font));
+        this.OnPropertyChanged(nameof(this.Font));
+    }
+
+    /// <summary>
+    /// Invoked when the user clicks an <c>OK</c> button of the font dialog box.
+    /// </summary>
+    /// <param name="result">The result of the font dialog box.</param>
+    [RelayCommand]
+    private void FontDialogOk(FontDialogActionResult result)
+    {
+        this.ApplyFont(result);
+    }
+
+    /// <summary>
+    /// Invoked when the user clicks an <c>Apply</c> button of the font dialog box.
+    /// </summary>
+    /// <param name="result">The result of the font dialog box.</param>
+    [RelayCommand]
+    private void FontDialogApply(FontDialogActionResult result)
+    {
+        this.ApplyFont(result);
+    }
+
+    /// <summary>
+    /// Invoked when the user cancels the font choice.
+    /// </summary>
+    /// <param name="result">The result of the font dialog box.</param>
+    [RelayCommand]
+    private void FontDialogCancel(FontDialogActionResult result)
+    {
+        this.ApplyFont(result);
     }
 
     /// <summary>
     /// Resets the UI font.
     /// </summary>
+    [RelayCommand]
     private void ResetFont()
     {
         this.ThrowIfDisposed();
         this.resourceDictionaryAdapter.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-        this.RaisePropertyChanged(nameof(this.Font));
+        this.OnPropertyChanged(nameof(this.Font));
     }
 
     #endregion

@@ -358,10 +358,10 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        Assert.IsTrue(command.CanExecute(null!));
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null!));
+        _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null));
     }
 
     [TestMethod]
@@ -380,10 +380,10 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        command.Execute();
+        command.Execute(null);
         Assert.AreEqual(1, numChanged);
         adapterMock.Received(1).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
     }
@@ -401,10 +401,10 @@ public class SettingWindowViewModelTests
 
         window.Dispose();
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(command.Execute);
+        _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(null));
     }
 
     [TestMethod]
