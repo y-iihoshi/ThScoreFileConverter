@@ -47,6 +47,9 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// </summary>
     private readonly IDispatcherAdapter dispatcher;
 
+    /// <summary>
+    /// An <see cref="IResourceDictionaryAdapter"/> that should wrap <see cref="Application.Current"/>.Resources.
+    /// </summary>
     private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
 
     /// <summary>
@@ -81,7 +84,9 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// <param name="dispatcher">
     /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
     /// </param>
-    /// <param name="adapter">An <see cref="IResourceDictionaryAdapter"/>.</param>
+    /// <param name="adapter">
+    /// An <see cref="IResourceDictionaryAdapter"/> that should wrap <see cref="Application.Current"/>.Resources.
+    /// </param>
     /// <param name="settings">The settings of this application.</param>
     /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
     public MainWindowViewModel(
