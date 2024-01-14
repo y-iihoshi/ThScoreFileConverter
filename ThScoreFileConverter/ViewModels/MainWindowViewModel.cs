@@ -539,11 +539,11 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     }
 
     /// <summary>
-    /// Invoked when a score file is dropped on a UI element.
+    /// Invoked when some data are dropped on a UI element.
     /// </summary>
     /// <param name="e">The event data.</param>
-    [RelayCommand]
-    private void OnDropScoreFile(DragEventArgs e)
+    /// <param name="action">The action invoked with the dropped data that is an array of file paths.</param>
+    private void OnDrop(DragEventArgs e, Action<string[]> action)
     {
         try
         {
@@ -551,9 +551,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var filePath = droppedPaths.FirstOrDefault(File.Exists);
-                    if (filePath is not null)
-                        this.ScoreFile.Value = filePath;
+                    action(droppedPaths);
                 }
             }
         }
@@ -562,6 +560,21 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
             this.Log.Value += ex.Message + Environment.NewLine;
             throw;
         }
+    }
+
+    /// <summary>
+    /// Invoked when a score file is dropped on a UI element.
+    /// </summary>
+    /// <param name="e">The event data.</param>
+    [RelayCommand]
+    private void OnDropScoreFile(DragEventArgs e)
+    {
+        this.OnDrop(e, droppedPaths =>
+        {
+            var filePath = droppedPaths.FirstOrDefault(File.Exists);
+            if (filePath is not null)
+                this.ScoreFile.Value = filePath;
+        });
     }
 
     /// <summary>
@@ -571,23 +584,12 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void OnDropBestShotDirectory(DragEventArgs e)
     {
-        try
+        this.OnDrop(e, droppedPaths =>
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
-                {
-                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
-                    if (dirPath is not null)
-                        this.BestShotDirectory.Value = dirPath;
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            this.Log.Value += ex.Message + Environment.NewLine;
-            throw;
-        }
+            var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
+            if (dirPath is not null)
+                this.BestShotDirectory.Value = dirPath;
+        });
     }
 
     /// <summary>
@@ -597,21 +599,10 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void OnDropTemplateFiles(DragEventArgs e)
     {
-        try
+        this.OnDrop(e, droppedPaths =>
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
-                {
-                    this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            this.Log.Value += ex.Message + Environment.NewLine;
-            throw;
-        }
+            this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
+        });
     }
 
     /// <summary>
@@ -621,23 +612,12 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void OnDropOutputDirectory(DragEventArgs e)
     {
-        try
+        this.OnDrop(e, droppedPaths =>
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
-                {
-                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
-                    if (dirPath is not null)
-                        this.OutputDirectory.Value = dirPath;
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            this.Log.Value += ex.Message + Environment.NewLine;
-            throw;
-        }
+            var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
+            if (dirPath is not null)
+                this.OutputDirectory.Value = dirPath;
+        });
     }
 
     /// <summary>
