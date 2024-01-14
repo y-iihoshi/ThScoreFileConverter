@@ -5,20 +5,20 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmDialogs;
-using Prism.Ioc;
-using Prism.Unity;
 using Reactive.Bindings;
 using Reactive.Bindings.Schedulers;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Views;
-using Unity;
+using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
 using Prop = ThScoreFileConverter.Properties;
 
@@ -27,10 +27,12 @@ namespace ThScoreFileConverter;
 /// <summary>
 /// Interaction logic for App.xaml.
 /// </summary>
-public partial class App : PrismApplication
+public sealed partial class App : Application, IDisposable
 {
     private readonly ResourceDictionaryAdapter adapter;
     private readonly Settings settings;
+    private bool disposed;
+    private ServiceProvider? serviceProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="App"/> class.
@@ -39,33 +41,32 @@ public partial class App : PrismApplication
     {
         this.adapter = new ResourceDictionaryAdapter(this.Resources);
         this.settings = new Settings();
+        this.disposed = false;
+        this.serviceProvider = default;
     }
 
     /// <inheritdoc/>
-    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    public void Dispose()
     {
-#if DEBUG
-        if (containerRegistry.GetContainer() is UnityContainer container)
-            container.EnableDebugDiagnostic();
-#endif
-
-        _ = containerRegistry.RegisterSingleton<IDialogService, DialogService>();
-        _ = containerRegistry.RegisterInstance<IResourceDictionaryAdapter>(this.adapter);
-        _ = containerRegistry.RegisterInstance(this.settings);
-        _ = containerRegistry.RegisterInstance<ISettings>(this.settings);
-        _ = containerRegistry.Register<INumberFormatter, NumberFormatter>();
-        _ = containerRegistry.Register<IDispatcherAdapter, DispatcherAdapter>();
-    }
-
-    /// <inheritdoc/>
-    protected override Window CreateShell()
-    {
-        return this.Container.Resolve<MainWindow>();
+        this.Dispose(true);
     }
 
     /// <inheritdoc/>
     protected override void OnStartup(StartupEventArgs e)
     {
+        this.serviceProvider?.Dispose();
+        this.serviceProvider = new ServiceCollection()
+            .AddSingleton<IDialogService, DialogService>()
+            .AddSingleton<IResourceDictionaryAdapter>(this.adapter)
+            .AddSingleton(this.settings)
+            .AddSingleton<ISettings>(this.settings)
+            .AddTransient<INumberFormatter, NumberFormatter>()
+            .AddTransient<IDispatcherAdapter, DispatcherAdapter>()
+            .AddTransient<MainWindowViewModel>()
+            .BuildServiceProvider();
+
+        Ioc.Default.ConfigureServices(this.serviceProvider);
+
         try
         {
             this.settings.Load(Prop.Resources.SettingFileName);
@@ -114,5 +115,28 @@ public partial class App : PrismApplication
         this.settings.FontSize = this.adapter.FontSize;
 
         this.settings.Save(Prop.Resources.SettingFileName);
+
+        this.serviceProvider?.Dispose();
+    }
+
+    /// <summary>
+    /// Disposes the resources of the current instance.
+    /// </summary>
+    /// <param name="disposing">
+    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
+    /// </param>
+    private void Dispose(bool disposing)
+    {
+        if (this.disposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            this.serviceProvider?.Dispose();
+        }
+
+        this.disposed = true;
     }
 }
