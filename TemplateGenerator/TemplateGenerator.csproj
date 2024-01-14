@@ -21,8 +21,4 @@
     <ProjectReference Include="..\ThScoreFileConverter.Core\ThScoreFileConverter.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="input\style.css" />
-  </ItemGroup>
-
 </Project>
