@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using MvvmDialogs;
 using NSubstitute;
-using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -30,6 +30,11 @@ public class MainWindowViewModelTests
         return Substitute.For<IDispatcherAdapter>();
     }
 
+    private static IResourceDictionaryAdapter MockResourceDictionaryAdapter()
+    {
+        return Substitute.For<IResourceDictionaryAdapter>();
+    }
+
     private static INumberFormatter MockNumberFormatter()
     {
         return Substitute.For<INumberFormatter>();
@@ -39,10 +44,11 @@ public class MainWindowViewModelTests
     {
         var dialogServiceMock = MockDialogService();
         var dispatcherAdapterMock = MockDispatcherAdapter();
+        var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
         return new MainWindowViewModel(
-            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
+            dialogServiceMock, dispatcherAdapterMock, resourceDictionaryAdapterMock, settings, formatterMock);
     }
 
     private static DragEventArgs? CreateDragEventArgs(IDataObject data, RoutedEvent routedEvent)
@@ -136,11 +142,12 @@ public class MainWindowViewModelTests
     {
         var dialogServiceMock = MockDialogService();
         var dispatcherAdapterMock = MockDispatcherAdapter();
+        var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
         var settings = new Settings();
         var initialLastTitle = settings.LastTitle;
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
-            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
+            dialogServiceMock, dispatcherAdapterMock, resourceDictionaryAdapterMock, settings, formatterMock);
         Assert.AreEqual(settings.LastTitle, window.LastWorkNumber.Value);
         Assert.AreNotEqual(initialLastTitle, settings.LastTitle);
 
@@ -211,10 +218,11 @@ public class MainWindowViewModelTests
     {
         var dialogServiceMock = MockDialogService();
         var dispatcherAdapterMock = MockDispatcherAdapter();
+        var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
-            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
+            dialogServiceMock, dispatcherAdapterMock, resourceDictionaryAdapterMock, settings, formatterMock);
         Assert.AreEqual(string.Empty, window.ImageOutputDirectory.Value);
 
         var numChanged = 0;
@@ -239,10 +247,11 @@ public class MainWindowViewModelTests
     {
         var dialogServiceMock = MockDialogService();
         var dispatcherAdapterMock = MockDispatcherAdapter();
+        var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
-            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
+            dialogServiceMock, dispatcherAdapterMock, resourceDictionaryAdapterMock, settings, formatterMock);
         Assert.IsTrue(window.HidesUntriedCards.Value);
 
         var numChanged = 0;
@@ -1180,11 +1189,12 @@ public class MainWindowViewModelTests
     {
         var dialogServiceMock = MockDialogService();
         var dispatcherAdapterMock = MockDispatcherAdapter();
+        var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
 
         using var window = new MainWindowViewModel(
-            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
+            dialogServiceMock, dispatcherAdapterMock, resourceDictionaryAdapterMock, settings, formatterMock);
 
         var command = window.OpenAboutWindowCommand;
         Assert.IsNotNull(command);
@@ -1192,8 +1202,7 @@ public class MainWindowViewModelTests
         Assert.IsTrue(command.CanExecute(null));
 
         command.Execute(null);
-        dialogServiceMock.Received().ShowDialog(
-            nameof(AboutWindowViewModel), Arg.Any<DialogParameters>(), Arg.Any<Action<IDialogResult>>());
+        dialogServiceMock.Received().ShowDialog(Arg.Any<MainWindowViewModel>(), Arg.Any<AboutWindowViewModel>());
     }
 
     [TestMethod]
@@ -1201,11 +1210,12 @@ public class MainWindowViewModelTests
     {
         var dialogServiceMock = MockDialogService();
         var dispatcherAdapterMock = MockDispatcherAdapter();
+        var resourceDictionaryAdapterMock = MockResourceDictionaryAdapter();
         var settings = new Settings();
         var formatterMock = MockNumberFormatter();
 
         using var window = new MainWindowViewModel(
-            dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
+            dialogServiceMock, dispatcherAdapterMock, resourceDictionaryAdapterMock, settings, formatterMock);
 
         var command = window.OpenSettingWindowCommand;
         Assert.IsNotNull(command);
@@ -1213,8 +1223,7 @@ public class MainWindowViewModelTests
         Assert.IsTrue(command.CanExecute(null));
 
         command.Execute(null);
-        dialogServiceMock.Received().ShowDialog(
-            nameof(SettingWindowViewModel), Arg.Any<DialogParameters>(), Arg.Any<Action<IDialogResult>>());
+        dialogServiceMock.Received().ShowDialog(Arg.Any<MainWindowViewModel>(), Arg.Any<SettingWindowViewModel>());
     }
 
     [TestMethod]

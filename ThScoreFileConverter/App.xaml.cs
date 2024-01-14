@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using MvvmDialogs;
 using Prism.Ioc;
 using Prism.Unity;
 using Reactive.Bindings;
@@ -16,7 +17,6 @@ using Reactive.Bindings.Schedulers;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
 using Unity;
 using WPFLocalizeExtension.Engine;
@@ -49,13 +49,12 @@ public partial class App : PrismApplication
             container.EnableDebugDiagnostic();
 #endif
 
+        _ = containerRegistry.RegisterSingleton<IDialogService, DialogService>();
         _ = containerRegistry.RegisterInstance<IResourceDictionaryAdapter>(this.adapter);
         _ = containerRegistry.RegisterInstance(this.settings);
         _ = containerRegistry.RegisterInstance<ISettings>(this.settings);
         _ = containerRegistry.Register<INumberFormatter, NumberFormatter>();
         _ = containerRegistry.Register<IDispatcherAdapter, DispatcherAdapter>();
-        containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
-        containerRegistry.RegisterDialog<SettingWindow>(nameof(SettingWindowViewModel));
     }
 
     /// <inheritdoc/>

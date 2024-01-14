@@ -18,7 +18,7 @@ using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Prism.Services.Dialogs;
+using MvvmDialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
@@ -46,6 +46,8 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
     /// </summary>
     private readonly IDispatcherAdapter dispatcher;
+
+    private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
 
     /// <summary>
     /// The settings of this application.
@@ -79,13 +81,15 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// <param name="dispatcher">
     /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
     /// </param>
+    /// <param name="adapter">An <see cref="IResourceDictionaryAdapter"/>.</param>
     /// <param name="settings">The settings of this application.</param>
     /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
     public MainWindowViewModel(
-        IDialogService dialogService, IDispatcherAdapter dispatcher, Settings settings, INumberFormatter formatter)
+        IDialogService dialogService, IDispatcherAdapter dispatcher, IResourceDictionaryAdapter adapter, Settings settings, INumberFormatter formatter)
     {
         this.dialogService = dialogService;
         this.dispatcher = dispatcher;
+        this.resourceDictionaryAdapter = adapter;
         this.settings = settings;
         this.formatter = formatter;
         this.disposables = [];
@@ -637,7 +641,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void OpenAboutWindow()
     {
-        this.dialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
+        _ = this.dialogService.ShowDialog(this, new AboutWindowViewModel());
     }
 
     /// <summary>
@@ -646,7 +650,8 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void OpenSettingWindow()
     {
-        this.dialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
+        using var viewModel = new SettingWindowViewModel(this.settings, this.resourceDictionaryAdapter);
+        _ = this.dialogService.ShowDialog(this, viewModel);
     }
 
     #endregion

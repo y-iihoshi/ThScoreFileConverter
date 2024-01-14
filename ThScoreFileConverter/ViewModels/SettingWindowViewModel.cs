@@ -14,7 +14,7 @@ using System.Windows;
 using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Prism.Services.Dialogs;
+using MvvmDialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed partial class SettingWindowViewModel : ObservableObject, IDialogAware, IDisposable
+internal sealed partial class SettingWindowViewModel : ObservableObject, IModalDialogViewModel, IDisposable
 {
     private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
     private readonly CompositeDisposable disposables;
@@ -73,17 +73,14 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IDialog
                 .Subscribe(_ => this.OnPropertyChanged(nameof(this.Title))));
     }
 
-    /// <inheritdoc/>
-#pragma warning disable CS0067
-    public event Action<IDialogResult>? RequestClose;
-#pragma warning restore CS0067
-
     #region Properties to bind a view
 
     /// <summary>
     /// Gets a title of the Settings window.
     /// </summary>
+#pragma warning disable CA1822 // Mark members as static
     public string Title => Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
+#pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
     /// Gets the current font.
@@ -155,21 +152,7 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IDialog
     #endregion
 
     /// <inheritdoc/>
-    public bool CanCloseDialog()
-    {
-        return true;
-    }
-
-    /// <inheritdoc/>
-    public void OnDialogClosed()
-    {
-        this.Dispose();
-    }
-
-    /// <inheritdoc/>
-    public void OnDialogOpened(IDialogParameters parameters)
-    {
-    }
+    public bool? DialogResult { get; } = true;
 
     /// <inheritdoc/>
     public void Dispose()

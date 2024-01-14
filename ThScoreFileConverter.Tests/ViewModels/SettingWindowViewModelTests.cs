@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using NSubstitute;
-using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -405,30 +404,6 @@ public class SettingWindowViewModelTests
         Assert.AreEqual(0, numChanged);
 
         _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(null));
-    }
-
-    [TestMethod]
-    public void CanCloseDialogTest()
-    {
-        using var window = CreateViewModel();
-        Assert.IsTrue(window.CanCloseDialog());
-    }
-
-    [TestMethod]
-    public void OnDialogClosedTest()
-    {
-        using var window = CreateViewModel();
-        window.OnDialogClosed();
-        Assert.IsTrue(true);
-    }
-
-    [TestMethod]
-    public void OnDialogOpenedTest()
-    {
-        using var window = CreateViewModel();
-        var parameters = new DialogParameters();
-        window.OnDialogOpened(parameters);
-        Assert.IsTrue(true);
     }
 
     [TestMethod]
