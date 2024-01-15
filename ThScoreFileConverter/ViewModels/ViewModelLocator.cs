@@ -12,6 +12,7 @@ namespace ThScoreFileConverter.ViewModels;
 /// <summary>
 /// Provides all view models in the application.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated as an application resource in App.xaml.")]
 internal sealed class ViewModelLocator
 {
     /// <summary>
