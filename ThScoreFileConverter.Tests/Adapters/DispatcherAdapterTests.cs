@@ -35,7 +35,7 @@ public class DispatcherAdapterTests
     [TestMethod]
     public void WithAppDispatcherAdapterTestNull()
     {
-        var app = SetupApp();
+        using var app = SetupApp();
         try
         {
             var adapter = new DispatcherAdapter();
