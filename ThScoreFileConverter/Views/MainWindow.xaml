@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xb="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:livet="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:i="clr-namespace:ThScoreFileConverter.Interactivity"
         xmlns:m="clr-namespace:ThScoreFileConverter.Models"
@@ -20,12 +19,6 @@
         Title="{Binding Title}"
         UseLayoutRounding="True"
         Width="{Binding Width.Value, Mode=TwoWay}">
-
-    <xb:Interaction.Triggers>
-        <xb:EventTrigger EventName="Closed">
-            <livet:DataContextDisposeAction/>
-        </xb:EventTrigger>
-    </xb:Interaction.Triggers>
 
     <DockPanel Margin="12">
         <Grid DockPanel.Dock="Top">
