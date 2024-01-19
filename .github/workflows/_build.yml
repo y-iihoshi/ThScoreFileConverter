@@ -51,7 +51,7 @@ jobs:
       run: dotnet tool restore
 
     - name: Cache NuGet packages
-      uses: actions/cache@v3.3.2
+      uses: actions/cache@v4.0.0
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ inputs.dotnet-target-framework }}-${{ hashFiles('**/*.csproj') }}
