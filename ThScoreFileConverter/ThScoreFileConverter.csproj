@@ -80,4 +80,10 @@
     <ProjectReference Include="..\ThScoreFileConverter.Core\ThScoreFileConverter.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    <!-- To enable mocking internal interfaces by NSubstitute -->
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
 </Project>
