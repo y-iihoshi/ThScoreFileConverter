@@ -11,10 +11,6 @@ using System.Collections.Generic;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th128;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Models.Th128;
 
 internal sealed class AllScoreData

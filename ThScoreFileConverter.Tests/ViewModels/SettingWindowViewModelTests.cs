@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using NSubstitute;
-using Prism.Services.Dialogs;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -358,10 +357,10 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        Assert.IsTrue(command.CanExecute(null!));
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null!));
+        _ = Assert.ThrowsException<NullReferenceException>(() => command.Execute(null));
     }
 
     [TestMethod]
@@ -380,10 +379,10 @@ public class SettingWindowViewModelTests
         var numChanged = 0;
         using var _1 = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        command.Execute();
+        command.Execute(null);
         Assert.AreEqual(1, numChanged);
         adapterMock.Received(1).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
     }
@@ -401,34 +400,10 @@ public class SettingWindowViewModelTests
 
         window.Dispose();
 
-        Assert.IsTrue(command.CanExecute());
+        Assert.IsTrue(command.CanExecute(null));
         Assert.AreEqual(0, numChanged);
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(command.Execute);
-    }
-
-    [TestMethod]
-    public void CanCloseDialogTest()
-    {
-        using var window = CreateViewModel();
-        Assert.IsTrue(window.CanCloseDialog());
-    }
-
-    [TestMethod]
-    public void OnDialogClosedTest()
-    {
-        using var window = CreateViewModel();
-        window.OnDialogClosed();
-        Assert.IsTrue(true);
-    }
-
-    [TestMethod]
-    public void OnDialogOpenedTest()
-    {
-        using var window = CreateViewModel();
-        var parameters = new DialogParameters();
-        window.OnDialogOpened(parameters);
-        Assert.IsTrue(true);
+        _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(null));
     }
 
     [TestMethod]

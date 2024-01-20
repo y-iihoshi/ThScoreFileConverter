@@ -1,0 +1,92 @@
+@using TemplateGenerator.Models.Th125
+@{
+    var charaKey = "H";
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) ベストショット一覧</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    table.bestshot { float: left; }
+    table.bestshot td.bestshot { background-color: #eee; padding: 2px; width: 340px; height: 340px; }
+    table.bestshot td.info { text-align: left; min-width: 200px; max-width: 200px; }
+    table.bestshot td.info pre { display: inline; }
+    table.bestshot td.info dt { font-weight: bold; }
+    table.bestshot td.info dd { min-height: 1em; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) ベストショット一覧</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th125score1.html">文 スコアデータ全般</a></li>
+     <li><a href="th125bestshot1.html">文 ベストショット一覧</a></li>
+     <li><a href="th125score2.html">はたて スコアデータ全般</a></li>
+     <li>はたて ベストショット一覧</li>
+    </ul>
+    <ul>
+    @foreach (var level in Definitions.LevelNames)
+    {
+     <li><a href="#@(level.Value.Id)">@Html.Raw(level.Value.LongName)</a></li>
+    }
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+    @foreach (var level in Definitions.LevelNames)
+    {
+        var scenes = (level.Key == "S")
+            ? Definitions.SpoilerScenesPerCharacter[charaKey]
+            : Enumerable.Range(1, Definitions.NumScenesPerLevel[level.Key]);
+   <section>
+    <h2 id="@(level.Value.Id)">@Html.Raw(level.Value.LongName)</h2>
+        @foreach (var scene in scenes)
+        {
+    <table class="bestshot">
+     <caption>@Html.Raw(level.Value.ShortName)-@(scene)</caption>
+     <tbody>
+      <tr>
+       <td class="bestshot">
+        <img src="%T125SHOTEX@(charaKey)@(level.Key)@(scene)1" width="%T125SHOTEX@(charaKey)@(level.Key)@(scene)2" height="%T125SHOTEX@(charaKey)@(level.Key)@(scene)3"
+             alt="@Html.Raw(level.Value.ShortName)-@(scene) のベストショット" />
+       </td>
+       <td class="info">
+        <dl>
+         <dt>スペルカード名</dt><dd>%T125CARD@(level.Key)@(scene)2</dd>
+         <dt>撮影日時</dt><dd>%T125SHOTEX@(charaKey)@(level.Key)@(scene)6</dd>
+         <dt>処理落ち率</dt><dd>%T125SHOTEX@(charaKey)@(level.Key)@(scene)5</dd>
+         <dt>詳細情報</dt><dd><pre>%T125SHOTEX@(charaKey)@(level.Key)@(scene)7</pre></dd>
+        </dl>
+       </td>
+      </tr>
+     </tbody>
+    </table>
+        }
+   </section>
+@:
+        @if (level.Key != Definitions.LevelNames.Last().Key)
+        {
+   <hr />
+@:
+        }
+    }
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

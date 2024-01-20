@@ -1,0 +1,182 @@
+@using TemplateGenerator.Models.Th06
+@{
+    var stageKeyTotal = Definitions.StageKeysTotalFirst.First();
+    var numCards = Definitions.NumCardsPerStage.Values.Sum();
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 100px; }
+    td.name { min-width: 70px; }
+    td.score { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    table.score_per_level { float: left; }
+    table.rate_per_card td.number { min-width: 50px; }
+    table.rate_per_card td.card { min-width: 200px; }
+    table.rate_per_card td.rate { min-width: 120px; }
+    table.rate_per_stage td.rate { min-width: 150px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th06score2.html">個別ランキング</a></li>
+     <li><a href="th06score3.html">プラクティス</a></li>
+    </ul>
+    <ul>
+    @foreach (var level in Definitions.LevelNames)
+    {
+     <li><a href="#@(level.Value)">@(level.Value)</a></li>
+    }
+     <li><a href="#Card">御札戦歴</a></li>
+     <li><a href="#Clear">クリア達成度</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>難易度別スコア</h2>
+
+    @foreach (var level in Definitions.LevelNames)
+    {
+    <table class="score_per_level">
+     <caption id="@(level.Value)">@Html.Raw(level.Value)</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="stage">Stage</th>
+      </tr>
+     </thead>
+     <tbody>
+        @foreach (var chara in Definitions.CharacterNames)
+        {
+      <tr>
+       <td class="character">@Html.Raw(chara.Value)</td>
+       <td class="name">%T06SCR@(level.Key)@(chara.Key)11</td>
+       <td class="score">%T06SCR@(level.Key)@(chara.Key)12</td>
+       <td class="stage">%T06SCR@(level.Key)@(chara.Key)13</td>
+      </tr>
+        }
+     </tbody>
+    </table>
+@:
+    }
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Card">御札戦歴</h2>
+
+    <table class="rate_per_card">
+     <caption>スペルカード別取得率（取得回数 / 遭遇回数）</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名（難易度）</th>
+       <th class="rate">全主人公合計</th>
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var card in Enumerable.Range(1, numCards))
+    {
+        var cardKey = card.ToString("D2");
+      <tr>
+       <td class="number">No.@(cardKey)</td>
+       <td class="card">%T06CARD@(cardKey)N<br />(%T06CARD@(cardKey)R)</td>
+       <td class="rate">%T06C@(cardKey)1 / %T06C@(cardKey)2</td>
+      </tr>
+    }
+     </tbody>
+     <tfoot>
+    @{
+        var cardStrTotal = "Total";
+        var cardKeyTotal = 0.ToString("D2");
+      <tr>
+       <td colspan="2">@(cardStrTotal)</td>
+       <td class="rate">%T06C@(cardKeyTotal)1 / %T06C@(cardKeyTotal)2</td>
+      </tr>
+    }
+     </tfoot>
+    </table>
+
+    <table class="rate_per_stage">
+     <caption>ステージ別スペルカード取得率<br />（取得回数 / 遭遇回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="stage">ステージ</th>
+       <th class="rate">全主人公合計</th>
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var stage in Definitions.StageNames)
+    {
+      <tr>
+       <td class="stage">@Html.Raw(stage.Value)</td>
+       <td class="rate">%T06CRG@(stage.Key)1 / %T06CRG@(stage.Key)2 / @(Definitions.NumCardsPerStage[stage.Key])</td>
+      </tr>
+    }
+      <tr>
+       <td>@(Definitions.StageWithTotalNames[stageKeyTotal])</td>
+       <td class="rate">%T06CRG@(stageKeyTotal)1 / %T06CRG@(stageKeyTotal)2 / @(numCards)</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Clear">クリア達成度</h2>
+
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+    @foreach (var level in Definitions.LevelNames)
+    {
+       <th class="level">@(level.Value)</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+      <tr>
+       <td class="character">@Html.Raw(chara.Value)</td>
+        @foreach (var level in Definitions.LevelNames)
+        {
+       <td class="stage">%T06CLEAR@(level.Key)@(chara.Key)</td>
+        }
+      </tr>
+    }
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

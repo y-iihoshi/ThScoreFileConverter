@@ -16,7 +16,6 @@ namespace ThScoreFileConverter.Models;
 /// Provides a parser for the enumeration type which fields have short names.
 /// </summary>
 /// <typeparam name="TEnum">The enumeration type which fields have short names.</typeparam>
-[CLSCompliant(false)]
 public sealed class EnumShortNameParser<TEnum>
     where TEnum : struct, Enum
 {

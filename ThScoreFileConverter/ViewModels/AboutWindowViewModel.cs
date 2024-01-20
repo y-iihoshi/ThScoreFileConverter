@@ -10,8 +10,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
+using CommunityToolkit.Mvvm.ComponentModel;
+using MvvmDialogs;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed class AboutWindowViewModel : BindableBase, IDialogAware
+internal sealed class AboutWindowViewModel : ObservableObject, IModalDialogViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AboutWindowViewModel"/> class.
@@ -50,11 +50,6 @@ internal sealed class AboutWindowViewModel : BindableBase, IDialogAware
 
         this.Icon = decoder.Frames.OrderByDescending(frame => frame.Width).First();
     }
-
-    /// <inheritdoc/>
-#pragma warning disable CS0067
-    public event Action<IDialogResult>? RequestClose;
-#pragma warning restore CS0067
 
     /// <summary>
     /// Gets a title of the About window.
@@ -87,18 +82,5 @@ internal sealed class AboutWindowViewModel : BindableBase, IDialogAware
     public string Uri { get; }
 
     /// <inheritdoc/>
-    public bool CanCloseDialog()
-    {
-        return true;
-    }
-
-    /// <inheritdoc/>
-    public void OnDialogClosed()
-    {
-    }
-
-    /// <inheritdoc/>
-    public void OnDialogOpened(IDialogParameters parameters)
-    {
-    }
+    public bool? DialogResult { get; } = true;
 }

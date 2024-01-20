@@ -8,10 +8,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Tests.UnitTesting;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Core.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.Models.Th10;
 
 [TestClass]

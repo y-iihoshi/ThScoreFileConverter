@@ -1,13 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
-
-#if NET5_0_OR_GREATER
-using System.Diagnostics.CodeAnalysis;
-#endif
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
@@ -19,20 +16,12 @@ internal sealed class Command(Action action) : ICommand
     public event EventHandler? CanExecuteChanged;
 #pragma warning restore CS0067
 
-#if NET5_0_OR_GREATER
     public bool CanExecute([NotNullWhen(true)] object? parameter)
-#else
-    public bool CanExecute(object parameter)
-#endif
     {
         return true;
     }
 
-#if NET5_0_OR_GREATER
     public void Execute(object? parameter)
-#else
-    public void Execute(object parameter)
-#endif
     {
         Assert.IsTrue(parameter is DragEventArgs);
         this.action.Invoke();

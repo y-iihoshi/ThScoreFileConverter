@@ -6,12 +6,9 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
-
-#if NET5_0_OR_GREATER
-using System.Diagnostics.CodeAnalysis;
-#endif
 
 namespace ThScoreFileConverter.Commands;
 
@@ -44,11 +41,7 @@ public class CloseWindowCommand : ICommand
     /// </summary>
     /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
     /// <returns><see langword="true"/> if this command can be executed; otherwise, <see langword="false"/>.</returns>
-#if NET5_0_OR_GREATER
     public bool CanExecute([NotNullWhen(true)] object? parameter)
-#else
-    public bool CanExecute(object parameter)
-#endif
     {
         return parameter is Window;
     }
@@ -57,11 +50,7 @@ public class CloseWindowCommand : ICommand
     /// Called when the command is invoked.
     /// </summary>
     /// <param name="parameter">A <see cref="Window"/> instance which is closed.</param>
-#if NET5_0_OR_GREATER
     public void Execute(object? parameter)
-#else
-    public void Execute(object parameter)
-#endif
     {
 #pragma warning disable CA1062 // Validate arguments of public methods
         if (this.CanExecute(parameter))

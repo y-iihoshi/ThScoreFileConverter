@@ -93,11 +93,7 @@ public class HeaderBaseTests
     [TestMethod]
     public void ReadFromTestShortenedSignature()
     {
-#if NETFRAMEWORK
-        var properties = MakeProperties(ValidProperties.signature.Substring(0, 3));
-#else
         var properties = MakeProperties(ValidProperties.signature[0..3]);
-#endif
 
         // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
         // __ xx xx xx 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00

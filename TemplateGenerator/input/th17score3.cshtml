@@ -1,0 +1,85 @@
+@using TemplateGenerator.Models.Th17
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.score { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    table.practice { float: left; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th17score1.html">スコアデータ全般</a></li>
+     <li><a href="th17score2.html">個別ランキング</a></li>
+     <li>プラクティス</li>
+     <li><a href="th17card1.html">御札戦歴（@Html.Raw(Definitions.CareerKinds["S"])）</a></li>
+     <li><a href="th17card2.html">御札戦歴（@Html.Raw(Definitions.CareerKinds["P"])）</a></li>
+    </ul>
+    <ul>
+    @foreach (var level in Definitions.LevelPracticeNames)
+    {
+     <li><a href="#@(level.Value)">@Html.Raw(level.Value)</a></li>
+    }
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+    @foreach (var level in Definitions.LevelPracticeNames)
+    {
+   <section>
+    <h2 id="@(level.Value)">@Html.Raw(level.Value)</h2>
+
+        @foreach (var chara in Definitions.CharacterNames)
+        {
+    <table class="practice">
+     <caption>@Html.Raw(chara.Value)</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+      </tr>
+     </thead>
+     <tbody>
+            @foreach (var stage in Definitions.StagePracticeNames)
+            {
+      <tr>
+       <td class="stage">@Html.Raw(stage.Value)</td>
+       <td class="score">%T17PRAC@(level.Key)@(chara.Key)@(stage.Key)</td>
+      </tr>
+            }
+     </tbody>
+    </table>
+@:
+        }
+   </section>
+@:
+        @if (level.Key != Definitions.LevelPracticeNames.Last().Key)
+        {
+   <hr />
+@:
+        }
+    }
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

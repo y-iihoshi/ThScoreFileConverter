@@ -1,0 +1,139 @@
+@using TemplateGenerator.Models.Th105
+@{
+    var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スペルカードデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.level { min-width: 70px; }
+    td.date { min-width: 40px; }
+    table.rate_per_chara { float: left; }
+    table.rate_per_chara td.number { min-width: 50px; }
+    table.rate_per_chara td.card { min-width: 280px; }
+    table.rate_per_chara tbody td.card,
+    table.rate_per_chara tfoot td.card { text-align: left; }
+    table.rate_per_chara td.rate { min-width: 70px; }
+    table.rate_per_level td.rate { min-width: 100px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スペルカードデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>御札戦歴</li>
+     <li><a href="th105card2.html">デッキ用カード蒐集歴</a></li>
+    </ul>
+    <ul>
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+     <li><a href="#@(chara.Value.Id)">@Html.Raw(chara.Value.ShortName)</a></li>
+    }
+     <li><a href="#CardGet">スペルカード蒐集率</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="Card">御札戦歴</h2>
+
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+        var numCards = Definitions.NumCardsPerCharacter[chara.Key];
+    <table class="rate_per_chara">
+     <caption id="@(chara.Value.Id)">@Html.Raw(chara.Value.LongName)</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名 (難易度)</th>
+       <th class="rate">取得 / 挑戦</th>
+       <th class="date">残り時間</th>
+      </tr>
+     </thead>
+     <tbody>
+        @foreach (var card in Enumerable.Range(1, numCards))
+        {
+            var cardStr = card.ToString("D2");
+            var cardKey = card.ToString("D3");
+      <tr>
+       <td class="number">No.@(cardStr)</td>
+       <td class="card">%T105CARD@(cardKey)@(chara.Key)N (%T105CARD@(cardKey)@(chara.Key)R)</td>
+       <td class="rate">%T105C@(cardKey)@(chara.Key)1 / %T105C@(cardKey)@(chara.Key)2</td>
+       <td class="date">%T105C@(cardKey)@(chara.Key)3</td>
+      </tr>
+            @if ((card < numCards) && (card % 10 == 0))
+                @Html.Raw(Environment.NewLine)
+        }
+     </tbody>
+     <tfoot>
+        @{
+            var cardStrTotal = "合計";
+            var cardKeyTotal = 0.ToString("D3");
+      <tr>
+       <td colspan="2">@Html.Raw(cardStrTotal)</td>
+       <td class="rate">%T105C@(cardKeyTotal)@(chara.Key)1 / %T105C@(cardKeyTotal)@(chara.Key)2</td>
+       <td class="date">%T105C@(cardKeyTotal)@(chara.Key)3</td>
+      </tr>
+        }
+     </tfoot>
+    </table>
+@:
+    }
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="CardGet">スペルカード蒐集率</h2>
+
+    <table class="rate_per_level">
+     <caption>スペルカード蒐集率（取得/挑戦/総数）</caption>
+     <thead>
+      <tr>
+       <th></th>
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    {
+       <th class="level">@(Definitions.LevelWithTotalNames[levelKey])</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+      <tr>
+       <td class="character">@Html.Raw(chara.Value.LongName)</td>
+        @foreach (var levelKey in Definitions.LevelKeysTotalLast)
+        {
+            var numCards = Definitions.NumCardsPerCharacter[chara.Key];
+            if (levelKey != levelKeyTotal)
+                numCards /= Definitions.LevelNames.Count;
+       <td class="rate">%T105CRG@(levelKey)@(chara.Key)1 / %T105CRG@(levelKey)@(chara.Key)2 / @(numCards)</td>
+        }
+      </tr>
+    }
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

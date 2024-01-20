@@ -102,11 +102,7 @@ public class LzssTests
     {
         var invalid = new byte[this.compressed.Length];
         this.compressed.CopyTo(invalid, 0);
-#if NETFRAMEWORK
-        invalid[invalid.Length - 1] ^= 0x80;
-#else
         invalid[^1] ^= 0x80;
-#endif
 
         using var input = new MemoryStream(invalid);
         using var output = new MemoryStream();

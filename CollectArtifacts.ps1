@@ -29,9 +29,10 @@ foreach ($Lang in ('en', 'ja')) {
 }
 
 $Arguments = @{
-    Path = 'TemplateGenerator\Templates'
+    Path = 'TemplateGenerator\output'
     Destination = Join-Path $OutputDir 'template'
-    Exclude = '*.tt*'
     Recurse = $True
 }
-Copy-Item @Arguments
+if (Test-Path $Arguments.Path) {
+    Copy-Item @Arguments
+}

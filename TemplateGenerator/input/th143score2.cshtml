@@ -1,0 +1,203 @@
+@using System.Text
+@using TemplateGenerator.Models.Th143
+@{
+    var itemKeyTotal = Definitions.ItemKeysTotalFirst.First();
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) クリア状況一覧</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.scene { min-width: 60px; }
+    td.count { min-width: 50px; }
+    canvas { background-color: #000; }
+    table.score_per_level caption { text-align: left; font-size: large; }
+    table.score_per_level th { min-width: 70px; }
+/* ]]> */
+</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/21.0.1/min/jcanvas.min.js" integrity="sha512-pu2L+33GBCuTrTU3mNJphG2Hm2JKlLA01280LIiz29D40f/UFOU5dEVxVuW46p+HZeZhXvQsUxtVFxPabX9S9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+// <![CDATA[
+	$(document).ready(function(){
+		var defaultSize = 220;
+		var originX = defaultSize / 2;
+		var originY = defaultSize / 2;
+		var triangleRadius = 80;
+		var clearRadius = 15;
+		var notClearRadius = 5;
+		var noItemRadius = 25;
+		var triangleColor = 'rgba(128, 48, 192, 0.6)';
+		var itemColors = [
+			'rgb( 96,  48, 255)',
+			'rgb(224, 224,  48)',
+			'rgb(255,  48,  96)',
+			'rgb(128,  48, 192)',
+			'rgb(192, 128, 128)',
+			'rgb(255, 112,  48)',
+			'rgb(128,  96, 192)',
+			'rgb(224, 160,  48)',
+			'rgb(192,  48, 160)'
+		];
+		var noItemColor = 'rgb(48, 255, 48)';
+		var numItems = itemColors.length;
+		var itemIndexMap = [ 0, 3, 6, 2, 5, 7, 1, 4, 8 ];
+
+		var drawGraph = function(args) {
+			if (args.clearCounts.length != 10)
+				return;
+			for (var i = 0; i < args.clearCounts.length; i++)
+				args.clearCounts[i].replace(',', '');
+
+			$(args.id).scaleCanvas({
+				scale: Math.min($(args.id).width(), $(args.id).height()) / defaultSize
+			});
+
+			for (var i = 0; i < 3; i++)
+				$(args.id).drawPolygon({
+					fillStyle: triangleColor,
+					x: originX,
+					y: originY,
+					radius: triangleRadius,
+					sides: 3,
+					rotate: (360 * i / numItems)
+				});
+
+			for (var i = 0; i < numItems; i++) {
+				var angle = 2 * Math.PI * i / numItems;
+				var count = args.clearCounts[itemIndexMap[i]];
+				$(args.id).drawArc({
+					fillStyle: itemColors[itemIndexMap[i]],
+					x: (triangleRadius *  Math.sin(angle) + originX),
+					y: (triangleRadius * -Math.cos(angle) + originY),
+					radius: ((count > 0) ? clearRadius: notClearRadius)
+				});
+			}
+
+			if (args.clearCounts[9] > 0)
+				$(args.id).drawArc({
+					fillStyle: noItemColor,
+					x: originX,
+					y: originY,
+					radius: noItemRadius
+				});
+		};
+
+    @foreach (var day in Definitions.DayNames)
+    {
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+            var sceneKey = scene % 10;
+
+            var builder = new StringBuilder(1024);
+            @foreach (var item in Definitions.ItemNames)
+            {
+                builder.AppendFormat("'%T143SCR{0}{1}{2}3'", day.Key, sceneKey, item.Key);
+                if (item.Key != Definitions.ItemNames.Last().Key)
+                    builder.Append(", ");
+            }
+
+            var clearCountsFormat = builder.ToString();
+<text>		drawGraph({
+			id: '#T143GRAPH@(day.Key)@(sceneKey)',
+			clearCounts: [ @Html.Raw(clearCountsFormat) ]
+		});
+</text>
+        }
+
+        @if (day.Key != Definitions.DayNames.Last().Key)
+            @Html.Raw(Environment.NewLine)
+    }
+	});
+// ]]>
+</script>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) クリア状況一覧</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th143score1.html">スコアデータ全般</a></li>
+     <li>クリア状況一覧</li>
+     <li><a href="th143screenshot.html">スクリーンショット一覧</a></li>
+    </ul>
+    <ul>
+    @foreach (var day in Definitions.DayNames)
+    {
+     <li><a href="#@(day.Value.Id)">@Html.Raw(day.Value.Name)</a></li>
+    }
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>日付別スコア</h2>
+
+    @foreach (var day in Definitions.DayNames)
+    {
+    <table class="score_per_level">
+     <caption id="@(day.Value.Id)">@Html.Raw(day.Value.Name)</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+       <td class="scene">シーン @(scene)</td>
+        }
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+            var sceneKey = scene % 10;
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)3</td>
+        }
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+            var sceneKey = scene % 10;
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)2</td>
+        }
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+            var sceneKey = scene % 10;
+       <td class="count">%T143SCR@(day.Key)@(sceneKey)@(itemKeyTotal)1</td>
+        }
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+        @foreach (var scene in Enumerable.Range(1, Definitions.NumScenesPerDay[day.Key]))
+        {
+            var sceneKey = scene % 10;
+       <td><canvas id="T143GRAPH@(day.Key)@(sceneKey)" width="110" height="110"></canvas></td>
+        }
+      </tr>
+     </tbody>
+    </table>
+@:
+        }
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

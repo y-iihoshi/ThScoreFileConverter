@@ -1,0 +1,144 @@
+@using TemplateGenerator.Models.Th075
+@{
+    var levelKeyTotal = Definitions.LevelKeysTotalFirst.First();
+    var numCards = Definitions.NumCardsPerLevel.Values.Sum();
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.level { min-width: 70px; }
+    table.rate_per_chara { float: left; }
+    table.rate_per_chara td.number { min-width: 50px; }
+    table.rate_per_chara td.card { min-width: 280px; }
+    table.rate_per_chara tbody td.card,
+    table.rate_per_chara tfoot td.card { text-align: left; }
+    table.rate_per_chara td.bonus { min-width: 70px; }
+    table.rate_per_chara tbody td.bonus,
+    table.rate_per_chara tfoot td.bonus { text-align: right; }
+    table.rate_per_chara td.star { min-width: 15px; }
+    table.rate_per_chara td.rate { min-width: 70px; }
+    table.rate_per_level td.rate { min-width: 120px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th075score1.html">スコアデータ全般</a></li>
+     <li><a href="th075score2.html">個別ランキング</a></li>
+     <li>御札戦歴</li>
+    </ul>
+    <ul>
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+     <li><a href="#@(chara.Value.Id)">@Html.Raw(chara.Value.ShortName)</a></li>
+    }
+     <li><a href="#CardGet">スペルカード蒐集率</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="Card">御札戦歴</h2>
+
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+    <table class="rate_per_chara">
+     <caption id="@(chara.Value.Id)">@Html.Raw(chara.Value.LongName)</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名</th>
+       <th class="bonus">MaxBonus</th>
+       <th class="star">★</th>
+       <th class="rate">取得 / 挑戦</th>
+      </tr>
+     </thead>
+     <tbody>
+        @foreach (var card in Enumerable.Range(1, numCards))
+        {
+            var cardStr = card.ToString("D2");
+            var cardKey = card.ToString("D3");
+      <tr>
+       <td class="number">No.@(cardStr)</td>
+       <td class="card">%T75CARD@(cardKey)@(chara.Key)N</td>
+       <td class="bonus">%T75C@(cardKey)@(chara.Key)1</td>
+       <td class="star">%T75C@(cardKey)@(chara.Key)4</td>
+       <td class="rate">%T75C@(cardKey)@(chara.Key)2 / %T75C@(cardKey)@(chara.Key)3</td>
+      </tr>
+            @if ((card < numCards) && (card % 10 == 0))
+                @Html.Raw(Environment.NewLine)
+        }
+     </tbody>
+     <tfoot>
+        @{
+            var cardStrTotal = "合計";
+            var cardKeyTotal = 0.ToString("D3");
+      <tr>
+       <td colspan="2">@Html.Raw(cardStrTotal)</td>
+       <td class="bonus">%T75C@(cardKeyTotal)@(chara.Key)1</td>
+       <td class="star"></td>
+       <td class="rate">%T75C@(cardKeyTotal)@(chara.Key)2 / %T75C@(cardKeyTotal)@(chara.Key)3</td>
+      </tr>
+        }
+     </tfoot>
+    </table>
+@:
+    }
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="CardGet">スペルカード蒐集率</h2>
+
+    <table class="rate_per_level">
+     <caption>スペルカード蒐集率（★/取得/挑戦/総数）</caption>
+     <thead>
+      <tr>
+       <th></th>
+    @foreach (var levelKey in Definitions.LevelKeysTotalLast)
+    {
+       <th class="level">@Html.Raw(Definitions.LevelWithTotalNames[levelKey])</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var chara in Definitions.CharacterNames)
+    {
+      <tr>
+       <td class="character">@Html.Raw(chara.Value.LongName)</td>
+        @foreach (var levelKey in Definitions.LevelKeysTotalLast)
+        {
+            var cards = (levelKey == levelKeyTotal) ? numCards : Definitions.NumCardsPerLevel[levelKey];
+       <td class="rate">%T75CRG@(levelKey)@(chara.Key)3 / %T75CRG@(levelKey)@(chara.Key)1 / %T75CRG@(levelKey)@(chara.Key)2 / @(cards)</td>
+        }
+      </tr>
+    }
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>

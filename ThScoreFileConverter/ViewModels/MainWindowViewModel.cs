@@ -16,9 +16,9 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MvvmDialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.ViewModels;
 #if !DEBUG
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812", Justification = "Instantiated by the DI container.")]
 #endif
-internal sealed class MainWindowViewModel : BindableBase, IDisposable
+internal sealed partial class MainWindowViewModel : ObservableObject, IDisposable
 {
     /// <summary>
     /// An <see cref="IDialogService"/>.
@@ -46,6 +46,11 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
     /// </summary>
     private readonly IDispatcherAdapter dispatcher;
+
+    /// <summary>
+    /// An <see cref="IResourceDictionaryAdapter"/> that should wrap <see cref="Application.Current"/>.Resources.
+    /// </summary>
+    private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
 
     /// <summary>
     /// The settings of this application.
@@ -79,13 +84,17 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <param name="dispatcher">
     /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
     /// </param>
+    /// <param name="adapter">
+    /// An <see cref="IResourceDictionaryAdapter"/> that should wrap <see cref="Application.Current"/>.Resources.
+    /// </param>
     /// <param name="settings">The settings of this application.</param>
     /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
     public MainWindowViewModel(
-        IDialogService dialogService, IDispatcherAdapter dispatcher, Settings settings, INumberFormatter formatter)
+        IDialogService dialogService, IDispatcherAdapter dispatcher, IResourceDictionaryAdapter adapter, Settings settings, INumberFormatter formatter)
     {
         this.dialogService = dialogService;
         this.dispatcher = dispatcher;
+        this.resourceDictionaryAdapter = adapter;
         this.settings = settings;
         this.formatter = formatter;
         this.disposables = [];
@@ -136,40 +145,9 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
             .ToReactivePropertySlimAsSynchronized(x => x.Value.HideUntriedCards, rpMode);
         this.Log = new ReactivePropertySlim<string>(string.Empty);
 
-        this.SelectScoreFileCommand =
-            new DelegateCommand<OpenFileDialogActionResult>(this.SelectScoreFile);
-        this.SelectBestShotDirectoryCommand =
-            new DelegateCommand<OpenFolderDialogActionResult>(this.SelectBestShotDirectory);
-        this.TemplateFilesSelectionChangedCommand =
-            new DelegateCommand(this.OnTemplateFilesSelectionChanged);
-        this.AddTemplateFilesCommand =
-            new DelegateCommand<OpenFileDialogActionResult>(this.AddTemplateFiles);
-        this.DeleteTemplateFilesCommand =
-            new DelegateCommand<IList?>(this.DeleteTemplateFiles, this.CanDeleteTemplateFiles);
-        this.DeleteAllTemplateFilesCommand =
-            new DelegateCommand(this.DeleteAllTemplateFiles, this.CanDeleteAllTemplateFiles);
-        this.SelectOutputDirectoryCommand =
-            new DelegateCommand<OpenFolderDialogActionResult>(this.SelectOutputDirectory);
-        this.ConvertCommand =
-            new DelegateCommand(this.Convert, this.CanConvert);
-
-        this.DraggingCommand =
-            new DelegateCommand<DragEventArgs>(this.OnDragging);
-        this.DropScoreFileCommand =
-            new DelegateCommand<DragEventArgs>(this.OnDropScoreFile);
-        this.DropBestShotDirectoryCommand =
-            new DelegateCommand<DragEventArgs>(this.OnDropBestShotDirectory);
-        this.DropTemplateFilesCommand =
-            new DelegateCommand<DragEventArgs>(this.OnDropTemplateFiles);
-        this.DropOutputDirectoryCommand =
-            new DelegateCommand<DragEventArgs>(this.OnDropOutputDirectory);
-
-        this.OpenAboutWindowCommand = new DelegateCommand(this.OpenAboutWindow);
-        this.OpenSettingWindowCommand = new DelegateCommand(this.OpenSettingWindow);
-
         this.disposables.Add(
             LocalizeDictionary.Instance.ObserveProperty(instance => instance.Culture)
-                .Subscribe(_ => this.RaisePropertyChanged(nameof(this.SupportedVersions))));
+                .Subscribe(_ => this.OnPropertyChanged(nameof(this.SupportedVersions))));
 
         this.disposables.Add(this.IsIdle.Subscribe(idle => this.OverrideCursor(idle ? null : Cursors.Wait)));
         this.disposables.Add(
@@ -191,26 +169,26 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
 
                 this.IsIdle.Value = true;
 
-                this.RaisePropertyChanged(nameof(this.SupportedVersions));
-                this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
-                this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
+                this.OnPropertyChanged(nameof(this.SupportedVersions));
+                this.OnPropertyChanged(nameof(this.CanHandleBestShot));
+                this.OnPropertyChanged(nameof(this.CanReplaceCardNames));
 
-                this.ConvertCommand.RaiseCanExecuteChanged();
+                this.ConvertCommand.NotifyCanExecuteChanged();
             }));
-        this.disposables.Add(this.ScoreFile.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+        this.disposables.Add(this.ScoreFile.Subscribe(value => this.ConvertCommand.NotifyCanExecuteChanged()));
         this.disposables.Add(
-            this.BestShotDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+            this.BestShotDirectory.Subscribe(value => this.ConvertCommand.NotifyCanExecuteChanged()));
         this.disposables.Add(
             this.TemplateFiles.Subscribe(value =>
             {
-                this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
-                this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
-                this.ConvertCommand.RaiseCanExecuteChanged();
+                this.DeleteTemplateFilesCommand.NotifyCanExecuteChanged();
+                this.DeleteAllTemplateFilesCommand.NotifyCanExecuteChanged();
+                this.ConvertCommand.NotifyCanExecuteChanged();
             }));
         this.disposables.Add(
-            this.OutputDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+            this.OutputDirectory.Subscribe(value => this.ConvertCommand.NotifyCanExecuteChanged()));
         this.disposables.Add(
-            this.ImageOutputDirectory.Subscribe(value => this.ConvertCommand.RaiseCanExecuteChanged()));
+            this.ImageOutputDirectory.Subscribe(value => this.ConvertCommand.NotifyCanExecuteChanged()));
 
         if (string.IsNullOrEmpty(this.LastWorkNumber.Value))
             this.LastWorkNumber.Value = this.Works.First().Number;
@@ -342,85 +320,6 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// </summary>
     public ReactivePropertySlim<string> Log { get; }
 
-    #region Commands
-
-    /// <summary>
-    /// Gets the command to select a score file.
-    /// </summary>
-    public DelegateCommand<OpenFileDialogActionResult> SelectScoreFileCommand { get; }
-
-    /// <summary>
-    /// Gets the command to select a best shot directory.
-    /// </summary>
-    public DelegateCommand<OpenFolderDialogActionResult> SelectBestShotDirectoryCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when the selection of template files is changed.
-    /// </summary>
-    public DelegateCommand TemplateFilesSelectionChangedCommand { get; }
-
-    /// <summary>
-    /// Gets the command to add some files to the list of template files.
-    /// </summary>
-    public DelegateCommand<OpenFileDialogActionResult> AddTemplateFilesCommand { get; }
-
-    /// <summary>
-    /// Gets the command to delete some files from the list of template files.
-    /// </summary>
-    public DelegateCommand<IList?> DeleteTemplateFilesCommand { get; }
-
-    /// <summary>
-    /// Gets the command to delete all files from the list of template files.
-    /// </summary>
-    public DelegateCommand DeleteAllTemplateFilesCommand { get; }
-
-    /// <summary>
-    /// Gets the command to select an output directory.
-    /// </summary>
-    public DelegateCommand<OpenFolderDialogActionResult> SelectOutputDirectoryCommand { get; }
-
-    /// <summary>
-    /// Gets the command to convert the score file.
-    /// </summary>
-    public DelegateCommand ConvertCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when a dragging event is occurred on a UI element.
-    /// </summary>
-    public DelegateCommand<DragEventArgs> DraggingCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when a score file is dropped on a UI element.
-    /// </summary>
-    public DelegateCommand<DragEventArgs> DropScoreFileCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when a best shot directory is dropped on a UI element.
-    /// </summary>
-    public DelegateCommand<DragEventArgs> DropBestShotDirectoryCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when some template files are dropped on a UI element.
-    /// </summary>
-    public DelegateCommand<DragEventArgs> DropTemplateFilesCommand { get; }
-
-    /// <summary>
-    /// Gets the command invoked when an output directory is dropped on a UI element.
-    /// </summary>
-    public DelegateCommand<DragEventArgs> DropOutputDirectoryCommand { get; }
-
-    /// <summary>
-    /// Gets the command to open an about window.
-    /// </summary>
-    public DelegateCommand OpenAboutWindowCommand { get; }
-
-    /// <summary>
-    /// Gets the command to open a setting window.
-    /// </summary>
-    public DelegateCommand OpenSettingWindowCommand { get; }
-
-    #endregion
-
     #endregion
 
     /// <summary>
@@ -486,6 +385,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// Selects a score file.
     /// </summary>
     /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
+    [RelayCommand]
     private void SelectScoreFile(OpenFileDialogActionResult result)
     {
         if (File.Exists(result.FileName))
@@ -496,6 +396,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// Selects a best shot directory.
     /// </summary>
     /// <param name="result">A result of <see cref="OpenFolderDialogAction"/>.</param>
+    [RelayCommand]
     private void SelectBestShotDirectory(OpenFolderDialogActionResult result)
     {
         if (Directory.Exists(result.FolderName))
@@ -505,15 +406,17 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Invoked when the selection of template files is changed.
     /// </summary>
+    [RelayCommand]
     private void OnTemplateFilesSelectionChanged()
     {
-        this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
+        this.DeleteTemplateFilesCommand.NotifyCanExecuteChanged();
     }
 
     /// <summary>
     /// Adds some files to the list of template files.
     /// </summary>
     /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
+    [RelayCommand]
     private void AddTemplateFiles(OpenFileDialogActionResult result)
     {
         this.TemplateFiles.Value = this.TemplateFiles.Value.Union(result.FileNames.Where(File.Exists)).ToArray();
@@ -526,7 +429,9 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <returns>
     /// <see langword="true"/> if <see cref="DeleteTemplateFiles"/> can be invoked; otherwise, <see langword="false"/>.
     /// </returns>
+#pragma warning disable CA1822 // Mark members as static
     private bool CanDeleteTemplateFiles(IList? selectedItems)
+#pragma warning restore CA1822 // Mark members as static
     {
         return selectedItems?.Count > 0;
     }
@@ -535,6 +440,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// Deletes some files from the list of template files.
     /// </summary>
     /// <param name="selectedItems">A list indicating the path strings which are deleted.</param>
+    [RelayCommand(CanExecute = nameof(CanDeleteTemplateFiles))]
     private void DeleteTemplateFiles(IList? selectedItems)
     {
         if (selectedItems is not null)
@@ -555,6 +461,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Deletes all files from the list of template files.
     /// </summary>
+    [RelayCommand(CanExecute = nameof(CanDeleteAllTemplateFiles))]
     private void DeleteAllTemplateFiles()
     {
         this.TemplateFiles.Value = Enumerable.Empty<string>();
@@ -564,6 +471,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// Selects an output directory.
     /// </summary>
     /// <param name="result">A result of <see cref="OpenFolderDialogAction"/>.</param>
+    [RelayCommand]
     private void SelectOutputDirectory(OpenFolderDialogActionResult result)
     {
         if (Directory.Exists(result.FolderName))
@@ -589,6 +497,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// <summary>
     /// Converts the score file.
     /// </summary>
+    [RelayCommand(CanExecute = nameof(CanConvert))]
     private void Convert()
     {
         if (this.CanConvert())
@@ -607,6 +516,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     /// Invoked when a dragging event is occurred.
     /// </summary>
     /// <param name="e">The event data.</param>
+    [RelayCommand]
     private void OnDragging(DragEventArgs e)
     {
         try
@@ -629,10 +539,11 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
     }
 
     /// <summary>
-    /// Invoked when a score file is dropped on a UI element.
+    /// Invoked when some data are dropped on a UI element.
     /// </summary>
     /// <param name="e">The event data.</param>
-    private void OnDropScoreFile(DragEventArgs e)
+    /// <param name="action">The action invoked with the dropped data that is an array of file paths.</param>
+    private void OnDrop(DragEventArgs e, Action<string[]> action)
     {
         try
         {
@@ -640,9 +551,7 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
             {
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                 {
-                    var filePath = droppedPaths.FirstOrDefault(File.Exists);
-                    if (filePath is not null)
-                        this.ScoreFile.Value = filePath;
+                    action(droppedPaths);
                 }
             }
         }
@@ -651,95 +560,83 @@ internal sealed class MainWindowViewModel : BindableBase, IDisposable
             this.Log.Value += ex.Message + Environment.NewLine;
             throw;
         }
+    }
+
+    /// <summary>
+    /// Invoked when a score file is dropped on a UI element.
+    /// </summary>
+    /// <param name="e">The event data.</param>
+    [RelayCommand]
+    private void OnDropScoreFile(DragEventArgs e)
+    {
+        this.OnDrop(e, droppedPaths =>
+        {
+            var filePath = droppedPaths.FirstOrDefault(File.Exists);
+            if (filePath is not null)
+                this.ScoreFile.Value = filePath;
+        });
     }
 
     /// <summary>
     /// Invoked when a best shot directory is dropped on a UI element.
     /// </summary>
     /// <param name="e">The event data.</param>
+    [RelayCommand]
     private void OnDropBestShotDirectory(DragEventArgs e)
     {
-        try
+        this.OnDrop(e, droppedPaths =>
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
-                {
-                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
-                    if (dirPath is not null)
-                        this.BestShotDirectory.Value = dirPath;
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            this.Log.Value += ex.Message + Environment.NewLine;
-            throw;
-        }
+            var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
+            if (dirPath is not null)
+                this.BestShotDirectory.Value = dirPath;
+        });
     }
 
     /// <summary>
     /// Invoked when some template files are dropped on a UI element.
     /// </summary>
     /// <param name="e">The event data.</param>
+    [RelayCommand]
     private void OnDropTemplateFiles(DragEventArgs e)
     {
-        try
+        this.OnDrop(e, droppedPaths =>
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
-                {
-                    this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            this.Log.Value += ex.Message + Environment.NewLine;
-            throw;
-        }
+            this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
+        });
     }
 
     /// <summary>
     /// Invoked when an output directory is dropped on a UI element.
     /// </summary>
     /// <param name="e">The event data.</param>
+    [RelayCommand]
     private void OnDropOutputDirectory(DragEventArgs e)
     {
-        try
+        this.OnDrop(e, droppedPaths =>
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
-                {
-                    var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
-                    if (dirPath is not null)
-                        this.OutputDirectory.Value = dirPath;
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            this.Log.Value += ex.Message + Environment.NewLine;
-            throw;
-        }
+            var dirPath = droppedPaths.FirstOrDefault(Directory.Exists);
+            if (dirPath is not null)
+                this.OutputDirectory.Value = dirPath;
+        });
     }
 
     /// <summary>
     /// Invoked when opening an about window is requested.
     /// </summary>
+    [RelayCommand]
     private void OpenAboutWindow()
     {
-        this.dialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
+        _ = this.dialogService.ShowDialog(this, new AboutWindowViewModel());
     }
 
     /// <summary>
     /// Invoked when opening a setting window is requested.
     /// </summary>
+    [RelayCommand]
     private void OpenSettingWindow()
     {
-        this.dialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
+        using var viewModel = new SettingWindowViewModel(this.settings, this.resourceDictionaryAdapter);
+        _ = this.dialogService.ShowDialog(this, viewModel);
     }
 
     #endregion

@@ -17,12 +17,7 @@ namespace ThScoreFileConverter.Core.Helpers;
 public static class EnumHelper<T>
     where T : struct, Enum
 {
-    private static readonly T[] Values =
-#if NET5_0_OR_GREATER
-        Enum.GetValues<T>();
-#else
-        (T[])Enum.GetValues(typeof(T));
-#endif
+    private static readonly T[] Values = Enum.GetValues<T>();
 
 #pragma warning disable CA1000 // Do not declare static members on generic types
     /// <summary>

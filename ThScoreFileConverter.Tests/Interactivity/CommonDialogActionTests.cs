@@ -20,11 +20,7 @@ internal sealed class Site : ISite
 
     public bool DesignMode => default;
 
-#if NET5_0_OR_GREATER
     public string? Name { get; set; } = string.Empty;
-#else
-    public string Name { get; set; } = string.Empty;
-#endif
 
     public object GetService(Type serviceType)
     {

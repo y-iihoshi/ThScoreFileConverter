@@ -20,10 +20,6 @@ using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
 
-#if NETFRAMEWORK
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter;
 
 /// <summary>

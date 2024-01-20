@@ -11,12 +11,7 @@ public class StringHelperTests
     public void CreateTest()
     {
         var now = DateTime.Now;
-
-#if NET6_0_OR_GREATER
         var expected = string.Create(CultureInfo.CurrentCulture, $"{now:F}");
-#else
-        var expected = string.Format(CultureInfo.CurrentCulture, "{0:F}", now);
-#endif
 
         Assert.AreEqual(expected, StringHelper.Create($"{now:F}"));
     }

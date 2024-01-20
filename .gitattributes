@@ -61,5 +61,3 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
-
-TemplateGenerator/Templates/*.html linguist-generated=true

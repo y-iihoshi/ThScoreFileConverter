@@ -1,0 +1,62 @@
+@using TemplateGenerator.Models.Th155
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@Html.Raw(Definitions.Title) スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.level { min-width: 70px; }
+    table.clear td.clear { min-width: 70px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>@Html.Raw(Definitions.Title) スコアデータ</h1>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>クリア達成度</h2>
+
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+    @foreach (var level in Definitions.LevelNames)
+    {
+       <th class="level">@Html.Raw(level.Value)</th>
+    }
+      </tr>
+     </thead>
+     <tbody>
+    @foreach (var chara in Definitions.StoryCharacterNames)
+    {
+      <tr>
+       <td class="character">@Html.Raw(chara.Value)</td>
+        @foreach (var level in Definitions.LevelNames)
+        {
+       <td class="clear">%T155CLEAR@(level.Key)@(chara.Key)</td>
+        }
+      </tr>
+    }
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+@await Html.PartialAsync("_Footer")
+  </footer>
+
+ </body>
+</html>
