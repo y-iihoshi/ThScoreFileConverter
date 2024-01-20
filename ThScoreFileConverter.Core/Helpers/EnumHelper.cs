@@ -27,7 +27,6 @@ public static class EnumHelper
     /// <paramref name="value"/>.
     /// </returns>
     /// <exception cref="InvalidCastException">No enumerator equal to <paramref name="value"/> exists.</exception>
-    [CLSCompliant(false)]
     public static TEnum To<TEnum>(object value)
         where TEnum : struct, Enum
     {
