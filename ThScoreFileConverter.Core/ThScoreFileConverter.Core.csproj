@@ -48,4 +48,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
 </Project>
