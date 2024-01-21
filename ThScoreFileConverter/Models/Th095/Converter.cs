@@ -37,11 +37,7 @@ internal sealed class Converter : ThConverter
     protected override bool ReadScoreFile(Stream input)
     {
         using var decrypted = new MemoryStream();
-#if DEBUG
-        using var decoded = new FileStream("th095decoded.dat", FileMode.Create, FileAccess.ReadWrite);
-#else
-        using var decoded = new MemoryStream();
-#endif
+        using var decoded = StreamHelper.Create("th095decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 
         if (!Decrypt(input, decrypted))
             return false;
