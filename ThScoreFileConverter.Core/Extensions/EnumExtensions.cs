@@ -25,7 +25,6 @@ public static class EnumExtensions
     /// <typeparam name="T">The enumeration type.</typeparam>
     /// <param name="enumValue">An enumeration value.</param>
     /// <returns>A short name of <paramref name="enumValue"/>.</returns>
-    [CLSCompliant(false)]
     public static string ToShortName<T>(this T enumValue)
         where T : struct, Enum
     {
@@ -39,7 +38,6 @@ public static class EnumExtensions
     /// <typeparam name="T">The enumeration type.</typeparam>
     /// <param name="enumValue">An enumeration value.</param>
     /// <returns>A long name of <paramref name="enumValue"/>.</returns>
-    [CLSCompliant(false)]
     public static string ToLongName<T>(this T enumValue)
         where T : struct, Enum
     {

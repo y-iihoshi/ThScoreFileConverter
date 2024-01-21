@@ -2,7 +2,6 @@
 using System.IO.Packaging;
 using System.Threading;
 using System.Windows;
-using Prism.Services.Dialogs;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -71,29 +70,5 @@ public class AboutWindowViewModelTests
     {
         var window = new AboutWindowViewModel();
         Assert.AreEqual(StringResources.ProjectUrl, window.Uri);
-    }
-
-    [TestMethod]
-    public void CanCloseDialogTest()
-    {
-        var window = new AboutWindowViewModel();
-        Assert.IsTrue(window.CanCloseDialog());
-    }
-
-    [TestMethod]
-    public void OnDialogClosedTest()
-    {
-        var window = new AboutWindowViewModel();
-        window.OnDialogClosed();
-        Assert.IsTrue(true);
-    }
-
-    [TestMethod]
-    public void OnDialogOpenedTest()
-    {
-        var parameters = new DialogParameters();
-        var window = new AboutWindowViewModel();
-        window.OnDialogOpened(parameters);
-        Assert.IsTrue(true);
     }
 }

@@ -5,14 +5,14 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Windows.Controls;
+using System.Windows;
 
 namespace ThScoreFileConverter.Views;
 
 /// <summary>
 /// Interaction logic for SettingWindow.xaml.
 /// </summary>
-public partial class SettingWindow : UserControl
+public partial class SettingWindow : Window
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SettingWindow"/> class.
