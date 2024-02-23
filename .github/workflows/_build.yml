@@ -60,7 +60,7 @@ jobs:
           ${{ runner.os }}-nuget-
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.3
+      uses: microsoft/setup-msbuild@v2.0.0
 
     - name: Build
       run: >
