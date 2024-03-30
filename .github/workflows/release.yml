@@ -39,7 +39,7 @@ jobs:
           7z a ThScoreFileConverter-${{ github.ref_name }}-net6.0.zip -r ./artifacts/net6.0/*
           7z a ThScoreFileConverter-${{ github.ref_name }}-net8.0.zip -r ./artifacts/net8.0/*
       - name: Create GitHub release as draft
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           fail_on_unmatched_files: true
           draft: true
