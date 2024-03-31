@@ -7,17 +7,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-12 19:00+0900\n"
-"PO-Revision-Date: 2023-08-12 19:02+0900\n"
+"POT-Creation-Date: 2024-03-31 11:09+0900\n"
+"PO-Revision-Date: 2024-03-31 11:19+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.14.0\n"
 
 msgid "変更履歴"
 msgstr "Changelog"
+
+msgid "Unreleased (yyyy/mm/dd)"
+msgstr "Unreleased (dd Mmm yyyy)"
+
+msgid "メインウィンドウのサイズを変更可能にした"
+msgstr "Made the main window resizable."
+
+msgid ".NET 8 に対応"
+msgstr "Supports .NET 8."
+
+msgid ".NET Framework の対応を終了"
+msgstr "Ended to support .NET Framework."
 
 msgid "v2.5.0 (2023/8/12)"
 msgstr "v2.5.0 (12 Aug 2023)"
