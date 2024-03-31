@@ -6,8 +6,8 @@ namespace ThScoreFileConverter.Core.Tests.Extensions;
 
 public enum Protagonist
 {
-    [EnumAltName("RM", LongName = "博麗 霊夢")] Reimu,
-    [EnumAltName("MR", LongName = "霧雨 魔理沙")] Marisa,
+    [EnumAltName("RM", LongName = "博麗 霊夢"), Pattern("RM")] Reimu,
+    [EnumAltName("MR", LongName = "霧雨 魔理沙"), Pattern("MR")] Marisa,
 }
 
 public enum UnnamedCharacter
@@ -40,5 +40,13 @@ public class EnumExtensionsTests
         Assert.AreEqual(string.Empty, UnnamedCharacter.大妖精.ToLongName());
         Assert.AreEqual(string.Empty, UnnamedCharacter.小悪魔.ToLongName());
         Assert.AreEqual(string.Empty, UnnamedCharacter.名無しの本読み妖怪.ToLongName());
+    }
+
+    [TestMethod]
+    public void ToPatternTest()
+    {
+        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToPattern());
+        Assert.AreEqual("RM", Protagonist.Reimu.ToPattern());
+        Assert.AreEqual("MR", Protagonist.Marisa.ToPattern());
     }
 }

@@ -46,6 +46,19 @@ public static class EnumExtensions
     }
 
     /// <summary>
+    /// Gets a pattern string of the specified enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>A pattern string of <paramref name="enumValue"/>.</returns>
+    public static string ToPattern<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return AttributeCache<T, PatternAttribute>.Cache.TryGetValue(enumValue, out var attr)
+            ? attr.Pattern : string.Empty;
+    }
+
+    /// <summary>
     /// Provides cache of attribute information.
     /// </summary>
     /// <typeparam name="TEnum">The enumeration type.</typeparam>
