@@ -108,8 +108,9 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4.2.0
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
         file: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Collect artifacts
