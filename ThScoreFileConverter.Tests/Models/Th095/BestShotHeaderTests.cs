@@ -32,8 +32,7 @@ public class BestShotHeaderTests
         _ = mock.Height.Returns((short)5);
         _ = mock.ResultScore.Returns(6);
         _ = mock.SlowRate.Returns(7f);
-        _ = mock.CardName.Returns(
-            TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray());
+        _ = mock.CardName.Returns([.. TestUtils.CP932Encoding.GetBytes("abcde"), .. Enumerable.Repeat((byte)'\0', 75)]);
         return mock;
     }
 
