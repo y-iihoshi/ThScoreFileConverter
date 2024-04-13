@@ -38,7 +38,7 @@ public class ClearDataTests
             Enumerable.Range(0, 10)
                 .Select(index => new HighScoreStub()
                 {
-                    EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
+                    EncodedName = [15, 37, 26, 50, 30, 43, (byte)(52 + index), 103],
                     Name = StringHelper.Create($"Player{index} "),
                     Month = (byte)(1 + index),
                     Day = (byte)(10 + index),

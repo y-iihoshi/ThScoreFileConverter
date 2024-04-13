@@ -696,7 +696,7 @@ public class SettingsTests
         settingsPerTitle.ImageOutputDirectory = "images";
         settingsPerTitle.OutputDirectory = "output";
         settingsPerTitle.ScoreFile = "score.dat";
-        settingsPerTitle.TemplateFiles = new[] { "template1", "template2" };
+        settingsPerTitle.TemplateFiles = ["template1", "template2"];
 
         var tempfile = Path.GetTempFileName();
         settings.Save(tempfile);

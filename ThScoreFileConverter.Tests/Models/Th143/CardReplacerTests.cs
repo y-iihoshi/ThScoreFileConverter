@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Tests.Models.Th143;
 [TestClass]
 public class CardReplacerTests
 {
-    internal static IReadOnlyList<IScore> Scores { get; } = new[] { ScoreTests.MockScore() };
+    internal static IReadOnlyList<IScore> Scores { get; } = [ScoreTests.MockScore()];
 
     [TestMethod]
     public void CardReplacerTest()

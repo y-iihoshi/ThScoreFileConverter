@@ -170,7 +170,7 @@ public class AllScoreDataTests
     private static byte[] MakeByteArrayFromArrayReflection(Array array)
     {
         return (byte[])FromArrayMethodInfo.MakeGenericMethod(array.GetType().GetElementType()!)
-            .Invoke(null, new object[] { array })!;
+            .Invoke(null, [array])!;
     }
 
     private static byte[] MakeByteArrayFromArray<T>(in IEnumerable<T> array)
@@ -190,7 +190,7 @@ public class AllScoreDataTests
     private static byte[] MakeByteArrayFromDictionaryReflection(object dictionary)
     {
         return (byte[])FromDictionaryMethodInfo.MakeGenericMethod(dictionary.GetType().GetGenericArguments())
-            .Invoke(null, new object[] { dictionary })!;
+            .Invoke(null, [dictionary])!;
     }
 
     private static byte[] MakeByteArrayFromDictionary<TKey, TValue>(

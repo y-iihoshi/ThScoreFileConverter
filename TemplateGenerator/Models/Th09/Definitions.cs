@@ -30,13 +30,13 @@ public class Definitions : Models.Definitions
         static tuple => tuple.Item1.ToShortName(),
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
 
-    public static IReadOnlyList<string> RankOrdinals { get; } = new[]
-    {
+    public static IReadOnlyList<string> RankOrdinals { get; } =
+    [
         "0th",  // unused
         "1st",
         "2nd",
         "3rd",
         "4th",
         "5th",
-    };
+    ];
 }

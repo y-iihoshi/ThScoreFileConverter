@@ -19,7 +19,7 @@ public class SpellCardInfoTests
         Assert.AreEqual("月符「ムーンライトレイ」", info.Name);
         Assert.AreEqual(Stage.One, info.Stage);
         Assert.AreEqual(Level.Hard, info.Level);
-        CollectionAssert.That.AreEqual(new[] { Level.Hard, Level.Lunatic }, info.Levels);
+        CollectionAssert.That.AreEqual([Level.Hard, Level.Lunatic], info.Levels);
     }
 
     [TestMethod]
@@ -72,7 +72,7 @@ public class SpellCardInfoTests
         Assert.AreEqual("霜符「フロストコラムス」", info.Name);
         Assert.AreEqual(Stage.One, info.Stage);
         Assert.AreEqual(Level.Hard, info.Level);
-        CollectionAssert.That.AreEqual(new[] { Level.Hard }, info.Levels);
+        CollectionAssert.That.AreEqual([Level.Hard], info.Levels);
     }
 
     [TestMethod]
