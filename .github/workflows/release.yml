@@ -17,6 +17,7 @@ jobs:
       dotnet-configuration: 'Release'
       dotnet-target-framework: ${{ matrix.target-framework }}
       artifact-name: 'ThScoreFileConverter-${{ github.ref_name }}-${{ matrix.target-framework }}'
+    secrets: inherit
 
   release:
     runs-on: windows-latest
