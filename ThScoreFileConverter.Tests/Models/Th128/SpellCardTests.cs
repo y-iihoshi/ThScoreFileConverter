@@ -16,7 +16,7 @@ public class SpellCardTests
     internal static ISpellCard MockInitialSpellCard()
     {
         var mock = Substitute.For<ISpellCard>();
-        _ = mock.Name.Returns(Enumerable.Empty<byte>());
+        _ = mock.Name.Returns([]);
         return mock;
     }
 

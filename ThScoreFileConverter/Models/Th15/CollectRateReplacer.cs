@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Helpers;
@@ -86,6 +85,6 @@ internal sealed class CollectRateReplacer(
     {
         return clearDataDictionary.TryGetValue(chara, out var clearData)
             && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
-            ? clearDataPerGameMode.Cards.Values : ImmutableList<ISpellCard>.Empty;
+            ? clearDataPerGameMode.Cards.Values : [];
     }
 }

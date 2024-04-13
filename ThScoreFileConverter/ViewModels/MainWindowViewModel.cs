@@ -464,7 +464,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand(CanExecute = nameof(CanDeleteAllTemplateFiles))]
     private void DeleteAllTemplateFiles()
     {
-        this.TemplateFiles.Value = Enumerable.Empty<string>();
+        this.TemplateFiles.Value = [];
     }
 
     /// <summary>

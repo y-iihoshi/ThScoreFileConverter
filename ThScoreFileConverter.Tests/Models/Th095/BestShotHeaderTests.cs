@@ -18,7 +18,7 @@ public class BestShotHeaderTests
     {
         var mock = Substitute.For<IBestShotHeader<Level>>();
         _ = mock.Signature.Returns(string.Empty);
-        _ = mock.CardName.Returns(Enumerable.Empty<byte>());
+        _ = mock.CardName.Returns([]);
         return mock;
     }
 

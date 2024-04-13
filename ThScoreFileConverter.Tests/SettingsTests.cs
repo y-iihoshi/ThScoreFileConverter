@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 
@@ -284,8 +283,7 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\no-template-files.xml");
         Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual(
-            Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
     }
 
     [TestMethod]
@@ -294,8 +292,7 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\empty-template-files.xml");
         Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual(
-            Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
     }
 
     [TestMethod]
@@ -304,8 +301,7 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\invalid-template-files.xml");
         Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual(
-            Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
     }
 
     [TestMethod]

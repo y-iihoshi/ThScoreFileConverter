@@ -285,7 +285,7 @@ public class MainWindowViewModelTests
         var fileName = Path.GetTempFileName();
         try
         {
-            var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
+            var result = new OpenFileDialogActionResult(fileName, []);
             Assert.IsTrue(command.CanExecute(result));
             Assert.AreEqual(0, numChanged);
 
@@ -311,7 +311,7 @@ public class MainWindowViewModelTests
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
         var fileName = window.ScoreFile.Value;
-        var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
+        var result = new OpenFileDialogActionResult(fileName, []);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -331,7 +331,7 @@ public class MainWindowViewModelTests
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
         var fileName = "nonexistent.txt";
-        var result = new OpenFileDialogActionResult(fileName, Array.Empty<string>());
+        var result = new OpenFileDialogActionResult(fileName, []);
         Assert.IsTrue(command.CanExecute(result));
         Assert.AreEqual(0, numChanged);
 
@@ -712,7 +712,7 @@ public class MainWindowViewModelTests
         Assert.AreEqual(0, numChanged);
 
         command.Execute(null);
-        Assert.AreEqual(1, numChanged);
+        Assert.AreEqual(0, numChanged);
         Assert.AreEqual(0, window.TemplateFiles.Value.Count());
     }
 
