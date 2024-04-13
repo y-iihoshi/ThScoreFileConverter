@@ -54,14 +54,14 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new CareerReplacer(this.allScoreData.ClearData, formatter),
             new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
             new CollectRateReplacer(this.allScoreData.ClearData, formatter),
             new CardForDeckReplacer(
                 this.allScoreData.SystemCards, this.allScoreData.ClearData, formatter, hideUntriedCards),
-        };
+        ];
     }
 
     private static bool Decrypt(Stream input, Stream output)

@@ -66,15 +66,15 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.Scores, formatter),
             new ScoreTotalReplacer(this.allScoreData.Scores, formatter),
             new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
             new TimeReplacer(this.allScoreData.Status),
             new ShotReplacer(this.bestshots, formatter, outputFilePath),
             new ShotExReplacer(this.bestshots, this.allScoreData.Scores, formatter, outputFilePath),
-        };
+        ];
     }
 
     protected override string[] FilterBestShotFiles(string[] files)

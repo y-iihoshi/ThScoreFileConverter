@@ -50,11 +50,11 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ClearRankReplacer(this.allScoreData.ClearRanks),
             new ClearTimeReplacer(this.allScoreData.ClearTimes),
-        };
+        ];
     }
 
     private static bool Extract(Stream input, Stream output)

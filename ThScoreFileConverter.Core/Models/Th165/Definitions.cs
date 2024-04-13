@@ -129,8 +129,8 @@ public static class Definitions
     /// <summary>
     /// Gets the list of nicknames.
     /// </summary>
-    public static IReadOnlyList<string> Nicknames { get; } = new List<string>
-    {
+    public static IReadOnlyList<string> Nicknames { get; } =
+    [
         "秘封倶楽部　伝説の会長",
         "現実を取り戻した会長",
         "弱小同好会",
@@ -181,5 +181,5 @@ public static class Definitions
         "スーパードリーマー",
         "パーフェクトドリーマー",
         "バイオレットドリーマー",
-    };
+    ];
 }

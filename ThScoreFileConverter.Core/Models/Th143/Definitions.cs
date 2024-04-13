@@ -101,8 +101,8 @@ public static class Definitions
     /// <summary>
     /// Gets the list of nicknames.
     /// </summary>
-    public static IReadOnlyList<string> Nicknames { get; } = new List<string>
-    {
+    public static IReadOnlyList<string> Nicknames { get; } =
+    [
         "弾幕アマノジャク",
         "ひよっこアマノジャク",
         "慣れてきたアマノジャク",
@@ -173,5 +173,5 @@ public static class Definitions
         "呪われ人形メイク",
         "脳みそ金時",
         "究極反則生命体",
-    };
+    ];
 }

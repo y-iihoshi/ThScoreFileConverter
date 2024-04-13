@@ -65,8 +65,8 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.Scores, formatter),
             new ScoreTotalReplacer(this.allScoreData.Scores, this.allScoreData.Status, formatter),
             new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
@@ -74,7 +74,7 @@ internal sealed class Converter : ThConverter
             new TimeReplacer(this.allScoreData.Status),
             new ShotReplacer(this.bestshots, outputFilePath),
             new ShotExReplacer(this.bestshots, formatter, outputFilePath),
-        };
+        ];
     }
 
     protected override string[] FilterBestShotFiles(string[] files)

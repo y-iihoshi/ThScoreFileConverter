@@ -62,12 +62,12 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.Rankings, formatter),
             new TimeReplacer(this.allScoreData.PlayStatus),
             new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts, formatter),
-        };
+        ];
     }
 
     private static bool Decrypt(Stream input, Stream output)

@@ -28,8 +28,8 @@ internal sealed class ShotExReplacer(
         $"{Definitions.FormatPrefix}SHOTEX({Parsers.DayParser.Pattern})([1-7])([1-9])");
 
     private static readonly Func<IBestShotHeader, IReadOnlyList<Hashtag>> HashtagList =
-        header => new List<Hashtag>
-        {
+        header =>
+        [
             new(header.Fields.IsSelfie, "＃自撮り！"),
             new(header.Fields.IsTwoShot, "＃ツーショット！"),
             new(header.Fields.IsThreeShot, "＃スリーショット！"),
@@ -91,7 +91,7 @@ internal sealed class ShotExReplacer(
             new(header.Fields.IsLandscapePhoto, "＃風景写真"),
             new(header.Fields.IsBoringPhoto, "＃何ともつまらない写真"),
             new(header.Fields.IsSumireko, "＃私こそが宇佐見菫子だ！"),
-        };
+        ];
 
     private readonly MatchEvaluator evaluator = new(match =>
     {

@@ -60,8 +60,8 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.ClearData, formatter),
             new CareerReplacer(this.allScoreData.CardData.Cards, formatter),
             new CardReplacer(this.allScoreData.CardData.Cards, hideUntriedCards),
@@ -70,7 +70,7 @@ internal sealed class Converter : ThConverter
             new RouteReplacer(this.allScoreData.ClearData, formatter),
             new RouteExReplacer(this.allScoreData.ClearData, formatter),
             new TimeReplacer(this.allScoreData.Status),
-        };
+        ];
     }
 
     private static bool Decrypt(Stream input, Stream output)
