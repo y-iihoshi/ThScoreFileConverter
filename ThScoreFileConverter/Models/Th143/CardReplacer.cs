@@ -47,7 +47,7 @@ internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntrie
 
         if (type == 1)
         {
-            return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()));
+            return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToCharaFullName()));
         }
         else
         {
