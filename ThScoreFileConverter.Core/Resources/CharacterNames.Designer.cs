@@ -313,6 +313,24 @@ namespace ThScoreFileConverter.Core.Resources {
         }
         
         /// <summary>
+        ///   Sumireko (Dream) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string DreamSumireko {
+            get {
+                return ResourceManager.GetString("DreamSumireko", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Usami Sumireko (Dream) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string DreamSumirekoFullName {
+            get {
+                return ResourceManager.GetString("DreamSumirekoFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Eika に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Eika {

@@ -181,6 +181,12 @@
   <data name="DoremyFullName" xml:space="preserve">
     <value>Doremy Sweet</value>
   </data>
+  <data name="DreamSumireko" xml:space="preserve">
+    <value>Sumireko (Dream)</value>
+  </data>
+  <data name="DreamSumirekoFullName" xml:space="preserve">
+    <value>Usami Sumireko (Dream)</value>
+  </data>
   <data name="Eika" xml:space="preserve">
     <value>Eika</value>
   </data>

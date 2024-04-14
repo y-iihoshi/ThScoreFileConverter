@@ -181,6 +181,12 @@
   <data name="DoremyFullName" xml:space="preserve">
     <value>ドレミー・スイート</value>
   </data>
+  <data name="DreamSumireko" xml:space="preserve">
+    <value>菫子 (夢)</value>
+  </data>
+  <data name="DreamSumirekoFullName" xml:space="preserve">
+    <value>宇佐見 菫子 (夢)</value>
+  </data>
   <data name="Eika" xml:space="preserve">
     <value>瓔花</value>
   </data>
