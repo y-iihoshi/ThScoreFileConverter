@@ -46,6 +46,32 @@ public static class EnumExtensions
     }
 
     /// <summary>
+    /// Gets the name of the character represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The name of the character represented as <paramref name="enumValue"/>.</returns>
+    public static string ToCharaName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return AttributeCache<T, CharacterAttribute>.Cache.TryGetValue(enumValue, out var attr)
+            ? attr.GetLocalizedName() : string.Empty;
+    }
+
+    /// <summary>
+    /// Gets the full name of the character represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The full name of the character represented as <paramref name="enumValue"/>.</returns>
+    public static string ToCharaFullName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return AttributeCache<T, CharacterAttribute>.Cache.TryGetValue(enumValue, out var attr)
+            ? attr.GetLocalizedFullName() : string.Empty;
+    }
+
+    /// <summary>
     /// Provides cache of attribute information.
     /// </summary>
     /// <typeparam name="TEnum">The enumeration type.</typeparam>
