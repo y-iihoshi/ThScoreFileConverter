@@ -1,0 +1,832 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Alice" xml:space="preserve">
+    <value>Alice</value>
+  </data>
+  <data name="AliceFullName" xml:space="preserve">
+    <value>Alice Margatroid</value>
+  </data>
+  <data name="Aun" xml:space="preserve">
+    <value>Aun</value>
+  </data>
+  <data name="AunFullName" xml:space="preserve">
+    <value>Komano Aun</value>
+  </data>
+  <data name="Aya" xml:space="preserve">
+    <value>Aya</value>
+  </data>
+  <data name="AyaFullName" xml:space="preserve">
+    <value>Shameimaru Aya</value>
+  </data>
+  <data name="Benben" xml:space="preserve">
+    <value>Benben</value>
+  </data>
+  <data name="BenbenFullName" xml:space="preserve">
+    <value>Tsukumo Benben</value>
+  </data>
+  <data name="Biten" xml:space="preserve">
+    <value>Biten</value>
+  </data>
+  <data name="BitenFullName" xml:space="preserve">
+    <value>Son Biten</value>
+  </data>
+  <data name="Byakuren" xml:space="preserve">
+    <value>Byakuren</value>
+  </data>
+  <data name="ByakurenFullName" xml:space="preserve">
+    <value>Hijiri Byakuren</value>
+  </data>
+  <data name="Catfish" xml:space="preserve">
+    <value>Catfish</value>
+  </data>
+  <data name="CatfishFullName" xml:space="preserve">
+    <value>Giant Catfish</value>
+  </data>
+  <data name="Chen" xml:space="preserve">
+    <value>Chen</value>
+  </data>
+  <data name="ChenFullName" xml:space="preserve">
+    <value>Chen</value>
+  </data>
+  <data name="Chimata" xml:space="preserve">
+    <value>Chimata</value>
+  </data>
+  <data name="ChimataFullName" xml:space="preserve">
+    <value>Tenkyuu Chimata</value>
+  </data>
+  <data name="Chiyari" xml:space="preserve">
+    <value>Chiyari</value>
+  </data>
+  <data name="ChiyariFullName" xml:space="preserve">
+    <value>Tenkajin Chiyari</value>
+  </data>
+  <data name="Cirno" xml:space="preserve">
+    <value>Cirno</value>
+  </data>
+  <data name="CirnoFullName" xml:space="preserve">
+    <value>Cirno</value>
+  </data>
+  <data name="Clownpiece" xml:space="preserve">
+    <value>Clownpiece</value>
+  </data>
+  <data name="ClownpieceFullName" xml:space="preserve">
+    <value>Clownpiece</value>
+  </data>
+  <data name="Daiyousei" xml:space="preserve">
+    <value>Daiyousei</value>
+  </data>
+  <data name="DaiyouseiFullName" xml:space="preserve">
+    <value>Daiyousei</value>
+  </data>
+  <data name="Doremy" xml:space="preserve">
+    <value>Doremy</value>
+  </data>
+  <data name="DoremyFullName" xml:space="preserve">
+    <value>Doremy Sweet</value>
+  </data>
+  <data name="Eika" xml:space="preserve">
+    <value>Eika</value>
+  </data>
+  <data name="EikaFullName" xml:space="preserve">
+    <value>Ebisu Eika</value>
+  </data>
+  <data name="Eiki" xml:space="preserve">
+    <value>Eiki</value>
+  </data>
+  <data name="EikiFullName" xml:space="preserve">
+    <value>Shiki Eiki, Yamaxanadu</value>
+  </data>
+  <data name="Eirin" xml:space="preserve">
+    <value>Eirin</value>
+  </data>
+  <data name="EirinFullName" xml:space="preserve">
+    <value>Yagokoro Eirin</value>
+  </data>
+  <data name="Enoko" xml:space="preserve">
+    <value>Enoko</value>
+  </data>
+  <data name="EnokoFullName" xml:space="preserve">
+    <value>Mitsugashira Enoko</value>
+  </data>
+  <data name="Flandre" xml:space="preserve">
+    <value>Flandre</value>
+  </data>
+  <data name="FlandreFullName" xml:space="preserve">
+    <value>Flandre Scarlet</value>
+  </data>
+  <data name="Futo" xml:space="preserve">
+    <value>Futo</value>
+  </data>
+  <data name="FutoFullName" xml:space="preserve">
+    <value>Mononobe no Futo</value>
+  </data>
+  <data name="Hatate" xml:space="preserve">
+    <value>Hatate</value>
+  </data>
+  <data name="HatateFullName" xml:space="preserve">
+    <value>Himekaidou Hatate</value>
+  </data>
+  <data name="Hecatia" xml:space="preserve">
+    <value>Hecatia</value>
+  </data>
+  <data name="HecatiaFullName" xml:space="preserve">
+    <value>Hecatia Lapislazuli</value>
+  </data>
+  <data name="Hina" xml:space="preserve">
+    <value>Hina</value>
+  </data>
+  <data name="HinaFullName" xml:space="preserve">
+    <value>Kagiyama Hina</value>
+  </data>
+  <data name="Hisami" xml:space="preserve">
+    <value>Hisami</value>
+  </data>
+  <data name="HisamiFullName" xml:space="preserve">
+    <value>Yomotsu Hisami</value>
+  </data>
+  <data name="Ichirin" xml:space="preserve">
+    <value>Ichirin</value>
+  </data>
+  <data name="IchirinFullName" xml:space="preserve">
+    <value>Kumoi Ichirin</value>
+  </data>
+  <data name="Iku" xml:space="preserve">
+    <value>Iku</value>
+  </data>
+  <data name="IkuFullName" xml:space="preserve">
+    <value>Nagae Iku</value>
+  </data>
+  <data name="Joon" xml:space="preserve">
+    <value>Joon</value>
+  </data>
+  <data name="JoonFullName" xml:space="preserve">
+    <value>Yorigami Joon</value>
+  </data>
+  <data name="Junko" xml:space="preserve">
+    <value>Junko</value>
+  </data>
+  <data name="JunkoFullName" xml:space="preserve">
+    <value>Junko</value>
+  </data>
+  <data name="Kagerou" xml:space="preserve">
+    <value>Kagerou</value>
+  </data>
+  <data name="KagerouFullName" xml:space="preserve">
+    <value>Imaizumi Kagerou</value>
+  </data>
+  <data name="Kaguya" xml:space="preserve">
+    <value>Kaguya</value>
+  </data>
+  <data name="KaguyaFullName" xml:space="preserve">
+    <value>Houraisan Kaguya</value>
+  </data>
+  <data name="Kanako" xml:space="preserve">
+    <value>Kanako</value>
+  </data>
+  <data name="KanakoFullName" xml:space="preserve">
+    <value>Yasaka Kanako</value>
+  </data>
+  <data name="Kasen" xml:space="preserve">
+    <value>Kasen</value>
+  </data>
+  <data name="KasenFullName" xml:space="preserve">
+    <value>Ibaraki Kasen</value>
+  </data>
+  <data name="Keiki" xml:space="preserve">
+    <value>Keiki</value>
+  </data>
+  <data name="KeikiFullName" xml:space="preserve">
+    <value>Haniyasushin Keiki</value>
+  </data>
+  <data name="Keine" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="KeineFullName" xml:space="preserve">
+    <value>Kamishirasawa Keine</value>
+  </data>
+  <data name="Kisume" xml:space="preserve">
+    <value>Kisume</value>
+  </data>
+  <data name="KisumeFullName" xml:space="preserve">
+    <value>Kisume</value>
+  </data>
+  <data name="Koakuma" xml:space="preserve">
+    <value>Koakuma</value>
+  </data>
+  <data name="KoakumaFullName" xml:space="preserve">
+    <value>Koakuma</value>
+  </data>
+  <data name="Kogasa" xml:space="preserve">
+    <value>Kogasa</value>
+  </data>
+  <data name="KogasaFullName" xml:space="preserve">
+    <value>Tatara Kogasa</value>
+  </data>
+  <data name="Koishi" xml:space="preserve">
+    <value>Koishi</value>
+  </data>
+  <data name="KoishiFullName" xml:space="preserve">
+    <value>Komeiji Koishi</value>
+  </data>
+  <data name="Kokoro" xml:space="preserve">
+    <value>Kokoro</value>
+  </data>
+  <data name="KokoroFullName" xml:space="preserve">
+    <value>Hata no Kokoro</value>
+  </data>
+  <data name="Komachi" xml:space="preserve">
+    <value>Komachi</value>
+  </data>
+  <data name="KomachiFullName" xml:space="preserve">
+    <value>Onozuka Komachi</value>
+  </data>
+  <data name="Kutaka" xml:space="preserve">
+    <value>Kutaka</value>
+  </data>
+  <data name="KutakaFullName" xml:space="preserve">
+    <value>Niwatari Kutaka</value>
+  </data>
+  <data name="Kyouko" xml:space="preserve">
+    <value>Kyouko</value>
+  </data>
+  <data name="KyoukoFullName" xml:space="preserve">
+    <value>Kasodani Kyouko</value>
+  </data>
+  <data name="Larva" xml:space="preserve">
+    <value>Larva</value>
+  </data>
+  <data name="LarvaFullName" xml:space="preserve">
+    <value>Eternity Larva</value>
+  </data>
+  <data name="Letty" xml:space="preserve">
+    <value>Letty</value>
+  </data>
+  <data name="LettyFullName" xml:space="preserve">
+    <value>Letty Whiterock</value>
+  </data>
+  <data name="Lily" xml:space="preserve">
+    <value>Lily</value>
+  </data>
+  <data name="LilyFullName" xml:space="preserve">
+    <value>Lily White</value>
+  </data>
+  <data name="Luna" xml:space="preserve">
+    <value>Luna</value>
+  </data>
+  <data name="LunaFullName" xml:space="preserve">
+    <value>Luna Child</value>
+  </data>
+  <data name="Lunasa" xml:space="preserve">
+    <value>Lunasa</value>
+  </data>
+  <data name="LunasaFullName" xml:space="preserve">
+    <value>Lunasa Prismriver</value>
+  </data>
+  <data name="Lyrica" xml:space="preserve">
+    <value>Lyrica</value>
+  </data>
+  <data name="LyricaFullName" xml:space="preserve">
+    <value>Lyrica Prismriver</value>
+  </data>
+  <data name="Mai" xml:space="preserve">
+    <value>Mai</value>
+  </data>
+  <data name="MaiFullName" xml:space="preserve">
+    <value>Teireida Mai</value>
+  </data>
+  <data name="Mamizou" xml:space="preserve">
+    <value>Mamizou</value>
+  </data>
+  <data name="MamizouFullName" xml:space="preserve">
+    <value>Futatsuiwa Mamizou</value>
+  </data>
+  <data name="Marisa" xml:space="preserve">
+    <value>Marisa</value>
+  </data>
+  <data name="MarisaFullName" xml:space="preserve">
+    <value>Kirisame Marisa</value>
+  </data>
+  <data name="Mayumi" xml:space="preserve">
+    <value>Mayumi</value>
+  </data>
+  <data name="MayumiFullName" xml:space="preserve">
+    <value>Joutouguu Mayumi</value>
+  </data>
+  <data name="Medicine" xml:space="preserve">
+    <value>Medicine</value>
+  </data>
+  <data name="MedicineFullName" xml:space="preserve">
+    <value>Medicine Melancholy</value>
+  </data>
+  <data name="Megumu" xml:space="preserve">
+    <value>Megumu</value>
+  </data>
+  <data name="MegumuFullName" xml:space="preserve">
+    <value>IIzunamaru Megumu</value>
+  </data>
+  <data name="Meirin" xml:space="preserve">
+    <value>Meirin</value>
+  </data>
+  <data name="MeirinFullName" xml:space="preserve">
+    <value>Hong Meirin</value>
+  </data>
+  <data name="Merlin" xml:space="preserve">
+    <value>Merlin</value>
+  </data>
+  <data name="MerlinFullName" xml:space="preserve">
+    <value>Merlin Prismriver</value>
+  </data>
+  <data name="Mike" xml:space="preserve">
+    <value>Mike</value>
+  </data>
+  <data name="MikeFullName" xml:space="preserve">
+    <value>Goutokuji Mike</value>
+  </data>
+  <data name="Miko" xml:space="preserve">
+    <value>Miko</value>
+  </data>
+  <data name="MikoFullName" xml:space="preserve">
+    <value>Toyosatomimi no Miko</value>
+  </data>
+  <data name="Minamitsu" xml:space="preserve">
+    <value>Minamitsu</value>
+  </data>
+  <data name="MinamitsuFullName" xml:space="preserve">
+    <value>Murasa Minamitsu</value>
+  </data>
+  <data name="Minoriko" xml:space="preserve">
+    <value>Minoriko</value>
+  </data>
+  <data name="MinorikoFullName" xml:space="preserve">
+    <value>Aki Minoriko</value>
+  </data>
+  <data name="Misumaru" xml:space="preserve">
+    <value>Misumaru</value>
+  </data>
+  <data name="MisumaruFullName" xml:space="preserve">
+    <value>Tamatsukuri Misumaru</value>
+  </data>
+  <data name="Mokou" xml:space="preserve">
+    <value>Mokou</value>
+  </data>
+  <data name="MokouFullName" xml:space="preserve">
+    <value>Fujiwara no Mokou</value>
+  </data>
+  <data name="Momiji" xml:space="preserve">
+    <value>Momiji</value>
+  </data>
+  <data name="MomijiFullName" xml:space="preserve">
+    <value>Inubashiri Momiji</value>
+  </data>
+  <data name="Momoyo" xml:space="preserve">
+    <value>Momoyo</value>
+  </data>
+  <data name="MomoyoFullName" xml:space="preserve">
+    <value>Himemushi Momoyo</value>
+  </data>
+  <data name="Mystia" xml:space="preserve">
+    <value>Mystia</value>
+  </data>
+  <data name="MystiaFullName" xml:space="preserve">
+    <value>Mystia Lorelei</value>
+  </data>
+  <data name="Narumi" xml:space="preserve">
+    <value>Narumi</value>
+  </data>
+  <data name="NarumiFullName" xml:space="preserve">
+    <value>Yatadera Narumi</value>
+  </data>
+  <data name="Nazrin" xml:space="preserve">
+    <value>Nazrin</value>
+  </data>
+  <data name="NazrinFullName" xml:space="preserve">
+    <value>Nazrin</value>
+  </data>
+  <data name="Nemuno" xml:space="preserve">
+    <value>Nemuno</value>
+  </data>
+  <data name="NemunoFullName" xml:space="preserve">
+    <value>Sakata Nemuno</value>
+  </data>
+  <data name="Nitori" xml:space="preserve">
+    <value>Nitori</value>
+  </data>
+  <data name="NitoriFullName" xml:space="preserve">
+    <value>Kawashiro Nitori</value>
+  </data>
+  <data name="Nue" xml:space="preserve">
+    <value>Nue</value>
+  </data>
+  <data name="NueFullName" xml:space="preserve">
+    <value>Houjuu Nue</value>
+  </data>
+  <data name="Okina" xml:space="preserve">
+    <value>Okina</value>
+  </data>
+  <data name="OkinaFullName" xml:space="preserve">
+    <value>Matara Okina</value>
+  </data>
+  <data name="Parsee" xml:space="preserve">
+    <value>Parsee</value>
+  </data>
+  <data name="ParseeFullName" xml:space="preserve">
+    <value>Mizuhashi Parsee</value>
+  </data>
+  <data name="Patchouli" xml:space="preserve">
+    <value>Patchouli</value>
+  </data>
+  <data name="PatchouliFullName" xml:space="preserve">
+    <value>Patchouli Knowledge</value>
+  </data>
+  <data name="Raiko" xml:space="preserve">
+    <value>Raiko</value>
+  </data>
+  <data name="RaikoFullName" xml:space="preserve">
+    <value>Horikawa Raiko</value>
+  </data>
+  <data name="Ran" xml:space="preserve">
+    <value>Ran</value>
+  </data>
+  <data name="RanFullName" xml:space="preserve">
+    <value>Yakumo Ran</value>
+  </data>
+  <data name="Reimu" xml:space="preserve">
+    <value>Reimu</value>
+  </data>
+  <data name="ReimuFullName" xml:space="preserve">
+    <value>Hakurei Reimu</value>
+  </data>
+  <data name="Reisen" xml:space="preserve">
+    <value>Reisen</value>
+  </data>
+  <data name="ReisenFullName" xml:space="preserve">
+    <value>Reisen Udongein Inaba</value>
+  </data>
+  <data name="Remilia" xml:space="preserve">
+    <value>Remilia</value>
+  </data>
+  <data name="RemiliaFullName" xml:space="preserve">
+    <value>Remilia Scarlet</value>
+  </data>
+  <data name="Rin" xml:space="preserve">
+    <value>Rin</value>
+  </data>
+  <data name="RinFullName" xml:space="preserve">
+    <value>Kaenbyou Rin</value>
+  </data>
+  <data name="Ringo" xml:space="preserve">
+    <value>Ringo</value>
+  </data>
+  <data name="RingoFullName" xml:space="preserve">
+    <value>Ringo</value>
+  </data>
+  <data name="Rumia" xml:space="preserve">
+    <value>Rumia</value>
+  </data>
+  <data name="RumiaFullName" xml:space="preserve">
+    <value>Rumia</value>
+  </data>
+  <data name="Sagume" xml:space="preserve">
+    <value>Sagume</value>
+  </data>
+  <data name="SagumeFullName" xml:space="preserve">
+    <value>Kishin Sagume</value>
+  </data>
+  <data name="Saki" xml:space="preserve">
+    <value>Saki</value>
+  </data>
+  <data name="SakiFullName" xml:space="preserve">
+    <value>Kurokoma Saki</value>
+  </data>
+  <data name="Sakuya" xml:space="preserve">
+    <value>Sakuya</value>
+  </data>
+  <data name="SakuyaFullName" xml:space="preserve">
+    <value>Izayoi Sakuya</value>
+  </data>
+  <data name="Sanae" xml:space="preserve">
+    <value>Sanae</value>
+  </data>
+  <data name="SanaeFullName" xml:space="preserve">
+    <value>Kochiya Sanae</value>
+  </data>
+  <data name="Sannyo" xml:space="preserve">
+    <value>Sannyo</value>
+  </data>
+  <data name="SannyoFullName" xml:space="preserve">
+    <value>Komakusa Sannyo</value>
+  </data>
+  <data name="Satono" xml:space="preserve">
+    <value>Satono</value>
+  </data>
+  <data name="SatonoFullName" xml:space="preserve">
+    <value>Nishida Satono</value>
+  </data>
+  <data name="Satori" xml:space="preserve">
+    <value>Satori</value>
+  </data>
+  <data name="SatoriFullName" xml:space="preserve">
+    <value>Komeiji Satori</value>
+  </data>
+  <data name="Seiga" xml:space="preserve">
+    <value>Seiga</value>
+  </data>
+  <data name="SeigaFullName" xml:space="preserve">
+    <value>Kaku Seiga</value>
+  </data>
+  <data name="Seija" xml:space="preserve">
+    <value>Seija</value>
+  </data>
+  <data name="SeijaFullName" xml:space="preserve">
+    <value>Kijin Seija</value>
+  </data>
+  <data name="Seiran" xml:space="preserve">
+    <value>Seiran</value>
+  </data>
+  <data name="SeiranFullName" xml:space="preserve">
+    <value>Seiran</value>
+  </data>
+  <data name="Sekibanki" xml:space="preserve">
+    <value>Sekibanki</value>
+  </data>
+  <data name="SekibankiFullName" xml:space="preserve">
+    <value>Sekibanki</value>
+  </data>
+  <data name="Shinmyoumaru" xml:space="preserve">
+    <value>Shinmyoumaru</value>
+  </data>
+  <data name="ShinmyoumaruFullName" xml:space="preserve">
+    <value>Sukuna Shinmyoumaru</value>
+  </data>
+  <data name="Shion" xml:space="preserve">
+    <value>Shion</value>
+  </data>
+  <data name="ShionFullName" xml:space="preserve">
+    <value>Yorigami Shion</value>
+  </data>
+  <data name="Shizuha" xml:space="preserve">
+    <value>Shizuha</value>
+  </data>
+  <data name="ShizuhaFullName" xml:space="preserve">
+    <value>Aki Shizuha</value>
+  </data>
+  <data name="Shou" xml:space="preserve">
+    <value>Shou</value>
+  </data>
+  <data name="ShouFullName" xml:space="preserve">
+    <value>Toramaru Shou</value>
+  </data>
+  <data name="Star" xml:space="preserve">
+    <value>Star</value>
+  </data>
+  <data name="StarFullName" xml:space="preserve">
+    <value>Star Sapphire</value>
+  </data>
+  <data name="Suika" xml:space="preserve">
+    <value>Suika</value>
+  </data>
+  <data name="SuikaFullName" xml:space="preserve">
+    <value>Ibuki Suika</value>
+  </data>
+  <data name="Sumireko" xml:space="preserve">
+    <value>Sumireko</value>
+  </data>
+  <data name="SumirekoFullName" xml:space="preserve">
+    <value>Usami Sumireko</value>
+  </data>
+  <data name="Sunny" xml:space="preserve">
+    <value>Sunny</value>
+  </data>
+  <data name="SunnyFullName" xml:space="preserve">
+    <value>Sunny Milk</value>
+  </data>
+  <data name="Suwako" xml:space="preserve">
+    <value>Suwako</value>
+  </data>
+  <data name="SuwakoFullName" xml:space="preserve">
+    <value>Moriya Suwako</value>
+  </data>
+  <data name="Takane" xml:space="preserve">
+    <value>Takane</value>
+  </data>
+  <data name="TakaneFullName" xml:space="preserve">
+    <value>Yamashiro Takane</value>
+  </data>
+  <data name="Tenshi" xml:space="preserve">
+    <value>Tenshi</value>
+  </data>
+  <data name="TenshiFullName" xml:space="preserve">
+    <value>Hinanawi Tenshi</value>
+  </data>
+  <data name="Tewi" xml:space="preserve">
+    <value>Tewi</value>
+  </data>
+  <data name="TewiFullName" xml:space="preserve">
+    <value>Inaba Tewi</value>
+  </data>
+  <data name="Tojiko" xml:space="preserve">
+    <value>Tojiko</value>
+  </data>
+  <data name="TojikoFullName" xml:space="preserve">
+    <value>Soga no Tojiko</value>
+  </data>
+  <data name="Tsukasa" xml:space="preserve">
+    <value>Tsukasa</value>
+  </data>
+  <data name="TsukasaFullName" xml:space="preserve">
+    <value>Kudamaki Tsukasa</value>
+  </data>
+  <data name="Unzan" xml:space="preserve">
+    <value>Unzan</value>
+  </data>
+  <data name="UnzanFullName" xml:space="preserve">
+    <value>Unzan</value>
+  </data>
+  <data name="Urumi" xml:space="preserve">
+    <value>Urumi</value>
+  </data>
+  <data name="UrumiFullName" xml:space="preserve">
+    <value>Ushizaki Urumi</value>
+  </data>
+  <data name="Utsuho" xml:space="preserve">
+    <value>Utsuho</value>
+  </data>
+  <data name="UtsuhoFullName" xml:space="preserve">
+    <value>Reiuji Utsuho</value>
+  </data>
+  <data name="Wakasagihime" xml:space="preserve">
+    <value>Wakasagihime</value>
+  </data>
+  <data name="WakasagihimeFullName" xml:space="preserve">
+    <value>Wakasagihime</value>
+  </data>
+  <data name="Wriggle" xml:space="preserve">
+    <value>Wriggle</value>
+  </data>
+  <data name="WriggleFullName" xml:space="preserve">
+    <value>Wriggle Nightbug</value>
+  </data>
+  <data name="Yachie" xml:space="preserve">
+    <value>Yachie</value>
+  </data>
+  <data name="YachieFullName" xml:space="preserve">
+    <value>Kicchou Yachie</value>
+  </data>
+  <data name="Yamame" xml:space="preserve">
+    <value>Yamame</value>
+  </data>
+  <data name="YamameFullName" xml:space="preserve">
+    <value>Kurodani Yamame</value>
+  </data>
+  <data name="Yatsuhashi" xml:space="preserve">
+    <value>Yatsuhashi</value>
+  </data>
+  <data name="YatsuhashiFullName" xml:space="preserve">
+    <value>Tsukumo Yatsuhashi</value>
+  </data>
+  <data name="Yoshika" xml:space="preserve">
+    <value>Yoshika</value>
+  </data>
+  <data name="YoshikaFullName" xml:space="preserve">
+    <value>Miyako Yoshika</value>
+  </data>
+  <data name="Youmu" xml:space="preserve">
+    <value>Youmu</value>
+  </data>
+  <data name="YoumuFullName" xml:space="preserve">
+    <value>Konpaku Youmu</value>
+  </data>
+  <data name="Yukari" xml:space="preserve">
+    <value>Yukari</value>
+  </data>
+  <data name="YukariFullName" xml:space="preserve">
+    <value>Yakumo Yukari</value>
+  </data>
+  <data name="Yuugi" xml:space="preserve">
+    <value>Yuugi</value>
+  </data>
+  <data name="YuugiFullName" xml:space="preserve">
+    <value>Hoshiguma Yuugi</value>
+  </data>
+  <data name="Yuuka" xml:space="preserve">
+    <value>Yuuka</value>
+  </data>
+  <data name="YuukaFullName" xml:space="preserve">
+    <value>Kazami Yuuka</value>
+  </data>
+  <data name="Yuuma" xml:space="preserve">
+    <value>Yuuma</value>
+  </data>
+  <data name="YuumaFullName" xml:space="preserve">
+    <value>Toutetsu Yuuma</value>
+  </data>
+  <data name="Yuyuko" xml:space="preserve">
+    <value>Yuyuko</value>
+  </data>
+  <data name="YuyukoFullName" xml:space="preserve">
+    <value>Saigyouji Yuyuko</value>
+  </data>
+  <data name="Zanmu" xml:space="preserve">
+    <value>Zanmu</value>
+  </data>
+  <data name="ZanmuFullName" xml:space="preserve">
+    <value>Nippaku Zanmu</value>
+  </data>
+</root>
