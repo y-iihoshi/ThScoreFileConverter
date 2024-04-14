@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
@@ -27,9 +28,14 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestEnemy()
     {
+        var culture = CultureInfo.CurrentCulture;
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+
         var replacer = new CardReplacer(Scores, false);
         Assert.AreEqual("蓬莱山 輝夜", replacer.Replace("%T95CARD961"));
         Assert.AreEqual("八意 永琳", replacer.Replace("%T95CARD971"));
+
+        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]
@@ -43,9 +49,14 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestHiddenEnemy()
     {
+        var culture = CultureInfo.CurrentCulture;
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+
         var replacer = new CardReplacer(Scores, true);
         Assert.AreEqual("蓬莱山 輝夜", replacer.Replace("%T95CARD961"));
         Assert.AreEqual("??????????", replacer.Replace("%T95CARD971"));
+
+        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]

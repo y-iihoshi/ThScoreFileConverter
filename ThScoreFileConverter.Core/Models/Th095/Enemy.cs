@@ -15,150 +15,150 @@ public enum Enemy
     /// <summary>
     /// Wriggle Nightbug.
     /// </summary>
-    [EnumAltName("リグル", LongName = "リグル・ナイトバグ")]
+    [Character(nameof(Wriggle))]
     Wriggle,
 
     /// <summary>
     /// Rumia.
     /// </summary>
-    [EnumAltName("ルーミア", LongName = "ルーミア")]
+    [Character(nameof(Rumia))]
     Rumia,
 
     /// <summary>
     /// Cirno.
     /// </summary>
-    [EnumAltName("チルノ", LongName = "チルノ")]
+    [Character(nameof(Cirno))]
     Cirno,
 
     /// <summary>
     /// Letty Whiterock.
     /// </summary>
-    [EnumAltName("レティ", LongName = "レティ・ホワイトロック")]
+    [Character(nameof(Letty))]
     Letty,
 
     /// <summary>
     /// Alice Margatroid.
     /// </summary>
-    [EnumAltName("アリス", LongName = "アリス・マーガトロイド")]
+    [Character(nameof(Alice))]
     Alice,
 
     /// <summary>
     /// Kamishirasawa Keine.
     /// </summary>
-    [EnumAltName("慧音", LongName = "上白沢 慧音")]
+    [Character(nameof(Keine))]
     Keine,
 
     /// <summary>
     /// Medicine Melancholy.
     /// </summary>
-    [EnumAltName("メディスン", LongName = "メディスン・メランコリー")]
+    [Character(nameof(Medicine))]
     Medicine,
 
     /// <summary>
     /// Inaba Tewi.
     /// </summary>
-    [EnumAltName("てゐ", LongName = "因幡 てゐ")]
+    [Character(nameof(Tewi))]
     Tewi,
 
     /// <summary>
     /// Reisen Udongein Inaba.
     /// </summary>
-    [EnumAltName("鈴仙", LongName = "鈴仙・優曇華院・イナバ")]
+    [Character(nameof(Reisen))]
     Reisen,
 
     /// <summary>
     /// Hon Meirin.
     /// </summary>
-    [EnumAltName("美鈴", LongName = "紅 美鈴")]
+    [Character(nameof(Meirin))]
     Meirin,
 
     /// <summary>
     /// Patchouli Knowledge.
     /// </summary>
-    [EnumAltName("パチュリー", LongName = "パチュリー・ノーレッジ")]
+    [Character(nameof(Patchouli))]
     Patchouli,
 
     /// <summary>
     /// Chen.
     /// </summary>
-    [EnumAltName("橙", LongName = "橙")]
+    [Character(nameof(Chen))]
     Chen,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
-    [EnumAltName("妖夢", LongName = "魂魄 妖夢")]
+    [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Izayoi Sakuya.
     /// </summary>
-    [EnumAltName("咲夜", LongName = "十六夜 咲夜")]
+    [Character(nameof(Sakuya))]
     Sakuya,
 
     /// <summary>
     /// Remilia Scarlet.
     /// </summary>
-    [EnumAltName("レミリア", LongName = "レミリア・スカーレット")]
+    [Character(nameof(Remilia))]
     Remilia,
 
     /// <summary>
     /// Yakumo Ran.
     /// </summary>
-    [EnumAltName("藍", LongName = "八雲 藍")]
+    [Character(nameof(Ran))]
     Ran,
 
     /// <summary>
     /// Saigyouji Yuyuko.
     /// </summary>
-    [EnumAltName("幽々子", LongName = "西行寺 幽々子")]
+    [Character(nameof(Yuyuko))]
     Yuyuko,
 
     /// <summary>
     /// Yagokoro Eirin.
     /// </summary>
-    [EnumAltName("永琳", LongName = "八意 永琳")]
+    [Character(nameof(Eirin))]
     Eirin,
 
     /// <summary>
     /// Houraisan Kaguya.
     /// </summary>
-    [EnumAltName("輝夜", LongName = "蓬莱山 輝夜")]
+    [Character(nameof(Kaguya))]
     Kaguya,
 
     /// <summary>
     /// Onozuka Komachi.
     /// </summary>
-    [EnumAltName("小町", LongName = "小野塚 小町")]
+    [Character(nameof(Komachi))]
     Komachi,
 
     /// <summary>
     /// Shiki Eiki, Yamaxanadu.
     /// </summary>
-    [EnumAltName("映姫", LongName = "四季映姫・ヤマザナドゥ")]
-    Shikieiki,
+    [Character(nameof(Eiki))]
+    Eiki,
 
     /// <summary>
     /// Flandre Scarlet.
     /// </summary>
-    [EnumAltName("フラン", LongName = "フランドール・スカーレット")]
+    [Character(nameof(Flandre))]
     Flandre,
 
     /// <summary>
     /// Yakumo Yukari.
     /// </summary>
-    [EnumAltName("紫", LongName = "八雲 紫")]
+    [Character(nameof(Yukari))]
     Yukari,
 
     /// <summary>
     /// Fujiwara no Mokou.
     /// </summary>
-    [EnumAltName("妹紅", LongName = "藤原 妹紅")]
+    [Character(nameof(Mokou))]
     Mokou,
 
     /// <summary>
     /// Ibuki Suika.
     /// </summary>
-    [EnumAltName("萃香", LongName = "伊吹 萃香")]
+    [Character(nameof(Suika))]
     Suika,
 }

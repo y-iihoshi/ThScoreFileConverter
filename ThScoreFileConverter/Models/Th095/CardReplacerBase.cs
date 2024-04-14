@@ -42,7 +42,7 @@ internal class CardReplacerBase<TLevel, TEnemy> : IStringReplaceable
             if (hideUntriedCards && !levelSceneHasTried(level, scene))
                 return "??????????";
 
-            return (type == 1) ? enemyCardPair.Enemy.ToLongName() : enemyCardPair.Card;
+            return (type == 1) ? enemyCardPair.Enemy.ToCharaFullName() : enemyCardPair.Card;
         });
     }
 
