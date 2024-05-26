@@ -176,11 +176,11 @@ public class AllScoreDataTests
     [DataRow(Level.Phantasm, Stage.Phantasm)]
     [DataRow(Level.Phantasm, Stage.Six)]
     [DataRow(Level.Normal, Stage.Phantasm)]
-    public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
+    public void SetPracticeScoreTestInvalidPracticeStage(Level level, Stage stage)
     {
         var score = Substitute.For<IPracticeScore>();
-        _ = score.Level.Returns((Level)level);
-        _ = score.Stage.Returns((Stage)stage);
+        _ = score.Level.Returns(level);
+        _ = score.Stage.Returns(stage);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
