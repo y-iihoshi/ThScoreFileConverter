@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.6" />
     <PackageReference Include="Statiq.App" Version="1.0.0-beta.72" />
     <PackageReference Include="Statiq.Razor" Version="1.0.0-beta.72" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
