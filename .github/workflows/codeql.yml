@@ -65,6 +65,9 @@ jobs:
     - name: Restore Python packages
       run: pip install -r ManualGenerator/requirements.txt
 
+    - name: Restore .NET tools
+      run: dotnet tool restore
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
