@@ -63,6 +63,13 @@ jobs:
       with:
         fetch-depth: 0  # for GitVersion
 
+    - name: Setup Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+        cache-dependency-path: 'ManualGenerator/requirements.txt'
+
     - name: Restore Python packages
       run: pip install -r ManualGenerator/requirements.txt
 
