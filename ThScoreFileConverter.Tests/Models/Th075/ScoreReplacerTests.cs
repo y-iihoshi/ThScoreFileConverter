@@ -41,7 +41,7 @@ public class ScoreReplacerTests
     public void ScoreReplacerTestEmptyRanking()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
+        _ = mock.Ranking.Returns([]);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
         var formatterMock = NumberFormatterTests.Mock;
 
@@ -89,7 +89,7 @@ public class ScoreReplacerTests
     public void ReplaceTestEmptyRanking()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
+        _ = mock.Ranking.Returns([]);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
         var formatterMock = NumberFormatterTests.Mock;
 
