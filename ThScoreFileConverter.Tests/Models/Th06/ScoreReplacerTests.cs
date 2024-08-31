@@ -16,7 +16,7 @@ public class ScoreReplacerTests
 {
     private static IReadOnlyList<IHighScore>[] CreateRankings()
     {
-        return new[] { new[] { HighScoreTests.MockHighScore() } };
+        return [[HighScoreTests.MockHighScore()]];
     }
 
     internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
