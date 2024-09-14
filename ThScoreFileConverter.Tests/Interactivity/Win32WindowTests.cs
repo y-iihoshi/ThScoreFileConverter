@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Interop;
 using ThScoreFileConverter.Interactivity;
+using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
