@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Tests.Interactivity;
 [TestClass]
 public class Win32WindowTests
 {
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void Win32WindowTest()
     {
         var window = new Window();
@@ -21,7 +21,7 @@ public class Win32WindowTests
         Assert.AreEqual(handle, win32window.Handle);
     }
 
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void Win32WindowTestDefault()
     {
         var window = new Window();

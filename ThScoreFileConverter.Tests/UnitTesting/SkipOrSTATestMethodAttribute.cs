@@ -2,7 +2,7 @@
 
 namespace ThScoreFileConverter.Tests.UnitTesting;
 
-public sealed class STATestMethodAttribute : TestMethodAttribute
+public sealed class SkipOrSTATestMethodAttribute : TestMethodAttribute
 {
     public override TestResult[] Execute(ITestMethod testMethod)
     {
