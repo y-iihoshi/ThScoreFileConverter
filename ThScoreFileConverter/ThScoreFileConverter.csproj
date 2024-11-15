@@ -62,7 +62,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="MvvmDialogs" Version="9.1.2" />
     <PackageReference Include="ReactiveProperty.WPF" Version="9.6.0" />
     <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.556">
