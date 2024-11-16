@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         configuration: [Debug, Release]
-        target-framework: [net6.0-windows, net8.0-windows]
+        target-framework: [net8.0-windows]
 
     uses: ./.github/workflows/_build.yml
     with:
