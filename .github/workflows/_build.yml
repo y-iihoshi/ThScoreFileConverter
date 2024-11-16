@@ -109,7 +109,7 @@ jobs:
       uses: codecov/codecov-action@v5.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
+        files: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Collect artifacts
