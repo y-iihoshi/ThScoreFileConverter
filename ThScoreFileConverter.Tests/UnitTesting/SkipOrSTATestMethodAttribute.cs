@@ -11,12 +11,8 @@ public sealed class SkipOrSTATestMethodAttribute : STATestMethodAttribute
         // This behavior has only been observed on the GitHub-hosted runners
         // (at least windows-2022 20231205.1.0 and 20231211.1.0).
 
-#if NET8_0_OR_GREATER
         return [
             new TestResult { Outcome = UnitTestOutcome.Inconclusive }
         ];
-#else
-        return base.Execute(testMethod);
-#endif
     }
 }
