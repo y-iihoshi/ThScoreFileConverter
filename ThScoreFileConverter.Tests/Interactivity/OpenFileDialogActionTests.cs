@@ -29,11 +29,8 @@ public class OpenFileDialogActionTests
             ValidateNames = false,
         };
 
-#if NET8_0_OR_GREATER
         var dialog = action.CreateDialog();
-#else
-        using var dialog = action.CreateDialog();
-#endif
+
         Assert.AreEqual(action.AddExtension, dialog.AddExtension);
         Assert.AreEqual(action.CheckFileExists, dialog.CheckFileExists);
         Assert.AreEqual(action.CheckPathExists, dialog.CheckPathExists);
