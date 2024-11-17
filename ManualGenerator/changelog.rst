@@ -5,7 +5,7 @@
 
 Unreleased (yyyy/mm/dd)
     * メインウィンドウのサイズを変更可能にした
-    * .NET 8 に対応
+    * .NET 8 及び .NET 9 に対応
     * .NET Framework 及び .NET 6 の対応を終了
 
 v2.5.0 (2023/8/12)

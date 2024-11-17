@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-17 02:53+0900\n"
+"POT-Creation-Date: 2024-11-17 20:33+0900\n"
 "PO-Revision-Date: 2024-11-17 02:57+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "メインウィンドウのサイズを変更可能にした"
 msgstr ""
 
-msgid ".NET 8 に対応"
+msgid ".NET 8 及び .NET 9 に対応"
 msgstr ""
 
 msgid ".NET Framework 及び .NET 6 の対応を終了"
@@ -428,4 +428,7 @@ msgstr ""
 
 msgid "東方紅魔郷～東方風神録に対応"
 msgstr ""
+
+#~ msgid ".NET 8 に対応"
+#~ msgstr ""
 

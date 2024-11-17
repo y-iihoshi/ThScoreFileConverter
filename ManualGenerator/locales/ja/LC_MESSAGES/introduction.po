@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-17 02:53+0900\n"
+"POT-Creation-Date: 2024-11-17 20:33+0900\n"
 "PO-Revision-Date: 2024-11-17 02:57+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
@@ -32,22 +32,25 @@ msgstr ""
 msgid "前提条件"
 msgstr ""
 
-msgid "ThSFC を利用するには .NET 8 が必要です。"
+msgid "ThSFC を利用するには、 .NET 8 または .NET 9 が必要です。"
 msgstr ""
 
-msgid "2024 年 1 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
+msgid "2024 年 11 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
 msgstr ""
 
-msgid "Windows 11 Pro Version 23H2"
+msgid "Windows 11 Pro Version 24H2"
 msgstr ""
 
 msgid ".NET 8"
 msgstr ""
 
-msgid "Visual Studio Community 2022 Version 17.8"
+msgid ".NET 9"
 msgstr ""
 
-msgid "Python 3.11"
+msgid "Visual Studio Community 2022 Version 17.12"
+msgstr ""
+
+msgid "Python 3.12"
 msgstr ""
 
 msgid "免責事項"
@@ -73,4 +76,19 @@ msgstr ""
 
 msgid "ThSFC の著作権は IIHOSHI Yoshinori (`Web サイト <https://www.colorless-sight.jp/>`_, `Twitter <https://twitter.com/iihoshi>`_) にあります。"
 msgstr ""
+
+#~ msgid "ThSFC を利用するには .NET 8 が必要です。"
+#~ msgstr ""
+
+#~ msgid "2024 年 1 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
+#~ msgstr ""
+
+#~ msgid "Windows 11 Pro Version 23H2"
+#~ msgstr ""
+
+#~ msgid "Visual Studio Community 2022 Version 17.8"
+#~ msgstr ""
+
+#~ msgid "Python 3.11"
+#~ msgstr ""
 
