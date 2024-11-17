@@ -54,7 +54,7 @@ csharp_new_line_before_members_in_anonymous_types = true
 csharp_new_line_before_members_in_object_initializers = true
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
-csharp_prefer_braces = true:silent
+csharp_prefer_braces = when_multiline
 csharp_prefer_simple_default_expression = true:suggestion
 csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
 csharp_preserve_single_line_blocks = true
@@ -98,6 +98,8 @@ dotnet_diagnostic.SA1025.severity = none
 dotnet_diagnostic.SA1124.severity = none
 # SA1503: Braces should not be omitted
 dotnet_diagnostic.SA1503.severity = none
+# IDE0011: Add braces
+dotnet_diagnostic.IDE0011.severity = none
 
 [*.Tests/**.cs]
 # CA1062: Validate arguments of public methods
