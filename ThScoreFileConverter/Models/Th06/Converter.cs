@@ -110,7 +110,7 @@ internal sealed class Converter : ThConverter
         Lzss.Extract(input, output);
 #else
         var body = new byte[header.DecodedAllSize - header.Size];
-        input.Read(body, 0, body.Length);
+        input.ReadExactly(body, 0, body.Length);
         output.Write(body, 0, body.Length);
 #endif
         output.Flush();
