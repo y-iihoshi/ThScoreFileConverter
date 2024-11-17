@@ -103,7 +103,9 @@ public class AllScoreDataTests
 
         for (var index = 0; index < allScoreData.Rankings[(mock.Chara, mock.Level)].Count; ++index)
         {
+#pragma warning disable MSTEST0025 // Use 'Assert.Fail' instead of an always-failing assert
             Assert.IsNull(allScoreData.Rankings[(mock.Chara, mock.Level)][index]);
+#pragma warning restore MSTEST0025 // Use 'Assert.Fail' instead of an always-failing assert
         }
     }
 
