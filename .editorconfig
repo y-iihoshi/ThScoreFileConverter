@@ -88,6 +88,8 @@ csharp_style_var_elsewhere = true:suggestion
 csharp_style_var_for_built_in_types = true:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
 
+# CA1515: Consider making public types internal
+dotnet_diagnostic.CA1515.severity = none
 # CA1802: Use Literals Where Appropriate
 dotnet_diagnostic.CA1802.severity = none
 # SA1025: Code should not contain multiple whitespace in a row
