@@ -170,8 +170,8 @@ public class AllScoreDataTests
     public void SetPracticeScoreTestInvalidPracticeStage(Level level, Stage stage)
     {
         var score = Substitute.For<IPracticeScore>();
-        score.Level.Returns(level);
-        score.Stage.Returns(stage);
+        _ = score.Level.Returns(level);
+        _ = score.Stage.Returns(stage);
 
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
