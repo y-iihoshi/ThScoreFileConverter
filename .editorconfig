@@ -100,6 +100,8 @@ dotnet_diagnostic.SA1124.severity = none
 dotnet_diagnostic.SA1503.severity = none
 # IDE0011: Add braces
 dotnet_diagnostic.IDE0011.severity = none
+# IDE0046: Use conditional expression for return
+dotnet_diagnostic.IDE0046.severity = none
 
 [*.Tests/**.cs]
 # CA1062: Validate arguments of public methods
