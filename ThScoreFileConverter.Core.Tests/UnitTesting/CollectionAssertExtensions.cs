@@ -7,11 +7,15 @@ public static class CollectionAssertExtensions
 {
     public static void AreEqual<T>(this CollectionAssert _, IEnumerable<T> expected, IEnumerable<T> actual)
     {
-        CollectionAssert.AreEqual(expected?.ToArray(), actual?.ToArray());
+        var expectedArray = expected?.ToArray();
+        var actualArray = actual?.ToArray();
+        CollectionAssert.AreEqual(expectedArray, actualArray);
     }
 
     public static void AreNotEqual<T>(this CollectionAssert _, IEnumerable<T> expected, IEnumerable<T> actual)
     {
-        CollectionAssert.AreNotEqual(expected?.ToArray(), actual?.ToArray());
+        var expectedArray = expected?.ToArray();
+        var actualArray = actual?.ToArray();
+        CollectionAssert.AreNotEqual(expectedArray, actualArray);
     }
 }

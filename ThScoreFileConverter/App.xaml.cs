@@ -93,12 +93,14 @@ public sealed partial class App : Application, IDisposable
         LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.DefaultProviderProperty, provider);
         LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.IncludeInvariantCultureProperty, false);
         LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+#pragma warning disable IDE0045 // Use conditional expression for assignment
         if (provider.AvailableCultures.Any(culture => culture.Name == this.settings.Language))
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(this.settings.Language!);
         else if (provider.AvailableCultures.Any(CultureInfo.CurrentCulture.Equals))
             LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
         else
             LocalizeDictionary.Instance.Culture = provider.AvailableCultures.First();
+#pragma warning restore IDE0045 // Use conditional expression for assignment
 
         ReactivePropertyScheduler.SetDefault(new ReactivePropertyWpfScheduler(this.Dispatcher));
 

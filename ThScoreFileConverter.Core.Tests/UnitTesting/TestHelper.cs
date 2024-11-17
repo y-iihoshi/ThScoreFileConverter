@@ -9,7 +9,12 @@ public static class TestHelper
     public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()
         where TEnum : struct, Enum
     {
-        var values = Enum.GetValues(typeof(TEnum)).Cast<int>().ToArray();
+        Assert.AreSame(typeof(int), Enum.GetUnderlyingType(typeof(TEnum)));
+
+#pragma warning disable CA2021 // Don't call Enumerable.Cast<T> or Enumerable.OfType<T> with incompatible types
+        var values = Enum.GetValues<TEnum>().Cast<int>().ToArray();
+#pragma warning restore CA2021 // Don't call Enumerable.Cast<T> or Enumerable.OfType<T> with incompatible types
+
         yield return new object[] { values.Min() - 1 };
         yield return new object[] { values.Max() + 1 };
     }
