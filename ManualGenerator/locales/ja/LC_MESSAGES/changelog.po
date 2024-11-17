@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-17 20:33+0900\n"
-"PO-Revision-Date: 2024-11-17 02:57+0900\n"
+"PO-Revision-Date: 2024-11-17 20:41+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -428,7 +428,4 @@ msgstr ""
 
 msgid "東方紅魔郷～東方風神録に対応"
 msgstr ""
-
-#~ msgid ".NET 8 に対応"
-#~ msgstr ""
 
