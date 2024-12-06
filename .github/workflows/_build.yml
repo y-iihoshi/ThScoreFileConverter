@@ -106,7 +106,7 @@ jobs:
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5.0.1
+      uses: codecov/codecov-action@v5.1.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
