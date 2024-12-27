@@ -23,6 +23,21 @@ spelling_language = unset
 trim_trailing_whitespace = true
 
 
+###### For XML-based files ######
+[*.{csproj,props,pyproj,xml}]
+indent_size = 2
+
+
+###### For configuration files ######
+[*.{json,yml}]
+indent_size = 2
+
+
+###### For lightweight markup languages and plain text ######
+[*.{md,rst,txt}]
+indent_size = unset
+
+
 ###### For C# and VB.NET files ######
 [*.{cs,vb}]
 

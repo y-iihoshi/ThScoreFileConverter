@@ -1,11 +1,5 @@
 ﻿root = true
 
-[*.{csproj,json,pyproj,yml,xml}]
-indent_size = 2
-
-[*.{md,rst,txt}]
-indent_size = unset
-
 [*.{cs,vb}]
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = true
