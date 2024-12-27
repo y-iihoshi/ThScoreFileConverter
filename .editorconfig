@@ -9,16 +9,28 @@ root = true
 
 # インデントと間隔
 indent_size = 4
-indent_style = tab
-tab_width = 4
+indent_style = space
+tab_width = unset
 
 # 改行設定
-end_of_line = crlf
-insert_final_newline = false
+end_of_line = unset
+insert_final_newline = true
+
+# Other supported pairs as of the EditorConfig specification v0.17.1
+# https://spec.editorconfig.org/#supported-pairs
+charset = unset
+spelling_language = unset
+trim_trailing_whitespace = true
 
 
 ###### For C# and VB.NET files ######
 [*.{cs,vb}]
+
+#### コア EditorConfig オプション ####
+
+# Overridden by the EditorConfig editor UI in Visual Studio 2022
+tab_width = 4
+end_of_line = crlf
 
 #### .NET コード アクション ####
 
