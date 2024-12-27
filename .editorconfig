@@ -278,3 +278,31 @@ csharp_space_between_square_brackets = false
 # 折り返しの設定
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = false
+
+#### Analyzer settings ####
+
+# CA1515: Consider making public types internal
+dotnet_diagnostic.CA1515.severity = none
+# CA1802: Use Literals Where Appropriate
+dotnet_diagnostic.CA1802.severity = none
+# SA1025: Code should not contain multiple whitespace in a row
+dotnet_diagnostic.SA1025.severity = none
+# SA1124: Do not use regions
+dotnet_diagnostic.SA1124.severity = none
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = none
+# IDE0011: Add braces
+dotnet_diagnostic.IDE0011.severity = none
+# IDE0046: Use conditional expression for return
+dotnet_diagnostic.IDE0046.severity = none
+
+
+###### For C# test files ######
+[*.Tests/**.cs]
+
+#### Analyzer settings ####
+
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
+# CA1308: Normalize strings to uppercase
+dotnet_diagnostic.CA1308.severity = none
