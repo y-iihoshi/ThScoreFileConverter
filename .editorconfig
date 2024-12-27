@@ -1,8 +1,9 @@
 # 上位ディレクトリから .editorconfig 設定を継承する場合は、以下の行を削除します
 root = true
 
-# C# ファイル
-[*.cs]
+
+###### For all files ######
+[*]
 
 #### コア EditorConfig オプション ####
 
@@ -14,6 +15,10 @@ tab_width = 4
 # 改行設定
 end_of_line = crlf
 insert_final_newline = false
+
+
+###### For C# and VB.NET files ######
+[*.{cs,vb}]
 
 #### .NET コード アクション ####
 
@@ -84,6 +89,10 @@ dotnet_remove_unnecessary_suppression_exclusions = none
 # 改行設定
 dotnet_style_allow_multiple_blank_lines_experimental = true
 dotnet_style_allow_statement_immediately_after_block_experimental = true
+
+
+###### For C# files ######
+[*.cs]
 
 #### C# コーディング規則 ####
 
@@ -200,6 +209,10 @@ csharp_space_between_square_brackets = false
 # 折り返しの設定
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
+
+
+###### For C# and VB.NET ######
+[*.{cs,vb}]
 
 #### 命名スタイル ####
 
