@@ -263,7 +263,6 @@ public class UIElementDropBehaviorTests
         behaviors.Add(behavior);
 
         element.RaiseEvent(CreateDragEventArgs(element, UIElement.DragEnterEvent));
-        Assert.IsTrue(true);  // Should be reached here.
 
         _ = behaviors.Remove(behavior);
     }

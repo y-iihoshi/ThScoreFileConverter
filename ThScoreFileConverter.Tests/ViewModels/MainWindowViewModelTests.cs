@@ -1241,7 +1241,6 @@ public class MainWindowViewModelTests
     {
         using var window = CreateViewModel();
         window.Dispose();
-        Assert.IsTrue(true);
     }
 
     [TestMethod]
@@ -1250,7 +1249,6 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
         window.Dispose();
         window.Dispose();
-        Assert.IsTrue(true);
     }
 
     [TestMethod]
