@@ -1,18 +1,18 @@
-# 上位ディレクトリから .editorconfig 設定を継承する場合は、以下の行を削除します
+# Remove the line below if you want to inherit .editorconfig settings from higher
 root = true
 
 
 ###### For all files ######
 [*]
 
-#### コア EditorConfig オプション ####
+#### Core EditorConfig Options ####
 
-# インデントと間隔
+# Indentation and spacing
 indent_size = 4
 indent_style = space
 tab_width = unset
 
-# 改行設定
+# New line preferences
 end_of_line = unset
 insert_final_newline = true
 
@@ -41,49 +41,49 @@ indent_size = unset
 ###### For C# and VB.NET files ######
 [*.{cs,vb}]
 
-#### コア EditorConfig オプション ####
+#### Core EditorConfig Options ####
 
 # Overridden by the EditorConfig editor UI in Visual Studio 2022
 tab_width = 4
 end_of_line = crlf
 
-#### .NET コード アクション ####
+#### .NET Code Actions ####
 
-# 型メンバー
+# Type members
 dotnet_hide_advanced_members = false
 dotnet_member_insertion_location = with_other_members_of_the_same_kind
 dotnet_property_generation_behavior = prefer_throwing_properties
 
-# シンボルの検索
+# Symbol search
 dotnet_search_reference_assemblies = true
 
-#### .NET コーディング規則 ####
+#### .NET Coding Conventions ####
 
-# using の整理
+# Organize usings
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = true
 file_header_template = unset
 
-# this. と Me. の設定
+# this. and Me. preferences
 dotnet_style_qualification_for_event = true:suggestion
 dotnet_style_qualification_for_field = true:suggestion
 dotnet_style_qualification_for_method = true:suggestion
 dotnet_style_qualification_for_property = true:suggestion
 
-# 言語キーワードと BCL の種類の設定
+# Language keywords vs BCL types preferences
 dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
 dotnet_style_predefined_type_for_member_access = true:suggestion
 
-# かっこの設定
+# Parentheses preferences
 dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:silent
 dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:silent
 dotnet_style_parentheses_in_other_operators = never_if_unnecessary:silent
 dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:silent
 
-# 修飾子設定
+# Modifier preferences
 dotnet_style_require_accessibility_modifiers = always:suggestion
 
-# 式レベルの設定
+# Expression-level preferences
 dotnet_prefer_system_hash_code = true
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
@@ -104,22 +104,22 @@ dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggesti
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 
-# フィールド設定
+# Field preferences
 dotnet_style_readonly_field = true:suggestion
 
-# パラメーターの設定
+# Parameter preferences
 dotnet_code_quality_unused_parameters = all:suggestion
 
-# 抑制の設定
+# Suppression preferences
 dotnet_remove_unnecessary_suppression_exclusions = none
 
-# 改行設定
+# New line preferences
 dotnet_style_allow_multiple_blank_lines_experimental = true:silent
 dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
 
-#### 命名スタイル ####
+#### Naming styles ####
 
-# 名前付けルール
+# Naming rules
 
 dotnet_naming_rule.interface_should_be_begins_with_i.severity = suggestion
 dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
@@ -133,7 +133,7 @@ dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
 dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
 
-# 記号の仕様
+# Symbol specifications
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
@@ -147,7 +147,7 @@ dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, meth
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
 dotnet_naming_symbols.non_field_members.required_modifiers = 
 
-# 命名スタイル
+# Naming styles
 
 dotnet_naming_style.pascal_case.required_prefix = 
 dotnet_naming_style.pascal_case.required_suffix = 
@@ -163,14 +163,14 @@ dotnet_naming_style.begins_with_i.capitalization = pascal_case
 ###### For C# files ######
 [*.cs]
 
-#### C# コーディング規則 ####
+#### C# Coding Conventions ####
 
-# var を優先
+# var preferences
 csharp_style_var_elsewhere = true:suggestion
 csharp_style_var_for_built_in_types = true:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
 
-# 式のようなメンバー
+# Expression-bodied members
 csharp_style_expression_bodied_accessors = true:suggestion
 csharp_style_expression_bodied_constructors = false:suggestion
 csharp_style_expression_bodied_indexers = true:suggestion
@@ -180,7 +180,7 @@ csharp_style_expression_bodied_methods = false:suggestion
 csharp_style_expression_bodied_operators = false:suggestion
 csharp_style_expression_bodied_properties = true:suggestion
 
-# パターン マッチング設定
+# Pattern matching preferences
 csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
 csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
 csharp_style_prefer_extended_property_pattern = true:suggestion
@@ -188,17 +188,17 @@ csharp_style_prefer_not_pattern = true:suggestion
 csharp_style_prefer_pattern_matching = true:silent
 csharp_style_prefer_switch_expression = true:suggestion
 
-# Null チェック設定
+# Null-checking preferences
 csharp_style_conditional_delegate_call = true:suggestion
 
-# 修飾子設定
+# Modifier preferences
 csharp_prefer_static_anonymous_function = true:suggestion
 csharp_prefer_static_local_function = true:suggestion
 csharp_preferred_modifier_order = public,private,protected,internal,file,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,required,volatile,async:suggestion
 csharp_style_prefer_readonly_struct = true:suggestion
 csharp_style_prefer_readonly_struct_member = true:suggestion
 
-# コード ブロックの設定
+# Code-block preferences
 csharp_prefer_braces = when_multiline:suggestion
 csharp_prefer_simple_using_statement = true:suggestion
 csharp_prefer_system_threading_lock = true:suggestion
@@ -207,7 +207,7 @@ csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_prefer_primary_constructors = true:suggestion
 csharp_style_prefer_top_level_statements = true:silent
 
-# 式レベルの設定
+# Expression-level preferences
 csharp_prefer_simple_default_expression = true:suggestion
 csharp_style_deconstructed_variable_declaration = true:suggestion
 csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
@@ -222,19 +222,19 @@ csharp_style_throw_expression = true:suggestion
 csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 csharp_style_unused_value_expression_statement_preference = discard_variable:silent
 
-# 'using' ディレクティブの基本設定
+# 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:silent
 
-# 改行設定
+# New line preferences
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
 csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
 csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:silent
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
 csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 
-#### C# 書式ルール ####
+#### C# Formatting Rules ####
 
-# 改行設定
+# New line preferences
 csharp_new_line_before_catch = true
 csharp_new_line_before_else = true
 csharp_new_line_before_finally = true
@@ -243,7 +243,7 @@ csharp_new_line_before_members_in_object_initializers = true
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
 
-# インデント設定
+# Indentation preferences
 csharp_indent_block_contents = true
 csharp_indent_braces = false
 csharp_indent_case_contents = true
@@ -251,7 +251,7 @@ csharp_indent_case_contents_when_block = true
 csharp_indent_labels = flush_left
 csharp_indent_switch_labels = true
 
-# スペース設定
+# Space preferences
 csharp_space_after_cast = false
 csharp_space_after_colon_in_inheritance_clause = true
 csharp_space_after_comma = true
@@ -275,7 +275,7 @@ csharp_space_between_method_declaration_parameter_list_parentheses = false
 csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
-# 折り返しの設定
+# Wrapping preferences
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = false
 
