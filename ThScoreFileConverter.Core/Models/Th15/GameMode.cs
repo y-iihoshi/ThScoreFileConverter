@@ -15,12 +15,12 @@ public enum GameMode
     /// <summary>
     /// Represents the Pointdevice Mode.
     /// </summary>
-    [EnumAltName("P")]
+    [Pattern("P")]
     Pointdevice,
 
     /// <summary>
     /// Represents the Legacy Mode.
     /// </summary>
-    [EnumAltName("L")]
+    [Pattern("L")]
     Legacy,
 }

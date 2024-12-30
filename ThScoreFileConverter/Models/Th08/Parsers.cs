@@ -5,10 +5,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
-using GameMode = ThScoreFileConverter.Core.Models.GameMode;
 using Level = ThScoreFileConverter.Core.Models.Level;
 using LevelWithTotal = ThScoreFileConverter.Core.Models.LevelWithTotal;
+using Stage = ThScoreFileConverter.Core.Models.Th08.Stage;
+using StageWithTotal = ThScoreFileConverter.Core.Models.Th08.StageWithTotal;
 
 namespace ThScoreFileConverter.Models.Th08;
 
@@ -20,8 +22,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="GameMode"/>.
     /// </summary>
-    public static EnumShortNameParser<GameMode> GameModeParser { get; } =
-        new EnumShortNameParser<GameMode>();
+    public static EnumPatternParser<GameMode> GameModeParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="Level"/>.

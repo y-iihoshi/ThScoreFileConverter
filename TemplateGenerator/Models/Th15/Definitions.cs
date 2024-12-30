@@ -50,5 +50,5 @@ public class Definitions : Models.Definitions
     {
         (GameMode.Pointdevice, "完全無欠モード"),
         (GameMode.Legacy,      "レガシーモード"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 }

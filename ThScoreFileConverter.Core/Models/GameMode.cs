@@ -15,12 +15,12 @@ public enum GameMode
     /// <summary>
     /// Story Mode.
     /// </summary>
-    [EnumAltName("S")]
+    [Pattern("S")]
     Story,
 
     /// <summary>
     /// Spell Practice Mode.
     /// </summary>
-    [EnumAltName("P")]
+    [Pattern("P")]
     SpellPractice,
 }

@@ -61,5 +61,5 @@ public class Definitions
     {
         (GameMode.Story,         "ゲーム本編"),
         (GameMode.SpellPractice, "スペルプラクティス"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 }

@@ -18,8 +18,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="GameMode"/>.
     /// </summary>
-    public static EnumShortNameParser<GameMode> GameModeParser { get; } =
-        new EnumShortNameParser<GameMode>();
+    public static EnumPatternParser<GameMode> GameModeParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="Level"/>.
