@@ -30,7 +30,7 @@ internal readonly struct HashtagFields(int data1, int data2, int data3)
         }
     }
 
-    public IEnumerable<int> Data => this.data?.Select(vector => vector.Data) ?? Enumerable.Empty<int>();
+    public IEnumerable<int> Data => this.data?.Select(vector => vector.Data) ?? [];
 
     public bool EnemyIsInFrame => this.data?[0][Masks[0]] ?? false; // Not used
 

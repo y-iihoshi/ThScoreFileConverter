@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
@@ -107,6 +106,6 @@ internal class CollectRateReplacerBase<
         TChWithT chara)
     {
         return clearDataDictionary.TryGetValue(chara, out var clearData)
-            ? clearData.Cards.Values : ImmutableList<ISpellCard<TLv>>.Empty;
+            ? clearData.Cards.Values : [];
     }
 }

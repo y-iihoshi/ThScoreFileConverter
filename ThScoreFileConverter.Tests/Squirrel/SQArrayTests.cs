@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
@@ -43,14 +44,17 @@ public class SQArrayTests
 #pragma warning restore CA1861 // Avoid constant arrays as arguments
     public void CreateTest(int[] array, int[] expected)
     {
+        Guard.IsNotNull(array);
+        Guard.IsNotNull(expected);
+
         var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));
 
         Assert.AreEqual(SQOT.Array, sqarray.Type);
-        for (var index = 0; index < (expected?.Length ?? 0); ++index)
+        for (var index = 0; index < expected.Length; ++index)
         {
             var element = sqarray.Value.ElementAt(index);
             Assert.IsTrue(element is SQInteger);
-            Assert.AreEqual(expected?[index], (SQInteger)element);
+            Assert.AreEqual(expected[index], (SQInteger)element);
         }
     }
 

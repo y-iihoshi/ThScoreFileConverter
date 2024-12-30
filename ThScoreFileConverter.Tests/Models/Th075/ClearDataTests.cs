@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Linq;
 using NSubstitute;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Helpers;
@@ -15,11 +14,11 @@ public class ClearDataTests
     internal static IClearData MockInitialClearData()
     {
         var mock = Substitute.For<IClearData>();
-        _ = mock.MaxBonuses.Returns(ImmutableList<int>.Empty);
-        _ = mock.CardGotCount.Returns(ImmutableList<short>.Empty);
-        _ = mock.CardTrialCount.Returns(ImmutableList<short>.Empty);
-        _ = mock.CardTrulyGot.Returns(ImmutableList<byte>.Empty);
-        _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
+        _ = mock.MaxBonuses.Returns([]);
+        _ = mock.CardGotCount.Returns([]);
+        _ = mock.CardTrialCount.Returns([]);
+        _ = mock.CardTrulyGot.Returns([]);
+        _ = mock.Ranking.Returns([]);
         return mock;
     }
 
@@ -38,7 +37,7 @@ public class ClearDataTests
             Enumerable.Range(0, 10)
                 .Select(index => new HighScoreStub()
                 {
-                    EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
+                    EncodedName = [15, 37, 26, 50, 30, 43, (byte)(52 + index), 103],
                     Name = StringHelper.Create($"Player{index} "),
                     Month = (byte)(1 + index),
                     Day = (byte)(10 + index),

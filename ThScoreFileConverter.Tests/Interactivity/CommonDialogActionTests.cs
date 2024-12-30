@@ -53,7 +53,7 @@ public class CommonDialogActionTests
         Assert.AreSame(command, action.CancelCommand);
     }
 
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void OwnerTest()
     {
         var action = new DerivedAction();

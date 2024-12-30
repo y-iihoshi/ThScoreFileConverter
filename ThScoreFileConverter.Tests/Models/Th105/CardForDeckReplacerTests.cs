@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Models.Th105;
 

@@ -11,7 +11,7 @@ public class HighScoreTests
 {
     internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
     {
-        EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
+        EncodedName = [15, 37, 26, 50, 30, 43, 53, 103],
         Name = "Player1 ",
         Month = 6,
         Day = 15,
@@ -68,7 +68,7 @@ public class HighScoreTests
     public void ReadFromTestExceededName()
     {
         var stub = new HighScoreStub(ValidStub);
-        stub.EncodedName = stub.EncodedName.Concat(new byte[] { default }).ToArray();
+        stub.EncodedName = stub.EncodedName.Concat([default]).ToArray();
 
         _ = Assert.ThrowsException<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
     }

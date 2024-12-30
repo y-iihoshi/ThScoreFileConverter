@@ -60,7 +60,7 @@ public class BinaryReaderExtensionsTests
 
         var readBytes = reader.ReadExactBytes(0);
 
-        CollectionAssert.That.AreEqual(Array.Empty<byte>(), readBytes);
+        CollectionAssert.That.AreEqual([], readBytes);
     }
 
     [TestMethod]

@@ -8,7 +8,7 @@ internal sealed class HighScoreStub : IHighScore
 {
     public HighScoreStub()
     {
-        this.EncodedName = Enumerable.Empty<byte>();
+        this.EncodedName = [];
         this.Name = string.Empty;
     }
 

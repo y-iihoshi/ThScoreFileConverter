@@ -12,8 +12,8 @@ namespace TemplateGenerator.Models.Th123;
 
 public class Definitions : Th105.Definitions
 {
-    private static readonly IEnumerable<(Chara, string, string)> CharacterNamesImpl = new[]
-    {
+    private static readonly IEnumerable<(Chara, string, string)> CharacterNamesImpl =
+    [
         (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
         (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
         (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
@@ -34,7 +34,7 @@ public class Definitions : Th105.Definitions
         (Chara.Meiling,   "美鈴",       "紅 美鈴"),
         (Chara.Utsuho,    "空",         "霊烏路 空"),
         (Chara.Suwako,    "諏訪子",     "洩矢 諏訪子"),
-    };
+    ];
 
     private static readonly IEnumerable<(Chara, CardType, int)> NumCardsPerCharacterAndTypeImpl =
         EnumHelper.Cartesian<Chara, CardType>().Select(

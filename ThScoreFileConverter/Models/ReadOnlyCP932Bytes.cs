@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ internal sealed class ReadOnlyCP932Bytes(IEnumerable<byte> bytes) : IEnumerable<
     private readonly byte[] bytes = bytes.ToArray();
     private string? str;
 
-    public static ReadOnlyCP932Bytes Empty { get; } = new ReadOnlyCP932Bytes(Array.Empty<byte>());
+    public static ReadOnlyCP932Bytes Empty { get; } = new ReadOnlyCP932Bytes([]);
 
     public IEnumerable<byte> Bytes => this.bytes;
 

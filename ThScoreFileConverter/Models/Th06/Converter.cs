@@ -36,15 +36,15 @@ internal sealed class Converter : ThConverter
         if (!Decrypt(input, decrypted))
             return false;
 
-        decrypted.Seek(0, SeekOrigin.Begin);
+        _ = decrypted.Seek(0, SeekOrigin.Begin);
         if (!Extract(decrypted, decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         if (!Validate(decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         this.allScoreData = Read(decoded);
 
         return this.allScoreData is not null;
@@ -59,15 +59,15 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.Rankings, formatter),
             new CareerReplacer(this.allScoreData.CardAttacks, formatter),
             new CardReplacer(this.allScoreData.CardAttacks, hideUntriedCards),
             new CollectRateReplacer(this.allScoreData.CardAttacks, formatter),
             new ClearReplacer(this.allScoreData.Rankings),
             new PracticeReplacer(this.allScoreData.PracticeScores, formatter),
-        };
+        ];
     }
 
     private static bool Decrypt(Stream input, Stream output)
@@ -110,7 +110,7 @@ internal sealed class Converter : ThConverter
         Lzss.Extract(input, output);
 #else
         var body = new byte[header.DecodedAllSize - header.Size];
-        input.Read(body, 0, body.Length);
+        input.ReadExactly(body, 0, body.Length);
         output.Write(body, 0, body.Length);
 #endif
         output.Flush();

@@ -11,8 +11,8 @@ namespace TemplateGenerator.Models.Th143;
 
 public static class Definitions
 {
-    private static readonly IEnumerable<(ItemWithTotal, string)> ItemWithTotalNamesImpl = new[]
-    {
+    private static readonly IEnumerable<(ItemWithTotal, string)> ItemWithTotalNamesImpl =
+    [
         (ItemWithTotal.Fablic,   "布"),
         (ItemWithTotal.Camera,   "カメラ"),
         (ItemWithTotal.Umbrella, "傘"),
@@ -24,7 +24,7 @@ public static class Definitions
         (ItemWithTotal.Mallet,   "小槌"),
         (ItemWithTotal.NoItem,   "未使用"),
         (ItemWithTotal.Total,    "合計"),
-    };
+    ];
 
     public static string Title { get; } = StringResources.TH143;
 

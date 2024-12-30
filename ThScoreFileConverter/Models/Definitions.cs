@@ -15,8 +15,8 @@ namespace ThScoreFileConverter.Models;
 
 internal static class Definitions
 {
-    public static IEnumerable<Work> Works { get; } = new Work[]
-    {
+    public static IEnumerable<Work> Works { get; } =
+    [
         new() { Number = nameof(StringResources.TH06),  IsSupported = true },
         new() { Number = nameof(StringResources.TH07),  IsSupported = true },
         new() { Number = nameof(StringResources.TH08),  IsSupported = true },
@@ -45,7 +45,7 @@ internal static class Definitions
         new() { Number = nameof(StringResources.TH145), IsSupported = true },
         new() { Number = nameof(StringResources.TH155), IsSupported = true },
         new() { Number = nameof(StringResources.TH175), IsSupported = true },
-    };
+    ];
 
     public static bool IsTotal(LevelWithTotal level)
     {

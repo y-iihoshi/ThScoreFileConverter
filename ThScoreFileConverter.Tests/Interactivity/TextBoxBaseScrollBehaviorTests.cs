@@ -36,7 +36,7 @@ internal sealed class Logger : INotifyPropertyChanged
 [TestClass]
 public class TextBoxBaseScrollBehaviorTests
 {
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void AutoScrollToEndTest()
     {
         var logger = new Logger();
@@ -79,7 +79,7 @@ public class TextBoxBaseScrollBehaviorTests
         BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
     }
 
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void NotAutoScrollToEndTest()
     {
         var logger = new Logger();

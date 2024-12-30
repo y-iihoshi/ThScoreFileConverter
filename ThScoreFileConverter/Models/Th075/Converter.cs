@@ -33,7 +33,7 @@ internal sealed class Converter : ThConverter
         {
             var size = (int)input.Length;
             var data = new byte[size];
-            input.Read(data, 0, size);
+            input.ReadExactly(data, 0, size);
             decoded.Write(data, 0, size);
             decoded.Flush();
             decoded.SetLength(decoded.Position);
@@ -55,14 +55,14 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.ClearData, formatter),
             new CareerReplacer(this.allScoreData.ClearData, formatter),
             new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
             new CollectRateReplacer(this.allScoreData.ClearData, formatter),
             new CharaReplacer(this.allScoreData.ClearData, formatter),
-        };
+        ];
     }
 
     private static AllScoreData? Read(Stream input)

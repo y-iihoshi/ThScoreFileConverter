@@ -18,7 +18,7 @@ public class BestShotHeaderTests
     {
         var mock = Substitute.For<IBestShotHeader>();
         _ = mock.Signature.Returns(string.Empty);
-        _ = mock.CardName.Returns(Enumerable.Empty<byte>());
+        _ = mock.CardName.Returns([]);
         return mock;
     }
 
@@ -48,8 +48,7 @@ public class BestShotHeaderTests
         _ = mock.ClearShot.Returns(21);
         _ = mock.Angle.Returns(22);
         _ = mock.ResultScore2.Returns(23);
-        _ = mock.CardName.Returns(
-            TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray());
+        _ = mock.CardName.Returns([.. TestUtils.CP932Encoding.GetBytes("abcde"), .. Enumerable.Repeat((byte)'\0', 75)]);
         return mock;
     }
 

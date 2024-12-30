@@ -11,8 +11,8 @@ namespace TemplateGenerator.Models;
 public class Definitions
 #pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
 {
-    private static readonly IEnumerable<(Stage, string)> StageNamesImpl = new[]
-    {
+    private static readonly IEnumerable<(Stage, string)> StageNamesImpl =
+    [
         (Stage.One,   "Stage 1"),
         (Stage.Two,   "Stage 2"),
         (Stage.Three, "Stage 3"),
@@ -20,7 +20,7 @@ public class Definitions
         (Stage.Five,  "Stage 5"),
         (Stage.Six,   "Stage 6"),
         (Stage.Extra, "Extra"),
-    };
+    ];
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToStringDictionary();

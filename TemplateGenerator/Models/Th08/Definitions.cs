@@ -11,8 +11,8 @@ namespace TemplateGenerator.Models.Th08;
 
 public class Definitions : Models.Definitions
 {
-    private static readonly IEnumerable<(Stage, string)> StageNamesImpl = new[]
-    {
+    private static readonly IEnumerable<(Stage, string)> StageNamesImpl =
+    [
         (Stage.One,          "Stage 1"),
         (Stage.Two,          "Stage 2"),
         (Stage.Three,        "Stage 3"),
@@ -22,7 +22,7 @@ public class Definitions : Models.Definitions
         (Stage.FinalA,       "Stage 6A"),
         (Stage.FinalB,       "Stage 6B"),
         (Stage.Extra,        "Extra"),
-    };
+    ];
 
     private static readonly IEnumerable<(LevelPractice, int)> NumCardsPerLevelImpl =
         EnumHelper<LevelPractice>.Enumerable.Select(

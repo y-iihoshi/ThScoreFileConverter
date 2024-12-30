@@ -65,7 +65,7 @@ public sealed class Settings : ISettings, INotifyPropertyChanged
     /// <summary>
     /// Gets the valid code page identifiers for this application.
     /// </summary>
-    public static IEnumerable<int> ValidCodePageIds { get; } = new[] { 65001, 932, 51932 };
+    public static IEnumerable<int> ValidCodePageIds { get; } = [65001, 932, 51932];
 
     /// <summary>
     /// Gets the maximum font size for this application.

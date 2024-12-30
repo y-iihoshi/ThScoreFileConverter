@@ -14,11 +14,11 @@ on:
       dotnet-target-framework:
         required: true
         type: string
-        default: 'net6.0-windows'
+        default: 'net8.0-windows'
       artifact-name:
         required: true
         type: string
-        default: 'ThScoreFileConverter.Debug.net6.0-windows'
+        default: 'ThScoreFileConverter.Debug.net8.0-windows'
 
 jobs:
   build:
@@ -43,7 +43,7 @@ jobs:
         python -m pip install -r ManualGenerator/requirements.txt
 
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4.0.0
+      uses: actions/setup-dotnet@v4.2.0
       with:
         global-json-file: 'global.json'
 
@@ -51,7 +51,7 @@ jobs:
       run: dotnet tool restore
 
     - name: Cache NuGet packages
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.2.0
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ inputs.dotnet-target-framework }}-${{ hashFiles('**/*.csproj') }}
@@ -106,10 +106,10 @@ jobs:
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.5
+      uses: codecov/codecov-action@v5.1.2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
+        files: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Collect artifacts

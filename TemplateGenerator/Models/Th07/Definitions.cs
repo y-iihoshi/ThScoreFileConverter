@@ -11,8 +11,8 @@ namespace TemplateGenerator.Models.Th07;
 
 public static class Definitions
 {
-    private static readonly IEnumerable<(Stage, string)> StageNamesImpl = new[]
-    {
+    private static readonly IEnumerable<(Stage, string)> StageNamesImpl =
+    [
         (Stage.One,      "Stage 1"),
         (Stage.Two,      "Stage 2"),
         (Stage.Three,    "Stage 3"),
@@ -21,7 +21,7 @@ public static class Definitions
         (Stage.Six,      "Stage 6"),
         (Stage.Extra,    "Extra"),
         (Stage.Phantasm, "Phantasm"),
-    };
+    ];
 
     public static string Title { get; } = StringResources.TH07;
 

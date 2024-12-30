@@ -24,7 +24,7 @@ public class StageInfoTests
         {
             stage = Stage.Two,
             enemy = TestUtils.Cast<TChara>(2),
-            cardIds = new List<int>() { 3, 4, 5 },
+            cardIds = [3, 4, 5],
         };
     }
 

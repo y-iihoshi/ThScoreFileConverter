@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
@@ -56,6 +55,6 @@ internal class ClearReplacerBase<TChara, TCharaWithTotal> : IStringReplaceable
     {
         return dictionary.TryGetValue(EnumHelper.To<TCharaWithTotal>(chara), out var clearData)
             && clearData.Rankings.TryGetValue(level, out var ranking)
-            ? ranking : ImmutableList<IScoreData>.Empty;
+            ? ranking : [];
     }
 }

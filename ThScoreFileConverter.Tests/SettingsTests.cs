@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using ThScoreFileConverter.Core.Tests.UnitTesting;
 
@@ -19,7 +18,7 @@ public class SettingsTests
         Assert.AreEqual(0, settings.NumTitles);
         Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
         Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
-        Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+        Assert.IsTrue(settings.OutputNumberGroupSeparator);
         Assert.AreEqual(65001, settings.InputCodePageId);
         Assert.AreEqual(65001, settings.OutputCodePageId);
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
@@ -50,7 +49,7 @@ public class SettingsTests
         Assert.AreEqual(0, settings.NumTitles);
         Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
         Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
-        Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+        Assert.IsTrue(settings.OutputNumberGroupSeparator);
         Assert.AreEqual(65001, settings.InputCodePageId);
         Assert.AreEqual(65001, settings.OutputCodePageId);
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
@@ -284,8 +283,7 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\no-template-files.xml");
         Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual(
-            Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
     }
 
     [TestMethod]
@@ -294,8 +292,7 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\empty-template-files.xml");
         Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual(
-            Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
     }
 
     [TestMethod]
@@ -304,8 +301,7 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\invalid-template-files.xml");
         Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual(
-            Enumerable.Empty<string>(), settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
     }
 
     [TestMethod]
@@ -372,7 +368,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+        Assert.IsTrue(settings.OutputNumberGroupSeparator);
     }
 
     [TestMethod]
@@ -696,7 +692,7 @@ public class SettingsTests
         settingsPerTitle.ImageOutputDirectory = "images";
         settingsPerTitle.OutputDirectory = "output";
         settingsPerTitle.ScoreFile = "score.dat";
-        settingsPerTitle.TemplateFiles = new[] { "template1", "template2" };
+        settingsPerTitle.TemplateFiles = ["template1", "template2"];
 
         var tempfile = Path.GetTempFileName();
         settings.Save(tempfile);

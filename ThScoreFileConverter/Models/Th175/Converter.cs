@@ -33,7 +33,7 @@ internal sealed class Converter : ThConverter
         if (!Extract(input, decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         this.allScoreData = Read(decoded);
 
         return this.allScoreData is not null;
@@ -48,8 +48,8 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(
                 this.allScoreData.SaveDataDictionary[0].ScoreDictionary,
                 this.allScoreData.SaveDataDictionary[0].TimeDictionary,
@@ -60,7 +60,7 @@ internal sealed class Converter : ThConverter
                 this.allScoreData.SaveDataDictionary[0].ClearCountDictionary,
                 this.allScoreData.SaveDataDictionary[0].PerfectClearCountDictionary,
                 formatter),
-        };
+        ];
     }
 
     private static bool Extract(Stream input, Stream output)

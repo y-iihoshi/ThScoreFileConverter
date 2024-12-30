@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Extensions;
 
@@ -26,7 +25,7 @@ internal class ScoreDataBase<TStageProgress> : IBinaryReadable, IScoreData<TStag
     public byte ContinueCount { get; protected set; }
 
     // The last 2 bytes are always 0x00 ?
-    public IEnumerable<byte> Name { get; protected set; } = Enumerable.Empty<byte>();
+    public IEnumerable<byte> Name { get; protected set; } = [];
 
     public uint DateTime { get; protected set; }    // UNIX time
 

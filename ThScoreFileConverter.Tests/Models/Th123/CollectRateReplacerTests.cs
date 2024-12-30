@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Models.Th123;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Core.Models.Th123.Chara>;

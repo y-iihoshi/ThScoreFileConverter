@@ -132,8 +132,8 @@ public static class Definitions
     /// Gets the list of achievements.
     /// Thanks to en.touhouwiki.net.
     /// </summary>
-    public static IReadOnlyList<string> Achievements { get; } = new List<string>
-    {
+    public static IReadOnlyList<string> Achievements { get; } =
+    [
         "霊夢（オオカミ霊）クリア",
         "霊夢（カワウソ霊）クリア",
         "霊夢（オオワシ霊）クリア",
@@ -174,5 +174,5 @@ public static class Definitions
         "おーいハニマルさん",
         "土の馬",
         "ひよこが三匹",
-    };
+    ];
 }

@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -31,7 +30,7 @@ internal sealed class ScoreReplacer(
         static IEnumerable<int> GetRanking(
             IReadOnlyDictionary<(Level, Chara), IEnumerable<int>> dictionary, Level level, Chara chara)
         {
-            return dictionary.TryGetValue((level, chara), out var ranking) ? ranking : Array.Empty<int>();
+            return dictionary.TryGetValue((level, chara), out var ranking) ? ranking : [];
         }
 
         var level = Parsers.LevelParser.Parse(match.Groups[1].Value);

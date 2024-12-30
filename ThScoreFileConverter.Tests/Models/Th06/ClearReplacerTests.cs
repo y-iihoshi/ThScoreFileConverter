@@ -22,7 +22,7 @@ public class ClearReplacerTests
         var stageProgress = mock1.StageProgress;
         var mock2 = HighScoreTests.MockHighScore();
         _ = mock2.StageProgress.Returns(++stageProgress);
-        return new[] { new[] { mock1, mock2 } };
+        return [[mock1, mock2]];
     }
 
     internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =

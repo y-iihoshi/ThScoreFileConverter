@@ -53,11 +53,11 @@ format from best shot files.
 ## Environments
 
 ### Development environment
-* Windows 11 Pro Version 23H2
-* .NET 6
+* Windows 11 Pro Version 24H2
 * .NET 8
-* Visual Studio Community 2022 17.8
-* Python 3.11
+* .NET 9
+* Visual Studio Community 2022 17.12
+* Python 3.12
 
 ### Tested environment
 * Same as above.

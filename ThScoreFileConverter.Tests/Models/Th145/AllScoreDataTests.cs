@@ -280,7 +280,6 @@ public class AllScoreDataTests
         ]);
 
         Assert.AreEqual(1, allScoreData.ClearRanks.Count);
-        Assert.IsNotNull(allScoreData.ClearRanks.First().Value);
         Assert.AreEqual(0, allScoreData.ClearRanks.First().Value.Count);
     }
 
@@ -328,7 +327,6 @@ public class AllScoreDataTests
         ]);
 
         Assert.AreEqual(1, allScoreData.ClearTimes.Count);
-        Assert.IsNotNull(allScoreData.ClearTimes.First().Value);
         Assert.AreEqual(0, allScoreData.ClearTimes.First().Value.Count);
     }
 }

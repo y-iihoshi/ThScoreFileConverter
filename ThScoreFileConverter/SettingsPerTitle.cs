@@ -31,7 +31,7 @@ public class SettingsPerTitle : INotifyPropertyChanged
     {
         this.scoreFile = string.Empty;
         this.bestShotDirectory = string.Empty;
-        this.templateFiles = new List<string>();
+        this.templateFiles = [];
         this.outputDirectory = string.Empty;
         this.imageOutputDirectory = string.Empty;
         this.hideUntriedCards = true;

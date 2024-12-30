@@ -197,8 +197,8 @@ public static class Definitions
     /// Gets the list of achievements.
     /// Thanks to en.touhouwiki.net.
     /// </summary>
-    public static IReadOnlyList<string> Achievements { get; } = new List<string>
-    {
+    public static IReadOnlyList<string> Achievements { get; } =
+    [
         "霊夢アナザークリア",
         "霊夢でクリア",
         "魔理沙アナザークリア",
@@ -229,5 +229,5 @@ public static class Definitions
         "蠱毒王",
         "スペルカードコレクター",
         "カード売人",
-    };
+    ];
 }

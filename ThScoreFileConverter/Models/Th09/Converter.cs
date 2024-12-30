@@ -39,15 +39,15 @@ internal sealed class Converter : ThConverter
         if (!Decrypt(input, decrypted))
             return false;
 
-        decrypted.Seek(0, SeekOrigin.Begin);
+        _ = decrypted.Seek(0, SeekOrigin.Begin);
         if (!Extract(decrypted, decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         if (!Validate(decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         this.allScoreData = Read(decoded);
 
         return this.allScoreData is not null;
@@ -62,12 +62,12 @@ internal sealed class Converter : ThConverter
                 StringHelper.Format(ExceptionMessages.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
         }
 
-        return new List<IStringReplaceable>
-        {
+        return
+        [
             new ScoreReplacer(this.allScoreData.Rankings, formatter),
             new TimeReplacer(this.allScoreData.PlayStatus),
             new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts, formatter),
-        };
+        ];
     }
 
     private static bool Decrypt(Stream input, Stream output)
