@@ -7,6 +7,8 @@
 
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 
@@ -16,7 +18,7 @@ namespace ThScoreFileConverter.Core.Models;
 /// Provides a parser for the enumeration type which fields have pattern strings.
 /// </summary>
 /// <typeparam name="TEnum">The enumeration type which fields have pattern strings.</typeparam>
-public sealed class EnumPatternParser<TEnum>
+public sealed class EnumPatternParser<TEnum> : IRegexParser<TEnum>
     where TEnum : struct, Enum
 {
     /// <summary>
@@ -39,5 +41,12 @@ public sealed class EnumPatternParser<TEnum>
     {
         return EnumHelper<TEnum>.Enumerable.First(
             value => value.ToPattern().Equals(pattern, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <inheritdoc/>
+    public TEnum Parse(Group group)
+    {
+        Guard.IsNotNull(group);
+        return this.Parse(group.Value);
     }
 }

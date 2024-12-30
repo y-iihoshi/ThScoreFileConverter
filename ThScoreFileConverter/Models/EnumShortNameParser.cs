@@ -7,6 +7,8 @@
 
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 
@@ -16,7 +18,7 @@ namespace ThScoreFileConverter.Models;
 /// Provides a parser for the enumeration type which fields have short names.
 /// </summary>
 /// <typeparam name="TEnum">The enumeration type which fields have short names.</typeparam>
-public sealed class EnumShortNameParser<TEnum>
+public sealed class EnumShortNameParser<TEnum> : Core.Models.IRegexParser<TEnum>
     where TEnum : struct, Enum
 {
     /// <summary>
@@ -39,5 +41,12 @@ public sealed class EnumShortNameParser<TEnum>
     {
         return EnumHelper<TEnum>.Enumerable.First(
             elem => elem.ToShortName().Equals(shortName, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <inheritdoc/>
+    public TEnum Parse(Group group)
+    {
+        Guard.IsNotNull(group);
+        return this.Parse(group.Value);
     }
 }
