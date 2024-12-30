@@ -12,8 +12,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Core.Models.Th105;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
+using Level = ThScoreFileConverter.Core.Models.Th105.Level;
+using LevelWithTotal = ThScoreFileConverter.Core.Models.Th105.LevelWithTotal;
 
 namespace ThScoreFileConverter.Models.Th105;
 
@@ -25,8 +27,8 @@ internal class CollectRateReplacerBase<TChara> : IStringReplaceable
 
     protected CollectRateReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<LevelWithTotal> levelWithTotalParser,
-        EnumShortNameParser<TChara> charaParser,
+        IRegexParser<LevelWithTotal> levelWithTotalParser,
+        IRegexParser<TChara> charaParser,
         Func<LevelWithTotal, TChara, int, bool> canReplace,
         IReadOnlyDictionary<TChara, IClearData<TChara>> clearDataDictionary,
         INumberFormatter formatter)
@@ -35,8 +37,8 @@ internal class CollectRateReplacerBase<TChara> : IStringReplaceable
             $"{formatPrefix}CRG({levelWithTotalParser.Pattern})({charaParser.Pattern})([1-2])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelWithTotalParser.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
+            var level = levelWithTotalParser.Parse(match.Groups[1]);
+            var chara = charaParser.Parse(match.Groups[2]);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 
             if (!canReplace(level, chara, type))

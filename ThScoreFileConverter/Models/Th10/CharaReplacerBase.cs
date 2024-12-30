@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10;
@@ -23,7 +24,7 @@ internal class CharaReplacerBase<TCharaWithTotal> : IStringReplaceable
 
     protected CharaReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TCharaWithTotal> charaWithTotalParser,
+        IRegexParser<TCharaWithTotal> charaWithTotalParser,
         Func<TCharaWithTotal, bool> isTotal,
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
         INumberFormatter formatter)
@@ -31,7 +32,7 @@ internal class CharaReplacerBase<TCharaWithTotal> : IStringReplaceable
         this.pattern = StringHelper.Create($"{formatPrefix}CHARA({charaWithTotalParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var chara = charaWithTotalParser.Parse(match.Groups[1].Value);
+            var chara = charaWithTotalParser.Parse(match.Groups[1]);
             var type = IntegerHelper.Parse(match.Groups[2].Value);
 
             Func<IClearData<TCharaWithTotal>, long> getValueByType = type switch

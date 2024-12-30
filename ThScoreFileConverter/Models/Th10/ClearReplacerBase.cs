@@ -28,15 +28,15 @@ internal class ClearReplacerBase<TChara, TCharaWithTotal> : IStringReplaceable
 
     protected ClearReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<Level> levelParser,
-        EnumShortNameParser<TChara> charaParser,
+        IRegexParser<Level> levelParser,
+        IRegexParser<TChara> charaParser,
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary)
     {
         this.pattern = StringHelper.Create($"{formatPrefix}CLEAR({levelParser.Pattern})({charaParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelParser.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
+            var level = levelParser.Parse(match.Groups[1]);
+            var chara = charaParser.Parse(match.Groups[2]);
 
             var scores = GetRanking(clearDataDictionary, level, chara).Where(static score => score.DateTime > 0);
             var stageProgress = scores.Any() ? scores.Max(static score => score.StageProgress) : StageProgress.None;
