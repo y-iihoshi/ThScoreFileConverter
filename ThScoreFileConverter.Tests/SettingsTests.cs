@@ -18,7 +18,7 @@ public class SettingsTests
         Assert.AreEqual(0, settings.NumTitles);
         Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
         Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
-        Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+        Assert.IsTrue(settings.OutputNumberGroupSeparator);
         Assert.AreEqual(65001, settings.InputCodePageId);
         Assert.AreEqual(65001, settings.OutputCodePageId);
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
@@ -49,7 +49,7 @@ public class SettingsTests
         Assert.AreEqual(0, settings.NumTitles);
         Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
         Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
-        Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+        Assert.IsTrue(settings.OutputNumberGroupSeparator);
         Assert.AreEqual(65001, settings.InputCodePageId);
         Assert.AreEqual(65001, settings.OutputCodePageId);
         Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
@@ -368,7 +368,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(true, settings.OutputNumberGroupSeparator);
+        Assert.IsTrue(settings.OutputNumberGroupSeparator);
     }
 
     [TestMethod]

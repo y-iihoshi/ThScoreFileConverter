@@ -17,7 +17,7 @@ public class DateTimeHelperTests
     [TestMethod]
     public void FormatTest()
     {
-        Assert.IsTrue(DateTimeHelper.ValidFormat.Length == DateTimeHelper.InvalidFormat.Length);
+        Assert.AreEqual(DateTimeHelper.ValidFormat.Length, DateTimeHelper.InvalidFormat.Length);
     }
 
     [DataTestMethod]

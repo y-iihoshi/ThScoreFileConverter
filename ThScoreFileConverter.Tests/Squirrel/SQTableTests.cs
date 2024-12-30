@@ -198,7 +198,7 @@ public class SQTableTests
             { new SQString("floatKey"), new SQFloat(456f) },
         });
 
-        Assert.AreEqual(true, sqtable.GetValueOrDefault<bool>("boolKey"));
+        Assert.IsTrue(sqtable.GetValueOrDefault<bool>("boolKey"));
         Assert.AreEqual(123, sqtable.GetValueOrDefault<int>("intKey"));
         Assert.AreEqual(456f, sqtable.GetValueOrDefault<float>("floatKey"));
     }
