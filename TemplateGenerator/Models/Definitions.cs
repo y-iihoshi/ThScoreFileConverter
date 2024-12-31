@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using static ThScoreFileConverter.Core.Models.Definitions;
@@ -57,9 +58,6 @@ public class Definitions
 
     public static IEnumerable<string> StageKeysTotalLast { get; } = StageWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, string> CareerKinds { get; } = new[]
-    {
-        (GameMode.Story,         "ゲーム本編"),
-        (GameMode.SpellPractice, "スペルプラクティス"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CareerKinds { get; } =
+        EnumHelper<GameMode>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 }
