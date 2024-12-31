@@ -40,21 +40,21 @@ public static class Definitions
         (Day.Eighth,  ("Day8",    "八日目")),
         (Day.Ninth,   ("Day9",    "九日目")),
         (Day.Last,    ("LastDay", "最終日")),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumScenesPerDay { get; } =
         EnumHelper<Day>.Enumerable.ToDictionary(
-            static day => day.ToShortName(),
+            static day => day.ToPattern(),
             static day => SpellCards.Count(pair => pair.Key.Day == day));
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemWithTotalNames { get; } =
         ItemWithTotalNamesImpl.ToDictionary(
-            static pair => pair.Item1.ToShortName(),
+            static pair => pair.Item1.ToPattern(),
             static pair => (pair.Item2, pair.Item1.ToLongName()));
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemNames { get; } =
         ItemWithTotalNamesImpl.Where(static pair => pair.Item1 != ItemWithTotal.Total).ToDictionary(
-            static pair => pair.Item1.ToShortName(),
+            static pair => pair.Item1.ToPattern(),
             static pair => (pair.Item2, pair.Item1.ToLongName()));
 
     public static IEnumerable<string> ItemKeysTotalFirst { get; } = ItemWithTotalNames.Keys.RotateRight();
