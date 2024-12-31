@@ -32,10 +32,10 @@ internal sealed class CollectRateReplacer : IStringReplaceable
         static string EvaluatorImpl(
             Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
         {
-            var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
-            var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
+            var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
+            var level = Parsers.LevelPracticeWithTotalParser.Parse(match.Groups[2]);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
+            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4]);
             var type = IntegerHelper.Parse(match.Groups[5].Value);
 
             if (stage == StageWithTotal.Extra)

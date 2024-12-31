@@ -26,8 +26,8 @@ internal sealed class ClearRankReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-            var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
+            var level = Parsers.LevelParser.Parse(match.Groups[1]);
+            var chara = Parsers.StoryCharaParser.Parse(match.Groups[2]);
 
             if (storyDictionary.TryGetValue(chara, out var story)
                 && story.Available

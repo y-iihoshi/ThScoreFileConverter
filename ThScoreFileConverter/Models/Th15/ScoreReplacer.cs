@@ -30,8 +30,8 @@ internal sealed class ScoreReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
-            var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2].Value);
+            var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
+            var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2]);
             var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[3].Value);
             var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[4].Value));
             var type = IntegerHelper.Parse(match.Groups[5].Value);

@@ -32,7 +32,7 @@ internal sealed class CardForDeckReplacer : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
-            var cardType = Parsers.CardTypeParser.Parse(match.Groups[2].Value);
+            var cardType = Parsers.CardTypeParser.Parse(match.Groups[2]);
             var number = IntegerHelper.Parse(match.Groups[3].Value);
             var type = match.Groups[4].Value.ToUpperInvariant();
 
