@@ -15,18 +15,18 @@ public enum CardType
     /// <summary>
     /// System Card.
     /// </summary>
-    [EnumAltName("Y")]
+    [Pattern("Y")]
     System,
 
     /// <summary>
     /// Skill Card.
     /// </summary>
-    [EnumAltName("K")]
+    [Pattern("K")]
     Skill,
 
     /// <summary>
     /// Spell Card.
     /// </summary>
-    [EnumAltName("P")]
+    [Pattern("P")]
     Spell,
 }

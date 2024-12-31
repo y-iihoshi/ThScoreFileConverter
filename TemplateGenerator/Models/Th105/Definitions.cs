@@ -58,15 +58,15 @@ public class Definitions
             static pair => pair.Value.Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
 
     public static IReadOnlyDictionary<string, string> CardTypeNames { get; } =
-        EnumHelper<CardType>.Enumerable.ToStringDictionary();
+        EnumHelper<CardType>.Enumerable.ToPatternDictionary();
 
     public static IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
         NumCardsPerCharacterAndTypeImpl.ToDictionary(
-            static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
+            static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToPattern()),
             static tuple => tuple.Item3);
 
     public static IReadOnlyDictionary<string, int> MaxNumCardsPerType { get; } =
         EnumHelper<CardType>.Enumerable.ToDictionary(
-            static type => type.ToShortName(),
+            static type => type.ToPattern(),
             static type => NumCardsPerCharacterAndTypeImpl.Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
 }

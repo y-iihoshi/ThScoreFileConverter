@@ -61,12 +61,12 @@ public class Definitions : Th105.Definitions
 
     public static new IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
         NumCardsPerCharacterAndTypeImpl.ToDictionary(
-            static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToShortName()),
+            static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToPattern()),
             static tuple => tuple.Item3);
 
     public static new IReadOnlyDictionary<string, int> MaxNumCardsPerType { get; } =
         EnumHelper<CardType>.Enumerable.ToDictionary(
-            static type => type.ToShortName(),
+            static type => type.ToPattern(),
             static type => NumCardsPerCharacterAndTypeImpl
                 .Where(tuple => tuple.Item2 == type).Max(static tuple => tuple.Item3));
 }

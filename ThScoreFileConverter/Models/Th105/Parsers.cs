@@ -28,6 +28,5 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="CardType"/>.
     /// </summary>
-    public static EnumShortNameParser<CardType> CardTypeParser { get; } =
-        new EnumShortNameParser<CardType>();
+    public static Core.Models.EnumPatternParser<CardType> CardTypeParser { get; } = new();
 }
