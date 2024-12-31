@@ -41,46 +41,11 @@ public class Definitions : Models.Definitions
 
     public static IEnumerable<string> RouteKeysTotalLast { get; } = RouteWithTotalNames.Keys;
 
-    public static new IReadOnlyDictionary<string, string> StageNames { get; } = new[]
-    {
-        (Stage.A_1,   "Stage A-1"),
-        (Stage.A1_2,  "Stage A1-2"),
-        (Stage.A1_3,  "Stage A1-3"),
-        (Stage.A2_2,  "Stage A2-2"),
-        (Stage.A2_3,  "Stage A2-3"),
-        (Stage.B_1,   "Stage B-1"),
-        (Stage.B1_2,  "Stage B1-2"),
-        (Stage.B1_3,  "Stage B1-3"),
-        (Stage.B2_2,  "Stage B2-2"),
-        (Stage.B2_3,  "Stage B2-3"),
-        (Stage.C_1,   "Stage C-1"),
-        (Stage.C1_2,  "Stage C1-2"),
-        (Stage.C1_3,  "Stage C1-3"),
-        (Stage.C2_2,  "Stage C2-2"),
-        (Stage.C2_3,  "Stage C2-3"),
-        (Stage.Extra, "Extra"),
-    }.ToPatternKeyedDictionary();
+    public static new IReadOnlyDictionary<string, string> StageNames { get; } =
+        EnumHelper<Stage>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
-    public static new IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
-    {
-        (StageWithTotal.A_1,   "Stage A-1"),
-        (StageWithTotal.A1_2,  "Stage A1-2"),
-        (StageWithTotal.A1_3,  "Stage A1-3"),
-        (StageWithTotal.A2_2,  "Stage A2-2"),
-        (StageWithTotal.A2_3,  "Stage A2-3"),
-        (StageWithTotal.B_1,   "Stage B-1"),
-        (StageWithTotal.B1_2,  "Stage B1-2"),
-        (StageWithTotal.B1_3,  "Stage B1-3"),
-        (StageWithTotal.B2_2,  "Stage B2-2"),
-        (StageWithTotal.B2_3,  "Stage B2-3"),
-        (StageWithTotal.C_1,   "Stage C-1"),
-        (StageWithTotal.C1_2,  "Stage C1-2"),
-        (StageWithTotal.C1_3,  "Stage C1-3"),
-        (StageWithTotal.C2_2,  "Stage C2-2"),
-        (StageWithTotal.C2_3,  "Stage C2-3"),
-        (StageWithTotal.Extra, "Extra"),
-        (StageWithTotal.Total, "Total"),
-    }.ToPatternKeyedDictionary();
+    public static new IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static new IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

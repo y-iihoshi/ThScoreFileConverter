@@ -43,17 +43,8 @@ public class Definitions : Models.Definitions
 
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } = new[]
-    {
-        (StagePractice.One,       "Stage 1"),
-        (StagePractice.Two,       "Stage 2"),
-        (StagePractice.Three,     "Stage 3"),
-        (StagePractice.Four,      "Stage 4"),
-        (StagePractice.Five,      "Stage 5"),
-        (StagePractice.Six,       "Stage 6"),
-        (StagePractice.Extra,     "Extra"),
-        (StagePractice.OverDrive, "Over Drive"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } =
+        EnumHelper<StagePractice>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         NumCardsPerLevelImpl.ToPatternKeyedDictionary();

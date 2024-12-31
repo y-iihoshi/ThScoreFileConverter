@@ -11,18 +11,6 @@ namespace TemplateGenerator.Models.Th07;
 
 public static class Definitions
 {
-    private static readonly IEnumerable<(Stage, string)> StageNamesImpl =
-    [
-        (Stage.One,      "Stage 1"),
-        (Stage.Two,      "Stage 2"),
-        (Stage.Three,    "Stage 3"),
-        (Stage.Four,     "Stage 4"),
-        (Stage.Five,     "Stage 5"),
-        (Stage.Six,      "Stage 6"),
-        (Stage.Extra,    "Extra"),
-        (Stage.Phantasm, "Phantasm"),
-    ];
-
     public static string Title { get; } = StringResources.TH07;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
@@ -64,23 +52,13 @@ public static class Definitions
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageNames { get; } =
-        StageNamesImpl.ToPatternKeyedDictionary();
+        EnumHelper<Stage>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToPatternKeyedDictionary();
+        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
-    public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
-    {
-        (StageWithTotal.One,      "Stage 1"),
-        (StageWithTotal.Two,      "Stage 2"),
-        (StageWithTotal.Three,    "Stage 3"),
-        (StageWithTotal.Four,     "Stage 4"),
-        (StageWithTotal.Five,     "Stage 5"),
-        (StageWithTotal.Six,      "Stage 6"),
-        (StageWithTotal.Extra,    "Extra"),
-        (StageWithTotal.Phantasm, "Phantasm"),
-        (StageWithTotal.Total,    "Total"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

@@ -12,17 +12,6 @@ namespace TemplateGenerator.Models;
 public class Definitions
 #pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
 {
-    private static readonly IEnumerable<(Stage, string)> StageNamesImpl =
-    [
-        (Stage.One,   "Stage 1"),
-        (Stage.Two,   "Stage 2"),
-        (Stage.Three, "Stage 3"),
-        (Stage.Four,  "Stage 4"),
-        (Stage.Five,  "Stage 5"),
-        (Stage.Six,   "Stage 6"),
-        (Stage.Extra, "Extra"),
-    ];
-
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToPatternDictionary();
 
@@ -37,22 +26,13 @@ public class Definitions
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageNames { get; } =
-        StageNamesImpl.ToPatternKeyedDictionary();
+        EnumHelper<Stage>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToPatternKeyedDictionary();
+        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
-    public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
-    {
-        (StageWithTotal.One,   "Stage 1"),
-        (StageWithTotal.Two,   "Stage 2"),
-        (StageWithTotal.Three, "Stage 3"),
-        (StageWithTotal.Four,  "Stage 4"),
-        (StageWithTotal.Five,  "Stage 5"),
-        (StageWithTotal.Six,   "Stage 6"),
-        (StageWithTotal.Extra, "Extra"),
-        (StageWithTotal.Total, "Total"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 
