@@ -15,48 +15,48 @@ public enum RouteWithTotal
     /// <summary>
     /// Route A1.
     /// </summary>
-    [EnumAltName("A1")]
+    [Pattern("A1")]
     A1,
 
     /// <summary>
     /// Route A2.
     /// </summary>
-    [EnumAltName("A2")]
+    [Pattern("A2")]
     A2,
 
     /// <summary>
     /// Route B1.
     /// </summary>
-    [EnumAltName("B1")]
+    [Pattern("B1")]
     B1,
 
     /// <summary>
     /// Route B2.
     /// </summary>
-    [EnumAltName("B2")]
+    [Pattern("B2")]
     B2,
 
     /// <summary>
     /// Route C1.
     /// </summary>
-    [EnumAltName("C1")]
+    [Pattern("C1")]
     C1,
 
     /// <summary>
     /// Route C2.
     /// </summary>
-    [EnumAltName("C2")]
+    [Pattern("C2")]
     C2,
 
     /// <summary>
     /// Route EX.
     /// </summary>
-    [EnumAltName("EX")]
+    [Pattern("EX")]
     Extra,
 
     /// <summary>
     /// Represents total across routes.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }

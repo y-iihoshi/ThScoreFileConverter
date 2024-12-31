@@ -23,7 +23,7 @@ public class Definitions : Models.Definitions
         (Route.C1,    "ルート C1"),
         (Route.C2,    "ルート C2"),
         (Route.Extra, "ルート EX"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, string> RouteWithTotalNames { get; } = new[]
     {
@@ -35,7 +35,7 @@ public class Definitions : Models.Definitions
         (RouteWithTotal.C2,    "ルート C2"),
         (RouteWithTotal.Extra, "ルート EX"),
         (RouteWithTotal.Total, "全ルート合計"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IEnumerable<string> RouteKeysTotalFirst { get; } = RouteWithTotalNames.Keys.RotateRight();
 

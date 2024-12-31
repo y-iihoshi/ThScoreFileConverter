@@ -29,14 +29,12 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Route"/>.
     /// </summary>
-    public static EnumShortNameParser<Route> RouteParser { get; } =
-        new EnumShortNameParser<Route>();
+    public static Core.Models.EnumPatternParser<Route> RouteParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="RouteWithTotal"/>.
     /// </summary>
-    public static EnumShortNameParser<RouteWithTotal> RouteWithTotalParser { get; } =
-        new EnumShortNameParser<RouteWithTotal>();
+    public static Core.Models.EnumPatternParser<RouteWithTotal> RouteWithTotalParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="StageWithTotal"/>.
