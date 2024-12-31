@@ -15,36 +15,36 @@ public enum LevelWithTotal
     /// <summary>
     /// Represents level Easy.
     /// </summary>
-    [EnumAltName("E")]
+    [Pattern("E")]
     Easy,
 
     /// <summary>
     /// Represents level Normal.
     /// </summary>
-    [EnumAltName("N")]
+    [Pattern("N")]
     Normal,
 
     /// <summary>
     /// Represents level Hard.
     /// </summary>
-    [EnumAltName("H")]
+    [Pattern("H")]
     Hard,
 
     /// <summary>
     /// Represents level Lunatic.
     /// </summary>
-    [EnumAltName("L")]
+    [Pattern("L")]
     Lunatic,
 
     /// <summary>
     /// Represents level Extra.
     /// </summary>
-    [EnumAltName("X")]
+    [Pattern("X")]
     Extra,
 
     /// <summary>
     /// Represents total across levels.
     /// </summary>
-    [EnumAltName("T")]
+    [Pattern("T")]
     Total,
 }

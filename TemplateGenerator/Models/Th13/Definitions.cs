@@ -19,7 +19,7 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]

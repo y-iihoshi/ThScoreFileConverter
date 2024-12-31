@@ -17,8 +17,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="LevelWithTotal"/>.
     /// </summary>
-    public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
-        new EnumShortNameParser<LevelWithTotal>();
+    public static Core.Models.EnumPatternParser<LevelWithTotal> LevelWithTotalParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="Chara"/>.

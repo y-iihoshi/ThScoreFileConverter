@@ -14,7 +14,7 @@ public static class Definitions
         EnumHelper<Level>.Enumerable.ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
-        EnumHelper<LevelWithTotal>.Enumerable.ToStringDictionary();
+        EnumHelper<LevelWithTotal>.Enumerable.ToPatternDictionary();
 
     public static IEnumerable<string> LevelKeysTotalFirst { get; } = LevelWithTotalNames.Keys.RotateRight();
 
