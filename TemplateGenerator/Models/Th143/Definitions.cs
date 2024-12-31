@@ -50,12 +50,12 @@ public static class Definitions
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemWithTotalNames { get; } =
         ItemWithTotalNamesImpl.ToDictionary(
             static pair => pair.Item1.ToPattern(),
-            static pair => (pair.Item2, pair.Item1.ToLongName()));
+            static pair => (pair.Item2, pair.Item1.ToDisplayName()));
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemNames { get; } =
         ItemWithTotalNamesImpl.Where(static pair => pair.Item1 != ItemWithTotal.Total).ToDictionary(
             static pair => pair.Item1.ToPattern(),
-            static pair => (pair.Item2, pair.Item1.ToLongName()));
+            static pair => (pair.Item2, pair.Item1.ToDisplayName()));
 
     public static IEnumerable<string> ItemKeysTotalFirst { get; } = ItemWithTotalNames.Keys.RotateRight();
 

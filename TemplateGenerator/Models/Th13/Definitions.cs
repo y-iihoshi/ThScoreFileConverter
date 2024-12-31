@@ -20,7 +20,7 @@ public class Definitions : Models.Definitions
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(
             static level => level.ToPattern(),
-            static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+            static level => level.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
     {
@@ -56,11 +56,11 @@ public class Definitions : Models.Definitions
     }.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
-        NumCardsPerLevelImpl.ToStringKeyedDictionary();
+        NumCardsPerLevelImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<StagePractice>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static int NumCardsWithOverDrive { get; } =

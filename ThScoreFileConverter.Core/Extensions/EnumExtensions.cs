@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -56,6 +57,22 @@ public static class EnumExtensions
     {
         return AttributeCache<T, PatternAttribute>.Cache.TryGetValue(enumValue, out var attr)
             ? attr.Pattern : string.Empty;
+    }
+
+    /// <summary>
+    /// Gets a display name of the specified enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>
+    /// The localized display name of <paramref name="enumValue"/>, if <paramref name="enumValue"/> has been set
+    /// <see cref="DisplayAttribute"/> properly; otherwise, the non-localized name of <paramref name="enumValue"/>.
+    /// </returns>
+    public static string ToDisplayName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return AttributeCache<T, DisplayAttribute>.Cache.TryGetValue(enumValue, out var attr)
+            ? attr.GetName() ?? enumValue.ToString() : enumValue.ToString();
     }
 
     /// <summary>

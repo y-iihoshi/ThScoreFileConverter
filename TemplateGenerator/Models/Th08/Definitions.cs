@@ -33,7 +33,7 @@ public class Definitions : Models.Definitions
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(
             static level => level.ToPattern(),
-            static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+            static level => level.ToDisplayName());
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> CharacterNames { get; } = new[]
     {
@@ -111,7 +111,7 @@ public class Definitions : Models.Definitions
     public static new IEnumerable<string> StageKeysTotalLast { get; } = StageWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
-        NumCardsPerLevelImpl.ToStringKeyedDictionary();
+        NumCardsPerLevelImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<StagePractice>.Enumerable.ToDictionary(
@@ -122,7 +122,7 @@ public class Definitions : Models.Definitions
         new[] { StagePractice.FourUncanny, StagePractice.FourPowerful }
             .Cartesian(EnumHelper<LevelPractice>.Enumerable)
             .ToDictionary(
-                static pair => (pair.First.ToShortName(), pair.Second.ToShortName()),
+                static pair => (pair.First.ToPattern(), pair.Second.ToPattern()),
                 static pair => CardTable.Values.Count(card => (card.Stage, card.Level) == pair));
 
     public static int NumCardsWithLastWord { get; } =
