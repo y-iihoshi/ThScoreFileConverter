@@ -15,24 +15,24 @@ public enum Level
     /// <summary>
     /// Represents level Easy (may be reserved).
     /// </summary>
-    [EnumAltName("E")]
+    [Pattern("E")]
     Easy,
 
     /// <summary>
     /// Represents level Normal.
     /// </summary>
-    [EnumAltName("N")]
+    [Pattern("N")]
     Normal,
 
     /// <summary>
     /// Represents level Hard.
     /// </summary>
-    [EnumAltName("H")]
+    [Pattern("H")]
     Hard,
 
     /// <summary>
     /// Represents level Rush (may be reserved).
     /// </summary>
-    [EnumAltName("R")]
+    [Pattern("R")]
     Rush,
 }

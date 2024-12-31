@@ -16,29 +16,34 @@ public enum Level
     /// Represents level Easy.
     /// </summary>
     [EnumAltName("E")]
+    [Pattern("E")]
     Easy,
 
     /// <summary>
     /// Represents level Normal.
     /// </summary>
     [EnumAltName("N")]
+    [Pattern("N")]
     Normal,
 
     /// <summary>
     /// Represents level Hard.
     /// </summary>
     [EnumAltName("H")]
+    [Pattern("H")]
     Hard,
 
     /// <summary>
     /// Represents level Lunatic.
     /// </summary>
     [EnumAltName("L")]
+    [Pattern("L")]
     Lunatic,
 
     /// <summary>
     /// Represents level OverDrive.
     /// </summary>
     [EnumAltName("D", LongName = "Over Drive")]
+    [Pattern("D")]
     OverDrive,
 }

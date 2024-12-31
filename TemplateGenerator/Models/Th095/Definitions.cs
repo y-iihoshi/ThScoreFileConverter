@@ -26,10 +26,10 @@ public static class Definitions
         (Level.Nine,  ("Level9",  "Level 9")),
         (Level.Ten,   ("Level10", "Level 10")),
         (Level.Extra, ("Extra",   "Level Extra")),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumScenesPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => SpellCards.Keys.Count(key => key.Level == level));
 }

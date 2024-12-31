@@ -46,7 +46,7 @@ public static class Definitions
         (Level.Twelve,  ("Level12", "12", "Level 12")),
         (Level.Extra,   ("LevelEX", "EX", "Level EX")),
         (Level.Spoiler, ("SPOILER", "??", "SPOILER")),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } = new[]
     {

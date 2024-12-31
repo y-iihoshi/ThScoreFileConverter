@@ -23,10 +23,10 @@ public class Definitions
     ];
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToStringDictionary();
+        EnumHelper<Level>.Enumerable.ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } =
-        EnumHelper<Level>.Enumerable.Where(CanPractice).ToStringDictionary();
+        EnumHelper<Level>.Enumerable.Where(CanPractice).ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
         EnumHelper<LevelWithTotal>.Enumerable.ToStringDictionary();

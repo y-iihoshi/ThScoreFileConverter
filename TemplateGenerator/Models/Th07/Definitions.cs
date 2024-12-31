@@ -26,10 +26,10 @@ public static class Definitions
     public static string Title { get; } = StringResources.TH07;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToStringDictionary();
+        EnumHelper<Level>.Enumerable.ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } =
-        EnumHelper<Level>.Enumerable.Where(CanPractice).ToStringDictionary();
+        EnumHelper<Level>.Enumerable.Where(CanPractice).ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
         EnumHelper<LevelWithTotal>.Enumerable.ToStringDictionary();
@@ -88,7 +88,7 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => CardTable.Count(pair => pair.Value.Level == level));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =

@@ -29,6 +29,6 @@ public class Definitions : Models.Definitions
 
     public static bool CanPractice(string levelKey, string stageKey)
     {
-        return !(levelKey == Level.Easy.ToShortName() && stageKey == Stage.Six.ToShortName());
+        return !(levelKey == Level.Easy.ToPattern() && stageKey == Stage.Six.ToShortName());
     }
 }

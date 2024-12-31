@@ -14,7 +14,7 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 
     public static IReadOnlyDictionary<string, string> StoryCharacterNames { get; } = new[]
