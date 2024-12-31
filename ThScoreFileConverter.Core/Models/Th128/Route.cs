@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ThScoreFileConverter.Core.Models.Th128;
 
 /// <summary>
@@ -15,42 +17,49 @@ public enum Route
     /// <summary>
     /// Route A1.
     /// </summary>
+    [Display(Name = "ルート A1")]
     [Pattern("A1")]
     A1,
 
     /// <summary>
     /// Route A2.
     /// </summary>
+    [Display(Name = "ルート A2")]
     [Pattern("A2")]
     A2,
 
     /// <summary>
     /// Route B1.
     /// </summary>
+    [Display(Name = "ルート B1")]
     [Pattern("B1")]
     B1,
 
     /// <summary>
     /// Route B2.
     /// </summary>
+    [Display(Name = "ルート B2")]
     [Pattern("B2")]
     B2,
 
     /// <summary>
     /// Route C1.
     /// </summary>
+    [Display(Name = "ルート C1")]
     [Pattern("C1")]
     C1,
 
     /// <summary>
     /// Route C2.
     /// </summary>
+    [Display(Name = "ルート C2")]
     [Pattern("C2")]
     C2,
 
     /// <summary>
     /// Route EX.
     /// </summary>
+    [Display(Name = "ルート EX")]
     [Pattern("EX")]
     Extra,
 }

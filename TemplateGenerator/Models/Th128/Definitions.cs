@@ -14,28 +14,11 @@ public class Definitions : Models.Definitions
 {
     public static string Title { get; } = StringResources.TH128;
 
-    public static IReadOnlyDictionary<string, string> RouteNames { get; } = new[]
-    {
-        (Route.A1,    "ルート A1"),
-        (Route.A2,    "ルート A2"),
-        (Route.B1,    "ルート B1"),
-        (Route.B2,    "ルート B2"),
-        (Route.C1,    "ルート C1"),
-        (Route.C2,    "ルート C2"),
-        (Route.Extra, "ルート EX"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> RouteNames { get; } =
+        EnumHelper<Route>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
-    public static IReadOnlyDictionary<string, string> RouteWithTotalNames { get; } = new[]
-    {
-        (RouteWithTotal.A1,    "ルート A1"),
-        (RouteWithTotal.A2,    "ルート A2"),
-        (RouteWithTotal.B1,    "ルート B1"),
-        (RouteWithTotal.B2,    "ルート B2"),
-        (RouteWithTotal.C1,    "ルート C1"),
-        (RouteWithTotal.C2,    "ルート C2"),
-        (RouteWithTotal.Extra, "ルート EX"),
-        (RouteWithTotal.Total, "全ルート合計"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> RouteWithTotalNames { get; } =
+        EnumHelper<RouteWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 
     public static IEnumerable<string> RouteKeysTotalFirst { get; } = RouteWithTotalNames.Keys.RotateRight();
 
