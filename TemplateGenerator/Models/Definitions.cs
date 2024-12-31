@@ -26,18 +26,26 @@ public class Definitions
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageNames { get; } =
-        EnumHelper<Stage>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
-        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 
     public static IEnumerable<string> StageKeysTotalLast { get; } = StageWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> CareerKinds { get; } =
-        EnumHelper<GameMode>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<GameMode>.Enumerable.ToDictionary(
+            static mode => mode.ToPattern(),
+            static mode => mode.ToDisplayName());
 }

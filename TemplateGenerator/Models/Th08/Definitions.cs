@@ -60,16 +60,24 @@ public class Definitions : Models.Definitions
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
     public static new IReadOnlyDictionary<string, string> StageNames { get; } =
-        EnumHelper<Stage>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static new IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } =
-        EnumHelper<StagePractice>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<StagePractice>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static new IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
-        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static new IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

@@ -31,17 +31,17 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, int> NumScenesPerDay { get; } =
         EnumHelper<Day>.Enumerable.ToDictionary(
-            EnumExtensions.ToPattern,
+            static day => day.ToPattern(),
             static day => SpellCards.Count(pair => pair.Key.Day == day));
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemWithTotalNames { get; } =
         EnumHelper<ItemWithTotal>.Enumerable.ToDictionary(
-            EnumExtensions.ToPattern,
+            static item => item.ToPattern(),
             static item => (item.ToDisplayShortName(), item.ToDisplayName()));
 
     public static IReadOnlyDictionary<string, (string ShortName, string LongName)> ItemNames { get; } =
         EnumHelper<ItemWithTotal>.Enumerable.Where(static item => item != ItemWithTotal.Total).ToDictionary(
-            EnumExtensions.ToPattern,
+            static item => item.ToPattern(),
             static item => (item.ToDisplayShortName(), item.ToDisplayName()));
 
     public static IEnumerable<string> ItemKeysTotalFirst { get; } = ItemWithTotalNames.Keys.RotateRight();

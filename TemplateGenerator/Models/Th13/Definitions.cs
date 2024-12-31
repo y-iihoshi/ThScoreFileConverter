@@ -44,7 +44,9 @@ public class Definitions : Models.Definitions
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } =
-        EnumHelper<StagePractice>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<StagePractice>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         NumCardsPerLevelImpl.ToPatternKeyedDictionary();

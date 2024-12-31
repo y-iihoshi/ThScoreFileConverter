@@ -14,12 +14,12 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, (string Id, string Name)> DayNames { get; } =
         EnumHelper<Day>.Enumerable.ToDictionary(
-            EnumExtensions.ToPattern,
+            static day => day.ToPattern(),
             static day => (day.ToString(), day.ToDisplayName()));
 
     public static IReadOnlyDictionary<string, int> NumDreamsPerDay { get; } =
         EnumHelper<Day>.Enumerable.ToDictionary(
-            EnumExtensions.ToPattern,
+            static day => day.ToPattern(),
             static day => SpellCards.Count(pair => pair.Key.Day == day));
 
     public static int NumNicknames { get; } = Nicknames.Count;

@@ -28,7 +28,7 @@ internal sealed class CardReplacer(
         Definitions.CardTable,
         hideUntriedCards,
         cardNumber => CardHasTried(clearDataDictionary, cardNumber),
-        EnumExtensions.ToDisplayName)
+        static level => level.ToDisplayName())
 {
     private static bool CardHasTried(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)

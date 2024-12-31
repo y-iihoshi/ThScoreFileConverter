@@ -15,20 +15,28 @@ public class Definitions : Models.Definitions
     public static string Title { get; } = StringResources.TH128;
 
     public static IReadOnlyDictionary<string, string> RouteNames { get; } =
-        EnumHelper<Route>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<Route>.Enumerable.ToDictionary(
+            static route => route.ToPattern(),
+            static route => route.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> RouteWithTotalNames { get; } =
-        EnumHelper<RouteWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<RouteWithTotal>.Enumerable.ToDictionary(
+            static route => route.ToPattern(),
+            static route => route.ToDisplayName());
 
     public static IEnumerable<string> RouteKeysTotalFirst { get; } = RouteWithTotalNames.Keys.RotateRight();
 
     public static IEnumerable<string> RouteKeysTotalLast { get; } = RouteWithTotalNames.Keys;
 
     public static new IReadOnlyDictionary<string, string> StageNames { get; } =
-        EnumHelper<Stage>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static new IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
-        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static new IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

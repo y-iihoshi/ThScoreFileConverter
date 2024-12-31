@@ -47,5 +47,7 @@ public class Definitions : Models.Definitions
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static IReadOnlyDictionary<string, string> GameModes { get; } =
-        EnumHelper<GameMode>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
+        EnumHelper<GameMode>.Enumerable.ToDictionary(
+            static mode => mode.ToPattern(),
+            static mode => mode.ToDisplayName());
 }
