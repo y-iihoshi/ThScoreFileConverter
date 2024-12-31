@@ -80,7 +80,7 @@ public static class Definitions
         (StageWithTotal.Extra,    "Extra"),
         (StageWithTotal.Phantasm, "Phantasm"),
         (StageWithTotal.Total,    "Total"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

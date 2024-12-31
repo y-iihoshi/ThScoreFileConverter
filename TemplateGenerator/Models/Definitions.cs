@@ -51,7 +51,7 @@ public class Definitions
         (StageWithTotal.Six,   "Stage 6"),
         (StageWithTotal.Extra, "Extra"),
         (StageWithTotal.Total, "Total"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

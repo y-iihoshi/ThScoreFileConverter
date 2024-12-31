@@ -80,7 +80,7 @@ public class Definitions : Models.Definitions
         (StageWithTotal.C2_3,  "Stage C2-3"),
         (StageWithTotal.Extra, "Extra"),
         (StageWithTotal.Total, "Total"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static new IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 

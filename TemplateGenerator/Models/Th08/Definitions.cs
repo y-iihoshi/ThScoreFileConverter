@@ -90,7 +90,7 @@ public class Definitions : Models.Definitions
         (StagePractice.FinalB,       "Stage 6B"),
         (StagePractice.Extra,        "Extra"),
         (StagePractice.LastWord,     "Last Word"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static new IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
     {
@@ -104,7 +104,7 @@ public class Definitions : Models.Definitions
         (StageWithTotal.FinalB,       "Stage 6B"),
         (StageWithTotal.Extra,        "Extra"),
         (StageWithTotal.Total,        "Total"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static new IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 
@@ -115,7 +115,7 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<StagePractice>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static IReadOnlyDictionary<(string, string), int> NumCardsPerStage4Level { get; } =

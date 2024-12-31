@@ -53,7 +53,7 @@ public class Definitions : Models.Definitions
         (StagePractice.Six,       "Stage 6"),
         (StagePractice.Extra,     "Extra"),
         (StagePractice.OverDrive, "Over Drive"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         NumCardsPerLevelImpl.ToStringKeyedDictionary();
