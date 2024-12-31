@@ -39,8 +39,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Stage"/>.
     /// </summary>
-    public static EnumShortNameParser<Stage> StageParser { get; } =
-        new EnumShortNameParser<Stage>();
+    public static Core.Models.EnumPatternParser<Stage> StageParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="StageWithTotal"/>.

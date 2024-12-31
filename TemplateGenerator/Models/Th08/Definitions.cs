@@ -73,10 +73,10 @@ public class Definitions : Models.Definitions
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
     public static new IReadOnlyDictionary<string, string> StageNames { get; } =
-        StageNamesImpl.ToStringKeyedDictionary();
+        StageNamesImpl.ToPatternKeyedDictionary();
 
     public static new IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
+        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } = new[]
     {
@@ -145,5 +145,5 @@ public class Definitions : Models.Definitions
         (Chara.Remilia,       Stage.FourPowerful),
         (Chara.Youmu,         Stage.FourUncanny),
         (Chara.Yuyuko,        Stage.FourUncanny),
-    }.ToDictionary(static pair => pair.Item1.ToShortName(), static pair => pair.Item2.ToShortName());
+    }.ToDictionary(static pair => pair.Item1.ToShortName(), static pair => pair.Item2.ToPattern());
 }

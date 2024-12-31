@@ -64,10 +64,10 @@ public static class Definitions
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageNames { get; } =
-        StageNamesImpl.ToStringKeyedDictionary();
+        StageNamesImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
+        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
     {
@@ -93,6 +93,6 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 }

@@ -36,10 +36,10 @@ public class Definitions
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageNames { get; } =
-        StageNamesImpl.ToStringKeyedDictionary();
+        StageNamesImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
+        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
     {

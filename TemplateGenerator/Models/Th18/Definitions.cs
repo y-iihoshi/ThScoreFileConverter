@@ -42,7 +42,7 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static int NumAbilityCards { get; } = AbilityCardTable.Count;

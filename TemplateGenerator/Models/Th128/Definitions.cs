@@ -59,7 +59,7 @@ public class Definitions : Models.Definitions
         (Stage.C2_2,  "Stage C2-2"),
         (Stage.C2_3,  "Stage C2-3"),
         (Stage.Extra, "Extra"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 
     public static new IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
     {
@@ -93,6 +93,6 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 }
