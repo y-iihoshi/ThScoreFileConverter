@@ -46,9 +46,6 @@ public class Definitions : Models.Definitions
             static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
-    public static IReadOnlyDictionary<string, string> GameModes { get; } = new[]
-    {
-        (GameMode.Pointdevice, "完全無欠モード"),
-        (GameMode.Legacy,      "レガシーモード"),
-    }.ToPatternKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> GameModes { get; } =
+        EnumHelper<GameMode>.Enumerable.ToDictionary(EnumExtensions.ToPattern, EnumExtensions.ToDisplayName);
 }
