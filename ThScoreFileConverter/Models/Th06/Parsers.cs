@@ -18,8 +18,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Level"/>.
     /// </summary>
-    public static EnumShortNameParser<Level> LevelParser { get; } =
-        new EnumShortNameParser<Level>();
+    public static EnumPatternParser<Level> LevelParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="Chara"/>.
@@ -30,12 +29,10 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Stage"/>.
     /// </summary>
-    public static EnumShortNameParser<Stage> StageParser { get; } =
-        new EnumShortNameParser<Stage>();
+    public static EnumPatternParser<Stage> StageParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="StageWithTotal"/>.
     /// </summary>
-    public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; } =
-        new EnumShortNameParser<StageWithTotal>();
+    public static EnumPatternParser<StageWithTotal> StageWithTotalParser { get; } = new();
 }

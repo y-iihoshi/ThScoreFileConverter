@@ -29,8 +29,8 @@ internal sealed class ClearReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
-            var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2].Value);
+            var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
+            var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2]);
             var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[3].Value);
 
 #if false   // FIXME
@@ -47,9 +47,9 @@ internal sealed class ClearReplacer : IStringReplaceable
             if (stageProgress == Th13.StageProgress.Extra)
                 return "Not Clear";
             else if (stageProgress == Th13.StageProgress.ExtraClear)
-                return Th13.StageProgress.Clear.ToShortName();
+                return Th13.StageProgress.Clear.ToDisplayName();
             else
-                return stageProgress.ToShortName();
+                return stageProgress.ToDisplayName();
         });
     }
 

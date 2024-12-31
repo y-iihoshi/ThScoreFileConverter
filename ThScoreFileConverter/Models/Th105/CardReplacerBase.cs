@@ -11,8 +11,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models.Th105;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
+using Level = ThScoreFileConverter.Core.Models.Th105.Level;
 
 #pragma warning disable SA1600 // Elements should be documented
 
@@ -26,7 +27,7 @@ internal class CardReplacerBase<TChara> : IStringReplaceable
 
     protected CardReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TChara> charaParser,
+        IRegexParser<TChara> charaParser,
         Func<TChara, bool> charaHasStory,
         IReadOnlyDictionary<TChara, IEnumerable<(TChara Enemy, int CardId)>> enemyCardIdTable,
         IReadOnlyDictionary<(TChara Chara, int CardId), string> cardNameTable,
@@ -40,7 +41,7 @@ internal class CardReplacerBase<TChara> : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
+            var chara = charaParser.Parse(match.Groups[2]);
             var type = match.Groups[3].Value.ToUpperInvariant();
 
             if (number <= 0)

@@ -27,7 +27,7 @@ internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringRepl
 
     protected CareerReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TCharaWithTotal> charaWithTotalParser,
+        IRegexParser<TCharaWithTotal> charaWithTotalParser,
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
         IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
         INumberFormatter formatter)
@@ -36,7 +36,7 @@ internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringRepl
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);
-            var chara = charaWithTotalParser.Parse(match.Groups[2].Value);
+            var chara = charaWithTotalParser.Parse(match.Groups[2]);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 
             Func<ISpellCard<Level>, int> getCount = type switch

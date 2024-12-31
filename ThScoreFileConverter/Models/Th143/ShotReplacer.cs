@@ -24,7 +24,7 @@ internal sealed class ShotReplacer(
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var day = Parsers.DayParser.Parse(match.Groups[1]);
         var scene = IntegerHelper.Parse(match.Groups[2].Value);
         scene = (scene == 0) ? 10 : scene;
 

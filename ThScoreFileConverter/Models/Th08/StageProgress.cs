@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ThScoreFileConverter.Models.Th08;
 
@@ -17,60 +17,60 @@ public enum StageProgress
     /// <summary>
     /// Lost at stage 1.
     /// </summary>
-    [EnumAltName("Stage 1")]
+    [Display(Name = "Stage 1")]
     One,
 
     /// <summary>
     /// Lost at stage 2.
     /// </summary>
-    [EnumAltName("Stage 2")]
+    [Display(Name = "Stage 2")]
     Two,
 
     /// <summary>
     /// Lost at stage 3.
     /// </summary>
-    [EnumAltName("Stage 3")]
+    [Display(Name = "Stage 3")]
     Three,
 
     /// <summary>
     /// Lost at stage 4 Uncanny.
     /// </summary>
-    [EnumAltName("Stage 4-uncanny")]
+    [Display(Name = "Stage 4-uncanny")]
     FourUncanny,
 
     /// <summary>
     /// Lost at stage 4 Powerful.
     /// </summary>
-    [EnumAltName("Stage 4-powerful")]
+    [Display(Name = "Stage 4-powerful")]
     FourPowerful,
 
     /// <summary>
     /// Lost at stage 5.
     /// </summary>
-    [EnumAltName("Stage 5")]
+    [Display(Name = "Stage 5")]
     Five,
 
     /// <summary>
     /// Lost at stage Final A.
     /// </summary>
-    [EnumAltName("Stage 6-Eirin")]
+    [Display(Name = "Stage 6-Eirin")]
     FinalA,
 
     /// <summary>
     /// Lost at stage Final B.
     /// </summary>
-    [EnumAltName("Stage 6-Kaguya")]
+    [Display(Name = "Stage 6-Kaguya")]
     FinalB,
 
     /// <summary>
     /// Lost at Extra stage.
     /// </summary>
-    [EnumAltName("Extra Stage")]
+    [Display(Name = "Extra Stage")]
     Extra,
 
     /// <summary>
     /// All cleared.
     /// </summary>
-    [EnumAltName("All Clear")]
+    [Display(Name = "All Clear")]
     Clear = 99,
 }

@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ThScoreFileConverter.Core.Models.Th15;
 
 /// <summary>
@@ -15,12 +17,14 @@ public enum GameMode
     /// <summary>
     /// Represents the Pointdevice Mode.
     /// </summary>
-    [EnumAltName("P")]
+    [Display(Name = "完全無欠モード")]
+    [Pattern("P")]
     Pointdevice,
 
     /// <summary>
     /// Represents the Legacy Mode.
     /// </summary>
-    [EnumAltName("L")]
+    [Display(Name = "レガシーモード")]
+    [Pattern("L")]
     Legacy,
 }

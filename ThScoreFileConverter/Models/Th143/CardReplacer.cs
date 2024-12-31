@@ -24,7 +24,7 @@ internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntrie
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var day = Parsers.DayParser.Parse(match.Groups[1].Value);
+        var day = Parsers.DayParser.Parse(match.Groups[1]);
         var scene = IntegerHelper.Parse(match.Groups[2].Value);
         scene = (scene == 0) ? 10 : scene;
         var type = IntegerHelper.Parse(match.Groups[3].Value);

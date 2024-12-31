@@ -11,7 +11,7 @@ public static class Definitions
     public static string Title { get; } = StringResources.TH135;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToStringDictionary();
+        EnumHelper<Level>.Enumerable.ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
     {

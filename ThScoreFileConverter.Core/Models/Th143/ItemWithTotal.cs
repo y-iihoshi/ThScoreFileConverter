@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ThScoreFileConverter.Core.Models.Th143;
 
 /// <summary>
@@ -15,66 +17,77 @@ public enum ItemWithTotal
     /// <summary>
     /// Nimble Fabric.
     /// </summary>
-    [EnumAltName("1", LongName = "ひらり布")]
+    [Display(Name = "ひらり布", ShortName = "布")]
+    [Pattern("1")]
     Fablic,
 
     /// <summary>
     /// Tengu's Toy Camera.
     /// </summary>
-    [EnumAltName("2", LongName = "天狗のトイカメラ")]
+    [Display(Name = "天狗のトイカメラ", ShortName = "カメラ")]
+    [Pattern("2")]
     Camera,
 
     /// <summary>
     /// Gap Folding Umbrella.
     /// </summary>
-    [EnumAltName("3", LongName = "隙間の折りたたみ傘")]
+    [Display(Name = "隙間の折りたたみ傘", ShortName = "傘")]
+    [Pattern("3")]
     Umbrella,
 
     /// <summary>
     /// Ghastly Send-Off Lantern.
     /// </summary>
-    [EnumAltName("4", LongName = "亡霊の送り提灯")]
+    [Display(Name = "亡霊の送り提灯", ShortName = "提灯")]
+    [Pattern("4")]
     Lantern,
 
     /// <summary>
     /// Bloodthirsty Yin-Yang Orb.
     /// </summary>
-    [EnumAltName("5", LongName = "血に飢えた陰陽玉")]
+    [Display(Name = "血に飢えた陰陽玉", ShortName = "陰陽玉")]
+    [Pattern("5")]
     Orb,
 
     /// <summary>
     /// Four-Foot Magic Bomb.
     /// </summary>
-    [EnumAltName("6", LongName = "四尺マジックボム")]
+    [Display(Name = "四尺マジックボム", ShortName = "ボム")]
+    [Pattern("6")]
     Bomb,
 
     /// <summary>
     /// Substitute Jizou.
     /// </summary>
-    [EnumAltName("7", LongName = "身代わり地蔵")]
+    [Display(Name = "身代わり地蔵", ShortName = "地蔵")]
+    [Pattern("7")]
     Jizou,
 
     /// <summary>
     /// Cursed Decoy Doll.
     /// </summary>
-    [EnumAltName("8", LongName = "呪いのデコイ人形")]
+    [Display(Name = "呪いのデコイ人形", ShortName = "人形")]
+    [Pattern("8")]
     Doll,
 
     /// <summary>
     /// A Miracle Mallet Replica.
     /// </summary>
-    [EnumAltName("9", LongName = "打ち出の小槌（レプリカ）")]
+    [Display(Name = "打ち出の小槌（レプリカ）", ShortName = "小槌")]
+    [Pattern("9")]
     Mallet,
 
     /// <summary>
     /// No item.
     /// </summary>
-    [EnumAltName("0", LongName = "ノーアイテム")]
+    [Display(Name = "ノーアイテム", ShortName = "未使用")]
+    [Pattern("0")]
     NoItem,
 
     /// <summary>
     /// Represents total across items.
     /// </summary>
-    [EnumAltName("T", LongName = "合計")]
+    [Display(Name = "合計")]
+    [Pattern("T")]
     Total,
 }

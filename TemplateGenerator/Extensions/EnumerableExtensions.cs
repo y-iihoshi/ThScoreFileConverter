@@ -34,4 +34,21 @@ internal static class EnumerableExtensions
 
         return source.ToDictionary(static element => element.ToShortName(), static element => element.ToString());
     }
+
+    public static Dictionary<string, TValue> ToPatternKeyedDictionary<TKey, TValue>(
+        this IEnumerable<(TKey Key, TValue Value)> source)
+        where TKey : struct, Enum
+    {
+        Guard.IsNotNull(source);
+
+        return source.ToDictionary(static pair => pair.Key.ToPattern(), static pair => pair.Value);
+    }
+
+    public static Dictionary<string, string> ToPatternDictionary<TEnum>(this IEnumerable<TEnum> source)
+        where TEnum : struct, Enum
+    {
+        Guard.IsNotNull(source);
+
+        return source.ToDictionary(static element => element.ToPattern(), static element => element.ToString());
+    }
 }

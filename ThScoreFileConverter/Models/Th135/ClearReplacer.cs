@@ -22,7 +22,7 @@ internal sealed class ClearReplacer(IReadOnlyDictionary<Chara, Levels> storyClea
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
         var cleared = false;

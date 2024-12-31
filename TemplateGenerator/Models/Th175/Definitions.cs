@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th175;
 using ThScoreFileConverter.Core.Resources;
@@ -13,9 +12,7 @@ public static class Definitions
     public static string Title { get; } = StringResources.TH175;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.Where(level => level is Level.Normal or Level.Hard).ToDictionary(
-            static level => level.ToShortName(),
-            static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+        EnumHelper<Level>.Enumerable.Where(level => level is Level.Normal or Level.Hard).ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
     {

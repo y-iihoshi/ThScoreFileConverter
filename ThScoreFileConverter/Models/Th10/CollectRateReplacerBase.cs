@@ -24,9 +24,9 @@ internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
 
     protected CollectRateReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<LevelWithTotal> levelWithTotalParser,
-        EnumShortNameParser<TCharaWithTotal> charaWithTotalParser,
-        EnumShortNameParser<StageWithTotal> stageWithTotalParser,
+        IRegexParser<LevelWithTotal> levelWithTotalParser,
+        IRegexParser<TCharaWithTotal> charaWithTotalParser,
+        IRegexParser<StageWithTotal> stageWithTotalParser,
         IReadOnlyDictionary<int, SpellCardInfo<Stage, Level>> cardTable,
         IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal>> clearDataDictionary,
         INumberFormatter formatter)
@@ -35,9 +35,9 @@ internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
             $"{formatPrefix}CRG({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelWithTotalParser.Parse(match.Groups[1].Value);
-            var chara = charaWithTotalParser.Parse(match.Groups[2].Value);
-            var stage = stageWithTotalParser.Parse(match.Groups[3].Value);
+            var level = levelWithTotalParser.Parse(match.Groups[1]);
+            var chara = charaWithTotalParser.Parse(match.Groups[2]);
+            var stage = stageWithTotalParser.Parse(match.Groups[3]);
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
             if (stage == StageWithTotal.Extra)

@@ -27,7 +27,7 @@ internal sealed class ScoreTotalReplacer(
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var item = Parsers.ItemWithTotalParser.Parse(match.Groups[1].Value);
+        var item = Parsers.ItemWithTotalParser.Parse(match.Groups[1]);
         var type = IntegerHelper.Parse(match.Groups[2].Value);
 
         switch (type)

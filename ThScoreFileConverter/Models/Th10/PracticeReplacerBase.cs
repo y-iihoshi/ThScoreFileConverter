@@ -9,6 +9,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th10;
@@ -23,9 +24,9 @@ internal class PracticeReplacerBase<TLevel, TChara, TStage> : IStringReplaceable
 
     protected PracticeReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TLevel> levelParser,
-        EnumShortNameParser<TChara> charaParser,
-        EnumShortNameParser<TStage> stageParser,
+        IRegexParser<TLevel> levelParser,
+        IRegexParser<TChara> charaParser,
+        IRegexParser<TStage> stageParser,
         Func<TLevel, bool> levelCanPractice,
         Func<TStage, bool> stageCanPractice,
         Func<TLevel, TChara, TStage, IPractice?> getPractice,
@@ -35,9 +36,9 @@ internal class PracticeReplacerBase<TLevel, TChara, TStage> : IStringReplaceable
             $"{formatPrefix}PRAC({levelParser.Pattern})({charaParser.Pattern})({stageParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelParser.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
-            var stage = stageParser.Parse(match.Groups[3].Value);
+            var level = levelParser.Parse(match.Groups[1]);
+            var chara = charaParser.Parse(match.Groups[2]);
+            var stage = stageParser.Parse(match.Groups[3]);
 
             return levelCanPractice(level) && stageCanPractice(stage)
                 ? formatter.FormatNumber(

@@ -33,10 +33,10 @@ internal class CollectRateReplacerBase<
 
     protected CollectRateReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TGameMode> gameModeParser,
-        EnumShortNameParser<TLvWithT> levelWithTotalParser,
-        EnumShortNameParser<TChWithT> charaWithTotalParser,
-        EnumShortNameParser<StageWithTotal> stageWithTotalParser,
+        IRegexParser<TGameMode> gameModeParser,
+        IRegexParser<TLvWithT> levelWithTotalParser,
+        IRegexParser<TChWithT> charaWithTotalParser,
+        IRegexParser<StageWithTotal> stageWithTotalParser,
         Func<TGameMode, TLvWithT, TChWithT, StageWithTotal, bool> canReplace,
         Func<TGameMode, int, Func<ISpellCard<TLv>, bool>> findCardByModeType,
         Func<TLvWithT, Func<ISpellCard<TLv>, bool>> findCardByLevel,
@@ -61,10 +61,10 @@ internal class CollectRateReplacerBase<
 
     protected CollectRateReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TGameMode> gameModeParser,
-        EnumShortNameParser<TLvWithT> levelWithTotalParser,
-        EnumShortNameParser<TChWithT> charaWithTotalParser,
-        EnumShortNameParser<StageWithTotal> stageWithTotalParser,
+        IRegexParser<TGameMode> gameModeParser,
+        IRegexParser<TLvWithT> levelWithTotalParser,
+        IRegexParser<TChWithT> charaWithTotalParser,
+        IRegexParser<StageWithTotal> stageWithTotalParser,
         Func<TGameMode, TLvWithT, TChWithT, StageWithTotal, bool> canReplace,
         Func<TGameMode, int, Func<ISpellCard<TLv>, bool>> findCardByModeType,
         Func<TLvWithT, Func<ISpellCard<TLv>, bool>> findCardByLevel,
@@ -76,10 +76,10 @@ internal class CollectRateReplacerBase<
             $"{formatPrefix}CRG({gameModeParser.Pattern})({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var mode = gameModeParser.Parse(match.Groups[1].Value);
-            var level = levelWithTotalParser.Parse(match.Groups[2].Value);
-            var chara = charaWithTotalParser.Parse(match.Groups[3].Value);
-            var stage = stageWithTotalParser.Parse(match.Groups[4].Value);
+            var mode = gameModeParser.Parse(match.Groups[1]);
+            var level = levelWithTotalParser.Parse(match.Groups[2]);
+            var chara = charaWithTotalParser.Parse(match.Groups[3]);
+            var stage = stageWithTotalParser.Parse(match.Groups[4]);
             var type = IntegerHelper.Parse(match.Groups[5].Value);
 
             if (!canReplace(mode, level, chara, stage))

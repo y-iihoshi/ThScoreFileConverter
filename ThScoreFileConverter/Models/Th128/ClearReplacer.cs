@@ -26,8 +26,8 @@ internal sealed class ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearDa
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1]);
+        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2]);
 
         if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
             return match.ToString();
@@ -40,7 +40,7 @@ internal sealed class ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearDa
         var stageProgress = scores.Any()
             ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
-        return stageProgress.ToShortName();
+        return stageProgress.ToDisplayName();
     });
 
     public string Replace(string input)

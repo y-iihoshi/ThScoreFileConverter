@@ -27,8 +27,8 @@ internal sealed class ScoreReplacer(
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1]);
+        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2]);
         var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
         var type = IntegerHelper.Parse(match.Groups[4].Value);
 
@@ -50,8 +50,8 @@ internal sealed class ScoreReplacer(
                 return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
             case 3:     // stage
                 if (ranking.DateTime == 0)
-                    return StageProgress.None.ToShortName();
-                return ranking.StageProgress.ToShortName();
+                    return StageProgress.None.ToDisplayName();
+                return ranking.StageProgress.ToDisplayName();
             case 4:     // date & time
                 return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
             case 5:     // slow
