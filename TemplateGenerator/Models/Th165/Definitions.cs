@@ -37,12 +37,12 @@ public static class Definitions
         (Day.NightmareSaturday,  "悪夢土曜"),
         (Day.NightmareDiary,     "ナイトメアダイアリー"),
     }.ToDictionary(
-        static pair => pair.Item1.ToShortName(),
+        static pair => pair.Item1.ToPattern(),
         static pair => (pair.Item1.ToString(), pair.Item2));
 
     public static IReadOnlyDictionary<string, int> NumDreamsPerDay { get; } =
         EnumHelper<Day>.Enumerable.ToDictionary(
-            static day => day.ToShortName(),
+            static day => day.ToPattern(),
             static day => SpellCards.Count(pair => pair.Key.Day == day));
 
     public static int NumNicknames { get; } = Nicknames.Count;

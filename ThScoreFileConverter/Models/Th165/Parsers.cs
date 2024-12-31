@@ -20,8 +20,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Day"/>.
     /// </summary>
-    public static EnumShortNameParser<Day> DayParser { get; } =
-        new EnumShortNameParser<Day>();
+    public static Core.Models.EnumPatternParser<Day> DayParser { get; } = new();
 
     /// <summary>
     /// Gets the pattern used for parsing as a long name of a <see cref="Day"/> enumerator.
