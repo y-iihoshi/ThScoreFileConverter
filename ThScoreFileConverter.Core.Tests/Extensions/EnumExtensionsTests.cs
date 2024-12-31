@@ -7,8 +7,15 @@ namespace ThScoreFileConverter.Core.Tests.Extensions;
 
 public enum Protagonist
 {
-    [EnumAltName("RM", LongName = "博麗 霊夢"), Pattern("RM"), Display(Name = "Hakurei Reimu")] Reimu,
-    [EnumAltName("MR", LongName = "霧雨 魔理沙"), Pattern("MR"), Display(Name = "Kirisame Marisa")] Marisa,
+    [EnumAltName("RM", LongName = "Hakurei Reimu")]
+    [Pattern("RM")]
+    [Display(Name = "博麗 霊夢", ShortName = "霊夢")]
+    Reimu,
+
+    [EnumAltName("MR", LongName = "Kirisame Marisa")]
+    [Pattern("MR")]
+    [Display(Name = "霧雨 魔理沙", ShortName = "魔理沙")]
+    Marisa,
 }
 
 public enum UnnamedCharacter
@@ -36,8 +43,8 @@ public class EnumExtensionsTests
     public void ToLongNameTest()
     {
         Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToLongName());
-        Assert.AreEqual("博麗 霊夢", Protagonist.Reimu.ToLongName());
-        Assert.AreEqual("霧雨 魔理沙", Protagonist.Marisa.ToLongName());
+        Assert.AreEqual("Hakurei Reimu", Protagonist.Reimu.ToLongName());
+        Assert.AreEqual("Kirisame Marisa", Protagonist.Marisa.ToLongName());
         Assert.AreEqual(string.Empty, UnnamedCharacter.大妖精.ToLongName());
         Assert.AreEqual(string.Empty, UnnamedCharacter.小悪魔.ToLongName());
         Assert.AreEqual(string.Empty, UnnamedCharacter.名無しの本読み妖怪.ToLongName());
@@ -55,7 +62,15 @@ public class EnumExtensionsTests
     public void ToDisplayNameTest()
     {
         Assert.AreEqual(nameof(DayOfWeek.Sunday), DayOfWeek.Sunday.ToDisplayName());
-        Assert.AreEqual("Hakurei Reimu", Protagonist.Reimu.ToDisplayName());
-        Assert.AreEqual("Kirisame Marisa", Protagonist.Marisa.ToDisplayName());
+        Assert.AreEqual("博麗 霊夢", Protagonist.Reimu.ToDisplayName());
+        Assert.AreEqual("霧雨 魔理沙", Protagonist.Marisa.ToDisplayName());
+    }
+
+    [TestMethod]
+    public void ToDisplayShortNameTest()
+    {
+        Assert.AreEqual(nameof(DayOfWeek.Sunday), DayOfWeek.Sunday.ToDisplayShortName());
+        Assert.AreEqual("霊夢", Protagonist.Reimu.ToDisplayShortName());
+        Assert.AreEqual("魔理沙", Protagonist.Marisa.ToDisplayShortName());
     }
 }

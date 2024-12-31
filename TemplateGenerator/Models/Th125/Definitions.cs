@@ -32,21 +32,23 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> LevelNames { get; } = new[]
     {
-        (Level.One,     ("Level1",  "1",  "Level 1")),
-        (Level.Two,     ("Level2",  "2",  "Level 2")),
-        (Level.Three,   ("Level3",  "3",  "Level 3")),
-        (Level.Four,    ("Level4",  "4",  "Level 4")),
-        (Level.Five,    ("Level5",  "5",  "Level 5")),
-        (Level.Six,     ("Level6",  "6",  "Level 6")),
-        (Level.Seven,   ("Level7",  "7",  "Level 7")),
-        (Level.Eight,   ("Level8",  "8",  "Level 8")),
-        (Level.Nine,    ("Level9",  "9",  "Level 9")),
-        (Level.Ten,     ("Level10", "10", "Level 10")),
-        (Level.Eleven,  ("Level11", "11", "Level 11")),
-        (Level.Twelve,  ("Level12", "12", "Level 12")),
-        (Level.Extra,   ("LevelEX", "EX", "Level EX")),
-        (Level.Spoiler, ("SPOILER", "??", "SPOILER")),
-    }.ToPatternKeyedDictionary();
+        (Level.One,     "Level1"),
+        (Level.Two,     "Level2"),
+        (Level.Three,   "Level3"),
+        (Level.Four,    "Level4"),
+        (Level.Five,    "Level5"),
+        (Level.Six,     "Level6"),
+        (Level.Seven,   "Level7"),
+        (Level.Eight,   "Level8"),
+        (Level.Nine,    "Level9"),
+        (Level.Ten,     "Level10"),
+        (Level.Eleven,  "Level11"),
+        (Level.Twelve,  "Level12"),
+        (Level.Extra,   "LevelEX"),
+        (Level.Spoiler, "SPOILER"),
+    }.ToDictionary(
+        static pair => pair.Item1.ToPattern(),
+        static pair => (pair.Item2, pair.Item1.ToDisplayShortName(), pair.Item1.ToDisplayName()));
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } = new[]
     {
