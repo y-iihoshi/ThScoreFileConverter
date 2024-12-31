@@ -22,5 +22,5 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="StoryChara"/>.
     /// </summary>
-    public static EnumShortNameParser<StoryChara> StoryCharaParser { get; } = new EnumShortNameParser<StoryChara>();
+    public static Core.Models.EnumPatternParser<StoryChara> StoryCharaParser { get; } = new();
 }

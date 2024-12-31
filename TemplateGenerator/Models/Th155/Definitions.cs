@@ -30,5 +30,5 @@ public static class Definitions
         (StoryChara.TenshiShinmyoumaru, "天子 &amp; 針妙丸"),
         (StoryChara.YukariReimu,        "紫 &amp; 霊夢"),
         (StoryChara.JoonShion,          "女苑 &amp; 紫苑"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 }
