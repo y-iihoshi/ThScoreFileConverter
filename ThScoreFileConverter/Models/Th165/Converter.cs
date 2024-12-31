@@ -79,10 +79,35 @@ internal sealed class Converter : ThConverter
 
     protected override string[] FilterBestShotFiles(string[] files)
     {
-        var pattern = StringHelper.Create($@"bs({Parsers.DayLongPattern})_\d{{2}}.dat");
+        var pairs = new[]
+        {
+            (Day.Sunday,             "01"),
+            (Day.Monday,             "02"),
+            (Day.Tuesday,            "03"),
+            (Day.Wednesday,          "04"),
+            (Day.Thursday,           "05"),
+            (Day.Friday,             "06"),
+            (Day.Saturday,           "07"),
+            (Day.WrongSunday,        "08"),
+            (Day.WrongMonday,        "09"),
+            (Day.WrongTuesday,       "10"),
+            (Day.WrongWednesday,     "11"),
+            (Day.WrongThursday,      "12"),
+            (Day.WrongFriday,        "13"),
+            (Day.WrongSaturday,      "14"),
+            (Day.NightmareSunday,    "15"),
+            (Day.NightmareMonday,    "16"),
+            (Day.NightmareTuesday,   "17"),
+            (Day.NightmareWednesday, "18"),
+            (Day.NightmareThursday,  "19"),
+            (Day.NightmareFriday,    "20"),
+            (Day.NightmareSaturday,  "21"),
+            (Day.NightmareDiary,     "22"),
+        };
+        var dayPattern = string.Join("|", pairs.Select(pair => pair.Item2));
+        var fileNamePattern = StringHelper.Create($@"bs({dayPattern})_\d{{2}}.dat");
 
-        return files.Where(file => Regex.IsMatch(
-            Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
+        return files.Where(file => Regex.IsMatch(Path.GetFileName(file), fileNamePattern, RegexOptions.IgnoreCase)).ToArray();
     }
 
     protected override void ConvertBestShot(Stream input, Stream output)

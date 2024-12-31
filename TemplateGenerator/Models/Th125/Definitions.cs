@@ -60,7 +60,7 @@ public static class Definitions
         SpoilerScenesPerCharacterImpl.ToStringKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumScenesPerLevel { get; } =
-        NumScenesPerLevelImpl.ToStringKeyedDictionary();
+        NumScenesPerLevelImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumScenesPerCharacter { get; } =
         SpoilerScenesPerCharacterImpl.ToDictionary(

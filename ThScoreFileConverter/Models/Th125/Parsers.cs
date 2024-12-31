@@ -5,9 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Linq;
-using ThScoreFileConverter.Core.Extensions;
-using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
 
 namespace ThScoreFileConverter.Models.Th125;
@@ -27,10 +24,4 @@ internal static class Parsers
     /// </summary>
     public static EnumShortNameParser<Chara> CharaParser { get; } =
         new EnumShortNameParser<Chara>();
-
-    /// <summary>
-    /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
-    /// </summary>
-    public static string LevelLongPattern { get; } =
-        string.Join("|", EnumHelper<Level>.Enumerable.Select(lv => lv.ToLongName()));
 }

@@ -79,10 +79,23 @@ internal sealed class Converter : ThConverter
 
     protected override string[] FilterBestShotFiles(string[] files)
     {
-        var pattern = StringHelper.Create($@"sc({Parsers.DayLongPattern})_\d{{2}}.dat");
+        var pairs = new[]
+        {
+            (Day.First,   "01"),
+            (Day.Second,  "02"),
+            (Day.Third,   "03"),
+            (Day.Fourth,  "04"),
+            (Day.Fifth,   "05"),
+            (Day.Sixth,   "06"),
+            (Day.Seventh, "07"),
+            (Day.Eighth,  "08"),
+            (Day.Ninth,   "09"),
+            (Day.Last,    "10"),
+        };
+        var dayPattern = string.Join("|", pairs.Select(pair => pair.Item2));
+        var fileNamePattern = StringHelper.Create($@"sc({dayPattern})_\d{{2}}.dat");
 
-        return files.Where(file => Regex.IsMatch(
-            Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
+        return files.Where(file => Regex.IsMatch(Path.GetFileName(file), fileNamePattern, RegexOptions.IgnoreCase)).ToArray();
     }
 
     protected override void ConvertBestShot(Stream input, Stream output)

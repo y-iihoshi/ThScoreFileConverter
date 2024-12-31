@@ -15,77 +15,66 @@ public enum Level
     /// <summary>
     /// Represents level 1.
     /// </summary>
-    [EnumAltName("1", LongName = "01")]
     [Pattern("1")]
     One,
 
     /// <summary>
     /// Represents level 2.
     /// </summary>
-    [EnumAltName("2", LongName = "02")]
     [Pattern("2")]
     Two,
 
     /// <summary>
     /// Represents level 3.
     /// </summary>
-    [EnumAltName("3", LongName = "03")]
     [Pattern("3")]
     Three,
 
     /// <summary>
     /// Represents level 4.
     /// </summary>
-    [EnumAltName("4", LongName = "04")]
     [Pattern("4")]
     Four,
 
     /// <summary>
     /// Represents level 5.
     /// </summary>
-    [EnumAltName("5", LongName = "05")]
     [Pattern("5")]
     Five,
 
     /// <summary>
     /// Represents level 6.
     /// </summary>
-    [EnumAltName("6", LongName = "06")]
     [Pattern("6")]
     Six,
 
     /// <summary>
     /// Represents level 7.
     /// </summary>
-    [EnumAltName("7", LongName = "07")]
     [Pattern("7")]
     Seven,
 
     /// <summary>
     /// Represents level 8.
     /// </summary>
-    [EnumAltName("8", LongName = "08")]
     [Pattern("8")]
     Eight,
 
     /// <summary>
     /// Represents level 9.
     /// </summary>
-    [EnumAltName("9", LongName = "09")]
     [Pattern("9")]
     Nine,
 
     /// <summary>
     /// Represents level 10.
     /// </summary>
-    [EnumAltName("0", LongName = "10")]
     [Pattern("0")]
     Ten,
 
     /// <summary>
     /// Represents level Extra.
     /// </summary>
-    [EnumAltName("X", LongName = "ex")]
     [Pattern("X")]
     Extra,
 }
