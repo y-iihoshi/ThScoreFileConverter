@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ThScoreFileConverter.Models.Th10;
 
@@ -17,54 +17,54 @@ public enum StageProgress
     /// <summary>
     /// Not played yet.
     /// </summary>
-    [EnumAltName("-------")]
+    [Display(Name = "-------")]
     None,
 
     /// <summary>
     /// Lost at stage 1.
     /// </summary>
-    [EnumAltName("Stage 1")]
+    [Display(Name = "Stage 1")]
     One,
 
     /// <summary>
     /// Lost at stage 2.
     /// </summary>
-    [EnumAltName("Stage 2")]
+    [Display(Name = "Stage 2")]
     Two,
 
     /// <summary>
     /// Lost at stage 3.
     /// </summary>
-    [EnumAltName("Stage 3")]
+    [Display(Name = "Stage 3")]
     Three,
 
     /// <summary>
     /// Lost at stage 4.
     /// </summary>
-    [EnumAltName("Stage 4")]
+    [Display(Name = "Stage 4")]
     Four,
 
     /// <summary>
     /// Lost at stage 5.
     /// </summary>
-    [EnumAltName("Stage 5")]
+    [Display(Name = "Stage 5")]
     Five,
 
     /// <summary>
     /// Lost at stage 6.
     /// </summary>
-    [EnumAltName("Stage 6")]
+    [Display(Name = "Stage 6")]
     Six,
 
     /// <summary>
     /// Lost at Extra stage.
     /// </summary>
-    [EnumAltName("Extra Stage")]
+    [Display(Name = "Extra Stage")]
     Extra,
 
     /// <summary>
     /// All cleared.
     /// </summary>
-    [EnumAltName("All Clear")]
+    [Display(Name = "All Clear")]
     Clear,
 }

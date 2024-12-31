@@ -50,11 +50,11 @@ internal sealed class ClearReplacer(
                         & PlayableStages.Stage6B) != PlayableStages.Stage6B))
                     return "FinalA Clear";
                 else
-                    return stageProgress.ToShortName();
+                    return stageProgress.ToDisplayName();
             }
             else
             {
-                return stageProgress.ToShortName();
+                return stageProgress.ToDisplayName();
             }
         }
         else

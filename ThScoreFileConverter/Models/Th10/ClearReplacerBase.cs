@@ -41,7 +41,7 @@ internal class ClearReplacerBase<TChara, TCharaWithTotal> : IStringReplaceable
             var scores = GetRanking(clearDataDictionary, level, chara).Where(static score => score.DateTime > 0);
             var stageProgress = scores.Any() ? scores.Max(static score => score.StageProgress) : StageProgress.None;
 
-            return (stageProgress == StageProgress.Extra) ? "Not Clear" : stageProgress.ToShortName();
+            return (stageProgress == StageProgress.Extra) ? "Not Clear" : stageProgress.ToDisplayName();
         });
     }
 

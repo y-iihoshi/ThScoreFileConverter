@@ -48,9 +48,9 @@ internal sealed class ScoreReplacer(
             case "3":   // stage
                 if ((level == Level.Extra) &&
                     (EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0') == "--/--"))
-                    return StageProgress.Extra.ToShortName();
+                    return StageProgress.Extra.ToDisplayName();
                 else
-                    return score.StageProgress.ToShortName();
+                    return score.StageProgress.ToDisplayName();
             case "4":   // date
                 return EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
             case "5":   // slow rate

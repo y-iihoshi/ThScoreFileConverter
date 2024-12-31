@@ -45,7 +45,7 @@ internal sealed class ScoreReplacer(
         {
             1 => EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0],
             2 => formatter.FormatNumber(score.Score),
-            3 => score.StageProgress.ToShortName(),
+            3 => score.StageProgress.ToDisplayName(),
             _ => match.ToString(),  // unreachable
         };
     });

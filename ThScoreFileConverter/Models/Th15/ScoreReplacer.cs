@@ -55,12 +55,12 @@ internal sealed class ScoreReplacer : IStringReplaceable
                     return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
                 case 3:     // stage
                     if (ranking.DateTime == 0)
-                        return Th13.StageProgress.None.ToShortName();
+                        return Th13.StageProgress.None.ToDisplayName();
                     if (ranking.StageProgress == Th13.StageProgress.Extra)
                         return "Not Clear";
                     if (ranking.StageProgress == Th13.StageProgress.ExtraClear)
-                        return Th13.StageProgress.Clear.ToShortName();
-                    return ranking.StageProgress.ToShortName();
+                        return Th13.StageProgress.Clear.ToDisplayName();
+                    return ranking.StageProgress.ToDisplayName();
                 case 4:     // date & time
                     return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
                 case 5:     // slow

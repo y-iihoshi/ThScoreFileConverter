@@ -47,9 +47,9 @@ internal sealed class ClearReplacer : IStringReplaceable
             if (stageProgress == Th13.StageProgress.Extra)
                 return "Not Clear";
             else if (stageProgress == Th13.StageProgress.ExtraClear)
-                return Th13.StageProgress.Clear.ToShortName();
+                return Th13.StageProgress.Clear.ToDisplayName();
             else
-                return stageProgress.ToShortName();
+                return stageProgress.ToDisplayName();
         });
     }
 

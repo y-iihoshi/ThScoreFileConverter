@@ -59,7 +59,7 @@ public class ClearReplacerTests
     public void ReplaceTest()
     {
         var replacer = new ClearReplacer(Rankings);
-        Assert.AreEqual(StageProgress.Four.ToShortName(), replacer.Replace("%T06CLEARHRB"));
+        Assert.AreEqual(StageProgress.Four.ToDisplayName(), replacer.Replace("%T06CLEARHRB"));
     }
 
     [TestMethod]
@@ -79,7 +79,7 @@ public class ClearReplacerTests
     {
         var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
         var replacer = new ClearReplacer(rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T06CLEARHRB"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T06CLEARHRB"));
     }
 
     [TestMethod]
@@ -91,21 +91,21 @@ public class ClearReplacerTests
             { (mock.Chara, mock.Level), ImmutableList<IHighScore>.Empty },
         };
         var replacer = new ClearReplacer(rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T06CLEARHRB"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T06CLEARHRB"));
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentLevel()
     {
         var replacer = new ClearReplacer(Rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T06CLEARNRB"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T06CLEARNRB"));
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentChara()
     {
         var replacer = new ClearReplacer(Rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T06CLEARHRA"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T06CLEARHRA"));
     }
 
     [TestMethod]

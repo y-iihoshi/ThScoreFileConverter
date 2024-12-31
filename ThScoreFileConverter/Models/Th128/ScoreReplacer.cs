@@ -50,8 +50,8 @@ internal sealed class ScoreReplacer(
                 return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
             case 3:     // stage
                 if (ranking.DateTime == 0)
-                    return StageProgress.None.ToShortName();
-                return ranking.StageProgress.ToShortName();
+                    return StageProgress.None.ToDisplayName();
+                return ranking.StageProgress.ToDisplayName();
             case 4:     // date & time
                 return DateTimeHelper.GetString(ranking.DateTime == 0 ? null : ranking.DateTime);
             case 5:     // slow

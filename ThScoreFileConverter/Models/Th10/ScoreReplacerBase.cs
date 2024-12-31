@@ -49,10 +49,10 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
                     return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
                 case 3:     // stage
                     if (score.DateTime == 0)
-                        return StageProgress.None.ToShortName();
+                        return StageProgress.None.ToDisplayName();
                     if (score.StageProgress == StageProgress.Extra)
                         return "Not Clear";
-                    return score.StageProgress.ToShortName();
+                    return score.StageProgress.ToDisplayName();
                 case 4:     // date & time
                     return DateTimeHelper.GetString(score.DateTime == 0 ? null : score.DateTime);
                 case 5:     // slow

@@ -64,9 +64,9 @@ internal class ClearReplacerBase<
             if (stageProgress == StageProgress.Extra)
                 return "Not Clear";
             else if (stageProgress == StageProgress.ExtraClear)
-                return StageProgress.Clear.ToShortName();
+                return StageProgress.Clear.ToDisplayName();
             else
-                return stageProgress.ToShortName();
+                return stageProgress.ToDisplayName();
         });
     }
 

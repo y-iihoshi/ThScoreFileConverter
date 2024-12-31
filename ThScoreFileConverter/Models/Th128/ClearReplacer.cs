@@ -40,7 +40,7 @@ internal sealed class ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearDa
         var stageProgress = scores.Any()
             ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
-        return stageProgress.ToShortName();
+        return stageProgress.ToDisplayName();
     });
 
     public string Replace(string input)

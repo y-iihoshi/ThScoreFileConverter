@@ -41,11 +41,11 @@ internal class ClearReplacerBase<TLevel, TChara, TStageProgress> : IStringReplac
             if (getRanking(level, chara) is { } ranking)
             {
                 var stageProgress = ranking.Count > 0 ? ranking.Max(static score => score.StageProgress) : default;
-                return isAdditionalStage(stageProgress) ? "Not Clear" : stageProgress.ToShortName();
+                return isAdditionalStage(stageProgress) ? "Not Clear" : stageProgress.ToDisplayName();
             }
             else
             {
-                return StageProgress.None.ToShortName();
+                return StageProgress.None.ToDisplayName();
             }
         });
     }
