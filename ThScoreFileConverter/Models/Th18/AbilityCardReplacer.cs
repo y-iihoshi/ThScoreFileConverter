@@ -9,6 +9,7 @@
 
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th18;
@@ -16,11 +17,12 @@ namespace ThScoreFileConverter.Models.Th18;
 // %T18ABIL[xx]
 internal sealed class AbilityCardReplacer(IAbilityCardHolder holder) : IStringReplaceable
 {
-    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL(\d{{2}})");
+    private static readonly IntegerParser NumberParser = new(@"\d{2}");
+    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL({NumberParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = NumberParser.Parse(match.Groups[1]);
 
         if (!Definitions.AbilityCardTable.TryGetValue(number - 1, out var card))
             return match.ToString();
