@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th07;
@@ -19,14 +20,16 @@ namespace ThScoreFileConverter.Models.Th07;
 internal sealed class CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly IntegerParser CardNumberParser = new(@"\d{3}");
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}C(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([1-3])");
+        $"{Definitions.FormatPrefix}C({CardNumberParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = CardNumberParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-        var type = IntegerHelper.Parse(match.Groups[3].Value);
+        var type = TypeParser.Parse(match.Groups[3]);
 
         Func<ICardAttack, long> getValue = type switch
         {

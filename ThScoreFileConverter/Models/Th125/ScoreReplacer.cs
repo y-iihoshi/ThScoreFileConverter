@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th125;
@@ -17,15 +18,16 @@ namespace ThScoreFileConverter.Models.Th125;
 // %T125SCR[w][x][y][z]
 internal sealed class ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatter formatter) : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-5]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}SCR({Parsers.CharaParser.Pattern})({Parsers.LevelParser.Pattern})([1-9])([1-5])");
+        $"{Definitions.FormatPrefix}SCR({Parsers.CharaParser.Pattern})({Parsers.LevelParser.Pattern})({Parsers.SceneParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
         var level = Parsers.LevelParser.Parse(match.Groups[2]);
-        var scene = IntegerHelper.Parse(match.Groups[3].Value);
-        var type = IntegerHelper.Parse(match.Groups[4].Value);
+        var scene = Parsers.SceneParser.Parse(match.Groups[3]);
+        var type = TypeParser.Parse(match.Groups[4]);
 
         var key = (level, scene);
         if (!Definitions.SpellCards.ContainsKey(key))

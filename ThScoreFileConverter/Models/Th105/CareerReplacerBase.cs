@@ -22,6 +22,8 @@ namespace ThScoreFileConverter.Models.Th105;
 internal class CareerReplacerBase<TChara> : IStringReplaceable
     where TChara : struct, Enum
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
@@ -35,13 +37,14 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
     {
         var numLevels = EnumHelper<Level>.NumValues;
         var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
+        var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
-        this.pattern = StringHelper.Create($@"{formatPrefix}C(\d{{{numDigits}}})({charaParser.Pattern})([1-3])");
+        this.pattern = StringHelper.Create($"{formatPrefix}C({cardNumberParser.Pattern})({charaParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = cardNumberParser.Parse(match.Groups[1]);
             var chara = charaParser.Parse(match.Groups[2]);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var type = TypeParser.Parse(match.Groups[3]);
 
             if (!canReplace(number, chara, type))
                 return match.ToString();

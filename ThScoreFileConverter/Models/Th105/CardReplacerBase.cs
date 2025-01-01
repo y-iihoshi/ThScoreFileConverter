@@ -36,11 +36,12 @@ internal class CardReplacerBase<TChara> : IStringReplaceable
     {
         var numLevels = EnumHelper<Level>.NumValues;
         var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
+        var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
-        this.pattern = StringHelper.Create($@"{formatPrefix}CARD(\d{{{numDigits}}})({charaParser.Pattern})([NR])");
+        this.pattern = StringHelper.Create($"{formatPrefix}CARD({cardNumberParser.Pattern})({charaParser.Pattern})([NR])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = cardNumberParser.Parse(match.Groups[1]);
             var chara = charaParser.Parse(match.Groups[2]);
             var type = match.Groups[3].Value.ToUpperInvariant();
 

@@ -18,4 +18,9 @@ internal static class Parsers
     /// Gets the parser of <see cref="Level"/>.
     /// </summary>
     public static Core.Models.EnumPatternParser<Level> LevelParser { get; } = new();
+
+    /// <summary>
+    /// Gets the parser of scenes.
+    /// </summary>
+    public static Core.Models.IntegerParser SceneParser { get; } = new(@"[1-9]");
 }

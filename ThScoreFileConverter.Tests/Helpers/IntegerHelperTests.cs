@@ -48,15 +48,6 @@ public class IntegerHelperTests
         _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => IntegerHelper.ToOneBased(10));
     }
 
-    [TestMethod]
-    public void ParseTest()
-    {
-        Assert.AreEqual(123, IntegerHelper.Parse("123"));
-        _ = Assert.ThrowsException<ArgumentNullException>(() => IntegerHelper.Parse(null!));
-        _ = Assert.ThrowsException<FormatException>(() => IntegerHelper.Parse(string.Empty));
-        _ = Assert.ThrowsException<FormatException>(() => IntegerHelper.Parse("abc"));
-    }
-
     [DataTestMethod]
     [DataRow(0, 1)]
     [DataRow(1, 1)]

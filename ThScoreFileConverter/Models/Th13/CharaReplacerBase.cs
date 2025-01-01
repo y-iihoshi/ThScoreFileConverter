@@ -25,6 +25,8 @@ internal class CharaReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, 
     where TStPrac : struct, Enum
     where TScoreData : Th10.IScoreData<StageProgress>
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
@@ -38,11 +40,11 @@ internal class CharaReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, 
             TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>> clearDataDictionary,
         INumberFormatter formatter)
     {
-        this.pattern = StringHelper.Create($"{formatPrefix}CHARA({charaWithTotalParser.Pattern})([1-3])");
+        this.pattern = StringHelper.Create($"{formatPrefix}CHARA({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var chara = charaWithTotalParser.Parse(match.Groups[1]);
-            var type = IntegerHelper.Parse(match.Groups[2].Value);
+            var type = TypeParser.Parse(match.Groups[2]);
 
             Func<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>, long> getValueByType = type switch
             {

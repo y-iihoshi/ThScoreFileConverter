@@ -24,14 +24,15 @@ internal sealed class ScoreReplacer(
     INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly IntegerParser RankParser = new(@"\d");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([\dA-G])");
+        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({RankParser.Pattern})([\dA-G])");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-        var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
+        var rank = IntegerHelper.ToZeroBased(RankParser.Parse(match.Groups[3]));
         var type = match.Groups[4].Value.ToUpperInvariant();
 
         var key = (chara, level);

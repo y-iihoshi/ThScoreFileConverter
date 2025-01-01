@@ -39,11 +39,12 @@ internal class CardReplacerBase<TStage, TLevel> : IStringReplaceable
         Func<SpellCardInfo<TStage, TLevel>, string> cardLevelToString)
     {
         var numDigits = IntegerHelper.GetNumDigits(cardTable.Count);
+        var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
-        this.pattern = StringHelper.Create($@"{formatPrefix}CARD(\d{{{numDigits}}})([NR])");
+        this.pattern = StringHelper.Create($"{formatPrefix}CARD({cardNumberParser.Pattern})([NR])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = cardNumberParser.Parse(match.Groups[1]);
             var type = match.Groups[2].Value.ToUpperInvariant();
 
             if (cardTable.TryGetValue(number, out var cardInfo))

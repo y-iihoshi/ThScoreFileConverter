@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Globalization;
 using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Helpers;
@@ -38,16 +37,6 @@ public static class IntegerHelper
         Guard.IsInRange(input, 0, 10);
 
         return (input + 1) % 10;
-    }
-
-    /// <summary>
-    /// Converts the string representation of a number to its 32-bit signed integer equivalent.
-    /// </summary>
-    /// <param name="s">A string containing a number to convert.</param>
-    /// <returns>A 32-bit signed integer equivalent to the number contained in <paramref name="s"/>.</returns>
-    public static int Parse(string s)
-    {
-        return int.Parse(s, CultureInfo.InvariantCulture);
     }
 
     /// <summary>

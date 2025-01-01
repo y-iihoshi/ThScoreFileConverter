@@ -19,8 +19,9 @@ namespace ThScoreFileConverter.Models.Th06;
 // %T06CRG[x][y]
 internal sealed class CollectRateReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[12]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}CRG({Parsers.StageWithTotalParser.Pattern})([12])");
+        $"{Definitions.FormatPrefix}CRG({Parsers.StageWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -29,7 +30,7 @@ internal sealed class CollectRateReplacer : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var stage = Parsers.StageWithTotalParser.Parse(match.Groups[1]);
-            var type = IntegerHelper.Parse(match.Groups[2].Value);
+            var type = TypeParser.Parse(match.Groups[2]);
 
 #pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ICardAttack, bool> findByStage = stage switch

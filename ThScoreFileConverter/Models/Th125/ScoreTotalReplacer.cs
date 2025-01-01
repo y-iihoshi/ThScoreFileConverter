@@ -18,8 +18,10 @@ namespace ThScoreFileConverter.Models.Th125;
 // %T125SCRTL[x][y][z]
 internal sealed class ScoreTotalReplacer : IStringReplaceable
 {
+    private static readonly Core.Models.IntegerParser MethodParser = new(@"[12]");
+    private static readonly Core.Models.IntegerParser TypeParser = new(@"[1-5]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}SCRTL({Parsers.CharaParser.Pattern})([12])([1-5])");
+        $"{Definitions.FormatPrefix}SCRTL({Parsers.CharaParser.Pattern})({MethodParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -30,8 +32,8 @@ internal sealed class ScoreTotalReplacer : IStringReplaceable
         static string EvaluatorImpl(Match match, IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
             var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
-            var method = IntegerHelper.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var method = MethodParser.Parse(match.Groups[2]);
+            var type = TypeParser.Parse(match.Groups[3]);
 
             bool IsTarget(IScore score)
             {

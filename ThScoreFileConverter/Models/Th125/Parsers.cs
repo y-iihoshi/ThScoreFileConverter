@@ -24,4 +24,9 @@ internal static class Parsers
     /// </summary>
     public static EnumShortNameParser<Chara> CharaParser { get; } =
         new EnumShortNameParser<Chara>();
+
+    /// <summary>
+    /// Gets the parser of scenes.
+    /// </summary>
+    public static Core.Models.IntegerParser SceneParser { get; } = new(@"[1-9]");
 }

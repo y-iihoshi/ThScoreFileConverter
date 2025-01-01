@@ -19,15 +19,16 @@ internal sealed class PracticeReplacer(
     IReadOnlyDictionary<Chara, IPracticeScore> practiceScores, INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly Core.Models.IntegerParser TypeParser = new(@"[12]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})([12])");
+        $"{Definitions.FormatPrefix}PRAC({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({Parsers.StageParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
         var stage = Parsers.StageParser.Parse(match.Groups[3]);
-        var type = IntegerHelper.Parse(match.Groups[4].Value);
+        var type = TypeParser.Parse(match.Groups[4]);
 
         int GetValue(IPracticeScore score)
         {

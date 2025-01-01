@@ -10,21 +10,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th17;
 
 internal class AchievementReplacerBase : IStringReplaceable
 {
+    private static readonly IntegerParser NumberParser = new(@"\d{2}");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
     protected AchievementReplacerBase(string formatPrefix, IReadOnlyList<string> achievementNames, IAchievementHolder achievementHolder)
     {
-        this.pattern = StringHelper.Create($@"{formatPrefix}ACHV(\d{{2}})");
+        this.pattern = StringHelper.Create($"{formatPrefix}ACHV({NumberParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = NumberParser.Parse(match.Groups[1]);
 
             if (number <= 0 || number > achievementNames.Count)
                 return match.ToString();

@@ -20,6 +20,11 @@ internal static class Parsers
     public static Core.Models.EnumPatternParser<Day> DayParser { get; } = new();
 
     /// <summary>
+    /// Gets the parser of scenes.
+    /// </summary>
+    public static SceneParser SceneParser { get; } = new();
+
+    /// <summary>
     /// Gets the parser of <see cref="ItemWithTotal"/>.
     /// </summary>
     public static Core.Models.EnumPatternParser<ItemWithTotal> ItemWithTotalParser { get; } = new();
