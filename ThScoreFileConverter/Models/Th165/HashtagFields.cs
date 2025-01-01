@@ -29,6 +29,7 @@ internal readonly struct HashtagFields(int data1, int data2, int data3)
             Masks[i] = BitVector32.CreateMask(Masks[i - 1]);
         }
     }
+#pragma warning restore CA2207 // Initialize value type static fields inline
 
     public IEnumerable<int> Data => this.data?.Select(vector => vector.Data) ?? [];
 
