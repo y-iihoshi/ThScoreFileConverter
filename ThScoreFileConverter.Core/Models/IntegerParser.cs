@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Diagnostics;
@@ -15,7 +16,7 @@ namespace ThScoreFileConverter.Core.Models;
 /// Provides a parser for an integer value.
 /// </summary>
 /// <param name="pattern">The regular expression used for parsing.</param>
-public sealed class IntegerParser(string pattern) : IRegexParser<int>
+public class IntegerParser([StringSyntax(StringSyntaxAttribute.Regex)] string pattern) : IRegexParser<int>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="IntegerParser"/> class.
@@ -29,7 +30,7 @@ public sealed class IntegerParser(string pattern) : IRegexParser<int>
     public string Pattern { get; } = pattern;
 
     /// <inheritdoc/>
-    public int Parse(Group group)
+    public virtual int Parse(Group group)
     {
         Guard.IsNotNull(group);
         return int.Parse(group.Value, CultureInfo.InvariantCulture);

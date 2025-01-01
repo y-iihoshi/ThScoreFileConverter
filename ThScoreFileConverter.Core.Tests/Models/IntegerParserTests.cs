@@ -19,12 +19,18 @@ public class IntegerParserTests
             return $"{name}^2 == {value * value}";
         });
 
-        var power_a_2 = Regex.Replace("var a = 1;", pattern, evaluator);
-        Assert.AreEqual("a^2 == 1", power_a_2);
-        var power_b_2 = Regex.Replace("var b = 23;", pattern, evaluator);
-        Assert.AreEqual("b^2 == 529", power_b_2);
-        var power_c_2 = Regex.Replace("var c = 456;", pattern, evaluator);
-        Assert.AreEqual("c^2 == 207936", power_c_2);
+        var pairs = new[]
+        {
+            ("var a = 1;",   "a^2 == 1"),
+            ("var b = 23;",  "b^2 == 529"),
+            ("var c = 456;", "c^2 == 207936"),
+        };
+
+        foreach (var pair in pairs)
+        {
+            var replaced = Regex.Replace(pair.Item1, pattern, evaluator);
+            Assert.AreEqual(pair.Item2, replaced);
+        }
     }
 
     [TestMethod]
@@ -40,15 +46,19 @@ public class IntegerParserTests
             return $"{name}^2 == {value * value}";
         });
 
-        var power_a_2 = Regex.Replace("var a = 1;", pattern, evaluator);
-        Assert.AreEqual("var a = 1;", power_a_2);
-        var power_b_2 = Regex.Replace("var b = 2;", pattern, evaluator);
-        Assert.AreEqual("b^2 == 4", power_b_2);
-        var power_c_2 = Regex.Replace("var c = 3;", pattern, evaluator);
-        Assert.AreEqual("c^2 == 9", power_c_2);
-        var power_d_2 = Regex.Replace("var d = 4;", pattern, evaluator);
-        Assert.AreEqual("d^2 == 16", power_d_2);
-        var power_e_2 = Regex.Replace("var e = 5;", pattern, evaluator);
-        Assert.AreEqual("var e = 5;", power_e_2);
+        var pairs = new[]
+        {
+            ("var a = 1;", "var a = 1;"),
+            ("var b = 2;", "b^2 == 4"),
+            ("var c = 3;", "c^2 == 9"),
+            ("var d = 4;", "d^2 == 16"),
+            ("var e = 5;", "var e = 5;"),
+        };
+
+        foreach (var pair in pairs)
+        {
+            var replaced = Regex.Replace(pair.Item1, pattern, evaluator);
+            Assert.AreEqual(pair.Item2, replaced);
+        }
     }
 }
