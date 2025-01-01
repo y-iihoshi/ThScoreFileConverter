@@ -25,7 +25,7 @@ public class IntegerParserTests
         Assert.AreEqual("b^2 == 529", power_b_2);
         var power_c_2 = Regex.Replace("var c = 456;", pattern, evaluator);
         Assert.AreEqual("c^2 == 207936", power_c_2);
-	}
+    }
 
     [TestMethod]
     public void ParseTest()
