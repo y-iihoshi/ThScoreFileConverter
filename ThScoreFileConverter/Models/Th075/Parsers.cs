@@ -29,4 +29,9 @@ internal static class Parsers
     /// </summary>
     public static EnumShortNameParser<Chara> CharaParser { get; } =
         new EnumShortNameParser<Chara>();
+
+    /// <summary>
+    /// Gets the parser for card numbers.
+    /// </summary>
+    public static Core.Models.IntegerParser CardNumberParser { get; } = new(@"\d{3}");
 }

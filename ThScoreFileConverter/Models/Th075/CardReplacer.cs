@@ -21,11 +21,11 @@ internal sealed class CardReplacer(
     : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}CARD(\d{{3}})({Parsers.CharaParser.Pattern})([NR])");
+        $@"{Definitions.FormatPrefix}CARD({Parsers.CardNumberParser.Pattern})({Parsers.CharaParser.Pattern})([NR])");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = Parsers.CardNumberParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
         var type = match.Groups[3].Value.ToUpperInvariant();
 
