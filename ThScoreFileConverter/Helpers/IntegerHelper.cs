@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Globalization;
 using CommunityToolkit.Diagnostics;
 
 namespace ThScoreFileConverter.Helpers;
