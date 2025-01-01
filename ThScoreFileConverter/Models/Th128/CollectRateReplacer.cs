@@ -21,8 +21,9 @@ namespace ThScoreFileConverter.Models.Th128;
 // %T128CRG[x][yyy][z]
 internal sealed class CollectRateReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}CRG({Parsers.LevelWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})([1-3])");
+        $"{Definitions.FormatPrefix}CRG({Parsers.LevelWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -32,7 +33,7 @@ internal sealed class CollectRateReplacer : IStringReplaceable
         {
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
             var stage = Parsers.StageWithTotalParser.Parse(match.Groups[2]);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var type = TypeParser.Parse(match.Groups[3]);
 
             if (stage == StageWithTotal.Extra)
                 return match.ToString();
