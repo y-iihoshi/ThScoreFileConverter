@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th165;
@@ -18,11 +19,12 @@ namespace ThScoreFileConverter.Models.Th165;
 internal sealed class ScoreTotalReplacer(IReadOnlyList<IScore> scores, IStatus status, INumberFormatter formatter)
     : IStringReplaceable
 {
-    private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}SCRTL([1-6])");
+    private static readonly IntegerParser TypeParser = new(@"[1-6]");
+    private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}SCRTL({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var type = IntegerHelper.Parse(match.Groups[1].Value);
+        var type = TypeParser.Parse(match.Groups[1]);
 
         return type switch
         {

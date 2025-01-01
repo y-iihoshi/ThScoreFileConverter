@@ -9,6 +9,7 @@
 
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th165;
@@ -16,11 +17,12 @@ namespace ThScoreFileConverter.Models.Th165;
 // %T165NICK[xx]
 internal sealed class NicknameReplacer(IStatus status) : IStringReplaceable
 {
-    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}NICK(\d{{2}})");
+    private static readonly IntegerParser NumberParser = new(@"\d{2}");
+    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}NICK({NumberParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = NumberParser.Parse(match.Groups[1]);
 
         if ((number > 0) && (number <= Definitions.Nicknames.Count))
         {

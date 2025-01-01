@@ -20,12 +20,12 @@ internal sealed class ShotReplacer(
     : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}SHOT({Parsers.DayParser.Pattern})([1-7])");
+        $"{Definitions.FormatPrefix}SHOT({Parsers.DayParser.Pattern})({Parsers.SceneParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var day = Parsers.DayParser.Parse(match.Groups[1]);
-        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+        var scene = Parsers.SceneParser.Parse(match.Groups[2]);
 
         var key = (day, scene);
         if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
