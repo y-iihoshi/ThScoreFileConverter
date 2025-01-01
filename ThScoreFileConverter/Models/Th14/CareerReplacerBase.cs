@@ -28,6 +28,8 @@ internal class CareerReplacerBase<
     where TStPrac : struct, Enum
     where TScoreData : IScoreData
 {
+    private static readonly IntegerParser TypeParser = new(@"[12]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
@@ -41,15 +43,16 @@ internal class CareerReplacerBase<
         INumberFormatter formatter)
     {
         var numDigits = IntegerHelper.GetNumDigits(validCardNumbers.Count());
+        var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
         this.pattern = StringHelper.Create(
-            $@"{formatPrefix}C({gameModeParser.Pattern})(\d{{{numDigits}}})({charaWithTotalParser.Pattern})([12])");
+            $@"{formatPrefix}C({gameModeParser.Pattern})({cardNumberParser.Pattern})({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var mode = gameModeParser.Parse(match.Groups[1]);
-            var number = IntegerHelper.Parse(match.Groups[2].Value);
+            var number = cardNumberParser.Parse(match.Groups[2]);
             var chara = charaWithTotalParser.Parse(match.Groups[3]);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var type = TypeParser.Parse(match.Groups[4]);
 
             Func<Th13.ISpellCard<TLv>, int> getCount = (mode, type) switch
             {
