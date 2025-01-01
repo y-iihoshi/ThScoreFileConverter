@@ -15,7 +15,7 @@ public class CloseWindowCommandTests
         Assert.IsNotNull(instance);
     }
 
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void CanExecuteTest()
     {
         var instance = CloseWindowCommand.Instance;
@@ -37,7 +37,7 @@ public class CloseWindowCommandTests
         Assert.IsFalse(instance.CanExecute(5));
     }
 
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void ExecuteTest()
     {
         var instance = CloseWindowCommand.Instance;
@@ -73,7 +73,7 @@ public class CloseWindowCommandTests
         instance.Execute(5);
     }
 
-    [STATestMethod]
+    [SkipOrSTATestMethod]
     public void CanExecuteChangedTest()
     {
         var instance = CloseWindowCommand.Instance;

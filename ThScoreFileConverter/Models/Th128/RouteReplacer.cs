@@ -29,7 +29,7 @@ internal sealed class RouteReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var route = Parsers.RouteWithTotalParser.Parse(match.Groups[1].Value);
+            var route = Parsers.RouteWithTotalParser.Parse(match.Groups[1]);
             var type = IntegerHelper.Parse(match.Groups[2].Value);
 
             Func<IClearData, long> getValueByType = type switch

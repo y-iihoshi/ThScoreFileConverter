@@ -28,7 +28,7 @@ internal sealed class ClearTimeReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
 
 #pragma warning disable IDE0072 // Add missing cases to switch expression

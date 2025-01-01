@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ThScoreFileConverter.Models.Th16;
 
@@ -17,30 +17,30 @@ public enum Season
     /// <summary>
     /// Spring.
     /// </summary>
-    [EnumAltName("春")]
+    [Display(Name = "春")]
     Spring,
 
     /// <summary>
     /// Summer.
     /// </summary>
-    [EnumAltName("夏")]
+    [Display(Name = "夏")]
     Summer,
 
     /// <summary>
     /// Autumn.
     /// </summary>
-    [EnumAltName("秋")]
+    [Display(Name = "秋")]
     Autumn,
 
     /// <summary>
     /// Winter.
     /// </summary>
-    [EnumAltName("冬")]
+    [Display(Name = "冬")]
     Winter,
 
     /// <summary>
     /// Doyou, the fifth season.
     /// </summary>
-    [EnumAltName("土用")]
+    [Display(Name = "土用")]
     Full,
 }

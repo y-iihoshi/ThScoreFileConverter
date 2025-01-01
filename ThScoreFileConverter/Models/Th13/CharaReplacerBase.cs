@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th13;
@@ -29,7 +30,7 @@ internal class CharaReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, 
 
     protected CharaReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TChWithT> charaWithTotalParser,
+        IRegexParser<TChWithT> charaWithTotalParser,
         Func<TChWithT, bool> charaIsTotal,
         Func<TLvPracWithT, bool> levelIsToBeSummed,
         Func<long, Time> createTime,
@@ -40,7 +41,7 @@ internal class CharaReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, 
         this.pattern = StringHelper.Create($"{formatPrefix}CHARA({charaWithTotalParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var chara = charaWithTotalParser.Parse(match.Groups[1].Value);
+            var chara = charaWithTotalParser.Parse(match.Groups[1]);
             var type = IntegerHelper.Parse(match.Groups[2].Value);
 
             Func<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>, long> getValueByType = type switch

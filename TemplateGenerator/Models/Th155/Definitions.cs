@@ -14,8 +14,8 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
-            static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+            static level => level.ToPattern(),
+            static level => level.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> StoryCharacterNames { get; } = new[]
     {
@@ -30,5 +30,5 @@ public static class Definitions
         (StoryChara.TenshiShinmyoumaru, "天子 &amp; 針妙丸"),
         (StoryChara.YukariReimu,        "紫 &amp; 霊夢"),
         (StoryChara.JoonShion,          "女苑 &amp; 紫苑"),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 }

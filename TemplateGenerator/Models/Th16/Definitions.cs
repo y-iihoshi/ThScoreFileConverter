@@ -37,11 +37,11 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => CardTable.Count(pair => pair.Value.Level == level));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 }

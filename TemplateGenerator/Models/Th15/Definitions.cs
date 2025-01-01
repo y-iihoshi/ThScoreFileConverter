@@ -38,17 +38,16 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => CardTable.Count(pair => pair.Value.Level == level));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
-    public static IReadOnlyDictionary<string, string> GameModes { get; } = new[]
-    {
-        (GameMode.Pointdevice, "完全無欠モード"),
-        (GameMode.Legacy,      "レガシーモード"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> GameModes { get; } =
+        EnumHelper<GameMode>.Enumerable.ToDictionary(
+            static mode => mode.ToPattern(),
+            static mode => mode.ToDisplayName());
 }

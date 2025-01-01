@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ThScoreFileConverter.Core.Models;
 
 /// <summary>
@@ -15,12 +17,14 @@ public enum GameMode
     /// <summary>
     /// Story Mode.
     /// </summary>
-    [EnumAltName("S")]
+    [Display(Name = "ゲーム本編")]
+    [Pattern("S")]
     Story,
 
     /// <summary>
     /// Spell Practice Mode.
     /// </summary>
-    [EnumAltName("P")]
+    [Display(Name = "スペルプラクティス")]
+    [Pattern("P")]
     SpellPractice,
 }

@@ -30,8 +30,8 @@ internal class CharaExReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac
 
     protected CharaExReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<LevelWithTotal> levelWithTotalParser,
-        EnumShortNameParser<TChWithT> charaWithTotalParser,
+        IRegexParser<LevelWithTotal> levelWithTotalParser,
+        IRegexParser<TChWithT> charaWithTotalParser,
         Func<LevelWithTotal, bool> levelIsTotal,
         Func<TChWithT, bool> charaIsTotal,
         Func<TLvPracWithT, bool> levelIsToBeSummed,
@@ -44,8 +44,8 @@ internal class CharaExReplacerBase<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac
             $"{formatPrefix}CHARAEX({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})([1-3])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelWithTotalParser.Parse(match.Groups[1].Value);
-            var chara = charaWithTotalParser.Parse(match.Groups[2].Value);
+            var level = levelWithTotalParser.Parse(match.Groups[1]);
+            var chara = charaWithTotalParser.Parse(match.Groups[2]);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 
             Func<IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TScoreData>, long> getValueByType = (level, type) switch

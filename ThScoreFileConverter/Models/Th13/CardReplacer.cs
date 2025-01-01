@@ -28,7 +28,7 @@ internal sealed class CardReplacer(
         Definitions.CardTable,
         hideUntriedCards,
         cardNumber => CardHasTried(clearDataDictionary, cardNumber),
-        LevelToString)
+        static level => level.ToDisplayName())
 {
     private static bool CardHasTried(
         IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, int cardNumber)
@@ -36,11 +36,5 @@ internal sealed class CardReplacer(
         return clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
             && clearData.Cards.TryGetValue(cardNumber, out var card)
             && card.HasTried;
-    }
-
-    private static string LevelToString(LevelPractice level)
-    {
-        var levelName = level.ToLongName();
-        return (levelName.Length > 0) ? levelName : level.ToString();
     }
 }

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th095;
@@ -24,7 +25,7 @@ internal class CardReplacerBase<TLevel, TEnemy> : IStringReplaceable
 
     protected CardReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TLevel> levelParser,
+        IRegexParser<TLevel> levelParser,
         IReadOnlyDictionary<(TLevel Level, int Scene), (TEnemy Enemy, string Card)> spellCards,
         bool hideUntriedCards,
         Func<TLevel, int, bool> levelSceneHasTried)
@@ -32,7 +33,7 @@ internal class CardReplacerBase<TLevel, TEnemy> : IStringReplaceable
         this.pattern = StringHelper.Create($"{formatPrefix}CARD({levelParser.Pattern})([1-9])([12])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelParser.Parse(match.Groups[1].Value);
+            var level = levelParser.Parse(match.Groups[1]);
             var scene = IntegerHelper.Parse(match.Groups[2].Value);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 

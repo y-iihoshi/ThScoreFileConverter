@@ -30,8 +30,8 @@ internal sealed class RouteExReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
-            var route = Parsers.RouteWithTotalParser.Parse(match.Groups[2].Value);
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
+            var route = Parsers.RouteWithTotalParser.Parse(match.Groups[2]);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 
             if ((level == LevelWithTotal.Extra) &&

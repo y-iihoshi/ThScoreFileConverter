@@ -19,8 +19,8 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
         EnumHelper<LevelPractice>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
-            static level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+            static level => level.ToPattern(),
+            static level => level.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
     {
@@ -43,24 +43,17 @@ public class Definitions : Models.Definitions
 
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } = new[]
-    {
-        (StagePractice.One,       "Stage 1"),
-        (StagePractice.Two,       "Stage 2"),
-        (StagePractice.Three,     "Stage 3"),
-        (StagePractice.Four,      "Stage 4"),
-        (StagePractice.Five,      "Stage 5"),
-        (StagePractice.Six,       "Stage 6"),
-        (StagePractice.Extra,     "Extra"),
-        (StagePractice.OverDrive, "Over Drive"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> StageSpellPracticeNames { get; } =
+        EnumHelper<StagePractice>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
-        NumCardsPerLevelImpl.ToStringKeyedDictionary();
+        NumCardsPerLevelImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<StagePractice>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static int NumCardsWithOverDrive { get; } =

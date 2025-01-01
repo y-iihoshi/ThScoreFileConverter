@@ -28,9 +28,9 @@ internal sealed class CollectRateReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[3].Value);
+            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[3]);
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
             if (stage is StageWithTotal.Extra or StageWithTotal.Phantasm)

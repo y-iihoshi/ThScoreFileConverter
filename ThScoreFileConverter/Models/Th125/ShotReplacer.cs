@@ -29,7 +29,7 @@ internal sealed class ShotReplacer(
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
-        var level = Parsers.LevelParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[2]);
         var scene = IntegerHelper.Parse(match.Groups[3].Value);
 
         if (!Definitions.SpellCards.ContainsKey((level, scene)))

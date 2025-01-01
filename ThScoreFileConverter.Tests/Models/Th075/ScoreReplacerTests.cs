@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NSubstitute;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Models.Th075;
 
@@ -41,7 +40,7 @@ public class ScoreReplacerTests
     public void ScoreReplacerTestEmptyRanking()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
+        _ = mock.Ranking.Returns([]);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
         var formatterMock = NumberFormatterTests.Mock;
 
@@ -89,7 +88,7 @@ public class ScoreReplacerTests
     public void ReplaceTestEmptyRanking()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.Ranking.Returns(ImmutableList<IHighScore>.Empty);
+        _ = mock.Ranking.Returns([]);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
         var formatterMock = NumberFormatterTests.Mock;
 

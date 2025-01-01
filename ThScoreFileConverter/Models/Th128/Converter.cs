@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // ElementsMustBeDocumented
+#pragma warning disable SA1600 // Elements should be documented
 
 using System;
 using System.Collections.Generic;
@@ -35,15 +35,15 @@ internal sealed class Converter : ThConverter
         if (!Decrypt(input, decrypted))
             return false;
 
-        decrypted.Seek(0, SeekOrigin.Begin);
+        _ = decrypted.Seek(0, SeekOrigin.Begin);
         if (!Extract(decrypted, decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         if (!Validate(decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         this.allScoreData = Read(decoded);
 
         return this.allScoreData is not null;

@@ -13,7 +13,6 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using CommunityToolkit.Diagnostics;
-using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Extensions;
 

@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // ElementsMustBeDocumented
+#pragma warning disable SA1600 // Elements should be documented
 
 using System;
 using System.Collections.Generic;
@@ -42,15 +42,15 @@ internal sealed class Converter : ThConverter
         if (!Decrypt(input, decrypted))
             return false;
 
-        decrypted.Seek(0, SeekOrigin.Begin);
+        _ = decrypted.Seek(0, SeekOrigin.Begin);
         if (!Extract(decrypted, decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         if (!Validate(decoded))
             return false;
 
-        decoded.Seek(0, SeekOrigin.Begin);
+        _ = decoded.Seek(0, SeekOrigin.Begin);
         this.allScoreData = Read(decoded);
 
         return this.allScoreData is not null;
@@ -77,10 +77,24 @@ internal sealed class Converter : ThConverter
 
     protected override string[] FilterBestShotFiles(string[] files)
     {
-        var pattern = StringHelper.Create($"bs_({Parsers.LevelLongPattern})_[1-9].dat");
+        var pairs = new[]
+        {
+            (Level.One,   "01"),
+            (Level.Two,   "02"),
+            (Level.Three, "03"),
+            (Level.Four,  "04"),
+            (Level.Five,  "05"),
+            (Level.Six,   "06"),
+            (Level.Seven, "07"),
+            (Level.Eight, "08"),
+            (Level.Nine,  "09"),
+            (Level.Ten,   "10"),
+            (Level.Extra, "ex"),
+        };
+        var levelPattern = string.Join("|", pairs.Select(pair => pair.Item2));
+        var fileNamePattern = StringHelper.Create($"bs_({levelPattern})_[1-9].dat");
 
-        return files.Where(file => Regex.IsMatch(
-            Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
+        return files.Where(file => Regex.IsMatch(Path.GetFileName(file), fileNamePattern, RegexOptions.IgnoreCase)).ToArray();
     }
 
     protected override void ConvertBestShot(Stream input, Stream output)

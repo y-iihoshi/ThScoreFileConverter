@@ -5,9 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Linq;
-using ThScoreFileConverter.Core.Extensions;
-using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th143;
 
 namespace ThScoreFileConverter.Models.Th143;
@@ -20,18 +17,10 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Day"/>.
     /// </summary>
-    public static EnumShortNameParser<Day> DayParser { get; } =
-        new EnumShortNameParser<Day>();
+    public static Core.Models.EnumPatternParser<Day> DayParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="ItemWithTotal"/>.
     /// </summary>
-    public static EnumShortNameParser<ItemWithTotal> ItemWithTotalParser { get; } =
-        new EnumShortNameParser<ItemWithTotal>();
-
-    /// <summary>
-    /// Gets the pattern used for parsing as a long name of a <see cref="Day"/> enumerator.
-    /// </summary>
-    public static string DayLongPattern { get; } =
-        string.Join("|", EnumHelper<Day>.Enumerable.Select(day => day.ToLongName()));
+    public static Core.Models.EnumPatternParser<ItemWithTotal> ItemWithTotalParser { get; } = new();
 }

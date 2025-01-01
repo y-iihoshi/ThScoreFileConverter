@@ -16,7 +16,7 @@ public class SettingsPerTitleTests
         Assert.AreEqual(0, setting.TemplateFiles.Count());
         Assert.AreEqual(string.Empty, setting.OutputDirectory);
         Assert.AreEqual(string.Empty, setting.ImageOutputDirectory);
-        Assert.AreEqual(true, setting.HideUntriedCards);
+        Assert.IsTrue(setting.HideUntriedCards);
     }
 
     [TestMethod]

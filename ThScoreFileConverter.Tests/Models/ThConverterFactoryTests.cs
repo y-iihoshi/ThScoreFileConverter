@@ -27,8 +27,9 @@ public class ThConverterFactoryTests
     public void CreateTest()
     {
         var converter = ThConverterFactory.Create("TH06");
+        var converterType = converter?.GetType();
 
-        Assert.AreEqual(typeof(ThScoreFileConverter.Models.Th06.Converter), converter?.GetType());
+        Assert.AreEqual(typeof(ThScoreFileConverter.Models.Th06.Converter), converterType);
     }
 
     [TestMethod]

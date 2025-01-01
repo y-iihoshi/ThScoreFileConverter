@@ -34,8 +34,8 @@ internal class ClearReplacerBase<
 
     protected ClearReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<Level> levelParser,
-        EnumShortNameParser<TCh> charaParser,
+        IRegexParser<Level> levelParser,
+        IRegexParser<TCh> charaParser,
         IReadOnlyDictionary<
             TChWithT, IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, IScoreData>> clearDataDictionary)
         : this(
@@ -48,15 +48,15 @@ internal class ClearReplacerBase<
 
     protected ClearReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<Level> levelParser,
-        EnumShortNameParser<TCh> charaParser,
+        IRegexParser<Level> levelParser,
+        IRegexParser<TCh> charaParser,
         Func<Level, TCh, IReadOnlyList<IScoreData>> getRanking)
     {
         this.pattern = StringHelper.Create($"{formatPrefix}CLEAR({levelParser.Pattern})({charaParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelParser.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
+            var level = levelParser.Parse(match.Groups[1]);
+            var chara = charaParser.Parse(match.Groups[2]);
 
             var scores = getRanking(level, chara).Where(static score => score.DateTime > 0);
             var stageProgress = scores.Any() ? scores.Max(static score => score.StageProgress) : StageProgress.None;
@@ -64,9 +64,9 @@ internal class ClearReplacerBase<
             if (stageProgress == StageProgress.Extra)
                 return "Not Clear";
             else if (stageProgress == StageProgress.ExtraClear)
-                return StageProgress.Clear.ToShortName();
+                return StageProgress.Clear.ToDisplayName();
             else
-                return stageProgress.ToShortName();
+                return stageProgress.ToDisplayName();
         });
     }
 

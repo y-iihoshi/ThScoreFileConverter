@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // ElementsMustBeDocumented
+#pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +33,7 @@ internal sealed class Converter : ThConverter
         {
             var size = (int)input.Length;
             var data = new byte[size];
-            input.Read(data, 0, size);
+            input.ReadExactly(data, 0, size);
             decoded.Write(data, 0, size);
             decoded.Flush();
             decoded.SetLength(decoded.Position);

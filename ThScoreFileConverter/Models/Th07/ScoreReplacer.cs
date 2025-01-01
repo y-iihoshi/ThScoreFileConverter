@@ -31,7 +31,7 @@ internal sealed class ScoreReplacer(
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
         var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
         var type = IntegerHelper.Parse(match.Groups[4].Value);
@@ -44,7 +44,7 @@ internal sealed class ScoreReplacer(
         {
             1 => EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0],
             2 => formatter.FormatNumber((score.Score * 10) + score.ContinueCount),
-            3 => score.StageProgress.ToShortName(),
+            3 => score.StageProgress.ToDisplayName(),
             4 => EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0'),
             5 => formatter.FormatPercent(score.SlowRate, 3),
             _ => match.ToString(),  // unreachable

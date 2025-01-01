@@ -35,7 +35,7 @@ internal sealed class CollectRateReplacer : IStringReplaceable
             IReadOnlyDictionary<(CharaWithReserved Chara, Level Level), IClearData> clearData,
             INumberFormatter formatter)
         {
-            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+            var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
             var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 

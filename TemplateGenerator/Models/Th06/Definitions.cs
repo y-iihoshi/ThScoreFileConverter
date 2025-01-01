@@ -24,11 +24,11 @@ public class Definitions : Models.Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 
     public static bool CanPractice(string levelKey, string stageKey)
     {
-        return !(levelKey == Level.Easy.ToShortName() && stageKey == Stage.Six.ToShortName());
+        return !(levelKey == Level.Easy.ToPattern() && stageKey == Stage.Six.ToPattern());
     }
 }

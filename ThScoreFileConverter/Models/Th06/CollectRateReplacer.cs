@@ -28,7 +28,7 @@ internal sealed class CollectRateReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[1].Value);
+            var stage = Parsers.StageWithTotalParser.Parse(match.Groups[1]);
             var type = IntegerHelper.Parse(match.Groups[2].Value);
 
 #pragma warning disable IDE0072 // Add missing cases to switch expression

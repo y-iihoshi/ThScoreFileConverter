@@ -21,7 +21,7 @@ internal sealed class PlayReplacer(PlayStatus playStatus, INumberFormatter forma
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+        var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
         var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
         var playCount = playStatus.PlayCounts[level];

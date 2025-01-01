@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
@@ -28,7 +29,6 @@ public class SQTableTests
     }
 
     [DataTestMethod]
-#pragma warning disable CA1861 // Avoid constant arrays as arguments
     [DataRow(
         new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
         new[] { 123 },
@@ -43,25 +43,28 @@ public class SQTableTests
         new[] { 123, 78 },
         new[] { 456, 90 },
         DisplayName = "two pairs")]
-#pragma warning restore CA1861 // Avoid constant arrays as arguments
     public void CreateTest(int[] array, int[] expectedKeys, int[] expectedValues)
     {
+        Guard.IsNotNull(array);
+        Guard.IsNotNull(expectedKeys);
+        Guard.IsNotNull(expectedValues);
+
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));
 
         Assert.AreEqual(SQOT.Table, sqtable.Type);
 
-        for (var index = 0; index < (expectedKeys?.Length ?? 0); ++index)
+        for (var index = 0; index < expectedKeys.Length; ++index)
         {
             var key = sqtable.Value.Keys.ElementAt(index);
             Assert.IsTrue(key is SQInteger);
-            Assert.AreEqual(expectedKeys?[index], (SQInteger)key);
+            Assert.AreEqual(expectedKeys[index], (SQInteger)key);
         }
 
-        for (var index = 0; index < (expectedValues?.Length ?? 0); ++index)
+        for (var index = 0; index < expectedValues.Length; ++index)
         {
             var value = sqtable.Value.Values.ElementAt(index);
             Assert.IsTrue(value is SQInteger);
-            Assert.AreEqual(expectedValues?[index], (SQInteger)value);
+            Assert.AreEqual(expectedValues[index], (SQInteger)value);
         }
     }
 
@@ -193,7 +196,7 @@ public class SQTableTests
             { new SQString("floatKey"), new SQFloat(456f) },
         });
 
-        Assert.AreEqual(true, sqtable.GetValueOrDefault<bool>("boolKey"));
+        Assert.IsTrue(sqtable.GetValueOrDefault<bool>("boolKey"));
         Assert.AreEqual(123, sqtable.GetValueOrDefault<int>("intKey"));
         Assert.AreEqual(456f, sqtable.GetValueOrDefault<float>("floatKey"));
     }

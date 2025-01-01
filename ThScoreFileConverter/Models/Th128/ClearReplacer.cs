@@ -8,7 +8,6 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
@@ -27,8 +26,8 @@ internal sealed class ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearDa
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1]);
+        var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2]);
 
         if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
             return match.ToString();
@@ -37,12 +36,11 @@ internal sealed class ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearDa
 
         var scores = clearDataDictionary.TryGetValue(route, out var clearData)
             && clearData.Rankings.TryGetValue(level, out var ranking)
-            ? ranking.Where(score => score.DateTime > 0)
-            : ImmutableList<Th10.IScoreData<StageProgress>>.Empty;
+            ? ranking.Where(score => score.DateTime > 0) : [];
         var stageProgress = scores.Any()
             ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
-        return stageProgress.ToShortName();
+        return stageProgress.ToDisplayName();
     });
 
     public string Replace(string input)

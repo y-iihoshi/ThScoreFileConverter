@@ -30,7 +30,6 @@ internal sealed class CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAtt
 
     private static string CardLevelToString(SpellCardInfo<StagePractice, LevelPractice> cardInfo)
     {
-        var levelName = cardInfo.Level.ToLongName();
-        return (levelName.Length > 0) ? levelName : cardInfo.Level.ToString();
+        return cardInfo.Level.ToDisplayName();
     }
 }

@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ThScoreFileConverter.Core.Models.Th143;
 
 /// <summary>
@@ -15,60 +17,70 @@ public enum Day
     /// <summary>
     /// The 1st Day.
     /// </summary>
-    [EnumAltName("1", LongName = "01")]
+    [Display(Name = "一日目")]
+    [Pattern("1")]
     First,
 
     /// <summary>
     /// The 2nd Day.
     /// </summary>
-    [EnumAltName("2", LongName = "02")]
+    [Display(Name = "二日目")]
+    [Pattern("2")]
     Second,
 
     /// <summary>
     /// The 3rd Day.
     /// </summary>
-    [EnumAltName("3", LongName = "03")]
+    [Display(Name = "三日目")]
+    [Pattern("3")]
     Third,
 
     /// <summary>
     /// The 4th Day.
     /// </summary>
-    [EnumAltName("4", LongName = "04")]
+    [Display(Name = "四日目")]
+    [Pattern("4")]
     Fourth,
 
     /// <summary>
     /// The 5th Day.
     /// </summary>
-    [EnumAltName("5", LongName = "05")]
+    [Display(Name = "五日目")]
+    [Pattern("5")]
     Fifth,
 
     /// <summary>
     /// The 6th Day.
     /// </summary>
-    [EnumAltName("6", LongName = "06")]
+    [Display(Name = "六日目")]
+    [Pattern("6")]
     Sixth,
 
     /// <summary>
     /// The 7th Day.
     /// </summary>
-    [EnumAltName("7", LongName = "07")]
+    [Display(Name = "七日目")]
+    [Pattern("7")]
     Seventh,
 
     /// <summary>
     /// The 8th Day.
     /// </summary>
-    [EnumAltName("8", LongName = "08")]
+    [Display(Name = "八日目")]
+    [Pattern("8")]
     Eighth,
 
     /// <summary>
     /// The 9th Day.
     /// </summary>
-    [EnumAltName("9", LongName = "09")]
+    [Display(Name = "九日目")]
+    [Pattern("9")]
     Ninth,
 
     /// <summary>
     /// The Last Day.
     /// </summary>
-    [EnumAltName("L", LongName = "10")]
+    [Display(Name = "最終日")]
+    [Pattern("L")]
     Last,
 }

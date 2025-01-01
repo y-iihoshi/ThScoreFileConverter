@@ -11,28 +11,16 @@ namespace TemplateGenerator.Models.Th07;
 
 public static class Definitions
 {
-    private static readonly IEnumerable<(Stage, string)> StageNamesImpl =
-    [
-        (Stage.One,      "Stage 1"),
-        (Stage.Two,      "Stage 2"),
-        (Stage.Three,    "Stage 3"),
-        (Stage.Four,     "Stage 4"),
-        (Stage.Five,     "Stage 5"),
-        (Stage.Six,      "Stage 6"),
-        (Stage.Extra,    "Extra"),
-        (Stage.Phantasm, "Phantasm"),
-    ];
-
     public static string Title { get; } = StringResources.TH07;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToStringDictionary();
+        EnumHelper<Level>.Enumerable.ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } =
-        EnumHelper<Level>.Enumerable.Where(CanPractice).ToStringDictionary();
+        EnumHelper<Level>.Enumerable.Where(CanPractice).ToPatternDictionary();
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
-        EnumHelper<LevelWithTotal>.Enumerable.ToStringDictionary();
+        EnumHelper<LevelWithTotal>.Enumerable.ToPatternDictionary();
 
     public static IEnumerable<string> LevelKeysTotalFirst { get; } = LevelWithTotalNames.Keys.RotateRight();
 
@@ -64,23 +52,19 @@ public static class Definitions
     public static IEnumerable<string> CharacterKeysTotalLast { get; } = CharacterWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, string> StageNames { get; } =
-        StageNamesImpl.ToStringKeyedDictionary();
+        EnumHelper<Stage>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, string> StagePracticeNames { get; } =
-        StageNamesImpl.Where(static pair => CanPractice(pair.Item1)).ToStringKeyedDictionary();
+        EnumHelper<Stage>.Enumerable.Where(CanPractice).ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
-    public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } = new[]
-    {
-        (StageWithTotal.One,      "Stage 1"),
-        (StageWithTotal.Two,      "Stage 2"),
-        (StageWithTotal.Three,    "Stage 3"),
-        (StageWithTotal.Four,     "Stage 4"),
-        (StageWithTotal.Five,     "Stage 5"),
-        (StageWithTotal.Six,      "Stage 6"),
-        (StageWithTotal.Extra,    "Extra"),
-        (StageWithTotal.Phantasm, "Phantasm"),
-        (StageWithTotal.Total,    "Total"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> StageWithTotalNames { get; } =
+        EnumHelper<StageWithTotal>.Enumerable.ToDictionary(
+            static stage => stage.ToPattern(),
+            static stage => stage.ToDisplayName());
 
     public static IEnumerable<string> StageKeysTotalFirst { get; } = StageWithTotalNames.Keys.RotateRight();
 
@@ -88,11 +72,11 @@ public static class Definitions
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(
-            static level => level.ToShortName(),
+            static level => level.ToPattern(),
             static level => CardTable.Count(pair => pair.Value.Level == level));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
-            static stage => stage.ToShortName(),
+            static stage => stage.ToPattern(),
             static stage => CardTable.Count(pair => pair.Value.Stage == stage));
 }

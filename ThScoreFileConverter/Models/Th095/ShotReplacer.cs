@@ -28,7 +28,7 @@ internal sealed class ShotReplacer(
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+        var level = Parsers.LevelParser.Parse(match.Groups[1]);
         var scene = IntegerHelper.Parse(match.Groups[2].Value);
 
         var key = (level, scene);

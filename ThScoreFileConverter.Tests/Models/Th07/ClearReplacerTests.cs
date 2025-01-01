@@ -21,7 +21,7 @@ public class ClearReplacerTests
         var stageProgress = mock1.StageProgress;
         var mock2 = HighScoreTests.MockHighScore();
         _ = mock2.StageProgress.Returns(++stageProgress);
-        return new[] { new[] { mock1, mock2 } };
+        return [[mock1, mock2]];
     }
 
     internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
@@ -58,7 +58,7 @@ public class ClearReplacerTests
     public void ReplaceTest()
     {
         var replacer = new ClearReplacer(Rankings);
-        Assert.AreEqual(StageProgress.Four.ToShortName(), replacer.Replace("%T07CLEARHRB"));
+        Assert.AreEqual(StageProgress.Four.ToDisplayName(), replacer.Replace("%T07CLEARHRB"));
     }
 
     [TestMethod]
@@ -90,7 +90,7 @@ public class ClearReplacerTests
     {
         var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
         var replacer = new ClearReplacer(rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T07CLEARHRB"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T07CLEARHRB"));
     }
 
     [TestMethod]
@@ -102,21 +102,21 @@ public class ClearReplacerTests
             { (mock.Chara, mock.Level), ImmutableList<IHighScore>.Empty },
         };
         var replacer = new ClearReplacer(rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T07CLEARHRB"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T07CLEARHRB"));
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentLevel()
     {
         var replacer = new ClearReplacer(Rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T07CLEARNRB"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T07CLEARNRB"));
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentChara()
     {
         var replacer = new ClearReplacer(Rankings);
-        Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T07CLEARHRA"));
+        Assert.AreEqual(StageProgress.None.ToDisplayName(), replacer.Replace("%T07CLEARHRA"));
     }
 
     [TestMethod]

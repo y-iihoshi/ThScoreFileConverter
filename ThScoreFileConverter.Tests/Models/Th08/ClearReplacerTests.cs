@@ -20,7 +20,7 @@ public class ClearReplacerTests
         var stageProgress = mock1.StageProgress;
         var mock2 = HighScoreTests.MockHighScore();
         _ = mock2.StageProgress.Returns(--stageProgress);
-        return new[] { new[] { mock1, mock2 } };
+        return [[mock1, mock2]];
     }
 
     internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
@@ -60,7 +60,7 @@ public class ClearReplacerTests
     public void ReplaceTest()
     {
         var replacer = new ClearReplacer(Rankings, ClearData);
-        Assert.AreEqual(StageProgress.Three.ToShortName(), replacer.Replace("%T08CLEARHMA"));
+        Assert.AreEqual(StageProgress.Three.ToDisplayName(), replacer.Replace("%T08CLEARHMA"));
     }
 
     [TestMethod]
@@ -110,7 +110,7 @@ public class ClearReplacerTests
         var clearData = new[] { clearDataMock }.ToDictionary(entry => entry.Chara);
 
         var replacer = new ClearReplacer(rankings, clearData);
-        Assert.AreEqual(StageProgress.Clear.ToShortName(), replacer.Replace("%T08CLEARHMA"));
+        Assert.AreEqual(StageProgress.Clear.ToDisplayName(), replacer.Replace("%T08CLEARHMA"));
     }
 
     [TestMethod]
@@ -134,7 +134,7 @@ public class ClearReplacerTests
         var rankings = new[] { new[] { mock } }.ToDictionary(
             ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
         var replacer = new ClearReplacer(rankings, ClearData);
-        Assert.AreEqual(StageProgress.Clear.ToShortName(), replacer.Replace("%T08CLEARXMA"));
+        Assert.AreEqual(StageProgress.Clear.ToDisplayName(), replacer.Replace("%T08CLEARXMA"));
     }
 
     [TestMethod]

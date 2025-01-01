@@ -1,6 +1,4 @@
-﻿#pragma warning disable CA2007 // Do not directly await a Task
-
-using System.Globalization;
+﻿using System.Globalization;
 using Statiq.App;
 using Statiq.Razor;
 using ThScoreFileConverter.Core.Resources;
@@ -18,4 +16,5 @@ return await Bootstrapper
     .BuildPipeline("Copy Assets", builder => builder
         .WithInputReadFiles("**/*.css")
         .WithOutputWriteFiles())
-    .RunAsync();
+    .RunAsync()
+    .ConfigureAwait(true);  // to avoid CA2007

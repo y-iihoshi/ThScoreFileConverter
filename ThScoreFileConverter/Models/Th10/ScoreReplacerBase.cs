@@ -24,8 +24,8 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
 
     protected ScoreReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<Level> levelParser,
-        EnumShortNameParser<TChara> charaParser,
+        IRegexParser<Level> levelParser,
+        IRegexParser<TChara> charaParser,
         Func<Level, TChara, int, IScoreData<StageProgress>> getScore,
         INumberFormatter formatter)
     {
@@ -33,8 +33,8 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
             $@"{formatPrefix}SCR({levelParser.Pattern})({charaParser.Pattern})(\d)([1-5])");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var level = levelParser.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
+            var level = levelParser.Parse(match.Groups[1]);
+            var chara = charaParser.Parse(match.Groups[2]);
             var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
             var type = IntegerHelper.Parse(match.Groups[4].Value);
 
@@ -49,10 +49,10 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
                     return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
                 case 3:     // stage
                     if (score.DateTime == 0)
-                        return StageProgress.None.ToShortName();
+                        return StageProgress.None.ToDisplayName();
                     if (score.StageProgress == StageProgress.Extra)
                         return "Not Clear";
-                    return score.StageProgress.ToShortName();
+                    return score.StageProgress.ToDisplayName();
                 case 4:     // date & time
                     return DateTimeHelper.GetString(score.DateTime == 0 ? null : score.DateTime);
                 case 5:     // slow

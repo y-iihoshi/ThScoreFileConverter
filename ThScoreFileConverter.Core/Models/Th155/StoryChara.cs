@@ -15,66 +15,66 @@ public enum StoryChara
     /// <summary>
     /// Hakurei Reimu and Ibaraki Kasen.
     /// </summary>
-    [EnumAltName("RK")]
+    [Pattern("RK")]
     ReimuKasen,
 
     /// <summary>
     /// Kirisame Marisa and Komeiji Koishi.
     /// </summary>
-    [EnumAltName("MK")]
+    [Pattern("MK")]
     MarisaKoishi,
 
     /// <summary>
     /// Kawashiro Nitori and Hata no Kokoro.
     /// </summary>
-    [EnumAltName("NK")]
+    [Pattern("NK")]
     NitoriKokoro,
 
     /// <summary>
     /// Futatsuiwa Mamizou and Fujiwara no Mokou.
     /// </summary>
-    [EnumAltName("MM")]
+    [Pattern("MM")]
     MamizouMokou,
 
     /// <summary>
     /// Toyosatomimi no Miko and Hijiri Byakuren.
     /// </summary>
-    [EnumAltName("MB")]
+    [Pattern("MB")]
     MikoByakuren,
 
     /// <summary>
     /// Mononobe no Futo and Kumoi Ichirin.
     /// </summary>
-    [EnumAltName("FI")]
+    [Pattern("FI")]
     FutoIchirin,
 
     /// <summary>
     /// Reisen Udongein Inaba and Doremy Sweet.
     /// </summary>
-    [EnumAltName("RD")]
+    [Pattern("RD")]
     ReisenDoremy,
 
     /// <summary>
     /// Usami Sumireko and Doremy Sweet.
     /// </summary>
-    [EnumAltName("SD")]
+    [Pattern("SD")]
     SumirekoDoremy,
 
     /// <summary>
     /// Hinanawi Tenshi and Sukuna Shinmyoumaru.
     /// </summary>
-    [EnumAltName("TS")]
+    [Pattern("TS")]
     TenshiShinmyoumaru,
 
     /// <summary>
     /// Yakumo Yukari and Hakurei Reimu.
     /// </summary>
-    [EnumAltName("YR")]
+    [Pattern("YR")]
     YukariReimu,
 
     /// <summary>
     /// Yorigami Joon and Yorigami Shion.
     /// </summary>
-    [EnumAltName("JS")]
+    [Pattern("JS")]
     JoonShion,
 }

@@ -13,8 +13,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Helpers;
-using ThScoreFileConverter.Core.Models.Th105;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
+using Level = ThScoreFileConverter.Core.Models.Th105.Level;
 
 namespace ThScoreFileConverter.Models.Th105;
 
@@ -26,7 +27,7 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
 
     protected CareerReplacerBase(
         string formatPrefix,
-        EnumShortNameParser<TChara> charaParser,
+        IRegexParser<TChara> charaParser,
         Func<int, TChara, int, bool> canReplace,
         IReadOnlyDictionary<TChara, IEnumerable<(TChara Enemy, int CardId)>> enemyCardIdTable,
         IReadOnlyDictionary<TChara, IClearData<TChara>> clearDataDictionary,
@@ -39,7 +40,7 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = IntegerHelper.Parse(match.Groups[1].Value);
-            var chara = charaParser.Parse(match.Groups[2].Value);
+            var chara = charaParser.Parse(match.Groups[2]);
             var type = IntegerHelper.Parse(match.Groups[3].Value);
 
             if (!canReplace(number, chara, type))
