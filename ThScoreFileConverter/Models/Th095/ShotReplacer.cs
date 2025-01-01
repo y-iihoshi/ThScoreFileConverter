@@ -24,12 +24,12 @@ internal sealed class ShotReplacer(
     : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}SHOT({Parsers.LevelParser.Pattern})([1-9])");
+        $"{Definitions.FormatPrefix}SHOT({Parsers.LevelParser.Pattern})({Parsers.SceneParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
-        var scene = IntegerHelper.Parse(match.Groups[2].Value);
+        var scene = Parsers.SceneParser.Parse(match.Groups[2]);
 
         var key = (level, scene);
         if (!Definitions.SpellCards.ContainsKey(key))
