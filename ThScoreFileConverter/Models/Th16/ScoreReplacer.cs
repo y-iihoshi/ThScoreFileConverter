@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th16;
 using ThScoreFileConverter.Helpers;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
@@ -28,15 +29,17 @@ internal sealed class ScoreReplacer(
     IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly IntegerParser RankParser = new(@"\d");
+    private static readonly IntegerParser TypeParser = new(@"[1-6]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-6])");
+        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = (Core.Models.Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1]);
         var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-        var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-        var type = IntegerHelper.Parse(match.Groups[4].Value);
+        var rank = IntegerHelper.ToZeroBased(RankParser.Parse(match.Groups[3]));
+        var type = TypeParser.Parse(match.Groups[4]);
 
         var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
             && clearData.Rankings.TryGetValue(level, out var rankings)
