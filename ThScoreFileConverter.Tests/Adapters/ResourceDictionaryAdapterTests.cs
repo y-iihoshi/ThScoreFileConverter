@@ -44,7 +44,9 @@ public class ResourceDictionaryAdapterTests
     {
         var dictionary = new ResourceDictionary();
         var adapter = new ResourceDictionaryAdapter(dictionary);
+#pragma warning disable MSTEST0032 // Assertion condition is always true
         Assert.IsNotNull(adapter.FontFamily);
+#pragma warning restore MSTEST0032 // Assertion condition is always true
     }
 
     [TestMethod]
