@@ -20,8 +20,10 @@ namespace ThScoreFileConverter.Models.Th15;
 // %T15SCR[v][w][xx][y][z]
 internal sealed class ScoreReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser RankParser = new(@"\d");
+    private static readonly IntegerParser TypeParser = new(@"[1-6]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}SCR({Parsers.GameModeParser.Pattern})({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})(\d)([1-6])");
+        $@"{Definitions.FormatPrefix}SCR({Parsers.GameModeParser.Pattern})({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -33,8 +35,8 @@ internal sealed class ScoreReplacer : IStringReplaceable
             var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
             var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2]);
             var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[3].Value);
-            var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[4].Value));
-            var type = IntegerHelper.Parse(match.Groups[5].Value);
+            var rank = IntegerHelper.ToZeroBased(RankParser.Parse(match.Groups[4]));
+            var type = TypeParser.Parse(match.Groups[5]);
 
 #if false   // FIXME
             if (level == LevelWithTotal.Extra)

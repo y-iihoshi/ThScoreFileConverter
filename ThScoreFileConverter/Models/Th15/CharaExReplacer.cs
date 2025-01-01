@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Helpers;
 
@@ -19,8 +20,9 @@ namespace ThScoreFileConverter.Models.Th15;
 // %T15CHARAEX[w][x][yy][z]
 internal sealed class CharaExReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}CHARAEX({Parsers.GameModeParser.Pattern})({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})([1-3])");
+        $"{Definitions.FormatPrefix}CHARAEX({Parsers.GameModeParser.Pattern})({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -32,7 +34,7 @@ internal sealed class CharaExReplacer : IStringReplaceable
             var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2]);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var type = TypeParser.Parse(match.Groups[4]);
 
             Func<IClearDataPerGameMode, long> getValueByType = (level, type) switch
             {
