@@ -33,7 +33,7 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
         INumberFormatter formatter)
     {
         this.pattern = StringHelper.Create(
-            $@"{formatPrefix}SCR({levelParser.Pattern})({charaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
+            $"{formatPrefix}SCR({levelParser.Pattern})({charaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1]);

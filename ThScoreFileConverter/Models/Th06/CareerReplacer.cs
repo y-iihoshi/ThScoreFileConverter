@@ -22,7 +22,7 @@ internal sealed class CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardA
 {
     private static readonly IntegerParser CardNumberParser = new(@"\d{2}");
     private static readonly IntegerParser TypeParser = new(@"[12]");
-    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}C({CardNumberParser.Pattern})({TypeParser.Pattern})");
+    private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}C({CardNumberParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {

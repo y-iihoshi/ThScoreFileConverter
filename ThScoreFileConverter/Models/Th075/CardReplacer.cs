@@ -21,7 +21,7 @@ internal sealed class CardReplacer(
     : IStringReplaceable
 {
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}CARD({Parsers.CardNumberParser.Pattern})({Parsers.CharaParser.Pattern})([NR])");
+        $"{Definitions.FormatPrefix}CARD({Parsers.CardNumberParser.Pattern})({Parsers.CharaParser.Pattern})([NR])");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {

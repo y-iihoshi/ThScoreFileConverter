@@ -41,7 +41,7 @@ internal class CardReplacerBase<TStage, TLevel> : IStringReplaceable
         var numDigits = IntegerHelper.GetNumDigits(cardTable.Count);
         var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
-        this.pattern = StringHelper.Create($@"{formatPrefix}CARD({cardNumberParser.Pattern})([NR])");
+        this.pattern = StringHelper.Create($"{formatPrefix}CARD({cardNumberParser.Pattern})([NR])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = cardNumberParser.Parse(match.Groups[1]);

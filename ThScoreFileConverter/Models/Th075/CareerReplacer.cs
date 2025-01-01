@@ -24,7 +24,7 @@ internal sealed class CareerReplacer(
 {
     private static readonly Core.Models.IntegerParser TypeParser = new(@"[1-4]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}C({Parsers.CardNumberParser.Pattern})({Parsers.CharaParser.Pattern})({TypeParser.Pattern})");
+        $"{Definitions.FormatPrefix}C({Parsers.CardNumberParser.Pattern})({Parsers.CharaParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {

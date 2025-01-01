@@ -23,7 +23,7 @@ internal sealed class CareerReplacer : IStringReplaceable
     private static readonly IntegerParser CardNumberParser = new(@"\d{3}");
     private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})({CardNumberParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
+        $"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})({CardNumberParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 

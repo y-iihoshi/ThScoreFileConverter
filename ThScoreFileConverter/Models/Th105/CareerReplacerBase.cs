@@ -39,7 +39,7 @@ internal class CareerReplacerBase<TChara> : IStringReplaceable
         var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
         var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
-        this.pattern = StringHelper.Create($@"{formatPrefix}C({cardNumberParser.Pattern})({charaParser.Pattern})({TypeParser.Pattern})");
+        this.pattern = StringHelper.Create($"{formatPrefix}C({cardNumberParser.Pattern})({charaParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = cardNumberParser.Parse(match.Groups[1]);

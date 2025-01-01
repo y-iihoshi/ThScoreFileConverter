@@ -35,7 +35,7 @@ internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringRepl
         IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
         INumberFormatter formatter)
     {
-        this.pattern = StringHelper.Create($@"{formatPrefix}C({CardNumberParser.Pattern})({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
+        this.pattern = StringHelper.Create($"{formatPrefix}C({CardNumberParser.Pattern})({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = CardNumberParser.Parse(match.Groups[1]);

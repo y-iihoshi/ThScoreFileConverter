@@ -23,7 +23,7 @@ internal sealed class ScoreReplacer(
     private static readonly Core.Models.IntegerParser RankParser = new(@"\d");
     private static readonly Core.Models.IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
+        $"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {

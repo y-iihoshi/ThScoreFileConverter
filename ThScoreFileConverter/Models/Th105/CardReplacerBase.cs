@@ -38,7 +38,7 @@ internal class CardReplacerBase<TChara> : IStringReplaceable
         var numDigits = IntegerHelper.GetNumDigits(enemyCardIdTable.Max(pair => pair.Value.Count()) * numLevels);
         var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
-        this.pattern = StringHelper.Create($@"{formatPrefix}CARD({cardNumberParser.Pattern})({charaParser.Pattern})([NR])");
+        this.pattern = StringHelper.Create($"{formatPrefix}CARD({cardNumberParser.Pattern})({charaParser.Pattern})([NR])");
         this.evaluator = new MatchEvaluator(match =>
         {
             var number = cardNumberParser.Parse(match.Groups[1]);

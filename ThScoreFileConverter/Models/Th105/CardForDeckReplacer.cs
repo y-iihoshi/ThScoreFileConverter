@@ -21,7 +21,7 @@ internal sealed class CardForDeckReplacer : IStringReplaceable
 {
     private static readonly IntegerParser CardNumberParser = new(@"\d{2}");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}DC({Parsers.CharaParser.Pattern})({Parsers.CardTypeParser.Pattern})({CardNumberParser.Pattern})([NC])");
+        $"{Definitions.FormatPrefix}DC({Parsers.CharaParser.Pattern})({Parsers.CardTypeParser.Pattern})({CardNumberParser.Pattern})([NC])");
 
     private readonly MatchEvaluator evaluator;
 

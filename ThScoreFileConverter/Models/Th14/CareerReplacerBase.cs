@@ -46,7 +46,7 @@ internal class CareerReplacerBase<
         var cardNumberParser = new IntegerParser($@"\d{{{numDigits}}}");
 
         this.pattern = StringHelper.Create(
-            $@"{formatPrefix}C({gameModeParser.Pattern})({cardNumberParser.Pattern})({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
+            $"{formatPrefix}C({gameModeParser.Pattern})({cardNumberParser.Pattern})({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var mode = gameModeParser.Parse(match.Groups[1]);

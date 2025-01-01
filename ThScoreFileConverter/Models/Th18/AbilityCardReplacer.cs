@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th18;
 internal sealed class AbilityCardReplacer(IAbilityCardHolder holder) : IStringReplaceable
 {
     private static readonly IntegerParser NumberParser = new(@"\d{2}");
-    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}ABIL({NumberParser.Pattern})");
+    private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}ABIL({NumberParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {

@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th165;
 internal sealed class NicknameReplacer(IStatus status) : IStringReplaceable
 {
     private static readonly IntegerParser NumberParser = new(@"\d{2}");
-    private static readonly string Pattern = StringHelper.Create($@"{Definitions.FormatPrefix}NICK({NumberParser.Pattern})");
+    private static readonly string Pattern = StringHelper.Create($"{Definitions.FormatPrefix}NICK({NumberParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
