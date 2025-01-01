@@ -19,6 +19,9 @@ namespace ThScoreFileConverter.Models.Th10;
 internal class ScoreReplacerBase<TChara> : IStringReplaceable
     where TChara : struct, Enum
 {
+    private static readonly IntegerParser RankParser = new(@"\d");
+    private static readonly IntegerParser TypeParser = new(@"[1-5]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
@@ -30,13 +33,13 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
         INumberFormatter formatter)
     {
         this.pattern = StringHelper.Create(
-            $@"{formatPrefix}SCR({levelParser.Pattern})({charaParser.Pattern})(\d)([1-5])");
+            $@"{formatPrefix}SCR({levelParser.Pattern})({charaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1]);
             var chara = charaParser.Parse(match.Groups[2]);
-            var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var rank = IntegerHelper.ToZeroBased(RankParser.Parse(match.Groups[3]));
+            var type = TypeParser.Parse(match.Groups[4]);
 
             var score = getScore(level, chara, rank);
 

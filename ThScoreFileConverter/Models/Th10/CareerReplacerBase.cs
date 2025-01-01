@@ -22,6 +22,9 @@ internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringRepl
     where TStage : struct, Enum
     where TLevel : struct, Enum
 {
+    private static readonly IntegerParser CardNumberParser = new(@"\d{3}");
+    private static readonly IntegerParser TypeParser = new(@"[12]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
@@ -32,12 +35,12 @@ internal class CareerReplacerBase<TCharaWithTotal, TStage, TLevel> : IStringRepl
         IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
         INumberFormatter formatter)
     {
-        this.pattern = StringHelper.Create($@"{formatPrefix}C(\d{{3}})({charaWithTotalParser.Pattern})([12])");
+        this.pattern = StringHelper.Create($@"{formatPrefix}C({CardNumberParser.Pattern})({charaWithTotalParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
-            var number = IntegerHelper.Parse(match.Groups[1].Value);
+            var number = CardNumberParser.Parse(match.Groups[1]);
             var chara = charaWithTotalParser.Parse(match.Groups[2]);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var type = TypeParser.Parse(match.Groups[3]);
 
             Func<ISpellCard<Level>, int> getCount = type switch
             {
