@@ -41,16 +41,6 @@ public static class IntegerHelper
     }
 
     /// <summary>
-    /// Converts the string representation of a number to its 32-bit signed integer equivalent.
-    /// </summary>
-    /// <param name="s">A string containing a number to convert.</param>
-    /// <returns>A 32-bit signed integer equivalent to the number contained in <paramref name="s"/>.</returns>
-    public static int Parse(string s)
-    {
-        return int.Parse(s, CultureInfo.InvariantCulture);
-    }
-
-    /// <summary>
     /// Gets the number of decimal digits.
     /// </summary>
     /// <param name="value">A decimal value.</param>
