@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Helpers;
 using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
@@ -18,8 +19,9 @@ namespace ThScoreFileConverter.Models.Th123;
 // %T123DC[ww][x][yy][z]
 internal sealed class CardForDeckReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser CardNumberParser = new(@"\d{2}");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}DC({Parsers.CharaParser.Pattern})({Parsers.CardTypeParser.Pattern})(\d{{2}})([NC])");
+        $@"{Definitions.FormatPrefix}DC({Parsers.CharaParser.Pattern})({Parsers.CardTypeParser.Pattern})({CardNumberParser.Pattern})([NC])");
 
     private readonly MatchEvaluator evaluator;
 
@@ -33,7 +35,7 @@ internal sealed class CardForDeckReplacer : IStringReplaceable
         {
             var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
             var cardType = Parsers.CardTypeParser.Parse(match.Groups[2]);
-            var number = IntegerHelper.Parse(match.Groups[3].Value);
+            var number = CardNumberParser.Parse(match.Groups[3]);
             var type = match.Groups[4].Value.ToUpperInvariant();
 
             if (chara == Chara.Oonamazu)
