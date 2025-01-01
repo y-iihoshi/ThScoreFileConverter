@@ -16,11 +16,6 @@ namespace ThScoreFileConverter.Helpers;
 public static class DateTimeHelper
 {
     /// <summary>
-    /// Gets the point in time when Unix time is equal to 0 (i.e. 1970-01-01T00:00:00Z).
-    /// </summary>
-    public static DateTime UnixEpoch { get; } = DateTime.UnixEpoch;
-
-    /// <summary>
     /// Gets the date and time format string used by <see cref="GetString(double?)"/>.
     /// </summary>
     public static string ValidFormat { get; } = "yyyy/MM/dd HH:mm:ss";
@@ -41,7 +36,7 @@ public static class DateTimeHelper
     public static string GetString(double? unixTime)
     {
         return unixTime.HasValue
-            ? UnixEpoch.AddSeconds(unixTime.Value).ToLocalTime().ToString(ValidFormat, CultureInfo.CurrentCulture)
+            ? DateTime.UnixEpoch.AddSeconds(unixTime.Value).ToLocalTime().ToString(ValidFormat, CultureInfo.CurrentCulture)
             : InvalidFormat;
     }
 }
