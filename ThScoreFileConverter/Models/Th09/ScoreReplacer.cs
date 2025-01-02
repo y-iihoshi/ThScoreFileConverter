@@ -22,15 +22,17 @@ internal sealed class ScoreReplacer(
     INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly IntegerParser RankParser = new(@"[1-5]");
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})([1-5])([1-3])");
+        $"{Definitions.FormatPrefix}SCR({Parsers.LevelParser.Pattern})({Parsers.CharaParser.Pattern})({RankParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-        var rank = IntegerHelper.ToZeroBased(IntegerHelper.Parse(match.Groups[3].Value));
-        var type = IntegerHelper.Parse(match.Groups[4].Value);
+        var rank = IntegerHelper.ToZeroBased(RankParser.Parse(match.Groups[3]));
+        var type = TypeParser.Parse(match.Groups[4]);
 
         var score = rankings.TryGetValue((chara, level), out var highScores) && (rank < highScores.Count)
             ? highScores[rank] : null;

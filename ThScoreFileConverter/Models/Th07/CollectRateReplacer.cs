@@ -19,8 +19,9 @@ namespace ThScoreFileConverter.Models.Th07;
 // %T07CRG[w][xx][yy][z]
 internal sealed class CollectRateReplacer : IStringReplaceable
 {
+    private static readonly Core.Models.IntegerParser TypeParser = new(@"[12]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}CRG({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})([12])");
+        $"{Definitions.FormatPrefix}CRG({Parsers.LevelWithTotalParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({Parsers.StageWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -31,7 +32,7 @@ internal sealed class CollectRateReplacer : IStringReplaceable
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
             var stage = Parsers.StageWithTotalParser.Parse(match.Groups[3]);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var type = TypeParser.Parse(match.Groups[4]);
 
             if (stage is StageWithTotal.Extra or StageWithTotal.Phantasm)
                 return match.ToString();

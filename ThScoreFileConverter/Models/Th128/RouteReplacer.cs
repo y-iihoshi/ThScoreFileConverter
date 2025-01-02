@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Helpers;
 
@@ -19,8 +20,9 @@ namespace ThScoreFileConverter.Models.Th128;
 // %T128ROUTE[xx][y]
 internal sealed class RouteReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}ROUTE({Parsers.RouteWithTotalParser.Pattern})([1-3])");
+        $"{Definitions.FormatPrefix}ROUTE({Parsers.RouteWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -30,7 +32,7 @@ internal sealed class RouteReplacer : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var route = Parsers.RouteWithTotalParser.Parse(match.Groups[1]);
-            var type = IntegerHelper.Parse(match.Groups[2].Value);
+            var type = TypeParser.Parse(match.Groups[2]);
 
             Func<IClearData, long> getValueByType = type switch
             {

@@ -38,7 +38,9 @@ public class AboutWindowViewModelTests
     public void IconTest()
     {
         var window = new AboutWindowViewModel();
+#pragma warning disable MSTEST0032 // Assertion condition is always true
         Assert.IsNotNull(window.Icon);
+#pragma warning restore MSTEST0032 // Assertion condition is always true
     }
 
     [TestMethod]

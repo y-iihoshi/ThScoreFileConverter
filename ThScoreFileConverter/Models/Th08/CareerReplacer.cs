@@ -20,8 +20,10 @@ namespace ThScoreFileConverter.Models.Th08;
 // %T08C[w][xxx][yy][z]
 internal sealed class CareerReplacer : IStringReplaceable
 {
+    private static readonly IntegerParser CardNumberParser = new(@"\d{3}");
+    private static readonly IntegerParser TypeParser = new(@"[1-3]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([1-3])");
+        $"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})({CardNumberParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator;
 
@@ -30,9 +32,9 @@ internal sealed class CareerReplacer : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
-            var number = IntegerHelper.Parse(match.Groups[2].Value);
+            var number = CardNumberParser.Parse(match.Groups[2]);
             var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var type = TypeParser.Parse(match.Groups[4]);
 
 #pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<ICardAttack, bool> isValidLevel = mode switch

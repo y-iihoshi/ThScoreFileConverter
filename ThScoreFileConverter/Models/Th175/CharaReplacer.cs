@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th175;
 using ThScoreFileConverter.Helpers;
 
@@ -24,8 +25,9 @@ internal sealed class CharaReplacer(
     INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[1-4]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}CHR({Parsers.CharaWithTotalParser.Pattern})([1-4])");
+        $"{Definitions.FormatPrefix}CHR({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
@@ -37,7 +39,7 @@ internal sealed class CharaReplacer(
         }
 
         var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1].Value);
-        var type = IntegerHelper.Parse(match.Groups[2].Value);
+        var type = TypeParser.Parse(match.Groups[2]);
 
         return type switch
         {

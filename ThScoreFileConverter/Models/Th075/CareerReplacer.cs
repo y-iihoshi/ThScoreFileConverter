@@ -22,14 +22,15 @@ internal sealed class CareerReplacer(
     INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly Core.Models.IntegerParser TypeParser = new(@"[1-4]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}C(\d{{3}})({Parsers.CharaParser.Pattern})([1-4])");
+        $"{Definitions.FormatPrefix}C({Parsers.CardNumberParser.Pattern})({Parsers.CharaParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var number = IntegerHelper.Parse(match.Groups[1].Value);
+        var number = Parsers.CardNumberParser.Parse(match.Groups[1]);
         var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-        var type = IntegerHelper.Parse(match.Groups[3].Value);
+        var type = TypeParser.Parse(match.Groups[3]);
 
         if (chara == Chara.Meiling)
             return match.ToString();

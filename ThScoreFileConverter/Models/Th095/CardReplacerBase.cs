@@ -20,22 +20,25 @@ internal class CardReplacerBase<TLevel, TEnemy> : IStringReplaceable
     where TLevel : struct, Enum
     where TEnemy : struct, Enum
 {
+    private static readonly IntegerParser TypeParser = new(@"[12]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
     protected CardReplacerBase(
         string formatPrefix,
         IRegexParser<TLevel> levelParser,
+        IRegexParser<int> sceneParser,
         IReadOnlyDictionary<(TLevel Level, int Scene), (TEnemy Enemy, string Card)> spellCards,
         bool hideUntriedCards,
         Func<TLevel, int, bool> levelSceneHasTried)
     {
-        this.pattern = StringHelper.Create($"{formatPrefix}CARD({levelParser.Pattern})([1-9])([12])");
+        this.pattern = StringHelper.Create($"{formatPrefix}CARD({levelParser.Pattern})({sceneParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelParser.Parse(match.Groups[1]);
-            var scene = IntegerHelper.Parse(match.Groups[2].Value);
-            var type = IntegerHelper.Parse(match.Groups[3].Value);
+            var scene = sceneParser.Parse(match.Groups[2]);
+            var type = TypeParser.Parse(match.Groups[3]);
 
             if (!spellCards.TryGetValue((level, scene), out var enemyCardPair))
                 return match.ToString();

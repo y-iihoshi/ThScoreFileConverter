@@ -23,15 +23,17 @@ internal sealed class CareerReplacer(
     IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, INumberFormatter formatter)
     : IStringReplaceable
 {
+    private static readonly IntegerParser CardNumberParser = new(@"\d{3}");
+    private static readonly IntegerParser TypeParser = new(@"[12]");
     private static readonly string Pattern = StringHelper.Create(
-        $@"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})(\d{{3}})({Parsers.CharaWithTotalParser.Pattern})([12])");
+        $"{Definitions.FormatPrefix}C({Parsers.GameModeParser.Pattern})({CardNumberParser.Pattern})({Parsers.CharaWithTotalParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
-        var number = IntegerHelper.Parse(match.Groups[2].Value);
+        var number = CardNumberParser.Parse(match.Groups[2]);
         var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
-        var type = IntegerHelper.Parse(match.Groups[4].Value);
+        var type = TypeParser.Parse(match.Groups[4]);
 
         Func<Th13.ISpellCard<Level>, int> getCount = type switch
         {

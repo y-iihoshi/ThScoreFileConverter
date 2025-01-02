@@ -19,6 +19,8 @@ namespace ThScoreFileConverter.Models.Th10;
 internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
     where TCharaWithTotal : struct, Enum
 {
+    private static readonly IntegerParser TypeParser = new(@"[12]");
+
     private readonly string pattern;
     private readonly MatchEvaluator evaluator;
 
@@ -32,13 +34,13 @@ internal class CollectRateReplacerBase<TCharaWithTotal> : IStringReplaceable
         INumberFormatter formatter)
     {
         this.pattern = StringHelper.Create(
-            $"{formatPrefix}CRG({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})([12])");
+            $"{formatPrefix}CRG({levelWithTotalParser.Pattern})({charaWithTotalParser.Pattern})({stageWithTotalParser.Pattern})({TypeParser.Pattern})");
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = levelWithTotalParser.Parse(match.Groups[1]);
             var chara = charaWithTotalParser.Parse(match.Groups[2]);
             var stage = stageWithTotalParser.Parse(match.Groups[3]);
-            var type = IntegerHelper.Parse(match.Groups[4].Value);
+            var type = TypeParser.Parse(match.Groups[4]);
 
             if (stage == StageWithTotal.Extra)
                 return match.ToString();

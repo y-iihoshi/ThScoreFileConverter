@@ -18,6 +18,7 @@ internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntrie
     : CardReplacerBase<Level, Enemy>(
         Definitions.FormatPrefix,
         Parsers.LevelParser,
+        Parsers.SceneParser,
         Definitions.SpellCards,
         hideUntriedCards,
         (level, scene) => HasTried(scores, level, scene))

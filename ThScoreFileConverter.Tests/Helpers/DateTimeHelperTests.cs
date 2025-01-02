@@ -8,13 +8,6 @@ namespace ThScoreFileConverter.Tests.Helpers;
 public class DateTimeHelperTests
 {
     [TestMethod]
-    public void UnixEpochTest()
-    {
-        var expected = new DateTime(1970, 1, 1);
-        Assert.AreEqual(expected, DateTimeHelper.UnixEpoch);
-    }
-
-    [TestMethod]
     public void FormatTest()
     {
         Assert.AreEqual(DateTimeHelper.ValidFormat.Length, DateTimeHelper.InvalidFormat.Length);
@@ -26,7 +19,7 @@ public class DateTimeHelperTests
     [DataRow(1234567)]
     public void GetStringTest(int unixTime)
     {
-        var expected = DateTimeHelper.UnixEpoch.AddSeconds(unixTime).ToLocalTime()
+        var expected = DateTime.UnixEpoch.AddSeconds(unixTime).ToLocalTime()
             .ToString(DateTimeHelper.ValidFormat, CultureInfo.CurrentCulture);
         Assert.AreEqual(expected, DateTimeHelper.GetString(unixTime));
     }

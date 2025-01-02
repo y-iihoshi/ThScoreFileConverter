@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Extensions;
+using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models.Th165;
@@ -18,14 +19,15 @@ namespace ThScoreFileConverter.Models.Th165;
 // %T165CARD[xx][y][z]
 internal sealed class CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards) : IStringReplaceable
 {
+    private static readonly IntegerParser TypeParser = new(@"[12]");
     private static readonly string Pattern = StringHelper.Create(
-        $"{Definitions.FormatPrefix}CARD({Parsers.DayParser.Pattern})([1-7])([12])");
+        $"{Definitions.FormatPrefix}CARD({Parsers.DayParser.Pattern})({Parsers.SceneParser.Pattern})({TypeParser.Pattern})");
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var day = Parsers.DayParser.Parse(match.Groups[1]);
-        var scene = IntegerHelper.Parse(match.Groups[2].Value);
-        var type = IntegerHelper.Parse(match.Groups[3].Value);
+        var scene = Parsers.SceneParser.Parse(match.Groups[2]);
+        var type = TypeParser.Parse(match.Groups[3]);
 
         var key = (day, scene);
         if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
