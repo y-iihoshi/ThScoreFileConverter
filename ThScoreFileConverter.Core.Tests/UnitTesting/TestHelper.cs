@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ThScoreFileConverter.Core.Tests.UnitTesting;
@@ -17,5 +18,28 @@ public static class TestHelper
 
         yield return new object[] { values.Min() - 1 };
         yield return new object[] { values.Max() + 1 };
+    }
+
+    public static IDisposable BackupCultureInfo()
+    {
+        return new CultureInfoDisposable();
+    }
+
+    private sealed class CultureInfoDisposable : IDisposable
+    {
+        private readonly CultureInfo cultureInfo;
+        private readonly CultureInfo uiCultureInfo;
+
+        public CultureInfoDisposable()
+        {
+            this.cultureInfo = CultureInfo.CurrentCulture;
+            this.uiCultureInfo = CultureInfo.CurrentUICulture;
+        }
+
+        public void Dispose()
+        {
+            CultureInfo.CurrentCulture = this.cultureInfo;
+            CultureInfo.CurrentUICulture = this.uiCultureInfo;
+        }
     }
 }

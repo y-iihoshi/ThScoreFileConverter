@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Globalization;
 using NSubstitute;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 
 namespace ThScoreFileConverter.Tests.Models.Th165;
@@ -36,14 +37,12 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestEnemy()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
 
         var replacer = new CardReplacer(Scores, false);
         Assert.AreEqual("レミリア・スカーレット &amp; フランドール・スカーレット", replacer.Replace("%T165CARDN111"));
         Assert.AreEqual("聖 白蓮 &amp; 豊聡耳 神子", replacer.Replace("%T165CARDN121"));
-
-        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]
@@ -57,14 +56,12 @@ public class CardReplacerTests
     [TestMethod]
     public void ReplaceTestHiddenEnemy()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
 
         var replacer = new CardReplacer(Scores, true);
         Assert.AreEqual("レミリア・スカーレット &amp; フランドール・スカーレット", replacer.Replace("%T165CARDN111"));
         Assert.AreEqual("??????????", replacer.Replace("%T165CARDN121"));
-
-        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]

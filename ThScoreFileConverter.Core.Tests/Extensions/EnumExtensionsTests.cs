@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Core.Tests.Extensions;
 
@@ -80,7 +81,7 @@ public class EnumExtensionsTests
     [TestMethod]
     public void ToCharaNameTest()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
 
         Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToCharaName());
 
@@ -91,14 +92,12 @@ public class EnumExtensionsTests
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("Reimu", Protagonist.Reimu.ToCharaName());
         Assert.AreEqual("Marisa", Protagonist.Marisa.ToCharaName());
-
-        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]
     public void ToCharaFullNameTest()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
 
         Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToCharaFullName());
 
@@ -109,7 +108,5 @@ public class EnumExtensionsTests
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("Hakurei Reimu", Protagonist.Reimu.ToCharaFullName());
         Assert.AreEqual("Kirisame Marisa", Protagonist.Marisa.ToCharaFullName());
-
-        CultureInfo.CurrentCulture = culture;
     }
 }

@@ -2,6 +2,7 @@
 using System.Globalization;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Resources;
+using ThScoreFileConverter.Core.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Core.Tests.Models;
 
@@ -70,7 +71,7 @@ public class CharacterAttributeTests
     [TestMethod]
     public void GetLocalizedNameTest()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
 
         var name = "Marisa";
         var attribute = new CharacterAttribute(name);
@@ -80,14 +81,12 @@ public class CharacterAttributeTests
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("Marisa", attribute.GetLocalizedName());
-
-        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]
     public void GetLocalizedNameTestUnregistered()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
 
         var name = "Rinnosuke";
         var attribute = new CharacterAttribute(name);
@@ -97,14 +96,12 @@ public class CharacterAttributeTests
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("Rinnosuke", attribute.GetLocalizedName());
-
-        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]
     public void GetLocalizedFullNameTest()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
 
         var name = "Marisa";
         var attribute = new CharacterAttribute(name);
@@ -114,14 +111,12 @@ public class CharacterAttributeTests
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("Kirisame Marisa", attribute.GetLocalizedFullName());
-
-        CultureInfo.CurrentCulture = culture;
     }
 
     [TestMethod]
     public void GetLocalizedFullNameTestUnregistered()
     {
-        var culture = CultureInfo.CurrentCulture;
+        using var backup = TestHelper.BackupCultureInfo();
 
         var name = "Rinnosuke";
         var attribute = new CharacterAttribute(name);
@@ -131,7 +126,5 @@ public class CharacterAttributeTests
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("RinnosukeFullName", attribute.GetLocalizedFullName());
-
-        CultureInfo.CurrentCulture = culture;
     }
 }
