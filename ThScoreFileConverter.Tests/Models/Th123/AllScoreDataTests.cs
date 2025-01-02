@@ -2,7 +2,6 @@
 using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th123;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th123;
 using ThScoreFileConverter.Tests.UnitTesting;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;

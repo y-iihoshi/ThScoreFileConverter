@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th125;
 
 namespace ThScoreFileConverter.Tests.Models.Th125;

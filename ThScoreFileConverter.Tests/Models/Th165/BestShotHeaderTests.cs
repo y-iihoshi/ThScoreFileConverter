@@ -4,7 +4,6 @@ using System.IO;
 using CommunityToolkit.Diagnostics;
 using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th165;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverter.Tests.UnitTesting;
 

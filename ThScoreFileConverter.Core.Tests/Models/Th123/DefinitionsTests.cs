@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ThScoreFileConverter.Core.Models.Th123;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Core.Tests.Models.Th123;
 

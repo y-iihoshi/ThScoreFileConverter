@@ -5,7 +5,6 @@ using System.Windows.Media;
 using NSubstitute;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;

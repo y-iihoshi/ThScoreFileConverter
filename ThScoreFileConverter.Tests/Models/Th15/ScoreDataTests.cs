@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NSubstitute;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverter.Tests.UnitTesting;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;

@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Core.Tests.Extensions;
 

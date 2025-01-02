@@ -5,7 +5,6 @@ using System.Linq;
 using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th07;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;

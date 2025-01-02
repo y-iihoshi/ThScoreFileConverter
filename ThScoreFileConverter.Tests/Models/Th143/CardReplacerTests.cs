@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Globalization;
 using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
