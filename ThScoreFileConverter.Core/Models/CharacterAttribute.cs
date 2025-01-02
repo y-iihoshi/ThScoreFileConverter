@@ -62,13 +62,11 @@ public sealed class CharacterAttribute : Attribute
     /// <summary>
     /// Gets the name of the character.
     /// </summary>
-    [Localizable(false)]
     public string Name { get; }
 
     /// <summary>
     /// Gets the full name of the character.
     /// </summary>
-    [Localizable(false)]
     public string FullName { get; }
 
     /// <summary>
@@ -80,7 +78,6 @@ public sealed class CharacterAttribute : Attribute
     /// Gets the localized name of the character.
     /// </summary>
     /// <returns>The localized name.</returns>
-    [Localizable(true)]
     public string GetLocalizedName()
     {
         return this.resourceManager.GetString(this.Name, CultureInfo.CurrentCulture) ?? this.Name;
@@ -90,7 +87,6 @@ public sealed class CharacterAttribute : Attribute
     /// Gets the localized full name of the character.
     /// </summary>
     /// <returns>The localized full name.</returns>
-    [Localizable(true)]
     public string GetLocalizedFullName()
     {
         return this.resourceManager.GetString(this.FullName, CultureInfo.CurrentCulture) ?? this.FullName;
