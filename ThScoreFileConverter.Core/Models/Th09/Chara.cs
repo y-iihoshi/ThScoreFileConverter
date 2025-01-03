@@ -94,7 +94,7 @@ public enum Chara
     /// Shiki Eiki, Yamaxanadu.
     /// </summary>
     [EnumAltName("SI")]
-    Shikieiki,
+    Eiki,
 
     /// <summary>
     /// Merlin Prismriver.

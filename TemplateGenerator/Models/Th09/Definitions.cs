@@ -25,7 +25,7 @@ public class Definitions : Models.Definitions
         (Chara.Medicine,  "メディスン", "メディスン・メランコリー"),
         (Chara.Yuuka,     "幽香",       "風見 幽香"),
         (Chara.Komachi,   "小町",       "小野塚 小町"),
-        (Chara.Shikieiki, "四季映姫",   "四季映姫・ヤマザナドゥ"),
+        (Chara.Eiki,      "映姫",       "四季映姫・ヤマザナドゥ"),
     }.ToDictionary(
         static tuple => tuple.Item1.ToShortName(),
         static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
