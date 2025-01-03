@@ -67,10 +67,10 @@ public enum Enemy
     Reisen,
 
     /// <summary>
-    /// Hon Meirin.
+    /// Hong Meiling.
     /// </summary>
-    [Character(nameof(Meirin))]
-    Meirin,
+    [Character(nameof(Meiling))]
+    Meiling,
 
     /// <summary>
     /// Patchouli Knowledge.

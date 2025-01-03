@@ -1051,20 +1051,20 @@ namespace ThScoreFileConverter.Core.Resources {
         }
         
         /// <summary>
-        ///   Meirin に類似しているローカライズされた文字列を検索します。
+        ///   Meiling に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Meirin {
+        public static string Meiling {
             get {
-                return ResourceManager.GetString("Meirin", resourceCulture);
+                return ResourceManager.GetString("Meiling", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Hong Meirin に類似しているローカライズされた文字列を検索します。
+        ///   Hong Meiling に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string MeirinFullName {
+        public static string MeilingFullName {
             get {
-                return ResourceManager.GetString("MeirinFullName", resourceCulture);
+                return ResourceManager.GetString("MeilingFullName", resourceCulture);
             }
         }
         
