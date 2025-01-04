@@ -28,6 +28,18 @@ public enum UnnamedCharacter
     [EnumAltName("Tokiko")] 名無しの本読み妖怪,
 }
 
+public enum Sisters
+{
+    [Character("Remilia")]
+    [Character("Flandre", 1)]
+    Scarlet,
+
+    [Character("Lunasa")]
+    [Character("Merlin", 1)]
+    [Character("Lyrica", 2)]
+    Prismriver,
+}
+
 [TestClass]
 public class EnumExtensionsTests
 {
@@ -107,5 +119,45 @@ public class EnumExtensionsTests
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         Assert.AreEqual("Hakurei Reimu", Protagonist.Reimu.ToCharaFullName());
         Assert.AreEqual("Kirisame Marisa", Protagonist.Marisa.ToCharaFullName());
+    }
+
+    [TestMethod]
+    public void ToCharaNameTestMultiple()
+    {
+        using var backup = TestHelper.BackupCultureInfo();
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+        Assert.AreEqual("レミリア", Sisters.Scarlet.ToCharaName());
+        Assert.AreEqual("フランドール", Sisters.Scarlet.ToCharaName(1));
+        Assert.AreEqual("ルナサ", Sisters.Prismriver.ToCharaName());
+        Assert.AreEqual("メルラン", Sisters.Prismriver.ToCharaName(1));
+        Assert.AreEqual("リリカ", Sisters.Prismriver.ToCharaName(2));
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+        Assert.AreEqual("Remilia", Sisters.Scarlet.ToCharaName());
+        Assert.AreEqual("Flandre", Sisters.Scarlet.ToCharaName(1));
+        Assert.AreEqual("Lunasa", Sisters.Prismriver.ToCharaName());
+        Assert.AreEqual("Merlin", Sisters.Prismriver.ToCharaName(1));
+        Assert.AreEqual("Lyrica", Sisters.Prismriver.ToCharaName(2));
+    }
+
+    [TestMethod]
+    public void ToCharaFullNameTestMultiple()
+    {
+        using var backup = TestHelper.BackupCultureInfo();
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+        Assert.AreEqual("レミリア・スカーレット", Sisters.Scarlet.ToCharaFullName());
+        Assert.AreEqual("フランドール・スカーレット", Sisters.Scarlet.ToCharaFullName(1));
+        Assert.AreEqual("ルナサ・プリズムリバー", Sisters.Prismriver.ToCharaFullName());
+        Assert.AreEqual("メルラン・プリズムリバー", Sisters.Prismriver.ToCharaFullName(1));
+        Assert.AreEqual("リリカ・プリズムリバー", Sisters.Prismriver.ToCharaFullName(2));
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+        Assert.AreEqual("Remilia Scarlet", Sisters.Scarlet.ToCharaFullName());
+        Assert.AreEqual("Flandre Scarlet", Sisters.Scarlet.ToCharaFullName(1));
+        Assert.AreEqual("Lunasa Prismriver", Sisters.Prismriver.ToCharaFullName());
+        Assert.AreEqual("Merlin Prismriver", Sisters.Prismriver.ToCharaFullName(1));
+        Assert.AreEqual("Lyrica Prismriver", Sisters.Prismriver.ToCharaFullName(2));
     }
 }
