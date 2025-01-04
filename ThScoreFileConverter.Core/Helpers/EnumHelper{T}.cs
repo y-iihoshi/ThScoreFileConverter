@@ -48,7 +48,7 @@ public static class EnumHelper<T>
     /// Provides additional information of a field in <typeparamref name="T"/> enum.
     /// Inspired from https://github.com/xin9le/FastEnum.
     /// </summary>
-    internal class Member
+    internal sealed class Member
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Member"/> class.
