@@ -6,12 +6,9 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using ThScoreFileConverter.Core.Models;
+using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Core.Helpers;
 
 namespace ThScoreFileConverter.Core.Extensions;
 
@@ -29,8 +26,7 @@ public static class EnumExtensions
     public static string ToShortName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.ShortName : string.Empty;
+        return enumValue.ToMember().ShortName;
     }
 
     /// <summary>
@@ -42,8 +38,7 @@ public static class EnumExtensions
     public static string ToLongName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.LongName : string.Empty;
+        return enumValue.ToMember().LongName;
     }
 
     /// <summary>
@@ -55,8 +50,7 @@ public static class EnumExtensions
     public static string ToPattern<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, PatternAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.Pattern : string.Empty;
+        return enumValue.ToMember().Pattern;
     }
 
     /// <summary>
@@ -71,8 +65,8 @@ public static class EnumExtensions
     public static string ToDisplayName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, DisplayAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.GetName() ?? enumValue.ToString() : enumValue.ToString();
+        var member = enumValue.ToMember();
+        return member.DisplayAttribute?.GetName() ?? member.Name;
     }
 
     /// <summary>
@@ -87,8 +81,8 @@ public static class EnumExtensions
     public static string ToDisplayShortName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, DisplayAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.GetShortName() ?? enumValue.ToString() : enumValue.ToString();
+        var member = enumValue.ToMember();
+        return member.DisplayAttribute?.GetShortName() ?? member.Name;
     }
 
     /// <summary>
@@ -100,8 +94,7 @@ public static class EnumExtensions
     public static string ToCharaName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, CharacterAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.GetLocalizedName() : string.Empty;
+        return enumValue.ToMember().CharacterAttribute?.GetLocalizedName() ?? string.Empty;
     }
 
     /// <summary>
@@ -113,50 +106,19 @@ public static class EnumExtensions
     public static string ToCharaFullName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, CharacterAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.GetLocalizedFullName() : string.Empty;
+        return enumValue.ToMember().CharacterAttribute?.GetLocalizedFullName() ?? string.Empty;
     }
 
     /// <summary>
-    /// Provides cache of attribute information.
+    /// Gets the <see cref="EnumHelper{T}.Member"/> instance corresponding to the specified enumeration value.
     /// </summary>
-    /// <typeparam name="TEnum">The enumeration type.</typeparam>
-    /// <typeparam name="TAttribute">The attribute type for <typeparamref name="TEnum"/>.</typeparam>
-    private static class AttributeCache<TEnum, TAttribute>
-        where TEnum : struct, Enum
-        where TAttribute : Attribute
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The <see cref="EnumHelper{T}.Member"/> instance corresponding to <paramref name="enumValue"/>.</returns>
+    internal static EnumHelper<T>.Member ToMember<T>(this T enumValue)
+        where T : struct, Enum
     {
-        /// <summary>
-        /// Gets the cache of attribute information collected by reflection.
-        /// </summary>
-        public static IReadOnlyDictionary<TEnum, TAttribute> Cache { get; } = InitializeCache();
-
-        /// <summary>
-        /// Initializes the cache.
-        /// </summary>
-        /// <returns>The cache of attribute information.</returns>
-        private static Dictionary<TEnum, TAttribute> InitializeCache()
-        {
-            var type = typeof(TEnum);
-            Debug.Assert(type.IsEnum, $"{nameof(TEnum)} must be an enum type.");
-
-            static bool IsAllowedMultiple(MemberInfo memberInfo)
-            {
-                return memberInfo.GetCustomAttribute<AttributeUsageAttribute>(false) is { } usage
-                    && usage.AllowMultiple;
-            }
-
-            Debug.Assert(
-                !IsAllowedMultiple(typeof(TAttribute)),
-                $"{nameof(TAttribute)} must not be allowed multiple instances.");
-
-            return type.GetFields()
-                .Where(field => field.FieldType == type)
-                .Select(static field =>
-                    (enumValue: field.GetValue(null) is TEnum value ? value : default,
-                        attr: field.GetCustomAttribute<TAttribute>(false)))
-                .Where(static pair => pair.attr is not null)
-                .ToDictionary(static pair => pair.enumValue, static pair => pair.attr!);
-        }
+        Guard.IsTrue(Enum.IsDefined(enumValue));
+        return EnumHelper<T>.Members[enumValue];
     }
 }
