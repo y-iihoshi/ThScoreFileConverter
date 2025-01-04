@@ -69,7 +69,9 @@ public static class EnumHelper<T>
             this.LongName = enumAltNameAttribute?.LongName ?? string.Empty;
             this.Pattern = fieldInfo.GetCustomAttribute<PatternAttribute>()?.Pattern ?? string.Empty;
             this.DisplayAttribute = fieldInfo.GetCustomAttribute<DisplayAttribute>();
-            this.CharacterAttribute = fieldInfo.GetCustomAttribute<CharacterAttribute>();
+            this.CharacterAttributes = fieldInfo.GetCustomAttributes<CharacterAttribute>().ToFrozenDictionary(
+                static attr => attr.Index,
+                static attr => attr);
         }
 
         /// <summary>
@@ -105,9 +107,9 @@ public static class EnumHelper<T>
         public DisplayAttribute? DisplayAttribute { get; }
 
         /// <summary>
-        /// Gets the <see cref="Models.CharacterAttribute"/> instance of the field in <typeparamref name="T"/>,
-        /// if defined; otherwise, <see langword="null"/>.
+        /// Gets the <see cref="CharacterAttribute"/> instances of the field in <typeparamref name="T"/>
+        /// as a dictionary keyed by <see cref="CharacterAttribute.Index"/>.
         /// </summary>
-        public CharacterAttribute? CharacterAttribute { get; }
+        public FrozenDictionary<int, CharacterAttribute> CharacterAttributes { get; }
     }
 }

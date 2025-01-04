@@ -90,11 +90,13 @@ public static class EnumExtensions
     /// </summary>
     /// <typeparam name="T">The enumeration type.</typeparam>
     /// <param name="enumValue">An enumeration value.</param>
+    /// <param name="index">The index specifying one name from multiple character names.</param>
     /// <returns>The name of the character represented as <paramref name="enumValue"/>.</returns>
-    public static string ToCharaName<T>(this T enumValue)
+    public static string ToCharaName<T>(this T enumValue, int index = 0)
         where T : struct, Enum
     {
-        return enumValue.ToMember().CharacterAttribute?.GetLocalizedName() ?? string.Empty;
+        return enumValue.ToMember().CharacterAttributes.TryGetValue(index, out var attribute)
+            ? attribute.GetLocalizedName() : string.Empty;
     }
 
     /// <summary>
@@ -102,11 +104,13 @@ public static class EnumExtensions
     /// </summary>
     /// <typeparam name="T">The enumeration type.</typeparam>
     /// <param name="enumValue">An enumeration value.</param>
+    /// <param name="index">The index specifying one name from multiple character names.</param>
     /// <returns>The full name of the character represented as <paramref name="enumValue"/>.</returns>
-    public static string ToCharaFullName<T>(this T enumValue)
+    public static string ToCharaFullName<T>(this T enumValue, int index = 0)
         where T : struct, Enum
     {
-        return enumValue.ToMember().CharacterAttribute?.GetLocalizedFullName() ?? string.Empty;
+        return enumValue.ToMember().CharacterAttributes.TryGetValue(index, out var attribute)
+            ? attribute.GetLocalizedFullName() : string.Empty;
     }
 
     /// <summary>

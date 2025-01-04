@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Core.Models;
 /// <summary>
 /// Provides names of the character represented as an enumeration field.
 /// </summary>
-[AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+[AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = false)]
 public sealed class CharacterAttribute : Attribute
 {
     private readonly ResourceManager resourceManager;
@@ -26,8 +26,9 @@ public sealed class CharacterAttribute : Attribute
     /// Initializes a new instance of the <see cref="CharacterAttribute"/> class.
     /// </summary>
     /// <param name="name">The name of the character.</param>
-    public CharacterAttribute([Localizable(false)] string name)
-        : this(name, $"{name}{nameof(FullName)}")
+    /// <param name="index">The index specifying the created instance of <see cref="CharacterAttribute"/>.</param>
+    public CharacterAttribute([Localizable(false)] string name, int index = 0)
+        : this(name, $"{name}{nameof(FullName)}", index)
     {
     }
 
@@ -36,8 +37,9 @@ public sealed class CharacterAttribute : Attribute
     /// </summary>
     /// <param name="name">The name of the character.</param>
     /// <param name="fullName">The full name of the character.</param>
-    public CharacterAttribute([Localizable(false)] string name, [Localizable(false)] string fullName)
-        : this(name, fullName, typeof(CharacterNames))
+    /// <param name="index">The index specifying the created instance of <see cref="CharacterAttribute"/>.</param>
+    public CharacterAttribute([Localizable(false)] string name, [Localizable(false)] string fullName, int index = 0)
+        : this(name, fullName, typeof(CharacterNames), index)
     {
     }
 
@@ -47,16 +49,19 @@ public sealed class CharacterAttribute : Attribute
     /// <param name="name">The name of the character.</param>
     /// <param name="fullName">The full name of the character.</param>
     /// <param name="resourceType">The type of a resource providing localized character names.</param>
-    public CharacterAttribute([Localizable(false)] string name, [Localizable(false)] string fullName, Type resourceType)
+    /// <param name="index">The index specifying the created instance of <see cref="CharacterAttribute"/>.</param>
+    public CharacterAttribute([Localizable(false)] string name, [Localizable(false)] string fullName, Type resourceType, int index = 0)
     {
         Guard.IsNotNullOrEmpty(name);
         Guard.IsNotNullOrEmpty(fullName);
         Guard.IsNotNull(resourceType);
+        Guard.IsGreaterThanOrEqualTo(index, 0);
 
         this.resourceManager = new(resourceType);
         this.Name = name;
         this.FullName = fullName;
         this.ResourceType = resourceType;
+        this.Index = index;
     }
 
     /// <summary>
@@ -73,6 +78,11 @@ public sealed class CharacterAttribute : Attribute
     /// Gets the type of a resource providing localized character names.
     /// </summary>
     public Type ResourceType { get; }
+
+    /// <summary>
+    /// Gets the index specifying this instance.
+    /// </summary>
+    public int Index { get; }
 
     /// <summary>
     /// Gets the localized name of the character.

@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Core.Tests.Models;
 public class CharacterAttributeTests
 {
     [TestMethod]
-    public void CharacterAttributeTestOneArg()
+    public void CharacterAttributeTestName()
     {
         var name = "Reimu";
         var attribute = new CharacterAttribute(name);
@@ -18,10 +18,11 @@ public class CharacterAttributeTests
         Assert.AreEqual(name, attribute.Name);
         Assert.AreEqual($"{name}FullName", attribute.FullName);
         Assert.AreEqual(typeof(CharacterNames), attribute.ResourceType);
+        Assert.AreEqual(0, attribute.Index);
     }
 
     [TestMethod]
-    public void CharacterAttributeTestTwoArgs()
+    public void CharacterAttributeTestFullName()
     {
         var name = "Reimu";
         var fullName = "HakureiReimu";
@@ -31,10 +32,11 @@ public class CharacterAttributeTests
         Assert.AreEqual(name, attribute.Name);
         Assert.AreEqual(fullName, attribute.FullName);
         Assert.AreEqual(typeof(CharacterNames), attribute.ResourceType);
+        Assert.AreEqual(0, attribute.Index);
     }
 
     [TestMethod]
-    public void CharacterAttributeTestThreeArgs()
+    public void CharacterAttributeTestResourceType()
     {
         var name = "Reimu";
         var fullName = "HakureiReimu";
@@ -45,6 +47,23 @@ public class CharacterAttributeTests
         Assert.AreEqual(name, attribute.Name);
         Assert.AreEqual(fullName, attribute.FullName);
         Assert.AreEqual(resourceType, attribute.ResourceType);
+        Assert.AreEqual(0, attribute.Index);
+    }
+
+    [TestMethod]
+    public void CharacterAttributeTestIndex()
+    {
+        var name = "Reimu";
+        var fullName = "HakureiReimu";
+        var resourceType = typeof(ExceptionMessages);
+        var index = 1;
+        var attribute = new CharacterAttribute(name, fullName, resourceType, index);
+
+        Assert.IsNotNull(attribute);
+        Assert.AreEqual(name, attribute.Name);
+        Assert.AreEqual(fullName, attribute.FullName);
+        Assert.AreEqual(resourceType, attribute.ResourceType);
+        Assert.AreEqual(1, attribute.Index);
     }
 
     [TestMethod]
