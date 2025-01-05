@@ -16,23 +16,27 @@ public enum Chara
     /// Hakurei Reimu (Spirit Sign).
     /// </summary>
     [EnumAltName("RA")]
+    [ShotType<Chara>(ReimuA)]
     ReimuA,
 
     /// <summary>
     /// Hakurei Reimu (Dream Sign).
     /// </summary>
     [EnumAltName("RB")]
+    [ShotType<Chara>(ReimuB)]
     ReimuB,
 
     /// <summary>
     /// Kirisame Marisa (Magic Sign).
     /// </summary>
     [EnumAltName("MA")]
+    [ShotType<Chara>(MarisaA)]
     MarisaA,
 
     /// <summary>
     /// Kirisame Marisa (Love Sign).
     /// </summary>
     [EnumAltName("MB")]
+    [ShotType<Chara>(MarisaB)]
     MarisaB,
 }

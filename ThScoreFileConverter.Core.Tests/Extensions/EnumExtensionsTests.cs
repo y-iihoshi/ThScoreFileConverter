@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
+using ThScoreFileConverter.Core.Models.Th06;
 
 namespace ThScoreFileConverter.Core.Tests.Extensions;
 
@@ -159,5 +160,37 @@ public class EnumExtensionsTests
         Assert.AreEqual("Lunasa Prismriver", Sisters.Prismriver.ToCharaFullName());
         Assert.AreEqual("Merlin Prismriver", Sisters.Prismriver.ToCharaFullName(1));
         Assert.AreEqual("Lyrica Prismriver", Sisters.Prismriver.ToCharaFullName(2));
+    }
+
+    [TestMethod]
+    public void ToShotTypeNameTest()
+    {
+        using var backup = TestHelper.BackupCultureInfo();
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeName());
+        Assert.AreEqual("霊", Chara.ReimuA.ToShotTypeName());
+        Assert.AreEqual("魔", Chara.MarisaA.ToShotTypeName());
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeName());
+        Assert.AreEqual("Spirit", Chara.ReimuA.ToShotTypeName());
+        Assert.AreEqual("Magic", Chara.MarisaA.ToShotTypeName());
+    }
+
+    [TestMethod]
+    public void ToShotTypeFullNameTest()
+    {
+        using var backup = TestHelper.BackupCultureInfo();
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
+        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeFullName());
+        Assert.AreEqual("霊符", Chara.ReimuA.ToShotTypeFullName());
+        Assert.AreEqual("魔符", Chara.MarisaA.ToShotTypeFullName());
+
+        CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeFullName());
+        Assert.AreEqual("Spirit Sign", Chara.ReimuA.ToShotTypeFullName());
+        Assert.AreEqual("Magic Sign", Chara.MarisaA.ToShotTypeFullName());
     }
 }

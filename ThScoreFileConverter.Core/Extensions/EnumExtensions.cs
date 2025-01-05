@@ -114,6 +114,30 @@ public static class EnumExtensions
     }
 
     /// <summary>
+    /// Gets the name of the shot type represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The name of the shot type represented as <paramref name="enumValue"/>.</returns>
+    public static string ToShotTypeName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return enumValue.ToMember().ShotTypeAttribute?.GetLocalizedName() ?? string.Empty;
+    }
+
+    /// <summary>
+    /// Gets the full name of the shot type represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The full name of the shot type represented as <paramref name="enumValue"/>.</returns>
+    public static string ToShotTypeFullName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return enumValue.ToMember().ShotTypeAttribute?.GetLocalizedFullName() ?? string.Empty;
+    }
+
+    /// <summary>
     /// Gets the <see cref="EnumHelper{T}.Member"/> instance corresponding to the specified enumeration value.
     /// </summary>
     /// <typeparam name="T">The enumeration type.</typeparam>

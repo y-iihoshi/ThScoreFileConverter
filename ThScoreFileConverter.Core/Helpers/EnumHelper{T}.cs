@@ -69,9 +69,9 @@ public static class EnumHelper<T>
             this.LongName = enumAltNameAttribute?.LongName ?? string.Empty;
             this.Pattern = fieldInfo.GetCustomAttribute<PatternAttribute>()?.Pattern ?? string.Empty;
             this.DisplayAttribute = fieldInfo.GetCustomAttribute<DisplayAttribute>();
-            this.CharacterAttributes = fieldInfo.GetCustomAttributes<CharacterAttribute>().ToFrozenDictionary(
-                static attr => attr.Index,
-                static attr => attr);
+            this.CharacterAttributes = fieldInfo.GetCustomAttributes<CharacterAttribute>()
+                .ToFrozenDictionary(static attr => attr.Index, static attr => attr);
+            this.ShotTypeAttribute = fieldInfo.GetCustomAttribute<ShotTypeAttribute<T>>();
         }
 
         /// <summary>
@@ -111,5 +111,11 @@ public static class EnumHelper<T>
         /// as a dictionary keyed by <see cref="CharacterAttribute.Index"/>.
         /// </summary>
         public FrozenDictionary<int, CharacterAttribute> CharacterAttributes { get; }
+
+        /// <summary>
+        /// Gets the <see cref="Models.ShotTypeAttribute{T}"/> instance of the field in
+        /// <typeparamref name="T"/>, if defined; otherwise, <see langword="null"/>.
+        /// </summary>
+        public ShotTypeAttribute<T>? ShotTypeAttribute { get; }
     }
 }
