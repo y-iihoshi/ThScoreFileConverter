@@ -61,12 +61,8 @@ public static class EnumHelper<T>
             var fieldInfo = typeof(T).GetField(name);
             Guard.IsNotNull(fieldInfo);
 
-            var enumAltNameAttribute = fieldInfo.GetCustomAttribute<EnumAltNameAttribute>();
-
             this.Name = name;
             this.Value = Enum.Parse<T>(name);
-            this.ShortName = enumAltNameAttribute?.ShortName ?? string.Empty;
-            this.LongName = enumAltNameAttribute?.LongName ?? string.Empty;
             this.Pattern = fieldInfo.GetCustomAttribute<PatternAttribute>()?.Pattern ?? string.Empty;
             this.DisplayAttribute = fieldInfo.GetCustomAttribute<DisplayAttribute>();
             this.CharacterAttributes = fieldInfo.GetCustomAttributes<CharacterAttribute>()
@@ -83,16 +79,6 @@ public static class EnumHelper<T>
         /// Gets the value of the field named <see cref="Name"/> in <typeparamref name="T"/>.
         /// </summary>
         public T Value { get; }
-
-        /// <summary>
-        /// Gets the short name of the field in <typeparamref name="T"/> that value is <see cref="Value"/>.
-        /// </summary>
-        public string ShortName { get; }
-
-        /// <summary>
-        /// Gets the long name of the field in <typeparamref name="T"/> that value is <see cref="Value"/>.
-        /// </summary>
-        public string LongName { get; }
 
         /// <summary>
         /// Gets the pattern string of the field in <typeparamref name="T"/> if defined;

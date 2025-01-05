@@ -9,13 +9,11 @@ namespace ThScoreFileConverter.Core.Tests.Extensions;
 
 public enum Protagonist
 {
-    [EnumAltName("RM", LongName = "Hakurei Reimu")]
     [Pattern("RM")]
     [Display(Name = "博麗 霊夢", ShortName = "霊夢")]
     [Character(nameof(Reimu))]
     Reimu,
 
-    [EnumAltName("MR", LongName = "Kirisame Marisa")]
     [Pattern("MR")]
     [Display(Name = "霧雨 魔理沙", ShortName = "魔理沙")]
     [Character(nameof(Marisa))]
@@ -24,9 +22,9 @@ public enum Protagonist
 
 public enum UnnamedCharacter
 {
-    [EnumAltName("Dai")] 大妖精,
-    [EnumAltName("Koa")] 小悪魔,
-    [EnumAltName("Tokiko")] 名無しの本読み妖怪,
+    大妖精,
+    小悪魔,
+    名無しの本読み妖怪,
 }
 
 public enum Sisters
@@ -44,28 +42,6 @@ public enum Sisters
 [TestClass]
 public class EnumExtensionsTests
 {
-    [TestMethod]
-    public void ToShortNameTest()
-    {
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShortName());
-        Assert.AreEqual("RM", Protagonist.Reimu.ToShortName());
-        Assert.AreEqual("MR", Protagonist.Marisa.ToShortName());
-        Assert.AreEqual("Dai", UnnamedCharacter.大妖精.ToShortName());
-        Assert.AreEqual("Koa", UnnamedCharacter.小悪魔.ToShortName());
-        Assert.AreEqual("Tokiko", UnnamedCharacter.名無しの本読み妖怪.ToShortName());
-    }
-
-    [TestMethod]
-    public void ToLongNameTest()
-    {
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToLongName());
-        Assert.AreEqual("Hakurei Reimu", Protagonist.Reimu.ToLongName());
-        Assert.AreEqual("Kirisame Marisa", Protagonist.Marisa.ToLongName());
-        Assert.AreEqual(string.Empty, UnnamedCharacter.大妖精.ToLongName());
-        Assert.AreEqual(string.Empty, UnnamedCharacter.小悪魔.ToLongName());
-        Assert.AreEqual(string.Empty, UnnamedCharacter.名無しの本読み妖怪.ToLongName());
-    }
-
     [TestMethod]
     public void ToPatternTest()
     {

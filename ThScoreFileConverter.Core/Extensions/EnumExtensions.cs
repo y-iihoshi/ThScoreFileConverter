@@ -18,30 +18,6 @@ namespace ThScoreFileConverter.Core.Extensions;
 public static class EnumExtensions
 {
     /// <summary>
-    /// Gets a short name of the specified enumeration value.
-    /// </summary>
-    /// <typeparam name="T">The enumeration type.</typeparam>
-    /// <param name="enumValue">An enumeration value.</param>
-    /// <returns>A short name of <paramref name="enumValue"/>.</returns>
-    public static string ToShortName<T>(this T enumValue)
-        where T : struct, Enum
-    {
-        return enumValue.ToMember().ShortName;
-    }
-
-    /// <summary>
-    /// Gets a long name of the specified enumeration value.
-    /// </summary>
-    /// <typeparam name="T">The enumeration type.</typeparam>
-    /// <param name="enumValue">An enumeration value.</param>
-    /// <returns>A long name of <paramref name="enumValue"/>.</returns>
-    public static string ToLongName<T>(this T enumValue)
-        where T : struct, Enum
-    {
-        return enumValue.ToMember().LongName;
-    }
-
-    /// <summary>
     /// Gets a pattern string of the specified enumeration value.
     /// </summary>
     /// <typeparam name="T">The enumeration type.</typeparam>
