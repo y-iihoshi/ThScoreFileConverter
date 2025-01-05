@@ -135,10 +135,10 @@ public enum CharaWithTotal
     Suwako,
 
     /// <summary>
-    /// Oonamazu.
+    /// Giant Catfish; Oonamazu.
     /// </summary>
     [EnumAltName("NM")]
-    Oonamazu = 0x15,
+    Catfish = 0x15,
 
     /// <summary>
     /// Represents total across characters.
