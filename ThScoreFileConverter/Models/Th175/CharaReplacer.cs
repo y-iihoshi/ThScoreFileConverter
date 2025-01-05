@@ -38,7 +38,7 @@ internal sealed class CharaReplacer(
                 : (dictionary.TryGetValue((Chara)chara, out var count) ? count : default);
         }
 
-        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1]);
         var type = TypeParser.Parse(match.Groups[2]);
 
         return type switch
