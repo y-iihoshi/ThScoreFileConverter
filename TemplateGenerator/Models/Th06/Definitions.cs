@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
@@ -14,13 +13,10 @@ public class Definitions : Models.Definitions
 {
     public static string Title { get; } = StringResources.TH06;
 
-    public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
-    {
-        (Chara.ReimuA,  "博麗 霊夢（霊）"),
-        (Chara.ReimuB,  "博麗 霊夢（夢）"),
-        (Chara.MarisaA, "霧雨 魔理沙（魔）"),
-        (Chara.MarisaB, "霧雨 魔理沙（恋）"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => $"{chara.ToCharaFullName()}（{chara.ToShotTypeName()}）");  // FIXME
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<Stage>.Enumerable.ToDictionary(
