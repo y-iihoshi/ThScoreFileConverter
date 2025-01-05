@@ -22,68 +22,29 @@ public class CharacterAttributeTests
     }
 
     [TestMethod]
-    public void CharacterAttributeTestFullName()
-    {
-        var name = "Reimu";
-        var fullName = "HakureiReimu";
-        var attribute = new CharacterAttribute(name, fullName);
-
-        Assert.IsNotNull(attribute);
-        Assert.AreEqual(name, attribute.Name);
-        Assert.AreEqual(fullName, attribute.FullName);
-        Assert.AreEqual(typeof(CharacterNames), attribute.ResourceType);
-        Assert.AreEqual(0, attribute.Index);
-    }
-
-    [TestMethod]
-    public void CharacterAttributeTestResourceType()
-    {
-        var name = "Reimu";
-        var fullName = "HakureiReimu";
-        var resourceType = typeof(ExceptionMessages);
-        var attribute = new CharacterAttribute(name, fullName, resourceType);
-
-        Assert.IsNotNull(attribute);
-        Assert.AreEqual(name, attribute.Name);
-        Assert.AreEqual(fullName, attribute.FullName);
-        Assert.AreEqual(resourceType, attribute.ResourceType);
-        Assert.AreEqual(0, attribute.Index);
-    }
-
-    [TestMethod]
     public void CharacterAttributeTestIndex()
     {
         var name = "Reimu";
-        var fullName = "HakureiReimu";
-        var resourceType = typeof(ExceptionMessages);
         var index = 1;
-        var attribute = new CharacterAttribute(name, fullName, resourceType, index);
+        var attribute = new CharacterAttribute(name, index);
 
         Assert.IsNotNull(attribute);
         Assert.AreEqual(name, attribute.Name);
-        Assert.AreEqual(fullName, attribute.FullName);
-        Assert.AreEqual(resourceType, attribute.ResourceType);
+        Assert.AreEqual($"{name}FullName", attribute.FullName);
+        Assert.AreEqual(typeof(CharacterNames), attribute.ResourceType);
         Assert.AreEqual(1, attribute.Index);
     }
 
     [TestMethod]
-    public void CharacterAttributeTestNullArgs()
+    public void CharacterAttributeTestNull()
     {
-        var name = "Reimu";
-        var fullName = "HakureiReimu";
-
         _ = Assert.ThrowsException<ArgumentNullException>(() => new CharacterAttribute(null!));
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new CharacterAttribute(name, null!));
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new CharacterAttribute(name, fullName, null!));
     }
 
     [TestMethod]
-    public void CharacterAttributeTestEmptyArgs()
+    public void CharacterAttributeTestEmpty()
     {
-        var name = "Reimu";
-
         _ = Assert.ThrowsException<ArgumentException>(() => new CharacterAttribute(string.Empty));
-        _ = Assert.ThrowsException<ArgumentException>(() => new CharacterAttribute(name, string.Empty));
     }
 
     [TestMethod]
