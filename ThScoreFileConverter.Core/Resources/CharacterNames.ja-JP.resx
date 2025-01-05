@@ -759,6 +759,12 @@
   <data name="Th145.ReimuBFullName" xml:space="preserve">
     <value>博麗 霊夢 (終)</value>
   </data>
+  <data name="Th16.Cirno" xml:space="preserve">
+    <value>チルノ</value>
+  </data>
+  <data name="Th16.CirnoFullName" xml:space="preserve">
+    <value>日焼けしたチルノ</value>
+  </data>
   <data name="Tojiko" xml:space="preserve">
     <value>屠自古</value>
   </data>

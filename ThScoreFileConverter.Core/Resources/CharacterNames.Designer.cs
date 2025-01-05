@@ -1987,6 +1987,24 @@ namespace ThScoreFileConverter.Core.Resources {
         }
         
         /// <summary>
+        ///   Cirno に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th16_Cirno {
+            get {
+                return ResourceManager.GetString("Th16.Cirno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Tanned Cirno に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th16_CirnoFullName {
+            get {
+                return ResourceManager.GetString("Th16.CirnoFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Tojiko に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Tojiko {

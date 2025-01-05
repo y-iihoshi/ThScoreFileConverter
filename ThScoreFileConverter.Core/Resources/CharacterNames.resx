@@ -759,6 +759,12 @@
   <data name="Th145.ReimuBFullName" xml:space="preserve">
     <value>Hakurei Reimu (Final)</value>
   </data>
+  <data name="Th16.Cirno" xml:space="preserve">
+    <value>Cirno</value>
+  </data>
+  <data name="Th16.CirnoFullName" xml:space="preserve">
+    <value>Tanned Cirno</value>
+  </data>
   <data name="Tojiko" xml:space="preserve">
     <value>Tojiko</value>
   </data>

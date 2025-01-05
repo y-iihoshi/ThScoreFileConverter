@@ -37,7 +37,7 @@ internal sealed class ScoreReplacer(
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = (Core.Models.Th14.LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1]);
-        var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2]);
         var rank = IntegerHelper.ToZeroBased(RankParser.Parse(match.Groups[3]));
         var type = TypeParser.Parse(match.Groups[4]);
 
