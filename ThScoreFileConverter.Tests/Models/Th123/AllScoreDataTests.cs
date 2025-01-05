@@ -26,7 +26,7 @@ public class AllScoreDataTests
             return Th105.CardForDeckTests.MockCardForDeck(id, (id % 4) + 1);
         }
 
-        var charas = EnumHelper<Chara>.Enumerable.Where(chara => chara != Chara.Oonamazu).ToArray();
+        var charas = EnumHelper<Chara>.Enumerable.Where(chara => chara != Chara.Catfish).ToArray();
         return new Properties()
         {
             storyClearCounts = charas.ToDictionary(chara => chara, chara => (byte)chara),

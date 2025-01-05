@@ -25,7 +25,7 @@ internal sealed class AllScoreData : IBinaryReadable
 
     public AllScoreData()
     {
-        var validNumCharas = EnumHelper<Chara>.Enumerable.Count(chara => chara != Chara.Oonamazu);
+        var validNumCharas = EnumHelper<Chara>.Enumerable.Count(chara => chara != Chara.Catfish);
         this.storyClearCounts = new Dictionary<Chara, byte>(validNumCharas);
         this.systemCards = new Dictionary<int, Th105.ICardForDeck>(Definitions.SystemCardNameTable.Count);
         this.clearData = new Dictionary<Chara, Th105.IClearData<Chara>>(validNumCharas);
@@ -39,7 +39,7 @@ internal sealed class AllScoreData : IBinaryReadable
 
     public void ReadFrom(BinaryReader reader)
     {
-        var validNumCharas = EnumHelper<Chara>.Enumerable.Count(chara => chara != Chara.Oonamazu);
+        var validNumCharas = EnumHelper<Chara>.Enumerable.Count(chara => chara != Chara.Catfish);
 
         _ = reader.ReadUInt32();            // version? (0xD2 == 210 --> ver.1.10?)
         _ = reader.ReadUInt32();

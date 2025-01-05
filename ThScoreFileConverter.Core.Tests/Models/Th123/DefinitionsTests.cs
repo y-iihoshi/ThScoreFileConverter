@@ -29,7 +29,7 @@ public class DefinitionsTests
         Assert.IsTrue(Definitions.HasStory(Chara.Meiling));
         Assert.IsFalse(Definitions.HasStory(Chara.Utsuho));
         Assert.IsFalse(Definitions.HasStory(Chara.Suwako));
-        Assert.IsFalse(Definitions.HasStory(Chara.Oonamazu));
+        Assert.IsFalse(Definitions.HasStory(Chara.Catfish));
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestHelper.GetInvalidEnumerators<Chara>();

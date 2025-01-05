@@ -38,7 +38,7 @@ internal sealed class CardForDeckReplacer : IStringReplaceable
             var number = CardNumberParser.Parse(match.Groups[3]);
             var type = match.Groups[4].Value.ToUpperInvariant();
 
-            if (chara == Chara.Oonamazu)
+            if (chara == Chara.Catfish)
                 return match.ToString();
 
             Th105.ICardForDeck cardForDeck;
