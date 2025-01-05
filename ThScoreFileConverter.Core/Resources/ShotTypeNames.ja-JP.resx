@@ -249,4 +249,40 @@
   <data name="Th12.SanaeBFullName" xml:space="preserve">
     <value>蛙符</value>
   </data>
+  <data name="Th14.MarisaA" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Th14.MarisaAFullName" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Th14.MarisaB" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Th14.MarisaBFullName" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Th14.ReimuA" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Th14.ReimuAFullName" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Th14.ReimuB" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Th14.ReimuBFullName" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Th14.SakuyaA" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Th14.SakuyaAFullName" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Th14.SakuyaB" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Th14.SakuyaBFullName" xml:space="preserve">
+    <value>B</value>
+  </data>
 </root>

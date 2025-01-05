@@ -455,5 +455,113 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("Th12.SanaeBFullName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_MarisaA {
+            get {
+                return ResourceManager.GetString("Th14.MarisaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_MarisaAFullName {
+            get {
+                return ResourceManager.GetString("Th14.MarisaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_MarisaB {
+            get {
+                return ResourceManager.GetString("Th14.MarisaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_MarisaBFullName {
+            get {
+                return ResourceManager.GetString("Th14.MarisaBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_ReimuA {
+            get {
+                return ResourceManager.GetString("Th14.ReimuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_ReimuAFullName {
+            get {
+                return ResourceManager.GetString("Th14.ReimuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_ReimuB {
+            get {
+                return ResourceManager.GetString("Th14.ReimuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_ReimuBFullName {
+            get {
+                return ResourceManager.GetString("Th14.ReimuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_SakuyaA {
+            get {
+                return ResourceManager.GetString("Th14.SakuyaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_SakuyaAFullName {
+            get {
+                return ResourceManager.GetString("Th14.SakuyaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_SakuyaB {
+            get {
+                return ResourceManager.GetString("Th14.SakuyaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   B に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th14_SakuyaBFullName {
+            get {
+                return ResourceManager.GetString("Th14.SakuyaBFullName", resourceCulture);
+            }
+        }
     }
 }
