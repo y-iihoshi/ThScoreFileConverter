@@ -50,28 +50,25 @@ public static class Definitions
         static pair => pair.Item1.ToPattern(),
         static pair => (pair.Item2, pair.Item1.ToDisplayShortName(), pair.Item1.ToDisplayName()));
 
-    public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } = new[]
-    {
-        (Chara.Aya,    "文",     "射命丸 文"),
-        (Chara.Hatate, "はたて", "姫海棠 はたて"),
-    }.ToDictionary(
-        static tuple => tuple.Item1.ToShortName(),
-        static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+    public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static IReadOnlyDictionary<string, IEnumerable<int>> SpoilerScenesPerCharacter { get; } =
-        SpoilerScenesPerCharacterImpl.ToStringKeyedDictionary();
+        SpoilerScenesPerCharacterImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumScenesPerLevel { get; } =
         NumScenesPerLevelImpl.ToPatternKeyedDictionary();
 
     public static IReadOnlyDictionary<string, int> NumScenesPerCharacter { get; } =
         SpoilerScenesPerCharacterImpl.ToDictionary(
-            static pair => pair.Item1.ToShortName(),
+            static pair => pair.Item1.ToPattern(),
             static pair => pair.Item2.Count() + NumScenesWithoutSpoiler);
 
     public static IReadOnlyDictionary<string, int> NumScenesPerCharacterInGame { get; } = new[]
     {
         (Chara.Aya,    NumScenesWithSpoiler),
         (Chara.Hatate, NumScenesWithoutSpoiler),
-    }.ToStringKeyedDictionary();
+    }.ToPatternKeyedDictionary();
 }

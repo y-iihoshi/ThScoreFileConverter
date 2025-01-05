@@ -31,7 +31,7 @@ internal sealed class ScoreTotalReplacer : IStringReplaceable
 
         static string EvaluatorImpl(Match match, IReadOnlyList<IScore> scores, INumberFormatter formatter)
         {
-            var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[1]);
             var method = MethodParser.Parse(match.Groups[2]);
             var type = TypeParser.Parse(match.Groups[3]);
 

@@ -15,12 +15,14 @@ public enum Chara
     /// <summary>
     /// Shameimaru Aya.
     /// </summary>
-    [EnumAltName("A")]
+    [Pattern("A")]
+    [Character(nameof(Aya))]
     Aya,
 
     /// <summary>
     /// Himekaidou Hatate.
     /// </summary>
-    [EnumAltName("H")]
+    [Pattern("H")]
+    [Character(nameof(Hatate))]
     Hatate,
 }
