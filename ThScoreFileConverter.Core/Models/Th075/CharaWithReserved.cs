@@ -16,66 +16,77 @@ public enum CharaWithReserved
     /// Hakurei Reimu.
     /// </summary>
     [EnumAltName("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
     [EnumAltName("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Izayoi Sakuya.
     /// </summary>
     [EnumAltName("SK")]
+    [Character(nameof(Sakuya))]
     Sakuya,
 
     /// <summary>
     /// Alice Margatroid.
     /// </summary>
     [EnumAltName("AL")]
+    [Character(nameof(Alice))]
     Alice,
 
     /// <summary>
     /// Patchouli Knowledge.
     /// </summary>
     [EnumAltName("PC")]
+    [Character(nameof(Patchouli))]
     Patchouli,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
     [EnumAltName("YM")]
+    [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Remilia Scarlet.
     /// </summary>
     [EnumAltName("RL")]
+    [Character(nameof(Remilia))]
     Remilia,
 
     /// <summary>
     /// Saigyouji Yuyuko.
     /// </summary>
     [EnumAltName("YU")]
+    [Character(nameof(Yuyuko))]
     Yuyuko,
 
     /// <summary>
     /// Yakumo Yukari.
     /// </summary>
     [EnumAltName("YK")]
+    [Character(nameof(Yukari))]
     Yukari,
 
     /// <summary>
     /// Ibuki Suika.
     /// </summary>
     [EnumAltName("SU")]
+    [Character(nameof(Suika))]
     Suika,
 
     /// <summary>
     /// Hong Meiling.
     /// </summary>
     [EnumAltName("ML")]
+    [Character(nameof(Meiling))]
     Meiling,
 
 #pragma warning disable CA1700 // Do not name enum values 'Reserved'

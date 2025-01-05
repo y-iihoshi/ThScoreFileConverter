@@ -29,7 +29,7 @@ internal sealed class CareerReplacer(
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var number = Parsers.CardNumberParser.Parse(match.Groups[1]);
-        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2]);
         var type = TypeParser.Parse(match.Groups[3]);
 
         if (chara == Chara.Meiling)
