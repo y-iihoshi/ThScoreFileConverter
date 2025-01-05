@@ -15,77 +15,77 @@ public enum CharaWithReserved
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
     [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
     [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Izayoi Sakuya.
     /// </summary>
-    [EnumAltName("SK")]
+    [Pattern("SK")]
     [Character(nameof(Sakuya))]
     Sakuya,
 
     /// <summary>
     /// Alice Margatroid.
     /// </summary>
-    [EnumAltName("AL")]
+    [Pattern("AL")]
     [Character(nameof(Alice))]
     Alice,
 
     /// <summary>
     /// Patchouli Knowledge.
     /// </summary>
-    [EnumAltName("PC")]
+    [Pattern("PC")]
     [Character(nameof(Patchouli))]
     Patchouli,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
-    [EnumAltName("YM")]
+    [Pattern("YM")]
     [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Remilia Scarlet.
     /// </summary>
-    [EnumAltName("RL")]
+    [Pattern("RL")]
     [Character(nameof(Remilia))]
     Remilia,
 
     /// <summary>
     /// Saigyouji Yuyuko.
     /// </summary>
-    [EnumAltName("YU")]
+    [Pattern("YU")]
     [Character(nameof(Yuyuko))]
     Yuyuko,
 
     /// <summary>
     /// Yakumo Yukari.
     /// </summary>
-    [EnumAltName("YK")]
+    [Pattern("YK")]
     [Character(nameof(Yukari))]
     Yukari,
 
     /// <summary>
     /// Ibuki Suika.
     /// </summary>
-    [EnumAltName("SU")]
+    [Pattern("SU")]
     [Character(nameof(Suika))]
     Suika,
 
     /// <summary>
     /// Hong Meiling.
     /// </summary>
-    [EnumAltName("ML")]
+    [Pattern("ML")]
     [Character(nameof(Meiling))]
     Meiling,
 
@@ -93,25 +93,25 @@ public enum CharaWithReserved
     /// <summary>
     /// Reserved character #12.
     /// </summary>
-    [EnumAltName("12")]
+    [Pattern("12")]
     Reserved12,
 
     /// <summary>
     /// Reserved character #13.
     /// </summary>
-    [EnumAltName("13")]
+    [Pattern("13")]
     Reserved13,
 
     /// <summary>
     /// Reserved character #14.
     /// </summary>
-    [EnumAltName("14")]
+    [Pattern("14")]
     Reserved14,
 
     /// <summary>
     /// Reserved character #15.
     /// </summary>
-    [EnumAltName("15")]
+    [Pattern("15")]
     Reserved15,
 #pragma warning restore CA1700 // Do not name enum values 'Reserved'
 }
