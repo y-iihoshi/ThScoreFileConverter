@@ -239,5 +239,113 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("Th07.SakuyaBFullName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   High-Power に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_MarisaA {
+            get {
+                return ResourceManager.GetString("Th10.MarisaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   High-Power Type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_MarisaAFullName {
+            get {
+                return ResourceManager.GetString("Th10.MarisaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Piercing に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_MarisaB {
+            get {
+                return ResourceManager.GetString("Th10.MarisaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Piercing Type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_MarisaBFullName {
+            get {
+                return ResourceManager.GetString("Th10.MarisaBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Magic-User に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_MarisaC {
+            get {
+                return ResourceManager.GetString("Th10.MarisaC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Magic-User に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_MarisaCFullName {
+            get {
+                return ResourceManager.GetString("Th10.MarisaCFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Homing に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_ReimuA {
+            get {
+                return ResourceManager.GetString("Th10.ReimuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Homing Type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_ReimuAFullName {
+            get {
+                return ResourceManager.GetString("Th10.ReimuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Forward Focus に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_ReimuB {
+            get {
+                return ResourceManager.GetString("Th10.ReimuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Forward Focus Type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_ReimuBFullName {
+            get {
+                return ResourceManager.GetString("Th10.ReimuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sealing に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_ReimuC {
+            get {
+                return ResourceManager.GetString("Th10.ReimuC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sealing Type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th10_ReimuCFullName {
+            get {
+                return ResourceManager.GetString("Th10.ReimuCFullName", resourceCulture);
+            }
+        }
     }
 }

@@ -15,36 +15,48 @@ public enum Chara
     /// <summary>
     /// Hakurei Reimu (Homing type).
     /// </summary>
-    [EnumAltName("RA")]
+    [Pattern("RA")]
+    [Character("Reimu")]
+    [ShotType<Chara>(ReimuA)]
     ReimuA,
 
     /// <summary>
     /// Hakurei Reimu (Forward focus type).
     /// </summary>
-    [EnumAltName("RB")]
+    [Pattern("RB")]
+    [Character("Reimu")]
+    [ShotType<Chara>(ReimuB)]
     ReimuB,
 
     /// <summary>
     /// Hakurei Reimu (Sealing type).
     /// </summary>
-    [EnumAltName("RC")]
+    [Pattern("RC")]
+    [Character("Reimu")]
+    [ShotType<Chara>(ReimuC)]
     ReimuC,
 
     /// <summary>
     /// Kirisame Marisa (High-power type).
     /// </summary>
-    [EnumAltName("MA")]
+    [Pattern("MA")]
+    [Character("Marisa")]
+    [ShotType<Chara>(MarisaA)]
     MarisaA,
 
     /// <summary>
     /// Kirisame Marisa (Piercing type).
     /// </summary>
-    [EnumAltName("MB")]
+    [Pattern("MB")]
+    [Character("Marisa")]
+    [ShotType<Chara>(MarisaB)]
     MarisaB,
 
     /// <summary>
     /// Kirisame Marisa (Magic-user type).
     /// </summary>
-    [EnumAltName("MC")]
+    [Pattern("MC")]
+    [Character("Marisa")]
+    [ShotType<Chara>(MarisaC)]
     MarisaC,
 }

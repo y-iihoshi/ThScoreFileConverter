@@ -177,4 +177,40 @@
   <data name="Th07.SakuyaBFullName" xml:space="preserve">
     <value>時符</value>
   </data>
+  <data name="Th10.MarisaA" xml:space="preserve">
+    <value>高威力</value>
+  </data>
+  <data name="Th10.MarisaAFullName" xml:space="preserve">
+    <value>高威力装備</value>
+  </data>
+  <data name="Th10.MarisaB" xml:space="preserve">
+    <value>貫通</value>
+  </data>
+  <data name="Th10.MarisaBFullName" xml:space="preserve">
+    <value>貫通装備</value>
+  </data>
+  <data name="Th10.MarisaC" xml:space="preserve">
+    <value>魔法使い</value>
+  </data>
+  <data name="Th10.MarisaCFullName" xml:space="preserve">
+    <value>魔法使い装備</value>
+  </data>
+  <data name="Th10.ReimuA" xml:space="preserve">
+    <value>誘導</value>
+  </data>
+  <data name="Th10.ReimuAFullName" xml:space="preserve">
+    <value>誘導装備</value>
+  </data>
+  <data name="Th10.ReimuB" xml:space="preserve">
+    <value>前方集中</value>
+  </data>
+  <data name="Th10.ReimuBFullName" xml:space="preserve">
+    <value>前方集中装備</value>
+  </data>
+  <data name="Th10.ReimuC" xml:space="preserve">
+    <value>封印</value>
+  </data>
+  <data name="Th10.ReimuCFullName" xml:space="preserve">
+    <value>封印装備</value>
+  </data>
 </root>

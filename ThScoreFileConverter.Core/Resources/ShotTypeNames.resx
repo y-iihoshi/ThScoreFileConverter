@@ -177,4 +177,40 @@
   <data name="Th07.SakuyaBFullName" xml:space="preserve">
     <value>Time Sign</value>
   </data>
+  <data name="Th10.MarisaA" xml:space="preserve">
+    <value>High-Power</value>
+  </data>
+  <data name="Th10.MarisaAFullName" xml:space="preserve">
+    <value>High-Power Type</value>
+  </data>
+  <data name="Th10.MarisaB" xml:space="preserve">
+    <value>Piercing</value>
+  </data>
+  <data name="Th10.MarisaBFullName" xml:space="preserve">
+    <value>Piercing Type</value>
+  </data>
+  <data name="Th10.MarisaC" xml:space="preserve">
+    <value>Magic-User</value>
+  </data>
+  <data name="Th10.MarisaCFullName" xml:space="preserve">
+    <value>Magic-User</value>
+  </data>
+  <data name="Th10.ReimuA" xml:space="preserve">
+    <value>Homing</value>
+  </data>
+  <data name="Th10.ReimuAFullName" xml:space="preserve">
+    <value>Homing Type</value>
+  </data>
+  <data name="Th10.ReimuB" xml:space="preserve">
+    <value>Forward Focus</value>
+  </data>
+  <data name="Th10.ReimuBFullName" xml:space="preserve">
+    <value>Forward Focus Type</value>
+  </data>
+  <data name="Th10.ReimuC" xml:space="preserve">
+    <value>Sealing</value>
+  </data>
+  <data name="Th10.ReimuCFullName" xml:space="preserve">
+    <value>Sealing Type</value>
+  </data>
 </root>
