@@ -747,6 +747,18 @@
   <data name="TewiFullName" xml:space="preserve">
     <value>因幡 てゐ</value>
   </data>
+  <data name="Th145.ReimuA" xml:space="preserve">
+    <value>霊夢 (序)</value>
+  </data>
+  <data name="Th145.ReimuAFullName" xml:space="preserve">
+    <value>博麗 霊夢 (序)</value>
+  </data>
+  <data name="Th145.ReimuB" xml:space="preserve">
+    <value>霊夢 (終)</value>
+  </data>
+  <data name="Th145.ReimuBFullName" xml:space="preserve">
+    <value>博麗 霊夢 (終)</value>
+  </data>
   <data name="Tojiko" xml:space="preserve">
     <value>屠自古</value>
   </data>

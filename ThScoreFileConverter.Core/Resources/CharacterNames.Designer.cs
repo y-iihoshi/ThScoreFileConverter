@@ -1951,6 +1951,42 @@ namespace ThScoreFileConverter.Core.Resources {
         }
         
         /// <summary>
+        ///   Reimu (Prologue) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th145_ReimuA {
+            get {
+                return ResourceManager.GetString("Th145.ReimuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hakurei Reimu (Prologue) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th145_ReimuAFullName {
+            get {
+                return ResourceManager.GetString("Th145.ReimuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Reimu (Final) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th145_ReimuB {
+            get {
+                return ResourceManager.GetString("Th145.ReimuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hakurei Reimu (Final) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th145_ReimuBFullName {
+            get {
+                return ResourceManager.GetString("Th145.ReimuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Tojiko に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Tojiko {

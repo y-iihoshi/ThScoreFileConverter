@@ -29,7 +29,7 @@ internal sealed class ClearTimeReplacer : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
-            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2]);
 
 #pragma warning disable IDE0072 // Add missing cases to switch expression
             Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara = chara switch

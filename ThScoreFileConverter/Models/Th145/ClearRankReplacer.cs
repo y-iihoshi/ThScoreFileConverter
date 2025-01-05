@@ -24,7 +24,7 @@ internal sealed class ClearRankReplacer(IReadOnlyDictionary<Level, IReadOnlyDict
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
-        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2]);
 
         if (clearRanks.TryGetValue(level, out var ranks) && ranks.TryGetValue(chara, out var rank))
         {

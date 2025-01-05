@@ -747,6 +747,18 @@
   <data name="TewiFullName" xml:space="preserve">
     <value>Inaba Tewi</value>
   </data>
+  <data name="Th145.ReimuA" xml:space="preserve">
+    <value>Reimu (Prologue)</value>
+  </data>
+  <data name="Th145.ReimuAFullName" xml:space="preserve">
+    <value>Hakurei Reimu (Prologue)</value>
+  </data>
+  <data name="Th145.ReimuB" xml:space="preserve">
+    <value>Reimu (Final)</value>
+  </data>
+  <data name="Th145.ReimuBFullName" xml:space="preserve">
+    <value>Hakurei Reimu (Final)</value>
+  </data>
   <data name="Tojiko" xml:space="preserve">
     <value>Tojiko</value>
   </data>
