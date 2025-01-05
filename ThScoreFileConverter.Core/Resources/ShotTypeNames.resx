@@ -141,4 +141,40 @@
   <data name="Th06.ReimuBFullName" xml:space="preserve">
     <value>Dream Sign</value>
   </data>
+  <data name="Th07.MarisaA" xml:space="preserve">
+    <value>Magic</value>
+  </data>
+  <data name="Th07.MarisaAFullName" xml:space="preserve">
+    <value>Magic Sign</value>
+  </data>
+  <data name="Th07.MarisaB" xml:space="preserve">
+    <value>Love</value>
+  </data>
+  <data name="Th07.MarisaBFullName" xml:space="preserve">
+    <value>Love Sign</value>
+  </data>
+  <data name="Th07.ReimuA" xml:space="preserve">
+    <value>Spirit</value>
+  </data>
+  <data name="Th07.ReimuAFullName" xml:space="preserve">
+    <value>Spirit Sign</value>
+  </data>
+  <data name="Th07.ReimuB" xml:space="preserve">
+    <value>Dream</value>
+  </data>
+  <data name="Th07.ReimuBFullName" xml:space="preserve">
+    <value>Dream Sign</value>
+  </data>
+  <data name="Th07.SakuyaA" xml:space="preserve">
+    <value>Illusion</value>
+  </data>
+  <data name="Th07.SakuyaAFullName" xml:space="preserve">
+    <value>Illusion Sign</value>
+  </data>
+  <data name="Th07.SakuyaB" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Th07.SakuyaBFullName" xml:space="preserve">
+    <value>Time Sign</value>
+  </data>
 </root>

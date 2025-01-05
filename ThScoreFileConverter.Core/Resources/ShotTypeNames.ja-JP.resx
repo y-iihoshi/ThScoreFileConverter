@@ -141,4 +141,40 @@
   <data name="Th06.ReimuBFullName" xml:space="preserve">
     <value>夢符</value>
   </data>
+  <data name="Th07.MarisaA" xml:space="preserve">
+    <value>魔</value>
+  </data>
+  <data name="Th07.MarisaAFullName" xml:space="preserve">
+    <value>魔符</value>
+  </data>
+  <data name="Th07.MarisaB" xml:space="preserve">
+    <value>恋</value>
+  </data>
+  <data name="Th07.MarisaBFullName" xml:space="preserve">
+    <value>恋符</value>
+  </data>
+  <data name="Th07.ReimuA" xml:space="preserve">
+    <value>霊</value>
+  </data>
+  <data name="Th07.ReimuAFullName" xml:space="preserve">
+    <value>霊符</value>
+  </data>
+  <data name="Th07.ReimuB" xml:space="preserve">
+    <value>夢</value>
+  </data>
+  <data name="Th07.ReimuBFullName" xml:space="preserve">
+    <value>夢符</value>
+  </data>
+  <data name="Th07.SakuyaA" xml:space="preserve">
+    <value>幻</value>
+  </data>
+  <data name="Th07.SakuyaAFullName" xml:space="preserve">
+    <value>幻符</value>
+  </data>
+  <data name="Th07.SakuyaB" xml:space="preserve">
+    <value>時</value>
+  </data>
+  <data name="Th07.SakuyaBFullName" xml:space="preserve">
+    <value>時符</value>
+  </data>
 </root>

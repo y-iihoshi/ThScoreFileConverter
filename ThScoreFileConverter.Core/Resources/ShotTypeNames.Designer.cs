@@ -131,5 +131,113 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("Th06.ReimuBFullName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Magic に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_MarisaA {
+            get {
+                return ResourceManager.GetString("Th07.MarisaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Magic Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_MarisaAFullName {
+            get {
+                return ResourceManager.GetString("Th07.MarisaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Love に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_MarisaB {
+            get {
+                return ResourceManager.GetString("Th07.MarisaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Love Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_MarisaBFullName {
+            get {
+                return ResourceManager.GetString("Th07.MarisaBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_ReimuA {
+            get {
+                return ResourceManager.GetString("Th07.ReimuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Spirit Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_ReimuAFullName {
+            get {
+                return ResourceManager.GetString("Th07.ReimuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dream に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_ReimuB {
+            get {
+                return ResourceManager.GetString("Th07.ReimuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dream Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_ReimuBFullName {
+            get {
+                return ResourceManager.GetString("Th07.ReimuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Illusion に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_SakuyaA {
+            get {
+                return ResourceManager.GetString("Th07.SakuyaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Illusion Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_SakuyaAFullName {
+            get {
+                return ResourceManager.GetString("Th07.SakuyaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Time に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_SakuyaB {
+            get {
+                return ResourceManager.GetString("Th07.SakuyaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Time Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th07_SakuyaBFullName {
+            get {
+                return ResourceManager.GetString("Th07.SakuyaBFullName", resourceCulture);
+            }
+        }
     }
 }

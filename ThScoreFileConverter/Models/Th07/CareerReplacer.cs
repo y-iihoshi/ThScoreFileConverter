@@ -28,7 +28,7 @@ internal sealed class CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardA
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var number = CardNumberParser.Parse(match.Groups[1]);
-        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2]);
         var type = TypeParser.Parse(match.Groups[3]);
 
         Func<ICardAttack, long> getValue = type switch
