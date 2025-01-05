@@ -14,22 +14,15 @@ public class Definitions : Models.Definitions
 {
     public static string Title { get; } = StringResources.TH18;
 
-    public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
-    {
-        (Chara.Reimu,  "博麗 霊夢"),
-        (Chara.Marisa, "霧雨 魔理沙"),
-        (Chara.Sakuya, "十六夜 咲夜"),
-        (Chara.Sanae,  "東風谷 早苗"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => chara.ToCharaFullName());
 
-    public static IReadOnlyDictionary<string, string> CharacterWithTotalNames { get; } = new[]
-    {
-        (CharaWithTotal.Reimu,  "博麗 霊夢"),
-        (CharaWithTotal.Marisa, "霧雨 魔理沙"),
-        (CharaWithTotal.Sakuya, "十六夜 咲夜"),
-        (CharaWithTotal.Sanae,  "東風谷 早苗"),
-        (CharaWithTotal.Total,  "全主人公合計"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterWithTotalNames { get; } =
+        EnumHelper<CharaWithTotal>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => (chara == CharaWithTotal.Total) ? "全主人公合計" : chara.ToCharaFullName());  // FIXME
 
     public static IEnumerable<string> CharacterKeysTotalFirst { get; } = CharacterWithTotalNames.Keys.RotateRight();
 
