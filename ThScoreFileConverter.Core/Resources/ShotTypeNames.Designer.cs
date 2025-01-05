@@ -563,5 +563,167 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("Th14.SakuyaBFullName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Wolf に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_MarisaA {
+            get {
+                return ResourceManager.GetString("Th17.MarisaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wolf Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_MarisaAFullName {
+            get {
+                return ResourceManager.GetString("Th17.MarisaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Otter に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_MarisaB {
+            get {
+                return ResourceManager.GetString("Th17.MarisaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Otter Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_MarisaBFullName {
+            get {
+                return ResourceManager.GetString("Th17.MarisaBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Eagle に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_MarisaC {
+            get {
+                return ResourceManager.GetString("Th17.MarisaC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Eagle Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_MarisaCFullName {
+            get {
+                return ResourceManager.GetString("Th17.MarisaCFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wolf に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_ReimuA {
+            get {
+                return ResourceManager.GetString("Th17.ReimuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wolf Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_ReimuAFullName {
+            get {
+                return ResourceManager.GetString("Th17.ReimuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Otter に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_ReimuB {
+            get {
+                return ResourceManager.GetString("Th17.ReimuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Otter Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_ReimuBFullName {
+            get {
+                return ResourceManager.GetString("Th17.ReimuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Eagle に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_ReimuC {
+            get {
+                return ResourceManager.GetString("Th17.ReimuC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Eagle Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_ReimuCFullName {
+            get {
+                return ResourceManager.GetString("Th17.ReimuCFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wolf に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_YoumuA {
+            get {
+                return ResourceManager.GetString("Th17.YoumuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wolf Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_YoumuAFullName {
+            get {
+                return ResourceManager.GetString("Th17.YoumuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Otter に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_YoumuB {
+            get {
+                return ResourceManager.GetString("Th17.YoumuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Otter Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_YoumuBFullName {
+            get {
+                return ResourceManager.GetString("Th17.YoumuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Eagle に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_YoumuC {
+            get {
+                return ResourceManager.GetString("Th17.YoumuC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Eagle Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th17_YoumuCFullName {
+            get {
+                return ResourceManager.GetString("Th17.YoumuCFullName", resourceCulture);
+            }
+        }
     }
 }

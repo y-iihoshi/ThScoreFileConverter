@@ -15,60 +15,78 @@ public enum CharaWithTotal
     /// <summary>
     /// Hakurei Reimu (Wolf spirit).
     /// </summary>
-    [EnumAltName("RA")]
+    [Pattern("RA")]
+    [Character("Reimu")]
+    [ShotType<CharaWithTotal>(ReimuA)]
     ReimuA,
 
     /// <summary>
     /// Hakurei Reimu (Otter spirit).
     /// </summary>
-    [EnumAltName("RB")]
+    [Pattern("RB")]
+    [Character("Reimu")]
+    [ShotType<CharaWithTotal>(ReimuB)]
     ReimuB,
 
     /// <summary>
     /// Hakurei Reimu (Eagle spirit).
     /// </summary>
-    [EnumAltName("RC")]
+    [Pattern("RC")]
+    [Character("Reimu")]
+    [ShotType<CharaWithTotal>(ReimuC)]
     ReimuC,
 
     /// <summary>
     /// Kirisame Reimu (Wolf spirit).
     /// </summary>
-    [EnumAltName("MA")]
+    [Pattern("MA")]
+    [Character("Marisa")]
+    [ShotType<CharaWithTotal>(MarisaA)]
     MarisaA,
 
     /// <summary>
     /// Kirisame Marisa (Otter spirit).
     /// </summary>
-    [EnumAltName("MB")]
+    [Pattern("MB")]
+    [Character("Marisa")]
+    [ShotType<CharaWithTotal>(MarisaB)]
     MarisaB,
 
     /// <summary>
     /// Kirisame Marisa (Eagle spirit).
     /// </summary>
-    [EnumAltName("MC")]
+    [Pattern("MC")]
+    [Character("Marisa")]
+    [ShotType<CharaWithTotal>(MarisaC)]
     MarisaC,
 
     /// <summary>
     /// Konpaku Youmu (Wolf spirit).
     /// </summary>
-    [EnumAltName("YA")]
+    [Pattern("YA")]
+    [Character("Youmu")]
+    [ShotType<CharaWithTotal>(YoumuA)]
     YoumuA,
 
     /// <summary>
     /// Konpaku Youmu (Otter spirit).
     /// </summary>
-    [EnumAltName("YB")]
+    [Pattern("YB")]
+    [Character("Youmu")]
+    [ShotType<CharaWithTotal>(YoumuB)]
     YoumuB,
 
     /// <summary>
     /// Konpaku Youmu (Eagle spirit).
     /// </summary>
-    [EnumAltName("YC")]
+    [Pattern("YC")]
+    [Character("Youmu")]
+    [ShotType<CharaWithTotal>(YoumuC)]
     YoumuC,
 
     /// <summary>
     /// Represents total across characters.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }

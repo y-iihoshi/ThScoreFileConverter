@@ -285,4 +285,58 @@
   <data name="Th14.SakuyaBFullName" xml:space="preserve">
     <value>B</value>
   </data>
+  <data name="Th17.MarisaA" xml:space="preserve">
+    <value>Wolf</value>
+  </data>
+  <data name="Th17.MarisaAFullName" xml:space="preserve">
+    <value>Wolf Spirit</value>
+  </data>
+  <data name="Th17.MarisaB" xml:space="preserve">
+    <value>Otter</value>
+  </data>
+  <data name="Th17.MarisaBFullName" xml:space="preserve">
+    <value>Otter Spirit</value>
+  </data>
+  <data name="Th17.MarisaC" xml:space="preserve">
+    <value>Eagle</value>
+  </data>
+  <data name="Th17.MarisaCFullName" xml:space="preserve">
+    <value>Eagle Spirit</value>
+  </data>
+  <data name="Th17.ReimuA" xml:space="preserve">
+    <value>Wolf</value>
+  </data>
+  <data name="Th17.ReimuAFullName" xml:space="preserve">
+    <value>Wolf Spirit</value>
+  </data>
+  <data name="Th17.ReimuB" xml:space="preserve">
+    <value>Otter</value>
+  </data>
+  <data name="Th17.ReimuBFullName" xml:space="preserve">
+    <value>Otter Spirit</value>
+  </data>
+  <data name="Th17.ReimuC" xml:space="preserve">
+    <value>Eagle</value>
+  </data>
+  <data name="Th17.ReimuCFullName" xml:space="preserve">
+    <value>Eagle Spirit</value>
+  </data>
+  <data name="Th17.YoumuA" xml:space="preserve">
+    <value>Wolf</value>
+  </data>
+  <data name="Th17.YoumuAFullName" xml:space="preserve">
+    <value>Wolf Spirit</value>
+  </data>
+  <data name="Th17.YoumuB" xml:space="preserve">
+    <value>Otter</value>
+  </data>
+  <data name="Th17.YoumuBFullName" xml:space="preserve">
+    <value>Otter Spirit</value>
+  </data>
+  <data name="Th17.YoumuC" xml:space="preserve">
+    <value>Eagle</value>
+  </data>
+  <data name="Th17.YoumuCFullName" xml:space="preserve">
+    <value>Eagle Spirit</value>
+  </data>
 </root>

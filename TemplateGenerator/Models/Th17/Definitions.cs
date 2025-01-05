@@ -14,32 +14,15 @@ public class Definitions : Models.Definitions
 {
     public static string Title { get; } = StringResources.TH17;
 
-    public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
-    {
-        (Chara.ReimuA,  "博麗 霊夢 (狼)"),
-        (Chara.ReimuB,  "博麗 霊夢 (獺)"),
-        (Chara.ReimuC,  "博麗 霊夢 (鷲)"),
-        (Chara.MarisaA, "霧雨 魔理沙 (狼)"),
-        (Chara.MarisaB, "霧雨 魔理沙 (獺)"),
-        (Chara.MarisaC, "霧雨 魔理沙 (鷲)"),
-        (Chara.YoumuA,  "魂魄 妖夢 (狼)"),
-        (Chara.YoumuB,  "魂魄 妖夢 (獺)"),
-        (Chara.YoumuC,  "魂魄 妖夢 (鷲)"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => $"{chara.ToCharaFullName()} ({chara.ToShotTypeName()})");
 
-    public static IReadOnlyDictionary<string, string> CharacterWithTotalNames { get; } = new[]
-    {
-        (CharaWithTotal.ReimuA,  "博麗 霊夢 (狼)"),
-        (CharaWithTotal.ReimuB,  "博麗 霊夢 (獺)"),
-        (CharaWithTotal.ReimuC,  "博麗 霊夢 (鷲)"),
-        (CharaWithTotal.MarisaA, "霧雨 魔理沙 (狼)"),
-        (CharaWithTotal.MarisaB, "霧雨 魔理沙 (獺)"),
-        (CharaWithTotal.MarisaC, "霧雨 魔理沙 (鷲)"),
-        (CharaWithTotal.YoumuA,  "魂魄 妖夢 (狼)"),
-        (CharaWithTotal.YoumuB,  "魂魄 妖夢 (獺)"),
-        (CharaWithTotal.YoumuC,  "魂魄 妖夢 (鷲)"),
-        (CharaWithTotal.Total,   "全主人公合計"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterWithTotalNames { get; } =
+        EnumHelper<CharaWithTotal>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => (chara == CharaWithTotal.Total) ? "全主人公合計" : $"{chara.ToCharaFullName()} ({chara.ToShotTypeName()})");
 
     public static IEnumerable<string> CharacterKeysTotalFirst { get; } = CharacterWithTotalNames.Keys.RotateRight();
 
