@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
@@ -15,6 +16,12 @@ public class Definitions : Models.Definitions
         EnumHelper<LevelPractice>.Enumerable.Select(
             static level => (level, CardTable.Count(pair => pair.Value.Level == level)));
 
+    private static string ToPairCharaNames<T>(T chara)
+        where T : struct, Enum
+    {
+        return $"{chara.ToCharaName(0)} &amp; {chara.ToCharaName(1)}";  // FIXME
+    }
+
     public static string Title { get; } = StringResources.TH08;
 
     public static IReadOnlyDictionary<string, string> LevelSpellPracticeNames { get; } =
@@ -22,38 +29,24 @@ public class Definitions : Models.Definitions
             static level => level.ToPattern(),
             static level => level.ToDisplayName());
 
-    public static IReadOnlyDictionary<string, (string ShortName, string LongName)> CharacterNames { get; } = new[]
-    {
-        (Chara.ReimuYukari,   ("霊夢 &amp; 紫",       "霊夢 &amp; 紫")),
-        (Chara.MarisaAlice,   ("魔理沙 &amp; アリス", "魔理沙 &amp; アリス")),
-        (Chara.SakuyaRemilia, ("咲夜 &amp; レミリア", "咲夜 &amp; レミリア")),
-        (Chara.YoumuYuyuko,   ("妖夢 &amp; 幽々子",   "妖夢 &amp; 幽々子")),
-        (Chara.Reimu,         ("霊夢",                "博麗 霊夢")),
-        (Chara.Yukari,        ("紫",                  "八雲 紫")),
-        (Chara.Marisa,        ("魔理沙",              "霧雨 魔理沙")),
-        (Chara.Alice,         ("アリス",              "アリス・マーガトロイド")),
-        (Chara.Sakuya,        ("咲夜",                "十六夜 咲夜")),
-        (Chara.Remilia,       ("レミリア",            "レミリア・スカーレット")),
-        (Chara.Youmu,         ("妖夢",                "魂魄 妖夢")),
-        (Chara.Yuyuko,        ("幽々子",              "西行寺 幽々子")),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, (string ShortName, string LongName)> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => chara switch
+            {
+                <= Chara.YoumuYuyuko => (ToPairCharaNames(chara), ToPairCharaNames(chara)),
+                _ => (chara.ToCharaName(), chara.ToCharaFullName()),
+            });
 
-    public static IReadOnlyDictionary<string, (string ShortName, string LongName)> CharacterWithTotalNames { get; } = new[]
-    {
-        (CharaWithTotal.ReimuYukari,   ("霊夢 &amp; 紫",       "霊夢 &amp; 紫")),
-        (CharaWithTotal.MarisaAlice,   ("魔理沙 &amp; アリス", "魔理沙 &amp; アリス")),
-        (CharaWithTotal.SakuyaRemilia, ("咲夜 &amp; レミリア", "咲夜 &amp; レミリア")),
-        (CharaWithTotal.YoumuYuyuko,   ("妖夢 &amp; 幽々子",   "妖夢 &amp; 幽々子")),
-        (CharaWithTotal.Reimu,         ("霊夢",                "博麗 霊夢")),
-        (CharaWithTotal.Yukari,        ("紫",                  "八雲 紫")),
-        (CharaWithTotal.Marisa,        ("魔理沙",              "霧雨 魔理沙")),
-        (CharaWithTotal.Alice,         ("アリス",              "アリス・マーガトロイド")),
-        (CharaWithTotal.Sakuya,        ("咲夜",                "十六夜 咲夜")),
-        (CharaWithTotal.Remilia,       ("レミリア",            "レミリア・スカーレット")),
-        (CharaWithTotal.Youmu,         ("妖夢",                "魂魄 妖夢")),
-        (CharaWithTotal.Yuyuko,        ("幽々子",              "西行寺 幽々子")),
-        (CharaWithTotal.Total,         ("全主人公合計",        "全主人公合計")),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, (string ShortName, string LongName)> CharacterWithTotalNames { get; } =
+        EnumHelper<CharaWithTotal>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => chara switch
+            {
+                CharaWithTotal.Total => ("全主人公合計", "全主人公合計"),  // FIXME
+                <= CharaWithTotal.YoumuYuyuko => (ToPairCharaNames(chara), ToPairCharaNames(chara)),
+                _ => (chara.ToCharaName(), chara.ToCharaFullName()),
+            });
 
     public static IEnumerable<string> CharacterKeysTotalFirst { get; } = CharacterWithTotalNames.Keys.RotateRight();
 
@@ -118,5 +111,5 @@ public class Definitions : Models.Definitions
         (Chara.Remilia,       Stage.FourPowerful),
         (Chara.Youmu,         Stage.FourUncanny),
         (Chara.Yuyuko,        Stage.FourUncanny),
-    }.ToDictionary(static pair => pair.Item1.ToShortName(), static pair => pair.Item2.ToPattern());
+    }.ToDictionary(static pair => pair.Item1.ToPattern(), static pair => pair.Item2.ToPattern());
 }

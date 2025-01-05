@@ -29,7 +29,7 @@ internal sealed class ClearReplacer(
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
-        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2]);
 
         var key = (chara, level);
         if (rankings.TryGetValue(key, out var ranking) && ranking.Any())
