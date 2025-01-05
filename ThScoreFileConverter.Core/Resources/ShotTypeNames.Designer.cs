@@ -347,5 +347,113 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("Th10.ReimuCFullName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Love に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_MarisaA {
+            get {
+                return ResourceManager.GetString("Th12.MarisaA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Love Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_MarisaAFullName {
+            get {
+                return ResourceManager.GetString("Th12.MarisaAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Magic に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_MarisaB {
+            get {
+                return ResourceManager.GetString("Th12.MarisaB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Magic Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_MarisaBFullName {
+            get {
+                return ResourceManager.GetString("Th12.MarisaBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dream に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_ReimuA {
+            get {
+                return ResourceManager.GetString("Th12.ReimuA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dream Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_ReimuAFullName {
+            get {
+                return ResourceManager.GetString("Th12.ReimuAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Spirit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_ReimuB {
+            get {
+                return ResourceManager.GetString("Th12.ReimuB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Spirit Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_ReimuBFullName {
+            get {
+                return ResourceManager.GetString("Th12.ReimuBFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Snake に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_SanaeA {
+            get {
+                return ResourceManager.GetString("Th12.SanaeA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Snake Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_SanaeAFullName {
+            get {
+                return ResourceManager.GetString("Th12.SanaeAFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Frog に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_SanaeB {
+            get {
+                return ResourceManager.GetString("Th12.SanaeB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Frog Sign に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Th12_SanaeBFullName {
+            get {
+                return ResourceManager.GetString("Th12.SanaeBFullName", resourceCulture);
+            }
+        }
     }
 }

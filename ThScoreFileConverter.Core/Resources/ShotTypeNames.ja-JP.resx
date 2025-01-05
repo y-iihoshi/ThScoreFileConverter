@@ -213,4 +213,40 @@
   <data name="Th10.ReimuCFullName" xml:space="preserve">
     <value>封印装備</value>
   </data>
+  <data name="Th12.MarisaA" xml:space="preserve">
+    <value>恋</value>
+  </data>
+  <data name="Th12.MarisaAFullName" xml:space="preserve">
+    <value>恋符</value>
+  </data>
+  <data name="Th12.MarisaB" xml:space="preserve">
+    <value>魔</value>
+  </data>
+  <data name="Th12.MarisaBFullName" xml:space="preserve">
+    <value>魔符</value>
+  </data>
+  <data name="Th12.ReimuA" xml:space="preserve">
+    <value>夢</value>
+  </data>
+  <data name="Th12.ReimuAFullName" xml:space="preserve">
+    <value>夢符</value>
+  </data>
+  <data name="Th12.ReimuB" xml:space="preserve">
+    <value>霊</value>
+  </data>
+  <data name="Th12.ReimuBFullName" xml:space="preserve">
+    <value>霊符</value>
+  </data>
+  <data name="Th12.SanaeA" xml:space="preserve">
+    <value>蛇</value>
+  </data>
+  <data name="Th12.SanaeAFullName" xml:space="preserve">
+    <value>蛇符</value>
+  </data>
+  <data name="Th12.SanaeB" xml:space="preserve">
+    <value>蛙</value>
+  </data>
+  <data name="Th12.SanaeBFullName" xml:space="preserve">
+    <value>蛙符</value>
+  </data>
 </root>
