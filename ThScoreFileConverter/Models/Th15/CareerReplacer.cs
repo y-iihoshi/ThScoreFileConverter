@@ -32,7 +32,7 @@ internal sealed class CareerReplacer(
     {
         var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
         var number = CardNumberParser.Parse(match.Groups[2]);
-        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
+        var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3]);
         var type = TypeParser.Parse(match.Groups[4]);
 
         Func<Th13.ISpellCard<Level>, int> getCount = type switch

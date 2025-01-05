@@ -15,24 +15,28 @@ public enum Chara
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Kochiya Sanae.
     /// </summary>
-    [EnumAltName("SN")]
+    [Pattern("SN")]
+    [Character(nameof(Sanae))]
     Sanae,
 
     /// <summary>
     /// Reisen Udongein Inaba.
     /// </summary>
-    [EnumAltName("RS")]
+    [Pattern("RS")]
+    [Character(nameof(Reisen))]
     Reisen,
 }
