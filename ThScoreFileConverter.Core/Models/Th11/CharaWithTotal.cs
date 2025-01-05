@@ -15,42 +15,54 @@ public enum CharaWithTotal
     /// <summary>
     /// Hakurei Reimu with Yakumo Yukari.
     /// </summary>
-    [EnumAltName("RY")]
+    [Pattern("RY")]
+    [Character("Reimu")]
+    [Character("Yukari", 1)]
     ReimuYukari,
 
     /// <summary>
     /// Hakurei Reimu with Ibuki Suika.
     /// </summary>
-    [EnumAltName("RS")]
+    [Pattern("RS")]
+    [Character("Reimu")]
+    [Character("Suika", 1)]
     ReimuSuika,
 
     /// <summary>
     /// Hakurei Reimu with Shameimaru Aya.
     /// </summary>
-    [EnumAltName("RA")]
+    [Pattern("RA")]
+    [Character("Reimu")]
+    [Character("Aya", 1)]
     ReimuAya,
 
     /// <summary>
     /// Kirisame Marisa with Alice Margatroid.
     /// </summary>
-    [EnumAltName("MA")]
+    [Pattern("MA")]
+    [Character("Marisa")]
+    [Character("Alice", 1)]
     MarisaAlice,
 
     /// <summary>
     /// Kirisame Marisa with Patchouli Knowledge.
     /// </summary>
-    [EnumAltName("MP")]
+    [Pattern("MP")]
+    [Character("Marisa")]
+    [Character("Patchouli", 1)]
     MarisaPatchouli,
 
     /// <summary>
     /// Kirisame Marisa with Kawashiro Nitori.
     /// </summary>
-    [EnumAltName("MN")]
+    [Pattern("MN")]
+    [Character("Marisa")]
+    [Character("Nitori", 1)]
     MarisaNitori,
 
     /// <summary>
     /// Represents total across characters.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }
