@@ -24,7 +24,7 @@ public static class Definitions
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
-        EnumHelper<Chara>.Enumerable.ToDictionary(
+        EnumHelper<Chara>.Enumerable.Where(static chara => chara != Chara.Meiling).ToDictionary(
             static chara => chara.ToPattern(),
             static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
 
