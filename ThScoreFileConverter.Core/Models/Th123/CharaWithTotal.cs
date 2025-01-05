@@ -17,132 +17,153 @@ public enum CharaWithTotal
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Izayoi Sakuya.
     /// </summary>
-    [EnumAltName("SK")]
+    [Pattern("SK")]
+    [Character(nameof(Sakuya))]
     Sakuya,
 
     /// <summary>
     /// Alice Margatroid.
     /// </summary>
-    [EnumAltName("AL")]
+    [Pattern("AL")]
+    [Character(nameof(Alice))]
     Alice,
 
     /// <summary>
     /// Patchouli Knowledge.
     /// </summary>
-    [EnumAltName("PC")]
+    [Pattern("PC")]
+    [Character(nameof(Patchouli))]
     Patchouli,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
-    [EnumAltName("YM")]
+    [Pattern("YM")]
+    [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Remilia Scarlet.
     /// </summary>
-    [EnumAltName("RL")]
+    [Pattern("RL")]
+    [Character(nameof(Remilia))]
     Remilia,
 
     /// <summary>
     /// Saigyouji Yuyuko.
     /// </summary>
-    [EnumAltName("YU")]
+    [Pattern("YU")]
+    [Character(nameof(Yuyuko))]
     Yuyuko,
 
     /// <summary>
     /// Yakumo Yukari.
     /// </summary>
-    [EnumAltName("YK")]
+    [Pattern("YK")]
+    [Character(nameof(Yukari))]
     Yukari,
 
     /// <summary>
     /// Ibuki Suika.
     /// </summary>
-    [EnumAltName("SU")]
+    [Pattern("SU")]
+    [Character(nameof(Suika))]
     Suika,
 
     /// <summary>
     /// Reisen Udongein Inaba.
     /// </summary>
-    [EnumAltName("RS")]
+    [Pattern("RS")]
+    [Character(nameof(Reisen))]
     Reisen,
 
     /// <summary>
     /// Shameimaru Aya.
     /// </summary>
-    [EnumAltName("AY")]
+    [Pattern("AY")]
+    [Character(nameof(Aya))]
     Aya,
 
     /// <summary>
     /// Onozuka Komachi.
     /// </summary>
-    [EnumAltName("KM")]
+    [Pattern("KM")]
+    [Character(nameof(Komachi))]
     Komachi,
 
     /// <summary>
     /// Nagae Iku.
     /// </summary>
-    [EnumAltName("IK")]
+    [Pattern("IK")]
+    [Character(nameof(Iku))]
     Iku,
 
     /// <summary>
     /// Hinanawi Tenshi.
     /// </summary>
-    [EnumAltName("TN")]
+    [Pattern("TN")]
+    [Character(nameof(Tenshi))]
     Tenshi,
 
     /// <summary>
     /// Kochiya Sanae.
     /// </summary>
-    [EnumAltName("SN")]
+    [Pattern("SN")]
+    [Character(nameof(Sanae))]
     Sanae,
 
     /// <summary>
     /// Cirno.
     /// </summary>
-    [EnumAltName("CI")]
+    [Pattern("CI")]
+    [Character(nameof(Cirno))]
     Cirno,
 
     /// <summary>
     /// Hong Meiling.
     /// </summary>
-    [EnumAltName("ML")]
+    [Pattern("ML")]
+    [Character(nameof(Meiling))]
     Meiling,
 
     /// <summary>
     /// Reiuji Utsuho.
     /// </summary>
-    [EnumAltName("UT")]
+    [Pattern("UT")]
+    [Character(nameof(Utsuho))]
     Utsuho,
 
     /// <summary>
     /// Moriya Suwako.
     /// </summary>
-    [EnumAltName("SW")]
+    [Pattern("SW")]
+    [Character(nameof(Suwako))]
     Suwako,
 
     /// <summary>
     /// Giant Catfish; Oonamazu.
     /// </summary>
-    [EnumAltName("NM")]
+    [Pattern("NM")]
+    [Character(nameof(Catfish))]
     Catfish = 0x15,
 
     /// <summary>
     /// Represents total across characters.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }
