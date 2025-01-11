@@ -122,7 +122,7 @@ public static class EnumExtensions
     internal static EnumHelper<T>.Member ToMember<T>(this T enumValue)
         where T : struct, Enum
     {
-        Guard.IsTrue(Enum.IsDefined(enumValue));
-        return EnumHelper<T>.Members[enumValue];
+        Guard.IsTrue(EnumHelper<T>.Members.TryGetValue(enumValue, out var member));
+        return member;
     }
 }

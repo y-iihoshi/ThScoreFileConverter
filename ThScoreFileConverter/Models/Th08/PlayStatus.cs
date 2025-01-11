@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,7 +44,7 @@ internal sealed class PlayStatus : Th06.Chapter, IPlayStatus
         var playCounts = EnumHelper<LevelPracticeWithTotal>.Enumerable
             .ToDictionary(level => level, _ => BinaryReadableHelper.Create<PlayCount>(reader) as IPlayCount);
         this.PlayCounts = playCounts
-            .Where(pair => Enum.IsDefined((Level)pair.Key))
+            .Where(pair => EnumHelper.IsDefined((Level)pair.Key))
             .ToDictionary(pair => (Level)pair.Key, pair => pair.Value);
         this.TotalPlayCount = playCounts[LevelPracticeWithTotal.Total];
 
