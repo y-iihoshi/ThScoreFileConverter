@@ -24,7 +24,7 @@ internal sealed class ScoreReplacer(IReadOnlyList<IScore> scores, INumberFormatt
 
     private readonly MatchEvaluator evaluator = new(match =>
     {
-        var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[1]);
         var level = Parsers.LevelParser.Parse(match.Groups[2]);
         var scene = Parsers.SceneParser.Parse(match.Groups[3]);
         var type = TypeParser.Parse(match.Groups[4]);

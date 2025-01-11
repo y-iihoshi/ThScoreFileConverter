@@ -37,7 +37,7 @@ internal sealed class CollectRateReplacer : IStringReplaceable
             INumberFormatter formatter)
         {
             var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1]);
-            var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[2]);
             var type = TypeParser.Parse(match.Groups[3]);
 
             if (chara == Chara.Meiling)

@@ -15,96 +15,112 @@ public enum Chara
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Izayoi Sakuya.
     /// </summary>
-    [EnumAltName("SK")]
+    [Pattern("SK")]
+    [Character(nameof(Sakuya))]
     Sakuya,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
-    [EnumAltName("YM")]
+    [Pattern("YM")]
+    [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Reisen Udongein Inaba.
     /// </summary>
-    [EnumAltName("RS")]
+    [Pattern("RS")]
+    [Character(nameof(Reisen))]
     Reisen,
 
     /// <summary>
     /// Cirno.
     /// </summary>
-    [EnumAltName("CI")]
+    [Pattern("CI")]
+    [Character(nameof(Cirno))]
     Cirno,
 
     /// <summary>
     /// Lyrica Prismriver.
     /// </summary>
-    [EnumAltName("LY")]
+    [Pattern("LY")]
+    [Character(nameof(Lyrica))]
     Lyrica,
 
     /// <summary>
     /// Mystia Lorelei.
     /// </summary>
-    [EnumAltName("MY")]
+    [Pattern("MY")]
+    [Character(nameof(Mystia))]
     Mystia,
 
     /// <summary>
     /// Inaba Tewi.
     /// </summary>
-    [EnumAltName("TW")]
+    [Pattern("TW")]
+    [Character(nameof(Tewi))]
     Tewi,
 
     /// <summary>
     /// Kazami Yuuka.
     /// </summary>
-    [EnumAltName("YU")]
+    [Pattern("YU")]
+    [Character(nameof(Yuuka))]
     Yuuka,
 
     /// <summary>
     /// Shameimaru Aya.
     /// </summary>
-    [EnumAltName("AY")]
+    [Pattern("AY")]
+    [Character(nameof(Aya))]
     Aya,
 
     /// <summary>
     /// Medicine Melancholy.
     /// </summary>
-    [EnumAltName("MD")]
+    [Pattern("MD")]
+    [Character(nameof(Medicine))]
     Medicine,
 
     /// <summary>
     /// Onozuka Komachi.
     /// </summary>
-    [EnumAltName("KM")]
+    [Pattern("KM")]
+    [Character(nameof(Komachi))]
     Komachi,
 
     /// <summary>
     /// Shiki Eiki, Yamaxanadu.
     /// </summary>
-    [EnumAltName("SI")]
-    Shikieiki,
+    [Pattern("SI")]
+    [Character(nameof(Eiki))]
+    Eiki,
 
     /// <summary>
     /// Merlin Prismriver.
     /// </summary>
-    [EnumAltName("ML")]
+    [Pattern("ML")]
+    [Character(nameof(Merlin))]
     Merlin,
 
     /// <summary>
     /// Lunasa Prismriver.
     /// </summary>
-    [EnumAltName("LN")]
+    [Pattern("LN")]
+    [Character(nameof(Lunasa))]
     Lunasa,
 }

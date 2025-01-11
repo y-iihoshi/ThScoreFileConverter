@@ -38,7 +38,7 @@ internal sealed class PlayReplacer(IPlayStatus playStatus, INumberFormatter form
                 return formatter.FormatNumber(playCount.TotalPractice);
             default:
                 {
-                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2]);
                     return formatter.FormatNumber((chara == CharaWithTotal.Total)
                         ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                 }

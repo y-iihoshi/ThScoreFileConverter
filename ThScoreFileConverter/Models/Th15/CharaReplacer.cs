@@ -32,7 +32,7 @@ internal sealed class CharaReplacer : IStringReplaceable
         this.evaluator = new MatchEvaluator(match =>
         {
             var mode = Parsers.GameModeParser.Parse(match.Groups[1]);
-            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
+            var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2]);
             var type = TypeParser.Parse(match.Groups[3]);
 
             Func<IClearDataPerGameMode, long> getValueByType = type switch

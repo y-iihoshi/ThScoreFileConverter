@@ -27,7 +27,7 @@ internal sealed class PracticeReplacer(
     private readonly MatchEvaluator evaluator = new(match =>
     {
         var level = Parsers.LevelParser.Parse(match.Groups[1]);
-        var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+        var chara = Parsers.CharaParser.Parse(match.Groups[2]);
         var stage = Parsers.StageParser.Parse(match.Groups[3]);
 
         return Core.Models.Definitions.CanPractice(level) && Core.Models.Definitions.CanPractice(stage)

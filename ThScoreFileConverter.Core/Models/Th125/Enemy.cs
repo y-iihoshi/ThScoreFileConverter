@@ -15,180 +15,180 @@ public enum Enemy
     /// <summary>
     /// Aki Shizuha.
     /// </summary>
-    [EnumAltName("静葉", LongName = "秋 静葉")]
+    [Character(nameof(Shizuha))]
     Shizuha,
 
     /// <summary>
     /// Aki Minoriko.
     /// </summary>
-    [EnumAltName("穣子", LongName = "秋 穣子")]
+    [Character(nameof(Minoriko))]
     Minoriko,
 
     /// <summary>
     /// Mizuhashi Parsee.
     /// </summary>
-    [EnumAltName("パルスィ", LongName = "水橋 パルスィ")]
+    [Character(nameof(Parsee))]
     Parsee,
 
     /// <summary>
     /// Kagiyama Hina.
     /// </summary>
-    [EnumAltName("雛", LongName = "鍵山 雛")]
+    [Character(nameof(Hina))]
     Hina,
 
     /// <summary>
     /// Tatara Kogasa.
     /// </summary>
-    [EnumAltName("小傘", LongName = "多々良 小傘")]
+    [Character(nameof(Kogasa))]
     Kogasa,
 
     /// <summary>
     /// Kisume.
     /// </summary>
-    [EnumAltName("キスメ", LongName = "キスメ")]
+    [Character(nameof(Kisume))]
     Kisume,
 
     /// <summary>
     /// Kurodani Yamame.
     /// </summary>
-    [EnumAltName("ヤマメ", LongName = "黒谷 ヤマメ")]
+    [Character(nameof(Yamame))]
     Yamame,
 
     /// <summary>
     /// Kawashiro Nitori.
     /// </summary>
-    [EnumAltName("にとり", LongName = "河城 にとり")]
+    [Character(nameof(Nitori))]
     Nitori,
 
     /// <summary>
     /// Inubashiri Momiji.
     /// </summary>
-    [EnumAltName("椛", LongName = "犬走 椛")]
+    [Character(nameof(Momiji))]
     Momiji,
 
     /// <summary>
-    /// Kumoi Ichirin and Unzan.
+    /// Kumoi Ichirin (and Unzan).
     /// </summary>
-    [EnumAltName("一輪 & 雲山", LongName = "雲居 一輪 & 雲山")]
+    [Character(nameof(Ichirin))]
     Ichirin,
 
     /// <summary>
     /// Murasa Minamitsu.
     /// </summary>
-    [EnumAltName("水蜜", LongName = "村紗 水蜜")]
+    [Character(nameof(Minamitsu))]
     Minamitsu,
 
     /// <summary>
     /// Hoshiguma Yuugi.
     /// </summary>
-    [EnumAltName("勇儀", LongName = "星熊 勇儀")]
+    [Character(nameof(Yuugi))]
     Yuugi,
 
     /// <summary>
     /// Ibuki Suika.
     /// </summary>
-    [EnumAltName("萃香", LongName = "伊吹 萃香")]
+    [Character(nameof(Suika))]
     Suika,
 
     /// <summary>
     /// Toramaru Shou.
     /// </summary>
-    [EnumAltName("星", LongName = "寅丸 星")]
+    [Character(nameof(Shou))]
     Shou,
 
     /// <summary>
     /// Nazrin.
     /// </summary>
-    [EnumAltName("ナズーリン", LongName = "ナズーリン")]
+    [Character(nameof(Nazrin))]
     Nazrin,
 
     /// <summary>
     /// Reiuji Utsuho.
     /// </summary>
-    [EnumAltName("お空", LongName = "霊烏路 空")]
+    [Character(nameof(Utsuho))]
     Utsuho,
 
     /// <summary>
     /// Kaenbyou Rin.
     /// </summary>
-    [EnumAltName("お燐", LongName = "火焔猫 燐")]
+    [Character(nameof(Rin))]
     Rin,
 
     /// <summary>
     /// Komeiji Koishi.
     /// </summary>
-    [EnumAltName("こいし", LongName = "古明地 こいし")]
+    [Character(nameof(Koishi))]
     Koishi,
 
     /// <summary>
     /// Komeiji Satori.
     /// </summary>
-    [EnumAltName("さとり", LongName = "古明地 さとり")]
+    [Character(nameof(Satori))]
     Satori,
 
     /// <summary>
     /// Hinanawi Tenshi.
     /// </summary>
-    [EnumAltName("天子", LongName = "比那名居 天子")]
+    [Character(nameof(Tenshi))]
     Tenshi,
 
     /// <summary>
     /// Nagae Iku.
     /// </summary>
-    [EnumAltName("衣玖", LongName = "永江 衣玖")]
+    [Character(nameof(Iku))]
     Iku,
 
     /// <summary>
     /// Moriya Suwako.
     /// </summary>
-    [EnumAltName("諏訪子", LongName = "洩矢 諏訪子")]
+    [Character(nameof(Suwako))]
     Suwako,
 
     /// <summary>
     /// Yasaka Kanako.
     /// </summary>
-    [EnumAltName("神奈子", LongName = "八坂 神奈子")]
+    [Character(nameof(Kanako))]
     Kanako,
 
     /// <summary>
     /// Houjuu Nue.
     /// </summary>
-    [EnumAltName("ぬえ", LongName = "封獣 ぬえ")]
+    [Character(nameof(Nue))]
     Nue,
 
     /// <summary>
     /// Hijiri Byakurin.
     /// </summary>
-    [EnumAltName("白蓮", LongName = "聖 白蓮")]
+    [Character(nameof(Byakuren))]
     Byakuren,
 
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("霊夢", LongName = "博麗 霊夢")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("魔理沙", LongName = "霧雨 魔理沙")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Kochiya Sanae.
     /// </summary>
-    [EnumAltName("早苗", LongName = "東風谷 早苗")]
+    [Character(nameof(Sanae))]
     Sanae,
 
     /// <summary>
     /// Himekaidou Hatate.
     /// </summary>
-    [EnumAltName("はたて", LongName = "姫海棠 はたて")]
+    [Character(nameof(Hatate))]
     Hatate,
 
     /// <summary>
     /// Shameimaru Aya.
     /// </summary>
-    [EnumAltName("文", LongName = "射命丸 文")]
+    [Character(nameof(Aya))]
     Aya,
 }

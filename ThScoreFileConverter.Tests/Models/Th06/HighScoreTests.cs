@@ -4,7 +4,6 @@ using System.IO;
 using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th06;
-using ThScoreFileConverter.Core.Tests.UnitTesting;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<

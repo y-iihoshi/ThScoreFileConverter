@@ -6,12 +6,9 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using ThScoreFileConverter.Core.Models;
+using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Core.Helpers;
 
 namespace ThScoreFileConverter.Core.Extensions;
 
@@ -21,32 +18,6 @@ namespace ThScoreFileConverter.Core.Extensions;
 public static class EnumExtensions
 {
     /// <summary>
-    /// Gets a short name of the specified enumeration value.
-    /// </summary>
-    /// <typeparam name="T">The enumeration type.</typeparam>
-    /// <param name="enumValue">An enumeration value.</param>
-    /// <returns>A short name of <paramref name="enumValue"/>.</returns>
-    public static string ToShortName<T>(this T enumValue)
-        where T : struct, Enum
-    {
-        return AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.ShortName : string.Empty;
-    }
-
-    /// <summary>
-    /// Gets a long name of the specified enumeration value.
-    /// </summary>
-    /// <typeparam name="T">The enumeration type.</typeparam>
-    /// <param name="enumValue">An enumeration value.</param>
-    /// <returns>A long name of <paramref name="enumValue"/>.</returns>
-    public static string ToLongName<T>(this T enumValue)
-        where T : struct, Enum
-    {
-        return AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.LongName : string.Empty;
-    }
-
-    /// <summary>
     /// Gets a pattern string of the specified enumeration value.
     /// </summary>
     /// <typeparam name="T">The enumeration type.</typeparam>
@@ -55,8 +26,7 @@ public static class EnumExtensions
     public static string ToPattern<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, PatternAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.Pattern : string.Empty;
+        return enumValue.ToMember().Pattern;
     }
 
     /// <summary>
@@ -71,8 +41,8 @@ public static class EnumExtensions
     public static string ToDisplayName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, DisplayAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.GetName() ?? enumValue.ToString() : enumValue.ToString();
+        var member = enumValue.ToMember();
+        return member.DisplayAttribute?.GetName() ?? member.Name;
     }
 
     /// <summary>
@@ -87,50 +57,72 @@ public static class EnumExtensions
     public static string ToDisplayShortName<T>(this T enumValue)
         where T : struct, Enum
     {
-        return AttributeCache<T, DisplayAttribute>.Cache.TryGetValue(enumValue, out var attr)
-            ? attr.GetShortName() ?? enumValue.ToString() : enumValue.ToString();
+        var member = enumValue.ToMember();
+        return member.DisplayAttribute?.GetShortName() ?? member.Name;
     }
 
     /// <summary>
-    /// Provides cache of attribute information.
+    /// Gets the name of the character represented as a given enumeration value.
     /// </summary>
-    /// <typeparam name="TEnum">The enumeration type.</typeparam>
-    /// <typeparam name="TAttribute">The attribute type for <typeparamref name="TEnum"/>.</typeparam>
-    private static class AttributeCache<TEnum, TAttribute>
-        where TEnum : struct, Enum
-        where TAttribute : Attribute
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <param name="index">The index specifying one name from multiple character names.</param>
+    /// <returns>The name of the character represented as <paramref name="enumValue"/>.</returns>
+    public static string ToCharaName<T>(this T enumValue, int index = 0)
+        where T : struct, Enum
     {
-        /// <summary>
-        /// Gets the cache of attribute information collected by reflection.
-        /// </summary>
-        public static IReadOnlyDictionary<TEnum, TAttribute> Cache { get; } = InitializeCache();
+        return enumValue.ToMember().CharacterAttributes.TryGetValue(index, out var attribute)
+            ? attribute.GetLocalizedName() : string.Empty;
+    }
 
-        /// <summary>
-        /// Initializes the cache.
-        /// </summary>
-        /// <returns>The cache of attribute information.</returns>
-        private static Dictionary<TEnum, TAttribute> InitializeCache()
-        {
-            var type = typeof(TEnum);
-            Debug.Assert(type.IsEnum, $"{nameof(TEnum)} must be an enum type.");
+    /// <summary>
+    /// Gets the full name of the character represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <param name="index">The index specifying one name from multiple character names.</param>
+    /// <returns>The full name of the character represented as <paramref name="enumValue"/>.</returns>
+    public static string ToCharaFullName<T>(this T enumValue, int index = 0)
+        where T : struct, Enum
+    {
+        return enumValue.ToMember().CharacterAttributes.TryGetValue(index, out var attribute)
+            ? attribute.GetLocalizedFullName() : string.Empty;
+    }
 
-            static bool IsAllowedMultiple(MemberInfo memberInfo)
-            {
-                return memberInfo.GetCustomAttribute<AttributeUsageAttribute>(false) is { } usage
-                    && usage.AllowMultiple;
-            }
+    /// <summary>
+    /// Gets the name of the shot type represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The name of the shot type represented as <paramref name="enumValue"/>.</returns>
+    public static string ToShotTypeName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return enumValue.ToMember().ShotTypeAttribute?.GetLocalizedName() ?? string.Empty;
+    }
 
-            Debug.Assert(
-                !IsAllowedMultiple(typeof(TAttribute)),
-                $"{nameof(TAttribute)} must not be allowed multiple instances.");
+    /// <summary>
+    /// Gets the full name of the shot type represented as a given enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The full name of the shot type represented as <paramref name="enumValue"/>.</returns>
+    public static string ToShotTypeFullName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return enumValue.ToMember().ShotTypeAttribute?.GetLocalizedFullName() ?? string.Empty;
+    }
 
-            return type.GetFields()
-                .Where(field => field.FieldType == type)
-                .Select(static field =>
-                    (enumValue: field.GetValue(null) is TEnum value ? value : default,
-                        attr: field.GetCustomAttribute<TAttribute>(false)))
-                .Where(static pair => pair.attr is not null)
-                .ToDictionary(static pair => pair.enumValue, static pair => pair.attr!);
-        }
+    /// <summary>
+    /// Gets the <see cref="EnumHelper{T}.Member"/> instance corresponding to the specified enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The <see cref="EnumHelper{T}.Member"/> instance corresponding to <paramref name="enumValue"/>.</returns>
+    internal static EnumHelper<T>.Member ToMember<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        Guard.IsTrue(Enum.IsDefined(enumValue));
+        return EnumHelper<T>.Members[enumValue];
     }
 }

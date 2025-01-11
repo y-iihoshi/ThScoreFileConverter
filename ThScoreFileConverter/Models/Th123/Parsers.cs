@@ -24,8 +24,7 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Chara"/>.
     /// </summary>
-    public static EnumShortNameParser<Chara> CharaParser { get; } =
-        new EnumShortNameParser<Chara>();
+    public static Core.Models.EnumPatternParser<Chara> CharaParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="CardType"/>.

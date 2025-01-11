@@ -26,26 +26,16 @@ public static class Definitions
 
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, string> CharacterNames { get; } = new[]
-    {
-        (Chara.ReimuA,  "博麗 霊夢（霊）"),
-        (Chara.ReimuB,  "博麗 霊夢（夢）"),
-        (Chara.MarisaA, "霧雨 魔理沙（魔）"),
-        (Chara.MarisaB, "霧雨 魔理沙（恋）"),
-        (Chara.SakuyaA, "十六夜 咲夜（幻）"),
-        (Chara.SakuyaB, "十六夜 咲夜（時）"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => $"{chara.ToCharaFullName()}（{chara.ToShotTypeName()}）");  // FIXME
 
-    public static IReadOnlyDictionary<string, string> CharacterWithTotalNames { get; } = new[]
-    {
-        (CharaWithTotal.ReimuA,  "博麗 霊夢（霊）"),
-        (CharaWithTotal.ReimuB,  "博麗 霊夢（夢）"),
-        (CharaWithTotal.MarisaA, "霧雨 魔理沙（魔）"),
-        (CharaWithTotal.MarisaB, "霧雨 魔理沙（恋）"),
-        (CharaWithTotal.SakuyaA, "十六夜 咲夜（幻）"),
-        (CharaWithTotal.SakuyaB, "十六夜 咲夜（時）"),
-        (CharaWithTotal.Total,   "全主人公合計"),
-    }.ToStringKeyedDictionary();
+    public static IReadOnlyDictionary<string, string> CharacterWithTotalNames { get; } =
+        EnumHelper<CharaWithTotal>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => (chara == CharaWithTotal.Total)
+                ? "全主人公合計" : $"{chara.ToCharaFullName()}（{chara.ToShotTypeName()}）");  // FIXME
 
     public static IEnumerable<string> CharacterKeysTotalFirst { get; } = CharacterWithTotalNames.Keys.RotateRight();
 

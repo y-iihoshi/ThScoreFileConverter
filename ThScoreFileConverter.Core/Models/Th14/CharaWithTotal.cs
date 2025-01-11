@@ -15,42 +15,54 @@ public enum CharaWithTotal
     /// <summary>
     /// Hakurei Reimu with the bewitched weapon.
     /// </summary>
-    [EnumAltName("RA")]
+    [Pattern("RA")]
+    [Character("Reimu")]
+    [ShotType<CharaWithTotal>(ReimuA)]
     ReimuA,
 
     /// <summary>
     /// Hakurei Reimu without the bewitched weapon.
     /// </summary>
-    [EnumAltName("RB")]
+    [Pattern("RB")]
+    [Character("Reimu")]
+    [ShotType<CharaWithTotal>(ReimuB)]
     ReimuB,
 
     /// <summary>
     /// Kirisame Marisa with the bewitched weapon.
     /// </summary>
-    [EnumAltName("MA")]
+    [Pattern("MA")]
+    [Character("Marisa")]
+    [ShotType<CharaWithTotal>(MarisaA)]
     MarisaA,
 
     /// <summary>
     /// Kirisame Marisa without the bewitched weapon.
     /// </summary>
-    [EnumAltName("MB")]
+    [Pattern("MB")]
+    [Character("Marisa")]
+    [ShotType<CharaWithTotal>(MarisaB)]
     MarisaB,
 
     /// <summary>
     /// Izayoi Sakuya with the bewitched weapon.
     /// </summary>
-    [EnumAltName("SA")]
+    [Pattern("SA")]
+    [Character("Sakuya")]
+    [ShotType<CharaWithTotal>(SakuyaA)]
     SakuyaA,
 
     /// <summary>
     /// Izayoi Sakuya without the bewitched weapon.
     /// </summary>
-    [EnumAltName("SB")]
+    [Pattern("SB")]
+    [Character("Sakuya")]
+    [ShotType<CharaWithTotal>(SakuyaB)]
     SakuyaB,
 
     /// <summary>
     /// Represents total across characters.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }

@@ -28,14 +28,12 @@ internal static class Parsers
     /// <summary>
     /// Gets the parser of <see cref="Chara"/>.
     /// </summary>
-    public static EnumShortNameParser<Chara> CharaParser { get; } =
-        new EnumShortNameParser<Chara>();
+    public static EnumPatternParser<Chara> CharaParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="CharaWithTotal"/>.
     /// </summary>
-    public static EnumShortNameParser<CharaWithTotal> CharaWithTotalParser { get; } =
-        new EnumShortNameParser<CharaWithTotal>();
+    public static EnumPatternParser<CharaWithTotal> CharaWithTotalParser { get; } = new();
 
     /// <summary>
     /// Gets the parser of <see cref="Stage"/>.

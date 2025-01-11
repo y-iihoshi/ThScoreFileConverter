@@ -31,30 +31,14 @@ public class Definitions
 
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } = new[]
-    {
-        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
-        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
-        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
-        (Chara.Alice,     "アリス",     "アリス・マーガトロイド"),
-        (Chara.Patchouli, "パチュリー", "パチュリー・ノーレッジ"),
-        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
-        (Chara.Remilia,   "レミリア",   "レミリア・スカーレット"),
-        (Chara.Yuyuko,    "幽々子",     "西行寺 幽々子"),
-        (Chara.Yukari,    "紫",         "八雲 紫"),
-        (Chara.Suika,     "萃香",       "伊吹 萃香"),
-        (Chara.Reisen,    "鈴仙",       "鈴仙・優曇華院・イナバ"),
-        (Chara.Aya,       "文",         "射命丸 文"),
-        (Chara.Komachi,   "小町",       "小野塚 小町"),
-        (Chara.Iku,       "衣玖",       "永江 衣玖"),
-        (Chara.Tenshi,    "天子",       "比那名居 天子"),
-    }.ToDictionary(
-        static tuple => tuple.Item1.ToShortName(),
-        static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+    public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } =
         StageInfoTable.ToDictionary(
-            static pair => pair.Key.ToShortName(),
+            static pair => pair.Key.ToPattern(),
             static pair => pair.Value.Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
 
     public static IReadOnlyDictionary<string, string> CardTypeNames { get; } =
@@ -62,7 +46,7 @@ public class Definitions
 
     public static IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
         NumCardsPerCharacterAndTypeImpl.ToDictionary(
-            static tuple => (tuple.Item1.ToShortName(), tuple.Item2.ToPattern()),
+            static tuple => (tuple.Item1.ToPattern(), tuple.Item2.ToPattern()),
             static tuple => tuple.Item3);
 
     public static IReadOnlyDictionary<string, int> MaxNumCardsPerType { get; } =

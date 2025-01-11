@@ -587,11 +587,11 @@ public static class Definitions
             { (Chara.Suwako, 208), "祟り神「赤口（ミシャグチ）さま」" },
             { (Chara.Suwako, 209), "土着神「宝永四年の赤蛙」" },
             { (Chara.Suwako, 212), "蛙休「オールウェイズ冬眠できます」" },
-            { (Chara.Oonamazu, 0), "ナマズ「ほらほら世界が震えるぞ？」" },
-            { (Chara.Oonamazu, 1), "ナマズ「液状化現象で大地も泥のようじゃ！」" },
-            { (Chara.Oonamazu, 2), "ナマズ「発電だって頑張っちゃうぞ？」" },
-            { (Chara.Oonamazu, 3), "ナマズ「オール電化でエコロジーじゃ！」" },
-            { (Chara.Oonamazu, 4), "大ナマズ「これで浮き世もおしまいじゃあ！」" },
+            { (Chara.Catfish, 0), "ナマズ「ほらほら世界が震えるぞ？」" },
+            { (Chara.Catfish, 1), "ナマズ「液状化現象で大地も泥のようじゃ！」" },
+            { (Chara.Catfish, 2), "ナマズ「発電だって頑張っちゃうぞ？」" },
+            { (Chara.Catfish, 3), "ナマズ「オール電化でエコロジーじゃ！」" },
+            { (Chara.Catfish, 4), "大ナマズ「これで浮き世もおしまいじゃあ！」" },
         };
 
     /// <summary>
@@ -631,7 +631,7 @@ public static class Definitions
                     new(Th105.Stage.Two,   Chara.Alice,     Enumerable.Range(0, 2)),
                     new(Th105.Stage.Three, Chara.Marisa,    Enumerable.Range(0, 3)),
                     new(Th105.Stage.Four,  Chara.Reimu,     Enumerable.Range(0, 4)),
-                    new(Th105.Stage.Five,  Chara.Oonamazu,  Enumerable.Range(0, 5)),
+                    new(Th105.Stage.Five,  Chara.Catfish,   Enumerable.Range(0, 5)),
                 }
             },
         };

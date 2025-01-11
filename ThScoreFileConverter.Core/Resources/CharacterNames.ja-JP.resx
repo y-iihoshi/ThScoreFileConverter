@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Alice" xml:space="preserve">
+    <value>アリス</value>
+  </data>
+  <data name="AliceFullName" xml:space="preserve">
+    <value>アリス・マーガトロイド</value>
+  </data>
+  <data name="Aun" xml:space="preserve">
+    <value>あうん</value>
+  </data>
+  <data name="AunFullName" xml:space="preserve">
+    <value>高麗野 あうん</value>
+  </data>
+  <data name="Aya" xml:space="preserve">
+    <value>文</value>
+  </data>
+  <data name="AyaFullName" xml:space="preserve">
+    <value>射命丸 文</value>
+  </data>
+  <data name="Benben" xml:space="preserve">
+    <value>弁々</value>
+  </data>
+  <data name="BenbenFullName" xml:space="preserve">
+    <value>九十九 弁々</value>
+  </data>
+  <data name="Biten" xml:space="preserve">
+    <value>美天</value>
+  </data>
+  <data name="BitenFullName" xml:space="preserve">
+    <value>孫 美天</value>
+  </data>
+  <data name="Byakuren" xml:space="preserve">
+    <value>白蓮</value>
+  </data>
+  <data name="ByakurenFullName" xml:space="preserve">
+    <value>聖 白蓮</value>
+  </data>
+  <data name="Catfish" xml:space="preserve">
+    <value>ナマズ</value>
+  </data>
+  <data name="CatfishFullName" xml:space="preserve">
+    <value>大ナマズ</value>
+  </data>
+  <data name="Chen" xml:space="preserve">
+    <value>橙</value>
+  </data>
+  <data name="ChenFullName" xml:space="preserve">
+    <value>橙</value>
+  </data>
+  <data name="Chimata" xml:space="preserve">
+    <value>千亦</value>
+  </data>
+  <data name="ChimataFullName" xml:space="preserve">
+    <value>天弓 千亦</value>
+  </data>
+  <data name="Chiyari" xml:space="preserve">
+    <value>ちやり</value>
+  </data>
+  <data name="ChiyariFullName" xml:space="preserve">
+    <value>天火人 ちやり</value>
+  </data>
+  <data name="Cirno" xml:space="preserve">
+    <value>チルノ</value>
+  </data>
+  <data name="CirnoFullName" xml:space="preserve">
+    <value>チルノ</value>
+  </data>
+  <data name="Clownpiece" xml:space="preserve">
+    <value>クラウンピース</value>
+  </data>
+  <data name="ClownpieceFullName" xml:space="preserve">
+    <value>クラウンピース</value>
+  </data>
+  <data name="Daiyousei" xml:space="preserve">
+    <value>大妖精</value>
+  </data>
+  <data name="DaiyouseiFullName" xml:space="preserve">
+    <value>大妖精</value>
+  </data>
+  <data name="Doremy" xml:space="preserve">
+    <value>ドレミー</value>
+  </data>
+  <data name="DoremyFullName" xml:space="preserve">
+    <value>ドレミー・スイート</value>
+  </data>
+  <data name="DreamSumireko" xml:space="preserve">
+    <value>菫子 (夢)</value>
+  </data>
+  <data name="DreamSumirekoFullName" xml:space="preserve">
+    <value>宇佐見 菫子 (夢)</value>
+  </data>
+  <data name="Eika" xml:space="preserve">
+    <value>瓔花</value>
+  </data>
+  <data name="EikaFullName" xml:space="preserve">
+    <value>戎 瓔花</value>
+  </data>
+  <data name="Eiki" xml:space="preserve">
+    <value>映姫</value>
+  </data>
+  <data name="EikiFullName" xml:space="preserve">
+    <value>四季映姫・ヤマザナドゥ</value>
+  </data>
+  <data name="Eirin" xml:space="preserve">
+    <value>永琳</value>
+  </data>
+  <data name="EirinFullName" xml:space="preserve">
+    <value>八意 永琳</value>
+  </data>
+  <data name="Enoko" xml:space="preserve">
+    <value>慧ノ子</value>
+  </data>
+  <data name="EnokoFullName" xml:space="preserve">
+    <value>三頭 慧ノ子</value>
+  </data>
+  <data name="Flandre" xml:space="preserve">
+    <value>フランドール</value>
+  </data>
+  <data name="FlandreFullName" xml:space="preserve">
+    <value>フランドール・スカーレット</value>
+  </data>
+  <data name="Futo" xml:space="preserve">
+    <value>布都</value>
+  </data>
+  <data name="FutoFullName" xml:space="preserve">
+    <value>物部 布都</value>
+  </data>
+  <data name="Hatate" xml:space="preserve">
+    <value>はたて</value>
+  </data>
+  <data name="HatateFullName" xml:space="preserve">
+    <value>姫海棠 はたて</value>
+  </data>
+  <data name="Hecatia" xml:space="preserve">
+    <value>ヘカーティア</value>
+  </data>
+  <data name="HecatiaFullName" xml:space="preserve">
+    <value>ヘカーティア・ラピスラズリ</value>
+  </data>
+  <data name="Hina" xml:space="preserve">
+    <value>雛</value>
+  </data>
+  <data name="HinaFullName" xml:space="preserve">
+    <value>鍵山 雛</value>
+  </data>
+  <data name="Hisami" xml:space="preserve">
+    <value>日狭美</value>
+  </data>
+  <data name="HisamiFullName" xml:space="preserve">
+    <value>豫母都 日狭美</value>
+  </data>
+  <data name="Ichirin" xml:space="preserve">
+    <value>一輪</value>
+  </data>
+  <data name="IchirinFullName" xml:space="preserve">
+    <value>雲居 一輪</value>
+  </data>
+  <data name="Iku" xml:space="preserve">
+    <value>衣玖</value>
+  </data>
+  <data name="IkuFullName" xml:space="preserve">
+    <value>永江 衣玖</value>
+  </data>
+  <data name="Joon" xml:space="preserve">
+    <value>女苑</value>
+  </data>
+  <data name="JoonFullName" xml:space="preserve">
+    <value>依神 女苑</value>
+  </data>
+  <data name="Junko" xml:space="preserve">
+    <value>純狐</value>
+  </data>
+  <data name="JunkoFullName" xml:space="preserve">
+    <value>純狐</value>
+  </data>
+  <data name="Kagerou" xml:space="preserve">
+    <value>影狼</value>
+  </data>
+  <data name="KagerouFullName" xml:space="preserve">
+    <value>今泉 影狼</value>
+  </data>
+  <data name="Kaguya" xml:space="preserve">
+    <value>輝夜</value>
+  </data>
+  <data name="KaguyaFullName" xml:space="preserve">
+    <value>蓬莱山 輝夜</value>
+  </data>
+  <data name="Kanako" xml:space="preserve">
+    <value>神奈子</value>
+  </data>
+  <data name="KanakoFullName" xml:space="preserve">
+    <value>八坂 神奈子</value>
+  </data>
+  <data name="Kasen" xml:space="preserve">
+    <value>華扇</value>
+  </data>
+  <data name="KasenFullName" xml:space="preserve">
+    <value>茨木 華扇</value>
+  </data>
+  <data name="Keiki" xml:space="preserve">
+    <value>袿姫</value>
+  </data>
+  <data name="KeikiFullName" xml:space="preserve">
+    <value>埴安神 袿姫</value>
+  </data>
+  <data name="Keine" xml:space="preserve">
+    <value>慧音</value>
+  </data>
+  <data name="KeineFullName" xml:space="preserve">
+    <value>上白沢 慧音</value>
+  </data>
+  <data name="Kisume" xml:space="preserve">
+    <value>キスメ</value>
+  </data>
+  <data name="KisumeFullName" xml:space="preserve">
+    <value>キスメ</value>
+  </data>
+  <data name="Koakuma" xml:space="preserve">
+    <value>小悪魔</value>
+  </data>
+  <data name="KoakumaFullName" xml:space="preserve">
+    <value>小悪魔</value>
+  </data>
+  <data name="Kogasa" xml:space="preserve">
+    <value>小傘</value>
+  </data>
+  <data name="KogasaFullName" xml:space="preserve">
+    <value>多々良 小傘</value>
+  </data>
+  <data name="Koishi" xml:space="preserve">
+    <value>こいし</value>
+  </data>
+  <data name="KoishiFullName" xml:space="preserve">
+    <value>古明地 こいし</value>
+  </data>
+  <data name="Kokoro" xml:space="preserve">
+    <value>こころ</value>
+  </data>
+  <data name="KokoroFullName" xml:space="preserve">
+    <value>秦 こころ</value>
+  </data>
+  <data name="Komachi" xml:space="preserve">
+    <value>小町</value>
+  </data>
+  <data name="KomachiFullName" xml:space="preserve">
+    <value>小野塚 小町</value>
+  </data>
+  <data name="Kutaka" xml:space="preserve">
+    <value>久侘歌</value>
+  </data>
+  <data name="KutakaFullName" xml:space="preserve">
+    <value>庭渡 久侘歌</value>
+  </data>
+  <data name="Kyouko" xml:space="preserve">
+    <value>響子</value>
+  </data>
+  <data name="KyoukoFullName" xml:space="preserve">
+    <value>幽谷 響子</value>
+  </data>
+  <data name="Larva" xml:space="preserve">
+    <value>ラルバ</value>
+  </data>
+  <data name="LarvaFullName" xml:space="preserve">
+    <value>エタニティラルバ</value>
+  </data>
+  <data name="Letty" xml:space="preserve">
+    <value>レティ</value>
+  </data>
+  <data name="LettyFullName" xml:space="preserve">
+    <value>レティ・ホワイトロック</value>
+  </data>
+  <data name="Lily" xml:space="preserve">
+    <value>リリー</value>
+  </data>
+  <data name="LilyFullName" xml:space="preserve">
+    <value>リリーホワイト</value>
+  </data>
+  <data name="Luna" xml:space="preserve">
+    <value>ルナ</value>
+  </data>
+  <data name="LunaFullName" xml:space="preserve">
+    <value>ルナチャイルド</value>
+  </data>
+  <data name="Lunasa" xml:space="preserve">
+    <value>ルナサ</value>
+  </data>
+  <data name="LunasaFullName" xml:space="preserve">
+    <value>ルナサ・プリズムリバー</value>
+  </data>
+  <data name="Lyrica" xml:space="preserve">
+    <value>リリカ</value>
+  </data>
+  <data name="LyricaFullName" xml:space="preserve">
+    <value>リリカ・プリズムリバー</value>
+  </data>
+  <data name="Mai" xml:space="preserve">
+    <value>舞</value>
+  </data>
+  <data name="MaiFullName" xml:space="preserve">
+    <value>丁礼田 舞</value>
+  </data>
+  <data name="Mamizou" xml:space="preserve">
+    <value>マミゾウ</value>
+  </data>
+  <data name="MamizouFullName" xml:space="preserve">
+    <value>二ッ岩 マミゾウ</value>
+  </data>
+  <data name="Marisa" xml:space="preserve">
+    <value>魔理沙</value>
+  </data>
+  <data name="MarisaFullName" xml:space="preserve">
+    <value>霧雨 魔理沙</value>
+  </data>
+  <data name="Mayumi" xml:space="preserve">
+    <value>磨弓</value>
+  </data>
+  <data name="MayumiFullName" xml:space="preserve">
+    <value>杖刀偶 磨弓</value>
+  </data>
+  <data name="Medicine" xml:space="preserve">
+    <value>メディスン</value>
+  </data>
+  <data name="MedicineFullName" xml:space="preserve">
+    <value>メディスン・メランコリー</value>
+  </data>
+  <data name="Megumu" xml:space="preserve">
+    <value>龍</value>
+  </data>
+  <data name="MegumuFullName" xml:space="preserve">
+    <value>飯綱丸 龍</value>
+  </data>
+  <data name="Meiling" xml:space="preserve">
+    <value>美鈴</value>
+  </data>
+  <data name="MeilingFullName" xml:space="preserve">
+    <value>紅 美鈴</value>
+  </data>
+  <data name="Merlin" xml:space="preserve">
+    <value>メルラン</value>
+  </data>
+  <data name="MerlinFullName" xml:space="preserve">
+    <value>メルラン・プリズムリバー</value>
+  </data>
+  <data name="Mike" xml:space="preserve">
+    <value>ミケ</value>
+  </data>
+  <data name="MikeFullName" xml:space="preserve">
+    <value>豪徳寺 ミケ</value>
+  </data>
+  <data name="Miko" xml:space="preserve">
+    <value>神子</value>
+  </data>
+  <data name="MikoFullName" xml:space="preserve">
+    <value>豊聡耳 神子</value>
+  </data>
+  <data name="Minamitsu" xml:space="preserve">
+    <value>水蜜</value>
+  </data>
+  <data name="MinamitsuFullName" xml:space="preserve">
+    <value>村紗 水蜜</value>
+  </data>
+  <data name="Minoriko" xml:space="preserve">
+    <value>穣子</value>
+  </data>
+  <data name="MinorikoFullName" xml:space="preserve">
+    <value>秋 穣子</value>
+  </data>
+  <data name="Misumaru" xml:space="preserve">
+    <value>魅須丸</value>
+  </data>
+  <data name="MisumaruFullName" xml:space="preserve">
+    <value>玉造 魅須丸</value>
+  </data>
+  <data name="Mokou" xml:space="preserve">
+    <value>妹紅</value>
+  </data>
+  <data name="MokouFullName" xml:space="preserve">
+    <value>藤原 妹紅</value>
+  </data>
+  <data name="Momiji" xml:space="preserve">
+    <value>椛</value>
+  </data>
+  <data name="MomijiFullName" xml:space="preserve">
+    <value>犬走 椛</value>
+  </data>
+  <data name="Momoyo" xml:space="preserve">
+    <value>百々世</value>
+  </data>
+  <data name="MomoyoFullName" xml:space="preserve">
+    <value>姫虫 百々世</value>
+  </data>
+  <data name="Mystia" xml:space="preserve">
+    <value>ミスティア</value>
+  </data>
+  <data name="MystiaFullName" xml:space="preserve">
+    <value>ミスティア・ローレライ</value>
+  </data>
+  <data name="Narumi" xml:space="preserve">
+    <value>成美</value>
+  </data>
+  <data name="NarumiFullName" xml:space="preserve">
+    <value>矢田寺 成美</value>
+  </data>
+  <data name="Nazrin" xml:space="preserve">
+    <value>ナズーリン</value>
+  </data>
+  <data name="NazrinFullName" xml:space="preserve">
+    <value>ナズーリン</value>
+  </data>
+  <data name="Nemuno" xml:space="preserve">
+    <value>ネムノ</value>
+  </data>
+  <data name="NemunoFullName" xml:space="preserve">
+    <value>坂田 ネムノ</value>
+  </data>
+  <data name="Nitori" xml:space="preserve">
+    <value>にとり</value>
+  </data>
+  <data name="NitoriFullName" xml:space="preserve">
+    <value>河城 にとり</value>
+  </data>
+  <data name="Nue" xml:space="preserve">
+    <value>ぬえ</value>
+  </data>
+  <data name="NueFullName" xml:space="preserve">
+    <value>封獣 ぬえ</value>
+  </data>
+  <data name="Okina" xml:space="preserve">
+    <value>隠岐奈</value>
+  </data>
+  <data name="OkinaFullName" xml:space="preserve">
+    <value>摩多羅 隠岐奈</value>
+  </data>
+  <data name="Parsee" xml:space="preserve">
+    <value>パルスィ</value>
+  </data>
+  <data name="ParseeFullName" xml:space="preserve">
+    <value>水橋 パルスィ</value>
+  </data>
+  <data name="Patchouli" xml:space="preserve">
+    <value>パチュリー</value>
+  </data>
+  <data name="PatchouliFullName" xml:space="preserve">
+    <value>パチュリー・ノーレッジ</value>
+  </data>
+  <data name="Raiko" xml:space="preserve">
+    <value>雷鼓</value>
+  </data>
+  <data name="RaikoFullName" xml:space="preserve">
+    <value>堀川 雷鼓</value>
+  </data>
+  <data name="Ran" xml:space="preserve">
+    <value>藍</value>
+  </data>
+  <data name="RanFullName" xml:space="preserve">
+    <value>八雲 藍</value>
+  </data>
+  <data name="Reimu" xml:space="preserve">
+    <value>霊夢</value>
+  </data>
+  <data name="ReimuFullName" xml:space="preserve">
+    <value>博麗 霊夢</value>
+  </data>
+  <data name="Reisen" xml:space="preserve">
+    <value>鈴仙</value>
+  </data>
+  <data name="ReisenFullName" xml:space="preserve">
+    <value>鈴仙・優曇華院・イナバ</value>
+  </data>
+  <data name="Remilia" xml:space="preserve">
+    <value>レミリア</value>
+  </data>
+  <data name="RemiliaFullName" xml:space="preserve">
+    <value>レミリア・スカーレット</value>
+  </data>
+  <data name="Rin" xml:space="preserve">
+    <value>燐</value>
+  </data>
+  <data name="RinFullName" xml:space="preserve">
+    <value>火焔猫 燐</value>
+  </data>
+  <data name="Ringo" xml:space="preserve">
+    <value>鈴瑚</value>
+  </data>
+  <data name="RingoFullName" xml:space="preserve">
+    <value>鈴瑚</value>
+  </data>
+  <data name="Rumia" xml:space="preserve">
+    <value>ルーミア</value>
+  </data>
+  <data name="RumiaFullName" xml:space="preserve">
+    <value>ルーミア</value>
+  </data>
+  <data name="Sagume" xml:space="preserve">
+    <value>サグメ</value>
+  </data>
+  <data name="SagumeFullName" xml:space="preserve">
+    <value>稀神 サグメ</value>
+  </data>
+  <data name="Saki" xml:space="preserve">
+    <value>早鬼</value>
+  </data>
+  <data name="SakiFullName" xml:space="preserve">
+    <value>驪駒 早鬼</value>
+  </data>
+  <data name="Sakuya" xml:space="preserve">
+    <value>咲夜</value>
+  </data>
+  <data name="SakuyaFullName" xml:space="preserve">
+    <value>十六夜 咲夜</value>
+  </data>
+  <data name="Sanae" xml:space="preserve">
+    <value>早苗</value>
+  </data>
+  <data name="SanaeFullName" xml:space="preserve">
+    <value>東風谷 早苗</value>
+  </data>
+  <data name="Sannyo" xml:space="preserve">
+    <value>山如</value>
+  </data>
+  <data name="SannyoFullName" xml:space="preserve">
+    <value>駒草 山如</value>
+  </data>
+  <data name="Satono" xml:space="preserve">
+    <value>里乃</value>
+  </data>
+  <data name="SatonoFullName" xml:space="preserve">
+    <value>爾子田 里乃</value>
+  </data>
+  <data name="Satori" xml:space="preserve">
+    <value>さとり</value>
+  </data>
+  <data name="SatoriFullName" xml:space="preserve">
+    <value>古明地 さとり</value>
+  </data>
+  <data name="Seiga" xml:space="preserve">
+    <value>青娥</value>
+  </data>
+  <data name="SeigaFullName" xml:space="preserve">
+    <value>霍 青娥</value>
+  </data>
+  <data name="Seija" xml:space="preserve">
+    <value>正邪</value>
+  </data>
+  <data name="SeijaFullName" xml:space="preserve">
+    <value>鬼人 正邪</value>
+  </data>
+  <data name="Seiran" xml:space="preserve">
+    <value>清蘭</value>
+  </data>
+  <data name="SeiranFullName" xml:space="preserve">
+    <value>清蘭</value>
+  </data>
+  <data name="Sekibanki" xml:space="preserve">
+    <value>赤蛮奇</value>
+  </data>
+  <data name="SekibankiFullName" xml:space="preserve">
+    <value>赤蛮奇</value>
+  </data>
+  <data name="Shinmyoumaru" xml:space="preserve">
+    <value>針妙丸</value>
+  </data>
+  <data name="ShinmyoumaruFullName" xml:space="preserve">
+    <value>少名 針妙丸</value>
+  </data>
+  <data name="Shion" xml:space="preserve">
+    <value>紫苑</value>
+  </data>
+  <data name="ShionFullName" xml:space="preserve">
+    <value>依神 紫苑</value>
+  </data>
+  <data name="Shizuha" xml:space="preserve">
+    <value>静葉</value>
+  </data>
+  <data name="ShizuhaFullName" xml:space="preserve">
+    <value>秋 静葉</value>
+  </data>
+  <data name="Shou" xml:space="preserve">
+    <value>星</value>
+  </data>
+  <data name="ShouFullName" xml:space="preserve">
+    <value>寅丸 星</value>
+  </data>
+  <data name="Star" xml:space="preserve">
+    <value>スター</value>
+  </data>
+  <data name="StarFullName" xml:space="preserve">
+    <value>スターサファイア</value>
+  </data>
+  <data name="Suika" xml:space="preserve">
+    <value>萃香</value>
+  </data>
+  <data name="SuikaFullName" xml:space="preserve">
+    <value>伊吹 萃香</value>
+  </data>
+  <data name="Sumireko" xml:space="preserve">
+    <value>菫子</value>
+  </data>
+  <data name="SumirekoFullName" xml:space="preserve">
+    <value>宇佐見 菫子</value>
+  </data>
+  <data name="Sunny" xml:space="preserve">
+    <value>サニー</value>
+  </data>
+  <data name="SunnyFullName" xml:space="preserve">
+    <value>サニーミルク</value>
+  </data>
+  <data name="Suwako" xml:space="preserve">
+    <value>諏訪子</value>
+  </data>
+  <data name="SuwakoFullName" xml:space="preserve">
+    <value>洩矢 諏訪子</value>
+  </data>
+  <data name="Takane" xml:space="preserve">
+    <value>たかね</value>
+  </data>
+  <data name="TakaneFullName" xml:space="preserve">
+    <value>山城 たかね</value>
+  </data>
+  <data name="Tenshi" xml:space="preserve">
+    <value>天子</value>
+  </data>
+  <data name="TenshiFullName" xml:space="preserve">
+    <value>比那名居 天子</value>
+  </data>
+  <data name="Tewi" xml:space="preserve">
+    <value>てゐ</value>
+  </data>
+  <data name="TewiFullName" xml:space="preserve">
+    <value>因幡 てゐ</value>
+  </data>
+  <data name="Th145.ReimuA" xml:space="preserve">
+    <value>霊夢 (序)</value>
+  </data>
+  <data name="Th145.ReimuAFullName" xml:space="preserve">
+    <value>博麗 霊夢 (序)</value>
+  </data>
+  <data name="Th145.ReimuB" xml:space="preserve">
+    <value>霊夢 (終)</value>
+  </data>
+  <data name="Th145.ReimuBFullName" xml:space="preserve">
+    <value>博麗 霊夢 (終)</value>
+  </data>
+  <data name="Th16.Cirno" xml:space="preserve">
+    <value>チルノ</value>
+  </data>
+  <data name="Th16.CirnoFullName" xml:space="preserve">
+    <value>日焼けしたチルノ</value>
+  </data>
+  <data name="Tojiko" xml:space="preserve">
+    <value>屠自古</value>
+  </data>
+  <data name="TojikoFullName" xml:space="preserve">
+    <value>蘇我 屠自古</value>
+  </data>
+  <data name="Tsukasa" xml:space="preserve">
+    <value>典</value>
+  </data>
+  <data name="TsukasaFullName" xml:space="preserve">
+    <value>菅牧 典</value>
+  </data>
+  <data name="Unzan" xml:space="preserve">
+    <value>雲山</value>
+  </data>
+  <data name="UnzanFullName" xml:space="preserve">
+    <value>雲山</value>
+  </data>
+  <data name="Urumi" xml:space="preserve">
+    <value>潤美</value>
+  </data>
+  <data name="UrumiFullName" xml:space="preserve">
+    <value>牛崎 潤美</value>
+  </data>
+  <data name="Utsuho" xml:space="preserve">
+    <value>空</value>
+  </data>
+  <data name="UtsuhoFullName" xml:space="preserve">
+    <value>霊烏路 空</value>
+  </data>
+  <data name="Wakasagihime" xml:space="preserve">
+    <value>わかさぎ姫</value>
+  </data>
+  <data name="WakasagihimeFullName" xml:space="preserve">
+    <value>わかさぎ姫</value>
+  </data>
+  <data name="Wriggle" xml:space="preserve">
+    <value>リグル</value>
+  </data>
+  <data name="WriggleFullName" xml:space="preserve">
+    <value>リグル・ナイトバグ</value>
+  </data>
+  <data name="Yachie" xml:space="preserve">
+    <value>八千慧</value>
+  </data>
+  <data name="YachieFullName" xml:space="preserve">
+    <value>吉弔 八千慧</value>
+  </data>
+  <data name="Yamame" xml:space="preserve">
+    <value>ヤマメ</value>
+  </data>
+  <data name="YamameFullName" xml:space="preserve">
+    <value>黒谷 ヤマメ</value>
+  </data>
+  <data name="Yatsuhashi" xml:space="preserve">
+    <value>八橋</value>
+  </data>
+  <data name="YatsuhashiFullName" xml:space="preserve">
+    <value>九十九 八橋</value>
+  </data>
+  <data name="Yoshika" xml:space="preserve">
+    <value>芳香</value>
+  </data>
+  <data name="YoshikaFullName" xml:space="preserve">
+    <value>宮古 芳香</value>
+  </data>
+  <data name="Youmu" xml:space="preserve">
+    <value>妖夢</value>
+  </data>
+  <data name="YoumuFullName" xml:space="preserve">
+    <value>魂魄 妖夢</value>
+  </data>
+  <data name="Yukari" xml:space="preserve">
+    <value>紫</value>
+  </data>
+  <data name="YukariFullName" xml:space="preserve">
+    <value>八雲 紫</value>
+  </data>
+  <data name="Yuugi" xml:space="preserve">
+    <value>勇儀</value>
+  </data>
+  <data name="YuugiFullName" xml:space="preserve">
+    <value>星熊 勇儀</value>
+  </data>
+  <data name="Yuuka" xml:space="preserve">
+    <value>幽香</value>
+  </data>
+  <data name="YuukaFullName" xml:space="preserve">
+    <value>風見 幽香</value>
+  </data>
+  <data name="Yuuma" xml:space="preserve">
+    <value>尤魔</value>
+  </data>
+  <data name="YuumaFullName" xml:space="preserve">
+    <value>饕餮 尤魔</value>
+  </data>
+  <data name="Yuyuko" xml:space="preserve">
+    <value>幽々子</value>
+  </data>
+  <data name="YuyukoFullName" xml:space="preserve">
+    <value>西行寺 幽々子</value>
+  </data>
+  <data name="Zanmu" xml:space="preserve">
+    <value>残無</value>
+  </data>
+  <data name="ZanmuFullName" xml:space="preserve">
+    <value>日白 残無</value>
+  </data>
+</root>

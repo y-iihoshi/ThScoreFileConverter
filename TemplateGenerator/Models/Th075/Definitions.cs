@@ -23,21 +23,10 @@ public static class Definitions
 
     public static IEnumerable<string> LevelKeysTotalLast { get; } = LevelWithTotalNames.Keys;
 
-    public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } = new[]
-    {
-        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
-        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
-        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
-        (Chara.Alice,     "アリス",     "アリス・マーガトロイド"),
-        (Chara.Patchouli, "パチュリー", "パチュリー・ノーレッジ"),
-        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
-        (Chara.Remilia,   "レミリア",   "レミリア・スカーレット"),
-        (Chara.Yuyuko,    "幽々子",     "西行寺 幽々子"),
-        (Chara.Yukari,    "紫",         "八雲 紫"),
-        (Chara.Suika,     "萃香",       "伊吹 萃香"),
-    }.ToDictionary(
-        static tuple => tuple.Item1.ToShortName(),
-        static tuple => (tuple.Item1.ToString(), tuple.Item2, tuple.Item3));
+    public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
+        EnumHelper<Chara>.Enumerable.Where(static chara => chara != Chara.Meiling).ToDictionary(
+            static chara => chara.ToPattern(),
+            static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
         EnumHelper<Level>.Enumerable.ToDictionary(

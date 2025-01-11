@@ -15,60 +15,71 @@ public enum Chara
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Kumoi Ichirin and Unzan.
     /// </summary>
-    [EnumAltName("IU")]
+    [Pattern("IU")]
+    [Character("Ichirin")]
+    [Character("Unzan", 1)]
     IchirinUnzan,
 
     /// <summary>
     /// Hijiri Byakuren.
     /// </summary>
-    [EnumAltName("BY")]
+    [Pattern("BY")]
+    [Character(nameof(Byakuren))]
     Byakuren,
 
     /// <summary>
     /// Mononobe no Futo.
     /// </summary>
-    [EnumAltName("FT")]
+    [Pattern("FT")]
+    [Character(nameof(Futo))]
     Futo,
 
     /// <summary>
     /// Toyosatomimi no Miko.
     /// </summary>
-    [EnumAltName("MK")]
+    [Pattern("MK")]
+    [Character(nameof(Miko))]
     Miko,
 
     /// <summary>
     /// Kawashiro Nitori.
     /// </summary>
-    [EnumAltName("NT")]
+    [Pattern("NT")]
+    [Character(nameof(Nitori))]
     Nitori,
 
     /// <summary>
     /// Komeiji Koishi.
     /// </summary>
-    [EnumAltName("KO")]
+    [Pattern("KO")]
+    [Character(nameof(Koishi))]
     Koishi,
 
     /// <summary>
     /// Futatsuiwa Mamizou.
     /// </summary>
-    [EnumAltName("MM")]
+    [Pattern("MM")]
+    [Character(nameof(Mamizou))]
     Mamizou,
 
     /// <summary>
     /// Hata no Kokoro.
     /// </summary>
-    [EnumAltName("KK")]
+    [Pattern("KK")]
+    [Character(nameof(Kokoro))]
     Kokoro,
 }

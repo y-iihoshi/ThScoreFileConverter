@@ -33,12 +33,12 @@ internal sealed class CardForDeckReplacer : IStringReplaceable
     {
         this.evaluator = new MatchEvaluator(match =>
         {
-            var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
+            var chara = Parsers.CharaParser.Parse(match.Groups[1]);
             var cardType = Parsers.CardTypeParser.Parse(match.Groups[2]);
             var number = CardNumberParser.Parse(match.Groups[3]);
             var type = match.Groups[4].Value.ToUpperInvariant();
 
-            if (chara == Chara.Oonamazu)
+            if (chara == Chara.Catfish)
                 return match.ToString();
 
             Th105.ICardForDeck cardForDeck;

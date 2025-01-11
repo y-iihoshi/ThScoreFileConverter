@@ -5,6 +5,8 @@ using ThScoreFileConverter.Core.Resources;
 
 // Currently, HTML templates are only written in Japanese.
 StringResources.Culture = CultureInfo.GetCultureInfo("ja-JP");
+CharacterNames.Culture = CultureInfo.GetCultureInfo("ja-JP");
+ShotTypeNames.Culture = CultureInfo.GetCultureInfo("ja-JP");
 
 return await Bootstrapper
     .Factory

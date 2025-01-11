@@ -113,7 +113,7 @@ public static class TestUtils
     public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()
         where TEnum : struct, Enum
     {
-        return Core.Tests.UnitTesting.TestHelper.GetInvalidEnumerators<TEnum>();
+        return TestHelper.GetInvalidEnumerators<TEnum>();
     }
 
     private static bool Invoke<T>(Action<T> action, string key, T value)

@@ -15,30 +15,34 @@ public enum CharaWithTotal
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Kochiya Sanae.
     /// </summary>
-    [EnumAltName("SN")]
+    [Pattern("SN")]
+    [Character(nameof(Sanae))]
     Sanae,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
-    [EnumAltName("YM")]
+    [Pattern("YM")]
+    [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Represents total across characters.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }

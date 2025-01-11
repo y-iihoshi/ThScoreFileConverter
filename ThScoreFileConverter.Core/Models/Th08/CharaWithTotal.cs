@@ -15,78 +15,94 @@ public enum CharaWithTotal
     /// <summary>
     /// Illusionary Barrier Team.
     /// </summary>
-    [EnumAltName("RY")]
+    [Pattern("RY")]
+    [Character(nameof(Reimu))]
+    [Character(nameof(Yukari), 1)]
     ReimuYukari,
 
     /// <summary>
     /// Aria of Forbidden Magic Team.
     /// </summary>
-    [EnumAltName("MA")]
+    [Pattern("MA")]
+    [Character(nameof(Marisa))]
+    [Character(nameof(Alice), 1)]
     MarisaAlice,
 
     /// <summary>
     /// Visionary Scarlet Devil Team.
     /// </summary>
-    [EnumAltName("SR")]
+    [Pattern("SR")]
+    [Character(nameof(Sakuya))]
+    [Character(nameof(Remilia), 1)]
     SakuyaRemilia,
 
     /// <summary>
     /// Netherworld Dwellers' Team.
     /// </summary>
-    [EnumAltName("YY")]
+    [Pattern("YY")]
+    [Character(nameof(Youmu))]
+    [Character(nameof(Yuyuko), 1)]
     YoumuYuyuko,
 
     /// <summary>
     /// Hakurei Reimu.
     /// </summary>
-    [EnumAltName("RM")]
+    [Pattern("RM")]
+    [Character(nameof(Reimu))]
     Reimu,
 
     /// <summary>
     /// Yakumo Yukari.
     /// </summary>
-    [EnumAltName("YK")]
+    [Pattern("YK")]
+    [Character(nameof(Yukari))]
     Yukari,
 
     /// <summary>
     /// Kirisame Marisa.
     /// </summary>
-    [EnumAltName("MR")]
+    [Pattern("MR")]
+    [Character(nameof(Marisa))]
     Marisa,
 
     /// <summary>
     /// Alice Margatroid.
     /// </summary>
-    [EnumAltName("AL")]
+    [Pattern("AL")]
+    [Character(nameof(Alice))]
     Alice,
 
     /// <summary>
     /// Izayoi Sakuya.
     /// </summary>
-    [EnumAltName("SK")]
+    [Pattern("SK")]
+    [Character(nameof(Sakuya))]
     Sakuya,
 
     /// <summary>
     /// Remilia Scarlet.
     /// </summary>
-    [EnumAltName("RL")]
+    [Pattern("RL")]
+    [Character(nameof(Remilia))]
     Remilia,
 
     /// <summary>
     /// Konpaku Youmu.
     /// </summary>
-    [EnumAltName("YM")]
+    [Pattern("YM")]
+    [Character(nameof(Youmu))]
     Youmu,
 
     /// <summary>
     /// Saigyouji Yuyuko.
     /// </summary>
-    [EnumAltName("YU")]
+    [Pattern("YU")]
+    [Character(nameof(Yuyuko))]
     Yuyuko,
 
     /// <summary>
     /// Represents total across characters.
     /// </summary>
-    [EnumAltName("TL")]
+    [Pattern("TL")]
     Total,
 }
