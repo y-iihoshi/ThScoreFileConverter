@@ -18,6 +18,18 @@ namespace ThScoreFileConverter.Core.Extensions;
 public static class EnumExtensions
 {
     /// <summary>
+    /// Gets the name of the specified enumeration value.
+    /// </summary>
+    /// <typeparam name="T">The enumeration type.</typeparam>
+    /// <param name="enumValue">An enumeration value.</param>
+    /// <returns>The name of <paramref name="enumValue"/>.</returns>
+    public static string ToName<T>(this T enumValue)
+        where T : struct, Enum
+    {
+        return enumValue.ToMember().Name;
+    }
+
+    /// <summary>
     /// Gets a pattern string of the specified enumeration value.
     /// </summary>
     /// <typeparam name="T">The enumeration type.</typeparam>
@@ -122,7 +134,7 @@ public static class EnumExtensions
     internal static EnumHelper<T>.Member ToMember<T>(this T enumValue)
         where T : struct, Enum
     {
-        Guard.IsTrue(Enum.IsDefined(enumValue));
-        return EnumHelper<T>.Members[enumValue];
+        Guard.IsTrue(EnumHelper<T>.Members.TryGetValue(enumValue, out var member));
+        return member;
     }
 }

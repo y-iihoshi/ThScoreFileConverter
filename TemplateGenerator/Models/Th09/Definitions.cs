@@ -34,7 +34,7 @@ public class Definitions : Models.Definitions
 #endif
         .ToDictionary(
             static chara => chara.ToPattern(),
-            static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
+            static chara => (chara.ToName(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static IReadOnlyList<string> RankOrdinals { get; } =
     [

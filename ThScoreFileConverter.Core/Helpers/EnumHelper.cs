@@ -47,4 +47,25 @@ public static class EnumHelper
     {
         return EnumHelper<T1>.Enumerable.Cartesian(EnumHelper<T2>.Enumerable);
     }
+
+    /// <summary>
+    /// Returns a boolean telling whether a given integral value exists in the <typeparamref name="TEnum"/> type.
+    /// </summary>
+    /// <typeparam name="TEnum">The enumeration type.</typeparam>
+    /// <param name="value">The value of a constant in <typeparamref name="TEnum"/>.</param>
+    /// <returns>
+    /// <see langword="true"/> if a given integral value exists in <typeparamref name="TEnum"/>;
+    /// <see langword="false"/> otherwise.
+    /// </returns>
+    /// <remarks>
+    /// To avoid circular references, do not call it from the following attributes
+    /// (use <see cref="Enum.IsDefined{TEnum}(TEnum)"/> instead):
+    /// <see cref="Models.PatternAttribute"/>, <see cref="Models.EnumDisplayAttribute"/>,
+    /// <see cref="Models.CharacterAttribute"/>, <see cref="Models.ShotTypeAttribute{T}"/>.
+    /// </remarks>
+    public static bool IsDefined<TEnum>(TEnum value)
+        where TEnum : struct, Enum
+    {
+        return EnumHelper<TEnum>.Members.ContainsKey(value);
+    }
 }

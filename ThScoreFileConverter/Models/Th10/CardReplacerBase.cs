@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
 
@@ -27,7 +28,7 @@ internal class CardReplacerBase<TStage, TLevel> : IStringReplaceable
         IReadOnlyDictionary<int, SpellCardInfo<TStage, TLevel>> cardTable,
         bool hideUntriedCards,
         Func<int, bool> cardHasTried)
-        : this(formatPrefix, cardTable, hideUntriedCards, cardHasTried, static level => level.ToString())
+        : this(formatPrefix, cardTable, hideUntriedCards, cardHasTried, static level => level.ToName())
     {
     }
 

@@ -32,6 +32,6 @@ internal static class EnumerableExtensions
     {
         Guard.IsNotNull(source);
 
-        return source.ToDictionary(static element => element.ToPattern(), static element => element.ToString());
+        return source.ToDictionary(static element => element.ToPattern(), static element => element.ToName());
     }
 }

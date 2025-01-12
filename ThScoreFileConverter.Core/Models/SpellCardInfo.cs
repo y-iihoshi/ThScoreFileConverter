@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Diagnostics;
+using ThScoreFileConverter.Core.Helpers;
 
 namespace ThScoreFileConverter.Core.Models;
 
@@ -43,9 +44,9 @@ public class SpellCardInfo<TStage, TLevel>
     {
         Guard.IsGreaterThan(id, 0);
         Guard.IsNotNullOrEmpty(name);
-        Guard.IsTrue(Enum.IsDefined(stage), nameof(stage));
+        Guard.IsTrue(EnumHelper.IsDefined(stage), nameof(stage));
         Guard.IsNotEmpty(levels);
-        Guard.IsTrue(levels.All(Enum.IsDefined), nameof(levels));
+        Guard.IsTrue(levels.All(EnumHelper.IsDefined), nameof(levels));
 
         this.Id = id;
         this.Name = name;

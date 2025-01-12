@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Helpers;
 
@@ -44,7 +45,7 @@ internal sealed class CardReplacer(
 
             var cardId = Definitions.CardIdTable[chara].ElementAt(number - 1);
             return (type == "N")
-                ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToString();
+                ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToName();
         }
         else
         {
