@@ -5,6 +5,7 @@
 
 Unreleased (yyyy/mm/dd)
     * メインウィンドウのサイズを変更可能にした
+    * 高 DPI 環境に対応
     * .NET 8 及び .NET 9 に対応
     * .NET Framework 及び .NET 6 の対応を終了
 

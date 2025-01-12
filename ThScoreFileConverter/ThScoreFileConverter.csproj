@@ -13,6 +13,7 @@
     <Copyright>© 2013 IIHOSHI Yoshinori</Copyright>
     <Description>Score file converter for Touhou games</Description>
     <ApplicationIcon>Resources\ApplicationIcon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
