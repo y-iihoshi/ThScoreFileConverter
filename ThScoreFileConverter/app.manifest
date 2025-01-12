@@ -7,17 +7,13 @@
     </application>
   </compatibility>
 
-  <!-- アプリケーションが DPI 対応であり、Windows によってそれ以上の DPI には自動的に拡大縮小されないことを
-       示します。Windows Presentation Foundation (WPF) アプリケーションは自動的に DPI に対応し、オプトインする必要は
-       ありません。さらに、この設定にオプトインする .NET Framework 4.6 を対象とする Windows フォーム アプリケーションは、
-       app.config ファイルで 'EnableWindowsFormsHighDpiAutoResizing' 設定を 'true' に設定する必要があります。
-       
-       アプリケーションを長いパス対応にします。https://docs.microsoft.com/windows/win32/fileio/maximum-file-path-limitation をご覧ください -->
   <application xmlns="urn:schemas-microsoft-com:asm.v3">
     <windowsSettings>
-      <!-- https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process -->
+      <!-- Enable per-monitor v2 DPI awareness mode.
+           See https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process -->
       <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2</dpiAwareness>
 
+      <!-- Makes the application long-path aware. See https://docs.microsoft.com/windows/win32/fileio/maximum-file-path-limitation -->
       <!-- <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">true</longPathAware> -->
     </windowsSettings>
   </application>
