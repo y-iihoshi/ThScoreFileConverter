@@ -39,8 +39,7 @@
     </windowsSettings>
   </application>
 
-  <!-- Windows のコモン コントロールとダイアログのテーマを有効にします (Windows XP 以降) -->
-  <!--
+  <!-- Enable themes for Windows common controls and dialogs (Windows XP and later) -->
   <dependency>
     <dependentAssembly>
       <assemblyIdentity
@@ -53,6 +52,5 @@
         />
     </dependentAssembly>
   </dependency>
-  -->
 
 </assembly>
