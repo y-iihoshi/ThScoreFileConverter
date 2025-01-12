@@ -40,8 +40,8 @@ public static class EnumHelper<T>
     /// <summary>
     /// Gets the <see cref="Member"/> instances of the fields in the <typeparamref name="T"/> type.
     /// </summary>
-    internal static FrozenDictionary<T, Member> Members { get; } = MembersImpl.ToFrozenDictionary(static member => member.Value);
-
+    internal static FrozenDictionary<T, Member> Members { get; } =
+        MembersImpl.ToFrozenDictionary(static member => member.Value);
 #pragma warning restore CA1000 // Do not declare static members on generic types
 
     /// <summary>
@@ -66,7 +66,7 @@ public static class EnumHelper<T>
             this.Pattern = fieldInfo.GetCustomAttribute<PatternAttribute>()?.Pattern ?? string.Empty;
             this.DisplayAttribute = fieldInfo.GetCustomAttribute<DisplayAttribute>();
             this.CharacterAttributes = fieldInfo.GetCustomAttributes<CharacterAttribute>()
-                .ToFrozenDictionary(static attr => attr.Index, static attr => attr);
+                .ToFrozenDictionary(static attr => attr.Index);
             this.ShotTypeAttribute = fieldInfo.GetCustomAttribute<ShotTypeAttribute<T>>();
         }
 

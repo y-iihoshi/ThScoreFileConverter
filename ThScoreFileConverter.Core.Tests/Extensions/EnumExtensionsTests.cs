@@ -43,6 +43,14 @@ public enum Sisters
 public class EnumExtensionsTests
 {
     [TestMethod]
+    public void ToNameTest()
+    {
+        Assert.AreEqual(nameof(DayOfWeek.Sunday), DayOfWeek.Sunday.ToName());
+        Assert.AreEqual(nameof(Protagonist.Reimu), Protagonist.Reimu.ToName());
+        Assert.AreEqual(nameof(Protagonist.Marisa), Protagonist.Marisa.ToName());
+    }
+
+    [TestMethod]
     public void ToPatternTest()
     {
         Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToPattern());
