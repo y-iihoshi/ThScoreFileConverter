@@ -23,12 +23,12 @@ public class Definitions : Th105.Definitions
     public static new IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> CharacterNames { get; } =
         EnumHelper<Chara>.Enumerable.Where(static chara => chara != Chara.Catfish).ToDictionary(
             static chara => chara.ToPattern(),
-            static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
+            static chara => (chara.ToName(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static IReadOnlyDictionary<string, (string Id, string ShortName, string LongName)> StoryCharacterNames { get; } =
         EnumHelper<Chara>.Enumerable.Where(static chara => HasStory(chara)).ToDictionary(
             static chara => chara.ToPattern(),
-            static chara => (chara.ToString(), chara.ToCharaName(), chara.ToCharaFullName()));
+            static chara => (chara.ToName(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static new IReadOnlyDictionary<string, int> NumCardsPerCharacter { get; } =
         StageInfoTable.ToDictionary(

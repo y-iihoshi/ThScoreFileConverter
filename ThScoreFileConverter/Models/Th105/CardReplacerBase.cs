@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;
@@ -66,7 +67,7 @@ internal class CardReplacerBase<TChara> : IStringReplaceable
                         return (type == "N") ? "??????????" : "?????";
                 }
 
-                return (type == "N") ? cardNameTable[enemyCardIdPair] : level.ToString();
+                return (type == "N") ? cardNameTable[enemyCardIdPair] : level.ToName();
             }
             else
             {

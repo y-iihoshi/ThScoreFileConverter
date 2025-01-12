@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Models;
 
 namespace ThScoreFileConverter.Models.Th06;
@@ -29,6 +30,6 @@ internal sealed class CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAtt
 
     private static string CardLevelToString(SpellCardInfo<Stage, Level> cardInfo)
     {
-        return string.Join(", ", cardInfo.Levels.Select(static level => level.ToString()));
+        return string.Join(", ", cardInfo.Levels.Select(static level => level.ToName()));
     }
 }
