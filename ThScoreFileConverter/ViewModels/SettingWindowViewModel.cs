@@ -10,20 +10,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
-using System.Windows;
 using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using MvvmDialogs;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using WPFLocalizeExtension.Engine;
-using SysDraw = System.Drawing;
 
 namespace ThScoreFileConverter.ViewModels;
 
@@ -35,26 +30,21 @@ namespace ThScoreFileConverter.ViewModels;
 #endif
 internal sealed partial class SettingWindowViewModel : ObservableObject, IModalDialogViewModel, IDisposable
 {
-    private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
     private readonly CompositeDisposable disposables;
     private bool disposed;
-    private SysDraw.Font? font;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
     /// </summary>
     /// <param name="settings">The settings of this application.</param>
-    /// <param name="adapter">An adapter of the resource dictionary of this application.</param>
-    public SettingWindowViewModel(Settings settings, IResourceDictionaryAdapter adapter)
+    public SettingWindowViewModel(Settings settings)
     {
         Guard.IsTrue(settings.OutputNumberGroupSeparator.HasValue, nameof(settings), $"{nameof(settings.OutputNumberGroupSeparator)} has no value");
         Guard.IsTrue(settings.InputCodePageId.HasValue, nameof(settings), $"{nameof(settings.InputCodePageId)} has no value");
         Guard.IsTrue(settings.OutputCodePageId.HasValue, nameof(settings), $"{nameof(settings.OutputCodePageId)} has no value");
 
-        this.resourceDictionaryAdapter = adapter;
         this.disposables = [];
         this.disposed = false;
-        this.font = null;
 
         this.OutputNumberGroupSeparator = settings.ToReactivePropertyAsSynchronized(
             x => x.OutputNumberGroupSeparator, value => (bool)value!, value => value);
@@ -80,28 +70,6 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IModalD
     /// </summary>
 #pragma warning disable CA1822 // Mark members as static
     public string Title => Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
-#pragma warning restore CA1822 // Mark members as static
-
-    /// <summary>
-    /// Gets the current font.
-    /// </summary>
-    public SysDraw.Font Font
-    {
-        get
-        {
-            this.font?.Dispose();
-            this.font = new SysDraw.Font(
-                this.resourceDictionaryAdapter.FontFamily.ToString(),
-                (float)this.resourceDictionaryAdapter.FontSize);
-            return this.font;
-        }
-    }
-
-    /// <summary>
-    /// Gets the maximum font size.
-    /// </summary>
-#pragma warning disable CA1822 // Mark members as static
-    public int MaxFontSize => (int)Settings.MaxFontSize;
 #pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
@@ -179,77 +147,9 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IModalD
             this.InputCodePageId.Dispose();
             this.OutputNumberGroupSeparator.Dispose();
 
-            this.font?.Dispose();
             this.disposables.Dispose();
         }
 
         this.disposed = true;
     }
-
-    /// <summary>
-    /// Throws <see cref="ObjectDisposedException"/> if the current instance has already been disposed.
-    /// </summary>
-    private void ThrowIfDisposed()
-    {
-        if (this.disposed)
-        {
-            ThrowHelper.ThrowObjectDisposedException(this.GetType().FullName);
-        }
-    }
-
-    #region Methods for command implementation
-
-    /// <summary>
-    /// Applies the UI font change.
-    /// </summary>
-    /// <param name="result">A result of <see cref="FontDialogAction"/>.</param>
-    private void ApplyFont(FontDialogActionResult result)
-    {
-        this.ThrowIfDisposed();
-        this.resourceDictionaryAdapter.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
-        this.OnPropertyChanged(nameof(this.Font));
-    }
-
-    /// <summary>
-    /// Invoked when the user clicks an <c>OK</c> button of the font dialog box.
-    /// </summary>
-    /// <param name="result">The result of the font dialog box.</param>
-    [RelayCommand]
-    private void FontDialogOk(FontDialogActionResult result)
-    {
-        this.ApplyFont(result);
-    }
-
-    /// <summary>
-    /// Invoked when the user clicks an <c>Apply</c> button of the font dialog box.
-    /// </summary>
-    /// <param name="result">The result of the font dialog box.</param>
-    [RelayCommand]
-    private void FontDialogApply(FontDialogActionResult result)
-    {
-        this.ApplyFont(result);
-    }
-
-    /// <summary>
-    /// Invoked when the user cancels the font choice.
-    /// </summary>
-    /// <param name="result">The result of the font dialog box.</param>
-    [RelayCommand]
-    private void FontDialogCancel(FontDialogActionResult result)
-    {
-        this.ApplyFont(result);
-    }
-
-    /// <summary>
-    /// Resets the UI font.
-    /// </summary>
-    [RelayCommand]
-    private void ResetFont()
-    {
-        this.ThrowIfDisposed();
-        this.resourceDictionaryAdapter.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-        this.OnPropertyChanged(nameof(this.Font));
-    }
-
-    #endregion
 }

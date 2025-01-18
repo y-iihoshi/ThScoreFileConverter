@@ -48,11 +48,6 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     private readonly IDispatcherAdapter dispatcher;
 
     /// <summary>
-    /// An <see cref="IResourceDictionaryAdapter"/> that should wrap <see cref="Application.Current"/>.Resources.
-    /// </summary>
-    private readonly IResourceDictionaryAdapter resourceDictionaryAdapter;
-
-    /// <summary>
     /// The settings of this application.
     /// </summary>
     private readonly Settings settings;
@@ -84,17 +79,13 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// <param name="dispatcher">
     /// An <see cref="IDispatcherAdapter"/> that should wrap <see cref="Application.Current"/>.Dispatcher.
     /// </param>
-    /// <param name="adapter">
-    /// An <see cref="IResourceDictionaryAdapter"/> that should wrap <see cref="Application.Current"/>.Resources.
-    /// </param>
     /// <param name="settings">The settings of this application.</param>
     /// <param name="formatter">An <see cref="INumberFormatter"/>.</param>
     public MainWindowViewModel(
-        IDialogService dialogService, IDispatcherAdapter dispatcher, IResourceDictionaryAdapter adapter, Settings settings, INumberFormatter formatter)
+        IDialogService dialogService, IDispatcherAdapter dispatcher, Settings settings, INumberFormatter formatter)
     {
         this.dialogService = dialogService;
         this.dispatcher = dispatcher;
-        this.resourceDictionaryAdapter = adapter;
         this.settings = settings;
         this.formatter = formatter;
         this.disposables = [];
@@ -635,7 +626,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void OpenSettingWindow()
     {
-        using var viewModel = new SettingWindowViewModel(this.settings, this.resourceDictionaryAdapter);
+        using var viewModel = new SettingWindowViewModel(this.settings);
         _ = this.dialogService.ShowDialog(this, viewModel);
     }
 
