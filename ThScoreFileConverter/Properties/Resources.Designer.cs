@@ -350,29 +350,11 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   _Change... に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ViewsSettingWindowButtonChange {
-            get {
-                return ResourceManager.GetString("ViewsSettingWindowButtonChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   O_K に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ViewsSettingWindowButtonOk {
             get {
                 return ResourceManager.GetString("ViewsSettingWindowButtonOk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   _Reset に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ViewsSettingWindowButtonReset {
-            get {
-                return ResourceManager.GetString("ViewsSettingWindowButtonReset", resourceCulture);
             }
         }
         
@@ -391,15 +373,6 @@ namespace ThScoreFileConverter.Properties {
         public static string ViewsSettingWindowGroupBoxCharacterEncoding {
             get {
                 return ResourceManager.GetString("ViewsSettingWindowGroupBoxCharacterEncoding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Font に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ViewsSettingWindowGroupBoxFont {
-            get {
-                return ResourceManager.GetString("ViewsSettingWindowGroupBoxFont", resourceCulture);
             }
         }
         

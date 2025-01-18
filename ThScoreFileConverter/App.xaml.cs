@@ -29,7 +29,6 @@ namespace ThScoreFileConverter;
 /// </summary>
 public sealed partial class App : Application, IDisposable
 {
-    private readonly ResourceDictionaryAdapter adapter;
     private readonly Settings settings;
     private bool disposed;
     private ServiceProvider? serviceProvider;
@@ -39,7 +38,6 @@ public sealed partial class App : Application, IDisposable
     /// </summary>
     public App()
     {
-        this.adapter = new ResourceDictionaryAdapter(this.Resources);
         this.settings = new Settings();
         this.disposed = false;
         this.serviceProvider = default;
@@ -57,7 +55,6 @@ public sealed partial class App : Application, IDisposable
         this.serviceProvider?.Dispose();
         this.serviceProvider = new ServiceCollection()
             .AddSingleton<IDialogService, DialogService>()
-            .AddSingleton<IResourceDictionaryAdapter>(this.adapter)
             .AddSingleton(this.settings)
             .AddSingleton<ISettings>(this.settings)
             .AddTransient<INumberFormatter, NumberFormatter>()
@@ -87,8 +84,6 @@ public sealed partial class App : Application, IDisposable
                 MessageBoxImage.Warning);
         }
 
-        this.adapter.UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
-
         var provider = LocalizationProvider.Instance;
         LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.DefaultProviderProperty, provider);
         LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.IncludeInvariantCultureProperty, false);
@@ -113,9 +108,6 @@ public sealed partial class App : Application, IDisposable
         base.OnExit(e);
 
         this.settings.Language = LocalizeDictionary.Instance.Culture.Name;
-        this.settings.FontFamilyName = this.adapter.FontFamily.ToString();
-        this.settings.FontSize = this.adapter.FontSize;
-
         this.settings.Save(Prop.Resources.SettingFileName);
 
         this.serviceProvider?.Dispose();

@@ -219,23 +219,14 @@ Renamed to "{1}".</value>
   <data name="ViewsMainWindowLabelTemplates" xml:space="preserve">
     <value>_Templates:</value>
   </data>
-  <data name="ViewsSettingWindowButtonChange" xml:space="preserve">
-    <value>_Change...</value>
-  </data>
   <data name="ViewsSettingWindowButtonOk" xml:space="preserve">
     <value>O_K</value>
-  </data>
-  <data name="ViewsSettingWindowButtonReset" xml:space="preserve">
-    <value>_Reset</value>
   </data>
   <data name="ViewsSettingWindowCheckBoxOutputNumberGroupSeparator" xml:space="preserve">
     <value>Outputs numeric values with number group _separators</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxCharacterEncoding" xml:space="preserve">
     <value>Character encoding</value>
-  </data>
-  <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
-    <value>Font</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxLanguage" xml:space="preserve">
     <value>Language</value>

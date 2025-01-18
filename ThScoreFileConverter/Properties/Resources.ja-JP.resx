@@ -199,23 +199,14 @@
   <data name="ViewsMainWindowLabelTemplates" xml:space="preserve">
     <value>テンプレート(_T):</value>
   </data>
-  <data name="ViewsSettingWindowButtonChange" xml:space="preserve">
-    <value>変更(_C)...</value>
-  </data>
   <data name="ViewsSettingWindowButtonOk" xml:space="preserve">
     <value>O_K</value>
-  </data>
-  <data name="ViewsSettingWindowButtonReset" xml:space="preserve">
-    <value>リセット(_R)</value>
   </data>
   <data name="ViewsSettingWindowCheckBoxOutputNumberGroupSeparator" xml:space="preserve">
     <value>数値を桁区切り形式で出力する(_S)</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxCharacterEncoding" xml:space="preserve">
     <value>文字エンコーディング設定</value>
-  </data>
-  <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
-    <value>フォント設定</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxLanguage" xml:space="preserve">
     <value>言語設定</value>

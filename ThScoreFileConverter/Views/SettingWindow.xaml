@@ -23,40 +23,12 @@
     </Window.InputBindings>
 
     <StackPanel Margin="10"
-                Style="{StaticResource VerticalStackPanelStyle}">
+                Style="{StaticResource VerticalStackPanelStyle}"
+                MinWidth="340">
         <GroupBox Header="{lex:Loc ViewsSettingWindowGroupBoxLanguage}">
             <ComboBox DisplayMemberPath="NativeName"
                       ItemsSource="{Binding MergedAvailableCultures, Source={x:Static lex:LocalizeDictionary.Instance}}"
                       SelectedItem="{Binding Culture}"/>
-        </GroupBox>
-
-        <Separator/>
-
-        <GroupBox Header="{lex:Loc ViewsSettingWindowGroupBoxFont}">
-            <StackPanel Style="{StaticResource HorizontalStackPanelStyle}">
-                <TextBox IsReadOnly="True"
-                         MinWidth="190"
-                         Text="{Binding Font, Mode=OneWay}"/>
-                <Separator/>
-                <Button Content="{lex:Loc ViewsSettingWindowButtonChange}">
-                    <xb:Interaction.Triggers>
-                        <xb:EventTrigger EventName="Click">
-                            <i:FontDialogAction ApplyCommand="{Binding FontDialogApplyCommand}"
-                                                CancelCommand="{Binding FontDialogCancelCommand}"
-                                                Font="{Binding Font}"
-                                                FontMustExist="True"
-                                                MaxSize="{Binding MaxFontSize}"
-                                                OkCommand="{Binding FontDialogOkCommand}"
-                                                Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                ShowApply="True"
-                                                ShowEffects="False"/>
-                        </xb:EventTrigger>
-                    </xb:Interaction.Triggers>
-                </Button>
-                <Separator/>
-                <Button Command="{Binding ResetFontCommand}"
-                        Content="{lex:Loc ViewsSettingWindowButtonReset}"/>
-            </StackPanel>
         </GroupBox>
 
         <Separator/>
