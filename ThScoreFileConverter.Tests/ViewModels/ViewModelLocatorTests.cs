@@ -17,7 +17,6 @@ public class ViewModelLocatorTests
         using var provider = new ServiceCollection()
             .AddSingleton(Substitute.For<IDialogService>())
             .AddSingleton(Substitute.For<IDispatcherAdapter>())
-            .AddSingleton(Substitute.For<IResourceDictionaryAdapter>())
             .AddSingleton(new Settings())
             .AddSingleton(Substitute.For<INumberFormatter>())
             .AddTransient<MainWindowViewModel>()

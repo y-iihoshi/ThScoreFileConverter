@@ -1,16 +1,11 @@
 ﻿<Application x:Class="ThScoreFileConverter.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:a="clr-namespace:ThScoreFileConverter.Adapters"
              xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
 
         <vm:ViewModelLocator x:Key="Locator"/>
-
-        <FontFamily x:Key="{x:Static a:ResourceDictionaryAdapter.FontFamilyKey}">Meiryo</FontFamily>
-        <sys:Double x:Key="{x:Static a:ResourceDictionaryAdapter.FontSizeKey}">12</sys:Double>
 
         <Style x:Key="WindowStyleKey"
                BasedOn="{StaticResource {x:Type Window}}"
