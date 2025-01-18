@@ -12,6 +12,7 @@
         md:DialogServiceViews.IsRegistered="True"
         FocusManager.FocusedElement="{x:Reference Name=OkButton}"
         Style="{StaticResource DialogStyleKey}"
+        Title="{Binding Title}"
         UseLayoutRounding="True"
         WindowStartupLocation="CenterOwner">
 
