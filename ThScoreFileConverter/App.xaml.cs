@@ -30,7 +30,6 @@ namespace ThScoreFileConverter;
 public sealed partial class App : Application, IDisposable
 {
     private readonly Settings settings;
-    private bool disposed;
     private ServiceProvider? serviceProvider;
 
     /// <summary>
@@ -39,14 +38,13 @@ public sealed partial class App : Application, IDisposable
     public App()
     {
         this.settings = new Settings();
-        this.disposed = false;
         this.serviceProvider = default;
     }
 
     /// <inheritdoc/>
     public void Dispose()
     {
-        this.Dispose(true);
+        this.serviceProvider?.Dispose();
     }
 
     /// <inheritdoc/>
@@ -111,26 +109,5 @@ public sealed partial class App : Application, IDisposable
         this.settings.Save(Prop.Resources.SettingFileName);
 
         this.serviceProvider?.Dispose();
-    }
-
-    /// <summary>
-    /// Disposes the resources of the current instance.
-    /// </summary>
-    /// <param name="disposing">
-    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
-    /// </param>
-    private void Dispose(bool disposing)
-    {
-        if (this.disposed)
-        {
-            return;
-        }
-
-        if (disposing)
-        {
-            this.serviceProvider?.Dispose();
-        }
-
-        this.disposed = true;
     }
 }

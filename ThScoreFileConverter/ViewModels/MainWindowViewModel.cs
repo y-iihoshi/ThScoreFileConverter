@@ -63,11 +63,6 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     private readonly CompositeDisposable disposables;
 
     /// <summary>
-    /// <see langword="true"/> if the current instance has been disposed.
-    /// </summary>
-    private bool disposed;
-
-    /// <summary>
     /// The instance that executes a conversion process.
     /// </summary>
     private ThConverter? converter;
@@ -89,7 +84,6 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
         this.settings = settings;
         this.formatter = formatter;
         this.disposables = [];
-        this.disposed = false;
         this.converter = null;
 
         var rpMode = ReactivePropertyMode.DistinctUntilChanged;
@@ -321,44 +315,23 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// <inheritdoc/>
     public void Dispose()
     {
-        this.Dispose(true);
-    }
-
-    /// <summary>
-    /// Disposes the resources of the current instance.
-    /// </summary>
-    /// <param name="disposing">
-    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
-    /// </param>
-    private void Dispose(bool disposing)
-    {
-        if (this.disposed)
-        {
-            return;
-        }
-
-        if (disposing)
-        {
-            this.Log.Dispose();
-            this.HidesUntriedCards.Dispose();
-            this.ImageOutputDirectory.Dispose();
-            this.OutputDirectory.Dispose();
-            this.OpenTemplateFilesDialogInitialDirectory.Dispose();
-            this.TemplateFiles.Dispose();
-            this.BestShotDirectory.Dispose();
-            this.OpenScoreFileDialogInitialDirectory.Dispose();
-            this.ScoreFile.Dispose();
-            this.LastWorkNumber.Dispose();
-            this.IsIdle.Dispose();
-            this.CurrentSetting.Dispose();
-            this.SubContentHeight.Dispose();
-            this.MainContentHeight.Dispose();
-            this.Height.Dispose();
-            this.Width.Dispose();
-            this.disposables.Dispose();
-        }
-
-        this.disposed = true;
+        this.Log.Dispose();
+        this.HidesUntriedCards.Dispose();
+        this.ImageOutputDirectory.Dispose();
+        this.OutputDirectory.Dispose();
+        this.OpenTemplateFilesDialogInitialDirectory.Dispose();
+        this.TemplateFiles.Dispose();
+        this.BestShotDirectory.Dispose();
+        this.OpenScoreFileDialogInitialDirectory.Dispose();
+        this.ScoreFile.Dispose();
+        this.LastWorkNumber.Dispose();
+        this.IsIdle.Dispose();
+        this.CurrentSetting.Dispose();
+        this.SubContentHeight.Dispose();
+        this.MainContentHeight.Dispose();
+        this.Height.Dispose();
+        this.Width.Dispose();
+        this.disposables.Dispose();
     }
 
     /// <summary>

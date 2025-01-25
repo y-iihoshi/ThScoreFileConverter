@@ -31,7 +31,6 @@ namespace ThScoreFileConverter.ViewModels;
 internal sealed partial class SettingWindowViewModel : ObservableObject, IModalDialogViewModel, IDisposable
 {
     private readonly CompositeDisposable disposables;
-    private bool disposed;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
@@ -44,7 +43,6 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IModalD
         Guard.IsTrue(settings.OutputCodePageId.HasValue, nameof(settings), $"{nameof(settings.OutputCodePageId)} has no value");
 
         this.disposables = [];
-        this.disposed = false;
 
         this.OutputNumberGroupSeparator = settings.ToReactivePropertyAsSynchronized(
             x => x.OutputNumberGroupSeparator, value => (bool)value!, value => value);
@@ -125,31 +123,9 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IModalD
     /// <inheritdoc/>
     public void Dispose()
     {
-        this.Dispose(true);
-    }
-
-    /// <summary>
-    /// Disposes the resources of the current instance.
-    /// </summary>
-    /// <param name="disposing">
-    /// <see langword="true"/> if calls from the <see cref="Dispose()"/> method; <see langword="false"/> for the finalizer.
-    /// </param>
-    private void Dispose(bool disposing)
-    {
-        if (this.disposed)
-        {
-            return;
-        }
-
-        if (disposing)
-        {
-            this.OutputCodePageId.Dispose();
-            this.InputCodePageId.Dispose();
-            this.OutputNumberGroupSeparator.Dispose();
-
-            this.disposables.Dispose();
-        }
-
-        this.disposed = true;
+        this.OutputCodePageId.Dispose();
+        this.InputCodePageId.Dispose();
+        this.OutputNumberGroupSeparator.Dispose();
+        this.disposables.Dispose();
     }
 }
