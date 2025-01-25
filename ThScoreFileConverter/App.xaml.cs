@@ -18,9 +18,9 @@ using Reactive.Bindings.Schedulers;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Resources;
 using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
-using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter;
 
@@ -64,20 +64,20 @@ public sealed partial class App : Application, IDisposable
 
         try
         {
-            this.settings.Load(Prop.Resources.SettingFileName);
+            this.settings.Load(StringResources.SettingFileName);
         }
         catch (InvalidDataException)
         {
-            var backup = Path.ChangeExtension(Prop.Resources.SettingFileName, Prop.Resources.BackupFileExtension);
+            var backup = Path.ChangeExtension(StringResources.SettingFileName, StringResources.BackupFileExtension);
             File.Delete(backup);
-            File.Move(Prop.Resources.SettingFileName, backup);
+            File.Move(StringResources.SettingFileName, backup);
             var message = StringHelper.Format(
-                Utils.GetLocalizedValues<string>(nameof(Prop.Resources.MessageSettingFileIsCorrupted)),
-                Prop.Resources.SettingFileName,
+                Utils.GetLocalizedValues<string>(nameof(StringResources.MessageSettingFileIsCorrupted)),
+                StringResources.SettingFileName,
                 backup);
             _ = MessageBox.Show(
                 message,
-                Utils.GetLocalizedValues<string>(nameof(Prop.Resources.MessageTitleWarning)),
+                Utils.GetLocalizedValues<string>(nameof(StringResources.MessageTitleWarning)),
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
         }
@@ -106,7 +106,7 @@ public sealed partial class App : Application, IDisposable
         base.OnExit(e);
 
         this.settings.Language = LocalizeDictionary.Instance.Culture.Name;
-        this.settings.Save(Prop.Resources.SettingFileName);
+        this.settings.Save(StringResources.SettingFileName);
 
         this.serviceProvider?.Dispose();
     }

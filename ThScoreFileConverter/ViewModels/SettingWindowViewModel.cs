@@ -17,7 +17,7 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using WPFLocalizeExtension.Engine;
 
 namespace ThScoreFileConverter.ViewModels;
@@ -67,7 +67,7 @@ internal sealed partial class SettingWindowViewModel : ObservableObject, IModalD
     /// Gets a title of the Settings window.
     /// </summary>
 #pragma warning disable CA1822 // Mark members as static
-    public string Title => Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
+    public string Title => Utils.GetLocalizedValues<string>(nameof(StringResources.SettingWindowTitle));
 #pragma warning restore CA1822 // Mark members as static
 
     /// <summary>

@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models;
 public sealed class Work
 {
     /// <summary>
-    /// Gets or sets a number string. Should be a property name of <see cref="Properties.Resources"/>.
+    /// Gets or sets a number string. Should be a property name of <see cref="Resources.StringResources"/>.
     /// </summary>
     public string Number { get; set; } = string.Empty;
 

@@ -10,8 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
-using ThScoreFileConverter.Core.Resources;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using WPFLocalizeExtension.Providers;
 
 namespace ThScoreFileConverter.Models;
@@ -72,8 +71,8 @@ internal sealed class LocalizationProvider : ILocalizationProvider
 
         try
         {
-            var result = Resources.ResourceManager.GetObject(fqKey.Key, culture)
-                ?? StringResources.ResourceManager.GetObject(fqKey.Key, culture);
+            var result = StringResources.ResourceManager.GetObject(fqKey.Key, culture)
+                ?? Core.Resources.StringResources.ResourceManager.GetObject(fqKey.Key, culture);
 
             if (result is null)
                 this.OnProviderError(target, key, "Missing key.");

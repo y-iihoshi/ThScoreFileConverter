@@ -2,7 +2,7 @@
 using System.Globalization;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
 
@@ -27,7 +27,7 @@ public class SettingWindowViewModelTests
     public void TitleTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle)), window.Title);
+        Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(StringResources.SettingWindowTitle)), window.Title);
     }
 
     [TestMethod]

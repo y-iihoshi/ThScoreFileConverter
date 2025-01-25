@@ -12,9 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmDialogs;
-using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 
 namespace ThScoreFileConverter.ViewModels;
 
@@ -31,7 +30,7 @@ internal sealed class AboutWindowViewModel : ObservableObject, IModalDialogViewM
     /// </summary>
     public AboutWindowViewModel()
     {
-        this.Title = Utils.GetLocalizedValues<string>(nameof(Resources.AboutWindowTitle));
+        this.Title = Utils.GetLocalizedValues<string>(nameof(StringResources.AboutWindowTitle));
 
         var thisAsm = Assembly.GetExecutingAssembly();
         var asmName = thisAsm.GetName();
@@ -40,10 +39,10 @@ internal sealed class AboutWindowViewModel : ObservableObject, IModalDialogViewM
         var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
 
         this.Name = asmName.Name ?? nameof(ThScoreFileConverter);
-        this.Version = Utils.GetLocalizedValues<string>(nameof(Resources.VersionPrefix))
+        this.Version = Utils.GetLocalizedValues<string>(nameof(StringResources.VersionPrefix))
             + (verField?.GetValue(null) ?? string.Empty);
         this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
-        this.Uri = StringResources.ProjectUrl;
+        this.Uri = Core.Resources.StringResources.ProjectUrl;
 
         var uriString = $"pack://application:,,,/{this.Name};component/Resources/ApplicationIcon.ico";
         var decoder = BitmapDecoder.Create(new Uri(uriString), BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);

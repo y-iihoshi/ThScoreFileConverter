@@ -24,7 +24,7 @@ using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using WPFLocalizeExtension.Engine;
 
 namespace ThScoreFileConverter.ViewModels;
@@ -253,7 +253,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// </summary>
     public string SupportedVersions => this.converter is null
         ? string.Empty
-        : Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)) + this.converter.SupportedVersions;
+        : Utils.GetLocalizedValues<string>(nameof(StringResources.SupportedVersion)) + this.converter.SupportedVersions;
 
     /// <summary>
     /// Gets a path of the score file.
@@ -467,7 +467,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
         if (this.CanConvert())
         {
             this.IsIdle.Value = false;
-            this.Log.Value = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
+            this.Log.Value = Utils.GetLocalizedValues<string>(nameof(StringResources.MessageStartConversion))
                 + Environment.NewLine;
             var inputCodePageId = this.settings.InputCodePageId!.Value;
             var outputCodePageId = this.settings.OutputCodePageId!.Value;
@@ -624,7 +624,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     /// <param name="e">The event data.</param>
     private void OnConvertAllFinished(object? sender, ThConverterEventArgs e)
     {
-        this.Log.Value += Utils.GetLocalizedValues<string>(nameof(Resources.MessageConversionFinished))
+        this.Log.Value += Utils.GetLocalizedValues<string>(nameof(StringResources.MessageConversionFinished))
             + Environment.NewLine;
         this.IsIdle.Value = true;
     }
@@ -639,7 +639,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
 #if DEBUG
         this.Log.Value += e.Exception.Message + Environment.NewLine;
 #endif
-        this.Log.Value += Utils.GetLocalizedValues<string>(nameof(Resources.MessageUnhandledExceptionOccurred))
+        this.Log.Value += Utils.GetLocalizedValues<string>(nameof(StringResources.MessageUnhandledExceptionOccurred))
             + Environment.NewLine;
         this.IsIdle.Value = true;
     }

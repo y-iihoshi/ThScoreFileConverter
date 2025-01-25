@@ -10,9 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CommunityToolkit.Diagnostics;
-using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Helpers;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 
 namespace ThScoreFileConverter.Models;
 
@@ -86,7 +85,7 @@ internal class ThConverter
                     this.Convert(settings, inputCodePageId, outputCodePageId, formatter);
                     break;
                 default:
-                    ThrowHelper.ThrowArgumentException(nameof(threadArg), ExceptionMessages.ArgumentExceptionWrongType);
+                    ThrowHelper.ThrowArgumentException(nameof(threadArg), Core.Resources.ExceptionMessages.ArgumentExceptionWrongType);
                     break;
             }
         }
@@ -196,7 +195,7 @@ internal class ThConverter
         var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(bestshotFile));
         if (outputDirectory == Path.GetDirectoryName(bestshotFile))
             outputFile += "_";
-        outputFile += Resources.ConvertedBestShotFileExtension;
+        outputFile += StringResources.ConvertedBestShotFileExtension;
 
         return outputFile;
     }
@@ -214,7 +213,7 @@ internal class ThConverter
         using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
         _ = scr.Seek(0, SeekOrigin.Begin);
         if (!this.ReadScoreFile(scr))
-            ThrowHelper.ThrowNotSupportedException(Resources.MessageFailedToReadScoreFile);
+            ThrowHelper.ThrowNotSupportedException(StringResources.MessageFailedToReadScoreFile);
 
         if (this.HasBestShotConverter)
         {
@@ -222,7 +221,7 @@ internal class ThConverter
             if (!Directory.Exists(dir))
                 _ = Directory.CreateDirectory(dir);
             var files = this.FilterBestShotFiles(
-                Directory.GetFiles(settings.BestShotDirectory, Resources.BestShotFilePattern));
+                Directory.GetFiles(settings.BestShotDirectory, StringResources.BestShotFilePattern));
             for (var index = 0; index < files.Length; index++)
             {
                 var result = GetBestShotFilePath(files[index], dir);

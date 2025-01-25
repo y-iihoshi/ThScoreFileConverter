@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using WPFLocalizeExtension.Engine;
 using WPFLocalizeExtension.Extensions;
 using WPFLocalizeExtension.Providers;
@@ -26,7 +26,7 @@ public static class Utils
     public static T GetLocalizedValues<T>(string key)
     {
         return LocalizeDictionary.Instance.DefaultProvider is ResxLocalizationProvider
-            ? LocExtension.GetLocalizedValue<T>($"{nameof(ThScoreFileConverter)}:{nameof(Resources)}:{key}")
+            ? LocExtension.GetLocalizedValue<T>($"{nameof(ThScoreFileConverter)}:{nameof(StringResources)}:{key}")
             : LocExtension.GetLocalizedValue<T>(key);
     }
 }

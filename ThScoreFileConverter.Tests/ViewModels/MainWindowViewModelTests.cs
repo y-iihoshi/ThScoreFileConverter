@@ -10,7 +10,7 @@ using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Adapters;
 using ThScoreFileConverter.Interactivity;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using ThScoreFileConverter.ViewModels;
 using WPFLocalizeExtension.Engine;
 
@@ -159,7 +159,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
         StringAssert.StartsWith(
             window.SupportedVersions,
-            Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)),
+            Utils.GetLocalizedValues<string>(nameof(StringResources.SupportedVersion)),
             StringComparison.CurrentCulture);
     }
 

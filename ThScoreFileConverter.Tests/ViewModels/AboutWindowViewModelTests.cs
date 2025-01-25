@@ -2,9 +2,8 @@
 using System.IO.Packaging;
 using System.Threading;
 using System.Windows;
-using ThScoreFileConverter.Core.Resources;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
+using ThScoreFileConverter.Resources;
 using ThScoreFileConverter.ViewModels;
 
 namespace ThScoreFileConverter.Tests.ViewModels;
@@ -31,7 +30,7 @@ public class AboutWindowViewModelTests
     public void TitleTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(Resources.AboutWindowTitle)), window.Title);
+        Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(StringResources.AboutWindowTitle)), window.Title);
     }
 
     [TestMethod]
@@ -56,7 +55,7 @@ public class AboutWindowViewModelTests
         var window = new AboutWindowViewModel();
         StringAssert.StartsWith(
             window.Version,
-            Utils.GetLocalizedValues<string>(nameof(Resources.VersionPrefix)),
+            Utils.GetLocalizedValues<string>(nameof(StringResources.VersionPrefix)),
             StringComparison.CurrentCulture);
     }
 
@@ -71,6 +70,6 @@ public class AboutWindowViewModelTests
     public void UriTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.AreEqual(StringResources.ProjectUrl, window.Uri);
+        Assert.AreEqual(Core.Resources.StringResources.ProjectUrl, window.Uri);
     }
 }
