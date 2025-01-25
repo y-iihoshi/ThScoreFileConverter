@@ -8,6 +8,8 @@ Score file converter for Touhou games
 [![GitHub Actions CI](https://github.com/y-iihoshi/ThScoreFileConverter/workflows/CI/badge.svg)](https://github.com/y-iihoshi/ThScoreFileConverter/actions?query=workflow%3ACI)
 [![Codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/graph/badge.svg?token=az4E4xnhLU)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter)
 
+![The main window of ThSFC](/ManualGenerator/_static/mainwindow.en.png)
+
 ## Introduction
 
 ThScoreFileConverter (*ThSFC* for short) can generate text and/or HTML summaries
