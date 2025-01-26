@@ -13,11 +13,11 @@ public class ShotTypeAttributeTests
     {
         var attribute = new ShotTypeAttribute<Chara>(Chara.ReimuA);
 
-        Assert.IsNotNull(attribute);
-        Assert.AreEqual("Th06.ReimuA", attribute.Name);
-        Assert.AreEqual("Th06.ReimuAFullName", attribute.FullName);
-        Assert.AreEqual(typeof(ShotTypeNames), attribute.ResourceType);
-        Assert.AreEqual(Chara.ReimuA, attribute.Value);
+        _ = attribute.ShouldNotBeNull();
+        attribute.Name.ShouldBe("Th06.ReimuA");
+        attribute.FullName.ShouldBe("Th06.ReimuAFullName");
+        attribute.ResourceType.ShouldBe(typeof(ShotTypeNames));
+        attribute.Value.ShouldBe(Chara.ReimuA);
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestHelper.GetInvalidEnumerators<Chara>();
@@ -26,7 +26,7 @@ public class ShotTypeAttributeTests
     [DynamicData(nameof(InvalidCharacters))]
     public void ShotTypeAttributeTestInvalid(int chara)
     {
-        _ = Assert.ThrowsException<ArgumentException>(() => new ShotTypeAttribute<Chara>((Chara)chara));
+        _ = Should.Throw<ArgumentException>(() => new ShotTypeAttribute<Chara>((Chara)chara));
     }
 
     [TestMethod]
@@ -37,10 +37,10 @@ public class ShotTypeAttributeTests
         var attribute = new ShotTypeAttribute<Chara>(Chara.MarisaA);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("魔", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("魔");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Magic", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("Magic");
     }
 
     [TestMethod]
@@ -51,10 +51,10 @@ public class ShotTypeAttributeTests
         var attribute = new ShotTypeAttribute<DayOfWeek>(DayOfWeek.Sunday);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("System.Sunday", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("System.Sunday");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("System.Sunday", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("System.Sunday");
     }
 
     [TestMethod]
@@ -65,10 +65,10 @@ public class ShotTypeAttributeTests
         var attribute = new ShotTypeAttribute<Chara>(Chara.MarisaA);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("魔符", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("魔符");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Magic Sign", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("Magic Sign");
     }
 
     [TestMethod]
@@ -79,9 +79,9 @@ public class ShotTypeAttributeTests
         var attribute = new ShotTypeAttribute<DayOfWeek>(DayOfWeek.Sunday);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("System.SundayFullName", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("System.SundayFullName");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("System.SundayFullName", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("System.SundayFullName");
     }
 }

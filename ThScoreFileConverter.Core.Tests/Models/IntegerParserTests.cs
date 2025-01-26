@@ -28,8 +28,7 @@ public class IntegerParserTests
 
         foreach (var pair in pairs)
         {
-            var replaced = Regex.Replace(pair.Item1, pattern, evaluator);
-            Assert.AreEqual(pair.Item2, replaced);
+            Regex.Replace(pair.Item1, pattern, evaluator).ShouldBe(pair.Item2);
         }
     }
 
@@ -57,8 +56,7 @@ public class IntegerParserTests
 
         foreach (var pair in pairs)
         {
-            var replaced = Regex.Replace(pair.Item1, pattern, evaluator);
-            Assert.AreEqual(pair.Item2, replaced);
+            Regex.Replace(pair.Item1, pattern, evaluator).ShouldBe(pair.Item2);
         }
     }
 }

@@ -13,11 +13,11 @@ public class CharacterAttributeTests
         var name = "Reimu";
         var attribute = new CharacterAttribute(name);
 
-        Assert.IsNotNull(attribute);
-        Assert.AreEqual(name, attribute.Name);
-        Assert.AreEqual($"{name}FullName", attribute.FullName);
-        Assert.AreEqual(typeof(CharacterNames), attribute.ResourceType);
-        Assert.AreEqual(0, attribute.Index);
+        _ = attribute.ShouldNotBeNull();
+        attribute.Name.ShouldBe(name);
+        attribute.FullName.ShouldBe($"{name}FullName");
+        attribute.ResourceType.ShouldBe(typeof(CharacterNames));
+        attribute.Index.ShouldBe(0);
     }
 
     [TestMethod]
@@ -27,23 +27,23 @@ public class CharacterAttributeTests
         var index = 1;
         var attribute = new CharacterAttribute(name, index);
 
-        Assert.IsNotNull(attribute);
-        Assert.AreEqual(name, attribute.Name);
-        Assert.AreEqual($"{name}FullName", attribute.FullName);
-        Assert.AreEqual(typeof(CharacterNames), attribute.ResourceType);
-        Assert.AreEqual(1, attribute.Index);
+        _ = attribute.ShouldNotBeNull();
+        attribute.Name.ShouldBe(name);
+        attribute.FullName.ShouldBe($"{name}FullName");
+        attribute.ResourceType.ShouldBe(typeof(CharacterNames));
+        attribute.Index.ShouldBe(1);
     }
 
     [TestMethod]
     public void CharacterAttributeTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new CharacterAttribute(null!));
+        _ = Should.Throw<ArgumentNullException>(() => new CharacterAttribute(null!));
     }
 
     [TestMethod]
     public void CharacterAttributeTestEmpty()
     {
-        _ = Assert.ThrowsException<ArgumentException>(() => new CharacterAttribute(string.Empty));
+        _ = Should.Throw<ArgumentException>(() => new CharacterAttribute(string.Empty));
     }
 
     [TestMethod]
@@ -55,10 +55,10 @@ public class CharacterAttributeTests
         var attribute = new CharacterAttribute(name);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("魔理沙", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("魔理沙");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Marisa", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("Marisa");
     }
 
     [TestMethod]
@@ -70,10 +70,10 @@ public class CharacterAttributeTests
         var attribute = new CharacterAttribute(name);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("Rinnosuke", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("Rinnosuke");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Rinnosuke", attribute.GetLocalizedName());
+        attribute.GetLocalizedName().ShouldBe("Rinnosuke");
     }
 
     [TestMethod]
@@ -85,10 +85,10 @@ public class CharacterAttributeTests
         var attribute = new CharacterAttribute(name);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("霧雨 魔理沙", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("霧雨 魔理沙");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Kirisame Marisa", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("Kirisame Marisa");
     }
 
     [TestMethod]
@@ -100,9 +100,9 @@ public class CharacterAttributeTests
         var attribute = new CharacterAttribute(name);
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("RinnosukeFullName", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("RinnosukeFullName");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("RinnosukeFullName", attribute.GetLocalizedFullName());
+        attribute.GetLocalizedFullName().ShouldBe("RinnosukeFullName");
     }
 }

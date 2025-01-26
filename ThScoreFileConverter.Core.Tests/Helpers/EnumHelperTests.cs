@@ -10,15 +10,13 @@ public class EnumHelperTests
     [TestMethod]
     public void ToEnumTest()
     {
-        var value = 0;
-        Assert.AreEqual(DayOfWeek.Sunday, EnumHelper.To<DayOfWeek>(value));
+        EnumHelper.To<DayOfWeek>(0).ShouldBe(DayOfWeek.Sunday);
     }
 
     [TestMethod]
     public void ToEnumTestInvalidValue()
     {
-        var value = 7;
-        _ = Assert.ThrowsException<InvalidCastException>(() => EnumHelper.To<DayOfWeek>(value));
+        _ = Should.Throw<InvalidCastException>(() => EnumHelper.To<DayOfWeek>(7));
     }
 
     [TestMethod]
@@ -26,14 +24,14 @@ public class EnumHelperTests
     {
         var i = (int)DayOfWeek.Sunday;
         foreach (var value in EnumHelper<DayOfWeek>.Enumerable)
-            Assert.AreEqual((DayOfWeek)i++, value);
-        Assert.AreEqual(7, i);
+            value.ShouldBe((DayOfWeek)i++);
+        i.ShouldBe(7);
     }
 
     [TestMethod]
     public void NumValuesTest()
     {
-        Assert.AreEqual(7, EnumHelper<DayOfWeek>.NumValues);
+        EnumHelper<DayOfWeek>.NumValues.ShouldBe(7);
     }
 
     [TestMethod]
@@ -49,13 +47,13 @@ public class EnumHelperTests
             (Protagonist.Marisa, UnnamedCharacter.名無しの本読み妖怪),
         };
 
-        CollectionAssert.That.AreEqual(expected, EnumHelper.Cartesian<Protagonist, UnnamedCharacter>());
+        EnumHelper.Cartesian<Protagonist, UnnamedCharacter>().ShouldBe(expected);
     }
 
     [TestMethod]
     public void IsDefinedTest()
     {
-        Assert.IsTrue(EnumHelper.IsDefined(DayOfWeek.Sunday));
-        Assert.IsFalse(EnumHelper.IsDefined((DayOfWeek)7));
+        EnumHelper.IsDefined(DayOfWeek.Sunday).ShouldBeTrue();
+        EnumHelper.IsDefined((DayOfWeek)7).ShouldBeFalse();
     }
 }

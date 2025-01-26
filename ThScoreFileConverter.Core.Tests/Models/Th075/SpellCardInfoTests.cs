@@ -21,9 +21,9 @@ public class SpellCardInfoTests
 
     internal static void Validate(in Properties properties, in SpellCardInfo spellCardInfo)
     {
-        Assert.AreEqual(properties.name, spellCardInfo.Name);
-        Assert.AreEqual(properties.enemy, spellCardInfo.Enemy);
-        Assert.AreEqual(properties.level, spellCardInfo.Level);
+        spellCardInfo.Name.ShouldBe(properties.name);
+        spellCardInfo.Enemy.ShouldBe(properties.enemy);
+        spellCardInfo.Level.ShouldBe(properties.level);
     }
 
     [TestMethod]
