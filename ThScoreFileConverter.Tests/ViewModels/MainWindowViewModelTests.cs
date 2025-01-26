@@ -75,56 +75,56 @@ public class MainWindowViewModelTests
     public void MinWidthTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(Settings.WindowMinWidth, window.MinWidth);
+        window.MinWidth.ShouldBe(Settings.WindowMinWidth);
     }
 
     [TestMethod]
     public void MinHeightTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(Settings.WindowMinHeight, window.MinHeight);
+        window.MinHeight.ShouldBe(Settings.WindowMinHeight);
     }
 
     [TestMethod]
     public void MainContentMinHeightTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(Settings.MainContentMinHeight, window.MainContentMinHeight);
+        window.MainContentMinHeight.ShouldBe(Settings.MainContentMinHeight);
     }
 
     [TestMethod]
     public void SubContentMinHeightTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(Settings.SubContentMinHeight, window.SubContentMinHeight);
+        window.SubContentMinHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
     public void TitleTest()
     {
         using var window = CreateViewModel();
-        Assert.IsFalse(string.IsNullOrEmpty(window.Title));
+        window.Title.ShouldNotBeNullOrEmpty();
     }
 
     [TestMethod]
     public void WorksTest()
     {
         using var window = CreateViewModel();
-        Assert.IsTrue(window.Works.Any());
+        window.Works.ShouldNotBeEmpty();
     }
 
     [TestMethod]
     public void IsIdleTest()
     {
         using var window = CreateViewModel();
-        Assert.IsTrue(window.IsIdle.Value);
+        window.IsIdle.Value.ShouldBeTrue();
     }
 
     [TestMethod]
     public void CanHandleBestShotTest()
     {
         using var window = CreateViewModel();
-        Assert.IsFalse(window.CanHandleBestShot);
+        window.CanHandleBestShot.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -137,69 +137,66 @@ public class MainWindowViewModelTests
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
             dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
-        Assert.AreEqual(settings.LastTitle, window.LastWorkNumber.Value);
-        Assert.AreNotEqual(initialLastTitle, settings.LastTitle);
+        window.LastWorkNumber.Value.ShouldBe(settings.LastTitle);
+        settings.LastTitle.ShouldNotBe(initialLastTitle);
 
         var numChanged = 0;
         using var disposable = window.LastWorkNumber.Subscribe(_ => ++numChanged);
 
         var expected = "TH07";
         window.LastWorkNumber.Value = expected;
-        Assert.AreEqual(1, numChanged);
-        Assert.AreEqual(expected, window.LastWorkNumber.Value);
-        Assert.AreEqual(expected, settings.LastTitle);
+        numChanged.ShouldBe(1);
+        window.LastWorkNumber.Value.ShouldBe(expected);
+        settings.LastTitle.ShouldBe(expected);
     }
 
     [TestMethod]
     public void SupportedVersionsTest()
     {
         using var window = CreateViewModel();
-        StringAssert.StartsWith(
-            window.SupportedVersions,
-            Utils.GetLocalizedValues<string>(nameof(StringResources.SupportedVersion)),
-            StringComparison.CurrentCulture);
+        window.SupportedVersions.ShouldStartWith(Utils.GetLocalizedValues<string>(nameof(StringResources.SupportedVersion)));
     }
 
     [TestMethod]
     public void ScoreFileTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(string.Empty, window.ScoreFile.Value);
+        window.ScoreFile.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void OpenScoreFileDialogInitialDirectoryTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(string.Empty, window.OpenScoreFileDialogInitialDirectory.Value);
+        window.OpenScoreFileDialogInitialDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void BestShotDirectoryTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
+        window.BestShotDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void TemplateFilesTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+        window.TemplateFiles.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void OpenTemplateFilesDialogInitialDirectoryTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(string.Empty, window.OpenTemplateFilesDialogInitialDirectory.Value);
+        window.OpenTemplateFilesDialogInitialDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void OutputDirectoryTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
+        window.OutputDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -211,23 +208,23 @@ public class MainWindowViewModelTests
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
             dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
-        Assert.AreEqual(string.Empty, window.ImageOutputDirectory.Value);
+        window.ImageOutputDirectory.Value.ShouldBeEmpty();
 
         var numChanged = 0;
         using var disposable = window.ImageOutputDirectory.Subscribe(_ => ++numChanged);
 
         var expected = "abc";
         window.ImageOutputDirectory.Value = expected;
-        Assert.AreEqual(1, numChanged);
-        Assert.AreEqual(expected, window.ImageOutputDirectory.Value);
-        Assert.AreEqual(expected, settings.GetSettingsPerTitle(window.Works.First().Number).ImageOutputDirectory);
+        numChanged.ShouldBe(1);
+        window.ImageOutputDirectory.Value.ShouldBe(expected);
+        settings.GetSettingsPerTitle(window.Works.First().Number).ImageOutputDirectory.ShouldBe(expected);
     }
 
     [TestMethod]
     public void CanReplaceCardNamesTest()
     {
         using var window = CreateViewModel();
-        Assert.IsTrue(window.CanReplaceCardNames);
+        window.CanReplaceCardNames.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -239,23 +236,23 @@ public class MainWindowViewModelTests
         var formatterMock = MockNumberFormatter();
         using var window = new MainWindowViewModel(
             dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
-        Assert.IsTrue(window.HidesUntriedCards.Value);
+        window.HidesUntriedCards.Value.ShouldBeTrue();
 
         var numChanged = 0;
         using var disposable = window.HidesUntriedCards.Subscribe(_ => ++numChanged);
 
         var expected = false;
         window.HidesUntriedCards.Value = expected;
-        Assert.AreEqual(1, numChanged);
-        Assert.AreEqual(expected, window.HidesUntriedCards.Value);
-        Assert.AreEqual(expected, settings.GetSettingsPerTitle(window.Works.First().Number).HideUntriedCards);
+        numChanged.ShouldBe(1);
+        window.HidesUntriedCards.Value.ShouldBe(expected);
+        settings.GetSettingsPerTitle(window.Works.First().Number).HideUntriedCards.ShouldBe(expected);
     }
 
     [TestMethod]
     public void LogTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(string.Empty, window.Log.Value);
+        window.Log.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -264,7 +261,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
@@ -273,12 +270,12 @@ public class MainWindowViewModelTests
         try
         {
             var result = new OpenFileDialogActionResult(fileName, []);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+            command.CanExecute(result).ShouldBeTrue();
+            numChanged.ShouldBe(0);
 
             command.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(fileName, window.ScoreFile.Value);
+            numChanged.ShouldBe(1);
+            window.ScoreFile.Value.ShouldBe(fileName);
         }
         finally
         {
@@ -292,18 +289,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
         var fileName = window.ScoreFile.Value;
         var result = new OpenFileDialogActionResult(fileName, []);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
     }
 
     [TestMethod]
@@ -312,18 +309,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
         var fileName = "nonexistent.txt";
         var result = new OpenFileDialogActionResult(fileName, []);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
     }
 
     [TestMethod]
@@ -332,19 +329,19 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var path = Path.GetTempPath();
         var result = new OpenFolderDialogActionResult(path);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(1, numChanged);
-        Assert.AreEqual(path, window.BestShotDirectory.Value);
+        numChanged.ShouldBe(1);
+        window.BestShotDirectory.Value.ShouldBe(path);
     }
 
     [TestMethod]
@@ -353,18 +350,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var path = window.BestShotDirectory.Value;
         var result = new OpenFolderDialogActionResult(path);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
     }
 
     [TestMethod]
@@ -373,18 +370,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var path = "nonexistent";
         var result = new OpenFolderDialogActionResult(path);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
     }
 
     [TestMethod]
@@ -393,17 +390,17 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.TemplateFilesSelectionChangedCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposed = window.DeleteTemplateFilesCommand
             .CanExecuteChangedAsObservable().Subscribe(_ => ++numChanged);
 
-        Assert.IsTrue(command.CanExecute(null));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(null).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(null);
-        Assert.AreEqual(1, numChanged);
+        numChanged.ShouldBe(1);
     }
 
     [TestMethod]
@@ -412,7 +409,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.AddTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -421,12 +418,12 @@ public class MainWindowViewModelTests
         try
         {
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+            command.CanExecute(result).ShouldBeTrue();
+            numChanged.ShouldBe(0);
 
             command.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
         }
         finally
         {
@@ -441,7 +438,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.AddTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -453,20 +450,20 @@ public class MainWindowViewModelTests
             var fileNames2 = fileNames.TakeLast(3);
 
             var result = new OpenFileDialogActionResult(string.Empty, fileNames1);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(0, numChanged);
+            command.CanExecute(result).ShouldBeTrue();
+            numChanged.ShouldBe(0);
 
             command.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames1, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames1);
 
             result = new OpenFileDialogActionResult(string.Empty, fileNames2);
-            Assert.IsTrue(command.CanExecute(result));
-            Assert.AreEqual(1, numChanged);
+            command.CanExecute(result).ShouldBeTrue();
+            numChanged.ShouldBe(1);
 
             command.Execute(result);
-            Assert.AreEqual(2, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(2);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
         }
         finally
         {
@@ -481,24 +478,24 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.AddTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
         var fileNames = window.TemplateFiles.Value.ToArray();
         var result = new OpenFileDialogActionResult(string.Empty, fileNames);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
 #if NET9_0_OR_GREATER
         // TODO: under investigation
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
 #else
-        Assert.AreEqual(1, numChanged);
+        numChanged.ShouldBe(1);
 #endif
-        CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+        window.TemplateFiles.Value.ShouldBe(fileNames);
     }
 
     [TestMethod]
@@ -507,24 +504,24 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.AddTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
         var fileNames = new[] { "nonexistent.txt" };
         var result = new OpenFileDialogActionResult(string.Empty, fileNames);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
 #if NET9_0_OR_GREATER
         // TODO: under investigation
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
 #else
-        Assert.AreEqual(1, numChanged);
+        numChanged.ShouldBe(1);
 #endif
-        Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+        window.TemplateFiles.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -533,7 +530,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DeleteTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -543,15 +540,15 @@ public class MainWindowViewModelTests
         {
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
             window.AddTemplateFilesCommand.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
 
-            Assert.IsTrue(command.CanExecute(fileNames));
-            Assert.AreEqual(1, numChanged);
+            command.CanExecute(fileNames).ShouldBeTrue();
+            numChanged.ShouldBe(1);
 
             command.Execute(fileNames.Take(2).ToList());
-            Assert.AreEqual(2, numChanged);
-            CollectionAssert.That.AreEqual(fileNames.TakeLast(1), window.TemplateFiles.Value);
+            numChanged.ShouldBe(2);
+            window.TemplateFiles.Value.ShouldBe(fileNames.TakeLast(1));
         }
         finally
         {
@@ -566,7 +563,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DeleteTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -576,15 +573,15 @@ public class MainWindowViewModelTests
         {
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
             window.AddTemplateFilesCommand.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
 
-            Assert.IsTrue(command.CanExecute(fileNames));
-            Assert.AreEqual(1, numChanged);
+            command.CanExecute(fileNames).ShouldBeTrue();
+            numChanged.ShouldBe(1);
 
             command.Execute(fileNames.ToList());
-            Assert.AreEqual(2, numChanged);
-            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+            numChanged.ShouldBe(2);
+            window.TemplateFiles.Value.ShouldBeEmpty();
         }
         finally
         {
@@ -599,7 +596,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DeleteTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -609,15 +606,15 @@ public class MainWindowViewModelTests
         {
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
             window.AddTemplateFilesCommand.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
 
-            Assert.IsFalse(command.CanExecute(null));
-            Assert.AreEqual(1, numChanged);
+            command.CanExecute(null).ShouldBeFalse();
+            numChanged.ShouldBe(1);
 
             command.Execute(null);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
         }
         finally
         {
@@ -632,7 +629,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DeleteTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -642,17 +639,17 @@ public class MainWindowViewModelTests
         {
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
             window.AddTemplateFilesCommand.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
 
             var empty = Array.Empty<string>();
 
-            Assert.IsFalse(command.CanExecute(empty));
-            Assert.AreEqual(1, numChanged);
+            command.CanExecute(empty).ShouldBeFalse();
+            numChanged.ShouldBe(1);
 
             command.Execute(empty);
-            Assert.AreEqual(2, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(2);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
         }
         finally
         {
@@ -667,7 +664,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DeleteAllTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -677,15 +674,15 @@ public class MainWindowViewModelTests
         {
             var result = new OpenFileDialogActionResult(string.Empty, fileNames);
             window.AddTemplateFilesCommand.Execute(result);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
 
-            Assert.IsTrue(command.CanExecute(null));
-            Assert.AreEqual(1, numChanged);
+            command.CanExecute(null).ShouldBeTrue();
+            numChanged.ShouldBe(1);
 
             command.Execute(null);
-            Assert.AreEqual(2, numChanged);
-            Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+            numChanged.ShouldBe(2);
+            window.TemplateFiles.Value.ShouldBeEmpty();
         }
         finally
         {
@@ -700,17 +697,17 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DeleteAllTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
-        Assert.IsFalse(command.CanExecute(null));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(null).ShouldBeFalse();
+        numChanged.ShouldBe(0);
 
         command.Execute(null);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+        numChanged.ShouldBe(0);
+        window.TemplateFiles.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -719,19 +716,19 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var path = Path.GetTempPath();
         var result = new OpenFolderDialogActionResult(path);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(1, numChanged);
-        Assert.AreEqual(path, window.OutputDirectory.Value);
+        numChanged.ShouldBe(1);
+        window.OutputDirectory.Value.ShouldBe(path);
     }
 
     [TestMethod]
@@ -740,18 +737,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var path = window.OutputDirectory.Value;
         var result = new OpenFolderDialogActionResult(path);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
     }
 
     [TestMethod]
@@ -760,18 +757,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.SelectOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var path = "nonexistent";
         var result = new OpenFolderDialogActionResult(path);
-        Assert.IsTrue(command.CanExecute(result));
-        Assert.AreEqual(0, numChanged);
+        command.CanExecute(result).ShouldBeTrue();
+        numChanged.ShouldBe(0);
 
         command.Execute(result);
-        Assert.AreEqual(0, numChanged);
+        numChanged.ShouldBe(0);
     }
 
     [TestMethod]
@@ -780,13 +777,13 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.ConvertCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
-        Assert.IsFalse(command.CanExecute(null));
+        command.CanExecute(null).ShouldBeFalse();
 
         command.Execute(null);
-        Assert.IsTrue(window.IsIdle.Value);
-        Assert.AreEqual(string.Empty, window.Log.Value);
+        window.IsIdle.Value.ShouldBeTrue();
+        window.Log.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -795,16 +792,16 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DraggingCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var args = CreateDragEventArgs(
             new DataObject(DataFormats.FileDrop, new object()), UIElement.PreviewDragEnterEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(DragDropEffects.Copy, args.Effects);
-        Assert.IsTrue(args.Handled);
+        args.Effects.ShouldBe(DragDropEffects.Copy);
+        args.Handled.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -813,16 +810,16 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DraggingCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var args = CreateDragEventArgs(
             new DataObject(DataFormats.Text, new object()), UIElement.PreviewDragEnterEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(DragDropEffects.None, args.Effects);
-        Assert.IsFalse(args.Handled);
+        args.Effects.ShouldBe(DragDropEffects.None);
+        args.Handled.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -831,7 +828,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
@@ -840,12 +837,12 @@ public class MainWindowViewModelTests
         try
         {
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, fileNames), UIElement.DropEvent);
-            Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args));
+            _ = args.ShouldNotBeNull();
+            command.CanExecute(args).ShouldBeTrue();
 
             command.Execute(args);
-            Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(fileNames[0], window.ScoreFile.Value);
+            numChanged.ShouldBe(1);
+            window.ScoreFile.Value.ShouldBe(fileNames[0]);
         }
         finally
         {
@@ -860,7 +857,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
@@ -868,12 +865,12 @@ public class MainWindowViewModelTests
         var fileNames = new[] { "nonexistent.txt" };
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, fileNames), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.ScoreFile.Value);
+        numChanged.ShouldBe(0);
+        window.ScoreFile.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -882,18 +879,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.ScoreFile.Value);
+        numChanged.ShouldBe(0);
+        window.ScoreFile.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -902,18 +899,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropScoreFileCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.ScoreFile.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.ScoreFile.Value);
+        numChanged.ShouldBe(0);
+        window.ScoreFile.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -922,7 +919,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
@@ -937,12 +934,12 @@ public class MainWindowViewModelTests
         try
         {
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
-            Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args));
+            _ = args.ShouldNotBeNull();
+            command.CanExecute(args).ShouldBeTrue();
 
             command.Execute(args);
-            Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(dirNames[0], window.BestShotDirectory.Value);
+            numChanged.ShouldBe(1);
+            window.BestShotDirectory.Value.ShouldBe(dirNames[0]);
         }
         finally
         {
@@ -957,7 +954,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
@@ -965,12 +962,12 @@ public class MainWindowViewModelTests
         var dirNames = new[] { "nonexistent" };
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
+        numChanged.ShouldBe(0);
+        window.BestShotDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -979,18 +976,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
+        numChanged.ShouldBe(0);
+        window.BestShotDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -999,18 +996,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropBestShotDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.BestShotDirectory.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.BestShotDirectory.Value);
+        numChanged.ShouldBe(0);
+        window.BestShotDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -1019,7 +1016,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
@@ -1030,12 +1027,12 @@ public class MainWindowViewModelTests
             var args = CreateDragEventArgs(
                 new DataObject(DataFormats.FileDrop, fileNames.Append("nonexistent.txt").ToArray()),
                 UIElement.DropEvent);
-            Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args));
+            _ = args.ShouldNotBeNull();
+            command.CanExecute(args).ShouldBeTrue();
 
             command.Execute(args);
-            Assert.AreEqual(1, numChanged);
-            CollectionAssert.That.AreEqual(fileNames, window.TemplateFiles.Value);
+            numChanged.ShouldBe(1);
+            window.TemplateFiles.Value.ShouldBe(fileNames);
         }
         finally
         {
@@ -1050,18 +1047,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+        numChanged.ShouldBe(0);
+        window.TemplateFiles.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -1070,18 +1067,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropTemplateFilesCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.TemplateFiles.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(0, window.TemplateFiles.Value.Count());
+        numChanged.ShouldBe(0);
+        window.TemplateFiles.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -1090,7 +1087,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
@@ -1105,12 +1102,12 @@ public class MainWindowViewModelTests
         try
         {
             var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
-            Assert.IsNotNull(args);
-            Assert.IsTrue(command.CanExecute(args));
+            _ = args.ShouldNotBeNull();
+            command.CanExecute(args).ShouldBeTrue();
 
             command.Execute(args);
-            Assert.AreEqual(1, numChanged);
-            Assert.AreEqual(dirNames[0], window.OutputDirectory.Value);
+            numChanged.ShouldBe(1);
+            window.OutputDirectory.Value.ShouldBe(dirNames[0]);
         }
         finally
         {
@@ -1125,7 +1122,7 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
@@ -1133,12 +1130,12 @@ public class MainWindowViewModelTests
         var dirNames = new[] { "nonexistent" };
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, dirNames), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
+        numChanged.ShouldBe(0);
+        window.OutputDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -1147,18 +1144,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.FileDrop, default(int)), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
+        numChanged.ShouldBe(0);
+        window.OutputDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -1167,18 +1164,18 @@ public class MainWindowViewModelTests
         using var window = CreateViewModel();
 
         var command = window.DropOutputDirectoryCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
         var numChanged = 0;
         using var disposable = window.OutputDirectory.Subscribe(_ => ++numChanged);
 
         var args = CreateDragEventArgs(new DataObject(DataFormats.Text, string.Empty), UIElement.DropEvent);
-        Assert.IsNotNull(args);
-        Assert.IsTrue(command.CanExecute(args));
+        _ = args.ShouldNotBeNull();
+        command.CanExecute(args).ShouldBeTrue();
 
         command.Execute(args);
-        Assert.AreEqual(0, numChanged);
-        Assert.AreEqual(string.Empty, window.OutputDirectory.Value);
+        numChanged.ShouldBe(0);
+        window.OutputDirectory.Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -1193,9 +1190,9 @@ public class MainWindowViewModelTests
             dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
 
         var command = window.OpenAboutWindowCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
-        Assert.IsTrue(command.CanExecute(null));
+        command.CanExecute(null).ShouldBeTrue();
 
         command.Execute(null);
         _ = dialogServiceMock.Received().ShowDialog(Arg.Any<MainWindowViewModel>(), Arg.Any<AboutWindowViewModel>());
@@ -1213,9 +1210,9 @@ public class MainWindowViewModelTests
             dialogServiceMock, dispatcherAdapterMock, settings, formatterMock);
 
         var command = window.OpenSettingWindowCommand;
-        Assert.IsNotNull(command);
+        _ = command.ShouldNotBeNull();
 
-        Assert.IsTrue(command.CanExecute(null));
+        command.CanExecute(null).ShouldBeTrue();
 
         command.Execute(null);
         _ = dialogServiceMock.Received().ShowDialog(Arg.Any<MainWindowViewModel>(), Arg.Any<SettingWindowViewModel>());
@@ -1252,7 +1249,7 @@ public class MainWindowViewModelTests
 
             var expected = CultureInfo.GetCultureInfo("ja-JP");
             LocalizeDictionary.Instance.Culture = expected;
-            Assert.AreEqual(1, numChanged);
+            numChanged.ShouldBe(1);
         }
         finally
         {
