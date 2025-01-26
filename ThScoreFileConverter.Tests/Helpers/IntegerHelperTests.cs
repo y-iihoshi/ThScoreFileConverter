@@ -1,5 +1,4 @@
-﻿using System;
-using ThScoreFileConverter.Helpers;
+﻿using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Tests.Helpers;
 

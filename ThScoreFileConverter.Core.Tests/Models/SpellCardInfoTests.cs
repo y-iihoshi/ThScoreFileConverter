@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using ThScoreFileConverter.Core.Models;
+﻿using ThScoreFileConverter.Core.Models;
 using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
     ThScoreFileConverter.Core.Models.Stage, ThScoreFileConverter.Core.Models.Level>;
 

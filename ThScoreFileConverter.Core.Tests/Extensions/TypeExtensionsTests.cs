@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using ThScoreFileConverter.Core.Extensions;
+﻿using ThScoreFileConverter.Core.Extensions;
 
 internal static class Global;
 

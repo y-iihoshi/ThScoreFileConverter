@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.IO;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverter.Tests.UnitTesting;
 

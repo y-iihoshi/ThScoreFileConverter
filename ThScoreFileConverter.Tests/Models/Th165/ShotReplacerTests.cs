@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Collections.Immutable;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Models.Th165;
 

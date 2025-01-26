@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Collections.Immutable;
 using ThScoreFileConverter.Core.Models.Th17;
 using ThScoreFileConverter.Models.Th17;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<

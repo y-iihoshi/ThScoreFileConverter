@@ -1,5 +1,4 @@
-﻿using System;
-using ThScoreFileConverter.Core.Helpers;
+﻿using ThScoreFileConverter.Core.Helpers;
 using Protagonist = ThScoreFileConverter.Core.Tests.Extensions.Protagonist;
 using UnnamedCharacter = ThScoreFileConverter.Core.Tests.Extensions.UnnamedCharacter;
 

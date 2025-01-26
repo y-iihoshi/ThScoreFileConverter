@@ -7,8 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
-using System.Linq;
 using ThScoreFileConverter.Core.Models.Th123;
 using CardType = ThScoreFileConverter.Core.Models.Th105.CardType;
 using StageInfo = ThScoreFileConverter.Core.Models.Th105.StageInfo<ThScoreFileConverter.Core.Models.Th123.Chara>;

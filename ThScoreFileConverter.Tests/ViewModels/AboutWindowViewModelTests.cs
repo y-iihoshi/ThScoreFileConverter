@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO.Packaging;
-using System.Threading;
+﻿using System.IO.Packaging;
 using System.Windows;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Resources;

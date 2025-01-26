@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverter.Tests.UnitTesting;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;

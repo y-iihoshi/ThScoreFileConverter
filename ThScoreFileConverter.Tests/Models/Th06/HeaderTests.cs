@@ -1,5 +1,4 @@
-﻿using System.IO;
-using ThScoreFileConverter.Models.Th06;
+﻿using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th06;

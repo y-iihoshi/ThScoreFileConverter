@@ -5,9 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Helpers;
 

@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
 using ThScoreFileConverter.Core.Models.Th105;
 
 namespace ThScoreFileConverter.Models.Th105;

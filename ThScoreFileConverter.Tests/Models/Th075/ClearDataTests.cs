@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverter.Tests.Models.Th075.Stubs;

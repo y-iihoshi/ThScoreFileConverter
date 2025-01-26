@@ -1,9 +1,5 @@
 ﻿// #define DEBUG_TEST
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using CommunityToolkit.Diagnostics;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;

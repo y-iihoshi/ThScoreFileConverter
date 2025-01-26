@@ -7,8 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
-
 namespace ThScoreFileConverter.Models.Th15;
 
 internal sealed class Header : Th095.HeaderBase

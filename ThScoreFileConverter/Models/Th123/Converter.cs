@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using CommunityToolkit.Diagnostics;

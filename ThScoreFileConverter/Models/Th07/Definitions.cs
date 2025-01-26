@@ -7,8 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
-using System.Linq;
 using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
     ThScoreFileConverter.Core.Models.Th07.Stage, ThScoreFileConverter.Core.Models.Th07.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<

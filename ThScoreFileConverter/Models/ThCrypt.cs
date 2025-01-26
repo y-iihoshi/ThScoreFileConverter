@@ -5,7 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.IO;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Resources;

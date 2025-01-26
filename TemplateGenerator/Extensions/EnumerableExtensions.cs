@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace TemplateGenerator.Extensions;
+﻿namespace TemplateGenerator.Extensions;
 
 internal static class EnumerableExtensions
 {

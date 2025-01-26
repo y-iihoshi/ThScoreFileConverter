@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-using ThScoreFileConverter.Models.Th09;
+﻿using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;

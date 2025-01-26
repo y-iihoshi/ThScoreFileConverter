@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Resources;
 

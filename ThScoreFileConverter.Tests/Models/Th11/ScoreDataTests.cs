@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ThScoreFileConverter.Models.Th11;
+﻿using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverter.Tests.UnitTesting;
 using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 

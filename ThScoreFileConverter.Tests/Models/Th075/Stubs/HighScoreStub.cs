@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ThScoreFileConverter.Models.Th075;
+﻿using ThScoreFileConverter.Models.Th075;
 
 namespace ThScoreFileConverter.Tests.Models.Th075.Stubs;
 

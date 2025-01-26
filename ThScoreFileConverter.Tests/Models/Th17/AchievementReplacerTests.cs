@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th17;
 
 namespace ThScoreFileConverter.Tests.Models.Th17;

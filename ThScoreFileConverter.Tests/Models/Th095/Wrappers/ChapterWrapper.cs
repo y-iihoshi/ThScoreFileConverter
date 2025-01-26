@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ThScoreFileConverter.Models.Th095;
+﻿using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverter.Tests.Models.Th095.Wrappers;
 

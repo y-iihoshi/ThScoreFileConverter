@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ThScoreFileConverter.Core.Models.Th175;
+﻿using ThScoreFileConverter.Core.Models.Th175;
 using ThScoreFileConverter.Models.Th175;
 using ThScoreFileConverter.Squirrel;
 

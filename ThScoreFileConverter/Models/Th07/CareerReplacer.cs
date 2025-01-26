@@ -7,9 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Helpers;

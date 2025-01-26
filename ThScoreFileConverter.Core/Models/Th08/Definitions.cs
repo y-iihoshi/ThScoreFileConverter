@@ -5,8 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
 using ThScoreFileConverter.Core.Helpers;
 using CardInfo = ThScoreFileConverter.Core.Models.SpellCardInfo<
     ThScoreFileConverter.Core.Models.Th08.StagePractice, ThScoreFileConverter.Core.Models.Th08.LevelPractice>;

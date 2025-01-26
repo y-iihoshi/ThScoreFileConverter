@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace ThScoreFileConverter.Core.Tests.UnitTesting;
+﻿namespace ThScoreFileConverter.Core.Tests.UnitTesting;
 
 public static class CollectionAssertExtensions
 {

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;

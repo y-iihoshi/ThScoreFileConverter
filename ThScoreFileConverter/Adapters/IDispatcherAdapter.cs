@@ -5,7 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Windows.Threading;
 
 namespace ThScoreFileConverter.Adapters;

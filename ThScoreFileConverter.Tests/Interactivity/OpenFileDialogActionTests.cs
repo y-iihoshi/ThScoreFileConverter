@@ -1,5 +1,4 @@
-﻿using System;
-using ThScoreFileConverter.Interactivity;
+﻿using ThScoreFileConverter.Interactivity;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 

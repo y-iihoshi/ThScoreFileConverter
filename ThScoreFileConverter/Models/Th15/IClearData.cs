@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
 using ThScoreFileConverter.Core.Models.Th15;
 using Level = ThScoreFileConverter.Core.Models.Level;
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ThScoreFileConverter.Tests.UnitTesting;
+﻿namespace ThScoreFileConverter.Tests.UnitTesting;
 
 public static class EnumerableExtensions
 {

@@ -5,8 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Core.Extensions;

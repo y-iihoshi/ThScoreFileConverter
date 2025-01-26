@@ -1,5 +1,4 @@
-﻿using System;
-using ThScoreFileConverter.Core.Models.Th18;
+﻿using ThScoreFileConverter.Core.Models.Th18;
 
 namespace ThScoreFileConverter.Core.Tests.Models.Th18;
 

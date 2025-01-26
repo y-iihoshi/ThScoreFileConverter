@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using Reactive.Bindings.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Resources;

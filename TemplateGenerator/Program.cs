@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Statiq.App;
 using Statiq.Razor;
 using ThScoreFileConverter.Core.Resources;
 

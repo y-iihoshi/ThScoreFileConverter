@@ -7,8 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System.Collections.Generic;
-
 namespace ThScoreFileConverter.Models.Th10;
 
 internal interface IStatus : Th095.IStatus

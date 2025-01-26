@@ -7,9 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
-using System.Collections.Generic;
-
 namespace ThScoreFileConverter.Models.Th095;
 
 internal interface IBestShotHeader<TLevel> : IBestShotHeader

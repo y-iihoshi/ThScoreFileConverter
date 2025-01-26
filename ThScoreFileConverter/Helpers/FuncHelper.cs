@@ -5,9 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Linq;
-
 namespace ThScoreFileConverter.Helpers;
 
 /// <summary>

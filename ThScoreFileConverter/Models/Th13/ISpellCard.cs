@@ -7,8 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using System;
-
 namespace ThScoreFileConverter.Models.Th13;
 
 internal interface ISpellCard<TLevel> : Th10.ISpellCard<TLevel>

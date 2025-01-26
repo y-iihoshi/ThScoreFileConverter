@@ -5,7 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
 using DependencyPropertyGenerator;
 using Microsoft.Win32;
 using ThScoreFileConverter.Core.Resources;

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ThScoreFileConverter.Core.Models;
+﻿using ThScoreFileConverter.Core.Models;
 
 namespace ThScoreFileConverter.Core.Tests.Models;
 
