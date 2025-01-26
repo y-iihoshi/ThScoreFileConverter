@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverter.Tests.UnitTesting;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;

@@ -1,6 +1,5 @@
 ﻿using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Tests.Models.Th06.Wrappers;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th06;
 

@@ -4,7 +4,6 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th18;
 using ThScoreFileConverter.Models.Th18;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using Definitions = ThScoreFileConverter.Models.Th18.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<

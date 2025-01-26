@@ -4,7 +4,6 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverter.Tests.UnitTesting;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 

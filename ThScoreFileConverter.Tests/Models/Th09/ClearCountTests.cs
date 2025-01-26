@@ -3,7 +3,6 @@ using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
 

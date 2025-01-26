@@ -1,7 +1,6 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Models.Th123;
-using ThScoreFileConverter.Tests.UnitTesting;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Core.Models.Th123.Chara>;
 

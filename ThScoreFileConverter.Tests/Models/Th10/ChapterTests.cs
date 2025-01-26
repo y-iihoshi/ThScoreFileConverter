@@ -1,6 +1,5 @@
 ﻿using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Tests.Models.Th10.Wrappers;
-using ThScoreFileConverter.Tests.UnitTesting;
 using IChapter = ThScoreFileConverter.Models.Th095.IChapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th10;

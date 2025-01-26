@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 

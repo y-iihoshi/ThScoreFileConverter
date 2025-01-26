@@ -3,7 +3,6 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th17;
 using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using Definitions = ThScoreFileConverter.Models.Th17.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<

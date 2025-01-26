@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Core.Models.Th105;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 

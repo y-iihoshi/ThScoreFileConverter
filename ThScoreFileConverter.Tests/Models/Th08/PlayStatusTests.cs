@@ -3,7 +3,6 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;

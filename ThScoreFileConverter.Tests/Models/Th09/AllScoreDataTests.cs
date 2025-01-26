@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using LastNameTests = ThScoreFileConverter.Tests.Models.Th07.LastNameTests;

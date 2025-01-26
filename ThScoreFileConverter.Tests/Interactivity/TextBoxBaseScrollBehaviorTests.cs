@@ -6,7 +6,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 

@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using ThScoreFileConverter.Models.Th175;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th175;

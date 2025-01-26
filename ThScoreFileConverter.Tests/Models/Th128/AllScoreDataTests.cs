@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverter.Tests.UnitTesting;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 

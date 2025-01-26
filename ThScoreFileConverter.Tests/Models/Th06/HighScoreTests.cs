@@ -2,7 +2,6 @@
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th06;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverter.Tests.UnitTesting;
 using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
     ThScoreFileConverter.Core.Models.Th06.Chara,
     ThScoreFileConverter.Core.Models.Level,

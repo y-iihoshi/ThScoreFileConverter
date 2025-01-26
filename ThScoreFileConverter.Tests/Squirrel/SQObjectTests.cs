@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Squirrel;

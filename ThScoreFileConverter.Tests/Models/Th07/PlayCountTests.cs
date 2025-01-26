@@ -1,7 +1,6 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 

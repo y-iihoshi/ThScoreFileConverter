@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using NSubstitute;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th06;
 

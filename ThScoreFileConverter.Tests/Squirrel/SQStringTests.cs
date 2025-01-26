@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
 

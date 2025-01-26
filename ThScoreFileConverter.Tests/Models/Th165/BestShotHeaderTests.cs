@@ -2,7 +2,6 @@
 using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th165;
 

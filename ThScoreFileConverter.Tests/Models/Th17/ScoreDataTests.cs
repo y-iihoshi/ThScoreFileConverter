@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverter.Tests.UnitTesting;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 

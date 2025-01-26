@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using ThScoreFileConverter.Commands;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Commands;
 

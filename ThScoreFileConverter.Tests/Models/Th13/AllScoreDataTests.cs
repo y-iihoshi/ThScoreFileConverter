@@ -2,7 +2,6 @@
 using ThScoreFileConverter.Core.Models.Th13;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Tests.Models.Th095;
-using ThScoreFileConverter.Tests.UnitTesting;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;

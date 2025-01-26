@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Core.Models.Th07.Chara,
