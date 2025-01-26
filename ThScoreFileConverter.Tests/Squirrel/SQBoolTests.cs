@@ -10,9 +10,9 @@ public class SQBoolTests
     {
         var sqbool = SQBool.True;
 
-        Assert.AreEqual(SQObjectType.Bool, sqbool.Type);
-        Assert.IsTrue(sqbool.Value);
-        Assert.IsTrue(sqbool);
+        sqbool.Type.ShouldBe(SQObjectType.Bool);
+        sqbool.Value.ShouldBeTrue();
+        ((bool)sqbool).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -20,9 +20,9 @@ public class SQBoolTests
     {
         var sqbool = SQBool.False;
 
-        Assert.AreEqual(SQObjectType.Bool, sqbool.Type);
-        Assert.IsFalse(sqbool.Value);
-        Assert.IsFalse(sqbool);
+        sqbool.Type.ShouldBe(SQObjectType.Bool);
+        sqbool.Value.ShouldBeFalse();
+        ((bool)sqbool).ShouldBeFalse();
     }
 
     internal static SQBool CreateTestHelper(byte[] bytes)
@@ -42,53 +42,53 @@ public class SQBoolTests
     {
         var sqbool = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool, serialized));
 
-        Assert.AreEqual(SQObjectType.Bool, sqbool.Type);
-        Assert.AreEqual(expected, sqbool.Value);
-        Assert.AreEqual(expected, sqbool);
+        sqbool.Type.ShouldBe(SQObjectType.Bool);
+        sqbool.Value.ShouldBe(expected);
+        ((bool)sqbool).ShouldBe(expected);
     }
 
     [TestMethod]
     public void CreateTestShortened()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool)));
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, (byte)0x00)));
     }
 
     [TestMethod]
     public void EqualsTestNull()
     {
-        Assert.IsFalse(SQBool.True.Equals(null!));
+        SQBool.True.Equals(null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestNullObject()
     {
-        Assert.IsFalse(SQBool.True.Equals((object)null!));
+        SQBool.True.Equals((object)null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestInvalidType()
     {
-        Assert.IsFalse(SQBool.True.Equals(SQNull.Instance));
+        SQBool.True.Equals(SQNull.Instance).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestSelf()
     {
-        Assert.IsTrue(SQBool.True.Equals(SQBool.True));
+        SQBool.True.Equals(SQBool.True).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestSelfObject()
     {
-        Assert.IsTrue(SQBool.True.Equals(SQBool.True as object));
+        SQBool.True.Equals(SQBool.True as object).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -96,13 +96,13 @@ public class SQBoolTests
     {
         var sqtrue = CreateTestHelper(SquirrelHelper.MakeByteArray(true));
 
-        Assert.IsTrue(SQBool.True.Equals(sqtrue));
+        SQBool.True.Equals(sqtrue).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestNotEqual()
     {
-        Assert.IsFalse(SQBool.True.Equals(SQBool.False));
+        SQBool.True.Equals(SQBool.False).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -110,19 +110,19 @@ public class SQBoolTests
     {
         var sqtrue = CreateTestHelper(SquirrelHelper.MakeByteArray(true));
 
-        Assert.AreEqual(SQBool.True.GetHashCode(), sqtrue.GetHashCode());
+        sqtrue.GetHashCode().ShouldBe(SQBool.True.GetHashCode());
     }
 
     [TestMethod]
     public void GetHashCodeTestNotEqual()
     {
-        Assert.AreNotEqual(SQBool.True.GetHashCode(), SQBool.False.GetHashCode());
+        SQBool.True.GetHashCode().ShouldNotBe(SQBool.False.GetHashCode());
     }
 
     [TestMethod]
     public void ToStringTest()
     {
-        Assert.AreEqual("True", SQBool.True.ToString());
-        Assert.AreEqual("False", SQBool.False.ToString());
+        SQBool.True.ToString().ShouldBe("True");
+        SQBool.False.ToString().ShouldBe("False");
     }
 }

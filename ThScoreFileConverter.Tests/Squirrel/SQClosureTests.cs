@@ -10,7 +10,7 @@ public class SQClosureTests
     {
         var closure = new SQClosure();
 
-        Assert.AreEqual(SQObjectType.Closure, closure.Type);
+        closure.Type.ShouldBe(SQObjectType.Closure);
     }
 
     internal static SQClosure CreateTestHelper(byte[] bytes)
@@ -26,13 +26,13 @@ public class SQClosureTests
     {
         var sqclosure = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Closure));
 
-        Assert.AreEqual(SQObjectType.Closure, sqclosure.Type);
+        sqclosure.Type.ShouldBe(SQObjectType.Closure);
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null)));
     }
 }

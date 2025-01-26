@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using ThScoreFileConverter.Squirrel;
+﻿using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
 
@@ -11,9 +10,9 @@ public class SQStringTests
     {
         var sqstring = new SQString();
 
-        Assert.AreEqual(SQObjectType.String, sqstring.Type);
-        Assert.AreEqual(string.Empty, sqstring.Value, false, CultureInfo.InvariantCulture);
-        Assert.AreEqual(string.Empty, sqstring, false, CultureInfo.InvariantCulture);
+        sqstring.Type.ShouldBe(SQObjectType.String);
+        sqstring.Value.ShouldBeEmpty();
+        ((string)sqstring).ShouldBeEmpty();
     }
 
     internal static SQString CreateTestHelper(byte[] bytes)
@@ -34,9 +33,9 @@ public class SQStringTests
         var bytes = TestUtils.CP932Encoding.GetBytes(expected);
         var sqstring = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, bytes.Length, bytes));
 
-        Assert.AreEqual(SQObjectType.String, sqstring.Type);
-        Assert.AreEqual(expected, sqstring.Value, false, CultureInfo.InvariantCulture);
-        Assert.AreEqual(expected, sqstring, false, CultureInfo.InvariantCulture);
+        sqstring.Type.ShouldBe(SQObjectType.String);
+        sqstring.Value.ShouldBe(expected);
+        ((string)sqstring).ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -51,9 +50,9 @@ public class SQStringTests
         var bytes = (value is null) ? [] : TestUtils.CP932Encoding.GetBytes(value);
         var sqstring = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, size, bytes));
 
-        Assert.AreEqual(SQObjectType.String, sqstring.Type);
-        Assert.AreEqual(string.Empty, sqstring.Value, false, CultureInfo.InvariantCulture);
-        Assert.AreEqual(string.Empty, sqstring, false, CultureInfo.InvariantCulture);
+        sqstring.Type.ShouldBe(SQObjectType.String);
+        sqstring.Value.ShouldBeEmpty();
+        ((string)sqstring).ShouldBeEmpty();
     }
 
     [DataTestMethod]
@@ -62,33 +61,33 @@ public class SQStringTests
     public void CreateTestShortened(string value)
     {
         var bytes = TestUtils.CP932Encoding.GetBytes(value);
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.String, bytes.Length + 1, bytes)));
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 3, "abc")));
     }
 
     [TestMethod]
     public void EqualsTestNull()
     {
-        Assert.IsFalse(new SQString().Equals(null!));
+        new SQString().Equals(null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestNullObject()
     {
-        Assert.IsFalse(new SQString().Equals((object)null!));
+        new SQString().Equals((object)null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestInvalidType()
     {
-        Assert.IsFalse(new SQString().Equals(SQNull.Instance));
+        new SQString().Equals(SQNull.Instance).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -96,7 +95,7 @@ public class SQStringTests
     {
         var value = new SQString();
 
-        Assert.IsTrue(value.Equals(value));
+        value.Equals(value).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -104,42 +103,42 @@ public class SQStringTests
     {
         var value = new SQString();
 
-        Assert.IsTrue(value.Equals(value as object));
+        value.Equals(value as object).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestEqual()
     {
-        Assert.IsTrue(new SQString().Equals(new SQString(string.Empty)));
+        new SQString(string.Empty).Equals(new SQString()).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestNotEqual()
     {
-        Assert.IsFalse(new SQString().Equals(new SQString("博麗 霊夢")));
+        new SQString("博麗 霊夢").Equals(new SQString()).ShouldBeFalse();
     }
 
     [TestMethod]
     public void GetHashCodeTestEqual()
     {
-        Assert.AreEqual(new SQString().GetHashCode(), new SQString(string.Empty).GetHashCode());
+        new SQString(string.Empty).GetHashCode().ShouldBe(new SQString().GetHashCode());
     }
 
     [TestMethod]
     public void GetHashCodeTestNotEqual()
     {
-        Assert.AreNotEqual(new SQString().GetHashCode(), new SQString("博麗 霊夢").GetHashCode());
+        new SQString("博麗 霊夢").GetHashCode().ShouldNotBe(new SQString().GetHashCode());
     }
 
     [TestMethod]
     public void ToStringTest()
     {
-        Assert.AreEqual("博麗 霊夢", new SQString("博麗 霊夢").ToString());
+        new SQString("博麗 霊夢").ToString().ShouldBe("博麗 霊夢");
     }
 
     [TestMethod]
     public void ToStringTestEmpty()
     {
-        Assert.AreEqual(string.Empty, new SQString().ToString());
+        new SQString().ToString().ShouldBeEmpty();
     }
 }
