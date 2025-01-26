@@ -42,7 +42,9 @@ public class Definitions : Models.Definitions
             static stage => stage.ToDisplayName());
 
     public static IReadOnlyDictionary<string, int> NumCardsPerLevel { get; } =
-        NumCardsPerLevelImpl.ToPatternKeyedDictionary();
+        NumCardsPerLevelImpl.ToDictionary(
+            static pair => pair.Item1.ToPattern(),
+            static pair => pair.Item2);
 
     public static IReadOnlyDictionary<string, int> NumCardsPerStage { get; } =
         EnumHelper<StagePractice>.Enumerable.ToDictionary(

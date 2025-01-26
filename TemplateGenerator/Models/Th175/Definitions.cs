@@ -20,7 +20,9 @@ public static class Definitions
     public static string Title { get; } = StringResources.TH175;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.Where(level => level is Level.Normal or Level.Hard).ToPatternDictionary();
+        EnumHelper<Level>.Enumerable.Where(level => level is Level.Normal or Level.Hard).ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IReadOnlyDictionary<string, string> CharacterNames { get; } =
         EnumHelper<Chara>.Enumerable.ToDictionary(

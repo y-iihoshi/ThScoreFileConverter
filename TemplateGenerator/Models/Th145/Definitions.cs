@@ -20,10 +20,14 @@ public static class Definitions
     public static string Title { get; } = StringResources.TH145;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToPatternDictionary();
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
-        EnumHelper<LevelWithTotal>.Enumerable.ToPatternDictionary();
+        EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IEnumerable<string> LevelKeysTotalFirst { get; } = LevelWithTotalNames.Keys.RotateRight();
 

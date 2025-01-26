@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TemplateGenerator.Extensions;
 using ThScoreFileConverter.Core.Extensions;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th125;
@@ -56,10 +55,14 @@ public static class Definitions
             static chara => (chara.ToName(), chara.ToCharaName(), chara.ToCharaFullName()));
 
     public static IReadOnlyDictionary<string, IEnumerable<int>> SpoilerScenesPerCharacter { get; } =
-        SpoilerScenesPerCharacterImpl.ToPatternKeyedDictionary();
+        SpoilerScenesPerCharacterImpl.ToDictionary(
+            static pair => pair.Item1.ToPattern(),
+            static pair => pair.Item2);
 
     public static IReadOnlyDictionary<string, int> NumScenesPerLevel { get; } =
-        NumScenesPerLevelImpl.ToPatternKeyedDictionary();
+        NumScenesPerLevelImpl.ToDictionary(
+            static pair => pair.Item1.ToPattern(),
+            static pair => pair.Item2);
 
     public static IReadOnlyDictionary<string, int> NumScenesPerCharacter { get; } =
         SpoilerScenesPerCharacterImpl.ToDictionary(
@@ -70,5 +73,5 @@ public static class Definitions
     {
         (Chara.Aya,    NumScenesWithSpoiler),
         (Chara.Hatate, NumScenesWithoutSpoiler),
-    }.ToPatternKeyedDictionary();
+    }.ToDictionary(static pair => pair.Item1.ToPattern(), static pair => pair.Item2);
 }

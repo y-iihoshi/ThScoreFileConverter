@@ -22,10 +22,14 @@ public class Definitions
     public static string Title { get; } = StringResources.TH105;
 
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToPatternDictionary();
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
-        EnumHelper<LevelWithTotal>.Enumerable.ToPatternDictionary();
+        EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IEnumerable<string> LevelKeysTotalFirst { get; } = LevelWithTotalNames.Keys.RotateRight();
 
@@ -42,7 +46,9 @@ public class Definitions
             static pair => pair.Value.Sum(static stageInfo => stageInfo.CardIds.Count()) * EnumHelper<Level>.NumValues);
 
     public static IReadOnlyDictionary<string, string> CardTypeNames { get; } =
-        EnumHelper<CardType>.Enumerable.ToPatternDictionary();
+        EnumHelper<CardType>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IReadOnlyDictionary<(string Chara, string CardType), int> NumCardsPerCharacterAndType { get; } =
         NumCardsPerCharacterAndTypeImpl.ToDictionary(

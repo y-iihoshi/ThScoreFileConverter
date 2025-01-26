@@ -13,13 +13,19 @@ public class Definitions
 #pragma warning restore CA1052 // Static holder types should be Static or NotInheritable
 {
     public static IReadOnlyDictionary<string, string> LevelNames { get; } =
-        EnumHelper<Level>.Enumerable.ToPatternDictionary();
+        EnumHelper<Level>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IReadOnlyDictionary<string, string> LevelPracticeNames { get; } =
-        EnumHelper<Level>.Enumerable.Where(CanPractice).ToPatternDictionary();
+        EnumHelper<Level>.Enumerable.Where(CanPractice).ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IReadOnlyDictionary<string, string> LevelWithTotalNames { get; } =
-        EnumHelper<LevelWithTotal>.Enumerable.ToPatternDictionary();
+        EnumHelper<LevelWithTotal>.Enumerable.ToDictionary(
+            static level => level.ToPattern(),
+            static level => level.ToName());
 
     public static IEnumerable<string> LevelKeysTotalFirst { get; } = LevelWithTotalNames.Keys.RotateRight();
 
