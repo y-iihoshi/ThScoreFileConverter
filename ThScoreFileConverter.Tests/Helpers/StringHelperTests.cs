@@ -12,7 +12,7 @@ public class StringHelperTests
         var now = DateTime.Now;
         var expected = string.Create(CultureInfo.CurrentCulture, $"{now:F}");
 
-        Assert.AreEqual(expected, StringHelper.Create($"{now:F}"));
+        StringHelper.Create($"{now:F}").ShouldBe(expected);
     }
 
     [TestMethod]
@@ -21,6 +21,6 @@ public class StringHelperTests
         var now = DateTime.Now;
         var expected = string.Format(CultureInfo.CurrentCulture, "{0:F}", now);
 
-        Assert.AreEqual(expected, StringHelper.Format("{0:F}", now));
+        StringHelper.Format("{0:F}", now).ShouldBe(expected);
     }
 }

@@ -12,11 +12,10 @@ public class StreamHelperTests
         using var stream = StreamHelper.Create(path, FileMode.OpenOrCreate, FileAccess.Read);
 
 #if DEBUG
-        Assert.IsTrue(stream is FileStream);
-        StringAssert.EndsWith(((FileStream)stream).Name, path, System.StringComparison.InvariantCulture);
-        Assert.IsTrue(stream.CanRead);
+        stream.ShouldBeOfType<FileStream>().Name.ShouldEndWith(path, Case.Sensitive);
+        stream.CanRead.ShouldBeTrue();
 #else
-        Assert.IsTrue(stream is MemoryStream);
+        _ = stream.ShouldBeOfType<MemoryStream>();
 #endif
     }
 }

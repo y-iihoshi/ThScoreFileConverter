@@ -12,12 +12,12 @@ public class OpenFolderDialogActionResultTests
     {
         var result = new OpenFolderDialogActionResult(path);
 
-        Assert.AreEqual(path, result.FolderName);
+        result.FolderName.ShouldBe(path);
     }
 
     [TestMethod]
     public void OpenFolderDialogActionResultTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new OpenFolderDialogActionResult(null!));
+        _ = Should.Throw<ArgumentNullException>(() => new OpenFolderDialogActionResult(null!));
     }
 }

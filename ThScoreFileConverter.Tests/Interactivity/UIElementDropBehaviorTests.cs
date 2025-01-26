@@ -22,7 +22,7 @@ internal sealed class Command(Action action) : ICommand
 
     public void Execute(object? parameter)
     {
-        Assert.IsTrue(parameter is DragEventArgs);
+        _ = parameter.ShouldBeOfType<DragEventArgs>();
         this.action.Invoke();
     }
 }
@@ -64,13 +64,8 @@ public class UIElementDropBehaviorTests
     public void DragEnterTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnDragEnter",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnDragEnter"));
         var behavior = new UIElementDropBehavior
         {
             DragEnterCommand = command,
@@ -88,13 +83,8 @@ public class UIElementDropBehaviorTests
     public void DragLeaveTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnDragLeave",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnDragLeave"));
         var behavior = new UIElementDropBehavior
         {
             DragLeaveCommand = command,
@@ -112,13 +102,8 @@ public class UIElementDropBehaviorTests
     public void DragOverTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnDragOver",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnDragOver"));
         var behavior = new UIElementDropBehavior
         {
             DragOverCommand = command,
@@ -136,13 +121,8 @@ public class UIElementDropBehaviorTests
     public void DropTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnDrop",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnDrop"));
         var behavior = new UIElementDropBehavior
         {
             DropCommand = command,
@@ -160,13 +140,8 @@ public class UIElementDropBehaviorTests
     public void PreviewDragEnterTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragEnter",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragEnter"));
         var behavior = new UIElementDropBehavior
         {
             PreviewDragEnterCommand = command,
@@ -184,13 +159,8 @@ public class UIElementDropBehaviorTests
     public void PreviewDragLeaveTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragLeave",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragLeave"));
         var behavior = new UIElementDropBehavior
         {
             PreviewDragLeaveCommand = command,
@@ -208,13 +178,8 @@ public class UIElementDropBehaviorTests
     public void PreviewDragOverTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragOver",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnPreviewDragOver"));
         var behavior = new UIElementDropBehavior
         {
             PreviewDragOverCommand = command,
@@ -232,13 +197,8 @@ public class UIElementDropBehaviorTests
     public void PreviewDropTest()
     {
         var element = new UIElement();
-        var command = new Command(() =>
-        {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(UIElementDropBehavior).FullName}.OnPreviewDrop",
-                StringComparison.CurrentCulture);
-        });
+        var command = new Command(
+            () => Environment.StackTrace.ShouldContain($"{typeof(UIElementDropBehavior).FullName}.OnPreviewDrop"));
         var behavior = new UIElementDropBehavior
         {
             PreviewDropCommand = command,

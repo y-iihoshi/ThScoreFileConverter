@@ -27,18 +27,18 @@ public class OpenFolderDialogActionTests
 
         var dialog = action.CreateDialog();
 
-        Assert.AreEqual(action.AddToRecent, dialog.AddToRecent);
-        Assert.AreEqual(action.ClientGuid, dialog.ClientGuid);
-        Assert.AreEqual(action.CustomPlaces, dialog.CustomPlaces);
-        Assert.AreEqual(action.DefaultDirectory, dialog.DefaultDirectory);
-        Assert.AreEqual(action.DereferenceLinks, dialog.DereferenceLinks);
-        Assert.AreEqual(action.FolderName, dialog.FolderName);
-        Assert.AreEqual(action.InitialDirectory, dialog.InitialDirectory);
-        Assert.AreEqual(action.Multiselect, dialog.Multiselect);
-        Assert.AreEqual(action.RootDirectory, dialog.RootDirectory);
-        Assert.AreEqual(action.ShowHiddenItems, dialog.ShowHiddenItems);
-        Assert.AreEqual(action.Title, dialog.Title);
-        Assert.AreEqual(action.ValidateNames, dialog.ValidateNames);
-        Assert.AreEqual(action.Tag, dialog.Tag);
+        dialog.AddToRecent.ShouldBe(action.AddToRecent);
+        dialog.ClientGuid.ShouldBe(action.ClientGuid);
+        dialog.CustomPlaces.ShouldBe(action.CustomPlaces);
+        dialog.DefaultDirectory.ShouldBe(action.DefaultDirectory);
+        dialog.DereferenceLinks.ShouldBe(action.DereferenceLinks);
+        dialog.FolderName.ShouldBe(action.FolderName);
+        dialog.InitialDirectory.ShouldBe(action.InitialDirectory);
+        dialog.Multiselect.ShouldBe(action.Multiselect);
+        dialog.RootDirectory.ShouldBe(action.RootDirectory);
+        dialog.ShowHiddenItems.ShouldBe(action.ShowHiddenItems);
+        dialog.Title.ShouldBe(action.Title);
+        dialog.ValidateNames.ShouldBe(action.ValidateNames);
+        dialog.Tag.ShouldBe(action.Tag);
     }
 }

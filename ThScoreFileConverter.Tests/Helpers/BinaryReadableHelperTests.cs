@@ -19,6 +19,6 @@ public class BinaryReadableHelperTests
     [TestMethod]
     public void CreateTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => BinaryReadableHelper.Create<Chapter>(null!));
+        _ = Should.Throw<ArgumentNullException>(() => BinaryReadableHelper.Create<Chapter>(null!));
     }
 }

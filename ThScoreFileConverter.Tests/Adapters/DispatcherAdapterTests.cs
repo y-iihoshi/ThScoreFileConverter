@@ -22,13 +22,13 @@ public class DispatcherAdapterTests
     public void DispatcherAdapter()
     {
         var adapter = new DispatcherAdapter(Dispatcher.CurrentDispatcher);
-        Assert.IsNotNull(adapter);
+        _ = adapter.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void DispatcherAdapterTestNull()
     {
-        _ = Assert.ThrowsException<NullReferenceException>(() => new DispatcherAdapter());
+        _ = Should.Throw<NullReferenceException>(() => new DispatcherAdapter());
     }
 
     [TestMethod]
@@ -38,7 +38,7 @@ public class DispatcherAdapterTests
         try
         {
             var adapter = new DispatcherAdapter();
-            Assert.IsNotNull(adapter);
+            _ = adapter.ShouldNotBeNull();
         }
         finally
         {
@@ -51,15 +51,15 @@ public class DispatcherAdapterTests
     {
         var dispatcher = Dispatcher.CurrentDispatcher;
         var adapter = new DispatcherAdapter(dispatcher);
-        Assert.IsNotNull(adapter);
+        _ = adapter.ShouldNotBeNull();
 
         var numInvoked = 0;
         adapter.Invoke(() =>
         {
             ++numInvoked;
-            Assert.AreSame(dispatcher, Dispatcher.CurrentDispatcher);
+            Dispatcher.CurrentDispatcher.ShouldBeSameAs(dispatcher);
         });
 
-        Assert.AreEqual(1, numInvoked);
+        numInvoked.ShouldBe(1);
     }
 }

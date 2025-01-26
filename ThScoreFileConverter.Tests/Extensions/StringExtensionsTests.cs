@@ -10,7 +10,7 @@ public class StringExtensionsTests
     {
         var value = 12;
 #pragma warning disable CA1305 // Specify IFormatProvider
-        Assert.AreEqual(value.ToString(), value.ToNonNullString());
+        value.ToNonNullString().ShouldBe(value.ToString());
 #pragma warning restore CA1305 // Specify IFormatProvider
     }
 
@@ -18,7 +18,7 @@ public class StringExtensionsTests
     public void ToNonNullStringTestNullObj()
     {
         object obj = null!;
-        Assert.AreEqual("(null)", obj.ToNonNullString());
+        obj.ToNonNullString().ShouldBe("(null)");
     }
 
     [TestMethod]
@@ -26,13 +26,13 @@ public class StringExtensionsTests
     {
         object obj = null!;
         var nonNullStr = "null";
-        Assert.AreEqual(nonNullStr, obj.ToNonNullString(nonNullStr));
+        obj.ToNonNullString(nonNullStr).ShouldBe(nonNullStr);
     }
 
     [TestMethod]
     public void ToNonNullStringTestNullStr()
     {
         var value = 12;
-        _ = Assert.ThrowsException<ArgumentNullException>(() => value.ToNonNullString(null!));
+        _ = Should.Throw<ArgumentNullException>(() => value.ToNonNullString(null!));
     }
 }

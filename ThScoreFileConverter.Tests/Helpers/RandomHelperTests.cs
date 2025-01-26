@@ -17,6 +17,6 @@ public class RandomHelperTests
             state = RandomHelper.ParkMillerRNG(state);
         }
 
-        Assert.AreEqual(399268537, state);
+        state.ShouldBe(399268537);
     }
 }

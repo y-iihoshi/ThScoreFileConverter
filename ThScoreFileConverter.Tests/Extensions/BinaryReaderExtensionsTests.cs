@@ -16,7 +16,7 @@ public class BinaryReaderExtensionsTests
 
         var readBytes = reader.ReadExactBytes(bytes.Length);
 
-        CollectionAssert.That.AreEqual(bytes, readBytes);
+        readBytes.ShouldBe(bytes);
     }
 
     [TestMethod]
@@ -24,7 +24,7 @@ public class BinaryReaderExtensionsTests
     {
         BinaryReader reader = null!;
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => reader.ReadExactBytes(1));
+        _ = Should.Throw<ArgumentNullException>(() => reader.ReadExactBytes(1));
     }
 
     [TestMethod]
@@ -33,7 +33,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream();
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadExactBytes(1));
+        _ = Should.Throw<EndOfStreamException>(() => reader.ReadExactBytes(1));
     }
 
     [TestMethod]
@@ -43,7 +43,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.ReadExactBytes(-1));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => reader.ReadExactBytes(-1));
     }
 
     [TestMethod]
@@ -55,7 +55,7 @@ public class BinaryReaderExtensionsTests
 
         var readBytes = reader.ReadExactBytes(0);
 
-        CollectionAssert.That.AreEqual([], readBytes);
+        readBytes.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -65,7 +65,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => reader.ReadExactBytes(bytes.Length + 1));
+        _ = Should.Throw<EndOfStreamException>(() => reader.ReadExactBytes(bytes.Length + 1));
     }
 
     [TestMethod]
@@ -77,8 +77,8 @@ public class BinaryReaderExtensionsTests
 
         var readBytes = reader.ReadExactBytes(bytes.Length - 1);
 
-        CollectionAssert.That.AreNotEqual(bytes, readBytes);
-        CollectionAssert.That.AreEqual(bytes.Take(readBytes.Length), readBytes);
+        readBytes.ShouldNotBe(bytes);
+        readBytes.ShouldBe(bytes.Take(readBytes.Length));
     }
 
     public static IEnumerable<object[]> ReadNullTerminatedStringTestData
@@ -107,8 +107,8 @@ public class BinaryReaderExtensionsTests
 
         var actual = encodingToRead is null ? reader.ReadNullTerminatedString() : reader.ReadNullTerminatedString(encodingToRead);
 
-        Assert.AreEqual(expected, actual);
-        Assert.AreNotEqual(nullTerminated, actual);
+        actual.ShouldBe(expected);
+        actual.ShouldNotBe(nullTerminated);
     }
 
     [TestMethod]
@@ -116,7 +116,7 @@ public class BinaryReaderExtensionsTests
     {
         BinaryReader reader = null!;
 
-        _ = Assert.ThrowsException<ArgumentNullException>(reader.ReadNullTerminatedString);
+        _ = Should.Throw<ArgumentNullException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
@@ -128,7 +128,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => reader.ReadNullTerminatedString(null!));
+        _ = Should.Throw<ArgumentNullException>(() => reader.ReadNullTerminatedString(null!));
     }
 
     [TestMethod]
@@ -137,7 +137,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream();
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(reader.ReadNullTerminatedString);
+        _ = Should.Throw<EndOfStreamException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
@@ -148,7 +148,7 @@ public class BinaryReaderExtensionsTests
         using var stream = new MemoryStream(bytes);
         using var reader = new BinaryReader(stream);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(reader.ReadNullTerminatedString);
+        _ = Should.Throw<EndOfStreamException>(reader.ReadNullTerminatedString);
     }
 
     [TestMethod]
@@ -162,6 +162,6 @@ public class BinaryReaderExtensionsTests
 
         var actual = reader.ReadNullTerminatedString();
 
-        Assert.AreNotEqual(expected, actual);
+        actual.ShouldNotBe(expected);
     }
 }
