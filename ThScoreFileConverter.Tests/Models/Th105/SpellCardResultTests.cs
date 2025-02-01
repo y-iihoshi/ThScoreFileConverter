@@ -41,12 +41,12 @@ public class SpellCardResultTests
     internal static void Validate<TChara>(ISpellCardResult<TChara> expected, ISpellCardResult<TChara> actual)
         where TChara : struct, Enum
     {
-        Assert.AreEqual(expected.Enemy, actual.Enemy);
-        Assert.AreEqual(expected.Level, actual.Level);
-        Assert.AreEqual(expected.Id, actual.Id);
-        Assert.AreEqual(expected.TrialCount, actual.TrialCount);
-        Assert.AreEqual(expected.GotCount, actual.GotCount);
-        Assert.AreEqual(expected.Frames, actual.Frames);
+        actual.Enemy.ShouldBe(expected.Enemy);
+        actual.Level.ShouldBe(expected.Level);
+        actual.Id.ShouldBe(expected.Id);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.GotCount.ShouldBe(expected.GotCount);
+        actual.Frames.ShouldBe(expected.Frames);
     }
 
     internal static void SpellCardResultTestHelper<TChara>()
@@ -73,7 +73,7 @@ public class SpellCardResultTests
         var mock = MockSpellCardResult<TChara>();
         var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<SpellCardResult<TChara>>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<SpellCardResult<TChara>>(array));
     }
 
     internal static void ReadFromTestExceededHelper<TChara>()

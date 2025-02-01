@@ -58,8 +58,8 @@ public class ClearDataTests
     {
         var clearData = new ClearData<TChara>();
 
-        Assert.AreEqual(0, clearData.CardsForDeck.Count);
-        Assert.AreEqual(0, clearData.SpellCardResults.Count);
+        clearData.CardsForDeck.ShouldBeEmpty();
+        clearData.SpellCardResults.ShouldBeEmpty();
     }
 
     internal static void ReadFromTestHelper<TChara>()
@@ -77,7 +77,7 @@ public class ClearDataTests
         var mock = MockClearData<TChara>();
         var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
     }
 
     internal static void ReadFromTestExceededHelper<TChara>()

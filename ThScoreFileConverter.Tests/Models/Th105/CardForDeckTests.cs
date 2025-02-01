@@ -21,8 +21,8 @@ public class CardForDeckTests
 
     internal static void Validate(ICardForDeck expected, ICardForDeck actual)
     {
-        Assert.AreEqual(expected.Id, actual.Id);
-        Assert.AreEqual(expected.MaxNumber, actual.MaxNumber);
+        actual.Id.ShouldBe(expected.Id);
+        actual.MaxNumber.ShouldBe(expected.MaxNumber);
     }
 
     [TestMethod]
@@ -49,7 +49,7 @@ public class CardForDeckTests
         var mock = MockCardForDeck(1, 2);
         var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<CardForDeck>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<CardForDeck>(array));
     }
 
     [TestMethod]

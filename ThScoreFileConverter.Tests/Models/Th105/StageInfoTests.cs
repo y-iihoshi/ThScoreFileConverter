@@ -27,9 +27,9 @@ public class StageInfoTests
     internal static void Validate<TChara>(in Properties<TChara> expected, in StageInfo<TChara> actual)
         where TChara : struct, Enum
     {
-        Assert.AreEqual(expected.stage, actual.Stage);
-        Assert.AreEqual(expected.enemy, actual.Enemy);
-        CollectionAssert.That.AreEqual(expected.cardIds, actual.CardIds);
+        actual.Stage.ShouldBe(expected.stage);
+        actual.Enemy.ShouldBe(expected.enemy);
+        actual.CardIds.ShouldBe(expected.cardIds);
     }
 
     internal static void StageInfoTestHelper<TChara>()
