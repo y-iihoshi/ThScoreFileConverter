@@ -30,7 +30,7 @@ public class ClearCountTests
 
     internal static void Validate(IClearCount expected, IClearCount actual)
     {
-        CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
+        actual.Counts.Values.ShouldBe(expected.Counts.Values);
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class ClearCountTests
         var counts = mock.Counts;
         _ = mock.Counts.Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearCount>(MakeByteArray(mock)));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearCount>(MakeByteArray(mock)));
     }
 
     [TestMethod]
@@ -72,7 +72,7 @@ public class ClearCountTests
 
         var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock));
 
-        CollectionAssert.That.AreNotEqual(mock.Counts.Values, clearCount.Counts.Values);
-        CollectionAssert.That.AreEqual(mock.Counts.Values.SkipLast(1), clearCount.Counts.Values);
+        clearCount.Counts.Values.ShouldNotBe(mock.Counts.Values);
+        clearCount.Counts.Values.ShouldBe(mock.Counts.Values.SkipLast(1));
     }
 }

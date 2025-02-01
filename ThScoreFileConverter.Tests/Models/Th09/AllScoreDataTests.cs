@@ -16,11 +16,11 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.IsNull(allScoreData.Header);
-        Assert.AreEqual(0, allScoreData.Rankings.Count);
-        Assert.IsNull(allScoreData.PlayStatus);
-        Assert.IsNull(allScoreData.LastName);
-        Assert.IsNull(allScoreData.VersionInfo);
+        allScoreData.Header.ShouldBeNull();
+        allScoreData.Rankings.ShouldBeEmpty();
+        allScoreData.PlayStatus.ShouldBeNull();
+        allScoreData.LastName.ShouldBeNull();
+        allScoreData.VersionInfo.ShouldBeNull();
     }
 
     [TestMethod]
@@ -32,7 +32,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(header);
 
-        Assert.AreSame(header, allScoreData.Header);
+        allScoreData.Header.ShouldBeSameAs(header);
     }
 
     [TestMethod]
@@ -46,8 +46,8 @@ public class AllScoreDataTests
         allScoreData.Set(header1);
         allScoreData.Set(header2);
 
-        Assert.AreNotSame(header1, allScoreData.Header);
-        Assert.AreSame(header2, allScoreData.Header);
+        allScoreData.Header.ShouldNotBeSameAs(header1);
+        allScoreData.Header.ShouldBeSameAs(header2);
     }
 
     [TestMethod]
@@ -63,7 +63,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        Assert.AreSame(score, allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank]);
+        allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank].ShouldBeSameAs(score);
     }
 
     [TestMethod]
@@ -81,8 +81,8 @@ public class AllScoreDataTests
         allScoreData.Set(score1);
         allScoreData.Set(score2);
 
-        Assert.AreNotSame(score1, allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank]);
-        Assert.AreSame(score2, allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank]);
+        allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank].ShouldNotBeSameAs(score1);
+        allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank].ShouldBeSameAs(score2);
     }
 
     [DataTestMethod]
@@ -103,7 +103,7 @@ public class AllScoreDataTests
         for (var index = 0; index < allScoreData.Rankings[(mock.Chara, mock.Level)].Count; ++index)
         {
 #pragma warning disable MSTEST0025 // Use 'Assert.Fail' instead of an always-failing assert
-            Assert.IsNull(allScoreData.Rankings[(mock.Chara, mock.Level)][index]);
+            allScoreData.Rankings[(mock.Chara, mock.Level)][index].ShouldBeNull();
 #pragma warning restore MSTEST0025 // Use 'Assert.Fail' instead of an always-failing assert
         }
     }
@@ -116,7 +116,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
 
-        Assert.AreSame(status, allScoreData.PlayStatus);
+        allScoreData.PlayStatus.ShouldBeSameAs(status);
     }
 
     [TestMethod]
@@ -129,8 +129,8 @@ public class AllScoreDataTests
         allScoreData.Set(status1);
         allScoreData.Set(status2);
 
-        Assert.AreNotSame(status1, allScoreData.PlayStatus);
-        Assert.AreSame(status2, allScoreData.PlayStatus);
+        allScoreData.PlayStatus.ShouldNotBeSameAs(status1);
+        allScoreData.PlayStatus.ShouldBeSameAs(status2);
     }
 
     [TestMethod]
@@ -142,7 +142,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(name);
 
-        Assert.AreSame(name, allScoreData.LastName);
+        allScoreData.LastName.ShouldBeSameAs(name);
     }
 
     [TestMethod]
@@ -156,8 +156,8 @@ public class AllScoreDataTests
         allScoreData.Set(name1);
         allScoreData.Set(name2);
 
-        Assert.AreNotSame(name1, allScoreData.LastName);
-        Assert.AreSame(name2, allScoreData.LastName);
+        allScoreData.LastName.ShouldNotBeSameAs(name1);
+        allScoreData.LastName.ShouldBeSameAs(name2);
     }
 
     [TestMethod]
@@ -169,7 +169,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(info);
 
-        Assert.AreSame(info, allScoreData.VersionInfo);
+        allScoreData.VersionInfo.ShouldBeSameAs(info);
     }
 
     [TestMethod]
@@ -183,7 +183,7 @@ public class AllScoreDataTests
         allScoreData.Set(info1);
         allScoreData.Set(info2);
 
-        Assert.AreNotSame(info1, allScoreData.VersionInfo);
-        Assert.AreSame(info2, allScoreData.VersionInfo);
+        allScoreData.VersionInfo.ShouldNotBeSameAs(info1);
+        allScoreData.VersionInfo.ShouldBeSameAs(info2);
     }
 }
