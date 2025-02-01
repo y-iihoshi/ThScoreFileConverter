@@ -112,28 +112,23 @@ public class AllScoreDataTests
 
     internal static void Validate(in Properties expected, in AllScoreData actual)
     {
-        Assert.AreEqual(expected.storyDictionary.Count, actual.StoryDictionary.Count);
+        actual.StoryDictionary.Count.ShouldBe(expected.storyDictionary.Count);
 
         foreach (var pair in expected.storyDictionary)
         {
             var story = actual.StoryDictionary[pair.Key];
-            Assert.AreEqual(pair.Value.Stage, story.Stage);
-            Assert.AreEqual(pair.Value.Ed, story.Ed);
-            Assert.AreEqual(pair.Value.Available, story.Available);
-            Assert.AreEqual(pair.Value.OverDrive, story.OverDrive);
-            Assert.AreEqual(pair.Value.StageOverDrive, story.StageOverDrive);
+            story.Stage.ShouldBe(pair.Value.Stage);
+            story.Ed.ShouldBe(pair.Value.Ed);
+            story.Available.ShouldBe(pair.Value.Available);
+            story.OverDrive.ShouldBe(pair.Value.OverDrive);
+            story.StageOverDrive.ShouldBe(pair.Value.StageOverDrive);
         }
 
-        CollectionAssert.That.AreEqual(expected.characterDictionary.Keys, actual.CharacterDictionary.Keys);
-        CollectionAssert.That.AreEqual(
-            expected.characterDictionary.Values, actual.CharacterDictionary.Values);
-        CollectionAssert.That.AreEqual(expected.bgmDictionary.Keys, actual.BgmDictionary.Keys);
-        CollectionAssert.That.AreEqual(expected.bgmDictionary.Values, actual.BgmDictionary.Values);
-        CollectionAssert.That.AreEqual(expected.endingDictionary.Keys, actual.EndingDictionary.Keys);
-        CollectionAssert.That.AreEqual(expected.endingDictionary.Values, actual.EndingDictionary.Values);
-        CollectionAssert.That.AreEqual(expected.stageDictionary.Keys, actual.StageDictionary.Keys);
-        CollectionAssert.That.AreEqual(expected.stageDictionary.Values, actual.StageDictionary.Values);
-        Assert.AreEqual(expected.version, actual.Version);
+        actual.CharacterDictionary.ShouldBe(expected.characterDictionary);
+        actual.BgmDictionary.ShouldBe(expected.bgmDictionary);
+        actual.EndingDictionary.ShouldBe(expected.endingDictionary);
+        actual.StageDictionary.ShouldBe(expected.stageDictionary);
+        actual.Version.ShouldBe(expected.version);
     }
 
     [TestMethod]
@@ -141,12 +136,12 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
-        Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
-        Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
-        Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
-        Assert.AreEqual(0, allScoreData.StageDictionary.Count);
-        Assert.AreEqual(default, allScoreData.Version);
+        allScoreData.StoryDictionary.ShouldBeEmpty();
+        allScoreData.CharacterDictionary.ShouldBeEmpty();
+        allScoreData.BgmDictionary.ShouldBeEmpty();
+        allScoreData.EndingDictionary.ShouldBeEmpty();
+        allScoreData.StageDictionary.ShouldBeEmpty();
+        allScoreData.Version.ShouldBe(default);
     }
 
     [TestMethod]
@@ -162,7 +157,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestEmpty()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
     }
 
     [TestMethod]
@@ -170,12 +165,12 @@ public class AllScoreDataTests
     {
         var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
-        Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
-        Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
-        Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
-        Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
-        Assert.AreEqual(0, allScoreData.StageDictionary.Count);
-        Assert.AreEqual(default, allScoreData.Version);
+        allScoreData.StoryDictionary.ShouldBeEmpty();
+        allScoreData.CharacterDictionary.ShouldBeEmpty();
+        allScoreData.BgmDictionary.ShouldBeEmpty();
+        allScoreData.EndingDictionary.ShouldBeEmpty();
+        allScoreData.StageDictionary.ShouldBeEmpty();
+        allScoreData.Version.ShouldBe(default);
     }
 
     [TestMethod]
@@ -188,12 +183,12 @@ public class AllScoreDataTests
             SquirrelHelper.MakeByteArray("version", version),
             (int)SQOT.Null));
 
-        Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
-        Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
-        Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
-        Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
-        Assert.AreEqual(0, allScoreData.StageDictionary.Count);
-        Assert.AreEqual(version, allScoreData.Version);
+        allScoreData.StoryDictionary.ShouldBeEmpty();
+        allScoreData.CharacterDictionary.ShouldBeEmpty();
+        allScoreData.BgmDictionary.ShouldBeEmpty();
+        allScoreData.EndingDictionary.ShouldBeEmpty();
+        allScoreData.StageDictionary.ShouldBeEmpty();
+        allScoreData.Version.ShouldBe(version);
     }
 
     [TestMethod]
@@ -205,7 +200,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
+        allScoreData.StoryDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -217,7 +212,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
+        allScoreData.StoryDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -229,7 +224,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
+        allScoreData.StoryDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -243,13 +238,13 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
+        allScoreData.StoryDictionary.Count.ShouldBe(1);
         var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
-        Assert.AreEqual(default, story.Stage);
-        Assert.AreEqual(default, story.Ed);
-        Assert.AreEqual(default, story.Available);
-        Assert.AreEqual(default, story.OverDrive);
-        Assert.AreEqual(default, story.StageOverDrive);
+        story.Stage.ShouldBe(default);
+        story.Ed.ShouldBe(default);
+        story.Available.ShouldBe(default);
+        story.OverDrive.ShouldBe(default);
+        story.StageOverDrive.ShouldBe(default);
     }
 
     [TestMethod]
@@ -269,13 +264,13 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
+        allScoreData.StoryDictionary.Count.ShouldBe(1);
         var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
-        Assert.AreEqual(default, story.Stage);
-        Assert.AreEqual(default, story.Ed);
-        Assert.AreEqual(default, story.Available);
-        Assert.AreEqual(default, story.OverDrive);
-        Assert.AreEqual(default, story.StageOverDrive);
+        story.Stage.ShouldBe(default);
+        story.Ed.ShouldBe(default);
+        story.Available.ShouldBe(default);
+        story.OverDrive.ShouldBe(default);
+        story.StageOverDrive.ShouldBe(default);
     }
 
     [TestMethod]
@@ -302,13 +297,13 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
+        allScoreData.StoryDictionary.Count.ShouldBe(1);
         var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
-        Assert.AreEqual(default, story.Stage);
-        Assert.AreEqual(default, story.Ed);
-        Assert.AreEqual(default, story.Available);
-        Assert.AreEqual(default, story.OverDrive);
-        Assert.AreEqual(default, story.StageOverDrive);
+        story.Stage.ShouldBe(default);
+        story.Ed.ShouldBe(default);
+        story.Available.ShouldBe(default);
+        story.OverDrive.ShouldBe(default);
+        story.StageOverDrive.ShouldBe(default);
     }
 
     [TestMethod]
@@ -320,7 +315,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
+        allScoreData.CharacterDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -333,7 +328,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
+        allScoreData.CharacterDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -345,7 +340,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
+        allScoreData.CharacterDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -357,7 +352,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
+        allScoreData.BgmDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -369,7 +364,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
+        allScoreData.BgmDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -381,7 +376,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
+        allScoreData.BgmDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -393,7 +388,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
+        allScoreData.EndingDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -405,7 +400,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
+        allScoreData.EndingDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -417,7 +412,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
+        allScoreData.EndingDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -429,7 +424,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StageDictionary.Count);
+        allScoreData.StageDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -441,7 +436,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StageDictionary.Count);
+        allScoreData.StageDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -453,7 +448,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StageDictionary.Count);
+        allScoreData.StageDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -465,6 +460,6 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(default, allScoreData.Version);
+        allScoreData.Version.ShouldBe(default);
     }
 }
