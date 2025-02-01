@@ -9,20 +9,20 @@ public class TimeReplacerTests
     public void TimeReplacerTest()
     {
         var replacer = new TimeReplacer(StatusTests.MockStatus());
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new TimeReplacer(StatusTests.MockStatus());
-        Assert.AreEqual("34:17:36.780", replacer.Replace("%T143TIMEPLY"));
+        replacer.Replace("%T143TIMEPLY").ShouldBe("34:17:36.780");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new TimeReplacer(StatusTests.MockStatus());
-        Assert.AreEqual("%T143XXXXXXX", replacer.Replace("%T143XXXXXXX"));
+        replacer.Replace("%T143XXXXXXX").ShouldBe("%T143XXXXXXX");
     }
 }

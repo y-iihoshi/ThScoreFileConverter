@@ -45,17 +45,17 @@ public class ItemStatusTests
 
     internal static void Validate(IItemStatus expected, IItemStatus actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
-        Assert.AreEqual(expected.Item, actual.Item);
-        Assert.AreEqual(expected.UseCount, actual.UseCount);
-        Assert.AreEqual(expected.ClearedCount, actual.ClearedCount);
-        Assert.AreEqual(expected.ClearedScenes, actual.ClearedScenes);
-        Assert.AreEqual(expected.ItemLevel, actual.ItemLevel);
-        Assert.AreEqual(expected.AvailableCount, actual.AvailableCount);
-        Assert.AreEqual(expected.FramesOrRanges, actual.FramesOrRanges);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Item.ShouldBe(expected.Item);
+        actual.UseCount.ShouldBe(expected.UseCount);
+        actual.ClearedCount.ShouldBe(expected.ClearedCount);
+        actual.ClearedScenes.ShouldBe(expected.ClearedScenes);
+        actual.ItemLevel.ShouldBe(expected.ItemLevel);
+        actual.AvailableCount.ShouldBe(expected.AvailableCount);
+        actual.FramesOrRanges.ShouldBe(expected.FramesOrRanges);
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class ItemStatusTests
         var itemStatus = new ItemStatus(chapter);
 
         Validate(mock, itemStatus);
-        Assert.IsFalse(itemStatus.IsValid);
+        itemStatus.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class ItemStatusTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
     [TestMethod]
@@ -89,7 +89,7 @@ public class ItemStatusTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
     [TestMethod]
@@ -100,7 +100,7 @@ public class ItemStatusTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ItemStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ItemStatus(chapter));
     }
 
     public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
@@ -113,7 +113,7 @@ public class ItemStatusTests
         _ = mock.Item.Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new ItemStatus(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new ItemStatus(chapter));
     }
 
     [DataTestMethod]
@@ -129,6 +129,6 @@ public class ItemStatusTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, ItemStatus.CanInitialize(chapter));
+        ItemStatus.CanInitialize(chapter).ShouldBe(expected);
     }
 }

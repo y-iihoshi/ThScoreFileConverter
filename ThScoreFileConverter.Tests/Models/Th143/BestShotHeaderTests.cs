@@ -48,13 +48,13 @@ public class BestShotHeaderTests
     {
         Guard.IsNotNull(actual);
 
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Day, actual.Day);
-        Assert.AreEqual(expected.Scene, actual.Scene);
-        Assert.AreEqual(expected.Width, actual.Width);
-        Assert.AreEqual(expected.Height, actual.Height);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Day.ShouldBe(expected.Day);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ public class BestShotHeaderTests
         var mock = Substitute.For<IBestShotHeader>();
         _ = mock.Signature.Returns(string.Empty);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -92,7 +92,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns(signature[0..^1]);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -103,7 +103,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns($"{signature}E");
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -116,7 +116,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Day.Returns((Day)day);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 }
