@@ -17,7 +17,7 @@ public class ShotReplacerTests
     public void ShotReplacerTest()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -25,7 +25,7 @@ public class ShotReplacerTests
     {
         var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
         var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -36,21 +36,21 @@ public class ShotReplacerTests
             ("abcde", BestShotHeaderTests.MockInitialBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ShotReplacerTestEmptyOutputFilePath()
     {
         var replacer = new ShotReplacer(BestShots, string.Empty);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ShotReplacerTestInvalidOutputFilePath()
     {
         var replacer = new ShotReplacer(BestShots, "abcde");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public class ShotReplacerTests
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
         var expected = string.Join(" ", GetExpectedStringArray());
 
-        Assert.AreEqual(expected, replacer.Replace("%T165SHOT023"));
+        replacer.Replace("%T165SHOT023").ShouldBe(expected);
     }
 
     [TestMethod]
@@ -76,7 +76,7 @@ public class ShotReplacerTests
     {
         var bestshots = ImmutableDictionary<(Day, int), (string, IBestShotHeader)>.Empty;
         var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT023"));
+        replacer.Replace("%T165SHOT023").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -87,62 +87,62 @@ public class ShotReplacerTests
             ("abcde", BestShotHeaderTests.MockInitialBestShotHeader()),
         }.ToDictionary(element => (element.header.Weekday, (int)element.header.Dream));
         var replacer = new ShotReplacer(bestshots, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT023"));
+        replacer.Replace("%T165SHOT023").ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReplaceTestEmptyOutputFilePath()
     {
         var replacer = new ShotReplacer(BestShots, string.Empty);
-        Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT023"));
+        replacer.Replace("%T165SHOT023").ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReplaceTestInvalidOutputFilePath()
     {
         var replacer = new ShotReplacer(BestShots, "abcde");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT023"));
+        replacer.Replace("%T165SHOT023").ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentDay()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT033"));
+        replacer.Replace("%T165SHOT033").ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentScene()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T165SHOT022"));
+        replacer.Replace("%T165SHOT022").ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentSpellCard()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.AreEqual("%T165SHOT013", replacer.Replace("%T165SHOT013"));
+        replacer.Replace("%T165SHOT013").ShouldBe("%T165SHOT013");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.AreEqual("%T165XXXX023", replacer.Replace("%T165XXXX023"));
+        replacer.Replace("%T165XXXX023").ShouldBe("%T165XXXX023");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidDay()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.AreEqual("%T165SHOTXX3", replacer.Replace("%T165SHOTXX3"));
+        replacer.Replace("%T165SHOTXX3").ShouldBe("%T165SHOTXX3");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidScene()
     {
         var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-        Assert.AreEqual("%T165SHOT02X", replacer.Replace("%T165SHOT02X"));
+        replacer.Replace("%T165SHOT02X").ShouldBe("%T165SHOT02X");
     }
 }

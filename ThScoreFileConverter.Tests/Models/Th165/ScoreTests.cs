@@ -40,15 +40,15 @@ public class ScoreTests
 
     internal static void Validate(IScore expected, IScore actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
-        Assert.AreEqual(expected.Number, actual.Number);
-        Assert.AreEqual(expected.ClearCount, actual.ClearCount);
-        Assert.AreEqual(expected.ChallengeCount, actual.ChallengeCount);
-        Assert.AreEqual(expected.NumPhotos, actual.NumPhotos);
-        Assert.AreEqual(expected.HighScore, actual.HighScore);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Number.ShouldBe(expected.Number);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.ChallengeCount.ShouldBe(expected.ChallengeCount);
+        actual.NumPhotos.ShouldBe(expected.NumPhotos);
+        actual.HighScore.ShouldBe(expected.HighScore);
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class ScoreTests
         var score = new Score(chapter);
 
         Validate(mock, score);
-        Assert.IsFalse(score.IsValid);
+        score.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -71,7 +71,7 @@ public class ScoreTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [TestMethod]
@@ -82,7 +82,7 @@ public class ScoreTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [TestMethod]
@@ -93,7 +93,7 @@ public class ScoreTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [DataTestMethod]
@@ -109,6 +109,6 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, Score.CanInitialize(chapter));
+        Score.CanInitialize(chapter).ShouldBe(expected);
     }
 }
