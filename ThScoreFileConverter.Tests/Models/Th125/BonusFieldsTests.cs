@@ -13,7 +13,7 @@ public class BonusFieldsTests
     public void DataTest(int data)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(data, fields.Data);
+        fields.Data.ShouldBe(data);
     }
 
     [DataTestMethod]
@@ -22,7 +22,7 @@ public class BonusFieldsTests
     public void TwoShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.TwoShot);
+        fields.TwoShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -31,7 +31,7 @@ public class BonusFieldsTests
     public void NiceShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.NiceShot);
+        fields.NiceShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -40,7 +40,7 @@ public class BonusFieldsTests
     public void RiskBonusTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.RiskBonus);
+        fields.RiskBonus.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -49,7 +49,7 @@ public class BonusFieldsTests
     public void RedShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.RedShot);
+        fields.RedShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -58,7 +58,7 @@ public class BonusFieldsTests
     public void PurpleShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.PurpleShot);
+        fields.PurpleShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -67,7 +67,7 @@ public class BonusFieldsTests
     public void BlueShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.BlueShot);
+        fields.BlueShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -76,7 +76,7 @@ public class BonusFieldsTests
     public void CyanShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.CyanShot);
+        fields.CyanShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -85,7 +85,7 @@ public class BonusFieldsTests
     public void GreenShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.GreenShot);
+        fields.GreenShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -94,7 +94,7 @@ public class BonusFieldsTests
     public void YellowShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.YellowShot);
+        fields.YellowShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -103,7 +103,7 @@ public class BonusFieldsTests
     public void OrangeShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.OrangeShot);
+        fields.OrangeShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -112,7 +112,7 @@ public class BonusFieldsTests
     public void ColorfulShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.ColorfulShot);
+        fields.ColorfulShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -121,7 +121,7 @@ public class BonusFieldsTests
     public void RainbowShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.RainbowShot);
+        fields.RainbowShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -130,7 +130,7 @@ public class BonusFieldsTests
     public void SoloShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.SoloShot);
+        fields.SoloShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -139,7 +139,7 @@ public class BonusFieldsTests
     public void MacroBonusTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.MacroBonus);
+        fields.MacroBonus.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -148,7 +148,7 @@ public class BonusFieldsTests
     public void FrontShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.FrontShot);
+        fields.FrontShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -157,7 +157,7 @@ public class BonusFieldsTests
     public void BackShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.BackShot);
+        fields.BackShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -166,7 +166,7 @@ public class BonusFieldsTests
     public void SideShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.SideShot);
+        fields.SideShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -175,7 +175,7 @@ public class BonusFieldsTests
     public void ClearShotTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.ClearShot);
+        fields.ClearShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -184,6 +184,6 @@ public class BonusFieldsTests
     public void CatBonusTest(int data, bool expected)
     {
         var fields = new BonusFields(data);
-        Assert.AreEqual(expected, fields.CatBonus);
+        fields.CatBonus.ShouldBe(expected);
     }
 }

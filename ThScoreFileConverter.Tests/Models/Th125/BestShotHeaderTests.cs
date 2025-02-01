@@ -86,30 +86,30 @@ public class BestShotHeaderTests
     {
         Guard.IsNotNull(actual);
 
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Level, actual.Level);
-        Assert.AreEqual(expected.Scene, actual.Scene);
-        Assert.AreEqual(expected.Width, actual.Width);
-        Assert.AreEqual(expected.Height, actual.Height);
-        Assert.AreEqual(expected.Width2, actual.Width2);
-        Assert.AreEqual(expected.Height2, actual.Height2);
-        Assert.AreEqual(expected.HalfWidth, actual.HalfWidth);
-        Assert.AreEqual(expected.HalfHeight, actual.HalfHeight);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
-        Assert.AreEqual(expected.Fields, actual.Fields);
-        Assert.AreEqual(expected.ResultScore, actual.ResultScore);
-        Assert.AreEqual(expected.BasePoint, actual.BasePoint);
-        Assert.AreEqual(expected.RiskBonus, actual.RiskBonus);
-        Assert.AreEqual(expected.BossShot, actual.BossShot);
-        Assert.AreEqual(expected.NiceShot, actual.NiceShot);
-        Assert.AreEqual(expected.AngleBonus, actual.AngleBonus);
-        Assert.AreEqual(expected.MacroBonus, actual.MacroBonus);
-        Assert.AreEqual(expected.FrontSideBackShot, actual.FrontSideBackShot);
-        Assert.AreEqual(expected.ClearShot, actual.ClearShot);
-        Assert.AreEqual(expected.Angle, actual.Angle);
-        Assert.AreEqual(expected.ResultScore2, actual.ResultScore2);
-        CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Level.ShouldBe(expected.Level);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.Width2.ShouldBe(expected.Width2);
+        actual.Height2.ShouldBe(expected.Height2);
+        actual.HalfWidth.ShouldBe(expected.HalfWidth);
+        actual.HalfHeight.ShouldBe(expected.HalfHeight);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.Fields.ShouldBe(expected.Fields);
+        actual.ResultScore.ShouldBe(expected.ResultScore);
+        actual.BasePoint.ShouldBe(expected.BasePoint);
+        actual.RiskBonus.ShouldBe(expected.RiskBonus);
+        actual.BossShot.ShouldBe(expected.BossShot);
+        actual.NiceShot.ShouldBe(expected.NiceShot);
+        actual.AngleBonus.ShouldBe(expected.AngleBonus);
+        actual.MacroBonus.ShouldBe(expected.MacroBonus);
+        actual.FrontSideBackShot.ShouldBe(expected.FrontSideBackShot);
+        actual.ClearShot.ShouldBe(expected.ClearShot);
+        actual.Angle.ShouldBe(expected.Angle);
+        actual.ResultScore2.ShouldBe(expected.ResultScore2);
+        actual.CardName.ShouldBe(expected.CardName);
     }
 
     [TestMethod]
@@ -136,7 +136,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Signature.Returns(string.Empty);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -147,7 +147,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns(signature[0..^1]);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -158,7 +158,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns($"{signature}E");
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -171,7 +171,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Level.Returns((Level)level);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -182,7 +182,7 @@ public class BestShotHeaderTests
         var cardName = mock.CardName;
         _ = mock.CardName.Returns(cardName.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 

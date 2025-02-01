@@ -18,7 +18,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -27,7 +27,7 @@ public class ShotReplacerTests
         var bestshots = ImmutableDictionary<(Chara, Level, int), (string, IBestShotHeader)>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(bestshots, formatterMock, @"C:\path\to\output\");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -39,7 +39,7 @@ public class ShotReplacerTests
         }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(bestshots, formatterMock, @"C:\path\to\output\");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -47,7 +47,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, string.Empty);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -55,7 +55,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, "abcde");
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -76,7 +76,7 @@ public class ShotReplacerTests
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
         var expected = string.Join(Environment.NewLine, GetExpectedStringArray());
 
-        Assert.AreEqual(expected, replacer.Replace("%T125SHOTH23"));
+        replacer.Replace("%T125SHOTH23").ShouldBe(expected);
     }
 
     [TestMethod]
@@ -85,7 +85,7 @@ public class ShotReplacerTests
         var bestshots = ImmutableDictionary<(Chara, Level, int), (string, IBestShotHeader)>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(bestshots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH23"));
+        replacer.Replace("%T125SHOTH23").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -97,7 +97,7 @@ public class ShotReplacerTests
         }.ToDictionary(element => (Chara.Hatate, element.header.Level, (int)element.header.Scene));
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(bestshots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH23"));
+        replacer.Replace("%T125SHOTH23").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, string.Empty);
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH23"));
+        replacer.Replace("%T125SHOTH23").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -113,7 +113,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, "abcde");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH23"));
+        replacer.Replace("%T125SHOTH23").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -121,7 +121,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTA23"));
+        replacer.Replace("%T125SHOTA23").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -129,7 +129,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH13"));
+        replacer.Replace("%T125SHOTH13").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -137,7 +137,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual(string.Empty, replacer.Replace("%T125SHOTH22"));
+        replacer.Replace("%T125SHOTH22").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -145,7 +145,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual("%T125SHOTH99", replacer.Replace("%T125SHOTH99"));
+        replacer.Replace("%T125SHOTH99").ShouldBe("%T125SHOTH99");
     }
 
     [TestMethod]
@@ -153,7 +153,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual("%T125XXXXH23", replacer.Replace("%T125XXXXH23"));
+        replacer.Replace("%T125XXXXH23").ShouldBe("%T125XXXXH23");
     }
 
     [TestMethod]
@@ -161,7 +161,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual("%T125SHOTX23", replacer.Replace("%T125SHOTX23"));
+        replacer.Replace("%T125SHOTX23").ShouldBe("%T125SHOTX23");
     }
 
     [TestMethod]
@@ -169,7 +169,7 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual("%T125SHOTHY3", replacer.Replace("%T125SHOTHY3"));
+        replacer.Replace("%T125SHOTHY3").ShouldBe("%T125SHOTHY3");
     }
 
     [TestMethod]
@@ -177,6 +177,6 @@ public class ShotReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ShotReplacer(BestShots, formatterMock, @"C:\path\to\output\");
-        Assert.AreEqual("%T125SHOTH2X", replacer.Replace("%T125SHOTH2X"));
+        replacer.Replace("%T125SHOTH2X").ShouldBe("%T125SHOTH2X");
     }
 }
