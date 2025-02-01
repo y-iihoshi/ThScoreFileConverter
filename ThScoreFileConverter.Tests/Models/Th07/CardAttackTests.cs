@@ -47,15 +47,15 @@ public class CardAttackTests
 
     internal static void Validate(ICardAttack expected, ICardAttack actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.MaxBonuses.Values, actual.MaxBonuses.Values);
-        Assert.AreEqual(expected.CardId, actual.CardId);
-        CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
-        CollectionAssert.That.AreEqual(expected.TrialCounts.Values, actual.TrialCounts.Values);
-        CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.MaxBonuses.Values.ShouldBe(expected.MaxBonuses.Values);
+        actual.CardId.ShouldBe(expected.CardId);
+        actual.CardName.ShouldBe(expected.CardName);
+        actual.TrialCounts.Values.ShouldBe(expected.TrialCounts.Values);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
     }
 
     [TestMethod]
@@ -66,7 +66,7 @@ public class CardAttackTests
         var cardAttack = new CardAttack(chapter);
 
         Validate(mock, cardAttack);
-        Assert.IsTrue(cardAttack.HasTried);
+        cardAttack.HasTried.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -77,7 +77,7 @@ public class CardAttackTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardAttack(chapter));
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class CardAttackTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardAttack(chapter));
     }
 
     [TestMethod]
@@ -105,6 +105,6 @@ public class CardAttackTests
         var cardAttack = new CardAttack(chapter);
 
         Validate(mock, cardAttack);
-        Assert.IsFalse(cardAttack.HasTried);
+        cardAttack.HasTried.ShouldBeFalse();
     }
 }

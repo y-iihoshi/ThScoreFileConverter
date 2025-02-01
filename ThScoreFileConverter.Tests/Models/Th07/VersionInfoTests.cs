@@ -37,11 +37,11 @@ public class VersionInfoTests
     {
         var data = MakeData(expected);
 
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(data[0], actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.version, actual.Version);
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.Version.ShouldBe(expected.version);
     }
 
     [TestMethod]
@@ -62,7 +62,7 @@ public class VersionInfoTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new VersionInfo(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new VersionInfo(chapter));
     }
 
     [TestMethod]
@@ -72,6 +72,6 @@ public class VersionInfoTests
         --properties.size1;
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new VersionInfo(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new VersionInfo(chapter));
     }
 }

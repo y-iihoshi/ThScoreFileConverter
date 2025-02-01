@@ -37,11 +37,11 @@ public class LastNameTests
     {
         var data = MakeData(expected);
 
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(data[0], actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.name, actual.Name);
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.Name.ShouldBe(expected.name);
     }
 
     [TestMethod]
@@ -62,7 +62,7 @@ public class LastNameTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new LastName(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new LastName(chapter));
     }
 
     [TestMethod]
@@ -72,6 +72,6 @@ public class LastNameTests
         --properties.size1;
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new LastName(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new LastName(chapter));
     }
 }

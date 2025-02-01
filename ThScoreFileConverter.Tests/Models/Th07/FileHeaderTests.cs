@@ -11,14 +11,14 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(FileHeaderBaseTests.MakeProperties(0x0B, 0x1C));
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsTrue(header.IsValid);
+        header.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
     public void IsValidTestInitial()
     {
         var header = new FileHeader();
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -29,7 +29,7 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(properties);
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -38,7 +38,7 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(FileHeaderBaseTests.MakeProperties(0x0C, 0x1C));
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -47,6 +47,6 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(FileHeaderBaseTests.MakeProperties(0x0B, 0x1D));
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 }
