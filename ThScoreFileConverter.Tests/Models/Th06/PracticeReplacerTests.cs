@@ -18,7 +18,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -27,7 +27,7 @@ public class PracticeReplacerTests
         var practiceScores = ImmutableDictionary<(Chara, Level, Stage), IPracticeScore>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public class PracticeReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
 
-        Assert.AreEqual("invoked: 123456", replacer.Replace("%T06PRACHRB6"));
+        replacer.Replace("%T06PRACHRB6").ShouldBe("invoked: 123456");
     }
 
     [TestMethod]
@@ -45,7 +45,7 @@ public class PracticeReplacerTests
         var practiceScores = ImmutableDictionary<(Chara, Level, Stage), IPracticeScore>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06PRACHRB6"));
+        replacer.Replace("%T06PRACHRB6").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -56,7 +56,7 @@ public class PracticeReplacerTests
         var practiceScores = new[] { mock }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("%T06PRACXRB6", replacer.Replace("%T06PRACXRB6"));
+        replacer.Replace("%T06PRACXRB6").ShouldBe("%T06PRACXRB6");
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class PracticeReplacerTests
         var practiceScores = new[] { mock }.ToDictionary(score => (score.Chara, score.Level, score.Stage));
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("%T06PRACHRBX", replacer.Replace("%T06PRACHRBX"));
+        replacer.Replace("%T06PRACHRBX").ShouldBe("%T06PRACHRBX");
     }
 
     [TestMethod]
@@ -75,7 +75,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06PRACNRB6"));
+        replacer.Replace("%T06PRACNRB6").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -83,7 +83,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06PRACHRA6"));
+        replacer.Replace("%T06PRACHRA6").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -91,7 +91,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06PRACHRB5"));
+        replacer.Replace("%T06PRACHRB5").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -99,7 +99,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T06XXXXHRB6", replacer.Replace("%T06XXXXHRB6"));
+        replacer.Replace("%T06XXXXHRB6").ShouldBe("%T06XXXXHRB6");
     }
 
     [TestMethod]
@@ -107,7 +107,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T06PRACYRB6", replacer.Replace("%T06PRACYRB6"));
+        replacer.Replace("%T06PRACYRB6").ShouldBe("%T06PRACYRB6");
     }
 
     [TestMethod]
@@ -115,7 +115,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T06PRACHXX6", replacer.Replace("%T06PRACHXX6"));
+        replacer.Replace("%T06PRACHXX6").ShouldBe("%T06PRACHXX6");
     }
 
     [TestMethod]
@@ -123,6 +123,6 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T06PRACHRBY", replacer.Replace("%T06PRACHRBY"));
+        replacer.Replace("%T06PRACHRBY").ShouldBe("%T06PRACHRBY");
     }
 }
