@@ -17,24 +17,24 @@ public class UtilsTests
         try
         {
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
-            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+            Utils.GetLocalizedValues<string>(key).ShouldBe("Settings");
 
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("ja-JP");
-            Assert.AreEqual("設定", Utils.GetLocalizedValues<string>(key));
+            Utils.GetLocalizedValues<string>(key).ShouldBe("設定");
 
             LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+            Utils.GetLocalizedValues<string>(key).ShouldBe("Settings");
 
             LocalizeDictionary.Instance.DefaultProvider = LocalizationProvider.Instance;
 
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
-            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+            Utils.GetLocalizedValues<string>(key).ShouldBe("Settings");
 
             LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("ja-JP");
-            Assert.AreEqual("設定", Utils.GetLocalizedValues<string>(key));
+            Utils.GetLocalizedValues<string>(key).ShouldBe("設定");
 
             LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+            Utils.GetLocalizedValues<string>(key).ShouldBe("Settings");
         }
         finally
         {

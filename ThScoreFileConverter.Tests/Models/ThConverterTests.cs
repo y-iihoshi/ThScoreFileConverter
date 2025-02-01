@@ -11,9 +11,9 @@ public class ThConverterTests
     {
         var converter = Substitute.ForPartsOf<ThConverter>();
 
-        Assert.AreEqual(string.Empty, converter.SupportedVersions);
-        Assert.IsFalse(converter.HasBestShotConverter);
-        Assert.IsTrue(converter.HasCardReplacer);
+        converter.SupportedVersions.ShouldBeEmpty();
+        converter.HasBestShotConverter.ShouldBeFalse();
+        converter.HasCardReplacer.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class ThConverterTests
         converter.ExceptionOccurred +=
             (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => converter.Convert(null!));
+        _ = Should.Throw<ArgumentNullException>(() => converter.Convert(null!));
     }
 
     [TestMethod]
@@ -43,7 +43,7 @@ public class ThConverterTests
         converter.ExceptionOccurred +=
             (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
-        _ = Assert.ThrowsException<ArgumentException>(() => converter.Convert(1));
+        _ = Should.Throw<ArgumentException>(() => converter.Convert(1));
     }
 
     [TestMethod]
@@ -60,6 +60,6 @@ public class ThConverterTests
         converter.ExceptionOccurred +=
             (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
-        _ = Assert.ThrowsException<ArgumentException>(() => converter.Convert((settings, formatter)));
+        _ = Should.Throw<ArgumentException>(() => converter.Convert((settings, formatter)));
     }
 }

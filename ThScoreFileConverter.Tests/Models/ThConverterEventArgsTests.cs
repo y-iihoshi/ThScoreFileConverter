@@ -10,15 +10,15 @@ public class ThConverterEventArgsTests
     {
         var args = new ThConverterEventArgs(@"path\to\file", 2, 5);
 
-        Assert.AreEqual(@"path\to\file", args.Path);
-        Assert.AreEqual(2, args.Current);
-        Assert.AreEqual(5, args.Total);
+        args.Path.ShouldBe(@"path\to\file");
+        args.Current.ShouldBe(2);
+        args.Total.ShouldBe(5);
 
         var message = args.Message;
 
-        StringAssert.Contains(message, "file", StringComparison.CurrentCulture);
-        StringAssert.Contains(message, "2", StringComparison.CurrentCulture);
-        StringAssert.Contains(message, "5", StringComparison.CurrentCulture);
+        message.ShouldContain("file", Case.Sensitive);
+        message.ShouldContain("2");
+        message.ShouldContain("5");
     }
 
     [TestMethod]
@@ -26,49 +26,49 @@ public class ThConverterEventArgsTests
     {
         var args = new ThConverterEventArgs();
 
-        Assert.AreEqual(string.Empty, args.Path);
-        Assert.AreEqual(default, args.Current);
-        Assert.AreEqual(default, args.Total);
+        args.Path.ShouldBeEmpty();
+        args.Current.ShouldBe(default);
+        args.Total.ShouldBe(default);
     }
 
     [TestMethod]
     public void ThConverterEventArgsTestEmptyPath()
     {
-        _ = Assert.ThrowsException<ArgumentException>(() => new ThConverterEventArgs(string.Empty, 2, 5));
+        _ = Should.Throw<ArgumentException>(() => new ThConverterEventArgs(string.Empty, 2, 5));
     }
 
     [TestMethod]
     public void ThConverterEventArgsTestNegativeCurrent()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => new ThConverterEventArgs(@"path\to\file", -1, 5));
     }
 
     [TestMethod]
     public void ThConverterEventArgsTestZeroCurrent()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => new ThConverterEventArgs(@"path\to\file", 0, 5));
     }
 
     [TestMethod]
     public void ThConverterEventArgsTestExtendedCurrent()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => new ThConverterEventArgs(@"path\to\file", 6, 5));
     }
 
     [TestMethod]
     public void ThConverterEventArgsTestNegativeTotal()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => new ThConverterEventArgs(@"path\to\file", 2, -1));
     }
 
     [TestMethod]
     public void ThConverterEventArgsTestZeroTotal()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => new ThConverterEventArgs(@"path\to\file", 2, 0));
     }
 }

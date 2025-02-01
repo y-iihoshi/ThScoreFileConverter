@@ -14,15 +14,15 @@ public class LocalizationProviderTests
     {
         var provider1 = LocalizationProvider.Instance;
         var provider2 = LocalizationProvider.Instance;
-        Assert.AreEqual(provider1, provider2);
+        provider2.ShouldBe(provider1);
     }
 
     [TestMethod]
     public void AvailableCulturesTest()
     {
         var cultures = LocalizationProvider.Instance.AvailableCultures;
-        Assert.IsTrue(cultures.Any(culture => culture.Name == "en-US"));
-        Assert.IsTrue(cultures.Any(culture => culture.Name == "ja-JP"));
+        cultures.Any(culture => culture.Name == "en-US").ShouldBeTrue();
+        cultures.Any(culture => culture.Name == "ja-JP").ShouldBeTrue();
     }
 
     [TestMethod]
@@ -30,8 +30,7 @@ public class LocalizationProviderTests
     {
         var key = "abc";
         var fqKey = LocalizationProvider.Instance.GetFullyQualifiedResourceKey(key, new DependencyObject());
-        Assert.IsTrue(fqKey is FQAssemblyDictionaryKey);
-        Assert.AreEqual(key, ((FQAssemblyDictionaryKey)fqKey).Key);
+        fqKey.ShouldBeOfType<FQAssemblyDictionaryKey>().Key.ShouldBe(key);
     }
 
     [TestMethod]
@@ -39,11 +38,11 @@ public class LocalizationProviderTests
     {
         var objEnUS = LocalizationProvider.Instance.GetLocalizedObject(
             "TH06", new DependencyObject(), CultureInfo.GetCultureInfo("en-US"));
-        Assert.AreEqual("the Embodiment of Scarlet Devil", objEnUS);
+        objEnUS.ShouldBe("the Embodiment of Scarlet Devil");
 
         var objJaJP = LocalizationProvider.Instance.GetLocalizedObject(
             "TH06", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
-        Assert.AreEqual("東方紅魔郷", objJaJP);
+        objJaJP.ShouldBe("東方紅魔郷");
     }
 
     [TestMethod]
@@ -51,7 +50,7 @@ public class LocalizationProviderTests
     {
         var obj = LocalizationProvider.Instance.GetLocalizedObject(
             string.Empty, new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
-        Assert.IsNull(obj);
+        obj.ShouldBeNull();
     }
 
     [TestMethod]
@@ -59,7 +58,7 @@ public class LocalizationProviderTests
     {
         var obj = LocalizationProvider.Instance.GetLocalizedObject(
             "TH01", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
-        Assert.IsNull(obj);
+        obj.ShouldBeNull();
     }
 
     [TestMethod]
@@ -68,7 +67,7 @@ public class LocalizationProviderTests
         var key = "TH06";
         var obj = LocalizationProvider.Instance.GetLocalizedObject(
             key, new DependencyObject(), CultureInfo.GetCultureInfo("de"));
-        Assert.AreEqual(StringResources.ResourceManager.GetObject(key, CultureInfo.InvariantCulture), obj);
+        obj.ShouldBe(StringResources.ResourceManager.GetObject(key, CultureInfo.InvariantCulture));
     }
 
     [TestMethod]
@@ -86,7 +85,7 @@ public class LocalizationProviderTests
         {
             _ = LocalizationProvider.Instance.GetLocalizedObject(
                 "TH01", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
-            Assert.IsTrue(invoked);
+            invoked.ShouldBeTrue();
         }
         finally
         {
@@ -113,7 +112,7 @@ public class LocalizationProviderTests
         {
             _ = LocalizationProvider.Instance.GetLocalizedObject(
                 "TH01", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
-            Assert.AreEqual(2, numInvoked);
+            numInvoked.ShouldBe(2);
         }
         finally
         {

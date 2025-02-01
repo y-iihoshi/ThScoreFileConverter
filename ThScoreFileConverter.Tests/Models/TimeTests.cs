@@ -8,7 +8,7 @@ public class TimeTests
     [TestMethod]
     public void TimeTestNegative()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(-1));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(-1));
     }
 
     [TestMethod]
@@ -16,12 +16,12 @@ public class TimeTests
     {
         var time = new Time(0);
 
-        Assert.AreEqual(0, time.Hours);
-        Assert.AreEqual(0, time.Minutes);
-        Assert.AreEqual(0, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(0, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(0);
+        time.Minutes.ShouldBe(0);
+        time.Seconds.ShouldBe(0);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(0);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -29,18 +29,18 @@ public class TimeTests
     {
         var time = new Time((1000 * 1000) + 1);
 
-        Assert.AreEqual(4, time.Hours);
-        Assert.AreEqual(37, time.Minutes);
-        Assert.AreEqual(46, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(41, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(4);
+        time.Minutes.ShouldBe(37);
+        time.Seconds.ShouldBe(46);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(41);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
     public void TimeTestNegativeFrame()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(-1, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(-1, true));
     }
 
     [TestMethod]
@@ -48,12 +48,12 @@ public class TimeTests
     {
         var time = new Time(0, true);
 
-        Assert.AreEqual(0, time.Hours);
-        Assert.AreEqual(0, time.Minutes);
-        Assert.AreEqual(0, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(0, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(0);
+        time.Minutes.ShouldBe(0);
+        time.Seconds.ShouldBe(0);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(0);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -61,18 +61,18 @@ public class TimeTests
     {
         var time = new Time((1000 * 1000) + 1, true);
 
-        Assert.AreEqual(4, time.Hours);
-        Assert.AreEqual(37, time.Minutes);
-        Assert.AreEqual(46, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(41, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(4);
+        time.Minutes.ShouldBe(37);
+        time.Seconds.ShouldBe(46);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(41);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
     public void TimeTestNegativeMillisecond()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(-1, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(-1, false));
     }
 
     [TestMethod]
@@ -80,12 +80,12 @@ public class TimeTests
     {
         var time = new Time(0, false);
 
-        Assert.AreEqual(0, time.Hours);
-        Assert.AreEqual(0, time.Minutes);
-        Assert.AreEqual(0, time.Seconds);
-        Assert.AreEqual(0, time.Milliseconds);
-        Assert.AreEqual(-1, time.Frames);
-        Assert.IsFalse(time.IsFrames);
+        time.Hours.ShouldBe(0);
+        time.Minutes.ShouldBe(0);
+        time.Seconds.ShouldBe(0);
+        time.Milliseconds.ShouldBe(0);
+        time.Frames.ShouldBe(-1);
+        time.IsFrames.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -93,12 +93,12 @@ public class TimeTests
     {
         var time = new Time((1000 * 1000) + 1, false);
 
-        Assert.AreEqual(0, time.Hours);
-        Assert.AreEqual(16, time.Minutes);
-        Assert.AreEqual(40, time.Seconds);
-        Assert.AreEqual(1, time.Milliseconds);
-        Assert.AreEqual(-1, time.Frames);
-        Assert.IsFalse(time.IsFrames);
+        time.Hours.ShouldBe(0);
+        time.Minutes.ShouldBe(16);
+        time.Seconds.ShouldBe(40);
+        time.Milliseconds.ShouldBe(1);
+        time.Frames.ShouldBe(-1);
+        time.IsFrames.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -106,18 +106,18 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 43);
 
-        Assert.AreEqual(12, time.Hours);
-        Assert.AreEqual(34, time.Minutes);
-        Assert.AreEqual(56, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(43, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(12);
+        time.Minutes.ShouldBe(34);
+        time.Seconds.ShouldBe(56);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(43);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
     public void TimeTestComponentsNegativeHour()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(-1, 34, 56, 43));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(-1, 34, 56, 43));
     }
 
     [TestMethod]
@@ -125,48 +125,48 @@ public class TimeTests
     {
         var time = new Time(24, 34, 56, 43);
 
-        Assert.AreEqual(24, time.Hours);
-        Assert.AreEqual(34, time.Minutes);
-        Assert.AreEqual(56, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(43, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(24);
+        time.Minutes.ShouldBe(34);
+        time.Seconds.ShouldBe(56);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(43);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
     public void TimeTestComponentsNegativeMinute()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, -1, 56, 43));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, -1, 56, 43));
     }
 
     [TestMethod]
     public void TimeTestComponentsExceededMinutes()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 60, 56, 43));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 60, 56, 43));
     }
 
     [TestMethod]
     public void TimeTestComponentsNegativeSecond()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, -1, 43));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, -1, 43));
     }
 
     [TestMethod]
     public void TimeTestComponentsExceededSeconds()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 60, 43));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 60, 43));
     }
 
     [TestMethod]
     public void TimeTestComponentsNegativeFrame()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, -1));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, -1));
     }
 
     [TestMethod]
     public void TimeTestComponentsExceededFrames()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, 60));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, 60));
     }
 
     [TestMethod]
@@ -174,18 +174,18 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 43, true);
 
-        Assert.AreEqual(12, time.Hours);
-        Assert.AreEqual(34, time.Minutes);
-        Assert.AreEqual(56, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(43, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(12);
+        time.Minutes.ShouldBe(34);
+        time.Seconds.ShouldBe(56);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(43);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesNegativeHour()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(-1, 34, 56, 43, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(-1, 34, 56, 43, true));
     }
 
     [TestMethod]
@@ -193,48 +193,48 @@ public class TimeTests
     {
         var time = new Time(24, 34, 56, 43, true);
 
-        Assert.AreEqual(24, time.Hours);
-        Assert.AreEqual(34, time.Minutes);
-        Assert.AreEqual(56, time.Seconds);
-        Assert.AreEqual(-1, time.Milliseconds);
-        Assert.AreEqual(43, time.Frames);
-        Assert.IsTrue(time.IsFrames);
+        time.Hours.ShouldBe(24);
+        time.Minutes.ShouldBe(34);
+        time.Seconds.ShouldBe(56);
+        time.Milliseconds.ShouldBe(-1);
+        time.Frames.ShouldBe(43);
+        time.IsFrames.ShouldBeTrue();
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesNegativeMinute()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, -1, 56, 43, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, -1, 56, 43, true));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesExceededMinutes()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 60, 56, 43, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 60, 56, 43, true));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesNegativeSecond()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, -1, 43, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, -1, 43, true));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesExceededSeconds()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 60, 43, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 60, 43, true));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesNegativeFrame()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, -1, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, -1, true));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithFramesExceededFrames()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, 60, true));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, 60, true));
     }
 
     [TestMethod]
@@ -242,18 +242,18 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 789, false);
 
-        Assert.AreEqual(12, time.Hours);
-        Assert.AreEqual(34, time.Minutes);
-        Assert.AreEqual(56, time.Seconds);
-        Assert.AreEqual(789, time.Milliseconds);
-        Assert.AreEqual(-1, time.Frames);
-        Assert.IsFalse(time.IsFrames);
+        time.Hours.ShouldBe(12);
+        time.Minutes.ShouldBe(34);
+        time.Seconds.ShouldBe(56);
+        time.Milliseconds.ShouldBe(789);
+        time.Frames.ShouldBe(-1);
+        time.IsFrames.ShouldBeFalse();
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsNegativeHour()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(-1, 34, 56, 789, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(-1, 34, 56, 789, false));
     }
 
     [TestMethod]
@@ -261,48 +261,48 @@ public class TimeTests
     {
         var time = new Time(24, 34, 56, 789, false);
 
-        Assert.AreEqual(24, time.Hours);
-        Assert.AreEqual(34, time.Minutes);
-        Assert.AreEqual(56, time.Seconds);
-        Assert.AreEqual(789, time.Milliseconds);
-        Assert.AreEqual(-1, time.Frames);
-        Assert.IsFalse(time.IsFrames);
+        time.Hours.ShouldBe(24);
+        time.Minutes.ShouldBe(34);
+        time.Seconds.ShouldBe(56);
+        time.Milliseconds.ShouldBe(789);
+        time.Frames.ShouldBe(-1);
+        time.IsFrames.ShouldBeFalse();
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsNegativeMinute()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, -1, 56, 789, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, -1, 56, 789, false));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsExceededMinutes()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 60, 56, 789, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 60, 56, 789, false));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsNegativeSecond()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, -1, 789, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, -1, 789, false));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsExceededSeconds()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 60, 789, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 60, 789, false));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsNegativeMillisecond()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, -1, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, -1, false));
     }
 
     [TestMethod]
     public void TimeTestComponentsWithMillisecondsExceededMilliseconds()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, 1000, false));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => new Time(12, 34, 56, 1000, false));
     }
 
     [TestMethod]
@@ -310,7 +310,7 @@ public class TimeTests
     {
         var time = new Time(1, 2, 3, 0);
 
-        Assert.AreEqual("1:02:03", time.ToString());
+        time.ToString().ShouldBe("1:02:03");
     }
 
     [TestMethod]
@@ -318,7 +318,7 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 0);
 
-        Assert.AreEqual("12:34:56", time.ToString());
+        time.ToString().ShouldBe("12:34:56");
     }
 
     [TestMethod]
@@ -326,7 +326,7 @@ public class TimeTests
     {
         var time = new Time(1, 2, 3, 4, true);
 
-        Assert.AreEqual("1:02:03.04", time.ToLongString());
+        time.ToLongString().ShouldBe("1:02:03.04");
     }
 
     [TestMethod]
@@ -334,7 +334,7 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 43, true);
 
-        Assert.AreEqual("12:34:56.43", time.ToLongString());
+        time.ToLongString().ShouldBe("12:34:56.43");
     }
 
     [TestMethod]
@@ -342,7 +342,7 @@ public class TimeTests
     {
         var time = new Time(1, 2, 3, 4, false);
 
-        Assert.AreEqual("1:02:03.004", time.ToLongString());
+        time.ToLongString().ShouldBe("1:02:03.004");
     }
 
     [TestMethod]
@@ -350,7 +350,7 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 78, false);
 
-        Assert.AreEqual("12:34:56.078", time.ToLongString());
+        time.ToLongString().ShouldBe("12:34:56.078");
     }
 
     [TestMethod]
@@ -358,6 +358,6 @@ public class TimeTests
     {
         var time = new Time(12, 34, 56, 789, false);
 
-        Assert.AreEqual("12:34:56.789", time.ToLongString());
+        time.ToLongString().ShouldBe("12:34:56.789");
     }
 }

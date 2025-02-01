@@ -13,13 +13,13 @@ public class BitReaderTests
             _ = new BitReader(stream);
         }
 
-        Assert.IsTrue(stream.CanRead);
+        stream.CanRead.ShouldBeTrue();
     }
 
     [TestMethod]
     public void BitReaderTestNoStream()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new BitReader(null!));
+        _ = Should.Throw<ArgumentNullException>(() => new BitReader(null!));
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class BitReaderTests
         var stream = new MemoryStream();
         stream.Close();
 
-        _ = Assert.ThrowsException<ArgumentException>(() => new BitReader(stream));
+        _ = Should.Throw<ArgumentException>(() => new BitReader(stream));
     }
 
     [TestMethod]
@@ -38,15 +38,15 @@ public class BitReaderTests
 
         var reader = new BitReader(stream);
 
-        Assert.AreEqual(0b0, reader.ReadBits(1));
-        Assert.AreEqual(0b1, reader.ReadBits(1));
-        Assert.AreEqual(0b0, reader.ReadBits(1));
-        Assert.AreEqual(0b1, reader.ReadBits(1));
+        reader.ReadBits(1).ShouldBe(0b0);
+        reader.ReadBits(1).ShouldBe(0b1);
+        reader.ReadBits(1).ShouldBe(0b0);
+        reader.ReadBits(1).ShouldBe(0b1);
 
-        Assert.AreEqual(0b0, reader.ReadBits(1));
-        Assert.AreEqual(0b0, reader.ReadBits(1));
-        Assert.AreEqual(0b1, reader.ReadBits(1));
-        Assert.AreEqual(0b1, reader.ReadBits(1));
+        reader.ReadBits(1).ShouldBe(0b0);
+        reader.ReadBits(1).ShouldBe(0b0);
+        reader.ReadBits(1).ShouldBe(0b1);
+        reader.ReadBits(1).ShouldBe(0b1);
     }
 
     [TestMethod]
@@ -55,17 +55,17 @@ public class BitReaderTests
         using var stream = new MemoryStream([0xFF]);
         var reader = new BitReader(stream);
 
-        Assert.AreEqual(0, reader.ReadBits(0));
-        Assert.AreEqual(0, reader.ReadBits(0));
-        Assert.AreEqual(0, reader.ReadBits(0));
-        Assert.AreEqual(0, reader.ReadBits(0));
+        reader.ReadBits(0).ShouldBe(0);
+        reader.ReadBits(0).ShouldBe(0);
+        reader.ReadBits(0).ShouldBe(0);
+        reader.ReadBits(0).ShouldBe(0);
 
-        Assert.AreEqual(0, reader.ReadBits(0));
-        Assert.AreEqual(0, reader.ReadBits(0));
-        Assert.AreEqual(0, reader.ReadBits(0));
-        Assert.AreEqual(0, reader.ReadBits(0));
+        reader.ReadBits(0).ShouldBe(0);
+        reader.ReadBits(0).ShouldBe(0);
+        reader.ReadBits(0).ShouldBe(0);
+        reader.ReadBits(0).ShouldBe(0);
 
-        Assert.AreEqual(0xFF, reader.ReadBits(8));
+        reader.ReadBits(8).ShouldBe(0xFF);
     }
 
     [TestMethod]
@@ -75,10 +75,10 @@ public class BitReaderTests
         using var stream = new MemoryStream(buffer);
         var reader = new BitReader(stream);
 
-        Assert.AreEqual(0b01, reader.ReadBits(2));
-        Assert.AreEqual(0b010, reader.ReadBits(3));
-        Assert.AreEqual(0b_011_1100, reader.ReadBits(7));
-        Assert.AreEqual(0b1010, reader.ReadBits(4));
+        reader.ReadBits(2).ShouldBe(0b01);
+        reader.ReadBits(3).ShouldBe(0b010);
+        reader.ReadBits(7).ShouldBe(0b_011_1100);
+        reader.ReadBits(4).ShouldBe(0b1010);
     }
 
     [TestMethod]
@@ -88,10 +88,10 @@ public class BitReaderTests
         using var stream = new MemoryStream(buffer);
         var reader = new BitReader(stream);
 
-        Assert.AreEqual(0x53CA, reader.ReadBits(16));
+        reader.ReadBits(16).ShouldBe(0x53CA);
 
         // NOTE: Changing the return type to uint makes BitReader.ReadBits() to CLS-noncompliant.
-        Assert.AreEqual(0x_AC35_5AA5, (uint)reader.ReadBits(32));
+        ((uint)reader.ReadBits(32)).ShouldBe(0x_AC35_5AA5);
     }
 
     [TestMethod]
@@ -101,7 +101,7 @@ public class BitReaderTests
 
         var reader = new BitReader(stream);
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.ReadBits(-1));
+        _ = Should.Throw<ArgumentOutOfRangeException>(() => reader.ReadBits(-1));
     }
 
     [TestMethod]
@@ -121,7 +121,7 @@ public class BitReaderTests
         using var stream = new MemoryStream(buffer);
         var reader = new BitReader(stream);
 
-        Assert.AreEqual(0b_1010_0111_1001_0101_0101_1000_0110_1010, (uint)reader.ReadBits(33));
+        ((uint)reader.ReadBits(33)).ShouldBe(0b_1010_0111_1001_0101_0101_1000_0110_1010);
     }
 
     [TestMethod]
@@ -131,7 +131,7 @@ public class BitReaderTests
 
         var reader = new BitReader(stream);
 
-        Assert.AreEqual(0x53, reader.ReadBits(8));
-        Assert.AreEqual(0, reader.ReadBits(1));
+        reader.ReadBits(8).ShouldBe(0x53);
+        reader.ReadBits(1).ShouldBe(0);
     }
 }

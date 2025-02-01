@@ -32,7 +32,7 @@ public class LzssTests
         using var input = new MemoryStream(this.decompressed);
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<NotImplementedException>(() => Lzss.Compress(input, output));
+        _ = Should.Throw<NotImplementedException>(() => Lzss.Compress(input, output));
     }
 
     [TestMethod]
@@ -42,7 +42,7 @@ public class LzssTests
         using var output = new MemoryStream();
 
         Lzss.Decompress(input, output);
-        CollectionAssert.AreEqual(this.decompressed, output.ToArray());
+        output.ToArray().ShouldBe(this.decompressed);
     }
 
     [TestMethod]
@@ -51,7 +51,7 @@ public class LzssTests
         using var output = new MemoryStream();
 
         Lzss.Decompress(Stream.Null, output);
-        Assert.AreEqual(0, output.Length);
+        output.Length.ShouldBe(0);
     }
 
     [TestMethod]
@@ -61,7 +61,7 @@ public class LzssTests
         using var output = new MemoryStream();
 
         Lzss.Decompress(input, output);
-        Assert.AreEqual(0, output.Length);
+        output.Length.ShouldBe(0);
     }
 
     [TestMethod]
@@ -70,7 +70,7 @@ public class LzssTests
         using var input = new UnreadableMemoryStream();
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<ArgumentException>(() => Lzss.Decompress(input, output));
+        _ = Should.Throw<ArgumentException>(() => Lzss.Decompress(input, output));
     }
 
     [TestMethod]
@@ -80,7 +80,7 @@ public class LzssTests
         var input = new MemoryStream(this.compressed);
         input.Close();
 
-        _ = Assert.ThrowsException<ArgumentException>(() => Lzss.Decompress(input, output));
+        _ = Should.Throw<ArgumentException>(() => Lzss.Decompress(input, output));
     }
 
     [TestMethod]
@@ -91,7 +91,7 @@ public class LzssTests
         using var output = new MemoryStream();
 
         Lzss.Decompress(input, output);
-        CollectionAssert.AreNotEqual(this.decompressed, output.ToArray());
+        output.ToArray().ShouldNotBe(this.decompressed);
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public class LzssTests
         using var output = new MemoryStream();
 
         Lzss.Decompress(input, output);
-        CollectionAssert.AreNotEqual(this.decompressed, output.ToArray());
+        output.ToArray().ShouldNotBe(this.decompressed);
     }
 
     [TestMethod]
@@ -114,7 +114,7 @@ public class LzssTests
         using var input = new MemoryStream(this.compressed);
         using var output = new MemoryStream([], false);
 
-        _ = Assert.ThrowsException<NotSupportedException>(() => Lzss.Decompress(input, output));
+        _ = Should.Throw<NotSupportedException>(() => Lzss.Decompress(input, output));
     }
 
     [TestMethod]
@@ -124,6 +124,6 @@ public class LzssTests
         var output = new MemoryStream();
         output.Close();
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(() => Lzss.Decompress(input, output));
+        _ = Should.Throw<ObjectDisposedException>(() => Lzss.Decompress(input, output));
     }
 }

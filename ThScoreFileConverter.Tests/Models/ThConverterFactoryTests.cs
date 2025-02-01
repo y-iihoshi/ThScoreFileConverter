@@ -8,19 +8,19 @@ public class ThConverterFactoryTests
     [TestMethod]
     public void CanCreateTest()
     {
-        Assert.IsTrue(ThConverterFactory.CanCreate("TH06"));
+        ThConverterFactory.CanCreate("TH06").ShouldBeTrue();
     }
 
     [TestMethod]
     public void CanCreateTestEmptyKey()
     {
-        Assert.IsFalse(ThConverterFactory.CanCreate(string.Empty));
+        ThConverterFactory.CanCreate(string.Empty).ShouldBeFalse();
     }
 
     [TestMethod]
     public void CanCreateTestInvalidKey()
     {
-        Assert.IsFalse(ThConverterFactory.CanCreate("invalidKey"));
+        ThConverterFactory.CanCreate("invalidKey").ShouldBeFalse();
     }
 
     [TestMethod]
@@ -29,7 +29,7 @@ public class ThConverterFactoryTests
         var converter = ThConverterFactory.Create("TH06");
         var converterType = converter?.GetType();
 
-        Assert.AreEqual(typeof(ThScoreFileConverter.Models.Th06.Converter), converterType);
+        converterType.ShouldBe(typeof(ThScoreFileConverter.Models.Th06.Converter));
     }
 
     [TestMethod]
@@ -37,7 +37,7 @@ public class ThConverterFactoryTests
     {
         var converter = ThConverterFactory.Create(string.Empty);
 
-        Assert.IsNull(converter);
+        converter.ShouldBeNull();
     }
 
     [TestMethod]
@@ -45,6 +45,6 @@ public class ThConverterFactoryTests
     {
         var converter = ThConverterFactory.Create("invalidKey");
 
-        Assert.IsNull(converter);
+        converter.ShouldBeNull();
     }
 }
