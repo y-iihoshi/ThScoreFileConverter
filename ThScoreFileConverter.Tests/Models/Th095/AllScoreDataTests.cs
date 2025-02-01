@@ -9,13 +9,13 @@ public class AllScoreDataTests
     internal static void AllScoreDataTestHelper<TAllScoreData, TScore, TStatus>()
         where TAllScoreData : AllScoreDataBase<TScore, TStatus>, new()
         where TScore : IChapter
-        where TStatus : IStatus
+        where TStatus : class, IStatus
     {
         var allScoreData = new TAllScoreData();
 
-        Assert.IsNull(allScoreData.Header);
-        Assert.AreEqual(0, allScoreData.Scores.Count);
-        Assert.IsNull(allScoreData.Status);
+        allScoreData.Header.ShouldBeNull();
+        allScoreData.Scores.ShouldBeEmpty();
+        allScoreData.Status.ShouldBeNull();
     }
 
     internal static void SetHeaderTestHelper<TAllScoreData, TScore, TStatus>()
@@ -29,7 +29,7 @@ public class AllScoreDataTests
         var allScoreData = new TAllScoreData();
         allScoreData.Set(header);
 
-        Assert.AreSame(header, allScoreData.Header);
+        allScoreData.Header.ShouldBeSameAs(header);
     }
 
     internal static void SetHeaderTestTwiceHelper<TAllScoreData, TScore, TStatus>()
@@ -45,8 +45,8 @@ public class AllScoreDataTests
         allScoreData.Set(header1);
         allScoreData.Set(header2);
 
-        Assert.AreNotSame(header1, allScoreData.Header);
-        Assert.AreSame(header2, allScoreData.Header);
+        allScoreData.Header.ShouldNotBeSameAs(header1);
+        allScoreData.Header.ShouldBeSameAs(header2);
     }
 
     internal static void SetScoreTestHelper<TAllScoreData, TScore, TStatus>()
@@ -59,7 +59,7 @@ public class AllScoreDataTests
         var allScoreData = new TAllScoreData();
         allScoreData.Set(score);
 
-        Assert.AreSame(score, allScoreData.Scores[0]);
+        allScoreData.Scores[0].ShouldBeSameAs(score);
     }
 
     internal static void SetScoreTestTwiceHelper<TAllScoreData, TScore, TStatus>()
@@ -74,8 +74,8 @@ public class AllScoreDataTests
         allScoreData.Set(score1);
         allScoreData.Set(score2);
 
-        Assert.AreSame(score1, allScoreData.Scores[0]);
-        Assert.AreSame(score2, allScoreData.Scores[1]);
+        allScoreData.Scores[0].ShouldBeSameAs(score1);
+        allScoreData.Scores[1].ShouldBeSameAs(score2);
     }
 
     internal static void SetStatusTestHelper<TAllScoreData, TScore, TStatus>()
@@ -88,7 +88,7 @@ public class AllScoreDataTests
         var allScoreData = new TAllScoreData();
         allScoreData.Set(status);
 
-        Assert.AreSame(status, allScoreData.Status);
+        allScoreData.Status.ShouldBeSameAs(status);
     }
 
     internal static void SetStatusTestTwiceHelper<TAllScoreData, TScore, TStatus>()
@@ -103,8 +103,8 @@ public class AllScoreDataTests
         allScoreData.Set(status1);
         allScoreData.Set(status2);
 
-        Assert.AreNotSame(status1, allScoreData.Status);
-        Assert.AreSame(status2, allScoreData.Status);
+        allScoreData.Status.ShouldNotBeSameAs(status1);
+        allScoreData.Status.ShouldBeSameAs(status2);
     }
 
     [TestMethod]

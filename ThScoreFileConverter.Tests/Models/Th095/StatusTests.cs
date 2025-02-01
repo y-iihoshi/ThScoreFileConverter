@@ -30,11 +30,11 @@ public class StatusTests
 
     internal static void Validate(IStatus expected, IStatus actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Size, actual.Size);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        CollectionAssert.That.AreEqual(expected.LastName, actual.LastName);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.LastName.ShouldBe(expected.LastName);
     }
 
     [TestMethod]
@@ -46,7 +46,7 @@ public class StatusTests
         var status = new Status(chapter);
 
         Validate(mock, status);
-        Assert.IsFalse(status.IsValid);
+        status.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -57,7 +57,7 @@ public class StatusTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public class StatusTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
     [TestMethod]
@@ -79,7 +79,7 @@ public class StatusTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
     [DataTestMethod]
@@ -95,6 +95,6 @@ public class StatusTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
-        Assert.AreEqual(expected, Status.CanInitialize(chapter));
+        Status.CanInitialize(chapter).ShouldBe(expected);
     }
 }

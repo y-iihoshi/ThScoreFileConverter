@@ -45,16 +45,16 @@ public class ChapterTests
 
     internal static void Validate(in Properties expected, IChapter actual)
     {
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.version, actual.Version);
-        Assert.AreEqual(expected.size, actual.Size);
-        Assert.AreEqual(expected.checksum, actual.Checksum);
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Version.ShouldBe(expected.version);
+        actual.Size.ShouldBe(expected.size);
+        actual.Checksum.ShouldBe(expected.checksum);
     }
 
     internal static void Validate(in Properties expected, in ChapterWrapper actual)
     {
         Validate(expected, actual as IChapter);
-        CollectionAssert.That.AreEqual(expected.data, actual.Data);
+        actual.Data.ShouldBe(expected.data);
     }
 
     [TestMethod]
@@ -63,7 +63,7 @@ public class ChapterTests
         var chapter = new ChapterWrapper();
 
         Validate(DefaultProperties, chapter);
-        Assert.IsFalse(chapter.IsValid);
+        chapter.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -73,7 +73,7 @@ public class ChapterTests
         var chapter2 = new ChapterWrapper(chapter1);
 
         Validate(DefaultProperties, chapter2);
-        Assert.IsFalse(chapter2.IsValid);
+        chapter2.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -83,14 +83,14 @@ public class ChapterTests
         var chapter2 = new ChapterWrapper(chapter1, chapter1.Signature, chapter1.Version, chapter1.Size);
 
         Validate(ValidProperties, chapter2);
-        Assert.IsTrue(chapter2.IsValid);
+        chapter2.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
     public void ChapterTestInvalidSignature()
     {
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new ChapterWrapper(chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size));
     }
 
@@ -98,7 +98,7 @@ public class ChapterTests
     public void ChapterTestInvalidVersion()
     {
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new ChapterWrapper(chapter, chapter.Signature, (ushort)(chapter.Version - 1), chapter.Size));
     }
 
@@ -106,7 +106,7 @@ public class ChapterTests
     public void ChapterTestInvalidSize()
     {
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new ChapterWrapper(chapter, chapter.Signature, chapter.Version, chapter.Size - 1));
     }
 
@@ -116,7 +116,7 @@ public class ChapterTests
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(ValidProperties));
 
         Validate(ValidProperties, chapter);
-        Assert.IsTrue(chapter.IsValid);
+        chapter.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -131,7 +131,7 @@ public class ChapterTests
 
         // The actual value of the Size property becomes negative,
         // so ArgumentOutOfRangeException will be thrown.
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -147,7 +147,7 @@ public class ChapterTests
 
         // The actual value of the Size property becomes negative,
         // so ArgumentOutOfRangeException will be thrown.
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -163,7 +163,7 @@ public class ChapterTests
 
         // The actual value of the Size property becomes too large,
         // so EndOfStreamException will be thrown.
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -173,7 +173,7 @@ public class ChapterTests
         var properties = ValidProperties;
         properties.size = -1;
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -183,7 +183,7 @@ public class ChapterTests
         var properties = ValidProperties;
         properties.size = 0;
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -196,8 +196,8 @@ public class ChapterTests
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
         Validate(properties, chapter as IChapter);
-        CollectionAssert.That.AreNotEqual(properties.data, chapter.Data);
-        Assert.IsFalse(chapter.IsValid);
+        chapter.Data.ShouldNotBe(properties.data);
+        chapter.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -206,7 +206,7 @@ public class ChapterTests
         var properties = ValidProperties;
         ++properties.size;
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -219,7 +219,7 @@ public class ChapterTests
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
         Validate(properties, chapter);
-        Assert.IsFalse(chapter.IsValid);
+        chapter.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -228,7 +228,7 @@ public class ChapterTests
         var properties = ValidProperties;
         properties.data = [];
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Chapter>(MakeByteArray(properties)));
     }
 
@@ -242,6 +242,6 @@ public class ChapterTests
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
         Validate(properties, chapter);
-        Assert.IsFalse(chapter.IsValid);
+        chapter.IsValid.ShouldBeFalse();
     }
 }
