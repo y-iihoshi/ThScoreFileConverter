@@ -37,12 +37,12 @@ public class ScoreDataTests
         IScoreData<TStageProgress> expected, IScoreData<TStageProgress> actual)
         where TStageProgress : struct, Enum
     {
-        Assert.AreEqual(expected.Score, actual.Score);
-        Assert.AreEqual(expected.StageProgress, actual.StageProgress);
-        Assert.AreEqual(expected.ContinueCount, actual.ContinueCount);
-        CollectionAssert.That.AreEqual(expected.Name, actual.Name);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
+        actual.Score.ShouldBe(expected.Score);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+        actual.Name.ShouldBe(expected.Name);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
     }
 
     internal static void ScoreDataTestHelper<TScoreData, TStageProgress>()
@@ -71,7 +71,7 @@ public class ScoreDataTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<TScoreData>(MakeByteArray(mock, unknownSize)));
     }
 
@@ -85,13 +85,13 @@ public class ScoreDataTests
 
         var scoreData = TestUtils.Create<TScoreData>(MakeByteArray(mock, unknownSize));
 
-        Assert.AreEqual(mock.Score, scoreData.Score);
-        Assert.AreEqual(mock.StageProgress, scoreData.StageProgress);
-        Assert.AreEqual(mock.ContinueCount, scoreData.ContinueCount);
-        CollectionAssert.That.AreNotEqual(mock.Name, scoreData.Name);
-        CollectionAssert.That.AreEqual(mock.Name.SkipLast(1), scoreData.Name);
-        Assert.AreNotEqual(mock.DateTime, scoreData.DateTime);
-        Assert.AreNotEqual(mock.SlowRate, scoreData.SlowRate);
+        scoreData.Score.ShouldBe(mock.Score);
+        scoreData.StageProgress.ShouldBe(mock.StageProgress);
+        scoreData.ContinueCount.ShouldBe(mock.ContinueCount);
+        scoreData.Name.ShouldNotBe(mock.Name);
+        scoreData.Name.ShouldBe(mock.Name.SkipLast(1));
+        scoreData.DateTime.ShouldNotBe(mock.DateTime);
+        scoreData.SlowRate.ShouldNotBe(mock.SlowRate);
     }
 
     internal static void ReadFromTestInvalidStageProgressHelper<TScoreData, TStageProgress>(
@@ -102,7 +102,7 @@ public class ScoreDataTests
         var mock = MockScoreData<TStageProgress>();
         _ = mock.StageProgress.Returns(TestUtils.Cast<TStageProgress>(stageProgress));
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<TScoreData>(MakeByteArray(mock, unknownSize)));
     }
 

@@ -22,9 +22,9 @@ public class PracticeTests
 
     internal static void Validate(IPractice expected, IPractice actual)
     {
-        Assert.AreEqual(expected.Score, actual.Score);
-        Assert.AreEqual(expected.Cleared, actual.Cleared);
-        Assert.AreEqual(expected.Unlocked, actual.Unlocked);
+        actual.Score.ShouldBe(expected.Score);
+        actual.Cleared.ShouldBe(expected.Cleared);
+        actual.Unlocked.ShouldBe(expected.Unlocked);
     }
 
     [TestMethod]
