@@ -110,7 +110,7 @@ public class SQFloatTests
     [TestMethod]
     public void GetHashCodeNotEqual()
     {
-        Assert.AreNotEqual(new SQFloat().GetHashCode(), new SQFloat(1f).GetHashCode());
+        new SQFloat(1f).GetHashCode().ShouldNotBe(new SQFloat().GetHashCode());
     }
 
     [TestMethod]
