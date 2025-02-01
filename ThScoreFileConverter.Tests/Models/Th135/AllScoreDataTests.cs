@@ -62,18 +62,18 @@ public class AllScoreDataTests
 
     internal static void Validate(in Properties expected, in AllScoreData actual)
     {
-        Assert.AreEqual(expected.storyProgress, actual.StoryProgress);
-        CollectionAssert.That.AreEqual(expected.storyClearFlags.Keys, actual.StoryClearFlags.Keys);
-        CollectionAssert.That.AreEqual(expected.storyClearFlags.Values, actual.StoryClearFlags.Values);
-        Assert.AreEqual(expected.endingCount, actual.EndingCount);
-        Assert.AreEqual(expected.ending2Count, actual.Ending2Count);
-        Assert.AreEqual(expected.isEnabledStageTanuki1, actual.IsEnabledStageTanuki1);
-        Assert.AreEqual(expected.isEnabledStageTanuki2, actual.IsEnabledStageTanuki2);
-        Assert.AreEqual(expected.isEnabledStageKokoro, actual.IsEnabledStageKokoro);
-        Assert.AreEqual(expected.isPlayableMamizou, actual.IsPlayableMamizou);
-        Assert.AreEqual(expected.isPlayableKokoro, actual.IsPlayableKokoro);
-        CollectionAssert.That.AreEqual(expected.bgmFlags.Keys, actual.BgmFlags.Keys);
-        CollectionAssert.That.AreEqual(expected.bgmFlags.Values, actual.BgmFlags.Values);
+        actual.StoryProgress.ShouldBe(expected.storyProgress);
+        actual.StoryClearFlags.Keys.ShouldBe(expected.storyClearFlags.Keys);
+        actual.StoryClearFlags.Values.ShouldBe(expected.storyClearFlags.Values);
+        actual.EndingCount.ShouldBe(expected.endingCount);
+        actual.Ending2Count.ShouldBe(expected.ending2Count);
+        actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
+        actual.IsEnabledStageTanuki2.ShouldBe(expected.isEnabledStageTanuki2);
+        actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
+        actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
+        actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
+        actual.BgmFlags.Keys.ShouldBe(expected.bgmFlags.Keys);
+        actual.BgmFlags.Values.ShouldBe(expected.bgmFlags.Values);
     }
 
     [TestMethod]
@@ -81,16 +81,16 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.AreEqual(default, allScoreData.StoryProgress);
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        Assert.AreEqual(default, allScoreData.EndingCount);
-        Assert.AreEqual(default, allScoreData.Ending2Count);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
-        Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
-        Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+        allScoreData.StoryProgress.ShouldBe(default);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
+        allScoreData.EndingCount.ShouldBe(default);
+        allScoreData.Ending2Count.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki1.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki2.ShouldBe(default);
+        allScoreData.IsEnabledStageKokoro.ShouldBe(default);
+        allScoreData.IsPlayableMamizou.ShouldBe(default);
+        allScoreData.IsPlayableKokoro.ShouldBe(default);
+        allScoreData.BgmFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -106,7 +106,7 @@ public class AllScoreDataTests
     [TestMethod]
     public void ReadFromTestEmpty()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
     }
 
     [TestMethod]
@@ -114,16 +114,16 @@ public class AllScoreDataTests
     {
         var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
-        Assert.AreEqual(default, allScoreData.StoryProgress);
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        Assert.AreEqual(default, allScoreData.EndingCount);
-        Assert.AreEqual(default, allScoreData.Ending2Count);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
-        Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
-        Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+        allScoreData.StoryProgress.ShouldBe(default);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
+        allScoreData.EndingCount.ShouldBe(default);
+        allScoreData.Ending2Count.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki1.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki2.ShouldBe(default);
+        allScoreData.IsEnabledStageKokoro.ShouldBe(default);
+        allScoreData.IsPlayableMamizou.ShouldBe(default);
+        allScoreData.IsPlayableKokoro.ShouldBe(default);
+        allScoreData.BgmFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -137,9 +137,9 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(storyProgressValue, allScoreData.StoryProgress);
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+        allScoreData.StoryProgress.ShouldBe(storyProgressValue);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
+        allScoreData.BgmFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -151,7 +151,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -168,7 +168,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -180,6 +180,6 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+        allScoreData.BgmFlags.ShouldBeEmpty();
     }
 }

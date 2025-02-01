@@ -17,7 +17,7 @@ public class ClearReplacerTests
     public void ClearReplacerTest()
     {
         var replacer = new ClearReplacer(StoryClearFlags);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -25,17 +25,17 @@ public class ClearReplacerTests
     {
         var dictionary = ImmutableDictionary<Chara, Levels>.Empty;
         var replacer = new ClearReplacer(dictionary);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new ClearReplacer(StoryClearFlags);
-        Assert.AreEqual("Clear", replacer.Replace("%T135CLEAREMR"));
-        Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARNMR"));
-        Assert.AreEqual("Clear", replacer.Replace("%T135CLEARHMR"));
-        Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARLMR"));
+        replacer.Replace("%T135CLEAREMR").ShouldBe("Clear");
+        replacer.Replace("%T135CLEARNMR").ShouldBe("Not Clear");
+        replacer.Replace("%T135CLEARHMR").ShouldBe("Clear");
+        replacer.Replace("%T135CLEARLMR").ShouldBe("Not Clear");
     }
 
     [TestMethod]
@@ -43,30 +43,30 @@ public class ClearReplacerTests
     {
         var dictionary = ImmutableDictionary<Chara, Levels>.Empty;
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEAREMR"));
-        Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARNMR"));
-        Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARHMR"));
-        Assert.AreEqual("Not Clear", replacer.Replace("%T135CLEARLMR"));
+        replacer.Replace("%T135CLEAREMR").ShouldBe("Not Clear");
+        replacer.Replace("%T135CLEARNMR").ShouldBe("Not Clear");
+        replacer.Replace("%T135CLEARHMR").ShouldBe("Not Clear");
+        replacer.Replace("%T135CLEARLMR").ShouldBe("Not Clear");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new ClearReplacer(StoryClearFlags);
-        Assert.AreEqual("%T135XXXXXHMR", replacer.Replace("%T135XXXXXHMR"));
+        replacer.Replace("%T135XXXXXHMR").ShouldBe("%T135XXXXXHMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
         var replacer = new ClearReplacer(StoryClearFlags);
-        Assert.AreEqual("%T135CLEARXMR", replacer.Replace("%T135CLEARXMR"));
+        replacer.Replace("%T135CLEARXMR").ShouldBe("%T135CLEARXMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
         var replacer = new ClearReplacer(StoryClearFlags);
-        Assert.AreEqual("%T135CLEARHXX", replacer.Replace("%T135CLEARHXX"));
+        replacer.Replace("%T135CLEARHXX").ShouldBe("%T135CLEARHXX");
     }
 }
