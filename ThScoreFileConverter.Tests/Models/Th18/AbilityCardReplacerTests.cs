@@ -20,48 +20,48 @@ public class AbilityCardReplacerTests
     public void AbilityCardReplacerTest()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.AreEqual("太古の勾玉", replacer.Replace("%T18ABIL22"));
+        replacer.Replace("%T18ABIL22").ShouldBe("太古の勾玉");
     }
 
     [TestMethod]
     public void ReplaceTestNotCleared()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.AreEqual("??????????", replacer.Replace("%T18ABIL05"));
+        replacer.Replace("%T18ABIL05").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestZeroNumber()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.AreEqual("%T18ABIL00", replacer.Replace("%T18ABIL00"));
+        replacer.Replace("%T18ABIL00").ShouldBe("%T18ABIL00");
     }
 
     [TestMethod]
     public void ReplaceTestExceededNumber()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.AreEqual("%T18ABIL57", replacer.Replace("%T18ABIL57"));
+        replacer.Replace("%T18ABIL57").ShouldBe("%T18ABIL57");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.AreEqual("%T18XXXX22", replacer.Replace("%T18XXXX22"));
+        replacer.Replace("%T18XXXX22").ShouldBe("%T18XXXX22");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new AbilityCardReplacer(AbilityCardHolder);
-        Assert.AreEqual("%T18ABILXX", replacer.Replace("%T18ABILXX"));
+        replacer.Replace("%T18ABILXX").ShouldBe("%T18ABILXX");
     }
 }

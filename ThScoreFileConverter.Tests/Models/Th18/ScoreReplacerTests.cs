@@ -23,7 +23,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -32,7 +32,7 @@ public class ScoreReplacerTests
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(dictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -40,7 +40,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("Player1", replacer.Replace("%T18SCRHMR21"));
+        replacer.Replace("%T18SCRHMR21").ShouldBe("Player1");
     }
 
     [TestMethod]
@@ -48,7 +48,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 123446701", replacer.Replace("%T18SCRHMR22"));
+        replacer.Replace("%T18SCRHMR22").ShouldBe("invoked: 123446701");
     }
 
     [TestMethod]
@@ -56,7 +56,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("Stage 1", replacer.Replace("%T18SCRHMR23"));
+        replacer.Replace("%T18SCRHMR23").ShouldBe("Stage 1");
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T18SCRHMR83"));
+        replacer.Replace("%T18SCRHMR83").ShouldBe("Not Clear");
     }
 
     [TestMethod]
@@ -72,7 +72,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("All Clear", replacer.Replace("%T18SCRHMR03"));
+        replacer.Replace("%T18SCRHMR03").ShouldBe("All Clear");
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ public class ScoreReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
         var expected = DateTimeHelper.GetString(34567890);
-        Assert.AreEqual(expected, replacer.Replace("%T18SCRHMR24"));
+        replacer.Replace("%T18SCRHMR24").ShouldBe(expected);
     }
 
     [TestMethod]
@@ -89,7 +89,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 1.200%", replacer.Replace("%T18SCRHMR25"));
+        replacer.Replace("%T18SCRHMR25").ShouldBe("invoked: 1.200%");
     }
 
     [TestMethod]
@@ -98,11 +98,11 @@ public class ScoreReplacerTests
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(dictionary, formatterMock);
-        Assert.AreEqual("--------", replacer.Replace("%T18SCRHMR21"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T18SCRHMR22"));
-        Assert.AreEqual("-------", replacer.Replace("%T18SCRHMR23"));
-        Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T18SCRHMR24"));
-        Assert.AreEqual("-----%", replacer.Replace("%T18SCRHMR25"));
+        replacer.Replace("%T18SCRHMR21").ShouldBe("--------");
+        replacer.Replace("%T18SCRHMR22").ShouldBe("invoked: 0");
+        replacer.Replace("%T18SCRHMR23").ShouldBe("-------");
+        replacer.Replace("%T18SCRHMR24").ShouldBe(DateTimeHelper.GetString(null));
+        replacer.Replace("%T18SCRHMR25").ShouldBe("-----%");
     }
 
     [TestMethod]
@@ -110,11 +110,11 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("--------", replacer.Replace("%T18SCRHRM21"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T18SCRHRM22"));
-        Assert.AreEqual("-------", replacer.Replace("%T18SCRHRM23"));
-        Assert.AreEqual(DateTimeHelper.GetString(null), replacer.Replace("%T18SCRHRM24"));
-        Assert.AreEqual("-----%", replacer.Replace("%T18SCRHRM25"));
+        replacer.Replace("%T18SCRHRM21").ShouldBe("--------");
+        replacer.Replace("%T18SCRHRM22").ShouldBe("invoked: 0");
+        replacer.Replace("%T18SCRHRM23").ShouldBe("-------");
+        replacer.Replace("%T18SCRHRM24").ShouldBe(DateTimeHelper.GetString(null));
+        replacer.Replace("%T18SCRHRM25").ShouldBe("-----%");
     }
 
     [TestMethod]
@@ -122,7 +122,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T18XXXHMR21", replacer.Replace("%T18XXXHMR21"));
+        replacer.Replace("%T18XXXHMR21").ShouldBe("%T18XXXHMR21");
     }
 
     [TestMethod]
@@ -130,7 +130,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T18SCRYMR21", replacer.Replace("%T18SCRYMR21"));
+        replacer.Replace("%T18SCRYMR21").ShouldBe("%T18SCRYMR21");
     }
 
     [TestMethod]
@@ -138,7 +138,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T18SCRHXX21", replacer.Replace("%T18SCRHXX21"));
+        replacer.Replace("%T18SCRHXX21").ShouldBe("%T18SCRHXX21");
     }
 
     [TestMethod]
@@ -146,7 +146,7 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T18SCRHMRX1", replacer.Replace("%T18SCRHMRX1"));
+        replacer.Replace("%T18SCRHMRX1").ShouldBe("%T18SCRHMRX1");
     }
 
     [TestMethod]
@@ -154,6 +154,6 @@ public class ScoreReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ScoreReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T18SCRHMR2X", replacer.Replace("%T18SCRHMR2X"));
+        replacer.Replace("%T18SCRHMR2X").ShouldBe("%T18SCRHMR2X");
     }
 }

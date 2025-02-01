@@ -20,48 +20,48 @@ public class AchievementReplacerTests
     public void AchievementReplacerTest()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.AreEqual("霊夢でクリア", replacer.Replace("%T18ACHV02"));
+        replacer.Replace("%T18ACHV02").ShouldBe("霊夢でクリア");
     }
 
     [TestMethod]
     public void ReplaceTestNotCleared()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.AreEqual("??????????", replacer.Replace("%T18ACHV04"));
+        replacer.Replace("%T18ACHV04").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestZeroNumber()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.AreEqual("%T18ACHV00", replacer.Replace("%T18ACHV00"));
+        replacer.Replace("%T18ACHV00").ShouldBe("%T18ACHV00");
     }
 
     [TestMethod]
     public void ReplaceTestExceededNumber()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.AreEqual("%T18ACHV31", replacer.Replace("%T18ACHV31"));
+        replacer.Replace("%T18ACHV31").ShouldBe("%T18ACHV31");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.AreEqual("%T18XXXX22", replacer.Replace("%T18XXXX22"));
+        replacer.Replace("%T18XXXX22").ShouldBe("%T18XXXX22");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new AchievementReplacer(AchievementHolder);
-        Assert.AreEqual("%T18ACHVXX", replacer.Replace("%T18ACHVXX"));
+        replacer.Replace("%T18ACHVXX").ShouldBe("%T18ACHVXX");
     }
 }
