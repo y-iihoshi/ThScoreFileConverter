@@ -51,7 +51,7 @@ public class AllScoreDataTests
 
     internal static void Validate(in Properties expected, in AllScoreData actual)
     {
-        CollectionAssert.That.AreEqual(expected.storyClearCounts.Values, actual.StoryClearCounts.Values);
+        actual.StoryClearCounts.Values.ShouldBe(expected.storyClearCounts.Values);
 
         foreach (var pair in expected.systemCards)
         {
@@ -69,9 +69,9 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.AreEqual(0, allScoreData.StoryClearCounts.Count);
-        Assert.AreEqual(0, allScoreData.SystemCards.Count);
-        Assert.AreEqual(0, allScoreData.ClearData.Count);
+        allScoreData.StoryClearCounts.ShouldBeEmpty();
+        allScoreData.SystemCards.ShouldBeEmpty();
+        allScoreData.ClearData.ShouldBeEmpty();
     }
 
     [TestMethod]
