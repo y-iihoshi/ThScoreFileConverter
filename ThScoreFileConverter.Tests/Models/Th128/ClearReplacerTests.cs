@@ -38,7 +38,7 @@ public class ClearReplacerTests
     public void ClearReplacerTest()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -46,28 +46,28 @@ public class ClearReplacerTests
     {
         var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
         var replacer = new ClearReplacer(dictionary);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("Stage A2-3", replacer.Replace("%T128CLEARHA2"));
+        replacer.Replace("%T128CLEARHA2").ShouldBe("Stage A2-3");
     }
 
     [TestMethod]
     public void ReplaceTestLevelExtra()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T128CLEARXA2", replacer.Replace("%T128CLEARXA2"));
+        replacer.Replace("%T128CLEARXA2").ShouldBe("%T128CLEARXA2");
     }
 
     [TestMethod]
     public void ReplaceTestRouteExtra()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T128CLEARHEX", replacer.Replace("%T128CLEARHEX"));
+        replacer.Replace("%T128CLEARHEX").ShouldBe("%T128CLEARHEX");
     }
 
     [TestMethod]
@@ -75,7 +75,7 @@ public class ClearReplacerTests
     {
         var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("-------", replacer.Replace("%T128CLEARHA2"));
+        replacer.Replace("%T128CLEARHA2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -87,7 +87,7 @@ public class ClearReplacerTests
         var dictionary = new[] { clearData }.ToDictionary(data => data.Route);
 
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("-------", replacer.Replace("%T128CLEARHA2"));
+        replacer.Replace("%T128CLEARHA2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -102,27 +102,27 @@ public class ClearReplacerTests
         var dictionary = new[] { clearData }.ToDictionary(data => data.Route);
 
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("-------", replacer.Replace("%T128CLEARHA2"));
+        replacer.Replace("%T128CLEARHA2").ShouldBe("-------");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T128XXXXXHA2", replacer.Replace("%T128XXXXXHA2"));
+        replacer.Replace("%T128XXXXXHA2").ShouldBe("%T128XXXXXHA2");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T128CLEARYA2", replacer.Replace("%T128CLEARYA2"));
+        replacer.Replace("%T128CLEARYA2").ShouldBe("%T128CLEARYA2");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidRoute()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T128CLEARHXX", replacer.Replace("%T128CLEARHXX"));
+        replacer.Replace("%T128CLEARHXX").ShouldBe("%T128CLEARHXX");
     }
 }

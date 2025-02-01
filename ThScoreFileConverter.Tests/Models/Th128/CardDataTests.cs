@@ -46,10 +46,10 @@ public class CardDataTests
 
     internal static void Validate(ICardData expected, ICardData actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
 
         foreach (var pair in expected.Cards)
         {
@@ -66,7 +66,7 @@ public class CardDataTests
         var clearData = new CardData(chapter);
 
         Validate(mock, clearData);
-        Assert.IsFalse(clearData.IsValid);
+        clearData.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -77,7 +77,7 @@ public class CardDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class CardDataTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
     [TestMethod]
@@ -99,7 +99,7 @@ public class CardDataTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
     [DataTestMethod]
@@ -115,7 +115,6 @@ public class CardDataTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(
-            expected, CardData.CanInitialize(chapter));
+        CardData.CanInitialize(chapter).ShouldBe(expected);
     }
 }

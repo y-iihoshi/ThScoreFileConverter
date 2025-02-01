@@ -41,12 +41,12 @@ public class SpellCardTests
 
     internal static void Validate(ISpellCard expected, ISpellCard actual)
     {
-        CollectionAssert.That.AreEqual(expected.Name, actual.Name);
-        Assert.AreEqual(expected.NoMissCount, actual.NoMissCount);
-        Assert.AreEqual(expected.NoIceCount, actual.NoIceCount);
-        Assert.AreEqual(expected.TrialCount, actual.TrialCount);
-        Assert.AreEqual(expected.Id, actual.Id);
-        Assert.AreEqual(expected.Level, actual.Level);
+        actual.Name.ShouldBe(expected.Name);
+        actual.NoMissCount.ShouldBe(expected.NoMissCount);
+        actual.NoIceCount.ShouldBe(expected.NoIceCount);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.Id.ShouldBe(expected.Id);
+        actual.Level.ShouldBe(expected.Level);
     }
 
     [TestMethod]
@@ -56,7 +56,7 @@ public class SpellCardTests
         var spellCard = new SpellCard();
 
         Validate(mock, spellCard);
-        Assert.IsFalse(spellCard.HasTried);
+        spellCard.HasTried.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class SpellCardTests
         var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock));
 
         Validate(mock, spellCard);
-        Assert.IsTrue(spellCard.HasTried);
+        spellCard.HasTried.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -77,7 +77,7 @@ public class SpellCardTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
@@ -88,7 +88,7 @@ public class SpellCardTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
@@ -101,7 +101,7 @@ public class SpellCardTests
         var mock = MockSpellCard();
         _ = mock.Level.Returns((Level)level);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 }
