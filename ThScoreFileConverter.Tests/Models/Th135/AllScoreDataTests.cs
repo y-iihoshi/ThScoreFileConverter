@@ -63,8 +63,7 @@ public class AllScoreDataTests
     internal static void Validate(in Properties expected, in AllScoreData actual)
     {
         actual.StoryProgress.ShouldBe(expected.storyProgress);
-        actual.StoryClearFlags.Keys.ShouldBe(expected.storyClearFlags.Keys);
-        actual.StoryClearFlags.Values.ShouldBe(expected.storyClearFlags.Values);
+        actual.StoryClearFlags.ShouldBe(expected.storyClearFlags);
         actual.EndingCount.ShouldBe(expected.endingCount);
         actual.Ending2Count.ShouldBe(expected.ending2Count);
         actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
@@ -72,8 +71,7 @@ public class AllScoreDataTests
         actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
         actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
         actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
-        actual.BgmFlags.Keys.ShouldBe(expected.bgmFlags.Keys);
-        actual.BgmFlags.Values.ShouldBe(expected.bgmFlags.Values);
+        actual.BgmFlags.ShouldBe(expected.bgmFlags);
     }
 
     [TestMethod]
