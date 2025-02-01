@@ -63,23 +63,23 @@ public class ClearDataTests
 
     internal static void Validate(IClearData expected, IClearData actual)
     {
-        Assert.AreEqual(expected.UseCount, actual.UseCount);
-        Assert.AreEqual(expected.ClearCount, actual.ClearCount);
-        Assert.AreEqual(expected.MaxCombo, actual.MaxCombo);
-        Assert.AreEqual(expected.MaxDamage, actual.MaxDamage);
-        CollectionAssert.That.AreEqual(expected.MaxBonuses, actual.MaxBonuses);
-        CollectionAssert.That.AreEqual(expected.CardGotCount, actual.CardGotCount);
-        CollectionAssert.That.AreEqual(expected.CardTrialCount, actual.CardTrialCount);
-        CollectionAssert.That.AreEqual(expected.CardTrulyGot, actual.CardTrulyGot);
-        Assert.AreEqual(expected.Ranking.Count, actual.Ranking.Count);
+        actual.UseCount.ShouldBe(expected.UseCount);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.MaxCombo.ShouldBe(expected.MaxCombo);
+        actual.MaxDamage.ShouldBe(expected.MaxDamage);
+        actual.MaxBonuses.ShouldBe(expected.MaxBonuses);
+        actual.CardGotCount.ShouldBe(expected.CardGotCount);
+        actual.CardTrialCount.ShouldBe(expected.CardTrialCount);
+        actual.CardTrulyGot.ShouldBe(expected.CardTrulyGot);
+        actual.Ranking.Count.ShouldBe(expected.Ranking.Count);
         foreach (var index in Enumerable.Range(0, expected.Ranking.Count))
         {
             var highScoreStub = expected.Ranking[index];
             var highScore = actual.Ranking[index];
-            Assert.AreEqual(highScoreStub.Name, highScore.Name);
-            Assert.AreEqual(highScoreStub.Month, highScore.Month);
-            Assert.AreEqual(highScoreStub.Day, highScore.Day);
-            Assert.AreEqual(highScoreStub.Score, highScore.Score);
+            highScore.Name.ShouldBe(highScoreStub.Name);
+            highScore.Month.ShouldBe(highScoreStub.Month);
+            highScore.Day.ShouldBe(highScoreStub.Day);
+            highScore.Score.ShouldBe(highScoreStub.Score);
         }
     }
 

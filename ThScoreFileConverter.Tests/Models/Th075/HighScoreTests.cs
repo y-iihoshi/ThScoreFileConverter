@@ -27,10 +27,10 @@ public class HighScoreTests
 
     internal static void Validate(IHighScore expected, IHighScore actual)
     {
-        Assert.AreEqual(expected.Name, actual.Name);
-        Assert.AreEqual(expected.Month, actual.Month);
-        Assert.AreEqual(expected.Day, actual.Day);
-        Assert.AreEqual(expected.Score, actual.Score);
+        actual.Name.ShouldBe(expected.Name);
+        actual.Month.ShouldBe(expected.Month);
+        actual.Day.ShouldBe(expected.Day);
+        actual.Score.ShouldBe(expected.Score);
     }
 
     [TestMethod]
@@ -38,10 +38,10 @@ public class HighScoreTests
     {
         var highScore = new HighScore();
 
-        Assert.AreEqual(string.Empty, highScore.Name);
-        Assert.AreEqual(default, highScore.Month);
-        Assert.AreEqual(default, highScore.Day);
-        Assert.AreEqual(default, highScore.Score);
+        highScore.Name.ShouldBeEmpty();
+        highScore.Month.ShouldBe(default);
+        highScore.Day.ShouldBe(default);
+        highScore.Score.ShouldBe(default);
     }
 
     [TestMethod]
@@ -58,7 +58,7 @@ public class HighScoreTests
         var stub = new HighScoreStub(ValidStub);
         stub.EncodedName = stub.EncodedName.SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
+        _ = Should.Throw<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class HighScoreTests
         var stub = new HighScoreStub(ValidStub);
         stub.EncodedName = stub.EncodedName.Concat([default]).ToArray();
 
-        _ = Assert.ThrowsException<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
+        _ = Should.Throw<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
     }
 
     [DataTestMethod]
@@ -145,7 +145,7 @@ public class HighScoreTests
             Day = (byte)day,
         };
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<HighScore>(MakeByteArray(properties)));
     }
 }

@@ -32,8 +32,8 @@ public class StatusTests
 
     internal static void Validate(in Properties properties, in Status status)
     {
-        Assert.AreEqual(properties.decodedLastName, status.LastName);
-        CollectionAssert.That.AreEqual(properties.arcadeScores.Values, status.ArcadeScores.Values);
+        status.LastName.ShouldBe(properties.decodedLastName);
+        status.ArcadeScores.Values.ShouldBe(properties.arcadeScores.Values);
     }
 
     [TestMethod]
@@ -41,8 +41,8 @@ public class StatusTests
     {
         var status = new Status();
 
-        Assert.AreEqual(string.Empty, status.LastName);
-        Assert.AreEqual(0, status.ArcadeScores.Count);
+        status.LastName.ShouldBeEmpty();
+        status.ArcadeScores.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -62,7 +62,7 @@ public class StatusTests
         properties.encodedLastName =
             properties.encodedLastName.Take(properties.encodedLastName.Length - 1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Status>(MakeByteArray(properties)));
     }
 
@@ -74,8 +74,8 @@ public class StatusTests
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
-        Assert.AreEqual("Player1 ", status.LastName);
-        CollectionAssert.That.AreNotEqual(properties.arcadeScores.Values, status.ArcadeScores.Values);
+        status.LastName.ShouldBe("Player1 ");
+        status.ArcadeScores.Values.ShouldNotBe(properties.arcadeScores.Values);
     }
 
     [TestMethod]
@@ -86,7 +86,7 @@ public class StatusTests
             .Where(pair => pair.Key != (CharaWithReserved.Meiling, CharaWithReserved.Meiling)).ToDictionary();
         properties.arcadeScores = scores;
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Status>(MakeByteArray(properties)));
     }
 

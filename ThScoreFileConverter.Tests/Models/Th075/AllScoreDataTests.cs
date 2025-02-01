@@ -34,7 +34,7 @@ public class AllScoreDataTests
             ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
         }
 
-        Assert.IsNotNull(allScoreData.Status);
+        _ = allScoreData.Status.ShouldNotBeNull();
         StatusTests.Validate(properties.status, allScoreData.Status!);
     }
 
@@ -43,8 +43,8 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.AreEqual(0, allScoreData.ClearData.Count);
-        Assert.IsNull(allScoreData.Status);
+        allScoreData.ClearData.ShouldBeEmpty();
+        allScoreData.Status.ShouldBeNull();
     }
 
     [TestMethod]
