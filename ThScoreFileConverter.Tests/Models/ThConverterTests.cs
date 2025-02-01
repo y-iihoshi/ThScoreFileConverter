@@ -22,9 +22,9 @@ public class ThConverterTests
         var converter = Substitute.ForPartsOf<ThConverter>();
 
         converter.ConvertFinished +=
-            (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
+            (sender, e) => TestHelper.ShouldNotReachHere(nameof(converter.ConvertFinished));
         converter.ConvertAllFinished +=
-            (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
+            (sender, e) => TestHelper.ShouldNotReachHere(nameof(converter.ConvertAllFinished));
         converter.ExceptionOccurred +=
             (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
@@ -37,9 +37,9 @@ public class ThConverterTests
         var converter = Substitute.ForPartsOf<ThConverter>();
 
         converter.ConvertFinished +=
-            (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
+            (sender, e) => TestHelper.ShouldNotReachHere(nameof(converter.ConvertFinished));
         converter.ConvertAllFinished +=
-            (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
+            (sender, e) => TestHelper.ShouldNotReachHere(nameof(converter.ConvertAllFinished));
         converter.ExceptionOccurred +=
             (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 
@@ -54,9 +54,9 @@ public class ThConverterTests
         var converter = Substitute.ForPartsOf<ThConverter>();
 
         converter.ConvertFinished +=
-            (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
+            (sender, e) => TestHelper.ShouldNotReachHere(nameof(converter.ConvertFinished));
         converter.ConvertAllFinished +=
-            (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
+            (sender, e) => TestHelper.ShouldNotReachHere(nameof(converter.ConvertAllFinished));
         converter.ExceptionOccurred +=
             (sender, e) => Console.WriteLine($"{nameof(converter.ExceptionOccurred)}: {e.Exception}");
 

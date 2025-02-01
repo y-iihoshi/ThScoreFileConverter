@@ -75,7 +75,7 @@ public class CloseWindowCommandTests
     public void CanExecuteChangedTest()
     {
         var instance = CloseWindowCommand.Instance;
-        instance.CanExecuteChanged += (sender, e) => Assert.Fail(TestUtils.Unreachable);
+        instance.CanExecuteChanged += static (sender, e) => TestHelper.ShouldNotReachHere();
 
         instance.Execute(null);
         instance.Execute(new Window());

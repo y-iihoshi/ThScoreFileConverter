@@ -17,6 +17,11 @@ public static class TestHelper
         yield return new object[] { values.Max() + 1 };
     }
 
+    public static void ShouldNotReachHere(string? message = null)
+    {
+        Assert.Fail(string.IsNullOrEmpty(message) ? nameof(ShouldNotReachHere) : $"{nameof(ShouldNotReachHere)}: {message}");
+    }
+
     public static IDisposable BackupCultureInfo()
     {
         return new CultureInfoDisposable();

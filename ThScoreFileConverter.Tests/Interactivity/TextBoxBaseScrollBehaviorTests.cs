@@ -93,7 +93,7 @@ public class TextBoxBaseScrollBehaviorTests
 
         static void onLayoutUpdated(object? sender, EventArgs eventArgs)
         {
-            Assert.Fail(TestUtils.Unreachable);
+            TestHelper.ShouldNotReachHere();
         }
 
         _ = BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
