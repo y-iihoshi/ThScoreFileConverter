@@ -7,10 +7,6 @@ using System.Text;
 using CommunityToolkit.Diagnostics;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 
-#if DEBUG_TEST
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.UnitTesting;
 
 #if DEBUG_TEST
