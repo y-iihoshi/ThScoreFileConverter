@@ -19,7 +19,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class PracticeReplacerTests
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(dictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 1234360", replacer.Replace("%T12PRACHRB3"));
+        replacer.Replace("%T12PRACHRB3").ShouldBe("invoked: 1234360");
     }
 
     [TestMethod]
@@ -44,7 +44,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T12PRACXRB3", replacer.Replace("%T12PRACXRB3"));
+        replacer.Replace("%T12PRACXRB3").ShouldBe("%T12PRACXRB3");
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T12PRACHRBX", replacer.Replace("%T12PRACHRBX"));
+        replacer.Replace("%T12PRACHRBX").ShouldBe("%T12PRACHRBX");
     }
 
     [TestMethod]
@@ -61,7 +61,7 @@ public class PracticeReplacerTests
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(dictionary, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T12PRACHRB3"));
+        replacer.Replace("%T12PRACHRB3").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -74,7 +74,7 @@ public class PracticeReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new PracticeReplacer(dictionary, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T12PRACHRB3"));
+        replacer.Replace("%T12PRACHRB3").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -82,7 +82,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T12XXXXHRB3", replacer.Replace("%T12XXXXHRB3"));
+        replacer.Replace("%T12XXXXHRB3").ShouldBe("%T12XXXXHRB3");
     }
 
     [TestMethod]
@@ -90,7 +90,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T12PRACYRB3", replacer.Replace("%T12PRACYRB3"));
+        replacer.Replace("%T12PRACYRB3").ShouldBe("%T12PRACYRB3");
     }
 
     [TestMethod]
@@ -98,7 +98,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T12PRACHXX3", replacer.Replace("%T12PRACHXX3"));
+        replacer.Replace("%T12PRACHXX3").ShouldBe("%T12PRACHXX3");
     }
 
     [TestMethod]
@@ -106,6 +106,6 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T12PRACHRBY", replacer.Replace("%T12PRACHRBY"));
+        replacer.Replace("%T12PRACHRBY").ShouldBe("%T12PRACHRBY");
     }
 }
