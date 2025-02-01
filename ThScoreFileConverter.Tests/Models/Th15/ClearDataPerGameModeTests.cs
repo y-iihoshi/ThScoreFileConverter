@@ -92,10 +92,10 @@ public class ClearDataPerGameModeTests
             }
         }
 
-        Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
-        Assert.AreEqual(expected.PlayTime, actual.PlayTime);
-        CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
-        CollectionAssert.That.AreEqual(expected.ClearFlags.Values, actual.ClearFlags.Values);
+        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+        actual.ClearFlags.Values.ShouldBe(expected.ClearFlags.Values);
 
         foreach (var pair in expected.Cards)
         {
@@ -129,7 +129,7 @@ public class ClearDataPerGameModeTests
         var mock = MockClearDataPerGameMode();
         var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(array));
     }
 
     [TestMethod]
