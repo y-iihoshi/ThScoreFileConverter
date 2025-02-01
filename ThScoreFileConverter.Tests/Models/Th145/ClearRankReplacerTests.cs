@@ -26,7 +26,7 @@ public class ClearRankReplacerTests
     public void ClearRankReplacerTest()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -34,7 +34,7 @@ public class ClearRankReplacerTests
     {
         var clearRanks = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
         var replacer = new ClearRankReplacer(clearRanks);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -46,31 +46,31 @@ public class ClearRankReplacerTests
         };
 
         var replacer = new ClearRankReplacer(clearRanks);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.AreEqual("Gold", replacer.Replace("%T145CLEARHRA"));
-        Assert.AreEqual("Silver", replacer.Replace("%T145CLEARHMR"));
-        Assert.AreEqual("Bronze", replacer.Replace("%T145CLEARHIU"));
-        Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHBY"));
+        replacer.Replace("%T145CLEARHRA").ShouldBe("Gold");
+        replacer.Replace("%T145CLEARHMR").ShouldBe("Silver");
+        replacer.Replace("%T145CLEARHIU").ShouldBe("Bronze");
+        replacer.Replace("%T145CLEARHBY").ShouldBe("Not Clear");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentLevel()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARLMR"));
+        replacer.Replace("%T145CLEARLMR").ShouldBe("Not Clear");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentChara()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHFT"));
+        replacer.Replace("%T145CLEARHFT").ShouldBe("Not Clear");
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class ClearRankReplacerTests
     {
         var clearRanks = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
         var replacer = new ClearRankReplacer(clearRanks);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHMR"));
+        replacer.Replace("%T145CLEARHMR").ShouldBe("Not Clear");
     }
 
     [TestMethod]
@@ -90,27 +90,27 @@ public class ClearRankReplacerTests
         };
 
         var replacer = new ClearRankReplacer(clearRanks);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHMR"));
+        replacer.Replace("%T145CLEARHMR").ShouldBe("Not Clear");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.AreEqual("%T145XXXXXHMR", replacer.Replace("%T145XXXXXHMR"));
+        replacer.Replace("%T145XXXXXHMR").ShouldBe("%T145XXXXXHMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.AreEqual("%T145CLEARXMR", replacer.Replace("%T145CLEARXMR"));
+        replacer.Replace("%T145CLEARXMR").ShouldBe("%T145CLEARXMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
         var replacer = new ClearRankReplacer(ClearRanks);
-        Assert.AreEqual("%T145CLEARHXX", replacer.Replace("%T145CLEARHXX"));
+        replacer.Replace("%T145CLEARHXX").ShouldBe("%T145CLEARHXX");
     }
 }
