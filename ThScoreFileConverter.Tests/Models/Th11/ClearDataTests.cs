@@ -90,7 +90,7 @@ public class ClearDataTests
         var clearData = new ClearData(chapter);
 
         Th10.ClearDataTests.Validate(mock, clearData);
-        Assert.IsFalse(clearData.IsValid);
+        clearData.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -101,7 +101,7 @@ public class ClearDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public class ClearDataTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -123,7 +123,7 @@ public class ClearDataTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [DataTestMethod]
@@ -139,6 +139,6 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
+        ClearData.CanInitialize(chapter).ShouldBe(expected);
     }
 }

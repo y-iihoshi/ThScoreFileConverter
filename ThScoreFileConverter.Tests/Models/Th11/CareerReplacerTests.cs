@@ -18,7 +18,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -27,7 +27,7 @@ public class CareerReplacerTests
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(dictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -35,7 +35,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 126", replacer.Replace("%T11C003RS1"));
+        replacer.Replace("%T11C003RS1").ShouldBe("invoked: 126");
     }
 
     [TestMethod]
@@ -43,7 +43,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 459", replacer.Replace("%T11C003RS2"));
+        replacer.Replace("%T11C003RS2").ShouldBe("invoked: 459");
     }
 
     [TestMethod]
@@ -51,7 +51,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 36925", replacer.Replace("%T11C000RS1"));
+        replacer.Replace("%T11C000RS1").ShouldBe("invoked: 36925");
     }
 
     [TestMethod]
@@ -59,7 +59,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 95200", replacer.Replace("%T11C000RS2"));
+        replacer.Replace("%T11C000RS2").ShouldBe("invoked: 95200");
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public class CareerReplacerTests
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(dictionary, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T11C003RS1"));
+        replacer.Replace("%T11C003RS1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ public class CareerReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new CareerReplacer(dictionary, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T11C003RS1"));
+        replacer.Replace("%T11C003RS1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -89,7 +89,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T11X003RS1", replacer.Replace("%T11X003RS1"));
+        replacer.Replace("%T11X003RS1").ShouldBe("%T11X003RS1");
     }
 
     [TestMethod]
@@ -97,7 +97,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T11C176RS1", replacer.Replace("%T11C176RS1"));
+        replacer.Replace("%T11C176RS1").ShouldBe("%T11C176RS1");
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T11C003XX1", replacer.Replace("%T11C003XX1"));
+        replacer.Replace("%T11C003XX1").ShouldBe("%T11C003XX1");
     }
 
     [TestMethod]
@@ -113,6 +113,6 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T11C003RSX", replacer.Replace("%T11C003RSX"));
+        replacer.Replace("%T11C003RSX").ShouldBe("%T11C003RSX");
     }
 }
