@@ -9,18 +9,18 @@ public class SaveDataTests
 {
     internal static void ValidateAsDefault(SaveData saveData)
     {
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -101,20 +101,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(1, saveData.BgmPlayCountDictionary.Count);
-        Assert.IsTrue(saveData.BgmPlayCountDictionary.ContainsKey("op"));
-        Assert.AreEqual(2, saveData.BgmPlayCountDictionary["op"]);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.BgmPlayCountDictionary.ShouldContainKeyAndValue("op", 2);
+#else
+        saveData.BgmPlayCountDictionary.ContainsKey("op").ShouldBeTrue();
+        saveData.BgmPlayCountDictionary["op"].ShouldBe(2);
+#endif
     }
 
     [TestMethod]
@@ -176,20 +180,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(1, saveData.TutorialCountDictionary.Count);
-        Assert.IsTrue(saveData.TutorialCountDictionary.ContainsKey(Chara.Reimu));
-        Assert.AreEqual(3, saveData.TutorialCountDictionary[Chara.Reimu]);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.TutorialCountDictionary.ShouldContainKeyAndValue(Chara.Reimu, 3);
+#else
+        saveData.TutorialCountDictionary.ContainsKey(Chara.Reimu).ShouldBeTrue();
+        saveData.TutorialCountDictionary[Chara.Reimu].ShouldBe(3);
+#endif
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -206,20 +214,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(1, saveData.ReachedStageDictionary.Count);
-        Assert.IsTrue(saveData.ReachedStageDictionary.ContainsKey(Chara.Marisa));
-        Assert.AreEqual(4, saveData.ReachedStageDictionary[Chara.Marisa]);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.ReachedStageDictionary.ShouldContainKeyAndValue(Chara.Marisa, 4);
+#else
+        saveData.ReachedStageDictionary.ContainsKey(Chara.Marisa).ShouldBeTrue();
+        saveData.ReachedStageDictionary[Chara.Marisa].ShouldBe(4);
+#endif
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -236,20 +248,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(1, saveData.UseCountDictionary.Count);
-        Assert.IsTrue(saveData.UseCountDictionary.ContainsKey(Chara.Kanako));
-        Assert.AreEqual(5, saveData.UseCountDictionary[Chara.Kanako]);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.UseCountDictionary.ShouldContainKeyAndValue(Chara.Kanako, 5);
+#else
+        saveData.UseCountDictionary.ContainsKey(Chara.Kanako).ShouldBeTrue();
+        saveData.UseCountDictionary[Chara.Kanako].ShouldBe(5);
+#endif
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -266,20 +282,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(1, saveData.RetireCountDictionary.Count);
-        Assert.IsTrue(saveData.RetireCountDictionary.ContainsKey(Chara.Minamitsu));
-        Assert.AreEqual(6, saveData.RetireCountDictionary[Chara.Minamitsu]);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.RetireCountDictionary.ShouldContainKeyAndValue(Chara.Minamitsu, 6);
+#else
+        saveData.RetireCountDictionary.ContainsKey(Chara.Minamitsu).ShouldBeTrue();
+        saveData.RetireCountDictionary[Chara.Minamitsu].ShouldBe(6);
+#endif
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -296,20 +316,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(1, saveData.ClearCountDictionary.Count);
-        Assert.IsTrue(saveData.ClearCountDictionary.ContainsKey(Chara.JoonShion));
-        Assert.AreEqual(7, saveData.ClearCountDictionary[Chara.JoonShion]);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.ClearCountDictionary.ShouldContainKeyAndValue(Chara.JoonShion, 7);
+#else
+        saveData.ClearCountDictionary.ContainsKey(Chara.JoonShion).ShouldBeTrue();
+        saveData.ClearCountDictionary[Chara.JoonShion].ShouldBe(7);
+#endif
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -326,20 +350,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(1, saveData.PerfectClearCountDictionary.Count);
-        Assert.IsTrue(saveData.PerfectClearCountDictionary.ContainsKey(Chara.Flandre));
-        Assert.AreEqual(8, saveData.PerfectClearCountDictionary[Chara.Flandre]);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.PerfectClearCountDictionary.ShouldContainKeyAndValue(Chara.Flandre, 8);
+#else
+        saveData.PerfectClearCountDictionary.ContainsKey(Chara.Flandre).ShouldBeTrue();
+        saveData.PerfectClearCountDictionary[Chara.Flandre].ShouldBe(8);
+#endif
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -356,20 +384,24 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(1, saveData.EndingCountDictionary.Count);
-        Assert.IsTrue(saveData.EndingCountDictionary.ContainsKey(Chara.Reimu));
-        Assert.AreEqual(9, saveData.EndingCountDictionary[Chara.Reimu]);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.Count.ShouldBe(1);
+#if NET9_0_OR_GREATER
+        saveData.EndingCountDictionary.ShouldContainKeyAndValue(Chara.Reimu, 9);
+#else
+        saveData.EndingCountDictionary.ContainsKey(Chara.Reimu).ShouldBeTrue();
+        saveData.EndingCountDictionary[Chara.Reimu].ShouldBe(9);
+#endif
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -487,26 +519,33 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(4, saveData.ScoreDictionary.Count);
-        Assert.IsTrue(saveData.ScoreDictionary.ContainsKey((Level.Easy, Chara.Reimu)));
-        Assert.AreEqual(2, saveData.ScoreDictionary[(Level.Easy, Chara.Reimu)].ElementAtOrDefault(1));
-        Assert.IsTrue(saveData.ScoreDictionary.ContainsKey((Level.Normal, Chara.Marisa)));
-        Assert.AreEqual(13, saveData.ScoreDictionary[(Level.Normal, Chara.Marisa)].ElementAtOrDefault(2));
-        Assert.IsTrue(saveData.ScoreDictionary.ContainsKey((Level.Hard, Chara.Kanako)));
-        Assert.AreEqual(24, saveData.ScoreDictionary[(Level.Hard, Chara.Kanako)].ElementAtOrDefault(3));
-        Assert.IsTrue(saveData.ScoreDictionary.ContainsKey((Level.Rush, Chara.Minamitsu)));
-        Assert.AreEqual(35, saveData.ScoreDictionary[(Level.Rush, Chara.Minamitsu)].ElementAtOrDefault(4));
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.Count.ShouldBe(4);
+#if NET9_0_OR_GREATER
+        saveData.ScoreDictionary.ShouldContainKey((Level.Easy, Chara.Reimu));
+        saveData.ScoreDictionary.ShouldContainKey((Level.Normal, Chara.Marisa));
+        saveData.ScoreDictionary.ShouldContainKey((Level.Hard, Chara.Kanako));
+        saveData.ScoreDictionary.ShouldContainKey((Level.Rush, Chara.Minamitsu));
+#else
+        saveData.ScoreDictionary.ContainsKey((Level.Easy, Chara.Reimu)).ShouldBeTrue();
+        saveData.ScoreDictionary.ContainsKey((Level.Normal, Chara.Marisa)).ShouldBeTrue();
+        saveData.ScoreDictionary.ContainsKey((Level.Hard, Chara.Kanako)).ShouldBeTrue();
+        saveData.ScoreDictionary.ContainsKey((Level.Rush, Chara.Minamitsu)).ShouldBeTrue();
+#endif
+        saveData.ScoreDictionary[(Level.Easy, Chara.Reimu)].ElementAtOrDefault(1).ShouldBe(2);
+        saveData.ScoreDictionary[(Level.Normal, Chara.Marisa)].ElementAtOrDefault(2).ShouldBe(13);
+        saveData.ScoreDictionary[(Level.Hard, Chara.Kanako)].ElementAtOrDefault(3).ShouldBe(24);
+        saveData.ScoreDictionary[(Level.Rush, Chara.Minamitsu)].ElementAtOrDefault(4).ShouldBe(35);
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -556,26 +595,33 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(4, saveData.TimeDictionary.Count);
-        Assert.IsTrue(saveData.TimeDictionary.ContainsKey((Level.Easy, Chara.Reimu)));
-        Assert.AreEqual(2, saveData.TimeDictionary[(Level.Easy, Chara.Reimu)].ElementAtOrDefault(1));
-        Assert.IsTrue(saveData.TimeDictionary.ContainsKey((Level.Normal, Chara.Marisa)));
-        Assert.AreEqual(13, saveData.TimeDictionary[(Level.Normal, Chara.Marisa)].ElementAtOrDefault(2));
-        Assert.IsTrue(saveData.TimeDictionary.ContainsKey((Level.Hard, Chara.Kanako)));
-        Assert.AreEqual(24, saveData.TimeDictionary[(Level.Hard, Chara.Kanako)].ElementAtOrDefault(3));
-        Assert.IsTrue(saveData.TimeDictionary.ContainsKey((Level.Rush, Chara.Minamitsu)));
-        Assert.AreEqual(35, saveData.TimeDictionary[(Level.Rush, Chara.Minamitsu)].ElementAtOrDefault(4));
-        Assert.AreEqual(0, saveData.SpellDictionary.Count);
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.Count.ShouldBe(4);
+#if NET9_0_OR_GREATER
+        saveData.TimeDictionary.ShouldContainKey((Level.Easy, Chara.Reimu));
+        saveData.TimeDictionary.ShouldContainKey((Level.Normal, Chara.Marisa));
+        saveData.TimeDictionary.ShouldContainKey((Level.Hard, Chara.Kanako));
+        saveData.TimeDictionary.ShouldContainKey((Level.Rush, Chara.Minamitsu));
+#else
+        saveData.TimeDictionary.ContainsKey((Level.Easy, Chara.Reimu)).ShouldBeTrue();
+        saveData.TimeDictionary.ContainsKey((Level.Normal, Chara.Marisa)).ShouldBeTrue();
+        saveData.TimeDictionary.ContainsKey((Level.Hard, Chara.Kanako)).ShouldBeTrue();
+        saveData.TimeDictionary.ContainsKey((Level.Rush, Chara.Minamitsu)).ShouldBeTrue();
+#endif
+        saveData.TimeDictionary[(Level.Easy, Chara.Reimu)].ElementAtOrDefault(1).ShouldBe(2);
+        saveData.TimeDictionary[(Level.Normal, Chara.Marisa)].ElementAtOrDefault(2).ShouldBe(13);
+        saveData.TimeDictionary[(Level.Hard, Chara.Kanako)].ElementAtOrDefault(3).ShouldBe(24);
+        saveData.TimeDictionary[(Level.Rush, Chara.Minamitsu)].ElementAtOrDefault(4).ShouldBe(35);
+        saveData.SpellDictionary.ShouldBeEmpty();
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -625,25 +671,32 @@ public class SaveDataTests
             },
         }));
 
-        Assert.IsNotNull(saveData);
-        Assert.AreEqual(0, saveData.ScoreDictionary.Count);
-        Assert.AreEqual(0, saveData.TimeDictionary.Count);
-        Assert.AreEqual(4, saveData.SpellDictionary.Count);
-        Assert.IsTrue(saveData.SpellDictionary.ContainsKey((Level.Easy, Chara.Reimu)));
-        Assert.AreEqual(2, saveData.SpellDictionary[(Level.Easy, Chara.Reimu)].ElementAtOrDefault(1));
-        Assert.IsTrue(saveData.SpellDictionary.ContainsKey((Level.Normal, Chara.Marisa)));
-        Assert.AreEqual(13, saveData.SpellDictionary[(Level.Normal, Chara.Marisa)].ElementAtOrDefault(2));
-        Assert.IsTrue(saveData.SpellDictionary.ContainsKey((Level.Hard, Chara.Kanako)));
-        Assert.AreEqual(24, saveData.SpellDictionary[(Level.Hard, Chara.Kanako)].ElementAtOrDefault(3));
-        Assert.IsTrue(saveData.SpellDictionary.ContainsKey((Level.Rush, Chara.Minamitsu)));
-        Assert.AreEqual(35, saveData.SpellDictionary[(Level.Rush, Chara.Minamitsu)].ElementAtOrDefault(4));
-        Assert.AreEqual(0, saveData.TutorialCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ReachedStageDictionary.Count);
-        Assert.AreEqual(0, saveData.UseCountDictionary.Count);
-        Assert.AreEqual(0, saveData.RetireCountDictionary.Count);
-        Assert.AreEqual(0, saveData.ClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.PerfectClearCountDictionary.Count);
-        Assert.AreEqual(0, saveData.EndingCountDictionary.Count);
-        Assert.AreEqual(0, saveData.BgmPlayCountDictionary.Count);
+        _ = saveData.ShouldNotBeNull();
+        saveData.ScoreDictionary.ShouldBeEmpty();
+        saveData.TimeDictionary.ShouldBeEmpty();
+        saveData.SpellDictionary.Count.ShouldBe(4);
+#if NET9_0_OR_GREATER
+        saveData.SpellDictionary.ShouldContainKey((Level.Easy, Chara.Reimu));
+        saveData.SpellDictionary.ShouldContainKey((Level.Normal, Chara.Marisa));
+        saveData.SpellDictionary.ShouldContainKey((Level.Hard, Chara.Kanako));
+        saveData.SpellDictionary.ShouldContainKey((Level.Rush, Chara.Minamitsu));
+#else
+        saveData.SpellDictionary.ContainsKey((Level.Easy, Chara.Reimu)).ShouldBeTrue();
+        saveData.SpellDictionary.ContainsKey((Level.Normal, Chara.Marisa)).ShouldBeTrue();
+        saveData.SpellDictionary.ContainsKey((Level.Hard, Chara.Kanako)).ShouldBeTrue();
+        saveData.SpellDictionary.ContainsKey((Level.Rush, Chara.Minamitsu)).ShouldBeTrue();
+#endif
+        saveData.SpellDictionary[(Level.Easy, Chara.Reimu)].ElementAtOrDefault(1).ShouldBe(2);
+        saveData.SpellDictionary[(Level.Normal, Chara.Marisa)].ElementAtOrDefault(2).ShouldBe(13);
+        saveData.SpellDictionary[(Level.Hard, Chara.Kanako)].ElementAtOrDefault(3).ShouldBe(24);
+        saveData.SpellDictionary[(Level.Rush, Chara.Minamitsu)].ElementAtOrDefault(4).ShouldBe(35);
+        saveData.TutorialCountDictionary.ShouldBeEmpty();
+        saveData.ReachedStageDictionary.ShouldBeEmpty();
+        saveData.UseCountDictionary.ShouldBeEmpty();
+        saveData.RetireCountDictionary.ShouldBeEmpty();
+        saveData.ClearCountDictionary.ShouldBeEmpty();
+        saveData.PerfectClearCountDictionary.ShouldBeEmpty();
+        saveData.EndingCountDictionary.ShouldBeEmpty();
+        saveData.BgmPlayCountDictionary.ShouldBeEmpty();
     }
 }
