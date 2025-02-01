@@ -39,7 +39,7 @@ public class ScoreDataTests
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
         _ = mock.StageProgress.Returns((StageProgress)stageProgress);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
@@ -50,7 +50,7 @@ public class ScoreDataTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
@@ -64,12 +64,12 @@ public class ScoreDataTests
 
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Assert.AreEqual(mock.Score, scoreData.Score);
-        Assert.AreEqual(mock.StageProgress, scoreData.StageProgress);
-        Assert.AreEqual(mock.ContinueCount, scoreData.ContinueCount);
-        CollectionAssert.That.AreNotEqual(mock.Name, scoreData.Name);
-        CollectionAssert.That.AreEqual(mock.Name.Take(validNameLength), scoreData.Name);
-        Assert.AreNotEqual(mock.DateTime, scoreData.DateTime);
-        Assert.AreNotEqual(mock.SlowRate, scoreData.SlowRate);
+        scoreData.Score.ShouldBe(mock.Score);
+        scoreData.StageProgress.ShouldBe(mock.StageProgress);
+        scoreData.ContinueCount.ShouldBe(mock.ContinueCount);
+        scoreData.Name.ShouldNotBe(mock.Name);
+        scoreData.Name.ShouldBe(mock.Name.Take(validNameLength));
+        scoreData.DateTime.ShouldNotBe(mock.DateTime);
+        scoreData.SlowRate.ShouldNotBe(mock.SlowRate);
     }
 }
