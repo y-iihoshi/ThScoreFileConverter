@@ -35,10 +35,10 @@ public class FlspTests
     {
         var data = MakeData(expected);
 
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(data[0], actual.FirstByteOfData);
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
     }
 
     [TestMethod]
@@ -59,7 +59,7 @@ public class FlspTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new FLSP(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new FLSP(chapter));
     }
 
     [TestMethod]
@@ -69,6 +69,6 @@ public class FlspTests
         --properties.size1;
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new FLSP(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new FLSP(chapter));
     }
 }

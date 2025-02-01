@@ -39,13 +39,13 @@ public class PracticeScoreTests
 
     internal static void Validate(IPracticeScore expected, IPracticeScore actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.PlayCounts.Values, actual.PlayCounts.Values);
-        CollectionAssert.That.AreEqual(expected.HighScores.Values, actual.HighScores.Values);
-        Assert.AreEqual(expected.Chara, actual.Chara);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.PlayCounts.Values.ShouldBe(expected.PlayCounts.Values);
+        actual.HighScores.Values.ShouldBe(expected.HighScores.Values);
+        actual.Chara.ShouldBe(expected.Chara);
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class PracticeScoreTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class PracticeScoreTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new PracticeScore(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new PracticeScore(chapter));
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
@@ -91,6 +91,6 @@ public class PracticeScoreTests
         _ = mock.Chara.Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new PracticeScore(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new PracticeScore(chapter));
     }
 }

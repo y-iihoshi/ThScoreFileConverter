@@ -30,10 +30,10 @@ public class HeaderTests
 
     internal static void Validate(in Properties expected, in Header actual)
     {
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(expected.data[0], actual.FirstByteOfData);
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(expected.data[0]);
     }
 
     [TestMethod]
@@ -54,7 +54,7 @@ public class HeaderTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Header(chapter));
     }
 
     [TestMethod]
@@ -65,6 +65,6 @@ public class HeaderTests
         properties.data = [.. properties.data, .. new byte[] { default }];
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Header(chapter));
     }
 }

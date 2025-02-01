@@ -39,13 +39,13 @@ public class ClearDataTests
 
     internal static void Validate(IClearData expected, IClearData actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.StoryFlags.Values, actual.StoryFlags.Values);
-        CollectionAssert.That.AreEqual(expected.PracticeFlags.Values, actual.PracticeFlags.Values);
-        Assert.AreEqual(expected.Chara, actual.Chara);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.StoryFlags.Values.ShouldBe(expected.StoryFlags.Values);
+        actual.PracticeFlags.Values.ShouldBe(expected.PracticeFlags.Values);
+        actual.Chara.ShouldBe(expected.Chara);
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class ClearDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class ClearDataTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<CharaWithTotal>();
@@ -91,6 +91,6 @@ public class ClearDataTests
         _ = mock.Chara.Returns((CharaWithTotal)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new ClearData(chapter));
     }
 }

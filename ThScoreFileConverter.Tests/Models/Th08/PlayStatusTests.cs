@@ -51,20 +51,20 @@ public class PlayStatusTests
 
     internal static void Validate(IPlayStatus expected, IPlayStatus actual)
     {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        Assert.AreEqual(expected.TotalRunningTime.Hours, actual.TotalRunningTime.Hours);
-        Assert.AreEqual(expected.TotalRunningTime.Minutes, actual.TotalRunningTime.Minutes);
-        Assert.AreEqual(expected.TotalRunningTime.Seconds, actual.TotalRunningTime.Seconds);
-        Assert.AreEqual(expected.TotalRunningTime.Milliseconds, actual.TotalRunningTime.Milliseconds);
-        Assert.IsFalse(actual.TotalRunningTime.IsFrames);
-        Assert.AreEqual(expected.TotalPlayTime.Hours, actual.TotalPlayTime.Hours);
-        Assert.AreEqual(expected.TotalPlayTime.Minutes, actual.TotalPlayTime.Minutes);
-        Assert.AreEqual(expected.TotalPlayTime.Seconds, actual.TotalPlayTime.Seconds);
-        Assert.AreEqual(expected.TotalPlayTime.Milliseconds, actual.TotalPlayTime.Milliseconds);
-        Assert.IsFalse(actual.TotalPlayTime.IsFrames);
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.TotalRunningTime.Hours.ShouldBe(expected.TotalRunningTime.Hours);
+        actual.TotalRunningTime.Minutes.ShouldBe(expected.TotalRunningTime.Minutes);
+        actual.TotalRunningTime.Seconds.ShouldBe(expected.TotalRunningTime.Seconds);
+        actual.TotalRunningTime.Milliseconds.ShouldBe(expected.TotalRunningTime.Milliseconds);
+        actual.TotalRunningTime.IsFrames.ShouldBeFalse();
+        actual.TotalPlayTime.Hours.ShouldBe(expected.TotalPlayTime.Hours);
+        actual.TotalPlayTime.Minutes.ShouldBe(expected.TotalPlayTime.Minutes);
+        actual.TotalPlayTime.Seconds.ShouldBe(expected.TotalPlayTime.Seconds);
+        actual.TotalPlayTime.Milliseconds.ShouldBe(expected.TotalPlayTime.Milliseconds);
+        actual.TotalPlayTime.IsFrames.ShouldBeFalse();
 
         foreach (var key in expected.PlayCounts.Keys)
         {
@@ -72,7 +72,7 @@ public class PlayStatusTests
         }
 
         PlayCountTests.Validate(expected.TotalPlayCount, actual.TotalPlayCount);
-        CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
+        actual.BgmFlags.ShouldBe(expected.BgmFlags);
     }
 
     [TestMethod]
@@ -94,7 +94,7 @@ public class PlayStatusTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new PlayStatus(chapter));
     }
 
     [TestMethod]
@@ -105,6 +105,6 @@ public class PlayStatusTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new PlayStatus(chapter));
     }
 }
