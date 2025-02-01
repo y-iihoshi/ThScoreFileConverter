@@ -40,14 +40,14 @@ public class SpellCardTests
     internal static void Validate<TLevel>(ISpellCard<TLevel> expected, ISpellCard<TLevel> actual)
         where TLevel : struct, Enum
     {
-        CollectionAssert.That.AreEqual(expected.Name, actual.Name);
-        Assert.AreEqual(expected.ClearCount, actual.ClearCount);
-        Assert.AreEqual(expected.PracticeClearCount, actual.PracticeClearCount);
-        Assert.AreEqual(expected.TrialCount, actual.TrialCount);
-        Assert.AreEqual(expected.PracticeTrialCount, actual.PracticeTrialCount);
-        Assert.AreEqual(expected.Id, actual.Id);
-        Assert.AreEqual(expected.Level, actual.Level);
-        Assert.AreEqual(expected.PracticeScore, actual.PracticeScore);
+        actual.Name.ShouldBe(expected.Name);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.PracticeClearCount.ShouldBe(expected.PracticeClearCount);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.PracticeTrialCount.ShouldBe(expected.PracticeTrialCount);
+        actual.Id.ShouldBe(expected.Id);
+        actual.Level.ShouldBe(expected.Level);
+        actual.PracticeScore.ShouldBe(expected.PracticeScore);
     }
 
     internal static void SpellCardTestHelper<TLevel>()
@@ -57,7 +57,7 @@ public class SpellCardTests
         var spellCard = new SpellCard<TLevel>();
 
         Validate(mock, spellCard);
-        Assert.IsFalse(spellCard.HasTried);
+        spellCard.HasTried.ShouldBeFalse();
     }
 
     internal static void ReadFromTestHelper<TLevel>()
@@ -68,7 +68,7 @@ public class SpellCardTests
         var spellCard = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock));
 
         Validate(mock, spellCard);
-        Assert.IsTrue(spellCard.HasTried);
+        spellCard.HasTried.ShouldBeTrue();
     }
 
     internal static void ReadFromTestShortenedNameHelper<TLevel>()
@@ -78,7 +78,7 @@ public class SpellCardTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock)));
     }
 
@@ -89,7 +89,7 @@ public class SpellCardTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock)));
     }
 
@@ -99,7 +99,7 @@ public class SpellCardTests
         var mock = MockSpellCard<TLevel>();
         _ = mock.Level.Returns(TestUtils.Cast<TLevel>(level));
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock)));
     }
 
