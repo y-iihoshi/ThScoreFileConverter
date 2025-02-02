@@ -1,9 +1,51 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Models.Th165;
 
 namespace ThScoreFileConverter.Tests.Models.Th165;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader actual, IBestShotHeader expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Weekday.ShouldBe(expected.Weekday);
+        actual.Dream.ShouldBe(expected.Dream);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.Width2.ShouldBe(expected.Width2);
+        actual.Height2.ShouldBe(expected.Height2);
+        actual.HalfWidth.ShouldBe(expected.HalfWidth);
+        actual.HalfHeight.ShouldBe(expected.HalfHeight);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.Angle.ShouldBe(expected.Angle);
+        actual.Score.ShouldBe(expected.Score);
+        actual.Fields.Data.ShouldBe(expected.Fields.Data);
+        actual.Score2.ShouldBe(expected.Score2);
+        actual.BasePoint.ShouldBe(expected.BasePoint);
+        actual.NumViewed.ShouldBe(expected.NumViewed);
+        actual.NumLikes.ShouldBe(expected.NumLikes);
+        actual.NumFavs.ShouldBe(expected.NumFavs);
+        actual.NumBullets.ShouldBe(expected.NumBullets);
+        actual.NumBulletsNearby.ShouldBe(expected.NumBulletsNearby);
+        actual.RiskBonus.ShouldBe(expected.RiskBonus);
+        actual.BossShot.ShouldBe(expected.BossShot);
+        actual.AngleBonus.ShouldBe(expected.AngleBonus);
+        actual.MacroBonus.ShouldBe(expected.MacroBonus);
+        actual.LikesPerView.ShouldBe(expected.LikesPerView);
+        actual.FavsPerView.ShouldBe(expected.FavsPerView);
+        actual.NumHashtags.ShouldBe(expected.NumHashtags);
+        actual.NumRedBullets.ShouldBe(expected.NumRedBullets);
+        actual.NumPurpleBullets.ShouldBe(expected.NumPurpleBullets);
+        actual.NumBlueBullets.ShouldBe(expected.NumBlueBullets);
+        actual.NumCyanBullets.ShouldBe(expected.NumCyanBullets);
+        actual.NumGreenBullets.ShouldBe(expected.NumGreenBullets);
+        actual.NumYellowBullets.ShouldBe(expected.NumYellowBullets);
+        actual.NumOrangeBullets.ShouldBe(expected.NumOrangeBullets);
+        actual.NumLightBullets.ShouldBe(expected.NumLightBullets);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -109,55 +151,13 @@ public class BestShotHeaderTests
             TestUtils.MakeRandomArray(0x78));
     }
 
-    internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
-    {
-        Guard.IsNotNull(actual);
-
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Weekday.ShouldBe(expected.Weekday);
-        actual.Dream.ShouldBe(expected.Dream);
-        actual.Width.ShouldBe(expected.Width);
-        actual.Height.ShouldBe(expected.Height);
-        actual.Width2.ShouldBe(expected.Width2);
-        actual.Height2.ShouldBe(expected.Height2);
-        actual.HalfWidth.ShouldBe(expected.HalfWidth);
-        actual.HalfHeight.ShouldBe(expected.HalfHeight);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-        actual.DateTime.ShouldBe(expected.DateTime);
-        actual.Angle.ShouldBe(expected.Angle);
-        actual.Score.ShouldBe(expected.Score);
-        actual.Fields.Data.ShouldBe(expected.Fields.Data);
-        actual.Score2.ShouldBe(expected.Score2);
-        actual.BasePoint.ShouldBe(expected.BasePoint);
-        actual.NumViewed.ShouldBe(expected.NumViewed);
-        actual.NumLikes.ShouldBe(expected.NumLikes);
-        actual.NumFavs.ShouldBe(expected.NumFavs);
-        actual.NumBullets.ShouldBe(expected.NumBullets);
-        actual.NumBulletsNearby.ShouldBe(expected.NumBulletsNearby);
-        actual.RiskBonus.ShouldBe(expected.RiskBonus);
-        actual.BossShot.ShouldBe(expected.BossShot);
-        actual.AngleBonus.ShouldBe(expected.AngleBonus);
-        actual.MacroBonus.ShouldBe(expected.MacroBonus);
-        actual.LikesPerView.ShouldBe(expected.LikesPerView);
-        actual.FavsPerView.ShouldBe(expected.FavsPerView);
-        actual.NumHashtags.ShouldBe(expected.NumHashtags);
-        actual.NumRedBullets.ShouldBe(expected.NumRedBullets);
-        actual.NumPurpleBullets.ShouldBe(expected.NumPurpleBullets);
-        actual.NumBlueBullets.ShouldBe(expected.NumBlueBullets);
-        actual.NumCyanBullets.ShouldBe(expected.NumCyanBullets);
-        actual.NumGreenBullets.ShouldBe(expected.NumGreenBullets);
-        actual.NumYellowBullets.ShouldBe(expected.NumYellowBullets);
-        actual.NumOrangeBullets.ShouldBe(expected.NumOrangeBullets);
-        actual.NumLightBullets.ShouldBe(expected.NumLightBullets);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -166,7 +166,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
