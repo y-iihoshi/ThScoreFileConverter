@@ -2,6 +2,17 @@
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 
+internal static class StageInfoExtensions
+{
+    internal static void ShouldBe<TChara>(this StageInfo<TChara> actual, StageInfoTests.Properties<TChara> expected)
+        where TChara : struct, Enum
+    {
+        actual.Stage.ShouldBe(expected.stage);
+        actual.Enemy.ShouldBe(expected.enemy);
+        actual.CardIds.ShouldBe(expected.cardIds);
+    }
+}
+
 [TestClass]
 public class StageInfoTests
 {
@@ -24,14 +35,6 @@ public class StageInfoTests
         };
     }
 
-    internal static void Validate<TChara>(in Properties<TChara> expected, in StageInfo<TChara> actual)
-        where TChara : struct, Enum
-    {
-        actual.Stage.ShouldBe(expected.stage);
-        actual.Enemy.ShouldBe(expected.enemy);
-        actual.CardIds.ShouldBe(expected.cardIds);
-    }
-
     internal static void StageInfoTestHelper<TChara>()
         where TChara : struct, Enum
     {
@@ -39,7 +42,7 @@ public class StageInfoTests
 
         var spellCardInfo = new StageInfo<TChara>(properties.stage, properties.enemy, properties.cardIds);
 
-        Validate(properties, spellCardInfo);
+        spellCardInfo.ShouldBe(properties);
     }
 
     [TestMethod]

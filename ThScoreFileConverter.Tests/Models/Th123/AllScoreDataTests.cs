@@ -1,6 +1,8 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th123;
 using ThScoreFileConverter.Models.Th123;
+using static ThScoreFileConverter.Tests.Models.Th105.CardForDeckExtensions;
+using static ThScoreFileConverter.Tests.Models.Th105.ClearDataExtensions;
 using ICardForDeck = ThScoreFileConverter.Models.Th105.ICardForDeck;
 using IClearData = ThScoreFileConverter.Models.Th105.IClearData<ThScoreFileConverter.Core.Models.Th123.Chara>;
 
@@ -55,12 +57,12 @@ public class AllScoreDataTests
 
         foreach (var pair in expected.systemCards)
         {
-            Th105.CardForDeckTests.Validate(pair.Value, actual.SystemCards[pair.Key]);
+            actual.SystemCards[pair.Key].ShouldBe(pair.Value);
         }
 
         foreach (var pair in expected.clearData)
         {
-            Th105.ClearDataTests.Validate(pair.Value, actual.ClearData[pair.Key]);
+            actual.ClearData[pair.Key].ShouldBe(pair.Value);
         }
     }
 

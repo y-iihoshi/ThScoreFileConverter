@@ -4,6 +4,20 @@ using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 
+internal static class SpellCardResultExtensions
+{
+    internal static void ShouldBe<TChara>(this ISpellCardResult<TChara> actual, ISpellCardResult<TChara> expected)
+        where TChara : struct, Enum
+    {
+        actual.Enemy.ShouldBe(expected.Enemy);
+        actual.Level.ShouldBe(expected.Level);
+        actual.Id.ShouldBe(expected.Id);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.GotCount.ShouldBe(expected.GotCount);
+        actual.Frames.ShouldBe(expected.Frames);
+    }
+}
+
 [TestClass]
 public class SpellCardResultTests
 {
@@ -38,24 +52,13 @@ public class SpellCardResultTests
             properties.Frames);
     }
 
-    internal static void Validate<TChara>(ISpellCardResult<TChara> expected, ISpellCardResult<TChara> actual)
-        where TChara : struct, Enum
-    {
-        actual.Enemy.ShouldBe(expected.Enemy);
-        actual.Level.ShouldBe(expected.Level);
-        actual.Id.ShouldBe(expected.Id);
-        actual.TrialCount.ShouldBe(expected.TrialCount);
-        actual.GotCount.ShouldBe(expected.GotCount);
-        actual.Frames.ShouldBe(expected.Frames);
-    }
-
     internal static void SpellCardResultTestHelper<TChara>()
         where TChara : struct, Enum
     {
         var mock = Substitute.For<ISpellCardResult<TChara>>();
         var spellCardResult = new SpellCardResult<TChara>();
 
-        Validate(mock, spellCardResult);
+        spellCardResult.ShouldBe(mock);
     }
 
     internal static void ReadFromTestHelper<TChara>()
@@ -64,7 +67,7 @@ public class SpellCardResultTests
         var mock = MockSpellCardResult<TChara>();
         var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(mock));
 
-        Validate(mock, spellCardResult);
+        spellCardResult.ShouldBe(mock);
     }
 
     internal static void ReadFromTestShortenedHelper<TChara>()
@@ -84,7 +87,7 @@ public class SpellCardResultTests
 
         var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(array);
 
-        Validate(mock, spellCardResult);
+        spellCardResult.ShouldBe(mock);
     }
 
     [TestMethod]

@@ -4,6 +4,24 @@ using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        actual.StoryClearCounts.Values.ShouldBe(expected.storyClearCounts.Values);
+
+        foreach (var pair in expected.systemCards)
+        {
+            actual.SystemCards[pair.Key].ShouldBe(pair.Value);
+        }
+
+        foreach (var pair in expected.clearData)
+        {
+            actual.ClearData[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
+
 [TestClass]
 public class AllScoreDataTests
 {
@@ -47,21 +65,6 @@ public class AllScoreDataTests
             properties.clearData.Select(pair => ClearDataTests.MakeByteArray(pair.Value)));
     }
 
-    internal static void Validate(in Properties expected, in AllScoreData actual)
-    {
-        actual.StoryClearCounts.Values.ShouldBe(expected.storyClearCounts.Values);
-
-        foreach (var pair in expected.systemCards)
-        {
-            CardForDeckTests.Validate(pair.Value, actual.SystemCards[pair.Key]);
-        }
-
-        foreach (var pair in expected.clearData)
-        {
-            ClearDataTests.Validate(pair.Value, actual.ClearData[pair.Key]);
-        }
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
@@ -79,7 +82,7 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -103,7 +106,7 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(array);
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -127,6 +130,6 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(array);
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 }

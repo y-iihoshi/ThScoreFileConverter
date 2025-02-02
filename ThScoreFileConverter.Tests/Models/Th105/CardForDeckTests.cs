@@ -3,6 +3,15 @@ using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 
+internal static class CardForDeckExtensions
+{
+    internal static void ShouldBe(this ICardForDeck actual, ICardForDeck expected)
+    {
+        actual.Id.ShouldBe(expected.Id);
+        actual.MaxNumber.ShouldBe(expected.MaxNumber);
+    }
+}
+
 [TestClass]
 public class CardForDeckTests
 {
@@ -19,19 +28,13 @@ public class CardForDeckTests
         return TestUtils.MakeByteArray(cardForDeck.Id, cardForDeck.MaxNumber);
     }
 
-    internal static void Validate(ICardForDeck expected, ICardForDeck actual)
-    {
-        actual.Id.ShouldBe(expected.Id);
-        actual.MaxNumber.ShouldBe(expected.MaxNumber);
-    }
-
     [TestMethod]
     public void CardForDeckTest()
     {
         var mock = Substitute.For<ICardForDeck>();
         var cardForDeck = new CardForDeck();
 
-        Validate(mock, cardForDeck);
+        cardForDeck.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -40,7 +43,7 @@ public class CardForDeckTests
         var mock = MockCardForDeck(1, 2);
         var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(mock));
 
-        Validate(mock, cardForDeck);
+        cardForDeck.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -60,6 +63,6 @@ public class CardForDeckTests
 
         var cardForDeck = TestUtils.Create<CardForDeck>(array);
 
-        Validate(mock, cardForDeck);
+        cardForDeck.ShouldBe(mock);
     }
 }

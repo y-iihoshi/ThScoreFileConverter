@@ -5,6 +5,24 @@ using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
 
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe<TChara>(this IClearData<TChara> actual, IClearData<TChara> expected)
+        where TChara : struct, Enum
+    {
+        foreach (var pair in expected.CardsForDeck)
+        {
+            actual.CardsForDeck[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.SpellCardResults.Count.ShouldBe(expected.SpellCardResults.Count);
+        foreach (var pair in expected.SpellCardResults)
+        {
+            actual.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)].ShouldBe(pair.Value);
+        }
+    }
+}
+
 [TestClass]
 public class ClearDataTests
 {
@@ -39,20 +57,6 @@ public class ClearDataTests
             properties.SpellCardResults.Select(pair => SpellCardResultTests.MakeByteArray(pair.Value)));
     }
 
-    internal static void Validate<TChara>(IClearData<TChara> expected, IClearData<TChara> actual)
-        where TChara : struct, Enum
-    {
-        foreach (var pair in expected.CardsForDeck)
-        {
-            CardForDeckTests.Validate(pair.Value, actual.CardsForDeck[pair.Key]);
-        }
-
-        foreach (var pair in expected.SpellCardResults)
-        {
-            SpellCardResultTests.Validate(pair.Value, actual.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)]);
-        }
-    }
-
     internal static void ClearDataTestHelper<TChara>()
         where TChara : struct, Enum
     {
@@ -68,7 +72,7 @@ public class ClearDataTests
         var mock = MockClearData<TChara>();
         var clearData = TestUtils.Create<ClearData<TChara>>(MakeByteArray(mock));
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     internal static void ReadFromTestShortenedHelper<TChara>()
@@ -88,7 +92,7 @@ public class ClearDataTests
 
         var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     internal static void ReadFromTestDuplicatedHelper<TChara>()
@@ -105,7 +109,7 @@ public class ClearDataTests
 
         var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]
