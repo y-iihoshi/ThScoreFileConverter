@@ -5,6 +5,23 @@ using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th135;
 
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        actual.StoryProgress.ShouldBe(expected.storyProgress);
+        actual.StoryClearFlags.ShouldBe(expected.storyClearFlags);
+        actual.EndingCount.ShouldBe(expected.endingCount);
+        actual.Ending2Count.ShouldBe(expected.ending2Count);
+        actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
+        actual.IsEnabledStageTanuki2.ShouldBe(expected.isEnabledStageTanuki2);
+        actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
+        actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
+        actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
+        actual.BgmFlags.ShouldBe(expected.bgmFlags);
+    }
+}
+
 [TestClass]
 public class AllScoreDataTests
 {
@@ -60,20 +77,6 @@ public class AllScoreDataTests
         ];
     }
 
-    internal static void Validate(in Properties expected, in AllScoreData actual)
-    {
-        actual.StoryProgress.ShouldBe(expected.storyProgress);
-        actual.StoryClearFlags.ShouldBe(expected.storyClearFlags);
-        actual.EndingCount.ShouldBe(expected.endingCount);
-        actual.Ending2Count.ShouldBe(expected.ending2Count);
-        actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
-        actual.IsEnabledStageTanuki2.ShouldBe(expected.isEnabledStageTanuki2);
-        actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
-        actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
-        actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
-        actual.BgmFlags.ShouldBe(expected.bgmFlags);
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
@@ -98,7 +101,7 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 
     [TestMethod]
