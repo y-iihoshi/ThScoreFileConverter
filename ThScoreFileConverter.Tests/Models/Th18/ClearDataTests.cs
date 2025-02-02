@@ -23,6 +23,41 @@ using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverter.Tests.Models.Th18;
 
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Chara.ShouldBe(expected.Chara);
+
+        foreach (var pair in expected.Rankings)
+        {
+            for (var index = 0; index < pair.Value.Count; ++index)
+            {
+                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
+            }
+        }
+
+        foreach (var pair in expected.Cards)
+        {
+            actual.Cards[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+        actual.ClearFlags.Values.ShouldBe(expected.ClearFlags.Values);
+
+        foreach (var pair in expected.Practices)
+        {
+            actual.Practices[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
+
 [TestClass]
 public class ClearDataTests
 {
@@ -123,38 +158,6 @@ public class ClearDataTests
             );
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.Chara.ShouldBe(expected.Chara);
-
-        foreach (var pair in expected.Rankings)
-        {
-            for (var index = 0; index < pair.Value.Count; ++index)
-            {
-                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
-            }
-        }
-
-        foreach (var pair in expected.Cards)
-        {
-            SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
-        }
-
-        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
-        actual.PlayTime.ShouldBe(expected.PlayTime);
-        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
-        actual.ClearFlags.Values.ShouldBe(expected.ClearFlags.Values);
-
-        foreach (var pair in expected.Practices)
-        {
-            actual.Practices[pair.Key].ShouldBe(pair.Value);
-        }
-    }
-
     [TestMethod]
     public void ClearDataTestChapter()
     {
@@ -163,7 +166,7 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
         clearData.IsValid.ShouldBeFalse();
     }
 

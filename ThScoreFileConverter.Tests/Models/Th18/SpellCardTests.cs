@@ -5,6 +5,21 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 
 namespace ThScoreFileConverter.Tests.Models.Th18;
 
+internal static class SpellCardExtensions
+{
+    internal static void ShouldBe(this ISpellCard actual, ISpellCard expected)
+    {
+        actual.Name.ShouldBe(expected.Name);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.PracticeClearCount.ShouldBe(expected.PracticeClearCount);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.PracticeTrialCount.ShouldBe(expected.PracticeTrialCount);
+        actual.Id.ShouldBe(expected.Id);
+        actual.Level.ShouldBe(expected.Level);
+        actual.PracticeScore.ShouldBe(expected.PracticeScore);
+    }
+}
+
 [TestClass]
 public class SpellCardTests
 {
@@ -35,25 +50,13 @@ public class SpellCardTests
             spellCard.PracticeScore);
     }
 
-    internal static void Validate(ISpellCard expected, ISpellCard actual)
-    {
-        actual.Name.ShouldBe(expected.Name);
-        actual.ClearCount.ShouldBe(expected.ClearCount);
-        actual.PracticeClearCount.ShouldBe(expected.PracticeClearCount);
-        actual.TrialCount.ShouldBe(expected.TrialCount);
-        actual.PracticeTrialCount.ShouldBe(expected.PracticeTrialCount);
-        actual.Id.ShouldBe(expected.Id);
-        actual.Level.ShouldBe(expected.Level);
-        actual.PracticeScore.ShouldBe(expected.PracticeScore);
-    }
-
     [TestMethod]
     public void SpellCardTest()
     {
         var mock = Substitute.For<ISpellCard>();
         var spellCard = new SpellCard();
 
-        Validate(mock, spellCard);
+        spellCard.ShouldBe(mock);
         spellCard.HasTried.ShouldBeFalse();
     }
 
@@ -64,7 +67,7 @@ public class SpellCardTests
 
         var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock));
 
-        Validate(mock, spellCard);
+        spellCard.ShouldBe(mock);
         spellCard.HasTried.ShouldBeTrue();
     }
 
