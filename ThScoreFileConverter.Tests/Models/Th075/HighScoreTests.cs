@@ -3,6 +3,17 @@ using ThScoreFileConverter.Tests.Models.Th075.Stubs;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
 
+internal static class HighScoreExtensions
+{
+    internal static void ShouldBe(this IHighScore actual, IHighScore expected)
+    {
+        actual.Name.ShouldBe(expected.Name);
+        actual.Month.ShouldBe(expected.Month);
+        actual.Day.ShouldBe(expected.Day);
+        actual.Score.ShouldBe(expected.Score);
+    }
+}
+
 [TestClass]
 public class HighScoreTests
 {
@@ -25,14 +36,6 @@ public class HighScoreTests
             stub.Score);
     }
 
-    internal static void Validate(IHighScore expected, IHighScore actual)
-    {
-        actual.Name.ShouldBe(expected.Name);
-        actual.Month.ShouldBe(expected.Month);
-        actual.Day.ShouldBe(expected.Day);
-        actual.Score.ShouldBe(expected.Score);
-    }
-
     [TestMethod]
     public void HighScoreTest()
     {
@@ -49,7 +52,7 @@ public class HighScoreTests
     {
         var highScore = TestUtils.Create<HighScore>(MakeByteArray(ValidStub));
 
-        Validate(ValidStub, highScore);
+        highScore.ShouldBe(ValidStub);
     }
 
     [TestMethod]
@@ -107,7 +110,7 @@ public class HighScoreTests
 
         var highScore = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
-        Validate(stub, highScore);
+        highScore.ShouldBe(stub);
     }
 
     [DataTestMethod]

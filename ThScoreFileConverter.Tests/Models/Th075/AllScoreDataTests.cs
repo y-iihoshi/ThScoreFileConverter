@@ -4,6 +4,19 @@ using ThScoreFileConverter.Models.Th075;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
 
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        foreach (var pair in expected.clearData)
+        {
+            actual.ClearData[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.Status.ShouldNotBeNull().ShouldBe(expected.status);
+    }
+}
+
 [TestClass]
 public class AllScoreDataTests
 {
@@ -27,17 +40,6 @@ public class AllScoreDataTests
             StatusTests.MakeByteArray(properties.status));
     }
 
-    internal static void Validate(in Properties properties, in AllScoreData allScoreData)
-    {
-        foreach (var pair in properties.clearData)
-        {
-            ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
-        }
-
-        _ = allScoreData.Status.ShouldNotBeNull();
-        StatusTests.Validate(properties.status, allScoreData.Status!);
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
@@ -54,6 +56,6 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 }

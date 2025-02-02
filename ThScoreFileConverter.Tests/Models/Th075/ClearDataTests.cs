@@ -5,6 +5,31 @@ using ThScoreFileConverter.Tests.Models.Th075.Stubs;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
 
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.UseCount.ShouldBe(expected.UseCount);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.MaxCombo.ShouldBe(expected.MaxCombo);
+        actual.MaxDamage.ShouldBe(expected.MaxDamage);
+        actual.MaxBonuses.ShouldBe(expected.MaxBonuses);
+        actual.CardGotCount.ShouldBe(expected.CardGotCount);
+        actual.CardTrialCount.ShouldBe(expected.CardTrialCount);
+        actual.CardTrulyGot.ShouldBe(expected.CardTrulyGot);
+        actual.Ranking.Count.ShouldBe(expected.Ranking.Count);
+        foreach (var index in Enumerable.Range(0, expected.Ranking.Count))
+        {
+            var expectedHighScore = expected.Ranking[index];
+            var actualHighScore = actual.Ranking[index];
+            actualHighScore.Name.ShouldBe(expectedHighScore.Name);
+            actualHighScore.Month.ShouldBe(expectedHighScore.Month);
+            actualHighScore.Day.ShouldBe(expectedHighScore.Day);
+            actualHighScore.Score.ShouldBe(expectedHighScore.Score);
+        }
+    }
+}
+
 [TestClass]
 public class ClearDataTests
 {
@@ -61,35 +86,13 @@ public class ClearDataTests
             clearData.Ranking.Select(element => HighScoreTests.MakeByteArray((HighScoreStub)element)));
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        actual.UseCount.ShouldBe(expected.UseCount);
-        actual.ClearCount.ShouldBe(expected.ClearCount);
-        actual.MaxCombo.ShouldBe(expected.MaxCombo);
-        actual.MaxDamage.ShouldBe(expected.MaxDamage);
-        actual.MaxBonuses.ShouldBe(expected.MaxBonuses);
-        actual.CardGotCount.ShouldBe(expected.CardGotCount);
-        actual.CardTrialCount.ShouldBe(expected.CardTrialCount);
-        actual.CardTrulyGot.ShouldBe(expected.CardTrulyGot);
-        actual.Ranking.Count.ShouldBe(expected.Ranking.Count);
-        foreach (var index in Enumerable.Range(0, expected.Ranking.Count))
-        {
-            var highScoreStub = expected.Ranking[index];
-            var highScore = actual.Ranking[index];
-            highScore.Name.ShouldBe(highScoreStub.Name);
-            highScore.Month.ShouldBe(highScoreStub.Month);
-            highScore.Day.ShouldBe(highScoreStub.Day);
-            highScore.Score.ShouldBe(highScoreStub.Score);
-        }
-    }
-
     [TestMethod]
     public void ClearDataTest()
     {
         var mock = MockInitialClearData();
         var clearData = new ClearData();
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -98,6 +101,6 @@ public class ClearDataTests
         var mock = MockClearData();
         var clearData = TestUtils.Create<ClearData>(MakeByteArray(mock));
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 }

@@ -4,6 +4,15 @@ using ThScoreFileConverter.Models.Th075;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
 
+internal static class StatusExtensions
+{
+    internal static void ShouldBe(this Status status, StatusTests.Properties properties)
+    {
+        status.LastName.ShouldBe(properties.decodedLastName);
+        status.ArcadeScores.Values.ShouldBe(properties.arcadeScores.Values);
+    }
+}
+
 [TestClass]
 public class StatusTests
 {
@@ -30,12 +39,6 @@ public class StatusTests
             new byte[0x128]);
     }
 
-    internal static void Validate(in Properties properties, in Status status)
-    {
-        status.LastName.ShouldBe(properties.decodedLastName);
-        status.ArcadeScores.Values.ShouldBe(properties.arcadeScores.Values);
-    }
-
     [TestMethod]
     public void StatusTest()
     {
@@ -52,7 +55,7 @@ public class StatusTests
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
-        Validate(properties, status);
+        status.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -100,6 +103,6 @@ public class StatusTests
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
-        Validate(ValidProperties, status);
+        status.ShouldBe(ValidProperties);
     }
 }
