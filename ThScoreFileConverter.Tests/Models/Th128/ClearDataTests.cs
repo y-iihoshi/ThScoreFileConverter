@@ -3,9 +3,9 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
+using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
-using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
 

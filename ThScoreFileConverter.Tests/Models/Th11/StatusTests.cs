@@ -1,8 +1,8 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th11;
+using static ThScoreFileConverter.Tests.Models.Th10.StatusExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IStatus = ThScoreFileConverter.Models.Th10.IStatus;
-using static ThScoreFileConverter.Tests.Models.Th10.StatusExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th11;
 

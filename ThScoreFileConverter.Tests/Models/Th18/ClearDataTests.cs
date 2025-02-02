@@ -4,6 +4,8 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th18;
 using ThScoreFileConverter.Models.Th18;
+using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
+using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using Definitions = ThScoreFileConverter.Models.Th18.Definitions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
@@ -18,8 +20,6 @@ using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConver
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 using LevelPracticeWithTotal = ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
-using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
-using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th18;
 

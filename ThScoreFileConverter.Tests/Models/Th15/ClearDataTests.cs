@@ -3,11 +3,11 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th15;
 using ThScoreFileConverter.Models.Th15;
+using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using StagePractice = ThScoreFileConverter.Core.Models.Th14.StagePractice;
-using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
 

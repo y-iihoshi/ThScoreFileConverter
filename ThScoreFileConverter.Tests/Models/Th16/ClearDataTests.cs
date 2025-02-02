@@ -3,6 +3,7 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th16;
 using ThScoreFileConverter.Models.Th16;
+using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th16.CharaWithTotal,
@@ -16,7 +17,6 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 using LevelPracticeWithTotal = ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal;
 using StagePractice = ThScoreFileConverter.Core.Models.Th14.StagePractice;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
-using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th16;
 

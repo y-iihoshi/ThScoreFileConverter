@@ -4,13 +4,13 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th12;
 using ThScoreFileConverter.Models.Th12;
+using static ThScoreFileConverter.Tests.Models.Th10.ClearDataExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Core.Models.Th12.CharaWithTotal>;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th10.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th10.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
-using static ThScoreFileConverter.Tests.Models.Th10.ClearDataExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th12;
 
