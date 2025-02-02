@@ -3,11 +3,35 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverter.Tests.UnitTesting;
+using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
+
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Route.ShouldBe(expected.Route);
+
+        foreach (var pair in expected.Rankings)
+        {
+            for (var index = 0; index < pair.Value.Count; ++index)
+            {
+                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
+            }
+        }
+
+        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+    }
+}
 
 [TestClass]
 public class ClearDataTests
@@ -58,27 +82,6 @@ public class ClearDataTests
             clearData.ClearCounts.Values);
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
-        Assert.AreEqual(expected.Route, actual.Route);
-
-        foreach (var pair in expected.Rankings)
-        {
-            for (var index = 0; index < pair.Value.Count; ++index)
-            {
-                Th10.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
-            }
-        }
-
-        Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
-        Assert.AreEqual(expected.PlayTime, actual.PlayTime);
-        CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
-    }
-
     [TestMethod]
     public void ClearDataTestChapter()
     {
@@ -87,8 +90,8 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock, clearData);
-        Assert.IsFalse(clearData.IsValid);
+        clearData.ShouldBe(mock);
+        clearData.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -99,7 +102,7 @@ public class ClearDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -110,7 +113,7 @@ public class ClearDataTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -121,7 +124,7 @@ public class ClearDataTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [DataTestMethod]
@@ -137,6 +140,6 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
+        ClearData.CanInitialize(chapter).ShouldBe(expected);
     }
 }

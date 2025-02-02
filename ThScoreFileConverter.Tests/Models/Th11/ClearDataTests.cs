@@ -4,7 +4,7 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th11;
 using ThScoreFileConverter.Models.Th11;
-using ThScoreFileConverter.Tests.UnitTesting;
+using static ThScoreFileConverter.Tests.Models.Th10.ClearDataExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<ThScoreFileConverter.Core.Models.Th11.CharaWithTotal>;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
@@ -90,8 +90,8 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Th10.ClearDataTests.Validate(mock, clearData);
-        Assert.IsFalse(clearData.IsValid);
+        clearData.ShouldBe(mock);
+        clearData.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -102,7 +102,7 @@ public class ClearDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -113,7 +113,7 @@ public class ClearDataTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -124,7 +124,7 @@ public class ClearDataTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [DataTestMethod]
@@ -140,6 +140,6 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
+        ClearData.CanInitialize(chapter).ShouldBe(expected);
     }
 }

@@ -1,11 +1,39 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LevelWithTotal = ThScoreFileConverter.Core.Models.Th07.LevelWithTotal;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
+
+internal static class PlayStatusExtensions
+{
+    internal static void ShouldBe(this PlayStatus actual, PlayStatusTests.Properties expected)
+    {
+        var data = PlayStatusTests.MakeData(expected);
+
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.TotalRunningTime.Hours.ShouldBe(expected.totalRunningTime.Hours);
+        actual.TotalRunningTime.Minutes.ShouldBe(expected.totalRunningTime.Minutes);
+        actual.TotalRunningTime.Seconds.ShouldBe(expected.totalRunningTime.Seconds);
+        actual.TotalRunningTime.Milliseconds.ShouldBe(expected.totalRunningTime.Milliseconds);
+        actual.TotalRunningTime.IsFrames.ShouldBeFalse();
+        actual.TotalPlayTime.Hours.ShouldBe(expected.totalPlayTime.Hours);
+        actual.TotalPlayTime.Minutes.ShouldBe(expected.totalPlayTime.Minutes);
+        actual.TotalPlayTime.Seconds.ShouldBe(expected.totalPlayTime.Seconds);
+        actual.TotalPlayTime.Milliseconds.ShouldBe(expected.totalPlayTime.Milliseconds);
+        actual.TotalPlayTime.IsFrames.ShouldBeFalse();
+        actual.PlayCounts.Keys.ShouldBe(expected.playCounts.Keys);
+
+        foreach (var pair in expected.playCounts)
+        {
+            actual.PlayCounts[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
 
 [TestClass]
 public class PlayStatusTests
@@ -53,31 +81,6 @@ public class PlayStatusTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
     }
 
-    internal static void Validate(in Properties expected, in PlayStatus actual)
-    {
-        var data = MakeData(expected);
-
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(data[0], actual.FirstByteOfData);
-        Assert.AreEqual(expected.totalRunningTime.Hours, actual.TotalRunningTime.Hours);
-        Assert.AreEqual(expected.totalRunningTime.Minutes, actual.TotalRunningTime.Minutes);
-        Assert.AreEqual(expected.totalRunningTime.Seconds, actual.TotalRunningTime.Seconds);
-        Assert.AreEqual(expected.totalRunningTime.Milliseconds, actual.TotalRunningTime.Milliseconds);
-        Assert.IsFalse(actual.TotalRunningTime.IsFrames);
-        Assert.AreEqual(expected.totalPlayTime.Hours, actual.TotalPlayTime.Hours);
-        Assert.AreEqual(expected.totalPlayTime.Minutes, actual.TotalPlayTime.Minutes);
-        Assert.AreEqual(expected.totalPlayTime.Seconds, actual.TotalPlayTime.Seconds);
-        Assert.AreEqual(expected.totalPlayTime.Milliseconds, actual.TotalPlayTime.Milliseconds);
-        Assert.IsFalse(actual.TotalPlayTime.IsFrames);
-
-        foreach (var key in expected.playCounts.Keys)
-        {
-            PlayCountTests.Validate(actual.PlayCounts[key], expected.playCounts[key]);
-        }
-    }
-
     [TestMethod]
     public void PlayStatusTestChapter()
     {
@@ -86,7 +89,7 @@ public class PlayStatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var playStatus = new PlayStatus(chapter);
 
-        Validate(properties, playStatus);
+        playStatus.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -96,7 +99,7 @@ public class PlayStatusTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new PlayStatus(chapter));
     }
 
     [TestMethod]
@@ -106,6 +109,6 @@ public class PlayStatusTests
         --properties.size1;
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new PlayStatus(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new PlayStatus(chapter));
     }
 }

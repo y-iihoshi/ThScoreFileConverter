@@ -18,7 +18,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -27,7 +27,7 @@ public class PracticeReplacerTests
         var practiceScores = ImmutableDictionary<Chara, IPracticeScore>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -35,7 +35,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("invoked: 260", replacer.Replace("%T08PRACHMA6A1"));
+        replacer.Replace("%T08PRACHMA6A1").ShouldBe("invoked: 260");
     }
 
     [TestMethod]
@@ -43,7 +43,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("invoked: 62", replacer.Replace("%T08PRACHMA6A2"));
+        replacer.Replace("%T08PRACHMA6A2").ShouldBe("invoked: 62");
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class PracticeReplacerTests
         var practiceScores = ImmutableDictionary<Chara, IPracticeScore>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACHMA6A1"));
+        replacer.Replace("%T08PRACHMA6A1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ public class PracticeReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACHMA6A1"));
+        replacer.Replace("%T08PRACHMA6A1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -76,7 +76,7 @@ public class PracticeReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACHMA6A2"));
+        replacer.Replace("%T08PRACHMA6A2").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -84,7 +84,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08PRACXMA6A1", replacer.Replace("%T08PRACXMA6A1"));
+        replacer.Replace("%T08PRACXMA6A1").ShouldBe("%T08PRACXMA6A1");
     }
 
     [TestMethod]
@@ -92,7 +92,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08PRACHMAEX1", replacer.Replace("%T08PRACHMAEX1"));
+        replacer.Replace("%T08PRACHMAEX1").ShouldBe("%T08PRACHMAEX1");
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public class PracticeReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACNMA6A1"));
+        replacer.Replace("%T08PRACNMA6A1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -113,7 +113,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACHRY6A1"));
+        replacer.Replace("%T08PRACHRY6A1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -126,7 +126,7 @@ public class PracticeReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new PracticeReplacer(practiceScores, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T08PRACHMA5A1"));
+        replacer.Replace("%T08PRACHMA5A1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -134,7 +134,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08XXXXHMA6A1", replacer.Replace("%T08XXXXHMA6A1"));
+        replacer.Replace("%T08XXXXHMA6A1").ShouldBe("%T08XXXXHMA6A1");
     }
 
     [TestMethod]
@@ -142,7 +142,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08PRACYMA6A1", replacer.Replace("%T08PRACYMA6A1"));
+        replacer.Replace("%T08PRACYMA6A1").ShouldBe("%T08PRACYMA6A1");
     }
 
     [TestMethod]
@@ -150,7 +150,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08PRACHXX6A1", replacer.Replace("%T08PRACHXX6A1"));
+        replacer.Replace("%T08PRACHXX6A1").ShouldBe("%T08PRACHXX6A1");
     }
 
     [TestMethod]
@@ -158,7 +158,7 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08PRACHMAXX1", replacer.Replace("%T08PRACHMAXX1"));
+        replacer.Replace("%T08PRACHMAXX1").ShouldBe("%T08PRACHMAXX1");
     }
 
     [TestMethod]
@@ -166,6 +166,6 @@ public class PracticeReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PracticeReplacer(PracticeScores, formatterMock);
-        Assert.AreEqual("%T08PRACHMA6AX", replacer.Replace("%T08PRACHMA6AX"));
+        replacer.Replace("%T08PRACHMA6AX").ShouldBe("%T08PRACHMA6AX");
     }
 }

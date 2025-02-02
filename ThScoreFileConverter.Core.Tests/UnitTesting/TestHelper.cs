@@ -7,7 +7,7 @@ public static class TestHelper
     public static IEnumerable<object[]> GetInvalidEnumerators<TEnum>()
         where TEnum : struct, Enum
     {
-        Assert.AreSame(typeof(int), Enum.GetUnderlyingType(typeof(TEnum)));
+        Enum.GetUnderlyingType(typeof(TEnum)).ShouldBeSameAs(typeof(int));
 
 #pragma warning disable CA2021 // Don't call Enumerable.Cast<T> or Enumerable.OfType<T> with incompatible types
         var values = Enum.GetValues<TEnum>().Cast<int>().ToArray();
@@ -15,6 +15,11 @@ public static class TestHelper
 
         yield return new object[] { values.Min() - 1 };
         yield return new object[] { values.Max() + 1 };
+    }
+
+    public static void ShouldNotReachHere(string? message = null)
+    {
+        Assert.Fail(string.IsNullOrEmpty(message) ? nameof(ShouldNotReachHere) : $"{nameof(ShouldNotReachHere)}: {message}");
     }
 
     public static IDisposable BackupCultureInfo()

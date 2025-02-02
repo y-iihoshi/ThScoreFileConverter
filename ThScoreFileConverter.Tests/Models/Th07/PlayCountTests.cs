@@ -1,9 +1,21 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
+
+internal static class PlayCountExtensions
+{
+    internal static void ShouldBe(this PlayCount actual, PlayCountTests.Properties expected)
+    {
+        actual.TotalTrial.ShouldBe(expected.totalTrial);
+        actual.Trials.Values.ShouldBe(expected.trials.Values);
+        actual.TotalRetry.ShouldBe(expected.totalRetry);
+        actual.TotalClear.ShouldBe(expected.totalClear);
+        actual.TotalContinue.ShouldBe(expected.totalContinue);
+        actual.TotalPractice.ShouldBe(expected.totalPractice);
+    }
+}
 
 [TestClass]
 public class PlayCountTests
@@ -39,27 +51,17 @@ public class PlayCountTests
             properties.totalPractice);
     }
 
-    internal static void Validate(in PlayCount playCount, in Properties properties)
-    {
-        Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
-        CollectionAssert.That.AreEqual(properties.trials.Values, playCount.Trials.Values);
-        Assert.AreEqual(properties.totalRetry, playCount.TotalRetry);
-        Assert.AreEqual(properties.totalClear, playCount.TotalClear);
-        Assert.AreEqual(properties.totalContinue, playCount.TotalContinue);
-        Assert.AreEqual(properties.totalPractice, playCount.TotalPractice);
-    }
-
     [TestMethod]
     public void PlayCountTest()
     {
         var playCount = new PlayCount();
 
-        Assert.AreEqual(default, playCount.TotalTrial);
-        Assert.AreEqual(0, playCount.Trials.Count);
-        Assert.AreEqual(default, playCount.TotalRetry);
-        Assert.AreEqual(default, playCount.TotalClear);
-        Assert.AreEqual(default, playCount.TotalContinue);
-        Assert.AreEqual(default, playCount.TotalPractice);
+        playCount.TotalTrial.ShouldBe(default);
+        playCount.Trials.ShouldBeEmpty();
+        playCount.TotalRetry.ShouldBe(default);
+        playCount.TotalClear.ShouldBe(default);
+        playCount.TotalContinue.ShouldBe(default);
+        playCount.TotalPractice.ShouldBe(default);
     }
 
     [TestMethod]
@@ -69,7 +71,7 @@ public class PlayCountTests
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
-        Validate(playCount, properties);
+        playCount.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -78,7 +80,7 @@ public class PlayCountTests
         var properties = new Properties(ValidProperties);
         _ = properties.trials.Remove(Chara.SakuyaB);
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<PlayCount>(MakeByteArray(properties)));
     }
 
@@ -90,12 +92,12 @@ public class PlayCountTests
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
-        Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
-        CollectionAssert.That.AreNotEqual(properties.trials.Values, playCount.Trials.Values);
-        CollectionAssert.That.AreEqual(properties.trials.Values.SkipLast(1), playCount.Trials.Values);
-        Assert.AreNotEqual(properties.totalRetry, playCount.TotalRetry);
-        Assert.AreNotEqual(properties.totalClear, playCount.TotalClear);
-        Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue);
-        Assert.AreNotEqual(properties.totalPractice, playCount.TotalPractice);
+        playCount.TotalTrial.ShouldBe(properties.totalTrial);
+        playCount.Trials.Values.ShouldNotBe(properties.trials.Values);
+        playCount.Trials.Values.ShouldBe(properties.trials.Values.SkipLast(1));
+        playCount.TotalRetry.ShouldNotBe(properties.totalRetry);
+        playCount.TotalClear.ShouldNotBe(properties.totalClear);
+        playCount.TotalContinue.ShouldNotBe(properties.totalContinue);
+        playCount.TotalPractice.ShouldNotBe(properties.totalPractice);
     }
 }

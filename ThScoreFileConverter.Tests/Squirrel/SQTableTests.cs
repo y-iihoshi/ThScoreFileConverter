@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
@@ -13,8 +12,8 @@ public class SQTableTests
     {
         var sqtable = new SQTable();
 
-        Assert.AreEqual(SQOT.Table, sqtable.Type);
-        Assert.AreEqual(0, sqtable.Value.Count);
+        sqtable.Type.ShouldBe(SQOT.Table);
+        sqtable.Value.ShouldBeEmpty();
     }
 
     internal static SQTable CreateTestHelper(byte[] bytes)
@@ -48,20 +47,18 @@ public class SQTableTests
 
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));
 
-        Assert.AreEqual(SQOT.Table, sqtable.Type);
+        sqtable.Type.ShouldBe(SQOT.Table);
 
         for (var index = 0; index < expectedKeys.Length; ++index)
         {
             var key = sqtable.Value.Keys.ElementAt(index);
-            Assert.IsTrue(key is SQInteger);
-            Assert.AreEqual(expectedKeys[index], (SQInteger)key);
+            key.ShouldBeOfType<SQInteger>().Value.ShouldBe(expectedKeys[index]);
         }
 
         for (var index = 0; index < expectedValues.Length; ++index)
         {
             var value = sqtable.Value.Values.ElementAt(index);
-            Assert.IsTrue(value is SQInteger);
-            Assert.AreEqual(expectedValues[index], (SQInteger)value);
+            value.ShouldBeOfType<SQInteger>().Value.ShouldBe(expectedValues[index]);
         }
     }
 
@@ -72,8 +69,8 @@ public class SQTableTests
     {
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));
 
-        Assert.AreEqual(SQOT.Table, sqtable.Type);
-        Assert.AreEqual(0, sqtable.Value.Count);
+        sqtable.Type.ShouldBe(SQOT.Table);
+        sqtable.Value.ShouldBeEmpty();
     }
 
     [DataTestMethod]
@@ -89,7 +86,7 @@ public class SQTableTests
         DisplayName = "empty and missing sentinel")]
     public void CreateTestShortened(int[] array)
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
+        _ = Should.Throw<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
     [DataTestMethod]
@@ -117,7 +114,7 @@ public class SQTableTests
         DisplayName = "missing value type and sentinel")]
     public void CreateTestInvalid(int[] array)
     {
-        _ = Assert.ThrowsException<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
+        _ = Should.Throw<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
 #pragma warning disable JSON002 // Probable JSON string detected
@@ -139,13 +136,13 @@ public class SQTableTests
     {
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array));
 
-        Assert.AreEqual(expected, sqtable.ToString());
+        sqtable.ToString().ShouldBe(expected);
     }
 
     [TestMethod]
     public void ToStringTestEmpty()
     {
-        Assert.AreEqual("{  }", new SQTable().ToString());
+        new SQTable().ToString().ShouldBe("{  }");
     }
 
     [TestMethod]
@@ -164,9 +161,9 @@ public class SQTableTests
             key => (string)(SQString)key,
             value => (int)(SQInteger)value);
 
-        Assert.AreEqual(1, table.Count);
-        Assert.AreEqual("intKey", table.Keys.First());
-        Assert.AreEqual(56, table["intKey"]);
+        table.Count.ShouldBe(1);
+        table.Keys.First().ShouldBe("intKey");
+        table["intKey"].ShouldBe(56);
     }
 
     [TestMethod]
@@ -180,7 +177,7 @@ public class SQTableTests
             key => (string)(SQString)key,
             value => (int)(SQInteger)value);
 
-        Assert.AreEqual(0, table.Count);
+        table.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -193,9 +190,9 @@ public class SQTableTests
             { new SQString("floatKey"), new SQFloat(456f) },
         });
 
-        Assert.IsTrue(sqtable.GetValueOrDefault<bool>("boolKey"));
-        Assert.AreEqual(123, sqtable.GetValueOrDefault<int>("intKey"));
-        Assert.AreEqual(456f, sqtable.GetValueOrDefault<float>("floatKey"));
+        sqtable.GetValueOrDefault<bool>("boolKey").ShouldBeTrue();
+        sqtable.GetValueOrDefault<int>("intKey").ShouldBe(123);
+        sqtable.GetValueOrDefault<float>("floatKey").ShouldBe(456f);
     }
 
     [TestMethod]
@@ -203,9 +200,9 @@ public class SQTableTests
     {
         var sqtable = new SQTable();
 
-        Assert.AreEqual(default, sqtable.GetValueOrDefault<bool>("boolKey"));
-        Assert.AreEqual(default, sqtable.GetValueOrDefault<int>("intKey"));
-        Assert.AreEqual(default, sqtable.GetValueOrDefault<float>("floatKey"));
+        sqtable.GetValueOrDefault<bool>("boolKey").ShouldBe(default);
+        sqtable.GetValueOrDefault<int>("intKey").ShouldBe(default);
+        sqtable.GetValueOrDefault<float>("floatKey").ShouldBe(default);
     }
 
     [TestMethod]
@@ -218,8 +215,8 @@ public class SQTableTests
             { new SQString("floatKey"), new SQFloat(456f) },
         });
 
-        Assert.AreEqual(default, sqtable.GetValueOrDefault<int>("boolKey"));
-        Assert.AreEqual(default, sqtable.GetValueOrDefault<float>("intKey"));
-        Assert.AreEqual(default, sqtable.GetValueOrDefault<bool>("floatKey"));
+        sqtable.GetValueOrDefault<int>("boolKey").ShouldBe(default);
+        sqtable.GetValueOrDefault<float>("intKey").ShouldBe(default);
+        sqtable.GetValueOrDefault<bool>("floatKey").ShouldBe(default);
     }
 }

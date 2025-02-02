@@ -11,48 +11,48 @@ public class NicknameReplacerTests
     public void NicknameReplacerTest()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.AreEqual("究極反則生命体", replacer.Replace("%T143NICK70"));
+        replacer.Replace("%T143NICK70").ShouldBe("究極反則生命体");
     }
 
     [TestMethod]
     public void ReplaceTestNotCleared()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.AreEqual("??????????", replacer.Replace("%T143NICK69"));
+        replacer.Replace("%T143NICK69").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestZeroNumber()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.AreEqual("%T143NICK00", replacer.Replace("%T143NICK00"));
+        replacer.Replace("%T143NICK00").ShouldBe("%T143NICK00");
     }
 
     [TestMethod]
     public void ReplaceTestExceededNumber()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.AreEqual("%T143NICK71", replacer.Replace("%T143NICK71"));
+        replacer.Replace("%T143NICK71").ShouldBe("%T143NICK71");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.AreEqual("%T143XXXX70", replacer.Replace("%T143XXXX70"));
+        replacer.Replace("%T143XXXX70").ShouldBe("%T143XXXX70");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new NicknameReplacer(Status);
-        Assert.AreEqual("%T143NICKXX", replacer.Replace("%T143NICKXX"));
+        replacer.Replace("%T143NICKXX").ShouldBe("%T143NICKXX");
     }
 }

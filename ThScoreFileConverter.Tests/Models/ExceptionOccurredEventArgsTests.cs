@@ -11,6 +11,6 @@ public class ExceptionOccurredEventArgsTests
         // NOTE: creating an Exception instance causes CA2201.
         var ex = new NotImplementedException();
         var args = new ExceptionOccurredEventArgs(ex);
-        Assert.AreSame(ex, args.Exception);
+        args.Exception.ShouldBeSameAs(ex);
     }
 }

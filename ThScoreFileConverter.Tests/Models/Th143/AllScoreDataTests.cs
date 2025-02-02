@@ -13,7 +13,7 @@ public class AllScoreDataTests
         Th095.AllScoreDataTests.AllScoreDataTestHelper<AllScoreData, IScore, IStatus>();
 
         var allScoreData = new AllScoreData();
-        Assert.AreEqual(0, allScoreData.ItemStatuses.Count);
+        allScoreData.ItemStatuses.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -50,7 +50,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
 
-        Assert.AreSame(status, allScoreData.ItemStatuses[item]);
+        allScoreData.ItemStatuses[item].ShouldBeSameAs(status);
     }
 
     [TestMethod]
@@ -66,8 +66,8 @@ public class AllScoreDataTests
         allScoreData.Set(status1);
         allScoreData.Set(status2);
 
-        Assert.AreSame(status1, allScoreData.ItemStatuses[item]);
-        Assert.AreNotSame(status2, allScoreData.ItemStatuses[item]);
+        allScoreData.ItemStatuses[item].ShouldBeSameAs(status1);
+        allScoreData.ItemStatuses[item].ShouldNotBeSameAs(status2);
     }
 
     [TestMethod]

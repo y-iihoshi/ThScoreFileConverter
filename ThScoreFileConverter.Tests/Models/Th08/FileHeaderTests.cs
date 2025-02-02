@@ -1,6 +1,5 @@
 ﻿using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverter.Tests.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
@@ -13,14 +12,14 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(FileHeaderBaseTests.MakeProperties(0x01, 0x1C));
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsTrue(header.IsValid);
+        header.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
     public void IsValidTestInitial()
     {
         var header = new FileHeader();
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -31,7 +30,7 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(properties);
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -40,7 +39,7 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(FileHeaderBaseTests.MakeProperties(0x02, 0x1C));
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -49,6 +48,6 @@ public class FileHeaderTests
         var array = FileHeaderBaseTests.MakeByteArray(FileHeaderBaseTests.MakeProperties(0x01, 0x1D));
         var header = TestUtils.Create<FileHeader>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 }

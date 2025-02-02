@@ -1,9 +1,21 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th075;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
+
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        foreach (var pair in expected.clearData)
+        {
+            actual.ClearData[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.Status.ShouldNotBeNull().ShouldBe(expected.status);
+    }
+}
 
 [TestClass]
 public class AllScoreDataTests
@@ -28,24 +40,13 @@ public class AllScoreDataTests
             StatusTests.MakeByteArray(properties.status));
     }
 
-    internal static void Validate(in Properties properties, in AllScoreData allScoreData)
-    {
-        foreach (var pair in properties.clearData)
-        {
-            ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
-        }
-
-        Assert.IsNotNull(allScoreData.Status);
-        StatusTests.Validate(properties.status, allScoreData.Status!);
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
         var allScoreData = new AllScoreData();
 
-        Assert.AreEqual(0, allScoreData.ClearData.Count);
-        Assert.IsNull(allScoreData.Status);
+        allScoreData.ClearData.ShouldBeEmpty();
+        allScoreData.Status.ShouldBeNull();
     }
 
     [TestMethod]
@@ -55,6 +56,6 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 }

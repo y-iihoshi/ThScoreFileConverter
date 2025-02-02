@@ -12,24 +12,24 @@ public class OpenFileDialogActionResultTests
         var filenames = new string[] { "bs01_1.dat", "bs01_2.dat" };
         var result = new OpenFileDialogActionResult(filename, filenames);
 
-        Assert.AreEqual(filename, result.FileName);
-        CollectionAssert.That.AreEqual(filenames, result.FileNames);
+        result.FileName.ShouldBe(filename);
+        result.FileNames.ShouldBe(filenames);
 
         filenames[0] = "bs02_1.dat";
-        CollectionAssert.That.AreNotEqual(filenames, result.FileNames);
+        result.FileNames.ShouldNotBe(filenames);
     }
 
     [TestMethod]
     public void OpenFileDialogActionResultTestNullFilename()
     {
         var filenames = new string[] { "bs01_1.dat", "bs01_2.dat" };
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new OpenFileDialogActionResult(null!, filenames));
+        _ = Should.Throw<ArgumentNullException>(() => new OpenFileDialogActionResult(null!, filenames));
     }
 
     [TestMethod]
     public void OpenFileDialogActionResultTestNullFilenames()
     {
         var filename = "score.dat";
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new OpenFileDialogActionResult(filename, null!));
+        _ = Should.Throw<ArgumentNullException>(() => new OpenFileDialogActionResult(filename, null!));
     }
 }

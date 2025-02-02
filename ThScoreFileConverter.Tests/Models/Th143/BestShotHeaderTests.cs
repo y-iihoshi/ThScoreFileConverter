@@ -1,10 +1,22 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader actual, IBestShotHeader expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Day.ShouldBe(expected.Day);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -45,26 +57,13 @@ public class BestShotHeaderTests
             TestUtils.MakeRandomArray(0x58));
     }
 
-    internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
-    {
-        Guard.IsNotNull(actual);
-
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Day, actual.Day);
-        Assert.AreEqual(expected.Scene, actual.Scene);
-        Assert.AreEqual(expected.Width, actual.Width);
-        Assert.AreEqual(expected.Height, actual.Height);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -73,7 +72,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -82,7 +81,7 @@ public class BestShotHeaderTests
         var mock = Substitute.For<IBestShotHeader>();
         _ = mock.Signature.Returns(string.Empty);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -93,7 +92,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns(signature[0..^1]);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -104,7 +103,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns($"{signature}E");
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -117,7 +116,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Day.Returns((Day)day);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 }

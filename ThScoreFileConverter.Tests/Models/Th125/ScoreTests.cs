@@ -1,10 +1,27 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Models.Th125;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th095.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th125;
+
+internal static class ScoreExtensions
+{
+    internal static void ShouldBe(this IScore actual, IScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.LevelScene.ShouldBe(expected.LevelScene);
+        actual.HighScore.ShouldBe(expected.HighScore);
+        actual.Chara.ShouldBe(expected.Chara);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.FirstSuccess.ShouldBe(expected.FirstSuccess);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.BestshotScore.ShouldBe(expected.BestshotScore);
+    }
+}
 
 [TestClass]
 public class ScoreTests
@@ -47,21 +64,6 @@ public class ScoreTests
             new byte[8]);
     }
 
-    internal static void Validate(IScore expected, IScore actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Size, actual.Size);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.LevelScene, actual.LevelScene);
-        Assert.AreEqual(expected.HighScore, actual.HighScore);
-        Assert.AreEqual(expected.Chara, actual.Chara);
-        Assert.AreEqual(expected.TrialCount, actual.TrialCount);
-        Assert.AreEqual(expected.FirstSuccess, actual.FirstSuccess);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.BestshotScore, actual.BestshotScore);
-    }
-
     [TestMethod]
     public void ScoreTestChapter()
     {
@@ -70,8 +72,8 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new Score(chapter);
 
-        Validate(mock, score);
-        Assert.IsFalse(score.IsValid);
+        score.ShouldBe(mock);
+        score.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -82,7 +84,7 @@ public class ScoreTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [TestMethod]
@@ -93,7 +95,7 @@ public class ScoreTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [TestMethod]
@@ -104,7 +106,7 @@ public class ScoreTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
@@ -118,7 +120,7 @@ public class ScoreTests
         _ = mock.LevelScene.Returns(((Level)level, levelScene.Scene));
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new Score(chapter));
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
@@ -131,7 +133,7 @@ public class ScoreTests
         _ = mock.Chara.Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new Score(chapter));
     }
 
     [DataTestMethod]
@@ -147,6 +149,6 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
-        Assert.AreEqual(expected, Score.CanInitialize(chapter));
+        Score.CanInitialize(chapter).ShouldBe(expected);
     }
 }

@@ -4,11 +4,6 @@ using System.Reflection;
 using CommunityToolkit.Diagnostics;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
-#if DEBUG_TEST
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.UnitTesting;
 
 #if DEBUG_TEST

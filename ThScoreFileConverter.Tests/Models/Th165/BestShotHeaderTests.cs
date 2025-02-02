@@ -1,10 +1,51 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th165;
 using ThScoreFileConverter.Models.Th165;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th165;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader actual, IBestShotHeader expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Weekday.ShouldBe(expected.Weekday);
+        actual.Dream.ShouldBe(expected.Dream);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.Width2.ShouldBe(expected.Width2);
+        actual.Height2.ShouldBe(expected.Height2);
+        actual.HalfWidth.ShouldBe(expected.HalfWidth);
+        actual.HalfHeight.ShouldBe(expected.HalfHeight);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.Angle.ShouldBe(expected.Angle);
+        actual.Score.ShouldBe(expected.Score);
+        actual.Fields.Data.ShouldBe(expected.Fields.Data);
+        actual.Score2.ShouldBe(expected.Score2);
+        actual.BasePoint.ShouldBe(expected.BasePoint);
+        actual.NumViewed.ShouldBe(expected.NumViewed);
+        actual.NumLikes.ShouldBe(expected.NumLikes);
+        actual.NumFavs.ShouldBe(expected.NumFavs);
+        actual.NumBullets.ShouldBe(expected.NumBullets);
+        actual.NumBulletsNearby.ShouldBe(expected.NumBulletsNearby);
+        actual.RiskBonus.ShouldBe(expected.RiskBonus);
+        actual.BossShot.ShouldBe(expected.BossShot);
+        actual.AngleBonus.ShouldBe(expected.AngleBonus);
+        actual.MacroBonus.ShouldBe(expected.MacroBonus);
+        actual.LikesPerView.ShouldBe(expected.LikesPerView);
+        actual.FavsPerView.ShouldBe(expected.FavsPerView);
+        actual.NumHashtags.ShouldBe(expected.NumHashtags);
+        actual.NumRedBullets.ShouldBe(expected.NumRedBullets);
+        actual.NumPurpleBullets.ShouldBe(expected.NumPurpleBullets);
+        actual.NumBlueBullets.ShouldBe(expected.NumBlueBullets);
+        actual.NumCyanBullets.ShouldBe(expected.NumCyanBullets);
+        actual.NumGreenBullets.ShouldBe(expected.NumGreenBullets);
+        actual.NumYellowBullets.ShouldBe(expected.NumYellowBullets);
+        actual.NumOrangeBullets.ShouldBe(expected.NumOrangeBullets);
+        actual.NumLightBullets.ShouldBe(expected.NumLightBullets);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -110,55 +151,13 @@ public class BestShotHeaderTests
             TestUtils.MakeRandomArray(0x78));
     }
 
-    internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
-    {
-        Guard.IsNotNull(actual);
-
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Weekday, actual.Weekday);
-        Assert.AreEqual(expected.Dream, actual.Dream);
-        Assert.AreEqual(expected.Width, actual.Width);
-        Assert.AreEqual(expected.Height, actual.Height);
-        Assert.AreEqual(expected.Width2, actual.Width2);
-        Assert.AreEqual(expected.Height2, actual.Height2);
-        Assert.AreEqual(expected.HalfWidth, actual.HalfWidth);
-        Assert.AreEqual(expected.HalfHeight, actual.HalfHeight);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.Angle, actual.Angle);
-        Assert.AreEqual(expected.Score, actual.Score);
-        CollectionAssert.That.AreEqual(expected.Fields.Data, actual.Fields.Data);
-        Assert.AreEqual(expected.Score2, actual.Score2);
-        Assert.AreEqual(expected.BasePoint, actual.BasePoint);
-        Assert.AreEqual(expected.NumViewed, actual.NumViewed);
-        Assert.AreEqual(expected.NumLikes, actual.NumLikes);
-        Assert.AreEqual(expected.NumFavs, actual.NumFavs);
-        Assert.AreEqual(expected.NumBullets, actual.NumBullets);
-        Assert.AreEqual(expected.NumBulletsNearby, actual.NumBulletsNearby);
-        Assert.AreEqual(expected.RiskBonus, actual.RiskBonus);
-        Assert.AreEqual(expected.BossShot, actual.BossShot);
-        Assert.AreEqual(expected.AngleBonus, actual.AngleBonus);
-        Assert.AreEqual(expected.MacroBonus, actual.MacroBonus);
-        Assert.AreEqual(expected.LikesPerView, actual.LikesPerView);
-        Assert.AreEqual(expected.FavsPerView, actual.FavsPerView);
-        Assert.AreEqual(expected.NumHashtags, actual.NumHashtags);
-        Assert.AreEqual(expected.NumRedBullets, actual.NumRedBullets);
-        Assert.AreEqual(expected.NumPurpleBullets, actual.NumPurpleBullets);
-        Assert.AreEqual(expected.NumBlueBullets, actual.NumBlueBullets);
-        Assert.AreEqual(expected.NumCyanBullets, actual.NumCyanBullets);
-        Assert.AreEqual(expected.NumGreenBullets, actual.NumGreenBullets);
-        Assert.AreEqual(expected.NumYellowBullets, actual.NumYellowBullets);
-        Assert.AreEqual(expected.NumOrangeBullets, actual.NumOrangeBullets);
-        Assert.AreEqual(expected.NumLightBullets, actual.NumLightBullets);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -167,7 +166,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -176,7 +175,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Signature.Returns(string.Empty);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -187,7 +186,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns(signature[0..^1]);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -198,7 +197,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns($"{signature}E");
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -211,7 +210,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Weekday.Returns((Day)day);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 }

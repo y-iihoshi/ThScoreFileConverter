@@ -30,21 +30,21 @@ public class OpenFileDialogActionTests
 
         var dialog = action.CreateDialog();
 
-        Assert.AreEqual(action.AddExtension, dialog.AddExtension);
-        Assert.AreEqual(action.CheckFileExists, dialog.CheckFileExists);
-        Assert.AreEqual(action.CheckPathExists, dialog.CheckPathExists);
-        Assert.AreEqual(action.DefaultExt, dialog.DefaultExt);
-        Assert.AreEqual(action.DereferenceLinks, dialog.DereferenceLinks);
-        Assert.AreEqual(action.FileName, dialog.FileName);
-        Assert.AreEqual(action.Filter, dialog.Filter);
-        Assert.AreEqual(action.FilterIndex, dialog.FilterIndex);
-        Assert.AreEqual(action.InitialDirectory, dialog.InitialDirectory);
-        Assert.AreEqual(action.Multiselect, dialog.Multiselect);
-        Assert.AreEqual(action.ReadOnlyChecked, dialog.ReadOnlyChecked);
-        Assert.AreEqual(action.RestoreDirectory, dialog.RestoreDirectory);
-        Assert.AreEqual(action.ShowReadOnly, dialog.ShowReadOnly);
-        Assert.AreEqual(action.Tag, dialog.Tag);
-        Assert.AreEqual(action.Title, dialog.Title);
-        Assert.AreEqual(action.ValidateNames, dialog.ValidateNames);
+        dialog.AddExtension.ShouldBe(action.AddExtension);
+        dialog.CheckFileExists.ShouldBe(action.CheckFileExists);
+        dialog.CheckPathExists.ShouldBe(action.CheckPathExists);
+        dialog.DefaultExt.ShouldBe(action.DefaultExt);
+        dialog.DereferenceLinks.ShouldBe(action.DereferenceLinks);
+        dialog.FileName.ShouldBe(action.FileName);
+        dialog.Filter.ShouldBe(action.Filter);
+        dialog.FilterIndex.ShouldBe(action.FilterIndex);
+        dialog.InitialDirectory.ShouldBe(action.InitialDirectory);
+        dialog.Multiselect.ShouldBe(action.Multiselect);
+        dialog.ReadOnlyChecked.ShouldBe(action.ReadOnlyChecked);
+        dialog.RestoreDirectory.ShouldBe(action.RestoreDirectory);
+        dialog.ShowReadOnly.ShouldBe(action.ShowReadOnly);
+        dialog.Tag.ShouldBe(action.Tag);
+        dialog.Title.ShouldBe(action.Title);
+        dialog.ValidateNames.ShouldBe(action.ValidateNames);
     }
 }

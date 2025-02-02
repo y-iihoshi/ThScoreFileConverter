@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using ThScoreFileConverter.Models.Th175;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th175;
@@ -20,15 +19,15 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(0, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReadFromTestEmpty()
     {
         var bytes = Array.Empty<byte>();
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>(bytes));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<AllScoreData>(bytes));
     }
 
     [TestMethod]
@@ -36,8 +35,8 @@ public class AllScoreDataTests
     {
         var allScoreData = TestUtils.Create<AllScoreData>(NullChar);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(0, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -46,8 +45,8 @@ public class AllScoreDataTests
         var bytes = MakeByteArray(0, new Dictionary<string, int> { { "key2", 12 } }).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(0, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -56,15 +55,15 @@ public class AllScoreDataTests
         var bytes = MakeByteArray("key", new Dictionary<string, int> { { "key2", 12 } }).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(0, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ReadFromTestInvalidValueType()
     {
         var bytes = MakeByteArray("0", 1.2f).Concat(NullChar).ToArray();
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>(bytes));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<AllScoreData>(bytes));
     }
 
     [TestMethod]
@@ -73,8 +72,8 @@ public class AllScoreDataTests
         var bytes = MakeByteArray("0", 12).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(0, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -88,8 +87,8 @@ public class AllScoreDataTests
         var bytes = MakeByteArray("0", GetChildArray()).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(0, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -98,8 +97,8 @@ public class AllScoreDataTests
         var bytes = MakeByteArray("0", new Dictionary<string, int> { }).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(1, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.Count.ShouldBe(1);
         SaveDataTests.ValidateAsDefault(allScoreData.SaveDataDictionary.Values.First());
     }
 
@@ -109,8 +108,8 @@ public class AllScoreDataTests
         var bytes = MakeByteArray("0", new Dictionary<int, string> { { 12, "key2" } }).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(1, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.Count.ShouldBe(1);
         SaveDataTests.ValidateAsDefault(allScoreData.SaveDataDictionary.Values.First());
     }
 
@@ -118,7 +117,7 @@ public class AllScoreDataTests
     public void ReadFromTestInvalidChildValueType()
     {
         var bytes = MakeByteArray("0", new Dictionary<string, float> { { "key2", 1.2f } }).Concat(NullChar).ToArray();
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>(bytes));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<AllScoreData>(bytes));
     }
 
     [TestMethod]
@@ -127,8 +126,8 @@ public class AllScoreDataTests
         var bytes = MakeByteArray("0", new Dictionary<string, int> { { "key2", 12 } }).Concat(NullChar).ToArray();
         var allScoreData = TestUtils.Create<AllScoreData>(bytes);
 
-        Assert.IsNotNull(allScoreData);
-        Assert.AreEqual(1, allScoreData.SaveDataDictionary.Count);
+        _ = allScoreData.ShouldNotBeNull();
+        allScoreData.SaveDataDictionary.Count.ShouldBe(1);
         SaveDataTests.ValidateAsDefault(allScoreData.SaveDataDictionary.Values.First());
     }
 

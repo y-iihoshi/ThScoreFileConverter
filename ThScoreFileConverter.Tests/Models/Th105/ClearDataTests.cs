@@ -2,9 +2,26 @@
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th105;
 using ThScoreFileConverter.Models.Th105;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th105;
+
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe<TChara>(this IClearData<TChara> actual, IClearData<TChara> expected)
+        where TChara : struct, Enum
+    {
+        foreach (var pair in expected.CardsForDeck)
+        {
+            actual.CardsForDeck[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.SpellCardResults.Count.ShouldBe(expected.SpellCardResults.Count);
+        foreach (var pair in expected.SpellCardResults)
+        {
+            actual.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)].ShouldBe(pair.Value);
+        }
+    }
+}
 
 [TestClass]
 public class ClearDataTests
@@ -40,27 +57,13 @@ public class ClearDataTests
             properties.SpellCardResults.Select(pair => SpellCardResultTests.MakeByteArray(pair.Value)));
     }
 
-    internal static void Validate<TChara>(IClearData<TChara> expected, IClearData<TChara> actual)
-        where TChara : struct, Enum
-    {
-        foreach (var pair in expected.CardsForDeck)
-        {
-            CardForDeckTests.Validate(pair.Value, actual.CardsForDeck[pair.Key]);
-        }
-
-        foreach (var pair in expected.SpellCardResults)
-        {
-            SpellCardResultTests.Validate(pair.Value, actual.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)]);
-        }
-    }
-
     internal static void ClearDataTestHelper<TChara>()
         where TChara : struct, Enum
     {
         var clearData = new ClearData<TChara>();
 
-        Assert.AreEqual(0, clearData.CardsForDeck.Count);
-        Assert.AreEqual(0, clearData.SpellCardResults.Count);
+        clearData.CardsForDeck.ShouldBeEmpty();
+        clearData.SpellCardResults.ShouldBeEmpty();
     }
 
     internal static void ReadFromTestHelper<TChara>()
@@ -69,7 +72,7 @@ public class ClearDataTests
         var mock = MockClearData<TChara>();
         var clearData = TestUtils.Create<ClearData<TChara>>(MakeByteArray(mock));
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     internal static void ReadFromTestShortenedHelper<TChara>()
@@ -78,7 +81,7 @@ public class ClearDataTests
         var mock = MockClearData<TChara>();
         var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
     }
 
     internal static void ReadFromTestExceededHelper<TChara>()
@@ -89,7 +92,7 @@ public class ClearDataTests
 
         var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     internal static void ReadFromTestDuplicatedHelper<TChara>()
@@ -106,7 +109,7 @@ public class ClearDataTests
 
         var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]

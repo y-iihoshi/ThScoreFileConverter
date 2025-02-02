@@ -19,7 +19,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class CareerReplacerTests
         var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(clearData, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 36", replacer.Replace("%T75C001RM1"));
+        replacer.Replace("%T75C001RM1").ShouldBe("invoked: 36");
     }
 
     [TestMethod]
@@ -44,7 +44,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 32", replacer.Replace("%T75C001RM2"));
+        replacer.Replace("%T75C001RM2").ShouldBe("invoked: 32");
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 28", replacer.Replace("%T75C001RM3"));
+        replacer.Replace("%T75C001RM3").ShouldBe("invoked: 28");
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("★", replacer.Replace("%T75C001RM4"));
+        replacer.Replace("%T75C001RM4").ShouldBe("★");
     }
 
     [TestMethod]
@@ -80,7 +80,7 @@ public class CareerReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new CareerReplacer(clearData, formatterMock);
-        Assert.AreEqual(string.Empty, replacer.Replace("%T75C001RM4"));
+        replacer.Replace("%T75C001RM4").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 23400", replacer.Replace("%T75C000RM1"));
+        replacer.Replace("%T75C000RM1").ShouldBe("invoked: 23400");
     }
 
     [TestMethod]
@@ -96,7 +96,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 23000", replacer.Replace("%T75C000RM2"));
+        replacer.Replace("%T75C000RM2").ShouldBe("invoked: 23000");
     }
 
     [TestMethod]
@@ -104,7 +104,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 22600", replacer.Replace("%T75C000RM3"));
+        replacer.Replace("%T75C000RM3").ShouldBe("invoked: 22600");
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("%T75C000RM4", replacer.Replace("%T75C000RM4"));
+        replacer.Replace("%T75C000RM4").ShouldBe("%T75C000RM4");
     }
 
     [TestMethod]
@@ -120,7 +120,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("%T75C001ML1", replacer.Replace("%T75C001ML1"));
+        replacer.Replace("%T75C001ML1").ShouldBe("%T75C001ML1");
     }
 
     [TestMethod]
@@ -128,7 +128,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T75C001MR1"));
+        replacer.Replace("%T75C001MR1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -136,7 +136,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T75C001MR2"));
+        replacer.Replace("%T75C001MR2").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -144,7 +144,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T75C001MR3"));
+        replacer.Replace("%T75C001MR3").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -152,7 +152,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual(string.Empty, replacer.Replace("%T75C001MR4"));
+        replacer.Replace("%T75C001MR4").ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -160,7 +160,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("%T75X001RM1", replacer.Replace("%T75X001RM1"));
+        replacer.Replace("%T75X001RM1").ShouldBe("%T75X001RM1");
     }
 
     [TestMethod]
@@ -168,7 +168,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("%T75C101RM1", replacer.Replace("%T75C101RM1"));
+        replacer.Replace("%T75C101RM1").ShouldBe("%T75C101RM1");
     }
 
     [TestMethod]
@@ -176,7 +176,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("%T75C001XX1", replacer.Replace("%T75C001XX1"));
+        replacer.Replace("%T75C001XX1").ShouldBe("%T75C001XX1");
     }
 
     [TestMethod]
@@ -184,6 +184,6 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(ClearData, formatterMock);
-        Assert.AreEqual("%T75C001RMX", replacer.Replace("%T75C001RMX"));
+        replacer.Replace("%T75C001RMX").ShouldBe("%T75C001RMX");
     }
 }

@@ -28,7 +28,7 @@ public class CardReplacerTests
     public void CardReplacerTest()
     {
         var replacer = new CardReplacer(SpellCards, false);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -36,39 +36,39 @@ public class CardReplacerTests
     {
         var cards = ImmutableDictionary<int, ISpellCard>.Empty;
         var replacer = new CardReplacer(cards, false);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTestName()
     {
         var replacer = new CardReplacer(SpellCards, false);
-        Assert.AreEqual("月符「ルナティックレイン」", replacer.Replace("%T128CARD003N"));
-        Assert.AreEqual("月符「ルナティックレイン」", replacer.Replace("%T128CARD004N"));
+        replacer.Replace("%T128CARD003N").ShouldBe("月符「ルナティックレイン」");
+        replacer.Replace("%T128CARD004N").ShouldBe("月符「ルナティックレイン」");
     }
 
     [TestMethod]
     public void ReplaceTestRank()
     {
         var replacer = new CardReplacer(SpellCards, false);
-        Assert.AreEqual("Hard", replacer.Replace("%T128CARD003R"));
-        Assert.AreEqual("Lunatic", replacer.Replace("%T128CARD004R"));
+        replacer.Replace("%T128CARD003R").ShouldBe("Hard");
+        replacer.Replace("%T128CARD004R").ShouldBe("Lunatic");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenName()
     {
         var replacer = new CardReplacer(SpellCards, true);
-        Assert.AreEqual("月符「ルナティックレイン」", replacer.Replace("%T128CARD003N"));
-        Assert.AreEqual("??????????", replacer.Replace("%T128CARD004N"));
+        replacer.Replace("%T128CARD003N").ShouldBe("月符「ルナティックレイン」");
+        replacer.Replace("%T128CARD004N").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenRank()
     {
         var replacer = new CardReplacer(SpellCards, true);
-        Assert.AreEqual("Hard", replacer.Replace("%T128CARD003R"));
-        Assert.AreEqual("Lunatic", replacer.Replace("%T128CARD004R"));
+        replacer.Replace("%T128CARD003R").ShouldBe("Hard");
+        replacer.Replace("%T128CARD004R").ShouldBe("Lunatic");
     }
 
     [TestMethod]
@@ -77,27 +77,27 @@ public class CardReplacerTests
         var dictionary = ImmutableDictionary<int, ISpellCard>.Empty;
 
         var replacer = new CardReplacer(dictionary, true);
-        Assert.AreEqual("??????????", replacer.Replace("%T128CARD003N"));
+        replacer.Replace("%T128CARD003N").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new CardReplacer(SpellCards, false);
-        Assert.AreEqual("%T128XXXX003N", replacer.Replace("%T128XXXX003N"));
+        replacer.Replace("%T128XXXX003N").ShouldBe("%T128XXXX003N");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new CardReplacer(SpellCards, false);
-        Assert.AreEqual("%T128CARD251N", replacer.Replace("%T128CARD251N"));
+        replacer.Replace("%T128CARD251N").ShouldBe("%T128CARD251N");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
         var replacer = new CardReplacer(SpellCards, false);
-        Assert.AreEqual("%T128CARD003X", replacer.Replace("%T128CARD003X"));
+        replacer.Replace("%T128CARD003X").ShouldBe("%T128CARD003X");
     }
 }

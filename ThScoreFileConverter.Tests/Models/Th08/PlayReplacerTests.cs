@@ -12,7 +12,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -20,7 +20,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 2", replacer.Replace("%T08PLAYHSR"));
+        replacer.Replace("%T08PLAYHSR").ShouldBe("invoked: 2");
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 2", replacer.Replace("%T08PLAYTSR"));
+        replacer.Replace("%T08PLAYTSR").ShouldBe("invoked: 2");
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 1", replacer.Replace("%T08PLAYHTL"));
+        replacer.Replace("%T08PLAYHTL").ShouldBe("invoked: 1");
     }
 
     [TestMethod]
@@ -44,7 +44,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 3", replacer.Replace("%T08PLAYHCL"));
+        replacer.Replace("%T08PLAYHCL").ShouldBe("invoked: 3");
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 4", replacer.Replace("%T08PLAYHCN"));
+        replacer.Replace("%T08PLAYHCN").ShouldBe("invoked: 4");
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 5", replacer.Replace("%T08PLAYHPR"));
+        replacer.Replace("%T08PLAYHPR").ShouldBe("invoked: 5");
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("%T08XXXXHSR", replacer.Replace("%T08XXXXHSR"));
+        replacer.Replace("%T08XXXXHSR").ShouldBe("%T08XXXXHSR");
     }
 
     [TestMethod]
@@ -76,7 +76,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("%T08PLAYYSR", replacer.Replace("%T08PLAYYSR"));
+        replacer.Replace("%T08PLAYYSR").ShouldBe("%T08PLAYYSR");
     }
 
     [TestMethod]
@@ -84,6 +84,6 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("%T08PLAYHXX", replacer.Replace("%T08PLAYHXX"));
+        replacer.Replace("%T08PLAYHXX").ShouldBe("%T08PLAYHXX");
     }
 }

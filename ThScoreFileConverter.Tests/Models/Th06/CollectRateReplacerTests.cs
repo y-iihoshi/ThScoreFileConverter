@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using NSubstitute;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th06;
 
@@ -36,7 +35,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -45,7 +44,7 @@ public class CollectRateReplacerTests
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -53,7 +52,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 1", replacer.Replace("%T06CRG41"));
+        replacer.Replace("%T06CRG41").ShouldBe("invoked: 1");
     }
 
     [TestMethod]
@@ -61,7 +60,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 2", replacer.Replace("%T06CRG42"));
+        replacer.Replace("%T06CRG42").ShouldBe("invoked: 2");
     }
 
     [TestMethod]
@@ -69,7 +68,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 2", replacer.Replace("%T06CRG01"));
+        replacer.Replace("%T06CRG01").ShouldBe("invoked: 2");
     }
 
     [TestMethod]
@@ -77,7 +76,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 3", replacer.Replace("%T06CRG02"));
+        replacer.Replace("%T06CRG02").ShouldBe("invoked: 3");
     }
 
     [TestMethod]
@@ -86,7 +85,7 @@ public class CollectRateReplacerTests
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06CRG41"));
+        replacer.Replace("%T06CRG41").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -95,7 +94,7 @@ public class CollectRateReplacerTests
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06CRG42"));
+        replacer.Replace("%T06CRG42").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -103,7 +102,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("%T06XXX41", replacer.Replace("%T06XXX41"));
+        replacer.Replace("%T06XXX41").ShouldBe("%T06XXX41");
     }
 
     [TestMethod]
@@ -111,7 +110,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("%T06CRGY1", replacer.Replace("%T06CRGY1"));
+        replacer.Replace("%T06CRGY1").ShouldBe("%T06CRGY1");
     }
 
     [TestMethod]
@@ -119,7 +118,7 @@ public class CollectRateReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("%T06CRG4X", replacer.Replace("%T06CRG4X"));
+        replacer.Replace("%T06CRG4X").ShouldBe("%T06CRG4X");
     }
 
     [TestMethod]
@@ -130,6 +129,6 @@ public class CollectRateReplacerTests
         var cardAttacks = new[] { mock }.ToDictionary(attack => (int)attack.CardId);
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CollectRateReplacer(cardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T06CRG41"));
+        replacer.Replace("%T06CRG41").ShouldBe("invoked: 0");
     }
 }

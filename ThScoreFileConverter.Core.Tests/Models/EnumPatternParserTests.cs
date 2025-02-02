@@ -11,44 +11,44 @@ public class EnumPatternParserTests
     public void PatternTest()
     {
         var parser = new EnumPatternParser<Protagonist>();
-        Assert.AreEqual("RM|MR", parser.Pattern);
+        parser.Pattern.ShouldBe("RM|MR");
     }
 
     [TestMethod]
     public void PatternTestNoPattern()
     {
         var parser = new EnumPatternParser<DayOfWeek>();
-        Assert.AreEqual(string.Empty, parser.Pattern);
+        parser.Pattern.ShouldBeEmpty();
     }
 
     [TestMethod]
     public void ParseTest()
     {
         var parser = new EnumPatternParser<Protagonist>();
-        Assert.AreEqual(Protagonist.Reimu, parser.Parse("RM"));
-        Assert.AreEqual(Protagonist.Marisa, parser.Parse("MR"));
+        parser.Parse("RM").ShouldBe(Protagonist.Reimu);
+        parser.Parse("MR").ShouldBe(Protagonist.Marisa);
     }
 
     [TestMethod]
     public void ParseTestMismatchedCase()
     {
         var parser = new EnumPatternParser<Protagonist>();
-        Assert.AreEqual(Protagonist.Reimu, parser.Parse("rm"));
-        Assert.AreEqual(Protagonist.Marisa, parser.Parse("mr"));
+        parser.Parse("rm").ShouldBe(Protagonist.Reimu);
+        parser.Parse("mr").ShouldBe(Protagonist.Marisa);
     }
 
     [TestMethod]
     public void ParseTestEmpty()
     {
         var parser = new EnumPatternParser<Protagonist>();
-        _ = Assert.ThrowsException<InvalidOperationException>(() => parser.Parse(string.Empty));
+        _ = Should.Throw<InvalidOperationException>(() => parser.Parse(string.Empty));
     }
 
     [TestMethod]
     public void ParseTestUnknown()
     {
         var parser = new EnumPatternParser<Protagonist>();
-        _ = Assert.ThrowsException<InvalidOperationException>(() => parser.Parse("A"));
+        _ = Should.Throw<InvalidOperationException>(() => parser.Parse("A"));
     }
 
     [TestMethod]
@@ -64,9 +64,7 @@ public class EnumPatternParserTests
             return $"Ch1: {chara1}, Ch2: {chara2}";
         });
 
-        var replaced = Regex.Replace("Chara: RM, MR", pattern, evaluator);
-
-        Assert.AreEqual("Ch1: Reimu, Ch2: Marisa", replaced);
+        Regex.Replace("Chara: RM, MR", pattern, evaluator).ShouldBe("Ch1: Reimu, Ch2: Marisa");
     }
 
     [TestMethod]
@@ -81,6 +79,6 @@ public class EnumPatternParserTests
             return $"Ch: {chara}";
         });
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => Regex.Replace("Chara: RM", pattern, evaluator));
+        _ = Should.Throw<ArgumentNullException>(() => Regex.Replace("Chara: RM", pattern, evaluator));
     }
 }

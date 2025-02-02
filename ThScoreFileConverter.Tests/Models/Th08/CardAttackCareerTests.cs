@@ -3,9 +3,18 @@ using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
+
+internal static class CardAttackCareerExtensions
+{
+    internal static void ShouldBe(this ICardAttackCareer career, ICardAttackCareer expected)
+    {
+        career.MaxBonuses.Values.ShouldBe(expected.MaxBonuses.Values);
+        career.TrialCounts.Values.ShouldBe(expected.TrialCounts.Values);
+        career.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+    }
+}
 
 [TestClass]
 public class CardAttackCareerTests
@@ -35,13 +44,6 @@ public class CardAttackCareerTests
             career.MaxBonuses.Values, career.TrialCounts.Values, career.ClearCounts.Values);
     }
 
-    internal static void Validate(ICardAttackCareer expected, ICardAttackCareer actual)
-    {
-        CollectionAssert.That.AreEqual(expected.MaxBonuses.Values, actual.MaxBonuses.Values);
-        CollectionAssert.That.AreEqual(expected.TrialCounts.Values, actual.TrialCounts.Values);
-        CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
-    }
-
     [TestMethod]
     public void CardAttackCareerTest()
     {
@@ -49,7 +51,7 @@ public class CardAttackCareerTests
 
         var career = new CardAttackCareer();
 
-        Validate(mock, career);
+        career.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -59,7 +61,7 @@ public class CardAttackCareerTests
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock));
 
-        Validate(mock, career);
+        career.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -69,7 +71,7 @@ public class CardAttackCareerTests
         var maxBonuses = mock.MaxBonuses;
         _ = mock.MaxBonuses.Returns(maxBonuses.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<CardAttackCareer>(MakeByteArray(mock)));
     }
 
@@ -82,10 +84,10 @@ public class CardAttackCareerTests
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock));
 
-        CollectionAssert.That.AreNotEqual(mock.MaxBonuses.Values, career.MaxBonuses.Values);
-        CollectionAssert.That.AreEqual(mock.MaxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
-        CollectionAssert.That.AreNotEqual(mock.TrialCounts.Values, career.TrialCounts.Values);
-        CollectionAssert.That.AreNotEqual(mock.ClearCounts.Values, career.ClearCounts.Values);
+        career.MaxBonuses.Values.ShouldNotBe(mock.MaxBonuses.Values);
+        career.MaxBonuses.Values.ShouldBe(mock.MaxBonuses.Values.SkipLast(1));
+        career.TrialCounts.Values.ShouldNotBe(mock.TrialCounts.Values);
+        career.ClearCounts.Values.ShouldNotBe(mock.ClearCounts.Values);
     }
 
     [TestMethod]
@@ -95,7 +97,7 @@ public class CardAttackCareerTests
         var trialCounts = mock.TrialCounts;
         _ = mock.TrialCounts.Returns(trialCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<CardAttackCareer>(MakeByteArray(mock)));
     }
 
@@ -108,10 +110,10 @@ public class CardAttackCareerTests
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock));
 
-        CollectionAssert.That.AreEqual(mock.MaxBonuses.Values, career.MaxBonuses.Values);
-        CollectionAssert.That.AreNotEqual(mock.TrialCounts.Values, career.TrialCounts.Values);
-        CollectionAssert.That.AreEqual(mock.TrialCounts.Values.SkipLast(1), career.TrialCounts.Values);
-        CollectionAssert.That.AreNotEqual(mock.ClearCounts.Values, career.ClearCounts.Values);
+        career.MaxBonuses.Values.ShouldBe(mock.MaxBonuses.Values);
+        career.TrialCounts.Values.ShouldNotBe(mock.TrialCounts.Values);
+        career.TrialCounts.Values.ShouldBe(mock.TrialCounts.Values.SkipLast(1));
+        career.ClearCounts.Values.ShouldNotBe(mock.ClearCounts.Values);
     }
 
     [TestMethod]
@@ -121,7 +123,7 @@ public class CardAttackCareerTests
         var clearCounts = mock.ClearCounts;
         _ = mock.ClearCounts.Returns(clearCounts.Where(pair => pair.Key != CharaWithTotal.Total).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<CardAttackCareer>(MakeByteArray(mock)));
     }
 
@@ -134,9 +136,9 @@ public class CardAttackCareerTests
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock));
 
-        CollectionAssert.That.AreEqual(mock.MaxBonuses.Values, career.MaxBonuses.Values);
-        CollectionAssert.That.AreEqual(mock.TrialCounts.Values, career.TrialCounts.Values);
-        CollectionAssert.That.AreNotEqual(mock.ClearCounts.Values, career.ClearCounts.Values);
-        CollectionAssert.That.AreEqual(mock.ClearCounts.Values.SkipLast(1), career.ClearCounts.Values);
+        career.MaxBonuses.Values.ShouldBe(mock.MaxBonuses.Values);
+        career.TrialCounts.Values.ShouldBe(mock.TrialCounts.Values);
+        career.ClearCounts.Values.ShouldNotBe(mock.ClearCounts.Values);
+        career.ClearCounts.Values.ShouldBe(mock.ClearCounts.Values.SkipLast(1));
     }
 }

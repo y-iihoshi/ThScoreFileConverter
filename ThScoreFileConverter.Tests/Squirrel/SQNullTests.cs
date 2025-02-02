@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
 
@@ -11,7 +10,7 @@ public class SQNullTests
     {
         var sqnull = SQNull.Instance;
 
-        Assert.AreEqual(SQObjectType.Null, sqnull.Type);
+        sqnull.Type.ShouldBe(SQObjectType.Null);
     }
 
     internal static SQNull CreateTestHelper(byte[] bytes)
@@ -27,44 +26,44 @@ public class SQNullTests
     {
         var sqnull = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
 
-        Assert.AreEqual(SQObjectType.Null, sqnull.Type);
+        sqnull.Type.ShouldBe(SQObjectType.Null);
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool)));
     }
 
     [TestMethod]
     public void EqualsTestNull()
     {
-        Assert.IsFalse(SQNull.Instance.Equals(null!));
+        SQNull.Instance.Equals(null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestNullObject()
     {
-        Assert.IsFalse(SQNull.Instance.Equals((object)null!));
+        SQNull.Instance.Equals((object)null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestInvalidType()
     {
-        Assert.IsFalse(SQNull.Instance.Equals(SQBool.True));
+        SQNull.Instance.Equals(SQBool.True).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestSelf()
     {
-        Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance));
+        SQNull.Instance.Equals(SQNull.Instance).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestSelfObject()
     {
-        Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance as object));
+        SQNull.Instance.Equals(SQNull.Instance as object).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -72,7 +71,7 @@ public class SQNullTests
     {
         var created = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
 
-        Assert.IsTrue(SQNull.Instance.Equals(created));
+        SQNull.Instance.Equals(created).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -80,12 +79,12 @@ public class SQNullTests
     {
         var created = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
 
-        Assert.AreEqual(SQNull.Instance.GetHashCode(), created.GetHashCode());
+        created.GetHashCode().ShouldBe(SQNull.Instance.GetHashCode());
     }
 
     [TestMethod]
     public void ToStringTest()
     {
-        Assert.AreEqual("Null", SQNull.Instance.ToString());
+        SQNull.Instance.ToString().ShouldBe("Null");
     }
 }

@@ -3,10 +3,23 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
+
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.StoryFlags.Values.ShouldBe(expected.StoryFlags.Values);
+        actual.PracticeFlags.Values.ShouldBe(expected.PracticeFlags.Values);
+        actual.Chara.ShouldBe(expected.Chara);
+    }
+}
 
 [TestClass]
 public class ClearDataTests
@@ -38,17 +51,6 @@ public class ClearDataTests
             (ushort)0);
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.StoryFlags.Values, actual.StoryFlags.Values);
-        CollectionAssert.That.AreEqual(expected.PracticeFlags.Values, actual.PracticeFlags.Values);
-        Assert.AreEqual(expected.Chara, actual.Chara);
-    }
-
     [TestMethod]
     public void ClearDataTestChapter()
     {
@@ -57,7 +59,7 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -68,7 +70,7 @@ public class ClearDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     [TestMethod]
@@ -79,7 +81,7 @@ public class ClearDataTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<CharaWithTotal>();
@@ -92,6 +94,6 @@ public class ClearDataTests
         _ = mock.Chara.Returns((CharaWithTotal)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new ClearData(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new ClearData(chapter));
     }
 }

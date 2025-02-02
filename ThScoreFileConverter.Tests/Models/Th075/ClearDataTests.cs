@@ -2,9 +2,33 @@
 using ThScoreFileConverter.Helpers;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverter.Tests.Models.Th075.Stubs;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th075;
+
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.UseCount.ShouldBe(expected.UseCount);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.MaxCombo.ShouldBe(expected.MaxCombo);
+        actual.MaxDamage.ShouldBe(expected.MaxDamage);
+        actual.MaxBonuses.ShouldBe(expected.MaxBonuses);
+        actual.CardGotCount.ShouldBe(expected.CardGotCount);
+        actual.CardTrialCount.ShouldBe(expected.CardTrialCount);
+        actual.CardTrulyGot.ShouldBe(expected.CardTrulyGot);
+        actual.Ranking.Count.ShouldBe(expected.Ranking.Count);
+        foreach (var index in Enumerable.Range(0, expected.Ranking.Count))
+        {
+            var expectedHighScore = expected.Ranking[index];
+            var actualHighScore = actual.Ranking[index];
+            actualHighScore.Name.ShouldBe(expectedHighScore.Name);
+            actualHighScore.Month.ShouldBe(expectedHighScore.Month);
+            actualHighScore.Day.ShouldBe(expectedHighScore.Day);
+            actualHighScore.Score.ShouldBe(expectedHighScore.Score);
+        }
+    }
+}
 
 [TestClass]
 public class ClearDataTests
@@ -62,35 +86,13 @@ public class ClearDataTests
             clearData.Ranking.Select(element => HighScoreTests.MakeByteArray((HighScoreStub)element)));
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        Assert.AreEqual(expected.UseCount, actual.UseCount);
-        Assert.AreEqual(expected.ClearCount, actual.ClearCount);
-        Assert.AreEqual(expected.MaxCombo, actual.MaxCombo);
-        Assert.AreEqual(expected.MaxDamage, actual.MaxDamage);
-        CollectionAssert.That.AreEqual(expected.MaxBonuses, actual.MaxBonuses);
-        CollectionAssert.That.AreEqual(expected.CardGotCount, actual.CardGotCount);
-        CollectionAssert.That.AreEqual(expected.CardTrialCount, actual.CardTrialCount);
-        CollectionAssert.That.AreEqual(expected.CardTrulyGot, actual.CardTrulyGot);
-        Assert.AreEqual(expected.Ranking.Count, actual.Ranking.Count);
-        foreach (var index in Enumerable.Range(0, expected.Ranking.Count))
-        {
-            var highScoreStub = expected.Ranking[index];
-            var highScore = actual.Ranking[index];
-            Assert.AreEqual(highScoreStub.Name, highScore.Name);
-            Assert.AreEqual(highScoreStub.Month, highScore.Month);
-            Assert.AreEqual(highScoreStub.Day, highScore.Day);
-            Assert.AreEqual(highScoreStub.Score, highScore.Score);
-        }
-    }
-
     [TestMethod]
     public void ClearDataTest()
     {
         var mock = MockInitialClearData();
         var clearData = new ClearData();
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -99,6 +101,6 @@ public class ClearDataTests
         var mock = MockClearData();
         var clearData = TestUtils.Create<ClearData>(MakeByteArray(mock));
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 }

@@ -1,10 +1,23 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader<Level> actual, IBestShotHeader<Level> expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Level.ShouldBe(expected.Level);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.ResultScore.ShouldBe(expected.ResultScore);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.CardName.ShouldBe(expected.CardName);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -46,27 +59,13 @@ public class BestShotHeaderTests
             header.CardName);
     }
 
-    internal static void Validate(IBestShotHeader<Level> expected, in IBestShotHeader<Level> actual)
-    {
-        Guard.IsNotNull(actual);
-
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Level, actual.Level);
-        Assert.AreEqual(expected.Scene, actual.Scene);
-        Assert.AreEqual(expected.Width, actual.Width);
-        Assert.AreEqual(expected.Height, actual.Height);
-        Assert.AreEqual(expected.ResultScore, actual.ResultScore);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
-        CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -75,7 +74,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -84,7 +83,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Signature.Returns(string.Empty);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -95,7 +94,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns(signature[0..^1]);
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -106,7 +105,7 @@ public class BestShotHeaderTests
         var signature = mock.Signature;
         _ = mock.Signature.Returns($"{signature}E");
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -119,7 +118,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         _ = mock.Level.Returns((Level)level);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -130,7 +129,7 @@ public class BestShotHeaderTests
         var cardName = mock.CardName;
         _ = mock.CardName.Returns(cardName.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
     }
 
@@ -143,6 +142,6 @@ public class BestShotHeaderTests
 
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(MockBestShotHeader(), header);
+        header.ShouldBe(MockBestShotHeader());
     }
 }

@@ -7,10 +7,6 @@ using System.Text;
 using CommunityToolkit.Diagnostics;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 
-#if DEBUG_TEST
-using ThScoreFileConverter.Extensions;
-#endif
-
 namespace ThScoreFileConverter.Tests.UnitTesting;
 
 #if DEBUG_TEST
@@ -20,13 +16,9 @@ public static class TestUtils
 {
     static TestUtils()
     {
-        Unreachable = nameof(Unreachable);
-
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         CP932Encoding = Encoding.GetEncoding(932);
     }
-
-    public static string Unreachable { get; }
 
     public static Encoding CP932Encoding { get; }
 

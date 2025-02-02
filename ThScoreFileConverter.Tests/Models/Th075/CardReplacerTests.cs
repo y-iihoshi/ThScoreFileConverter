@@ -29,7 +29,7 @@ public class CardReplacerTests
     public void CardReplacerTest()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -37,88 +37,88 @@ public class CardReplacerTests
     {
         var clearData = ImmutableDictionary<(CharaWithReserved, Level), IClearData>.Empty;
         var replacer = new CardReplacer(clearData, true);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTestName()
     {
         var replacer = new CardReplacer(ClearData, false);
-        Assert.AreEqual("符の壱「スターダストレヴァリエ」-Easy-", replacer.Replace("%T75CARD001RMN"));
-        Assert.AreEqual("符の壱「アーティフルチャンター」-Easy-", replacer.Replace("%T75CARD001MRN"));
+        replacer.Replace("%T75CARD001RMN").ShouldBe("符の壱「スターダストレヴァリエ」-Easy-");
+        replacer.Replace("%T75CARD001MRN").ShouldBe("符の壱「アーティフルチャンター」-Easy-");
     }
 
     [TestMethod]
     public void ReplaceTestRank()
     {
         var replacer = new CardReplacer(ClearData, false);
-        Assert.AreEqual("Easy", replacer.Replace("%T75CARD001RMR"));
-        Assert.AreEqual("Easy", replacer.Replace("%T75CARD001MRR"));
+        replacer.Replace("%T75CARD001RMR").ShouldBe("Easy");
+        replacer.Replace("%T75CARD001MRR").ShouldBe("Easy");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenName()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("符の壱「スターダストレヴァリエ」-Easy-", replacer.Replace("%T75CARD001RMN"));
-        Assert.AreEqual("??????????", replacer.Replace("%T75CARD001MRN"));
+        replacer.Replace("%T75CARD001RMN").ShouldBe("符の壱「スターダストレヴァリエ」-Easy-");
+        replacer.Replace("%T75CARD001MRN").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenRank()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("Easy", replacer.Replace("%T75CARD001RMR"));
-        Assert.AreEqual("?????", replacer.Replace("%T75CARD001MRR"));
+        replacer.Replace("%T75CARD001RMR").ShouldBe("Easy");
+        replacer.Replace("%T75CARD001MRR").ShouldBe("?????");
     }
 
     [TestMethod]
     public void ReplaceTestMeiling()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75CARD001MLN", replacer.Replace("%T75CARD001MLN"));
+        replacer.Replace("%T75CARD001MLN").ShouldBe("%T75CARD001MLN");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentName()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75CARD101RMN", replacer.Replace("%T75CARD101RMN"));
+        replacer.Replace("%T75CARD101RMN").ShouldBe("%T75CARD101RMN");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentRank()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75CARD101RMR", replacer.Replace("%T75CARD101RMR"));
+        replacer.Replace("%T75CARD101RMR").ShouldBe("%T75CARD101RMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75XXXX001RMN", replacer.Replace("%T75XXXX001RMN"));
+        replacer.Replace("%T75XXXX001RMN").ShouldBe("%T75XXXX001RMN");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75CARD000RMN", replacer.Replace("%T75CARD000RMN"));
-        Assert.AreEqual("%T75CARD101RMN", replacer.Replace("%T75CARD101RMN"));
+        replacer.Replace("%T75CARD000RMN").ShouldBe("%T75CARD000RMN");
+        replacer.Replace("%T75CARD101RMN").ShouldBe("%T75CARD101RMN");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75CARD001XXN", replacer.Replace("%T75CARD001XXN"));
+        replacer.Replace("%T75CARD001XXN").ShouldBe("%T75CARD001XXN");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
         var replacer = new CardReplacer(ClearData, true);
-        Assert.AreEqual("%T75CARD001RMX", replacer.Replace("%T75CARD001RMX"));
+        replacer.Replace("%T75CARD001RMX").ShouldBe("%T75CARD001RMX");
     }
 }

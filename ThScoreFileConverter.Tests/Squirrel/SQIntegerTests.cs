@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
 
@@ -11,9 +10,9 @@ public class SQIntegerTests
     {
         var sqinteger = new SQInteger();
 
-        Assert.AreEqual(SQObjectType.Integer, sqinteger.Type);
-        Assert.AreEqual(0, sqinteger.Value);
-        Assert.AreEqual(0, sqinteger);
+        sqinteger.Type.ShouldBe(SQObjectType.Integer);
+        sqinteger.Value.ShouldBe(0);
+        ((int)sqinteger).ShouldBe(0);
     }
 
     internal static SQInteger CreateTestHelper(byte[] bytes)
@@ -34,41 +33,41 @@ public class SQIntegerTests
     {
         var sqinteger = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Integer, expected));
 
-        Assert.AreEqual(SQObjectType.Integer, sqinteger.Type);
-        Assert.AreEqual(expected, sqinteger.Value);
-        Assert.AreEqual(expected, sqinteger);
+        sqinteger.Type.ShouldBe(SQObjectType.Integer);
+        sqinteger.Value.ShouldBe(expected);
+        ((int)sqinteger).ShouldBe(expected);
     }
 
     [TestMethod]
     public void CreateTestShortened()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Integer, new byte[3])));
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 123)));
     }
 
     [TestMethod]
     public void EqualsTestNull()
     {
-        Assert.IsFalse(new SQInteger().Equals(null!));
+        new SQInteger().Equals(null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestNullObject()
     {
-        Assert.IsFalse(new SQInteger().Equals((object)null!));
+        new SQInteger().Equals((object)null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestInvalidType()
     {
-        Assert.IsFalse(new SQInteger().Equals(SQNull.Instance));
+        new SQInteger().Equals(SQNull.Instance).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -76,7 +75,7 @@ public class SQIntegerTests
     {
         var value = new SQInteger();
 
-        Assert.IsTrue(value.Equals(value));
+        value.Equals(value).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -84,36 +83,36 @@ public class SQIntegerTests
     {
         var value = new SQInteger();
 
-        Assert.IsTrue(value.Equals(value as object));
+        value.Equals(value as object).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestEqual()
     {
-        Assert.IsTrue(new SQInteger().Equals(new SQInteger(0)));
+        new SQInteger().Equals(new SQInteger(0)).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestNotEqual()
     {
-        Assert.IsFalse(new SQInteger().Equals(new SQInteger(1)));
+        new SQInteger().Equals(new SQInteger(1)).ShouldBeFalse();
     }
 
     [TestMethod]
     public void GetHashCodeTestEqual()
     {
-        Assert.AreEqual(new SQInteger().GetHashCode(), new SQInteger(0).GetHashCode());
+        new SQInteger(0).GetHashCode().ShouldBe(new SQInteger().GetHashCode());
     }
 
     [TestMethod]
     public void GetHashCodeTestNotEqual()
     {
-        Assert.AreNotEqual(new SQInteger().GetHashCode(), new SQInteger(1).GetHashCode());
+        new SQInteger(1).GetHashCode().ShouldNotBe(new SQInteger().GetHashCode());
     }
 
     [TestMethod]
     public void ToStringTest()
     {
-        Assert.AreEqual("12", new SQInteger(12).ToString());
+        new SQInteger(12).ToString().ShouldBe("12");
     }
 }

@@ -2,10 +2,24 @@
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
+
+internal static class ScoreExtensions
+{
+    internal static void ShouldBe(this IScore actual, IScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Number.ShouldBe(expected.Number);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+        actual.ChallengeCounts.Values.ShouldBe(expected.ChallengeCounts.Values);
+        actual.HighScore.ShouldBe(expected.HighScore);
+    }
+}
 
 [TestClass]
 public class ScoreTests
@@ -39,18 +53,6 @@ public class ScoreTests
             new byte[0x2A8]);
     }
 
-    internal static void Validate(IScore expected, IScore actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
-        Assert.AreEqual(expected.Number, actual.Number);
-        CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
-        CollectionAssert.That.AreEqual(expected.ChallengeCounts.Values, actual.ChallengeCounts.Values);
-        Assert.AreEqual(expected.HighScore, actual.HighScore);
-    }
-
     [TestMethod]
     public void ScoreTestChapter()
     {
@@ -59,8 +61,8 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new Score(chapter);
 
-        Validate(mock, score);
-        Assert.IsFalse(score.IsValid);
+        score.ShouldBe(mock);
+        score.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -71,7 +73,7 @@ public class ScoreTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [TestMethod]
@@ -82,7 +84,7 @@ public class ScoreTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [TestMethod]
@@ -93,7 +95,7 @@ public class ScoreTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Score(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
     [DataTestMethod]
@@ -109,6 +111,6 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, Score.CanInitialize(chapter));
+        Score.CanInitialize(chapter).ShouldBe(expected);
     }
 }

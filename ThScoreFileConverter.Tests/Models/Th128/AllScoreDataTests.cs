@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverter.Tests.UnitTesting;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
@@ -15,10 +14,10 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.IsNull(allScoreData.Header);
-        Assert.AreEqual(0, allScoreData.ClearData.Count);
-        Assert.IsNull(allScoreData.CardData);
-        Assert.IsNull(allScoreData.Status);
+        allScoreData.Header.ShouldBeNull();
+        allScoreData.ClearData.ShouldBeEmpty();
+        allScoreData.CardData.ShouldBeNull();
+        allScoreData.Status.ShouldBeNull();
     }
 
     [TestMethod]
@@ -30,7 +29,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(header);
 
-        Assert.AreSame(header, allScoreData.Header);
+        allScoreData.Header.ShouldBeSameAs(header);
     }
 
     [TestMethod]
@@ -44,8 +43,8 @@ public class AllScoreDataTests
         allScoreData.Set(header1);
         allScoreData.Set(header2);
 
-        Assert.AreNotSame(header1, allScoreData.Header);
-        Assert.AreSame(header2, allScoreData.Header);
+        allScoreData.Header.ShouldNotBeSameAs(header1);
+        allScoreData.Header.ShouldBeSameAs(header2);
     }
 
     [TestMethod]
@@ -58,7 +57,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData);
 
-        Assert.AreSame(clearData, allScoreData.ClearData[route]);
+        allScoreData.ClearData[route].ShouldBeSameAs(clearData);
     }
 
     [TestMethod]
@@ -74,8 +73,8 @@ public class AllScoreDataTests
         allScoreData.Set(clearData1);
         allScoreData.Set(clearData2);
 
-        Assert.AreSame(clearData1, allScoreData.ClearData[route]);
-        Assert.AreNotSame(clearData2, allScoreData.ClearData[route]);
+        allScoreData.ClearData[route].ShouldBeSameAs(clearData1);
+        allScoreData.ClearData[route].ShouldNotBeSameAs(clearData2);
     }
 
     [TestMethod]
@@ -86,7 +85,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(cardData);
 
-        Assert.AreSame(cardData, allScoreData.CardData);
+        allScoreData.CardData.ShouldBeSameAs(cardData);
     }
 
     [TestMethod]
@@ -99,8 +98,8 @@ public class AllScoreDataTests
         allScoreData.Set(cardData1);
         allScoreData.Set(cardData2);
 
-        Assert.AreNotSame(cardData1, allScoreData.CardData);
-        Assert.AreSame(cardData2, allScoreData.CardData);
+        allScoreData.CardData.ShouldNotBeSameAs(cardData1);
+        allScoreData.CardData.ShouldBeSameAs(cardData2);
     }
 
     [TestMethod]
@@ -111,7 +110,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
 
-        Assert.AreSame(status, allScoreData.Status);
+        allScoreData.Status.ShouldBeSameAs(status);
     }
 
     [TestMethod]
@@ -124,7 +123,7 @@ public class AllScoreDataTests
         allScoreData.Set(status1);
         allScoreData.Set(status2);
 
-        Assert.AreNotSame(status1, allScoreData.Status);
-        Assert.AreSame(status2, allScoreData.Status);
+        allScoreData.Status.ShouldNotBeSameAs(status1);
+        allScoreData.Status.ShouldBeSameAs(status2);
     }
 }

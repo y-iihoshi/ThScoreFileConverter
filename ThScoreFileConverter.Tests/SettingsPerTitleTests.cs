@@ -9,42 +9,42 @@ public class SettingsPerTitleTests
     public void SettingsPerTitleTest()
     {
         var setting = new SettingsPerTitle();
-        Assert.AreEqual(string.Empty, setting.ScoreFile);
-        Assert.AreEqual(string.Empty, setting.BestShotDirectory);
-        Assert.AreEqual(0, setting.TemplateFiles.Count());
-        Assert.AreEqual(string.Empty, setting.OutputDirectory);
-        Assert.AreEqual(string.Empty, setting.ImageOutputDirectory);
-        Assert.IsTrue(setting.HideUntriedCards);
+        setting.ScoreFile.ShouldBeEmpty();
+        setting.BestShotDirectory.ShouldBeEmpty();
+        setting.TemplateFiles.ShouldBeEmpty();
+        setting.OutputDirectory.ShouldBeEmpty();
+        setting.ImageOutputDirectory.ShouldBeEmpty();
+        setting.HideUntriedCards.ShouldBeTrue();
     }
 
     [TestMethod]
     public void ScoreFileTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().ScoreFile = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new SettingsPerTitle().ScoreFile = null!);
     }
 
     [TestMethod]
     public void BestShotDirectoryTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().BestShotDirectory = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new SettingsPerTitle().BestShotDirectory = null!);
     }
 
     [TestMethod]
     public void TemplateFilesTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().TemplateFiles = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new SettingsPerTitle().TemplateFiles = null!);
     }
 
     [TestMethod]
     public void OutputDirectoryTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().OutputDirectory = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new SettingsPerTitle().OutputDirectory = null!);
     }
 
     [TestMethod]
     public void ImageOutputDirectoryNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new SettingsPerTitle().ImageOutputDirectory = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new SettingsPerTitle().ImageOutputDirectory = null!);
     }
 
     [TestMethod]
@@ -62,8 +62,8 @@ public class SettingsPerTitleTests
         {
             var scoreFile = nameof(setting.ScoreFile);
             setting.ScoreFile = scoreFile;
-            Assert.AreEqual(scoreFile, setting.ScoreFile);
-            Assert.AreEqual(1, numCalled);
+            setting.ScoreFile.ShouldBe(scoreFile);
+            numCalled.ShouldBe(1);
         }
         finally
         {
@@ -86,8 +86,8 @@ public class SettingsPerTitleTests
         {
             var scoreFile = setting.ScoreFile;
             setting.ScoreFile = scoreFile;
-            Assert.AreEqual(scoreFile, setting.ScoreFile);
-            Assert.AreEqual(0, numCalled);
+            setting.ScoreFile.ShouldBe(scoreFile);
+            numCalled.ShouldBe(0);
         }
         finally
         {

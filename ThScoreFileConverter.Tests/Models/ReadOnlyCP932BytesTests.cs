@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models;
 
@@ -13,17 +12,17 @@ public class ReadOnlyCP932BytesTests
         var expectedBytes = TestUtils.CP932Encoding.GetBytes("博麗 霊夢\0霧雨 魔理沙");
         var actual = new ReadOnlyCP932Bytes(expectedBytes);
 
-        Assert.AreEqual("博麗 霊夢", actual.ToString());
-        Assert.AreNotEqual("博麗 霊夢\0霧雨 魔理沙", actual.ToString());
-        CollectionAssert.That.AreEqual(expectedBytes, actual.Bytes);
+        actual.ToString().ShouldBe("博麗 霊夢");
+        actual.ToString().ShouldNotBe("博麗 霊夢\0霧雨 魔理沙");
+        actual.Bytes.ShouldBe(expectedBytes);
     }
 
     [TestMethod]
     public void EmptyTest()
     {
         var empty = ReadOnlyCP932Bytes.Empty;
-        Assert.IsFalse(empty.Bytes.Any());
-        Assert.AreEqual(string.Empty, empty.ToString());
+        empty.Bytes.Any().ShouldBeFalse();
+        empty.ToString().ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -31,7 +30,7 @@ public class ReadOnlyCP932BytesTests
     {
         var empty = ReadOnlyCP932Bytes.Empty;
         var empty2 = ReadOnlyCP932Bytes.Empty;
-        Assert.AreSame(empty, empty2);
+        empty2.ShouldBeSameAs(empty);
     }
 
     [TestMethod]
@@ -43,7 +42,7 @@ public class ReadOnlyCP932BytesTests
         var index = 0;
         foreach (var actualByte in actual)
         {
-            Assert.AreEqual(expectedBytes[index++], actualByte);
+            actualByte.ShouldBe(expectedBytes[index++]);
         }
     }
 
@@ -56,7 +55,7 @@ public class ReadOnlyCP932BytesTests
         var index = 0;
         foreach (var actualByte in actual as IEnumerable)
         {
-            Assert.AreEqual(expectedBytes[index++], actualByte);
+            actualByte.ShouldBe(expectedBytes[index++]);
         }
     }
 }

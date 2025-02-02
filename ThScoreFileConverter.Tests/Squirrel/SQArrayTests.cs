@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
 using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
@@ -13,8 +12,8 @@ public class SQArrayTests
     {
         var sqarray = new SQArray();
 
-        Assert.AreEqual(SQOT.Array, sqarray.Type);
-        Assert.AreEqual(0, sqarray.Value.Count());
+        sqarray.Type.ShouldBe(SQOT.Array);
+        sqarray.Value.ShouldBeEmpty();
     }
 
     internal static SQArray CreateTestHelper(byte[] bytes)
@@ -45,12 +44,12 @@ public class SQArrayTests
 
         var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));
 
-        Assert.AreEqual(SQOT.Array, sqarray.Type);
+        sqarray.Type.ShouldBe(SQOT.Array);
         for (var index = 0; index < expected.Length; ++index)
         {
             var element = sqarray.Value.ElementAt(index);
-            Assert.IsTrue(element is SQInteger);
-            Assert.AreEqual(expected[index], (SQInteger)element);
+            var value = element.ShouldBeOfType<SQInteger>();
+            ((int)value).ShouldBe(expected[index]);
         }
     }
 
@@ -61,8 +60,8 @@ public class SQArrayTests
     {
         var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));
 
-        Assert.AreEqual(SQOT.Array, sqarray.Type);
-        Assert.AreEqual(0, sqarray.Value.Count());
+        sqarray.Type.ShouldBe(SQOT.Array);
+        sqarray.Value.ShouldBeEmpty();
     }
 
     [DataTestMethod]
@@ -86,7 +85,7 @@ public class SQArrayTests
         DisplayName = "empty and only array type")]
     public void CreateTestShortened(int[] array)
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
+        _ = Should.Throw<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
     [DataTestMethod]
@@ -130,7 +129,7 @@ public class SQArrayTests
         DisplayName = "empty and invalid sentinel")]
     public void CreateTestInvalid(int[] array)
     {
-        _ = Assert.ThrowsException<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
+        _ = Should.Throw<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
     [DataTestMethod]
@@ -150,12 +149,12 @@ public class SQArrayTests
     {
         var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));
 
-        Assert.AreEqual(expected, sqarray.ToString());
+        sqarray.ToString().ShouldBe(expected);
     }
 
     [TestMethod]
     public void ToStringTestEmpty()
     {
-        Assert.AreEqual("[  ]", new SQArray().ToString());
+        new SQArray().ToString().ShouldBe("[  ]");
     }
 }

@@ -10,7 +10,7 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.AreEqual("dir2/file.ext", UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBe("dir2/file.ext");
     }
 
     [TestMethod]
@@ -18,7 +18,7 @@ public class UriHelperTests
     {
         string dir = null!;
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.AreEqual(string.Empty, UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -26,7 +26,7 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         string file = null!;
-        Assert.AreEqual(string.Empty, UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -34,7 +34,7 @@ public class UriHelperTests
     {
         var dir = string.Empty;
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.AreEqual(string.Empty, UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -42,7 +42,7 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         var file = string.Empty;
-        Assert.AreEqual(string.Empty, UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -50,7 +50,7 @@ public class UriHelperTests
     {
         var dir = "abcde";
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.AreEqual(string.Empty, UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -58,7 +58,7 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         var file = "abcde";
-        Assert.AreEqual(string.Empty, UriHelper.GetRelativePath(dir, file));
+        UriHelper.GetRelativePath(dir, file).ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -66,8 +66,8 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.IsTrue(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual("dir2/file.ext", path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeTrue();
+        path.ShouldBe("dir2/file.ext");
     }
 
     [TestMethod]
@@ -75,8 +75,8 @@ public class UriHelperTests
     {
         string dir = null!;
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.IsFalse(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual(string.Empty, path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeFalse();
+        path.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -84,8 +84,8 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         string file = null!;
-        Assert.IsFalse(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual(string.Empty, path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeFalse();
+        path.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -93,8 +93,8 @@ public class UriHelperTests
     {
         var dir = string.Empty;
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.IsFalse(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual(string.Empty, path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeFalse();
+        path.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -102,8 +102,8 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         var file = string.Empty;
-        Assert.IsFalse(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual(string.Empty, path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeFalse();
+        path.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -111,8 +111,8 @@ public class UriHelperTests
     {
         var dir = "abcde";
         var file = @"C:\path\to\dir\dir2\file.ext";
-        Assert.IsFalse(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual(string.Empty, path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeFalse();
+        path.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -120,7 +120,7 @@ public class UriHelperTests
     {
         var dir = @"C:\path\to\dir\";
         var file = "abcde";
-        Assert.IsFalse(UriHelper.TryGetRelativePath(dir, file, out var path));
-        Assert.AreEqual(string.Empty, path);
+        UriHelper.TryGetRelativePath(dir, file, out var path).ShouldBeFalse();
+        path.ShouldBeEmpty();
     }
 }

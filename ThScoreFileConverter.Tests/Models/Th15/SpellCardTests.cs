@@ -1,10 +1,24 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverter.Tests.UnitTesting;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
+
+internal static class SpellCardExtensions
+{
+    internal static void ShouldBe(this ISpellCard actual, ISpellCard expected)
+    {
+        actual.Name.ShouldBe(expected.Name);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.PracticeClearCount.ShouldBe(expected.PracticeClearCount);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.PracticeTrialCount.ShouldBe(expected.PracticeTrialCount);
+        actual.Id.ShouldBe(expected.Id);
+        actual.Level.ShouldBe(expected.Level);
+        actual.PracticeScore.ShouldBe(expected.PracticeScore);
+    }
+}
 
 [TestClass]
 public class SpellCardTests
@@ -36,26 +50,14 @@ public class SpellCardTests
             spellCard.PracticeScore);
     }
 
-    internal static void Validate(ISpellCard expected, ISpellCard actual)
-    {
-        CollectionAssert.That.AreEqual(expected.Name, actual.Name);
-        Assert.AreEqual(expected.ClearCount, actual.ClearCount);
-        Assert.AreEqual(expected.PracticeClearCount, actual.PracticeClearCount);
-        Assert.AreEqual(expected.TrialCount, actual.TrialCount);
-        Assert.AreEqual(expected.PracticeTrialCount, actual.PracticeTrialCount);
-        Assert.AreEqual(expected.Id, actual.Id);
-        Assert.AreEqual(expected.Level, actual.Level);
-        Assert.AreEqual(expected.PracticeScore, actual.PracticeScore);
-    }
-
     [TestMethod]
     public void SpellCardTest()
     {
         var mock = Substitute.For<ISpellCard>();
         var spellCard = new SpellCard();
 
-        Validate(mock, spellCard);
-        Assert.IsFalse(spellCard.HasTried);
+        spellCard.ShouldBe(mock);
+        spellCard.HasTried.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -65,8 +67,8 @@ public class SpellCardTests
 
         var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock));
 
-        Validate(mock, spellCard);
-        Assert.IsTrue(spellCard.HasTried);
+        spellCard.ShouldBe(mock);
+        spellCard.HasTried.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -76,7 +78,7 @@ public class SpellCardTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
@@ -87,7 +89,7 @@ public class SpellCardTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 
@@ -100,7 +102,7 @@ public class SpellCardTests
         var mock = MockSpellCard();
         _ = mock.Level.Returns((Level)level);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard>(MakeByteArray(mock)));
     }
 }

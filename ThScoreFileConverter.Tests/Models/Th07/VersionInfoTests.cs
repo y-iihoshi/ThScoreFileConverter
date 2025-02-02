@@ -1,8 +1,21 @@
 ﻿using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
+
+internal static class VersionInfoExtensions
+{
+    internal static void ShouldBe(this VersionInfo actual, VersionInfoTests.Properties expected)
+    {
+        var data = VersionInfoTests.MakeData(expected);
+
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.Version.ShouldBe(expected.version);
+    }
+}
 
 [TestClass]
 public class VersionInfoTests
@@ -34,17 +47,6 @@ public class VersionInfoTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
     }
 
-    internal static void Validate(in Properties expected, in VersionInfo actual)
-    {
-        var data = MakeData(expected);
-
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(data[0], actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.version, actual.Version);
-    }
-
     [TestMethod]
     public void VersionInfoTestChapter()
     {
@@ -53,7 +55,7 @@ public class VersionInfoTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var versionInfo = new VersionInfo(chapter);
 
-        Validate(properties, versionInfo);
+        versionInfo.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -63,7 +65,7 @@ public class VersionInfoTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new VersionInfo(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new VersionInfo(chapter));
     }
 
     [TestMethod]
@@ -73,6 +75,6 @@ public class VersionInfoTests
         --properties.size1;
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new VersionInfo(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new VersionInfo(chapter));
     }
 }

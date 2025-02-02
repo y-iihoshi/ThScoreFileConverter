@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
 
@@ -11,7 +10,7 @@ public class SQInstanceTests
     {
         var instance = new SQInstance();
 
-        Assert.AreEqual(SQObjectType.Instance, instance.Type);
+        instance.Type.ShouldBe(SQObjectType.Instance);
     }
 
     internal static SQInstance CreateTestHelper(byte[] bytes)
@@ -27,13 +26,13 @@ public class SQInstanceTests
     {
         var sqinstance = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Instance));
 
-        Assert.AreEqual(SQObjectType.Instance, sqinstance.Type);
+        sqinstance.Type.ShouldBe(SQObjectType.Instance);
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null)));
     }
 }

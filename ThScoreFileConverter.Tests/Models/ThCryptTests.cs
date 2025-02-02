@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models;
 
@@ -22,7 +21,7 @@ public class ThCryptTests
         using var input = new MemoryStream(this.decrypted);
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<NotImplementedException>(
+        _ = Should.Throw<NotImplementedException>(
             () => ThCrypt.Encrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
     }
 
@@ -35,8 +34,8 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreEqual(this.decrypted, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldBe(this.decrypted);
     }
 
     [TestMethod]
@@ -45,7 +44,7 @@ public class ThCryptTests
         using var output = new MemoryStream();
 
         ThCrypt.Decrypt(Stream.Null, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-        Assert.AreEqual(0, output.Length);
+        output.Length.ShouldBe(0);
     }
 
     [TestMethod]
@@ -55,7 +54,7 @@ public class ThCryptTests
         using var output = new MemoryStream();
 
         ThCrypt.Decrypt(input, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-        Assert.AreEqual(0, output.Length);
+        output.Length.ShouldBe(0);
     }
 
     [TestMethod]
@@ -64,7 +63,7 @@ public class ThCryptTests
         using var input = new UnreadableMemoryStream();
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<NotSupportedException>(
+        _ = Should.Throw<NotSupportedException>(
             () => ThCrypt.Decrypt(input, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
     }
 
@@ -75,7 +74,7 @@ public class ThCryptTests
         var input = new MemoryStream(this.encryptedBySmallBlock);
         input.Close();
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(
+        _ = Should.Throw<ObjectDisposedException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
     }
 
@@ -88,7 +87,7 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreNotEqual(this.decrypted.Length, actual.Length);
+        actual.Length.ShouldNotBe(this.decrypted.Length);
     }
 
     [TestMethod]
@@ -104,8 +103,8 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreNotEqual(this.decrypted, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldNotBe(this.decrypted);
     }
 
     [TestMethod]
@@ -114,7 +113,7 @@ public class ThCryptTests
         using var input = new MemoryStream(this.encryptedBySmallBlock);
         using var output = new MemoryStream([], false);
 
-        _ = Assert.ThrowsException<NotSupportedException>(
+        _ = Should.Throw<NotSupportedException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
     }
 
@@ -125,7 +124,7 @@ public class ThCryptTests
         var output = new MemoryStream();
         output.Close();
 
-        _ = Assert.ThrowsException<ObjectDisposedException>(
+        _ = Should.Throw<ObjectDisposedException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT));
     }
 
@@ -135,7 +134,7 @@ public class ThCryptTests
         using var input = new MemoryStream(this.encryptedBySmallBlock);
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => ThCrypt.Decrypt(input, output, -1, KEY, STEP, SMALL_BLOCK, LIMIT));
     }
 
@@ -146,7 +145,7 @@ public class ThCryptTests
         using var output = new MemoryStream();
 
         ThCrypt.Decrypt(input, output, 0, KEY, STEP, SMALL_BLOCK, LIMIT);
-        Assert.AreEqual(0, output.Length);
+        output.Length.ShouldBe(0);
     }
 
     [TestMethod]
@@ -158,7 +157,7 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length - 1, KEY, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreNotEqual(this.decrypted.Length, actual.Length);
+        actual.Length.ShouldNotBe(this.decrypted.Length);
     }
 
     [TestMethod]
@@ -170,7 +169,7 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length + 1, KEY, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        CollectionAssert.AreEqual(this.decrypted, actual);
+        actual.ShouldBe(this.decrypted);
     }
 
     [TestMethod]
@@ -182,8 +181,8 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, 0, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreNotEqual(this.decrypted, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldNotBe(this.decrypted);
     }
 
     [TestMethod]
@@ -195,8 +194,8 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, 1, STEP, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreNotEqual(this.decrypted, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldNotBe(this.decrypted);
     }
 
     [TestMethod]
@@ -208,8 +207,8 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, KEY, 0, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreNotEqual(this.decrypted, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldNotBe(this.decrypted);
     }
 
     [TestMethod]
@@ -221,8 +220,8 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, KEY, 1, SMALL_BLOCK, LIMIT);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreNotEqual(this.decrypted, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldNotBe(this.decrypted);
     }
 
     [TestMethod]
@@ -231,7 +230,7 @@ public class ThCryptTests
         using var input = new MemoryStream(this.encryptedBySmallBlock);
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, -1, LIMIT));
     }
 
@@ -241,7 +240,7 @@ public class ThCryptTests
         using var input = new MemoryStream(this.encryptedBySmallBlock);
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<DivideByZeroException>(
+        _ = Should.Throw<DivideByZeroException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, 0, LIMIT));
     }
 
@@ -264,9 +263,9 @@ public class ThCryptTests
             var actual = output.ToArray();
 
             // We are doing the decryption in a vague atmosphere.
-            Assert.AreEqual(this.decrypted.Length, actual.Length);
-            CollectionAssert.AreNotEqual(this.decrypted, actual);
-            CollectionAssert.AreNotEqual(this.encryptedBySmallBlock, actual);
+            actual.Length.ShouldBe(this.decrypted.Length);
+            actual.ShouldNotBe(this.decrypted);
+            actual.ShouldNotBe(this.encryptedBySmallBlock);
         }
     }
 
@@ -291,13 +290,13 @@ public class ThCryptTests
             // We are doing the decryption in a vague atmosphere.
             if (block >= size)
             {
-                CollectionAssert.AreEqual(this.decrypted, actual);
+                actual.ShouldBe(this.decrypted);
             }
             else
             {
-                Assert.AreEqual(this.decrypted.Length, actual.Length);
-                CollectionAssert.AreNotEqual(this.decrypted, actual);
-                CollectionAssert.AreNotEqual(this.encryptedByLargeBlock, actual);
+                actual.Length.ShouldBe(this.decrypted.Length);
+                actual.ShouldNotBe(this.decrypted);
+                actual.ShouldNotBe(this.encryptedByLargeBlock);
             }
         }
     }
@@ -308,7 +307,7 @@ public class ThCryptTests
         using var input = new MemoryStream(this.encryptedBySmallBlock);
         using var output = new MemoryStream();
 
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, -1));
     }
 
@@ -321,9 +320,9 @@ public class ThCryptTests
         ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, 0);
 
         var actual = output.ToArray();
-        Assert.AreEqual(this.decrypted.Length, actual.Length);
-        CollectionAssert.AreNotEqual(this.decrypted, actual);
-        CollectionAssert.AreEqual(this.encryptedBySmallBlock, actual);
+        actual.Length.ShouldBe(this.decrypted.Length);
+        actual.ShouldNotBe(this.decrypted);
+        actual.ShouldBe(this.encryptedBySmallBlock);
     }
 
     [TestMethod]
@@ -346,13 +345,13 @@ public class ThCryptTests
             // We are doing the decryption in a vague atmosphere.
             if (limit > SMALL_BLOCK)
             {
-                CollectionAssert.AreEqual(this.decrypted, actual);
+                actual.ShouldBe(this.decrypted);
             }
             else
             {
-                Assert.AreEqual(this.decrypted.Length, actual.Length);
-                CollectionAssert.AreNotEqual(this.decrypted, actual);
-                CollectionAssert.AreNotEqual(this.encryptedBySmallBlock, actual);
+                actual.Length.ShouldBe(this.decrypted.Length);
+                actual.ShouldNotBe(this.decrypted);
+                actual.ShouldNotBe(this.encryptedBySmallBlock);
             }
         }
     }
@@ -374,7 +373,7 @@ public class ThCryptTests
             ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, LARGE_BLOCK, limit);
 
             var actual = output.ToArray();
-            CollectionAssert.AreEqual(this.decrypted, actual);
+            actual.ShouldBe(this.decrypted);
         }
     }
 }

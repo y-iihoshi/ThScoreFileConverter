@@ -1,7 +1,17 @@
 ﻿using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
+
+internal static class HeaderBaseExtensions
+{
+    internal static void ShouldBe(this HeaderBase actual, HeaderBaseTests.Properties expected)
+    {
+        actual.Signature.ShouldBe(expected.signature);
+        actual.EncodedAllSize.ShouldBe(expected.encodedAllSize);
+        actual.EncodedBodySize.ShouldBe(expected.encodedBodySize);
+        actual.DecodedBodySize.ShouldBe(expected.decodedBodySize);
+    }
+}
 
 [TestClass]
 public class HeaderBaseTests
@@ -46,21 +56,13 @@ public class HeaderBaseTests
             properties.decodedBodySize);
     }
 
-    internal static void Validate(in Properties expected, in HeaderBase actual)
-    {
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.encodedAllSize, actual.EncodedAllSize);
-        Assert.AreEqual(expected.encodedBodySize, actual.EncodedBodySize);
-        Assert.AreEqual(expected.decodedBodySize, actual.DecodedBodySize);
-    }
-
     [TestMethod]
     public void HeaderTest()
     {
         var header = new HeaderBase();
 
-        Validate(DefaultProperties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(DefaultProperties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -70,8 +72,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsTrue(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -85,7 +87,7 @@ public class HeaderBaseTests
 
         // The actual value of the DecodedBodySize property can not be read.
         // so EndOfStreamException will be thrown.
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
     }
 
@@ -100,7 +102,7 @@ public class HeaderBaseTests
 
         // The actual value of the DecodedBodySize property can not be read.
         // so EndOfStreamException will be thrown.
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
     }
 
@@ -115,11 +117,11 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Assert.AreEqual(ValidProperties.signature, header.Signature);
-        Assert.AreNotEqual(properties.encodedAllSize, header.EncodedAllSize);
-        Assert.AreNotEqual(properties.encodedBodySize, header.EncodedBodySize);
-        Assert.AreNotEqual(properties.decodedBodySize, header.DecodedBodySize);
-        Assert.IsFalse(header.IsValid);
+        header.Signature.ShouldBe(ValidProperties.signature);
+        header.EncodedAllSize.ShouldNotBe(properties.encodedAllSize);
+        header.EncodedBodySize.ShouldNotBe(properties.encodedBodySize);
+        header.DecodedBodySize.ShouldNotBe(properties.decodedBodySize);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -128,7 +130,7 @@ public class HeaderBaseTests
         var properties = ValidProperties;
         properties.encodedAllSize = -1;
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
     }
 
@@ -140,8 +142,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -152,8 +154,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -164,8 +166,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -174,7 +176,7 @@ public class HeaderBaseTests
         var properties = ValidProperties;
         properties.encodedBodySize = -1;
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
     }
 
@@ -186,8 +188,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -198,8 +200,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -210,8 +212,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsFalse(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -220,7 +222,7 @@ public class HeaderBaseTests
         var properties = ValidProperties;
         properties.decodedBodySize = -1;
 
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => TestUtils.Create<HeaderBase>(MakeByteArray(properties)));
     }
 
@@ -232,8 +234,8 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
-        Assert.IsTrue(header.IsValid);
+        header.ShouldBe(properties);
+        header.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -249,6 +251,6 @@ public class HeaderBaseTests
         header.WriteTo(writer);
 
         writer.Flush();
-        CollectionAssert.AreEqual(byteArray, stream.ToArray());
+        stream.ToArray().ShouldBe(byteArray);
     }
 }

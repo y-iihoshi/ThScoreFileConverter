@@ -4,7 +4,6 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th09;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
 
@@ -34,7 +33,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -43,7 +42,7 @@ public class ClearReplacerTests
         var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(rankings, ClearCounts, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -56,7 +55,7 @@ public class ClearReplacerTests
         };
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(rankings, ClearCounts, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -64,7 +63,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("invoked: 2", replacer.Replace("%T09CLEARHMR1"));
+        replacer.Replace("%T09CLEARHMR1").ShouldBe("invoked: 2");
     }
 
     [TestMethod]
@@ -72,7 +71,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("Cleared", replacer.Replace("%T09CLEARHMR2"));
+        replacer.Replace("%T09CLEARHMR2").ShouldBe("Cleared");
     }
 
     [TestMethod]
@@ -80,7 +79,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ZeroClearCounts, formatterMock);
-        Assert.AreEqual("Not Cleared", replacer.Replace("%T09CLEARHMR2"));
+        replacer.Replace("%T09CLEARHMR2").ShouldBe("Not Cleared");
     }
 
     [TestMethod]
@@ -92,7 +91,7 @@ public class ClearReplacerTests
             ranking => (ranking[0].Chara, ranking[0].Level), ranking => ranking as IReadOnlyList<IHighScore>);
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock);
-        Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
+        replacer.Replace("%T09CLEARHMR2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -101,7 +100,7 @@ public class ClearReplacerTests
         var rankings = ImmutableDictionary<(Chara, Level), IReadOnlyList<IHighScore>>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock);
-        Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
+        replacer.Replace("%T09CLEARHMR2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -114,7 +113,7 @@ public class ClearReplacerTests
         };
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(rankings, ZeroClearCounts, formatterMock);
-        Assert.AreEqual("-------", replacer.Replace("%T09CLEARHMR2"));
+        replacer.Replace("%T09CLEARHMR2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -127,8 +126,8 @@ public class ClearReplacerTests
         var clearCounts = new[] { (highScoreMock.Chara, clearCountMock) }.ToDictionary();
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, clearCounts, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T09CLEARNMR1"));
-        Assert.AreEqual("-------", replacer.Replace("%T09CLEARNMR2"));
+        replacer.Replace("%T09CLEARNMR1").ShouldBe("invoked: 0");
+        replacer.Replace("%T09CLEARNMR2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -136,8 +135,8 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T09CLEARHRM1"));
-        Assert.AreEqual("-------", replacer.Replace("%T09CLEARHRM2"));
+        replacer.Replace("%T09CLEARHRM1").ShouldBe("invoked: 0");
+        replacer.Replace("%T09CLEARHRM2").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -145,7 +144,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("%T09XXXXXHMR1", replacer.Replace("%T09XXXXXHMR1"));
+        replacer.Replace("%T09XXXXXHMR1").ShouldBe("%T09XXXXXHMR1");
     }
 
     [TestMethod]
@@ -153,7 +152,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("%T09CLEARYMR1", replacer.Replace("%T09CLEARYMR1"));
+        replacer.Replace("%T09CLEARYMR1").ShouldBe("%T09CLEARYMR1");
     }
 
     [TestMethod]
@@ -161,7 +160,7 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("%T09CLEARHXX1", replacer.Replace("%T09CLEARHXX1"));
+        replacer.Replace("%T09CLEARHXX1").ShouldBe("%T09CLEARHXX1");
     }
 
     [TestMethod]
@@ -169,6 +168,6 @@ public class ClearReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new ClearReplacer(Rankings, ClearCounts, formatterMock);
-        Assert.AreEqual("%T09CLEARHMRX", replacer.Replace("%T09CLEARHMRX"));
+        replacer.Replace("%T09CLEARHMRX").ShouldBe("%T09CLEARHMRX");
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
@@ -20,8 +19,8 @@ public class SQObjectTests
     {
         var sqnull = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Null)) as SQNull;
 
-        Assert.IsNotNull(sqnull);
-        Assert.AreEqual(SQOT.Null, sqnull!.Type);
+        var instance = sqnull.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Null);
     }
 
     [TestMethod]
@@ -29,10 +28,10 @@ public class SQObjectTests
     {
         var sqbool = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Bool, (byte)0x01)) as SQBool;
 
-        Assert.IsNotNull(sqbool);
-        Assert.AreEqual(SQOT.Bool, sqbool!.Type);
-        Assert.IsTrue(sqbool.Value);
-        Assert.IsTrue(sqbool);
+        var instance = sqbool.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Bool);
+        instance.Value.ShouldBeTrue();
+        ((bool)instance).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -42,10 +41,10 @@ public class SQObjectTests
 
         var sqinteger = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Integer, expected)) as SQInteger;
 
-        Assert.IsNotNull(sqinteger);
-        Assert.AreEqual(SQOT.Integer, sqinteger!.Type);
-        Assert.AreEqual(expected, sqinteger.Value);
-        Assert.AreEqual(expected, sqinteger);
+        var instance = sqinteger.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Integer);
+        instance.Value.ShouldBe(expected);
+        ((int)instance).ShouldBe(expected);
     }
 
     [TestMethod]
@@ -55,10 +54,10 @@ public class SQObjectTests
 
         var sqfloat = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Float, expected)) as SQFloat;
 
-        Assert.IsNotNull(sqfloat);
-        Assert.AreEqual(SQOT.Float, sqfloat!.Type);
-        Assert.AreEqual(expected, sqfloat.Value);
-        Assert.AreEqual(expected, sqfloat);
+        var instance = sqfloat.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Float);
+        instance.Value.ShouldBe(expected);
+        ((float)instance).ShouldBe(expected);
     }
 
     [TestMethod]
@@ -69,10 +68,10 @@ public class SQObjectTests
 
         var sqstring = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.String, bytes.Length, bytes)) as SQString;
 
-        Assert.IsNotNull(sqstring);
-        Assert.AreEqual(SQOT.String, sqstring!.Type);
-        Assert.AreEqual(expected, sqstring.Value);
-        Assert.AreEqual(expected, sqstring);
+        var instance = sqstring.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.String);
+        instance.Value.ShouldBe(expected);
+        ((string)instance).ShouldBe(expected);
     }
 
     [TestMethod]
@@ -88,11 +87,10 @@ public class SQObjectTests
 
         var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array)) as SQArray;
 
-        Assert.IsNotNull(sqarray);
-        Assert.AreEqual(SQOT.Array, sqarray!.Type);
-        Assert.AreEqual(1, sqarray.Value.Count());
-        Assert.IsTrue(sqarray.Value.First() is SQInteger);
-        Assert.AreEqual(expected, (SQInteger)sqarray.Value.First());
+        var instance = sqarray.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Array);
+        instance.Value.Count().ShouldBe(1);
+        instance.Value.First().ShouldBeOfType<SQInteger>().Value.ShouldBe(expected);
     }
 
     [TestMethod]
@@ -109,14 +107,11 @@ public class SQObjectTests
 
         var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array)) as SQTable;
 
-        Assert.IsNotNull(sqtable);
-        Assert.AreEqual(SQOT.Table, sqtable!.Type);
-        Assert.AreEqual(1, sqtable.Value.Count);
-
-        Assert.IsTrue(sqtable.Value.Keys.First() is SQInteger);
-        Assert.AreEqual(expectedKey, (SQInteger)sqtable.Value.Keys.First());
-        Assert.IsTrue(sqtable.Value[new SQInteger(expectedKey)] is SQInteger);
-        Assert.AreEqual(expectedValue, (SQInteger)sqtable.Value[new SQInteger(expectedKey)]);
+        var instance = sqtable.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Table);
+        instance.Value.Count.ShouldBe(1);
+        instance.Value.Keys.First().ShouldBeOfType<SQInteger>().Value.ShouldBe(expectedKey);
+        instance.Value[new SQInteger(expectedKey)].ShouldBeOfType<SQInteger>().Value.ShouldBe(expectedValue);
     }
 
     [TestMethod]
@@ -124,8 +119,8 @@ public class SQObjectTests
     {
         var sqclosure = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Closure)) as SQClosure;
 
-        Assert.IsNotNull(sqclosure);
-        Assert.AreEqual(SQOT.Closure, sqclosure!.Type);
+        var instance = sqclosure.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Closure);
     }
 
     [TestMethod]
@@ -133,14 +128,14 @@ public class SQObjectTests
     {
         var sqinstance = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Instance)) as SQInstance;
 
-        Assert.IsNotNull(sqinstance);
-        Assert.AreEqual(SQOT.Instance, sqinstance!.Type);
+        var instance = sqinstance.ShouldNotBeNull();
+        instance.Type.ShouldBe(SQOT.Instance);
     }
 
     [TestMethod]
     public void CreateTestShorteneed()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(() => CreateTestHelper(new byte[3]));
+        _ = Should.Throw<EndOfStreamException>(() => CreateTestHelper(new byte[3]));
     }
 
     [DataTestMethod]
@@ -155,7 +150,6 @@ public class SQObjectTests
     [DataRow(SQOT.WeakRef)]
     public void CreateTestInvalid(SQOT type)
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
-            () => CreateTestHelper(TestUtils.MakeByteArray((int)type)));
+        _ = Should.Throw<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray((int)type)));
     }
 }

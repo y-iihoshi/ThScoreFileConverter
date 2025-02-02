@@ -32,7 +32,7 @@ public class ClearTimeReplacerTests
     public void ClearTimeReplacerTest()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -40,7 +40,7 @@ public class ClearTimeReplacerTests
     {
         var clearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
         var replacer = new ClearTimeReplacer(clearTimes);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -52,49 +52,49 @@ public class ClearTimeReplacerTests
         };
 
         var replacer = new ClearTimeReplacer(clearTimes);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("0:00:21", replacer.Replace("%T145TIMECLRHMR"));
+        replacer.Replace("%T145TIMECLRHMR").ShouldBe("0:00:21");
     }
 
     [TestMethod]
     public void ReplaceTestLevelTotal()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("0:01:26", replacer.Replace("%T145TIMECLRTMR"));
+        replacer.Replace("%T145TIMECLRTMR").ShouldBe("0:01:26");
     }
 
     [TestMethod]
     public void ReplaceTestCharaTotal()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("0:01:04", replacer.Replace("%T145TIMECLRHTL"));
+        replacer.Replace("%T145TIMECLRHTL").ShouldBe("0:01:04");
     }
 
     [TestMethod]
     public void ReplaceTestTotal()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("0:03:36", replacer.Replace("%T145TIMECLRTTL"));
+        replacer.Replace("%T145TIMECLRTTL").ShouldBe("0:03:36");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentLevel()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("0:00:00", replacer.Replace("%T145TIMECLRLMR"));
+        replacer.Replace("%T145TIMECLRLMR").ShouldBe("0:00:00");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentChara()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("0:00:00", replacer.Replace("%T145TIMECLRHIU"));
+        replacer.Replace("%T145TIMECLRHIU").ShouldBe("0:00:00");
     }
 
     [TestMethod]
@@ -102,7 +102,7 @@ public class ClearTimeReplacerTests
     {
         var clearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
         var replacer = new ClearTimeReplacer(clearTimes);
-        Assert.AreEqual("0:00:00", replacer.Replace("%T145TIMECLRHMR"));
+        replacer.Replace("%T145TIMECLRHMR").ShouldBe("0:00:00");
     }
 
     [TestMethod]
@@ -114,27 +114,27 @@ public class ClearTimeReplacerTests
         };
 
         var replacer = new ClearTimeReplacer(clearTimes);
-        Assert.AreEqual("0:00:00", replacer.Replace("%T145TIMECLRHMR"));
+        replacer.Replace("%T145TIMECLRHMR").ShouldBe("0:00:00");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("%T145XXXXXXXHMR", replacer.Replace("%T145XXXXXXXHMR"));
+        replacer.Replace("%T145XXXXXXXHMR").ShouldBe("%T145XXXXXXXHMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("%T145TIMECLRXMR", replacer.Replace("%T145TIMECLRXMR"));
+        replacer.Replace("%T145TIMECLRXMR").ShouldBe("%T145TIMECLRXMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
         var replacer = new ClearTimeReplacer(ClearTimes);
-        Assert.AreEqual("%T145TIMECLRHXX", replacer.Replace("%T145TIMECLRHXX"));
+        replacer.Replace("%T145TIMECLRHXX").ShouldBe("%T145TIMECLRHXX");
     }
 }

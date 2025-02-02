@@ -44,7 +44,7 @@ public class CardReplacerTests
     public void CardReplacerTest()
     {
         var replacer = new CardReplacer(ClearDataDictionary, true);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -52,39 +52,39 @@ public class CardReplacerTests
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var replacer = new CardReplacer(dictionary, true);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTestName()
     {
         var replacer = new CardReplacer(ClearDataDictionary, false);
-        Assert.AreEqual("招符「弾幕万来」", replacer.Replace("%T18CARD01N"));
-        Assert.AreEqual("招符「弾幕万来」", replacer.Replace("%T18CARD02N"));
+        replacer.Replace("%T18CARD01N").ShouldBe("招符「弾幕万来」");
+        replacer.Replace("%T18CARD02N").ShouldBe("招符「弾幕万来」");
     }
 
     [TestMethod]
     public void ReplaceTestRank()
     {
         var replacer = new CardReplacer(ClearDataDictionary, false);
-        Assert.AreEqual("Easy", replacer.Replace("%T18CARD01R"));
-        Assert.AreEqual("Normal", replacer.Replace("%T18CARD02R"));
+        replacer.Replace("%T18CARD01R").ShouldBe("Easy");
+        replacer.Replace("%T18CARD02R").ShouldBe("Normal");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenName()
     {
         var replacer = new CardReplacer(ClearDataDictionary, true);
-        Assert.AreEqual("招符「弾幕万来」", replacer.Replace("%T18CARD01N"));
-        Assert.AreEqual("??????????", replacer.Replace("%T18CARD02N"));
+        replacer.Replace("%T18CARD01N").ShouldBe("招符「弾幕万来」");
+        replacer.Replace("%T18CARD02N").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenRank()
     {
         var replacer = new CardReplacer(ClearDataDictionary, true);
-        Assert.AreEqual("Easy", replacer.Replace("%T18CARD01R"));
-        Assert.AreEqual("Normal", replacer.Replace("%T18CARD02R"));
+        replacer.Replace("%T18CARD01R").ShouldBe("Easy");
+        replacer.Replace("%T18CARD02R").ShouldBe("Normal");
     }
 
     [TestMethod]
@@ -96,27 +96,27 @@ public class CardReplacerTests
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new CardReplacer(dictionary, true);
-        Assert.AreEqual("??????????", replacer.Replace("%T18CARD01N"));
+        replacer.Replace("%T18CARD01N").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new CardReplacer(ClearDataDictionary, true);
-        Assert.AreEqual("%T18XXXX01N", replacer.Replace("%T18XXXX01N"));
+        replacer.Replace("%T18XXXX01N").ShouldBe("%T18XXXX01N");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new CardReplacer(ClearDataDictionary, true);
-        Assert.AreEqual("%T18CARD98N", replacer.Replace("%T18CARD98N"));
+        replacer.Replace("%T18CARD98N").ShouldBe("%T18CARD98N");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
         var replacer = new CardReplacer(ClearDataDictionary, true);
-        Assert.AreEqual("%T18CARD01X", replacer.Replace("%T18CARD01X"));
+        replacer.Replace("%T18CARD01X").ShouldBe("%T18CARD01X");
     }
 }

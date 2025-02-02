@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using NSubstitute;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
@@ -34,7 +33,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -43,7 +42,7 @@ public class CareerReplacerTests
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(cardAttacks, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -51,7 +50,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 1", replacer.Replace("%T07C123RB1"));
+        replacer.Replace("%T07C123RB1").ShouldBe("invoked: 1");
     }
 
     [TestMethod]
@@ -59,7 +58,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 9", replacer.Replace("%T07C123RB2"));
+        replacer.Replace("%T07C123RB2").ShouldBe("invoked: 9");
     }
 
     [TestMethod]
@@ -67,7 +66,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 11", replacer.Replace("%T07C123RB3"));
+        replacer.Replace("%T07C123RB3").ShouldBe("invoked: 11");
     }
 
     [TestMethod]
@@ -76,7 +75,7 @@ public class CareerReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
 
-        Assert.AreEqual("invoked: 1001", replacer.Replace("%T07C000RB1"));
+        replacer.Replace("%T07C000RB1").ShouldBe("invoked: 1001");
     }
 
     [TestMethod]
@@ -84,7 +83,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 27", replacer.Replace("%T07C000RB2"));
+        replacer.Replace("%T07C000RB2").ShouldBe("invoked: 27");
     }
 
     [TestMethod]
@@ -92,7 +91,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 44", replacer.Replace("%T07C000RB3"));
+        replacer.Replace("%T07C000RB3").ShouldBe("invoked: 44");
     }
 
     [TestMethod]
@@ -100,7 +99,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T07C001RB1"));
+        replacer.Replace("%T07C001RB1").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -108,7 +107,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T07C001RB2"));
+        replacer.Replace("%T07C001RB2").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -116,7 +115,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T07C001RB3"));
+        replacer.Replace("%T07C001RB3").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -124,7 +123,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("%T07X123RB1", replacer.Replace("%T07X123RB1"));
+        replacer.Replace("%T07X123RB1").ShouldBe("%T07X123RB1");
     }
 
     [TestMethod]
@@ -132,7 +131,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("%T07C142RB1", replacer.Replace("%T07C142RB1"));
+        replacer.Replace("%T07C142RB1").ShouldBe("%T07C142RB1");
     }
 
     [TestMethod]
@@ -140,6 +139,6 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(CardAttacks, formatterMock);
-        Assert.AreEqual("%T07C123RB4", replacer.Replace("%T07C123RB4"));
+        replacer.Replace("%T07C123RB4").ShouldBe("%T07C123RB4");
     }
 }

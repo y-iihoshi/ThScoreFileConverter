@@ -2,11 +2,39 @@
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
+
+internal static class HighScoreExtensions
+{
+    internal static void ShouldBe(this IHighScore actual, IHighScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.Score.ShouldBe(expected.Score);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.Chara.ShouldBe(expected.Chara);
+        actual.Level.ShouldBe(expected.Level);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.Name.ShouldBe(expected.Name);
+        actual.Date.ShouldBe(expected.Date);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+        actual.PlayerNum.ShouldBe(expected.PlayerNum);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.PointItem.ShouldBe(expected.PointItem);
+        actual.MissCount.ShouldBe(expected.MissCount);
+        actual.BombCount.ShouldBe(expected.BombCount);
+        actual.LastSpellCount.ShouldBe(expected.LastSpellCount);
+        actual.PauseCount.ShouldBe(expected.PauseCount);
+        actual.TimePoint.ShouldBe(expected.TimePoint);
+        actual.HumanRate.ShouldBe(expected.HumanRate);
+        actual.CardFlags.Values.ShouldBe(expected.CardFlags.Values);
+    }
+}
 
 [TestClass]
 public class HighScoreTests
@@ -69,32 +97,6 @@ public class HighScoreTests
             new byte[2]);
     }
 
-    internal static void Validate(IHighScore expected, IHighScore actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        Assert.AreEqual(expected.Score, actual.Score);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
-        Assert.AreEqual(expected.Chara, actual.Chara);
-        Assert.AreEqual(expected.Level, actual.Level);
-        Assert.AreEqual(expected.StageProgress, actual.StageProgress);
-        CollectionAssert.That.AreEqual(expected.Name, actual.Name);
-        CollectionAssert.That.AreEqual(expected.Date, actual.Date);
-        Assert.AreEqual(expected.ContinueCount, actual.ContinueCount);
-        Assert.AreEqual(expected.PlayerNum, actual.PlayerNum);
-        Assert.AreEqual(expected.PlayTime, actual.PlayTime);
-        Assert.AreEqual(expected.PointItem, actual.PointItem);
-        Assert.AreEqual(expected.MissCount, actual.MissCount);
-        Assert.AreEqual(expected.BombCount, actual.BombCount);
-        Assert.AreEqual(expected.LastSpellCount, actual.LastSpellCount);
-        Assert.AreEqual(expected.PauseCount, actual.PauseCount);
-        Assert.AreEqual(expected.TimePoint, actual.TimePoint);
-        Assert.AreEqual(expected.HumanRate, actual.HumanRate);
-        CollectionAssert.That.AreEqual(expected.CardFlags.Values, actual.CardFlags.Values);
-    }
-
     [TestMethod]
     public void HighScoreTestChapter()
     {
@@ -103,7 +105,7 @@ public class HighScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var highScore = new HighScore(chapter);
 
-        Validate(mock, highScore);
+        highScore.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -116,10 +118,10 @@ public class HighScoreTests
 
         var highScore = new HighScore(score);
 
-        Assert.AreEqual(score, highScore.Score);
-        CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
-        CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date);
-        CollectionAssert.That.AreEqual(cardFlags, highScore.CardFlags.Values);
+        highScore.Score.ShouldBe(score);
+        highScore.Name.ShouldBe(TestUtils.CP932Encoding.GetBytes(name));
+        highScore.Date.ShouldBe(TestUtils.CP932Encoding.GetBytes(date));
+        highScore.CardFlags.Values.ShouldBe(cardFlags);
     }
 
     [TestMethod]
@@ -132,10 +134,10 @@ public class HighScoreTests
 
         var highScore = new HighScore(score);
 
-        Assert.AreEqual(score, highScore.Score);
-        CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
-        CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date);
-        CollectionAssert.That.AreEqual(cardFlags, highScore.CardFlags.Values);
+        highScore.Score.ShouldBe(score);
+        highScore.Name.ShouldBe(TestUtils.CP932Encoding.GetBytes(name));
+        highScore.Date.ShouldBe(TestUtils.CP932Encoding.GetBytes(date));
+        highScore.CardFlags.Values.ShouldBe(cardFlags);
     }
 
     [TestMethod]
@@ -146,7 +148,7 @@ public class HighScoreTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new HighScore(chapter));
     }
 
     [TestMethod]
@@ -157,7 +159,7 @@ public class HighScoreTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new HighScore(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new HighScore(chapter));
     }
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
@@ -170,7 +172,7 @@ public class HighScoreTests
         _ = mock.Chara.Returns((Chara)chara);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new HighScore(chapter));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
@@ -183,7 +185,7 @@ public class HighScoreTests
         _ = mock.Level.Returns((Level)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new HighScore(chapter));
     }
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
@@ -196,6 +198,6 @@ public class HighScoreTests
         _ = mock.StageProgress.Returns((StageProgress)stageProgress);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new HighScore(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new HighScore(chapter));
     }
 }

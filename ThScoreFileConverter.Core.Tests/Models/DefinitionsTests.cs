@@ -8,11 +8,11 @@ public class DefinitionsTests
     [TestMethod]
     public void CanPracticeTestValidLevel()
     {
-        Assert.IsTrue(Definitions.CanPractice(Level.Easy));
-        Assert.IsTrue(Definitions.CanPractice(Level.Normal));
-        Assert.IsTrue(Definitions.CanPractice(Level.Hard));
-        Assert.IsTrue(Definitions.CanPractice(Level.Lunatic));
-        Assert.IsFalse(Definitions.CanPractice(Level.Extra));
+        Definitions.CanPractice(Level.Easy).ShouldBeTrue();
+        Definitions.CanPractice(Level.Normal).ShouldBeTrue();
+        Definitions.CanPractice(Level.Hard).ShouldBeTrue();
+        Definitions.CanPractice(Level.Lunatic).ShouldBeTrue();
+        Definitions.CanPractice(Level.Extra).ShouldBeFalse();
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
@@ -21,19 +21,19 @@ public class DefinitionsTests
     [DynamicData(nameof(InvalidLevels))]
     public void CanPracticeTestInvalidLevel(int level)
     {
-        Assert.IsFalse(Definitions.CanPractice((Level)level));
+        Definitions.CanPractice((Level)level).ShouldBeFalse();
     }
 
     [TestMethod]
     public void CanPracticeTestValidStage()
     {
-        Assert.IsTrue(Definitions.CanPractice(Stage.One));
-        Assert.IsTrue(Definitions.CanPractice(Stage.Two));
-        Assert.IsTrue(Definitions.CanPractice(Stage.Three));
-        Assert.IsTrue(Definitions.CanPractice(Stage.Four));
-        Assert.IsTrue(Definitions.CanPractice(Stage.Five));
-        Assert.IsTrue(Definitions.CanPractice(Stage.Six));
-        Assert.IsFalse(Definitions.CanPractice(Stage.Extra));
+        Definitions.CanPractice(Stage.One).ShouldBeTrue();
+        Definitions.CanPractice(Stage.Two).ShouldBeTrue();
+        Definitions.CanPractice(Stage.Three).ShouldBeTrue();
+        Definitions.CanPractice(Stage.Four).ShouldBeTrue();
+        Definitions.CanPractice(Stage.Five).ShouldBeTrue();
+        Definitions.CanPractice(Stage.Six).ShouldBeTrue();
+        Definitions.CanPractice(Stage.Extra).ShouldBeFalse();
     }
 
     public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
@@ -42,6 +42,6 @@ public class DefinitionsTests
     [DynamicData(nameof(InvalidStages))]
     public void CanPracticeTestInvalidStage(int stage)
     {
-        Assert.IsFalse(Definitions.CanPractice((Stage)stage));
+        Definitions.CanPractice((Stage)stage).ShouldBeFalse();
     }
 }

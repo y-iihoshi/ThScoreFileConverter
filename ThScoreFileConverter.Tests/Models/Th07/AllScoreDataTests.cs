@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th07;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Core.Models.Th07.Chara, ThScoreFileConverter.Core.Models.Th07.Level>;
@@ -20,14 +19,14 @@ public class AllScoreDataTests
     {
         var allScoreData = new AllScoreData();
 
-        Assert.IsNull(allScoreData.Header);
-        Assert.AreEqual(0, allScoreData.Rankings.Count);
-        Assert.AreEqual(0, allScoreData.ClearData.Count);
-        Assert.AreEqual(0, allScoreData.CardAttacks.Count);
-        Assert.AreEqual(0, allScoreData.PracticeScores.Count);
-        Assert.IsNull(allScoreData.PlayStatus);
-        Assert.IsNull(allScoreData.LastName);
-        Assert.IsNull(allScoreData.VersionInfo);
+        allScoreData.Header.ShouldBeNull();
+        allScoreData.Rankings.ShouldBeEmpty();
+        allScoreData.ClearData.ShouldBeEmpty();
+        allScoreData.CardAttacks.ShouldBeEmpty();
+        allScoreData.PracticeScores.ShouldBeEmpty();
+        allScoreData.PlayStatus.ShouldBeNull();
+        allScoreData.LastName.ShouldBeNull();
+        allScoreData.VersionInfo.ShouldBeNull();
     }
 
     [TestMethod]
@@ -39,7 +38,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(header);
 
-        Assert.AreSame(header, allScoreData.Header);
+        allScoreData.Header.ShouldBeSameAs(header);
     }
 
     [TestMethod]
@@ -53,8 +52,8 @@ public class AllScoreDataTests
         allScoreData.Set(header1);
         allScoreData.Set(header2);
 
-        Assert.AreNotSame(header1, allScoreData.Header);
-        Assert.AreSame(header2, allScoreData.Header);
+        allScoreData.Header.ShouldNotBeSameAs(header1);
+        allScoreData.Header.ShouldBeSameAs(header2);
     }
 
     [TestMethod]
@@ -66,7 +65,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        Assert.AreSame(score, allScoreData.Rankings[(score.Chara, score.Level)][2]);
+        allScoreData.Rankings[(score.Chara, score.Level)][2].ShouldBeSameAs(score);
     }
 
     [TestMethod]
@@ -81,8 +80,8 @@ public class AllScoreDataTests
         allScoreData.Set(score1);
         allScoreData.Set(score2);
 
-        Assert.AreSame(score1, allScoreData.Rankings[(score1.Chara, score1.Level)][2]);
-        Assert.AreSame(score2, allScoreData.Rankings[(score2.Chara, score2.Level)][3]);
+        allScoreData.Rankings[(score1.Chara, score1.Level)][2].ShouldBeSameAs(score1);
+        allScoreData.Rankings[(score2.Chara, score2.Level)][3].ShouldBeSameAs(score2);
     }
 
     [TestMethod]
@@ -93,7 +92,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(clearData);
 
-        Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
+        allScoreData.ClearData[clearData.Chara].ShouldBeSameAs(clearData);
     }
 
     [TestMethod]
@@ -108,8 +107,8 @@ public class AllScoreDataTests
         allScoreData.Set(clearData1);
         allScoreData.Set(clearData2);
 
-        Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
-        Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
+        allScoreData.ClearData[clearData1.Chara].ShouldBeSameAs(clearData1);
+        allScoreData.ClearData[clearData2.Chara].ShouldNotBeSameAs(clearData2);
     }
 
     [TestMethod]
@@ -121,7 +120,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(attack);
 
-        Assert.AreSame(attack, allScoreData.CardAttacks[attack.CardId]);
+        allScoreData.CardAttacks[attack.CardId].ShouldBeSameAs(attack);
     }
 
     [TestMethod]
@@ -136,8 +135,8 @@ public class AllScoreDataTests
         allScoreData.Set(attack1);
         allScoreData.Set(attack2);
 
-        Assert.AreSame(attack1, allScoreData.CardAttacks[attack1.CardId]);
-        Assert.AreNotSame(attack2, allScoreData.CardAttacks[attack2.CardId]);
+        allScoreData.CardAttacks[attack1.CardId].ShouldBeSameAs(attack1);
+        allScoreData.CardAttacks[attack2.CardId].ShouldNotBeSameAs(attack2);
     }
 
     [TestMethod]
@@ -148,7 +147,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        Assert.AreSame(score, allScoreData.PracticeScores[(score.Chara, score.Level, score.Stage)]);
+        allScoreData.PracticeScores[(score.Chara, score.Level, score.Stage)].ShouldBeSameAs(score);
     }
 
     [TestMethod]
@@ -165,8 +164,8 @@ public class AllScoreDataTests
         allScoreData.Set(score1);
         allScoreData.Set(score2);
 
-        Assert.AreSame(score1, allScoreData.PracticeScores[(score1.Chara, score1.Level, score1.Stage)]);
-        Assert.AreNotSame(score2, allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)]);
+        allScoreData.PracticeScores[(score1.Chara, score1.Level, score1.Stage)].ShouldBeSameAs(score1);
+        allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)].ShouldNotBeSameAs(score2);
     }
 
     [DataTestMethod]
@@ -185,7 +184,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        Assert.AreEqual(0, allScoreData.PracticeScores.Count);
+        allScoreData.PracticeScores.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -197,7 +196,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(status);
 
-        Assert.AreSame(status, allScoreData.PlayStatus);
+        allScoreData.PlayStatus.ShouldBeSameAs(status);
     }
 
     [TestMethod]
@@ -211,8 +210,8 @@ public class AllScoreDataTests
         allScoreData.Set(status1);
         allScoreData.Set(status2);
 
-        Assert.AreNotSame(status1, allScoreData.PlayStatus);
-        Assert.AreSame(status2, allScoreData.PlayStatus);
+        allScoreData.PlayStatus.ShouldNotBeSameAs(status1);
+        allScoreData.PlayStatus.ShouldBeSameAs(status2);
     }
 
     [TestMethod]
@@ -224,7 +223,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(name);
 
-        Assert.AreSame(name, allScoreData.LastName);
+        allScoreData.LastName.ShouldBeSameAs(name);
     }
 
     [TestMethod]
@@ -238,8 +237,8 @@ public class AllScoreDataTests
         allScoreData.Set(name1);
         allScoreData.Set(name2);
 
-        Assert.AreNotSame(name1, allScoreData.LastName);
-        Assert.AreSame(name2, allScoreData.LastName);
+        allScoreData.LastName.ShouldNotBeSameAs(name1);
+        allScoreData.LastName.ShouldBeSameAs(name2);
     }
 
     [TestMethod]
@@ -251,7 +250,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(info);
 
-        Assert.AreSame(info, allScoreData.VersionInfo);
+        allScoreData.VersionInfo.ShouldBeSameAs(info);
     }
 
     [TestMethod]
@@ -264,7 +263,7 @@ public class AllScoreDataTests
         allScoreData.Set(info1);
         allScoreData.Set(info2);
 
-        Assert.AreNotSame(info1, allScoreData.VersionInfo);
-        Assert.AreSame(info2, allScoreData.VersionInfo);
+        allScoreData.VersionInfo.ShouldNotBeSameAs(info1);
+        allScoreData.VersionInfo.ShouldBeSameAs(info2);
     }
 }

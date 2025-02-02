@@ -1,8 +1,18 @@
 ﻿using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
+
+internal static class HeaderExtensions
+{
+    internal static void ShouldBe(this Header actual, HeaderTests.Properties expected)
+    {
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(expected.data[0]);
+    }
+}
 
 [TestClass]
 public class HeaderTests
@@ -29,14 +39,6 @@ public class HeaderTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, properties.data);
     }
 
-    internal static void Validate(in Properties expected, in Header actual)
-    {
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(expected.data[0], actual.FirstByteOfData);
-    }
-
     [TestMethod]
     public void HeaderTest()
     {
@@ -45,7 +47,7 @@ public class HeaderTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var header = new Header(chapter);
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -55,7 +57,7 @@ public class HeaderTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Header(chapter));
     }
 
     [TestMethod]
@@ -66,6 +68,6 @@ public class HeaderTests
         properties.data = [.. properties.data, .. new byte[] { default }];
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Header(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Header(chapter));
     }
 }

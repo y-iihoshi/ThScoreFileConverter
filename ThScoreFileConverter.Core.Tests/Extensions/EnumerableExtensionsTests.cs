@@ -12,7 +12,7 @@ public class EnumerableExtensionsTests
         var second = new[] { 3, 4, 5 };
         var expected = new[] { (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5) };
 
-        CollectionAssert.That.AreEqual(expected, first.Cartesian(second));
+        first.Cartesian(second).ShouldBe(expected);
     }
 
     [TestMethod]
@@ -21,7 +21,7 @@ public class EnumerableExtensionsTests
         int[] first = null!;
         var second = new[] { 3, 4, 5 };
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => first.Cartesian(second));
+        _ = Should.Throw<ArgumentNullException>(() => first.Cartesian(second));
     }
 
     [TestMethod]
@@ -30,6 +30,6 @@ public class EnumerableExtensionsTests
         var first = new[] { 1, 2 };
         int[] second = null!;
 
-        _ = Assert.ThrowsException<ArgumentNullException>(() => first.Cartesian(second));
+        _ = Should.Throw<ArgumentNullException>(() => first.Cartesian(second));
     }
 }

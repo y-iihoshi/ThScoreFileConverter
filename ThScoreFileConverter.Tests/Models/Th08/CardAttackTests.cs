@@ -1,10 +1,27 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
+
+internal static class CardAttackExtensions
+{
+    internal static void ShouldBe(this ICardAttack actual, ICardAttack expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.CardId.ShouldBe(expected.CardId);
+        actual.Level.ShouldBe(expected.Level);
+        actual.CardName.ShouldBe(expected.CardName);
+        actual.EnemyName.ShouldBe(expected.EnemyName);
+        actual.Comment.ShouldBe(expected.Comment);
+        actual.StoryCareer.ShouldBe(expected.StoryCareer);
+        actual.PracticeCareer.ShouldBe(expected.PracticeCareer);
+    }
+}
 
 [TestClass]
 public class CardAttackTests
@@ -59,21 +76,6 @@ public class CardAttackTests
             0u);
     }
 
-    internal static void Validate(ICardAttack expected, ICardAttack actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Size1, actual.Size1);
-        Assert.AreEqual(expected.Size2, actual.Size2);
-        Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-        Assert.AreEqual(expected.CardId, actual.CardId);
-        Assert.AreEqual(expected.Level, actual.Level);
-        CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
-        CollectionAssert.That.AreEqual(expected.EnemyName, actual.EnemyName);
-        CollectionAssert.That.AreEqual(expected.Comment, actual.Comment);
-        CardAttackCareerTests.Validate(expected.StoryCareer, actual.StoryCareer);
-        CardAttackCareerTests.Validate(expected.PracticeCareer, actual.PracticeCareer);
-    }
-
     [TestMethod]
     public void CardAttackTestChapter()
     {
@@ -82,8 +84,8 @@ public class CardAttackTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock, cardAttack);
-        Assert.IsTrue(cardAttack.HasTried);
+        cardAttack.ShouldBe(mock);
+        cardAttack.HasTried.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -94,7 +96,7 @@ public class CardAttackTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardAttack(chapter));
     }
 
     [TestMethod]
@@ -105,7 +107,7 @@ public class CardAttackTests
         _ = mock.Size1.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardAttack(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardAttack(chapter));
     }
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<LevelPracticeWithTotal>();
@@ -118,7 +120,7 @@ public class CardAttackTests
         _ = mock.Level.Returns((LevelPracticeWithTotal)level);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new CardAttack(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new CardAttack(chapter));
     }
 
     [TestMethod]
@@ -139,7 +141,7 @@ public class CardAttackTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock, cardAttack);
-        Assert.IsFalse(cardAttack.HasTried);
+        cardAttack.ShouldBe(mock);
+        cardAttack.HasTried.ShouldBeFalse();
     }
 }

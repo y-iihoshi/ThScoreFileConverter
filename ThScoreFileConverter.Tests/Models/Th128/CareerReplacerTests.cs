@@ -25,7 +25,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -34,7 +34,7 @@ public class CareerReplacerTests
         var cards = ImmutableDictionary<int, ISpellCard>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(cards, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -42,7 +42,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("invoked: 34", replacer.Replace("%T128C0781"));
+        replacer.Replace("%T128C0781").ShouldBe("invoked: 34");
     }
 
     [TestMethod]
@@ -50,7 +50,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("invoked: 12", replacer.Replace("%T128C0782"));
+        replacer.Replace("%T128C0782").ShouldBe("invoked: 12");
     }
 
     [TestMethod]
@@ -58,7 +58,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("invoked: 56", replacer.Replace("%T128C0783"));
+        replacer.Replace("%T128C0783").ShouldBe("invoked: 56");
     }
 
     [TestMethod]
@@ -66,7 +66,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("invoked: 68", replacer.Replace("%T128C0001"));
+        replacer.Replace("%T128C0001").ShouldBe("invoked: 68");
     }
 
     [TestMethod]
@@ -74,7 +74,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("invoked: 24", replacer.Replace("%T128C0002"));
+        replacer.Replace("%T128C0002").ShouldBe("invoked: 24");
     }
 
     [TestMethod]
@@ -82,7 +82,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("invoked: 112", replacer.Replace("%T128C0003"));
+        replacer.Replace("%T128C0003").ShouldBe("invoked: 112");
     }
 
     [TestMethod]
@@ -91,7 +91,7 @@ public class CareerReplacerTests
         var cards = ImmutableDictionary<int, ISpellCard>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(cards, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T128C0781"));
+        replacer.Replace("%T128C0781").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -99,7 +99,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("%T128X0781", replacer.Replace("%T128X0781"));
+        replacer.Replace("%T128X0781").ShouldBe("%T128X0781");
     }
 
     [TestMethod]
@@ -107,7 +107,7 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("%T128C2511", replacer.Replace("%T128C2511"));
+        replacer.Replace("%T128C2511").ShouldBe("%T128C2511");
     }
 
     [TestMethod]
@@ -115,6 +115,6 @@ public class CareerReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CareerReplacer(SpellCards, formatterMock);
-        Assert.AreEqual("%T128C078X", replacer.Replace("%T128C078X"));
+        replacer.Replace("%T128C078X").ShouldBe("%T128C078X");
     }
 }

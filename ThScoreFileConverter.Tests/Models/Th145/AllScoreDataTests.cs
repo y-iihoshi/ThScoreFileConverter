@@ -1,10 +1,41 @@
 ﻿using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th145;
 using ThScoreFileConverter.Models.Th145;
-using ThScoreFileConverter.Tests.UnitTesting;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th145;
+
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        actual.StoryProgress.ShouldBe(expected.storyProgress);
+        actual.StoryClearFlags.ShouldBe(expected.storyClearFlags);
+        actual.EndingCount.ShouldBe(expected.endingCount);
+        actual.Ending2Count.ShouldBe(expected.ending2Count);
+        actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
+        actual.IsEnabledStageTanuki2.ShouldBe(expected.isEnabledStageTanuki2);
+        actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
+        actual.IsEnabledSt27.ShouldBe(expected.isEnabledSt27);
+        actual.IsEnabledSt28.ShouldBe(expected.isEnabledSt28);
+        actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
+        actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
+        actual.BgmFlags.ShouldBe(expected.bgmFlags);
+        actual.ClearRanks.Keys.ShouldBe(expected.clearRanks.Keys);
+
+        foreach (var pair in expected.clearRanks)
+        {
+            actual.ClearRanks[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.ClearTimes.Keys.ShouldBe(expected.clearTimes.Keys);
+
+        foreach (var pair in expected.clearTimes)
+        {
+            actual.ClearTimes[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
 
 [TestClass]
 public class AllScoreDataTests
@@ -84,56 +115,23 @@ public class AllScoreDataTests
         ];
     }
 
-    internal static void Validate(in Properties expected, in AllScoreData actual)
-    {
-        Assert.AreEqual(expected.storyProgress, actual.StoryProgress);
-        CollectionAssert.That.AreEqual(expected.storyClearFlags.Keys, actual.StoryClearFlags.Keys);
-        CollectionAssert.That.AreEqual(expected.storyClearFlags.Values, actual.StoryClearFlags.Values);
-        Assert.AreEqual(expected.endingCount, actual.EndingCount);
-        Assert.AreEqual(expected.ending2Count, actual.Ending2Count);
-        Assert.AreEqual(expected.isEnabledStageTanuki1, actual.IsEnabledStageTanuki1);
-        Assert.AreEqual(expected.isEnabledStageTanuki2, actual.IsEnabledStageTanuki2);
-        Assert.AreEqual(expected.isEnabledStageKokoro, actual.IsEnabledStageKokoro);
-        Assert.AreEqual(expected.isEnabledSt27, actual.IsEnabledSt27);
-        Assert.AreEqual(expected.isEnabledSt28, actual.IsEnabledSt28);
-        Assert.AreEqual(expected.isPlayableMamizou, actual.IsPlayableMamizou);
-        Assert.AreEqual(expected.isPlayableKokoro, actual.IsPlayableKokoro);
-        CollectionAssert.That.AreEqual(expected.bgmFlags.Keys, actual.BgmFlags.Keys);
-        CollectionAssert.That.AreEqual(expected.bgmFlags.Values, actual.BgmFlags.Values);
-        CollectionAssert.That.AreEqual(expected.clearRanks.Keys, actual.ClearRanks.Keys);
-
-        foreach (var pair in expected.clearRanks)
-        {
-            CollectionAssert.That.AreEqual(pair.Value.Keys, actual.ClearRanks[pair.Key].Keys);
-            CollectionAssert.That.AreEqual(pair.Value.Values, actual.ClearRanks[pair.Key].Values);
-        }
-
-        CollectionAssert.That.AreEqual(expected.clearTimes.Keys, actual.ClearTimes.Keys);
-
-        foreach (var pair in expected.clearTimes)
-        {
-            CollectionAssert.That.AreEqual(pair.Value.Keys, actual.ClearTimes[pair.Key].Keys);
-            CollectionAssert.That.AreEqual(pair.Value.Values, actual.ClearTimes[pair.Key].Values);
-        }
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
         var allScoreData = new AllScoreData();
 
-        Assert.AreEqual(default, allScoreData.StoryProgress);
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        Assert.AreEqual(default, allScoreData.EndingCount);
-        Assert.AreEqual(default, allScoreData.Ending2Count);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
-        Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
-        Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        Assert.AreEqual(0, allScoreData.ClearRanks.Count);
-        Assert.AreEqual(0, allScoreData.ClearTimes.Count);
+        allScoreData.StoryProgress.ShouldBe(default);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
+        allScoreData.EndingCount.ShouldBe(default);
+        allScoreData.Ending2Count.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki1.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki2.ShouldBe(default);
+        allScoreData.IsEnabledStageKokoro.ShouldBe(default);
+        allScoreData.IsPlayableMamizou.ShouldBe(default);
+        allScoreData.IsPlayableKokoro.ShouldBe(default);
+        allScoreData.BgmFlags.ShouldBeEmpty();
+        allScoreData.ClearRanks.ShouldBeEmpty();
+        allScoreData.ClearTimes.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -143,13 +141,13 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 
     [TestMethod]
     public void ReadFromTestEmpty()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<AllScoreData>([]));
     }
 
     [TestMethod]
@@ -157,20 +155,20 @@ public class AllScoreDataTests
     {
         var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
-        Assert.AreEqual(default, allScoreData.StoryProgress);
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        Assert.AreEqual(default, allScoreData.EndingCount);
-        Assert.AreEqual(default, allScoreData.Ending2Count);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2);
-        Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
-        Assert.AreEqual(default, allScoreData.IsEnabledSt27);
-        Assert.AreEqual(default, allScoreData.IsEnabledSt28);
-        Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
-        Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        Assert.AreEqual(0, allScoreData.ClearRanks.Count);
-        Assert.AreEqual(0, allScoreData.ClearTimes.Count);
+        allScoreData.StoryProgress.ShouldBe(default);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
+        allScoreData.EndingCount.ShouldBe(default);
+        allScoreData.Ending2Count.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki1.ShouldBe(default);
+        allScoreData.IsEnabledStageTanuki2.ShouldBe(default);
+        allScoreData.IsEnabledStageKokoro.ShouldBe(default);
+        allScoreData.IsEnabledSt27.ShouldBe(default);
+        allScoreData.IsEnabledSt28.ShouldBe(default);
+        allScoreData.IsPlayableMamizou.ShouldBe(default);
+        allScoreData.IsPlayableKokoro.ShouldBe(default);
+        allScoreData.BgmFlags.ShouldBeEmpty();
+        allScoreData.ClearRanks.ShouldBeEmpty();
+        allScoreData.ClearTimes.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -184,11 +182,11 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(storyProgressValue, allScoreData.StoryProgress);
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        Assert.AreEqual(0, allScoreData.ClearRanks.Count);
-        Assert.AreEqual(0, allScoreData.ClearTimes.Count);
+        allScoreData.StoryProgress.ShouldBe(storyProgressValue);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
+        allScoreData.BgmFlags.ShouldBeEmpty();
+        allScoreData.ClearRanks.ShouldBeEmpty();
+        allScoreData.ClearTimes.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -200,7 +198,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -217,7 +215,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+        allScoreData.StoryClearFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -229,7 +227,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+        allScoreData.BgmFlags.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -241,7 +239,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+        allScoreData.ClearRanks.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -258,7 +256,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+        allScoreData.ClearRanks.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -275,8 +273,8 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(1, allScoreData.ClearRanks.Count);
-        Assert.AreEqual(0, allScoreData.ClearRanks.First().Value.Count);
+        allScoreData.ClearRanks.Count.ShouldBe(1);
+        allScoreData.ClearRanks.First().Value.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -288,7 +286,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.ClearTimes.Count);
+        allScoreData.ClearTimes.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -305,7 +303,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(0, allScoreData.ClearTimes.Count);
+        allScoreData.ClearTimes.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -322,7 +320,7 @@ public class AllScoreDataTests
             .. TestUtils.MakeByteArray((int)SQOT.Null),
         ]);
 
-        Assert.AreEqual(1, allScoreData.ClearTimes.Count);
-        Assert.AreEqual(0, allScoreData.ClearTimes.First().Value.Count);
+        allScoreData.ClearTimes.Count.ShouldBe(1);
+        allScoreData.ClearTimes.First().Value.ShouldBeEmpty();
     }
 }

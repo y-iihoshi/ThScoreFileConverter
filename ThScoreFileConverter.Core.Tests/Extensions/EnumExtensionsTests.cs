@@ -44,33 +44,33 @@ public class EnumExtensionsTests
     [TestMethod]
     public void ToNameTest()
     {
-        Assert.AreEqual(nameof(DayOfWeek.Sunday), DayOfWeek.Sunday.ToName());
-        Assert.AreEqual(nameof(Protagonist.Reimu), Protagonist.Reimu.ToName());
-        Assert.AreEqual(nameof(Protagonist.Marisa), Protagonist.Marisa.ToName());
+        DayOfWeek.Sunday.ToName().ShouldBe(nameof(DayOfWeek.Sunday));
+        Protagonist.Reimu.ToName().ShouldBe(nameof(Protagonist.Reimu));
+        Protagonist.Marisa.ToName().ShouldBe(nameof(Protagonist.Marisa));
     }
 
     [TestMethod]
     public void ToPatternTest()
     {
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToPattern());
-        Assert.AreEqual("RM", Protagonist.Reimu.ToPattern());
-        Assert.AreEqual("MR", Protagonist.Marisa.ToPattern());
+        DayOfWeek.Sunday.ToPattern().ShouldBeEmpty();
+        Protagonist.Reimu.ToPattern().ShouldBe("RM");
+        Protagonist.Marisa.ToPattern().ShouldBe("MR");
     }
 
     [TestMethod]
     public void ToDisplayNameTest()
     {
-        Assert.AreEqual(nameof(DayOfWeek.Sunday), DayOfWeek.Sunday.ToDisplayName());
-        Assert.AreEqual("博麗 霊夢", Protagonist.Reimu.ToDisplayName());
-        Assert.AreEqual("霧雨 魔理沙", Protagonist.Marisa.ToDisplayName());
+        DayOfWeek.Sunday.ToDisplayName().ShouldBe(nameof(DayOfWeek.Sunday));
+        Protagonist.Reimu.ToDisplayName().ShouldBe("博麗 霊夢");
+        Protagonist.Marisa.ToDisplayName().ShouldBe("霧雨 魔理沙");
     }
 
     [TestMethod]
     public void ToDisplayShortNameTest()
     {
-        Assert.AreEqual(nameof(DayOfWeek.Sunday), DayOfWeek.Sunday.ToDisplayShortName());
-        Assert.AreEqual("霊夢", Protagonist.Reimu.ToDisplayShortName());
-        Assert.AreEqual("魔理沙", Protagonist.Marisa.ToDisplayShortName());
+        DayOfWeek.Sunday.ToDisplayShortName().ShouldBe(nameof(DayOfWeek.Sunday));
+        Protagonist.Reimu.ToDisplayShortName().ShouldBe("霊夢");
+        Protagonist.Marisa.ToDisplayShortName().ShouldBe("魔理沙");
     }
 
     [TestMethod]
@@ -78,15 +78,15 @@ public class EnumExtensionsTests
     {
         using var backup = TestHelper.BackupCultureInfo();
 
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToCharaName());
+        DayOfWeek.Sunday.ToCharaName().ShouldBeEmpty();
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("霊夢", Protagonist.Reimu.ToCharaName());
-        Assert.AreEqual("魔理沙", Protagonist.Marisa.ToCharaName());
+        Protagonist.Reimu.ToCharaName().ShouldBe("霊夢");
+        Protagonist.Marisa.ToCharaName().ShouldBe("魔理沙");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Reimu", Protagonist.Reimu.ToCharaName());
-        Assert.AreEqual("Marisa", Protagonist.Marisa.ToCharaName());
+        Protagonist.Reimu.ToCharaName().ShouldBe("Reimu");
+        Protagonist.Marisa.ToCharaName().ShouldBe("Marisa");
     }
 
     [TestMethod]
@@ -94,15 +94,15 @@ public class EnumExtensionsTests
     {
         using var backup = TestHelper.BackupCultureInfo();
 
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToCharaFullName());
+        DayOfWeek.Sunday.ToCharaFullName().ShouldBeEmpty();
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("博麗 霊夢", Protagonist.Reimu.ToCharaFullName());
-        Assert.AreEqual("霧雨 魔理沙", Protagonist.Marisa.ToCharaFullName());
+        Protagonist.Reimu.ToCharaFullName().ShouldBe("博麗 霊夢");
+        Protagonist.Marisa.ToCharaFullName().ShouldBe("霧雨 魔理沙");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Hakurei Reimu", Protagonist.Reimu.ToCharaFullName());
-        Assert.AreEqual("Kirisame Marisa", Protagonist.Marisa.ToCharaFullName());
+        Protagonist.Reimu.ToCharaFullName().ShouldBe("Hakurei Reimu");
+        Protagonist.Marisa.ToCharaFullName().ShouldBe("Kirisame Marisa");
     }
 
     [TestMethod]
@@ -111,18 +111,18 @@ public class EnumExtensionsTests
         using var backup = TestHelper.BackupCultureInfo();
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("レミリア", Sisters.Scarlet.ToCharaName());
-        Assert.AreEqual("フランドール", Sisters.Scarlet.ToCharaName(1));
-        Assert.AreEqual("ルナサ", Sisters.Prismriver.ToCharaName());
-        Assert.AreEqual("メルラン", Sisters.Prismriver.ToCharaName(1));
-        Assert.AreEqual("リリカ", Sisters.Prismriver.ToCharaName(2));
+        Sisters.Scarlet.ToCharaName().ShouldBe("レミリア");
+        Sisters.Scarlet.ToCharaName(1).ShouldBe("フランドール");
+        Sisters.Prismriver.ToCharaName().ShouldBe("ルナサ");
+        Sisters.Prismriver.ToCharaName(1).ShouldBe("メルラン");
+        Sisters.Prismriver.ToCharaName(2).ShouldBe("リリカ");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Remilia", Sisters.Scarlet.ToCharaName());
-        Assert.AreEqual("Flandre", Sisters.Scarlet.ToCharaName(1));
-        Assert.AreEqual("Lunasa", Sisters.Prismriver.ToCharaName());
-        Assert.AreEqual("Merlin", Sisters.Prismriver.ToCharaName(1));
-        Assert.AreEqual("Lyrica", Sisters.Prismriver.ToCharaName(2));
+        Sisters.Scarlet.ToCharaName().ShouldBe("Remilia");
+        Sisters.Scarlet.ToCharaName(1).ShouldBe("Flandre");
+        Sisters.Prismriver.ToCharaName().ShouldBe("Lunasa");
+        Sisters.Prismriver.ToCharaName(1).ShouldBe("Merlin");
+        Sisters.Prismriver.ToCharaName(2).ShouldBe("Lyrica");
     }
 
     [TestMethod]
@@ -131,18 +131,18 @@ public class EnumExtensionsTests
         using var backup = TestHelper.BackupCultureInfo();
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual("レミリア・スカーレット", Sisters.Scarlet.ToCharaFullName());
-        Assert.AreEqual("フランドール・スカーレット", Sisters.Scarlet.ToCharaFullName(1));
-        Assert.AreEqual("ルナサ・プリズムリバー", Sisters.Prismriver.ToCharaFullName());
-        Assert.AreEqual("メルラン・プリズムリバー", Sisters.Prismriver.ToCharaFullName(1));
-        Assert.AreEqual("リリカ・プリズムリバー", Sisters.Prismriver.ToCharaFullName(2));
+        Sisters.Scarlet.ToCharaFullName().ShouldBe("レミリア・スカーレット");
+        Sisters.Scarlet.ToCharaFullName(1).ShouldBe("フランドール・スカーレット");
+        Sisters.Prismriver.ToCharaFullName().ShouldBe("ルナサ・プリズムリバー");
+        Sisters.Prismriver.ToCharaFullName(1).ShouldBe("メルラン・プリズムリバー");
+        Sisters.Prismriver.ToCharaFullName(2).ShouldBe("リリカ・プリズムリバー");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual("Remilia Scarlet", Sisters.Scarlet.ToCharaFullName());
-        Assert.AreEqual("Flandre Scarlet", Sisters.Scarlet.ToCharaFullName(1));
-        Assert.AreEqual("Lunasa Prismriver", Sisters.Prismriver.ToCharaFullName());
-        Assert.AreEqual("Merlin Prismriver", Sisters.Prismriver.ToCharaFullName(1));
-        Assert.AreEqual("Lyrica Prismriver", Sisters.Prismriver.ToCharaFullName(2));
+        Sisters.Scarlet.ToCharaFullName().ShouldBe("Remilia Scarlet");
+        Sisters.Scarlet.ToCharaFullName(1).ShouldBe("Flandre Scarlet");
+        Sisters.Prismriver.ToCharaFullName().ShouldBe("Lunasa Prismriver");
+        Sisters.Prismriver.ToCharaFullName(1).ShouldBe("Merlin Prismriver");
+        Sisters.Prismriver.ToCharaFullName(2).ShouldBe("Lyrica Prismriver");
     }
 
     [TestMethod]
@@ -151,14 +151,14 @@ public class EnumExtensionsTests
         using var backup = TestHelper.BackupCultureInfo();
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeName());
-        Assert.AreEqual("霊", Chara.ReimuA.ToShotTypeName());
-        Assert.AreEqual("魔", Chara.MarisaA.ToShotTypeName());
+        DayOfWeek.Sunday.ToShotTypeName().ShouldBeEmpty();
+        Chara.ReimuA.ToShotTypeName().ShouldBe("霊");
+        Chara.MarisaA.ToShotTypeName().ShouldBe("魔");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeName());
-        Assert.AreEqual("Spirit", Chara.ReimuA.ToShotTypeName());
-        Assert.AreEqual("Magic", Chara.MarisaA.ToShotTypeName());
+        DayOfWeek.Sunday.ToShotTypeName().ShouldBeEmpty();
+        Chara.ReimuA.ToShotTypeName().ShouldBe("Spirit");
+        Chara.MarisaA.ToShotTypeName().ShouldBe("Magic");
     }
 
     [TestMethod]
@@ -167,13 +167,13 @@ public class EnumExtensionsTests
         using var backup = TestHelper.BackupCultureInfo();
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ja-JP");
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeFullName());
-        Assert.AreEqual("霊符", Chara.ReimuA.ToShotTypeFullName());
-        Assert.AreEqual("魔符", Chara.MarisaA.ToShotTypeFullName());
+        DayOfWeek.Sunday.ToShotTypeFullName().ShouldBeEmpty();
+        Chara.ReimuA.ToShotTypeFullName().ShouldBe("霊符");
+        Chara.MarisaA.ToShotTypeFullName().ShouldBe("魔符");
 
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-        Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShotTypeFullName());
-        Assert.AreEqual("Spirit Sign", Chara.ReimuA.ToShotTypeFullName());
-        Assert.AreEqual("Magic Sign", Chara.MarisaA.ToShotTypeFullName());
+        DayOfWeek.Sunday.ToShotTypeFullName().ShouldBeEmpty();
+        Chara.ReimuA.ToShotTypeFullName().ShouldBe("Spirit Sign");
+        Chara.MarisaA.ToShotTypeFullName().ShouldBe("Magic Sign");
     }
 }

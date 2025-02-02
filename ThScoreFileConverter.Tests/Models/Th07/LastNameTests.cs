@@ -1,8 +1,21 @@
 ﻿using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
+
+internal static class LastNameExtensions
+{
+    internal static void ShouldBe(this LastName actual, LastNameTests.Properties expected)
+    {
+        var data = LastNameTests.MakeData(expected);
+
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.Name.ShouldBe(expected.name);
+    }
+}
 
 [TestClass]
 public class LastNameTests
@@ -34,17 +47,6 @@ public class LastNameTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
     }
 
-    internal static void Validate(in Properties expected, in LastName actual)
-    {
-        var data = MakeData(expected);
-
-        Assert.AreEqual(expected.signature, actual.Signature);
-        Assert.AreEqual(expected.size1, actual.Size1);
-        Assert.AreEqual(expected.size2, actual.Size2);
-        Assert.AreEqual(data[0], actual.FirstByteOfData);
-        CollectionAssert.That.AreEqual(expected.name, actual.Name);
-    }
-
     [TestMethod]
     public void LastNameTestChapter()
     {
@@ -53,7 +55,7 @@ public class LastNameTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var lastName = new LastName(chapter);
 
-        Validate(properties, lastName);
+        lastName.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -63,7 +65,7 @@ public class LastNameTests
         properties.signature = properties.signature.ToLowerInvariant();
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new LastName(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new LastName(chapter));
     }
 
     [TestMethod]
@@ -73,6 +75,6 @@ public class LastNameTests
         --properties.size1;
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new LastName(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new LastName(chapter));
     }
 }

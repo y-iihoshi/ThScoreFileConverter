@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Squirrel;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Squirrel;
 
@@ -11,9 +10,9 @@ public class SQFloatTests
     {
         var sqfloat = new SQFloat();
 
-        Assert.AreEqual(SQObjectType.Float, sqfloat.Type);
-        Assert.AreEqual(0f, sqfloat.Value);
-        Assert.AreEqual(0f, sqfloat);
+        sqfloat.Type.ShouldBe(SQObjectType.Float);
+        sqfloat.Value.ShouldBe(0f);
+        ((float)sqfloat).ShouldBe(0f);
     }
 
     internal static SQFloat CreateTestHelper(byte[] bytes)
@@ -37,41 +36,41 @@ public class SQFloatTests
     {
         var sqfloat = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Float, expected));
 
-        Assert.AreEqual(SQObjectType.Float, sqfloat.Type);
-        Assert.AreEqual(expected, sqfloat.Value);
-        Assert.AreEqual(expected, sqfloat);
+        sqfloat.Type.ShouldBe(SQObjectType.Float);
+        sqfloat.Value.ShouldBe(expected);
+        ((float)sqfloat).ShouldBe(expected);
     }
 
     [TestMethod]
     public void CreateTestShortened()
     {
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Float, new byte[3])));
     }
 
     [TestMethod]
     public void CreateTestInvalid()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, 0f)));
     }
 
     [TestMethod]
     public void EqualsTestNull()
     {
-        Assert.IsFalse(new SQFloat().Equals(null!));
+        new SQFloat().Equals(null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestNullObject()
     {
-        Assert.IsFalse(new SQFloat().Equals((object)null!));
+        new SQFloat().Equals((object)null!).ShouldBeFalse();
     }
 
     [TestMethod]
     public void EqualsTestInvalidType()
     {
-        Assert.IsFalse(new SQFloat().Equals(SQNull.Instance));
+        new SQFloat().Equals(SQNull.Instance).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -79,7 +78,7 @@ public class SQFloatTests
     {
         var value = new SQFloat();
 
-        Assert.IsTrue(value.Equals(value));
+        value.Equals(value).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -87,36 +86,36 @@ public class SQFloatTests
     {
         var value = new SQFloat();
 
-        Assert.IsTrue(value.Equals(value as object));
+        value.Equals(value as object).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestEqual()
     {
-        Assert.IsTrue(new SQFloat().Equals(new SQFloat(0f)));
+        new SQFloat().Equals(new SQFloat(0f)).ShouldBeTrue();
     }
 
     [TestMethod]
     public void EqualsTestNotEqual()
     {
-        Assert.IsFalse(new SQFloat().Equals(new SQFloat(1f)));
+        new SQFloat().Equals(new SQFloat(1f)).ShouldBeFalse();
     }
 
     [TestMethod]
     public void GetHashCodeEqual()
     {
-        Assert.AreEqual(new SQFloat().GetHashCode(), new SQFloat(0f).GetHashCode());
+        new SQFloat(0f).GetHashCode().ShouldBe(new SQFloat().GetHashCode());
     }
 
     [TestMethod]
     public void GetHashCodeNotEqual()
     {
-        Assert.AreNotEqual(new SQFloat().GetHashCode(), new SQFloat(1f).GetHashCode());
+        new SQFloat(1f).GetHashCode().ShouldNotBe(new SQFloat().GetHashCode());
     }
 
     [TestMethod]
     public void MyTestMethod()
     {
-        Assert.AreEqual("1.2", new SQFloat(1.2f).ToString());
+        new SQFloat(1.2f).ToString().ShouldBe("1.2");
     }
 }

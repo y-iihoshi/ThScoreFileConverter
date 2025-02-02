@@ -1,6 +1,5 @@
 ﻿using ThScoreFileConverter.Models.Th14;
 using ThScoreFileConverter.Tests.Models.Th095;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th14;
 
@@ -13,7 +12,7 @@ public class HeaderTests
         var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("TH41"));
         var header = TestUtils.Create<Header>(array);
 
-        Assert.IsTrue(header.IsValid);
+        header.IsValid.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -22,7 +21,7 @@ public class HeaderTests
         var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("th41"));
         var header = TestUtils.Create<Header>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -31,6 +30,6 @@ public class HeaderTests
         var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("TH41."));
         var header = TestUtils.Create<Header>(array);
 
-        Assert.IsFalse(header.IsValid);
+        header.IsValid.ShouldBeFalse();
     }
 }

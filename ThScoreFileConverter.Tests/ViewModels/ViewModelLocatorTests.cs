@@ -25,7 +25,7 @@ public class ViewModelLocatorTests
         Ioc.Default.ConfigureServices(provider);
 
         using var window = new ViewModelLocator().MainWindow;
-        Assert.IsNotNull(window);
+        _ = window.ShouldNotBeNull();
 
         // NOTE: Ioc.Default can't be configured twice.
     }

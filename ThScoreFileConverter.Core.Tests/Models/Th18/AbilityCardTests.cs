@@ -14,22 +14,22 @@ public class AbilityCardTests
 
         var card = new AbilityCard(expectedId, expectedName, expectedType);
 
-        Assert.AreEqual(expectedId, card.Id);
-        Assert.AreEqual(expectedName, card.Name);
-        Assert.AreEqual(expectedType, card.Type);
+        card.Id.ShouldBe(expectedId);
+        card.Name.ShouldBe(expectedName);
+        card.Type.ShouldBe(expectedType);
     }
 
     [TestMethod]
     public void AbilityCardTestNegativeId()
     {
-        _ = Assert.ThrowsException<ArgumentOutOfRangeException>(
+        _ = Should.Throw<ArgumentOutOfRangeException>(
             () => new AbilityCard(-1, string.Empty, AbilityCardType.Unknown));
     }
 
     [TestMethod]
     public void AbilityCardTestNullName()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(
+        _ = Should.Throw<ArgumentNullException>(
             () => new AbilityCard(0, null!, AbilityCardType.Unknown));
     }
 }

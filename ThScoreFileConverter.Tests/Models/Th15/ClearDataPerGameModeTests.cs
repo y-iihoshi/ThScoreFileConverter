@@ -4,11 +4,34 @@ using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverter.Tests.UnitTesting;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Core.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
+
+internal static class ClearDataPerGameModeExtensions
+{
+    internal static void ShouldBe(this IClearDataPerGameMode actual, IClearDataPerGameMode expected)
+    {
+        foreach (var pair in expected.Rankings)
+        {
+            for (var index = 0; index < pair.Value.Count; ++index)
+            {
+                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
+            }
+        }
+
+        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+        actual.ClearFlags.Values.ShouldBe(expected.ClearFlags.Values);
+
+        foreach (var pair in expected.Cards)
+        {
+            actual.Cards[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
 
 [TestClass]
 public class ClearDataPerGameModeTests
@@ -83,27 +106,6 @@ public class ClearDataPerGameModeTests
             0u);
     }
 
-    internal static void Validate(IClearDataPerGameMode expected, IClearDataPerGameMode actual)
-    {
-        foreach (var pair in expected.Rankings)
-        {
-            for (var index = 0; index < pair.Value.Count; ++index)
-            {
-                ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
-            }
-        }
-
-        Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
-        Assert.AreEqual(expected.PlayTime, actual.PlayTime);
-        CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
-        CollectionAssert.That.AreEqual(expected.ClearFlags.Values, actual.ClearFlags.Values);
-
-        foreach (var pair in expected.Cards)
-        {
-            SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
-        }
-    }
-
     [TestMethod]
     public void ClearDataPerGameModeTest()
     {
@@ -111,7 +113,7 @@ public class ClearDataPerGameModeTests
 
         var clearData = new ClearDataPerGameMode();
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -121,7 +123,7 @@ public class ClearDataPerGameModeTests
 
         var clearData = TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(mock));
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -130,7 +132,7 @@ public class ClearDataPerGameModeTests
         var mock = MockClearDataPerGameMode();
         var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(array));
     }
 
     [TestMethod]
@@ -141,6 +143,6 @@ public class ClearDataPerGameModeTests
 
         var clearData = TestUtils.Create<ClearDataPerGameMode>(array);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 }

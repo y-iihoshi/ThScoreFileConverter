@@ -1,9 +1,22 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Models.Th16;
-using ThScoreFileConverter.Tests.UnitTesting;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverter.Tests.Models.Th16;
+
+internal static class ScoreDataExtensions
+{
+    internal static void ShouldBe(this IScoreData actual, IScoreData expected)
+    {
+        actual.Score.ShouldBe(expected.Score);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+        actual.Name.ShouldBe(expected.Name);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.Season.ShouldBe(expected.Season);
+    }
+}
 
 [TestClass]
 public class ScoreDataTests
@@ -34,24 +47,13 @@ public class ScoreDataTests
             (int)scoreData.Season);
     }
 
-    internal static void Validate(IScoreData expected, IScoreData actual)
-    {
-        Assert.AreEqual(expected.Score, actual.Score);
-        Assert.AreEqual(expected.StageProgress, actual.StageProgress);
-        Assert.AreEqual(expected.ContinueCount, actual.ContinueCount);
-        CollectionAssert.That.AreEqual(expected.Name, actual.Name);
-        Assert.AreEqual(expected.DateTime, actual.DateTime);
-        Assert.AreEqual(expected.SlowRate, actual.SlowRate);
-        Assert.AreEqual(expected.Season, actual.Season);
-    }
-
     [TestMethod]
     public void ScoreDataTest()
     {
         var mock = Substitute.For<IScoreData>();
         var scoreData = new ScoreData();
 
-        Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -60,7 +62,7 @@ public class ScoreDataTests
         var mock = MockScoreData();
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
@@ -72,7 +74,7 @@ public class ScoreDataTests
         var mock = MockScoreData();
         _ = mock.StageProgress.Returns((StageProgress)stageProgress);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
@@ -83,7 +85,7 @@ public class ScoreDataTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.SkipLast(1).ToArray());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
@@ -94,7 +96,7 @@ public class ScoreDataTests
         var name = mock.Name;
         _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 
@@ -107,7 +109,7 @@ public class ScoreDataTests
         var mock = MockScoreData();
         _ = mock.Season.Returns((Season)season);
 
-        _ = Assert.ThrowsException<InvalidCastException>(
+        _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
     }
 }

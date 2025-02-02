@@ -11,30 +11,30 @@ public class SettingsTests
     public void SettingsTest()
     {
         var settings = new Settings();
-        Assert.AreEqual(string.Empty, settings.LastTitle);
-        Assert.AreEqual(0, settings.NumTitles);
-        Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
-        Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
-        Assert.IsTrue(settings.OutputNumberGroupSeparator);
-        Assert.AreEqual(65001, settings.InputCodePageId);
-        Assert.AreEqual(65001, settings.OutputCodePageId);
-        Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
-        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
-        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
-        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
-        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+        settings.LastTitle.ShouldBeEmpty();
+        settings.NumTitles.ShouldBe(0);
+        settings.FontFamilyName.ShouldBe(SystemFonts.MessageFontFamily.Source);
+        settings.FontSize.ShouldBe(SystemFonts.MessageFontSize);
+        settings.OutputNumberGroupSeparator.ShouldBe(true);
+        settings.InputCodePageId.ShouldBe(65001);
+        settings.OutputCodePageId.ShouldBe(65001);
+        settings.Language.ShouldBe(CultureInfo.InvariantCulture.Name);
+        settings.WindowWidth.ShouldBe(Settings.WindowMinWidth);
+        settings.WindowHeight.ShouldBe(Settings.WindowMinHeight);
+        settings.MainContentHeight.ShouldBe(Settings.MainContentMinHeight);
+        settings.SubContentHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
     public void LoadTestNullPath()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Load(null!));
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().Load(null!));
     }
 
     [TestMethod]
     public void LoadTestEmptyPath()
     {
-        _ = Assert.ThrowsException<ArgumentException>(() => new Settings().Load(string.Empty));
+        _ = Should.Throw<ArgumentException>(() => new Settings().Load(string.Empty));
     }
 
     [TestMethod]
@@ -42,86 +42,86 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\nonexistent.xml");
-        Assert.AreEqual(string.Empty, settings.LastTitle);
-        Assert.AreEqual(0, settings.NumTitles);
-        Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
-        Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
-        Assert.IsTrue(settings.OutputNumberGroupSeparator);
-        Assert.AreEqual(65001, settings.InputCodePageId);
-        Assert.AreEqual(65001, settings.OutputCodePageId);
-        Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
-        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
-        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
-        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
-        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+        settings.LastTitle.ShouldBeEmpty();
+        settings.NumTitles.ShouldBe(0);
+        settings.FontFamilyName.ShouldBe(SystemFonts.MessageFontFamily.Source);
+        settings.FontSize.ShouldBe(SystemFonts.MessageFontSize);
+        settings.OutputNumberGroupSeparator.ShouldBe(true);
+        settings.InputCodePageId.ShouldBe(65001);
+        settings.OutputCodePageId.ShouldBe(65001);
+        settings.Language.ShouldBe(CultureInfo.InvariantCulture.Name);
+        settings.WindowWidth.ShouldBe(Settings.WindowMinWidth);
+        settings.WindowHeight.ShouldBe(Settings.WindowMinHeight);
+        settings.MainContentHeight.ShouldBe(Settings.MainContentMinHeight);
+        settings.SubContentHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
     public void LoadTestEmptyFile()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\empty.xml"));
+        _ = Should.Throw<InvalidDataException>(() => new Settings().Load(@"TestData\empty.xml"));
     }
 
     [TestMethod]
     public void LoadTestNoRootNode()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\no-root-node.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidRootNode()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-root-node.xml"));
     }
 
     [TestMethod]
     public void LoadTestWrongNamespace()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\wrong-namespace.xml"));
     }
 
     [TestMethod]
     public void LoadTestNoChildNodes()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\no-child-nodes.xml"));
     }
 
     [TestMethod]
     public void LoadTestNoLastTitle()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\no-last-title.xml"));
     }
 
     [TestMethod]
     public void LoadTestEmptyLastTitle()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-last-title.xml"));
     }
 
     [TestMethod]
     public void LoadTestNonexistentLastTitle()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\nonexistent-last-title.xml"));
     }
 
     [TestMethod]
     public void LoadTestNoDictionary()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\no-dictionary.xml"));
     }
 
     [TestMethod]
     public void LoadTestEmptyDictionary()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-dictionary.xml"));
     }
 
@@ -130,13 +130,13 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\invalid-key-value-types.xml");
-        Assert.AreEqual(1, settings.NumTitles);
+        settings.NumTitles.ShouldBe(1);
     }
 
     [TestMethod]
     public void LoadTestNoKey()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-key.xml"));
+        _ = Should.Throw<InvalidDataException>(() => new Settings().Load(@"TestData\no-key.xml"));
     }
 
     [TestMethod]
@@ -144,7 +144,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-key.xml");
-        Assert.AreEqual(2, settings.NumTitles);
+        settings.NumTitles.ShouldBe(2);
     }
 
     [TestMethod]
@@ -152,13 +152,13 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\unknown-key.xml");
-        Assert.AreEqual(2, settings.NumTitles);
+        settings.NumTitles.ShouldBe(2);
     }
 
     [TestMethod]
     public void LoadTestNoValue()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Settings().Load(@"TestData\no-value.xml"));
+        _ = Should.Throw<InvalidDataException>(() => new Settings().Load(@"TestData\no-value.xml"));
     }
 
     [TestMethod]
@@ -167,16 +167,16 @@ public class SettingsTests
         var settings = new Settings();
         settings.Load(@"TestData\empty-value.xml");
 
-        Assert.AreEqual(1, settings.NumTitles);
+        settings.NumTitles.ShouldBe(1);
 
         var expected = new SettingsPerTitle();
         var actual = settings.GetSettingsPerTitle(settings.LastTitle);
-        Assert.AreEqual(expected.BestShotDirectory, actual.BestShotDirectory);
-        Assert.AreEqual(expected.HideUntriedCards, actual.HideUntriedCards);
-        Assert.AreEqual(expected.ImageOutputDirectory, actual.ImageOutputDirectory);
-        Assert.AreEqual(expected.OutputDirectory, actual.OutputDirectory);
-        Assert.AreEqual(expected.ScoreFile, actual.ScoreFile);
-        CollectionAssert.That.AreEqual(expected.TemplateFiles, actual.TemplateFiles);
+        actual.BestShotDirectory.ShouldBe(expected.BestShotDirectory);
+        actual.HideUntriedCards.ShouldBe(expected.HideUntriedCards);
+        actual.ImageOutputDirectory.ShouldBe(expected.ImageOutputDirectory);
+        actual.OutputDirectory.ShouldBe(expected.OutputDirectory);
+        actual.ScoreFile.ShouldBe(expected.ScoreFile);
+        actual.TemplateFiles.ShouldBe(expected.TemplateFiles);
     }
 
     [TestMethod]
@@ -184,8 +184,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-best-shot-directory.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).BestShotDirectory);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).BestShotDirectory.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -193,8 +193,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-best-shot-directory.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).BestShotDirectory);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).BestShotDirectory.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -202,21 +202,21 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-hide-untried-cards.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.IsTrue(settings.GetSettingsPerTitle(settings.LastTitle).HideUntriedCards);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).HideUntriedCards.ShouldBeTrue();
     }
 
     [TestMethod]
     public void LoadTestEmptyHideUntriedCards()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-hide-untried-cards.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidHideUntriedCards()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-hide-untried-cards.xml"));
     }
 
@@ -225,8 +225,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-image-output-directory.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ImageOutputDirectory);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).ImageOutputDirectory.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -234,8 +234,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-image-output-directory.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ImageOutputDirectory);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).ImageOutputDirectory.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -243,8 +243,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-output-directory.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).OutputDirectory);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).OutputDirectory.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -252,8 +252,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-output-directory.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).OutputDirectory);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).OutputDirectory.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -261,8 +261,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-score-file.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ScoreFile);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).ScoreFile.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -270,8 +270,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-score-file.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        Assert.AreEqual(string.Empty, settings.GetSettingsPerTitle(settings.LastTitle).ScoreFile);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).ScoreFile.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -279,8 +279,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-template-files.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -288,8 +288,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-template-files.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -297,8 +297,8 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\invalid-template-files.xml");
-        Assert.AreEqual(1, settings.NumTitles);
-        CollectionAssert.That.AreEqual([], settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles);
+        settings.NumTitles.ShouldBe(1);
+        settings.GetSettingsPerTitle(settings.LastTitle).TemplateFiles.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -306,7 +306,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
+        settings.FontFamilyName.ShouldBe(SystemFonts.MessageFontFamily.Source);
     }
 
     [TestMethod]
@@ -314,7 +314,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-font-family-name.xml");
-        Assert.AreEqual(SystemFonts.MessageFontFamily.Source, settings.FontFamilyName);
+        settings.FontFamilyName.ShouldBe(SystemFonts.MessageFontFamily.Source);
     }
 
     [TestMethod]
@@ -322,41 +322,41 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(SystemFonts.MessageFontSize, settings.FontSize);
+        settings.FontSize.ShouldBe(SystemFonts.MessageFontSize);
     }
 
     [TestMethod]
     public void LoadTestEmptyFontSize()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-font-size.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidFontSize()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-font-size.xml"));
     }
 
     [TestMethod]
     public void LoadTestNegativeFontSize()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\negative-font-size.xml"));
     }
 
     [TestMethod]
     public void LoadTestZeroFontSize()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\zero-font-size.xml"));
     }
 
     [TestMethod]
     public void LoadTestExceededFontSize()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\exceeded-font-size.xml"));
     }
 
@@ -365,20 +365,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.IsTrue(settings.OutputNumberGroupSeparator);
+        settings.OutputNumberGroupSeparator.ShouldBe(true);
     }
 
     [TestMethod]
     public void LoadTestEmptyOutputNumberGroupSeparator()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-output-number-group-separator.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidOutputNumberGroupSeparator()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-output-number-group-separator.xml"));
     }
 
@@ -387,20 +387,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(65001, settings.InputCodePageId);
+        settings.InputCodePageId.ShouldBe(65001);
     }
 
     [TestMethod]
     public void LoadTestEmptyInputCodePageId()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-input-code-page-id.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidInputCodePageId()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-input-code-page-id.xml"));
     }
 
@@ -409,7 +409,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\unsupported-input-code-page-id.xml");
-        Assert.AreEqual(65001, settings.InputCodePageId);
+        settings.InputCodePageId.ShouldBe(65001);
     }
 
     [TestMethod]
@@ -417,20 +417,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(65001, settings.OutputCodePageId);
+        settings.OutputCodePageId.ShouldBe(65001);
     }
 
     [TestMethod]
     public void LoadTestEmptyOutputCodePageId()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-output-code-page-id.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidOutputCodePageId()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-output-code-page-id.xml"));
     }
 
@@ -439,7 +439,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\unsupported-output-code-page-id.xml");
-        Assert.AreEqual(65001, settings.OutputCodePageId);
+        settings.OutputCodePageId.ShouldBe(65001);
     }
 
     [TestMethod]
@@ -447,7 +447,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
+        settings.Language.ShouldBe(CultureInfo.InvariantCulture.Name);
     }
 
     [TestMethod]
@@ -455,7 +455,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\empty-language.xml");
-        Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
+        settings.Language.ShouldBe(CultureInfo.InvariantCulture.Name);
     }
 
     [TestMethod]
@@ -463,7 +463,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\invalid-language.xml");
-        Assert.AreEqual(CultureInfo.InvariantCulture.Name, settings.Language);
+        settings.Language.ShouldBe(CultureInfo.InvariantCulture.Name);
     }
 
     [TestMethod]
@@ -471,7 +471,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\valid-language-ja-JP.xml");
-        Assert.AreEqual("ja-JP", settings.Language);
+        settings.Language.ShouldBe("ja-JP");
     }
 
     [TestMethod]
@@ -479,20 +479,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+        settings.WindowWidth.ShouldBe(Settings.WindowMinWidth);
     }
 
     [TestMethod]
     public void LoadTestEmptyWindowWidth()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-window-width.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidWindowWidth()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-window-width.xml"));
     }
 
@@ -501,7 +501,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\negative-window-width.xml");
-        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+        settings.WindowWidth.ShouldBe(Settings.WindowMinWidth);
     }
 
     [TestMethod]
@@ -509,7 +509,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\zero-window-width.xml");
-        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+        settings.WindowWidth.ShouldBe(Settings.WindowMinWidth);
     }
 
     [TestMethod]
@@ -517,7 +517,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\below-window-width.xml");
-        Assert.AreEqual(Settings.WindowMinWidth, settings.WindowWidth);
+        settings.WindowWidth.ShouldBe(Settings.WindowMinWidth);
     }
 
     [TestMethod]
@@ -525,20 +525,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+        settings.WindowHeight.ShouldBe(Settings.WindowMinHeight);
     }
 
     [TestMethod]
     public void LoadTestEmptyWindowHeight()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-window-height.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidWindowHeight()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-window-height.xml"));
     }
 
@@ -547,7 +547,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\negative-window-height.xml");
-        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+        settings.WindowHeight.ShouldBe(Settings.WindowMinHeight);
     }
 
     [TestMethod]
@@ -555,7 +555,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\zero-window-height.xml");
-        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+        settings.WindowHeight.ShouldBe(Settings.WindowMinHeight);
     }
 
     [TestMethod]
@@ -563,7 +563,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\below-window-height.xml");
-        Assert.AreEqual(Settings.WindowMinHeight, settings.WindowHeight);
+        settings.WindowHeight.ShouldBe(Settings.WindowMinHeight);
     }
 
     [TestMethod]
@@ -571,20 +571,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+        settings.MainContentHeight.ShouldBe(Settings.MainContentMinHeight);
     }
 
     [TestMethod]
     public void LoadTestEmptyMainContentHeight()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-main-content-height.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidMainContentHeight()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-main-content-height.xml"));
     }
 
@@ -593,7 +593,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\negative-main-content-height.xml");
-        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+        settings.MainContentHeight.ShouldBe(Settings.MainContentMinHeight);
     }
 
     [TestMethod]
@@ -601,7 +601,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\zero-main-content-height.xml");
-        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+        settings.MainContentHeight.ShouldBe(Settings.MainContentMinHeight);
     }
 
     [TestMethod]
@@ -609,7 +609,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\below-main-content-height.xml");
-        Assert.AreEqual(Settings.MainContentMinHeight, settings.MainContentHeight);
+        settings.MainContentHeight.ShouldBe(Settings.MainContentMinHeight);
     }
 
     [TestMethod]
@@ -617,20 +617,20 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\no-optional-settings.xml");
-        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+        settings.SubContentHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
     public void LoadTestEmptySubContentHeight()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\empty-sub-content-height.xml"));
     }
 
     [TestMethod]
     public void LoadTestInvalidSubContentHeight()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-sub-content-height.xml"));
     }
 
@@ -639,7 +639,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\negative-sub-content-height.xml");
-        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+        settings.SubContentHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
@@ -647,7 +647,7 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\zero-sub-content-height.xml");
-        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+        settings.SubContentHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
@@ -655,13 +655,13 @@ public class SettingsTests
     {
         var settings = new Settings();
         settings.Load(@"TestData\below-sub-content-height.xml");
-        Assert.AreEqual(Settings.SubContentMinHeight, settings.SubContentHeight);
+        settings.SubContentHeight.ShouldBe(Settings.SubContentMinHeight);
     }
 
     [TestMethod]
     public void LoadTestInvalidCharacter()
     {
-        _ = Assert.ThrowsException<InvalidDataException>(
+        _ = Should.Throw<InvalidDataException>(
             () => new Settings().Load(@"TestData\invalid-character.xml"));
     }
 
@@ -698,71 +698,71 @@ public class SettingsTests
         settings2.Load(tempfile);
         File.Delete(tempfile);
 
-        Assert.AreEqual(settings.LastTitle, settings2.LastTitle);
-        Assert.AreEqual(1, settings2.NumTitles);
+        settings2.LastTitle.ShouldBe(settings.LastTitle);
+        settings2.NumTitles.ShouldBe(1);
 
         var expected = settings.GetSettingsPerTitle(settings.LastTitle);
         var actual = settings2.GetSettingsPerTitle(settings2.LastTitle);
-        Assert.AreEqual(expected.BestShotDirectory, actual.BestShotDirectory);
-        Assert.AreEqual(expected.HideUntriedCards, actual.HideUntriedCards);
-        Assert.AreEqual(expected.ImageOutputDirectory, actual.ImageOutputDirectory);
-        Assert.AreEqual(expected.OutputDirectory, actual.OutputDirectory);
-        Assert.AreEqual(expected.ScoreFile, actual.ScoreFile);
-        CollectionAssert.That.AreEqual(expected.TemplateFiles, actual.TemplateFiles);
+        actual.BestShotDirectory.ShouldBe(expected.BestShotDirectory);
+        actual.HideUntriedCards.ShouldBe(expected.HideUntriedCards);
+        actual.ImageOutputDirectory.ShouldBe(expected.ImageOutputDirectory);
+        actual.OutputDirectory.ShouldBe(expected.OutputDirectory);
+        actual.ScoreFile.ShouldBe(expected.ScoreFile);
+        actual.TemplateFiles.ShouldBe(expected.TemplateFiles);
 
-        Assert.AreEqual(settings.FontFamilyName, settings2.FontFamilyName);
-        Assert.AreEqual(settings.FontSize, settings2.FontSize);
-        Assert.AreEqual(settings.OutputNumberGroupSeparator, settings2.OutputNumberGroupSeparator);
-        Assert.AreEqual(settings.InputCodePageId, settings2.InputCodePageId);
-        Assert.AreEqual(settings.OutputCodePageId, settings2.OutputCodePageId);
-        Assert.AreEqual(settings.Language, settings2.Language);
+        settings2.FontFamilyName.ShouldBe(settings.FontFamilyName);
+        settings2.FontSize.ShouldBe(settings.FontSize);
+        settings2.OutputNumberGroupSeparator.ShouldBe(settings.OutputNumberGroupSeparator);
+        settings2.InputCodePageId.ShouldBe(settings.InputCodePageId);
+        settings2.OutputCodePageId.ShouldBe(settings.OutputCodePageId);
+        settings2.Language.ShouldBe(settings.Language);
 
-        Assert.AreEqual(settings.WindowWidth, settings2.WindowWidth);
-        Assert.AreEqual(settings.WindowHeight, settings2.WindowHeight);
-        Assert.AreEqual(settings.MainContentHeight, settings2.MainContentHeight);
-        Assert.AreEqual(settings.SubContentHeight, settings2.SubContentHeight);
+        settings2.WindowWidth.ShouldBe(settings.WindowWidth);
+        settings2.WindowHeight.ShouldBe(settings.WindowHeight);
+        settings2.MainContentHeight.ShouldBe(settings.MainContentHeight);
+        settings2.SubContentHeight.ShouldBe(settings.SubContentHeight);
     }
 
     [TestMethod]
     public void LastTitleTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().LastTitle = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().LastTitle = null!);
     }
 
     [TestMethod]
     public void FontFamilyNameTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontFamilyName = null!);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().FontFamilyName = null!);
     }
 
     [TestMethod]
     public void FontSizeTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().FontSize = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().FontSize = null);
     }
 
     [TestMethod]
     public void OutputNumberGroupSeparatorTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputNumberGroupSeparator = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().OutputNumberGroupSeparator = null);
     }
 
     [TestMethod]
     public void InputCodePageIdTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().InputCodePageId = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().InputCodePageId = null);
     }
 
     [TestMethod]
     public void OutputCodePageIdTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().OutputCodePageId = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().OutputCodePageId = null);
     }
 
     [TestMethod]
     public void LanguageTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().Language = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().Language = null);
     }
 
     [TestMethod]
@@ -771,31 +771,31 @@ public class SettingsTests
         var settings = new Settings();
         var language = settings.Language;
         settings.Language = "invalid";
-        Assert.AreEqual(language, settings.Language);
+        settings.Language.ShouldBe(language);
     }
 
     [TestMethod]
     public void WindowWidthTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().WindowWidth = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().WindowWidth = null);
     }
 
     [TestMethod]
     public void WindowHeightTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().WindowHeight = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().WindowHeight = null);
     }
 
     [TestMethod]
     public void MainContentHeightTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().MainContentHeight = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().MainContentHeight = null);
     }
 
     [TestMethod]
     public void SubContentHeightTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => new Settings().SubContentHeight = null);
+        _ = Should.Throw<ArgumentNullException>(() => new Settings().SubContentHeight = null);
     }
 
     [TestMethod]
@@ -813,8 +813,8 @@ public class SettingsTests
         {
             var lastTitle = "TH06";
             settings.LastTitle = lastTitle;
-            Assert.AreEqual(lastTitle, settings.LastTitle);
-            Assert.AreEqual(1, numCalled);
+            settings.LastTitle.ShouldBe(lastTitle);
+            numCalled.ShouldBe(1);
         }
         finally
         {
@@ -837,8 +837,8 @@ public class SettingsTests
         {
             var lastTitle = settings.LastTitle;
             settings.LastTitle = lastTitle;
-            Assert.AreEqual(lastTitle, settings.LastTitle);
-            Assert.AreEqual(0, numCalled);
+            settings.LastTitle.ShouldBe(lastTitle);
+            numCalled.ShouldBe(0);
         }
         finally
         {

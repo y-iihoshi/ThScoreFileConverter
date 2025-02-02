@@ -1,10 +1,25 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
+
+internal static class CardDataExtensions
+{
+    internal static void ShouldBe(this ICardData actual, ICardData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+
+        foreach (var pair in expected.Cards)
+        {
+            actual.Cards[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
 
 [TestClass]
 public class CardDataTests
@@ -45,19 +60,6 @@ public class CardDataTests
             cardData.Cards.Values.Select(SpellCardTests.MakeByteArray));
     }
 
-    internal static void Validate(ICardData expected, ICardData actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
-
-        foreach (var pair in expected.Cards)
-        {
-            SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
-        }
-    }
-
     [TestMethod]
     public void CardDataTestChapter()
     {
@@ -66,8 +68,8 @@ public class CardDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new CardData(chapter);
 
-        Validate(mock, clearData);
-        Assert.IsFalse(clearData.IsValid);
+        clearData.ShouldBe(mock);
+        clearData.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -78,7 +80,7 @@ public class CardDataTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
     [TestMethod]
@@ -89,7 +91,7 @@ public class CardDataTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
     [TestMethod]
@@ -100,7 +102,7 @@ public class CardDataTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new CardData(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
     [DataTestMethod]
@@ -116,7 +118,6 @@ public class CardDataTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(
-            expected, CardData.CanInitialize(chapter));
+        CardData.CanInitialize(chapter).ShouldBe(expected);
     }
 }

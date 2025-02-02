@@ -44,7 +44,7 @@ public class ClearReplacerTests
     public void ClearReplacerTest()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -52,21 +52,21 @@ public class ClearReplacerTests
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var replacer = new ClearReplacer(dictionary);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTest()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("Stage 5", replacer.Replace("%T13CLEARHMR"));
+        replacer.Replace("%T13CLEARHMR").ShouldBe("Stage 5");
     }
 
     [TestMethod]
     public void ReplaceTestExtra()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("Not Clear", replacer.Replace("%T13CLEARXMR"));
+        replacer.Replace("%T13CLEARXMR").ShouldBe("Not Clear");
     }
 
     [TestMethod]
@@ -85,7 +85,7 @@ public class ClearReplacerTests
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("All Clear", replacer.Replace("%T13CLEARXMR"));
+        replacer.Replace("%T13CLEARXMR").ShouldBe("All Clear");
     }
 
     [TestMethod]
@@ -93,7 +93,7 @@ public class ClearReplacerTests
     {
         var dictionary = ImmutableDictionary<CharaWithTotal, IClearData>.Empty;
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("-------", replacer.Replace("%T13CLEARHMR"));
+        replacer.Replace("%T13CLEARHMR").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public class ClearReplacerTests
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("-------", replacer.Replace("%T13CLEARHMR"));
+        replacer.Replace("%T13CLEARHMR").ShouldBe("-------");
     }
 
     [TestMethod]
@@ -120,27 +120,27 @@ public class ClearReplacerTests
         var dictionary = new[] { clearData }.ToDictionary(data => data.Chara);
 
         var replacer = new ClearReplacer(dictionary);
-        Assert.AreEqual("-------", replacer.Replace("%T13CLEARHMR"));
+        replacer.Replace("%T13CLEARHMR").ShouldBe("-------");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T13XXXXXHMR", replacer.Replace("%T13XXXXXHMR"));
+        replacer.Replace("%T13XXXXXHMR").ShouldBe("%T13XXXXXHMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidLevel()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T13CLEARYMR", replacer.Replace("%T13CLEARYMR"));
+        replacer.Replace("%T13CLEARYMR").ShouldBe("%T13CLEARYMR");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidChara()
     {
         var replacer = new ClearReplacer(ClearDataDictionary);
-        Assert.AreEqual("%T13CLEARHXX", replacer.Replace("%T13CLEARHXX"));
+        replacer.Replace("%T13CLEARHXX").ShouldBe("%T13CLEARHXX");
     }
 }

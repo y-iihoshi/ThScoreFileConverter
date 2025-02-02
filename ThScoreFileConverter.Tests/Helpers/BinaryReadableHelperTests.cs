@@ -13,12 +13,12 @@ public class BinaryReadableHelperTests
         using var stream = new MemoryStream(ChapterTests.MakeByteArray(ChapterTests.ValidProperties));
         using var reader = new BinaryReader(stream);
         var chapter = BinaryReadableHelper.Create<Chapter>(reader);
-        ChapterTests.Validate(ChapterTests.ValidProperties, chapter);
+        chapter.ShouldBe(ChapterTests.ValidProperties);
     }
 
     [TestMethod]
     public void CreateTestNull()
     {
-        _ = Assert.ThrowsException<ArgumentNullException>(() => BinaryReadableHelper.Create<Chapter>(null!));
+        _ = Should.Throw<ArgumentNullException>(() => BinaryReadableHelper.Create<Chapter>(null!));
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
@@ -15,7 +14,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -23,7 +22,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 3", replacer.Replace("%T07PLAYHMB"));
+        replacer.Replace("%T07PLAYHMB").ShouldBe("invoked: 3");
     }
 
     [TestMethod]
@@ -31,7 +30,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 3", replacer.Replace("%T07PLAYTMB"));
+        replacer.Replace("%T07PLAYTMB").ShouldBe("invoked: 3");
     }
 
     [TestMethod]
@@ -39,7 +38,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 1", replacer.Replace("%T07PLAYHTL"));
+        replacer.Replace("%T07PLAYHTL").ShouldBe("invoked: 1");
     }
 
     [TestMethod]
@@ -47,7 +46,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 3", replacer.Replace("%T07PLAYHCL"));
+        replacer.Replace("%T07PLAYHCL").ShouldBe("invoked: 3");
     }
 
     [TestMethod]
@@ -55,7 +54,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 4", replacer.Replace("%T07PLAYHCN"));
+        replacer.Replace("%T07PLAYHCN").ShouldBe("invoked: 4");
     }
 
     [TestMethod]
@@ -63,7 +62,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 5", replacer.Replace("%T07PLAYHPR"));
+        replacer.Replace("%T07PLAYHPR").ShouldBe("invoked: 5");
     }
 
     [TestMethod]
@@ -71,7 +70,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("invoked: 2", replacer.Replace("%T07PLAYHRT"));
+        replacer.Replace("%T07PLAYHRT").ShouldBe("invoked: 2");
     }
 
     [TestMethod]
@@ -79,7 +78,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("%T07XXXXHMB", replacer.Replace("%T07XXXXHMB"));
+        replacer.Replace("%T07XXXXHMB").ShouldBe("%T07XXXXHMB");
     }
 
     [TestMethod]
@@ -87,7 +86,7 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("%T07PLAYYMB", replacer.Replace("%T07PLAYYMB"));
+        replacer.Replace("%T07PLAYYMB").ShouldBe("%T07PLAYYMB");
     }
 
     [TestMethod]
@@ -95,6 +94,6 @@ public class PlayReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new PlayReplacer(PlayStatus, formatterMock);
-        Assert.AreEqual("%T07PLAYHXX", replacer.Replace("%T07PLAYHXX"));
+        replacer.Replace("%T07PLAYHXX").ShouldBe("%T07PLAYHXX");
     }
 }

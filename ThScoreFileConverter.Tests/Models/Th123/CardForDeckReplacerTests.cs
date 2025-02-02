@@ -39,7 +39,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -48,7 +48,7 @@ public class CardForDeckReplacerTests
         var cards = ImmutableDictionary<int, ICardForDeck>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(cards, ClearDataDictionary, formatterMock, false);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -57,7 +57,7 @@ public class CardForDeckReplacerTests
         var dictionary = ImmutableDictionary<Chara, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, dictionary, formatterMock, false);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -65,8 +65,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("「霊撃札」", replacer.Replace("%T123DCMRY01N"));
-        Assert.AreEqual("「マジックポーション」", replacer.Replace("%T123DCMRY02N"));
+        replacer.Replace("%T123DCMRY01N").ShouldBe("「霊撃札」");
+        replacer.Replace("%T123DCMRY02N").ShouldBe("「マジックポーション」");
     }
 
     [TestMethod]
@@ -74,8 +74,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("invoked: 12", replacer.Replace("%T123DCMRY01C"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRY02C"));
+        replacer.Replace("%T123DCMRY01C").ShouldBe("invoked: 12");
+        replacer.Replace("%T123DCMRY02C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -83,8 +83,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("メテオニックデブリ", replacer.Replace("%T123DCMRK01N"));
-        Assert.AreEqual("ナロースパーク", replacer.Replace("%T123DCMRK02N"));
+        replacer.Replace("%T123DCMRK01N").ShouldBe("メテオニックデブリ");
+        replacer.Replace("%T123DCMRK02N").ShouldBe("ナロースパーク");
     }
 
     [TestMethod]
@@ -92,8 +92,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("invoked: 34", replacer.Replace("%T123DCMRK01C"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRK02C"));
+        replacer.Replace("%T123DCMRK01C").ShouldBe("invoked: 34");
+        replacer.Replace("%T123DCMRK02C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -101,8 +101,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("星符「メテオニックシャワー」", replacer.Replace("%T123DCMRP01N"));
-        Assert.AreEqual("魔符「スターダストレヴァリエ」", replacer.Replace("%T123DCMRP02N"));
+        replacer.Replace("%T123DCMRP01N").ShouldBe("星符「メテオニックシャワー」");
+        replacer.Replace("%T123DCMRP02N").ShouldBe("魔符「スターダストレヴァリエ」");
     }
 
     [TestMethod]
@@ -110,8 +110,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("invoked: 56", replacer.Replace("%T123DCMRP01C"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRP02C"));
+        replacer.Replace("%T123DCMRP01C").ShouldBe("invoked: 56");
+        replacer.Replace("%T123DCMRP02C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -119,8 +119,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("「霊撃札」", replacer.Replace("%T123DCMRY01N"));
-        Assert.AreEqual("??????????", replacer.Replace("%T123DCMRY02N"));
+        replacer.Replace("%T123DCMRY01N").ShouldBe("「霊撃札」");
+        replacer.Replace("%T123DCMRY02N").ShouldBe("??????????");
     }
 
     [TestMethod]
@@ -128,8 +128,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("invoked: 12", replacer.Replace("%T123DCMRY01C"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRY02C"));
+        replacer.Replace("%T123DCMRY01C").ShouldBe("invoked: 12");
+        replacer.Replace("%T123DCMRY02C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -137,8 +137,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("メテオニックデブリ", replacer.Replace("%T123DCMRK01N"));
-        Assert.AreEqual("??????????", replacer.Replace("%T123DCMRK02N"));
+        replacer.Replace("%T123DCMRK01N").ShouldBe("メテオニックデブリ");
+        replacer.Replace("%T123DCMRK02N").ShouldBe("??????????");
     }
 
     [TestMethod]
@@ -146,8 +146,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("invoked: 34", replacer.Replace("%T123DCMRK01C"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRK02C"));
+        replacer.Replace("%T123DCMRK01C").ShouldBe("invoked: 34");
+        replacer.Replace("%T123DCMRK02C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -155,8 +155,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("星符「メテオニックシャワー」", replacer.Replace("%T123DCMRP01N"));
-        Assert.AreEqual("??????????", replacer.Replace("%T123DCMRP02N"));
+        replacer.Replace("%T123DCMRP01N").ShouldBe("星符「メテオニックシャワー」");
+        replacer.Replace("%T123DCMRP02N").ShouldBe("??????????");
     }
 
     [TestMethod]
@@ -164,8 +164,8 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("invoked: 56", replacer.Replace("%T123DCMRP01C"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRP02C"));
+        replacer.Replace("%T123DCMRP01C").ShouldBe("invoked: 56");
+        replacer.Replace("%T123DCMRP02C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -174,12 +174,12 @@ public class CardForDeckReplacerTests
         var cards = ImmutableDictionary<int, ICardForDeck>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(cards, ClearDataDictionary, formatterMock, true);
-        Assert.AreEqual("??????????", replacer.Replace("%T123DCMRY01N"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRY01C"));
-        Assert.AreEqual("メテオニックデブリ", replacer.Replace("%T123DCMRK01N"));
-        Assert.AreEqual("invoked: 34", replacer.Replace("%T123DCMRK01C"));
-        Assert.AreEqual("星符「メテオニックシャワー」", replacer.Replace("%T123DCMRP01N"));
-        Assert.AreEqual("invoked: 56", replacer.Replace("%T123DCMRP01C"));
+        replacer.Replace("%T123DCMRY01N").ShouldBe("??????????");
+        replacer.Replace("%T123DCMRY01C").ShouldBe("invoked: 0");
+        replacer.Replace("%T123DCMRK01N").ShouldBe("メテオニックデブリ");
+        replacer.Replace("%T123DCMRK01C").ShouldBe("invoked: 34");
+        replacer.Replace("%T123DCMRP01N").ShouldBe("星符「メテオニックシャワー」");
+        replacer.Replace("%T123DCMRP01C").ShouldBe("invoked: 56");
     }
 
     [TestMethod]
@@ -188,12 +188,12 @@ public class CardForDeckReplacerTests
         var dictionary = ImmutableDictionary<Chara, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, dictionary, formatterMock, true);
-        Assert.AreEqual("「霊撃札」", replacer.Replace("%T123DCMRY01N"));
-        Assert.AreEqual("invoked: 12", replacer.Replace("%T123DCMRY01C"));
-        Assert.AreEqual("??????????", replacer.Replace("%T123DCMRK01N"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRK01C"));
-        Assert.AreEqual("??????????", replacer.Replace("%T123DCMRP01N"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T123DCMRP01C"));
+        replacer.Replace("%T123DCMRY01N").ShouldBe("「霊撃札」");
+        replacer.Replace("%T123DCMRY01C").ShouldBe("invoked: 12");
+        replacer.Replace("%T123DCMRK01N").ShouldBe("??????????");
+        replacer.Replace("%T123DCMRK01C").ShouldBe("invoked: 0");
+        replacer.Replace("%T123DCMRP01N").ShouldBe("??????????");
+        replacer.Replace("%T123DCMRP01C").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -201,7 +201,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCNMY01N", replacer.Replace("%T123DCNMY01N"));
+        replacer.Replace("%T123DCNMY01N").ShouldBe("%T123DCNMY01N");
     }
 
     [TestMethod]
@@ -209,7 +209,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCMRY22N", replacer.Replace("%T123DCMRY22N"));
+        replacer.Replace("%T123DCMRY22N").ShouldBe("%T123DCMRY22N");
     }
 
     [TestMethod]
@@ -217,7 +217,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCMRK13N", replacer.Replace("%T123DCMRK13N"));
+        replacer.Replace("%T123DCMRK13N").ShouldBe("%T123DCMRK13N");
     }
 
     [TestMethod]
@@ -225,7 +225,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCMRP15N", replacer.Replace("%T123DCMRP15N"));
+        replacer.Replace("%T123DCMRP15N").ShouldBe("%T123DCMRP15N");
     }
 
     [TestMethod]
@@ -233,7 +233,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123XXMRY01N", replacer.Replace("%T123XXMRY01N"));
+        replacer.Replace("%T123XXMRY01N").ShouldBe("%T123XXMRY01N");
     }
 
     [TestMethod]
@@ -241,7 +241,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCXXY01N", replacer.Replace("%T123DCXXY01N"));
+        replacer.Replace("%T123DCXXY01N").ShouldBe("%T123DCXXY01N");
     }
 
     [TestMethod]
@@ -249,7 +249,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCRMX01N", replacer.Replace("%T123DCRMX01N"));
+        replacer.Replace("%T123DCRMX01N").ShouldBe("%T123DCRMX01N");
     }
 
     [TestMethod]
@@ -257,7 +257,7 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCMRY22N", replacer.Replace("%T123DCMRY22N"));
+        replacer.Replace("%T123DCMRY22N").ShouldBe("%T123DCMRY22N");
     }
 
     [TestMethod]
@@ -265,6 +265,6 @@ public class CardForDeckReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new CardForDeckReplacer(SystemCards, ClearDataDictionary, formatterMock, false);
-        Assert.AreEqual("%T123DCMRY01X", replacer.Replace("%T123DCMRY01X"));
+        replacer.Replace("%T123DCMRY01X").ShouldBe("%T123DCMRY01X");
     }
 }

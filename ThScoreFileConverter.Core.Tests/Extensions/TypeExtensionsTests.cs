@@ -10,29 +10,29 @@ namespace ThScoreFileConverter.Core.Tests.Extensions
         [TestMethod]
         public void GetLeafNamespaceTest()
         {
-            Assert.AreEqual("System", typeof(Math).GetLeafNamespace());
-            Assert.AreEqual("Linq", typeof(Enumerable).GetLeafNamespace());
-            Assert.AreEqual("Extensions", typeof(TypeExtensionsTests).GetLeafNamespace());
+            typeof(Math).GetLeafNamespace().ShouldBe("System");
+            typeof(Enumerable).GetLeafNamespace().ShouldBe("Linq");
+            typeof(TypeExtensionsTests).GetLeafNamespace().ShouldBe("Extensions");
         }
 
         [TestMethod]
         public void GetLeafNamespaceTestNull()
         {
             Type type = null!;
-            _ = Assert.ThrowsException<ArgumentNullException>(type.GetLeafNamespace);
+            _ = Should.Throw<ArgumentNullException>(type.GetLeafNamespace);
         }
 
         [TestMethod]
         public void GetLeafNamespaceTestTwice()
         {
-            Assert.AreEqual("System", typeof(Math).GetLeafNamespace());
-            Assert.AreEqual("System", typeof(Math).GetLeafNamespace());  // cached
+            typeof(Math).GetLeafNamespace().ShouldBe("System");
+            typeof(Math).GetLeafNamespace().ShouldBe("System");  // cached
         }
 
         [TestMethod]
         public void GetLeafNamespaceTestGlobal()
         {
-            Assert.AreEqual(string.Empty, typeof(Global).GetLeafNamespace());
+            typeof(Global).GetLeafNamespace().ShouldBeEmpty();
         }
     }
 }

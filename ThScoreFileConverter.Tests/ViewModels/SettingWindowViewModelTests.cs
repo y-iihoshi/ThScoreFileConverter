@@ -26,7 +26,7 @@ public class SettingWindowViewModelTests
     public void TitleTest()
     {
         using var window = CreateViewModel();
-        Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(StringResources.SettingWindowTitle)), window.Title);
+        window.Title.ShouldBe(Utils.GetLocalizedValues<string>(nameof(StringResources.SettingWindowTitle)));
     }
 
     [TestMethod]
@@ -34,23 +34,23 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         using var window = new SettingWindowViewModel(settings);
-        Assert.AreEqual(settings.OutputNumberGroupSeparator, window.OutputNumberGroupSeparator.Value);
+        window.OutputNumberGroupSeparator.Value.ShouldBe(settings.OutputNumberGroupSeparator.GetValueOrDefault());
 
         var numChanged = 0;
         using var _ = window.OutputNumberGroupSeparator.Subscribe(_ => ++numChanged);
 
         var expected = true;
         window.OutputNumberGroupSeparator.Value = expected;
-        Assert.AreEqual(1, numChanged);
-        Assert.AreEqual(expected, window.OutputNumberGroupSeparator.Value);
-        Assert.AreEqual(expected, settings.OutputNumberGroupSeparator);
+        numChanged.ShouldBe(1);
+        window.OutputNumberGroupSeparator.Value.ShouldBe(expected);
+        settings.OutputNumberGroupSeparator.ShouldBe(expected);
     }
 
     [TestMethod]
     public void InputEncodingsTest()
     {
         using var window = CreateViewModel();
-        CollectionAssert.That.AreEqual(Settings.ValidCodePageIds, window.InputEncodings.Keys);
+        window.InputEncodings.Keys.ShouldBe(Settings.ValidCodePageIds);
     }
 
     [TestMethod]
@@ -58,23 +58,23 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         using var window = new SettingWindowViewModel(settings);
-        Assert.AreEqual(settings.InputCodePageId, window.InputCodePageId.Value);
+        window.InputCodePageId.Value.ShouldBe(settings.InputCodePageId.GetValueOrDefault());
 
         var numChanged = 0;
         using var _ = window.InputCodePageId.Subscribe(_ => ++numChanged);
 
         var expected = 12345;
         window.InputCodePageId.Value = expected;
-        Assert.AreEqual(2, numChanged);
-        Assert.AreEqual(expected, window.InputCodePageId.Value);
-        Assert.AreEqual(expected, settings.InputCodePageId);
+        numChanged.ShouldBe(2);
+        window.InputCodePageId.Value.ShouldBe(expected);
+        settings.InputCodePageId.ShouldBe(expected);
     }
 
     [TestMethod]
     public void OutputEncodingsTest()
     {
         using var window = CreateViewModel();
-        CollectionAssert.That.AreEqual(Settings.ValidCodePageIds, window.OutputEncodings.Keys);
+        window.OutputEncodings.Keys.ShouldBe(Settings.ValidCodePageIds);
     }
 
     [TestMethod]
@@ -82,16 +82,16 @@ public class SettingWindowViewModelTests
     {
         var settings = new Settings();
         using var window = new SettingWindowViewModel(settings);
-        Assert.AreEqual(settings.OutputCodePageId, window.OutputCodePageId.Value);
+        window.OutputCodePageId.Value.ShouldBe(settings.OutputCodePageId.GetValueOrDefault());
 
         var numChanged = 0;
         using var _ = window.OutputCodePageId.Subscribe(_ => ++numChanged);
 
         var expected = 12345;
         window.OutputCodePageId.Value = expected;
-        Assert.AreEqual(2, numChanged);
-        Assert.AreEqual(expected, window.OutputCodePageId.Value);
-        Assert.AreEqual(expected, settings.OutputCodePageId);
+        numChanged.ShouldBe(2);
+        window.OutputCodePageId.Value.ShouldBe(expected);
+        settings.OutputCodePageId.ShouldBe(expected);
     }
 
     [TestMethod]
@@ -104,7 +104,7 @@ public class SettingWindowViewModelTests
             LocalizeDictionary.Instance.Culture = culture;
 
             using var window = CreateViewModel();
-            Assert.AreEqual(culture, window.Culture);
+            window.Culture.ShouldBe(culture);
 
             var numCultureChanged = 0;
             var numTitleChanged = 0;
@@ -113,10 +113,10 @@ public class SettingWindowViewModelTests
 
             var expected = CultureInfo.GetCultureInfo("ja-JP");
             window.Culture = expected;
-            Assert.AreEqual(1, numCultureChanged);
-            Assert.AreEqual(1, numTitleChanged);
-            Assert.AreEqual(expected, window.Culture);
-            Assert.AreEqual(expected, LocalizeDictionary.Instance.Culture);
+            numCultureChanged.ShouldBe(1);
+            numTitleChanged.ShouldBe(1);
+            window.Culture.ShouldBe(expected);
+            LocalizeDictionary.Instance.Culture.ShouldBe(expected);
         }
         finally
         {

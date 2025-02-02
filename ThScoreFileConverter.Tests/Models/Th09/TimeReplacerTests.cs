@@ -11,20 +11,20 @@ public class TimeReplacerTests
     public void TimeReplacerTest()
     {
         var replacer = new TimeReplacer(PlayStatus);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTestAll()
     {
         var replacer = new TimeReplacer(PlayStatus);
-        Assert.AreEqual("12:34:56.789", replacer.Replace("%T09TIMEALL"));
+        replacer.Replace("%T09TIMEALL").ShouldBe("12:34:56.789");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new TimeReplacer(PlayStatus);
-        Assert.AreEqual("%T09XXXXXXX", replacer.Replace("%T09XXXXXXX"));
+        replacer.Replace("%T09XXXXXXX").ShouldBe("%T09XXXXXXX");
     }
 }

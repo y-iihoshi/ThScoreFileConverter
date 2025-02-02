@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using NSubstitute;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
@@ -34,7 +33,7 @@ public class CardReplacerTests
     public void CardReplacerTest()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -42,73 +41,73 @@ public class CardReplacerTests
     {
         var cardAttacks = ImmutableDictionary<int, ICardAttack>.Empty;
         var replacer = new CardReplacer(cardAttacks, true);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void ReplaceTestName()
     {
         var replacer = new CardReplacer(CardAttacks, false);
-        Assert.AreEqual("式輝「プリンセス天狐 -Illusion-」", replacer.Replace("%T07CARD123N"));
-        Assert.AreEqual("式弾「アルティメットブディスト」", replacer.Replace("%T07CARD124N"));
+        replacer.Replace("%T07CARD123N").ShouldBe("式輝「プリンセス天狐 -Illusion-」");
+        replacer.Replace("%T07CARD124N").ShouldBe("式弾「アルティメットブディスト」");
     }
 
     [TestMethod]
     public void ReplaceTestRank()
     {
         var replacer = new CardReplacer(CardAttacks, false);
-        Assert.AreEqual("Extra", replacer.Replace("%T07CARD123R"));
-        Assert.AreEqual("Extra", replacer.Replace("%T07CARD124R"));
+        replacer.Replace("%T07CARD123R").ShouldBe("Extra");
+        replacer.Replace("%T07CARD124R").ShouldBe("Extra");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenName()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("式輝「プリンセス天狐 -Illusion-」", replacer.Replace("%T07CARD123N"));
-        Assert.AreEqual("??????????", replacer.Replace("%T07CARD124N"));
+        replacer.Replace("%T07CARD123N").ShouldBe("式輝「プリンセス天狐 -Illusion-」");
+        replacer.Replace("%T07CARD124N").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestHiddenRank()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("Extra", replacer.Replace("%T07CARD123R"));
-        Assert.AreEqual("?????", replacer.Replace("%T07CARD124R"));
+        replacer.Replace("%T07CARD123R").ShouldBe("Extra");
+        replacer.Replace("%T07CARD124R").ShouldBe("?????");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentName()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("??????????", replacer.Replace("%T07CARD125N"));
+        replacer.Replace("%T07CARD125N").ShouldBe("??????????");
     }
 
     [TestMethod]
     public void ReplaceTestNonexistentRank()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("?????", replacer.Replace("%T07CARD125R"));
+        replacer.Replace("%T07CARD125R").ShouldBe("?????");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidFormat()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("%T07XXXX123N", replacer.Replace("%T07XXXX123N"));
+        replacer.Replace("%T07XXXX123N").ShouldBe("%T07XXXX123N");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidNumber()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("%T07CARD142N", replacer.Replace("%T07CARD142N"));
+        replacer.Replace("%T07CARD142N").ShouldBe("%T07CARD142N");
     }
 
     [TestMethod]
     public void ReplaceTestInvalidType()
     {
         var replacer = new CardReplacer(CardAttacks, true);
-        Assert.AreEqual("%T07CARD123X", replacer.Replace("%T07CARD123X"));
+        replacer.Replace("%T07CARD123X").ShouldBe("%T07CARD123X");
     }
 }

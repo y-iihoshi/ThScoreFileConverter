@@ -3,9 +3,16 @@ using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
+
+internal static class ClearCountExtensions
+{
+    internal static void ShouldBe(this IClearCount actual, IClearCount expected)
+    {
+        actual.Counts.Values.ShouldBe(expected.Counts.Values);
+    }
+}
 
 [TestClass]
 public class ClearCountTests
@@ -29,11 +36,6 @@ public class ClearCountTests
         return TestUtils.MakeByteArray(clearCount.Counts.Values, 0u);
     }
 
-    internal static void Validate(IClearCount expected, IClearCount actual)
-    {
-        CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
-    }
-
     [TestMethod]
     public void ClearCountTest()
     {
@@ -41,7 +43,7 @@ public class ClearCountTests
 
         var clearCount = new ClearCount();
 
-        Validate(mock, clearCount);
+        clearCount.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -51,7 +53,7 @@ public class ClearCountTests
 
         var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock));
 
-        Validate(mock, clearCount);
+        clearCount.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -61,7 +63,7 @@ public class ClearCountTests
         var counts = mock.Counts;
         _ = mock.Counts.Returns(counts.Where(pair => pair.Key == Level.Extra).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(() => TestUtils.Create<ClearCount>(MakeByteArray(mock)));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearCount>(MakeByteArray(mock)));
     }
 
     [TestMethod]
@@ -73,7 +75,7 @@ public class ClearCountTests
 
         var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock));
 
-        CollectionAssert.That.AreNotEqual(mock.Counts.Values, clearCount.Counts.Values);
-        CollectionAssert.That.AreEqual(mock.Counts.Values.SkipLast(1), clearCount.Counts.Values);
+        clearCount.Counts.Values.ShouldNotBe(mock.Counts.Values);
+        clearCount.Counts.Values.ShouldBe(mock.Counts.Values.SkipLast(1));
     }
 }

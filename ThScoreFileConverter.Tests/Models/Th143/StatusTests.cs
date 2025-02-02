@@ -1,10 +1,26 @@
 ﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverter.Tests.UnitTesting;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
+
+internal static class StatusExtensions
+{
+    internal static void ShouldBe(this IStatus actual, IStatus expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.LastName.ShouldBe(expected.LastName);
+        actual.BgmFlags.ShouldBe(expected.BgmFlags);
+        actual.TotalPlayTime.ShouldBe(expected.TotalPlayTime);
+        actual.LastMainItem.ShouldBe(expected.LastMainItem);
+        actual.LastSubItem.ShouldBe(expected.LastSubItem);
+        actual.NicknameFlags.ShouldBe(expected.NicknameFlags);
+    }
+}
 
 [TestClass]
 public class StatusTests
@@ -46,20 +62,6 @@ public class StatusTests
             new byte[0x12D]);
     }
 
-    internal static void Validate(IStatus expected, IStatus actual)
-    {
-        Assert.AreEqual(expected.Signature, actual.Signature);
-        Assert.AreEqual(expected.Version, actual.Version);
-        Assert.AreEqual(expected.Checksum, actual.Checksum);
-        Assert.AreEqual(expected.Size, actual.Size);
-        CollectionAssert.That.AreEqual(expected.LastName, actual.LastName);
-        CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
-        Assert.AreEqual(expected.TotalPlayTime, actual.TotalPlayTime);
-        Assert.AreEqual(expected.LastMainItem, actual.LastMainItem);
-        Assert.AreEqual(expected.LastSubItem, actual.LastSubItem);
-        CollectionAssert.That.AreEqual(expected.NicknameFlags, actual.NicknameFlags);
-    }
-
     [TestMethod]
     public void StatusTestChapter()
     {
@@ -68,8 +70,8 @@ public class StatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var status = new Status(chapter);
 
-        Validate(mock, status);
-        Assert.IsFalse(status.IsValid);
+        status.ShouldBe(mock);
+        status.IsValid.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -80,7 +82,7 @@ public class StatusTests
         _ = mock.Signature.Returns(signature.ToLowerInvariant());
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
     [TestMethod]
@@ -91,7 +93,7 @@ public class StatusTests
         _ = mock.Version.Returns(++version);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
     [TestMethod]
@@ -102,7 +104,7 @@ public class StatusTests
         _ = mock.Size.Returns(--size);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidDataException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
     [DataTestMethod]
@@ -118,7 +120,7 @@ public class StatusTests
         var chapter = TestUtils.Create<Chapter>(
             TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-        Assert.AreEqual(expected, Status.CanInitialize(chapter));
+        Status.CanInitialize(chapter).ShouldBe(expected);
     }
 
     public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
@@ -131,7 +133,7 @@ public class StatusTests
         _ = mock.LastMainItem.Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new Status(chapter));
     }
 
     [DataTestMethod]
@@ -142,6 +144,6 @@ public class StatusTests
         _ = mock.LastSubItem.Returns((ItemWithTotal)item);
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
-        _ = Assert.ThrowsException<InvalidCastException>(() => new Status(chapter));
+        _ = Should.Throw<InvalidCastException>(() => new Status(chapter));
     }
 }

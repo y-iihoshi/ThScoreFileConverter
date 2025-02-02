@@ -13,9 +13,9 @@ public class HashtagFieldsTests
     public void DataTest(int data1, int data2, int data3)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(data1, fields.Data.ElementAt(0));
-        Assert.AreEqual(data2, fields.Data.ElementAt(1));
-        Assert.AreEqual(data3, fields.Data.ElementAt(2));
+        fields.Data.ElementAt(0).ShouldBe(data1);
+        fields.Data.ElementAt(1).ShouldBe(data2);
+        fields.Data.ElementAt(2).ShouldBe(data3);
     }
 
     [DataTestMethod]
@@ -24,7 +24,7 @@ public class HashtagFieldsTests
     public void EnemyIsInFrameTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsInFrame);
+        fields.EnemyIsInFrame.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -33,7 +33,7 @@ public class HashtagFieldsTests
     public void EnemyIsPartlyInFrameTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsPartlyInFrame);
+        fields.EnemyIsPartlyInFrame.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -42,7 +42,7 @@ public class HashtagFieldsTests
     public void WholeEnemyIsInFrameTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.WholeEnemyIsInFrame);
+        fields.WholeEnemyIsInFrame.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -51,7 +51,7 @@ public class HashtagFieldsTests
     public void EnemyIsInMiddleTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsInMiddle);
+        fields.EnemyIsInMiddle.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -60,7 +60,7 @@ public class HashtagFieldsTests
     public void IsSelfieTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsSelfie);
+        fields.IsSelfie.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -69,7 +69,7 @@ public class HashtagFieldsTests
     public void IsTwoShotTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsTwoShot);
+        fields.IsTwoShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -78,7 +78,7 @@ public class HashtagFieldsTests
     public void BitDangerousTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.BitDangerous);
+        fields.BitDangerous.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -87,7 +87,7 @@ public class HashtagFieldsTests
     public void SeriouslyDangerousTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.SeriouslyDangerous);
+        fields.SeriouslyDangerous.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -96,7 +96,7 @@ public class HashtagFieldsTests
     public void ThoughtGonnaDieTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ThoughtGonnaDie);
+        fields.ThoughtGonnaDie.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -105,7 +105,7 @@ public class HashtagFieldsTests
     public void ManyRedsTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyReds);
+        fields.ManyReds.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -114,7 +114,7 @@ public class HashtagFieldsTests
     public void ManyPurplesTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyPurples);
+        fields.ManyPurples.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -123,7 +123,7 @@ public class HashtagFieldsTests
     public void ManyBluesTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyBlues);
+        fields.ManyBlues.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -132,7 +132,7 @@ public class HashtagFieldsTests
     public void ManyCyansTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyCyans);
+        fields.ManyCyans.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -141,7 +141,7 @@ public class HashtagFieldsTests
     public void ManyGreensTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyGreens);
+        fields.ManyGreens.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -150,7 +150,7 @@ public class HashtagFieldsTests
     public void ManyYellowsTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyYellows);
+        fields.ManyYellows.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -159,7 +159,7 @@ public class HashtagFieldsTests
     public void ManyOrangesTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ManyOranges);
+        fields.ManyOranges.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -168,7 +168,7 @@ public class HashtagFieldsTests
     public void TooColorfulTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TooColorful);
+        fields.TooColorful.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -177,7 +177,7 @@ public class HashtagFieldsTests
     public void SevenColorsTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.SevenColors);
+        fields.SevenColors.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -186,7 +186,7 @@ public class HashtagFieldsTests
     public void NoBulletTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.NoBullet);
+        fields.NoBullet.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -195,7 +195,7 @@ public class HashtagFieldsTests
     public void IsLandscapePhotoTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsLandscapePhoto);
+        fields.IsLandscapePhoto.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -204,7 +204,7 @@ public class HashtagFieldsTests
     public void CloseupTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Closeup);
+        fields.Closeup.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -213,7 +213,7 @@ public class HashtagFieldsTests
     public void QuiteCloseupTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.QuiteCloseup);
+        fields.QuiteCloseup.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -222,7 +222,7 @@ public class HashtagFieldsTests
     public void TooCloseTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TooClose);
+        fields.TooClose.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -231,7 +231,7 @@ public class HashtagFieldsTests
     public void EnemyIsInFullViewTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsInFullView);
+        fields.EnemyIsInFullView.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -240,7 +240,7 @@ public class HashtagFieldsTests
     public void TooManyBulletsTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TooManyBullets);
+        fields.TooManyBullets.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -249,7 +249,7 @@ public class HashtagFieldsTests
     public void TooPlayfulBarrageTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TooPlayfulBarrage);
+        fields.TooPlayfulBarrage.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -258,7 +258,7 @@ public class HashtagFieldsTests
     public void TooDenseTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TooDense);
+        fields.TooDense.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -267,7 +267,7 @@ public class HashtagFieldsTests
     public void ChasedTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Chased);
+        fields.Chased.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -276,7 +276,7 @@ public class HashtagFieldsTests
     public void IsSuppositoryTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsSuppository);
+        fields.IsSuppository.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -285,7 +285,7 @@ public class HashtagFieldsTests
     public void IsButterflyLikeMothTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsButterflyLikeMoth);
+        fields.IsButterflyLikeMoth.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -294,7 +294,7 @@ public class HashtagFieldsTests
     public void EnemyIsUndamagedTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsUndamaged);
+        fields.EnemyIsUndamaged.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -303,7 +303,7 @@ public class HashtagFieldsTests
     public void EnemyCanAffordTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyCanAfford);
+        fields.EnemyCanAfford.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -312,7 +312,7 @@ public class HashtagFieldsTests
     public void EnemyIsWeakenedTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsWeakened);
+        fields.EnemyIsWeakened.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -321,7 +321,7 @@ public class HashtagFieldsTests
     public void EnemyIsDyingTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemyIsDying);
+        fields.EnemyIsDying.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -330,7 +330,7 @@ public class HashtagFieldsTests
     public void FinishedTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Finished);
+        fields.Finished.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -339,7 +339,7 @@ public class HashtagFieldsTests
     public void IsThreeShotTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsThreeShot);
+        fields.IsThreeShot.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -348,7 +348,7 @@ public class HashtagFieldsTests
     public void TwoEnemiesTogetherTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TwoEnemiesTogether);
+        fields.TwoEnemiesTogether.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -357,7 +357,7 @@ public class HashtagFieldsTests
     public void EnemiesAreOverlappingTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemiesAreOverlapping);
+        fields.EnemiesAreOverlapping.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -366,7 +366,7 @@ public class HashtagFieldsTests
     public void PeaceSignAlongsideTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.PeaceSignAlongside);
+        fields.PeaceSignAlongside.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -375,7 +375,7 @@ public class HashtagFieldsTests
     public void EnemiesAreTooCloseTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.EnemiesAreTooClose);
+        fields.EnemiesAreTooClose.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -384,7 +384,7 @@ public class HashtagFieldsTests
     public void ScorchingTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Scorching);
+        fields.Scorching.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -393,7 +393,7 @@ public class HashtagFieldsTests
     public void TooBigBulletTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.TooBigBullet);
+        fields.TooBigBullet.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -402,7 +402,7 @@ public class HashtagFieldsTests
     public void ThrowingEdgedToolsTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.ThrowingEdgedTools);
+        fields.ThrowingEdgedTools.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -411,7 +411,7 @@ public class HashtagFieldsTests
     public void SnakyTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Snaky);
+        fields.Snaky.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -420,7 +420,7 @@ public class HashtagFieldsTests
     public void LightLooksStoppedTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.LightLooksStopped);
+        fields.LightLooksStopped.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -429,7 +429,7 @@ public class HashtagFieldsTests
     public void IsSuperMoonTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsSuperMoon);
+        fields.IsSuperMoon.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -438,7 +438,7 @@ public class HashtagFieldsTests
     public void DazzlingTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Dazzling);
+        fields.Dazzling.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -447,7 +447,7 @@ public class HashtagFieldsTests
     public void MoreDazzlingTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.MoreDazzling);
+        fields.MoreDazzling.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -456,7 +456,7 @@ public class HashtagFieldsTests
     public void MostDazzlingTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.MostDazzling);
+        fields.MostDazzling.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -465,7 +465,7 @@ public class HashtagFieldsTests
     public void FinishedTogetherTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.FinishedTogether);
+        fields.FinishedTogether.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -474,7 +474,7 @@ public class HashtagFieldsTests
     public void WasDreamTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.WasDream);
+        fields.WasDream.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -483,7 +483,7 @@ public class HashtagFieldsTests
     public void IsRockyBarrageTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsRockyBarrage);
+        fields.IsRockyBarrage.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -492,7 +492,7 @@ public class HashtagFieldsTests
     public void IsStickDestroyingBarrageTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsStickDestroyingBarrage);
+        fields.IsStickDestroyingBarrage.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -501,7 +501,7 @@ public class HashtagFieldsTests
     public void FluffyTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.Fluffy);
+        fields.Fluffy.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -510,7 +510,7 @@ public class HashtagFieldsTests
     public void IsDoggiePhotoTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsDoggiePhoto);
+        fields.IsDoggiePhoto.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -519,7 +519,7 @@ public class HashtagFieldsTests
     public void IsAnimalPhotoTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsAnimalPhoto);
+        fields.IsAnimalPhoto.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -528,7 +528,7 @@ public class HashtagFieldsTests
     public void IsZooTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsZoo);
+        fields.IsZoo.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -537,7 +537,7 @@ public class HashtagFieldsTests
     public void IsLovelyHeartTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsLovelyHeart);
+        fields.IsLovelyHeart.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -546,7 +546,7 @@ public class HashtagFieldsTests
     public void IsThunderTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsThunder);
+        fields.IsThunder.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -555,7 +555,7 @@ public class HashtagFieldsTests
     public void IsDrumTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsDrum);
+        fields.IsDrum.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -564,7 +564,7 @@ public class HashtagFieldsTests
     public void IsMistyTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsMisty);
+        fields.IsMisty.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -573,7 +573,7 @@ public class HashtagFieldsTests
     public void IsBoringPhotoTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsBoringPhoto);
+        fields.IsBoringPhoto.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -582,7 +582,7 @@ public class HashtagFieldsTests
     public void WasScoldedTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.WasScolded);
+        fields.WasScolded.ShouldBe(expected);
     }
 
     [DataTestMethod]
@@ -591,7 +591,7 @@ public class HashtagFieldsTests
     public void IsSumirekoTest(int data1, int data2, int data3, bool expected)
     {
         var fields = new HashtagFields(data1, data2, data3);
-        Assert.AreEqual(expected, fields.IsSumireko);
+        fields.IsSumireko.ShouldBe(expected);
     }
 
     [TestMethod]
@@ -599,11 +599,11 @@ public class HashtagFieldsTests
     {
         var fields = (new HashtagFields[1])[0];
 
-        Assert.AreEqual(0, fields.Data.Count());
+        fields.Data.ShouldBeEmpty();
         foreach (var prop in fields.GetType().GetProperties().Where(prop => prop.PropertyType == typeof(bool)))
         {
             var value = prop.GetValue(fields);
-            Assert.IsTrue((value is bool boolean) && !boolean);
+            value.ShouldBeOfType<bool>().ShouldBeFalse();
         }
     }
 }

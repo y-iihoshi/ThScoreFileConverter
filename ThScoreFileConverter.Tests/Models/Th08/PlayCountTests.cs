@@ -3,9 +3,20 @@ using NSubstitute;
 using ThScoreFileConverter.Core.Helpers;
 using ThScoreFileConverter.Core.Models.Th08;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
+
+internal static class PlayCountExtensions
+{
+    internal static void ShouldBe(this IPlayCount actual, IPlayCount expected)
+    {
+        actual.TotalTrial.ShouldBe(expected.TotalTrial);
+        actual.Trials.Values.ShouldBe(expected.Trials.Values);
+        actual.TotalClear.ShouldBe(expected.TotalClear);
+        actual.TotalContinue.ShouldBe(expected.TotalContinue);
+        actual.TotalPractice.ShouldBe(expected.TotalPractice);
+    }
+}
 
 [TestClass]
 public class PlayCountTests
@@ -39,15 +50,6 @@ public class PlayCountTests
             playCount.TotalPractice);
     }
 
-    internal static void Validate(IPlayCount expected, IPlayCount actual)
-    {
-        Assert.AreEqual(expected.TotalTrial, actual.TotalTrial);
-        CollectionAssert.That.AreEqual(expected.Trials.Values, actual.Trials.Values);
-        Assert.AreEqual(expected.TotalClear, actual.TotalClear);
-        Assert.AreEqual(expected.TotalContinue, actual.TotalContinue);
-        Assert.AreEqual(expected.TotalPractice, actual.TotalPractice);
-    }
-
     [TestMethod]
     public void PlayCountTest()
     {
@@ -55,7 +57,7 @@ public class PlayCountTests
 
         var playCount = new PlayCount();
 
-        Validate(mock, playCount);
+        playCount.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -65,7 +67,7 @@ public class PlayCountTests
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock));
 
-        Validate(mock, playCount);
+        playCount.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -75,7 +77,7 @@ public class PlayCountTests
         var trials = mock.Trials;
         _ = mock.Trials.Returns(trials.Where(pair => pair.Key != Chara.Yuyuko).ToDictionary());
 
-        _ = Assert.ThrowsException<EndOfStreamException>(
+        _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<PlayCount>(MakeByteArray(mock)));
     }
 
@@ -88,11 +90,11 @@ public class PlayCountTests
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock));
 
-        Assert.AreEqual(mock.TotalTrial, playCount.TotalTrial);
-        CollectionAssert.That.AreNotEqual(mock.Trials.Values, playCount.Trials.Values);
-        CollectionAssert.That.AreEqual(mock.Trials.Values.SkipLast(1), playCount.Trials.Values);
-        Assert.AreNotEqual(mock.TotalClear, playCount.TotalClear);
-        Assert.AreNotEqual(mock.TotalContinue, playCount.TotalContinue);
-        Assert.AreNotEqual(mock.TotalPractice, playCount.TotalPractice);
+        playCount.TotalTrial.ShouldBe(mock.TotalTrial);
+        playCount.Trials.Values.ShouldNotBe(mock.Trials.Values);
+        playCount.Trials.Values.ShouldBe(mock.Trials.Values.SkipLast(1));
+        playCount.TotalClear.ShouldNotBe(mock.TotalClear);
+        playCount.TotalContinue.ShouldNotBe(mock.TotalContinue);
+        playCount.TotalPractice.ShouldNotBe(mock.TotalPractice);
     }
 }

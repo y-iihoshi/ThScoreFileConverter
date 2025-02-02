@@ -6,7 +6,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Interactivity;
-using ThScoreFileConverter.Tests.UnitTesting;
 
 namespace ThScoreFileConverter.Tests.Interactivity;
 
@@ -57,14 +56,8 @@ public class TextBoxBaseScrollBehaviorTests
 
         static void onLayoutUpdated(object? sender, EventArgs eventArgs)
         {
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated",
-                StringComparison.CurrentCulture);
-            StringAssert.Contains(
-                Environment.StackTrace,
-                $"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}",
-                StringComparison.CurrentCulture);
+            Environment.StackTrace.ShouldContain($"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated");
+            Environment.StackTrace.ShouldContain($"{typeof(TextBoxBase).FullName}.{nameof(TextBoxBase.ScrollToEnd)}");
         }
 
         _ = BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);
@@ -100,7 +93,7 @@ public class TextBoxBaseScrollBehaviorTests
 
         static void onLayoutUpdated(object? sender, EventArgs eventArgs)
         {
-            Assert.Fail(TestUtils.Unreachable);
+            TestHelper.ShouldNotReachHere();
         }
 
         _ = BindingOperations.SetBinding(textbox, TextBox.TextProperty, binding);

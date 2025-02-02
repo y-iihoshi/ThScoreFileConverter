@@ -28,46 +28,41 @@ public class AboutWindowViewModelTests
     public void TitleTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.AreEqual(Utils.GetLocalizedValues<string>(nameof(StringResources.AboutWindowTitle)), window.Title);
+        window.Title.ShouldBe(Utils.GetLocalizedValues<string>(nameof(StringResources.AboutWindowTitle)));
     }
 
     [TestMethod]
     public void IconTest()
     {
         var window = new AboutWindowViewModel();
-#pragma warning disable MSTEST0032 // Assertion condition is always true
-        Assert.IsNotNull(window.Icon);
-#pragma warning restore MSTEST0032 // Assertion condition is always true
+        _ = window.Icon.ShouldNotBeNull();
     }
 
     [TestMethod]
     public void NameTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.AreEqual(nameof(ThScoreFileConverter), window.Name);
+        window.Name.ShouldBe(nameof(ThScoreFileConverter));
     }
 
     [TestMethod]
     public void VersionTest()
     {
         var window = new AboutWindowViewModel();
-        StringAssert.StartsWith(
-            window.Version,
-            Utils.GetLocalizedValues<string>(nameof(StringResources.VersionPrefix)),
-            StringComparison.CurrentCulture);
+        window.Version.ShouldStartWith(Utils.GetLocalizedValues<string>(nameof(StringResources.VersionPrefix)), Case.Sensitive);
     }
 
     [TestMethod]
     public void CopyrightTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.IsFalse(string.IsNullOrEmpty(window.Copyright));
+        window.Copyright.ShouldNotBeNullOrEmpty();
     }
 
     [TestMethod]
     public void UriTest()
     {
         var window = new AboutWindowViewModel();
-        Assert.AreEqual(Core.Resources.StringResources.ProjectUrl, window.Uri);
+        window.Uri.ShouldBe(Core.Resources.StringResources.ProjectUrl);
     }
 }

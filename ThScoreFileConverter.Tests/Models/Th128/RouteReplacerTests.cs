@@ -37,7 +37,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -46,7 +46,7 @@ public class RouteReplacerTests
         var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(dictionary, formatterMock);
-        Assert.IsNotNull(replacer);
+        _ = replacer.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -54,7 +54,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 23", replacer.Replace("%T128ROUTEA21"));
+        replacer.Replace("%T128ROUTEA21").ShouldBe("invoked: 23");
     }
 
     [TestMethod]
@@ -62,7 +62,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("21:08:51", replacer.Replace("%T128ROUTEA22"));
+        replacer.Replace("%T128ROUTEA22").ShouldBe("21:08:51");
     }
 
     [TestMethod]
@@ -70,7 +70,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 490", replacer.Replace("%T128ROUTEA23"));
+        replacer.Replace("%T128ROUTEA23").ShouldBe("invoked: 490");
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 35", replacer.Replace("%T128ROUTETL1"));
+        replacer.Replace("%T128ROUTETL1").ShouldBe("invoked: 35");
     }
 
     [TestMethod]
@@ -86,7 +86,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("37:09:04", replacer.Replace("%T128ROUTETL2"));
+        replacer.Replace("%T128ROUTETL2").ShouldBe("37:09:04");
     }
 
     [TestMethod]
@@ -94,7 +94,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("invoked: 730", replacer.Replace("%T128ROUTETL3"));
+        replacer.Replace("%T128ROUTETL3").ShouldBe("invoked: 730");
     }
 
     [TestMethod]
@@ -103,9 +103,9 @@ public class RouteReplacerTests
         var dictionary = ImmutableDictionary<RouteWithTotal, IClearData>.Empty;
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(dictionary, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEA21"));
-        Assert.AreEqual("0:00:00", replacer.Replace("%T128ROUTEA22"));
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEA23"));
+        replacer.Replace("%T128ROUTEA21").ShouldBe("invoked: 0");
+        replacer.Replace("%T128ROUTEA22").ShouldBe("0:00:00");
+        replacer.Replace("%T128ROUTEA23").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -118,7 +118,7 @@ public class RouteReplacerTests
         var formatterMock = NumberFormatterTests.Mock;
 
         var replacer = new RouteReplacer(dictionary, formatterMock);
-        Assert.AreEqual("invoked: 0", replacer.Replace("%T128ROUTEA23"));
+        replacer.Replace("%T128ROUTEA23").ShouldBe("invoked: 0");
     }
 
     [TestMethod]
@@ -126,7 +126,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T128XXXXXA21", replacer.Replace("%T128XXXXXA21"));
+        replacer.Replace("%T128XXXXXA21").ShouldBe("%T128XXXXXA21");
     }
 
     [TestMethod]
@@ -134,7 +134,7 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T128ROUTEXX1", replacer.Replace("%T128ROUTEXX1"));
+        replacer.Replace("%T128ROUTEXX1").ShouldBe("%T128ROUTEXX1");
     }
 
     [TestMethod]
@@ -142,6 +142,6 @@ public class RouteReplacerTests
     {
         var formatterMock = NumberFormatterTests.Mock;
         var replacer = new RouteReplacer(ClearDataDictionary, formatterMock);
-        Assert.AreEqual("%T128ROUTEA2X", replacer.Replace("%T128ROUTEA2X"));
+        replacer.Replace("%T128ROUTEA2X").ShouldBe("%T128ROUTEA2X");
     }
 }

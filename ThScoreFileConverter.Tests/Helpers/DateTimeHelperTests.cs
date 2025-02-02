@@ -9,7 +9,7 @@ public class DateTimeHelperTests
     [TestMethod]
     public void FormatTest()
     {
-        Assert.AreEqual(DateTimeHelper.ValidFormat.Length, DateTimeHelper.InvalidFormat.Length);
+        DateTimeHelper.InvalidFormat.Length.ShouldBe(DateTimeHelper.ValidFormat.Length);
     }
 
     [DataTestMethod]
@@ -20,12 +20,12 @@ public class DateTimeHelperTests
     {
         var expected = DateTime.UnixEpoch.AddSeconds(unixTime).ToLocalTime()
             .ToString(DateTimeHelper.ValidFormat, CultureInfo.CurrentCulture);
-        Assert.AreEqual(expected, DateTimeHelper.GetString(unixTime));
+        DateTimeHelper.GetString(unixTime).ShouldBe(expected);
     }
 
     [TestMethod]
     public void GetStringTestNull()
     {
-        Assert.AreEqual(DateTimeHelper.InvalidFormat, DateTimeHelper.GetString(null));
+        DateTimeHelper.GetString(null).ShouldBe(DateTimeHelper.InvalidFormat);
     }
 }

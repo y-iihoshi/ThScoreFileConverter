@@ -5,34 +5,17 @@ namespace ThScoreFileConverter.Core.Tests.Models.Th075;
 [TestClass]
 public class SpellCardInfoTests
 {
-    internal struct Properties
-    {
-        public string name;
-        public Chara enemy;
-        public Level level;
-    }
-
-    internal static Properties ValidProperties { get; } = new Properties()
-    {
-        name = "「百万鬼夜行」",
-        enemy = Chara.Suika,
-        level = Level.Normal,
-    };
-
-    internal static void Validate(in Properties properties, in SpellCardInfo spellCardInfo)
-    {
-        Assert.AreEqual(properties.name, spellCardInfo.Name);
-        Assert.AreEqual(properties.enemy, spellCardInfo.Enemy);
-        Assert.AreEqual(properties.level, spellCardInfo.Level);
-    }
-
     [TestMethod]
     public void SpellCardInfoTest()
     {
-        var properties = ValidProperties;
+        var expectedName = "「百万鬼夜行」";
+        var expectedEnemy = Chara.Suika;
+        var expectedLevel = Level.Normal;
 
-        var spellCardInfo = new SpellCardInfo(properties.name, properties.enemy, properties.level);
+        var actual = new SpellCardInfo(expectedName, expectedEnemy, expectedLevel);
 
-        Validate(properties, spellCardInfo);
+        actual.Name.ShouldBe(expectedName);
+        actual.Enemy.ShouldBe(expectedEnemy);
+        actual.Level.ShouldBe(expectedLevel);
     }
 }
