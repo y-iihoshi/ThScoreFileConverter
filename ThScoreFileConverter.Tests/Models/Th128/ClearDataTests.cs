@@ -9,6 +9,30 @@ using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConver
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
 
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Route.ShouldBe(expected.Route);
+
+        foreach (var pair in expected.Rankings)
+        {
+            for (var index = 0; index < pair.Value.Count; ++index)
+            {
+                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
+            }
+        }
+
+        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+    }
+}
+
 [TestClass]
 public class ClearDataTests
 {
@@ -58,27 +82,6 @@ public class ClearDataTests
             clearData.ClearCounts.Values);
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.Route.ShouldBe(expected.Route);
-
-        foreach (var pair in expected.Rankings)
-        {
-            for (var index = 0; index < pair.Value.Count; ++index)
-            {
-                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
-            }
-        }
-
-        actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);
-        actual.PlayTime.ShouldBe(expected.PlayTime);
-        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
-    }
-
     [TestMethod]
     public void ClearDataTestChapter()
     {
@@ -87,7 +90,7 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
         clearData.IsValid.ShouldBeFalse();
     }
 

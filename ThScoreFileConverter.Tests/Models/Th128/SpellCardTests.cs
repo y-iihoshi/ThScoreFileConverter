@@ -4,6 +4,19 @@ using ThScoreFileConverter.Models.Th128;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
 
+internal static class SpellCardExtensions
+{
+    internal static void ShouldBe(this ISpellCard actual, ISpellCard expected)
+    {
+        actual.Name.ShouldBe(expected.Name);
+        actual.NoMissCount.ShouldBe(expected.NoMissCount);
+        actual.NoIceCount.ShouldBe(expected.NoIceCount);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.Id.ShouldBe(expected.Id);
+        actual.Level.ShouldBe(expected.Level);
+    }
+}
+
 [TestClass]
 public class SpellCardTests
 {
@@ -39,23 +52,13 @@ public class SpellCardTests
             (int)spellCard.Level);
     }
 
-    internal static void Validate(ISpellCard expected, ISpellCard actual)
-    {
-        actual.Name.ShouldBe(expected.Name);
-        actual.NoMissCount.ShouldBe(expected.NoMissCount);
-        actual.NoIceCount.ShouldBe(expected.NoIceCount);
-        actual.TrialCount.ShouldBe(expected.TrialCount);
-        actual.Id.ShouldBe(expected.Id);
-        actual.Level.ShouldBe(expected.Level);
-    }
-
     [TestMethod]
     public void SpellCardTest()
     {
         var mock = MockInitialSpellCard();
         var spellCard = new SpellCard();
 
-        Validate(mock, spellCard);
+        spellCard.ShouldBe(mock);
         spellCard.HasTried.ShouldBeFalse();
     }
 
@@ -66,7 +69,7 @@ public class SpellCardTests
 
         var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(mock));
 
-        Validate(mock, spellCard);
+        spellCard.ShouldBe(mock);
         spellCard.HasTried.ShouldBeTrue();
     }
 

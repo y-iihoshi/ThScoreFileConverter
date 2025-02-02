@@ -5,6 +5,22 @@ using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
 
+internal static class CardDataExtensions
+{
+    internal static void ShouldBe(this ICardData actual, ICardData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+
+        foreach (var pair in expected.Cards)
+        {
+            actual.Cards[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
+
 [TestClass]
 public class CardDataTests
 {
@@ -44,19 +60,6 @@ public class CardDataTests
             cardData.Cards.Values.Select(SpellCardTests.MakeByteArray));
     }
 
-    internal static void Validate(ICardData expected, ICardData actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-
-        foreach (var pair in expected.Cards)
-        {
-            SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
-        }
-    }
-
     [TestMethod]
     public void CardDataTestChapter()
     {
@@ -65,7 +68,7 @@ public class CardDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new CardData(chapter);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
         clearData.IsValid.ShouldBeFalse();
     }
 
