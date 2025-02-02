@@ -5,6 +5,38 @@ using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th145;
 
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        actual.StoryProgress.ShouldBe(expected.storyProgress);
+        actual.StoryClearFlags.ShouldBe(expected.storyClearFlags);
+        actual.EndingCount.ShouldBe(expected.endingCount);
+        actual.Ending2Count.ShouldBe(expected.ending2Count);
+        actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
+        actual.IsEnabledStageTanuki2.ShouldBe(expected.isEnabledStageTanuki2);
+        actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
+        actual.IsEnabledSt27.ShouldBe(expected.isEnabledSt27);
+        actual.IsEnabledSt28.ShouldBe(expected.isEnabledSt28);
+        actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
+        actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
+        actual.BgmFlags.ShouldBe(expected.bgmFlags);
+        actual.ClearRanks.Keys.ShouldBe(expected.clearRanks.Keys);
+
+        foreach (var pair in expected.clearRanks)
+        {
+            actual.ClearRanks[pair.Key].ShouldBe(pair.Value);
+        }
+
+        actual.ClearTimes.Keys.ShouldBe(expected.clearTimes.Keys);
+
+        foreach (var pair in expected.clearTimes)
+        {
+            actual.ClearTimes[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
+
 [TestClass]
 public class AllScoreDataTests
 {
@@ -83,35 +115,6 @@ public class AllScoreDataTests
         ];
     }
 
-    internal static void Validate(in Properties expected, in AllScoreData actual)
-    {
-        actual.StoryProgress.ShouldBe(expected.storyProgress);
-        actual.StoryClearFlags.ShouldBe(expected.storyClearFlags);
-        actual.EndingCount.ShouldBe(expected.endingCount);
-        actual.Ending2Count.ShouldBe(expected.ending2Count);
-        actual.IsEnabledStageTanuki1.ShouldBe(expected.isEnabledStageTanuki1);
-        actual.IsEnabledStageTanuki2.ShouldBe(expected.isEnabledStageTanuki2);
-        actual.IsEnabledStageKokoro.ShouldBe(expected.isEnabledStageKokoro);
-        actual.IsEnabledSt27.ShouldBe(expected.isEnabledSt27);
-        actual.IsEnabledSt28.ShouldBe(expected.isEnabledSt28);
-        actual.IsPlayableMamizou.ShouldBe(expected.isPlayableMamizou);
-        actual.IsPlayableKokoro.ShouldBe(expected.isPlayableKokoro);
-        actual.BgmFlags.ShouldBe(expected.bgmFlags);
-        actual.ClearRanks.Keys.ShouldBe(expected.clearRanks.Keys);
-
-        foreach (var pair in expected.clearRanks)
-        {
-            actual.ClearRanks[pair.Key].ShouldBe(pair.Value);
-        }
-
-        actual.ClearTimes.Keys.ShouldBe(expected.clearTimes.Keys);
-
-        foreach (var pair in expected.clearTimes)
-        {
-            actual.ClearTimes[pair.Key].ShouldBe(pair.Value);
-        }
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
@@ -138,7 +141,7 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 
     [TestMethod]
