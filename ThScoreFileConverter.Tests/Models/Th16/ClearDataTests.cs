@@ -4,6 +4,7 @@ using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th16;
 using ThScoreFileConverter.Models.Th16;
 using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
+using static ThScoreFileConverter.Tests.Models.Th13.SpellCardExtensions;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Core.Models.Th16.CharaWithTotal,
@@ -131,7 +132,7 @@ public class ClearDataTests
 
         foreach (var pair in expected.Cards)
         {
-            Th13.SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
+            actual.Cards[pair.Key].ShouldBe(pair.Value);
         }
     }
 

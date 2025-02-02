@@ -5,6 +5,22 @@ using ThScoreFileConverter.Models.Th13;
 
 namespace ThScoreFileConverter.Tests.Models.Th13;
 
+internal static class SpellCardExtensions
+{
+    internal static void ShouldBe<TLevel>(this ISpellCard<TLevel> actual, ISpellCard<TLevel> expected)
+        where TLevel : struct, Enum
+    {
+        actual.Name.ShouldBe(expected.Name);
+        actual.ClearCount.ShouldBe(expected.ClearCount);
+        actual.PracticeClearCount.ShouldBe(expected.PracticeClearCount);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.PracticeTrialCount.ShouldBe(expected.PracticeTrialCount);
+        actual.Id.ShouldBe(expected.Id);
+        actual.Level.ShouldBe(expected.Level);
+        actual.PracticeScore.ShouldBe(expected.PracticeScore);
+    }
+}
+
 [TestClass]
 public class SpellCardTests
 {
@@ -37,26 +53,13 @@ public class SpellCardTests
             spellCard.PracticeScore);
     }
 
-    internal static void Validate<TLevel>(ISpellCard<TLevel> expected, ISpellCard<TLevel> actual)
-        where TLevel : struct, Enum
-    {
-        actual.Name.ShouldBe(expected.Name);
-        actual.ClearCount.ShouldBe(expected.ClearCount);
-        actual.PracticeClearCount.ShouldBe(expected.PracticeClearCount);
-        actual.TrialCount.ShouldBe(expected.TrialCount);
-        actual.PracticeTrialCount.ShouldBe(expected.PracticeTrialCount);
-        actual.Id.ShouldBe(expected.Id);
-        actual.Level.ShouldBe(expected.Level);
-        actual.PracticeScore.ShouldBe(expected.PracticeScore);
-    }
-
     internal static void SpellCardTestHelper<TLevel>()
         where TLevel : struct, Enum
     {
         var mock = Substitute.For<ISpellCard<TLevel>>();
         var spellCard = new SpellCard<TLevel>();
 
-        Validate(mock, spellCard);
+        spellCard.ShouldBe(mock);
         spellCard.HasTried.ShouldBeFalse();
     }
 
@@ -67,7 +70,7 @@ public class SpellCardTests
 
         var spellCard = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock));
 
-        Validate(mock, spellCard);
+        spellCard.ShouldBe(mock);
         spellCard.HasTried.ShouldBeTrue();
     }
 
