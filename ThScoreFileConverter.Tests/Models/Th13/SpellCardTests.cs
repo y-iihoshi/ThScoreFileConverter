@@ -1,5 +1,4 @@
 ﻿using NSubstitute;
-using ThScoreFileConverter.Core.Models;
 using ThScoreFileConverter.Core.Models.Th13;
 using ThScoreFileConverter.Models.Th13;
 
@@ -106,112 +105,36 @@ public class SpellCardTests
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock)));
     }
 
-    public static IEnumerable<object[]> InvalidTh13LevelPractices => TestUtils.GetInvalidEnumerators<LevelPractice>();
-
-    public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
-
-    #region Th13
+    public static IEnumerable<object[]> InvalidLevelPractices => TestUtils.GetInvalidEnumerators<LevelPractice>();
 
     [TestMethod]
-    public void Th13SpellCardTest()
+    public void SpellCardTest()
     {
         SpellCardTestHelper<LevelPractice>();
     }
 
     [TestMethod]
-    public void Th13ReadFromTest()
+    public void ReadFromTest()
     {
         ReadFromTestHelper<LevelPractice>();
     }
 
     [TestMethod]
-    public void Th13ReadFromTestShortenedName()
+    public void ReadFromTestShortenedName()
     {
         ReadFromTestShortenedNameHelper<LevelPractice>();
     }
 
     [TestMethod]
-    public void Th13ReadFromTestExceededName()
+    public void ReadFromTestExceededName()
     {
         ReadFromTestExceededNameHelper<LevelPractice>();
     }
 
     [DataTestMethod]
-    [DynamicData(nameof(InvalidTh13LevelPractices))]
-    public void Th13ReadFromTestInvalidLevel(int level)
+    [DynamicData(nameof(InvalidLevelPractices))]
+    public void ReadFromTestInvalidLevel(int level)
     {
         ReadFromTestInvalidLevelHelper<LevelPractice>(level);
     }
-
-    #endregion
-
-    #region Th14
-
-    [TestMethod]
-    public void Th14SpellCardTest()
-    {
-        SpellCardTestHelper<Level>();
-    }
-
-    [TestMethod]
-    public void Th14ReadFromTest()
-    {
-        ReadFromTestHelper<Level>();
-    }
-
-    [TestMethod]
-    public void Th14ReadFromTestShortenedName()
-    {
-        ReadFromTestShortenedNameHelper<Level>();
-    }
-
-    [TestMethod]
-    public void Th14ReadFromTestExceededName()
-    {
-        ReadFromTestExceededNameHelper<Level>();
-    }
-
-    [DataTestMethod]
-    [DynamicData(nameof(InvalidLevels))]
-    public void Th14ReadFromTestInvalidLevel(int level)
-    {
-        ReadFromTestInvalidLevelHelper<Level>(level);
-    }
-
-    #endregion
-
-    #region Th16
-
-    [TestMethod]
-    public void Th16SpellCardTest()
-    {
-        SpellCardTestHelper<Level>();
-    }
-
-    [TestMethod]
-    public void Th16ReadFromTest()
-    {
-        ReadFromTestHelper<Level>();
-    }
-
-    [TestMethod]
-    public void Th16ReadFromTestShortenedName()
-    {
-        ReadFromTestShortenedNameHelper<Level>();
-    }
-
-    [TestMethod]
-    public void Th16ReadFromTestExceededName()
-    {
-        ReadFromTestExceededNameHelper<Level>();
-    }
-
-    [DataTestMethod]
-    [DynamicData(nameof(InvalidLevels))]
-    public void Th16ReadFromTestInvalidLevel(int level)
-    {
-        ReadFromTestInvalidLevelHelper<Level>(level);
-    }
-
-    #endregion
 }
