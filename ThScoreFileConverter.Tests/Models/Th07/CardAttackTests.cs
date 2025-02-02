@@ -6,6 +6,22 @@ using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
+internal static class CardAttackExtensions
+{
+    internal static void ShouldBe(this ICardAttack actual, ICardAttack expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.MaxBonuses.Values.ShouldBe(expected.MaxBonuses.Values);
+        actual.CardId.ShouldBe(expected.CardId);
+        actual.CardName.ShouldBe(expected.CardName);
+        actual.TrialCounts.Values.ShouldBe(expected.TrialCounts.Values);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+    }
+}
+
 [TestClass]
 public class CardAttackTests
 {
@@ -45,19 +61,6 @@ public class CardAttackTests
             cardAttack.ClearCounts.Values);
     }
 
-    internal static void Validate(ICardAttack expected, ICardAttack actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.MaxBonuses.Values.ShouldBe(expected.MaxBonuses.Values);
-        actual.CardId.ShouldBe(expected.CardId);
-        actual.CardName.ShouldBe(expected.CardName);
-        actual.TrialCounts.Values.ShouldBe(expected.TrialCounts.Values);
-        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
-    }
-
     [TestMethod]
     public void CardAttackTestChapter()
     {
@@ -65,7 +68,7 @@ public class CardAttackTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock, cardAttack);
+        cardAttack.ShouldBe(mock);
         cardAttack.HasTried.ShouldBeTrue();
     }
 
@@ -104,7 +107,7 @@ public class CardAttackTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock, cardAttack);
+        cardAttack.ShouldBe(mock);
         cardAttack.HasTried.ShouldBeFalse();
     }
 }

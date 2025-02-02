@@ -6,6 +6,35 @@ using LevelWithTotal = ThScoreFileConverter.Core.Models.Th07.LevelWithTotal;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
+internal static class PlayStatusExtensions
+{
+    internal static void ShouldBe(this PlayStatus actual, PlayStatusTests.Properties expected)
+    {
+        var data = PlayStatusTests.MakeData(expected);
+
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.TotalRunningTime.Hours.ShouldBe(expected.totalRunningTime.Hours);
+        actual.TotalRunningTime.Minutes.ShouldBe(expected.totalRunningTime.Minutes);
+        actual.TotalRunningTime.Seconds.ShouldBe(expected.totalRunningTime.Seconds);
+        actual.TotalRunningTime.Milliseconds.ShouldBe(expected.totalRunningTime.Milliseconds);
+        actual.TotalRunningTime.IsFrames.ShouldBeFalse();
+        actual.TotalPlayTime.Hours.ShouldBe(expected.totalPlayTime.Hours);
+        actual.TotalPlayTime.Minutes.ShouldBe(expected.totalPlayTime.Minutes);
+        actual.TotalPlayTime.Seconds.ShouldBe(expected.totalPlayTime.Seconds);
+        actual.TotalPlayTime.Milliseconds.ShouldBe(expected.totalPlayTime.Milliseconds);
+        actual.TotalPlayTime.IsFrames.ShouldBeFalse();
+        actual.PlayCounts.Keys.ShouldBe(expected.playCounts.Keys);
+
+        foreach (var key in expected.playCounts.Keys)
+        {
+            actual.PlayCounts[key].ShouldBe(expected.playCounts[key]);
+        }
+    }
+}
+
 [TestClass]
 public class PlayStatusTests
 {
@@ -52,31 +81,6 @@ public class PlayStatusTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
     }
 
-    internal static void Validate(in Properties expected, in PlayStatus actual)
-    {
-        var data = MakeData(expected);
-
-        actual.Signature.ShouldBe(expected.signature);
-        actual.Size1.ShouldBe(expected.size1);
-        actual.Size2.ShouldBe(expected.size2);
-        actual.FirstByteOfData.ShouldBe(data[0]);
-        actual.TotalRunningTime.Hours.ShouldBe(expected.totalRunningTime.Hours);
-        actual.TotalRunningTime.Minutes.ShouldBe(expected.totalRunningTime.Minutes);
-        actual.TotalRunningTime.Seconds.ShouldBe(expected.totalRunningTime.Seconds);
-        actual.TotalRunningTime.Milliseconds.ShouldBe(expected.totalRunningTime.Milliseconds);
-        actual.TotalRunningTime.IsFrames.ShouldBeFalse();
-        actual.TotalPlayTime.Hours.ShouldBe(expected.totalPlayTime.Hours);
-        actual.TotalPlayTime.Minutes.ShouldBe(expected.totalPlayTime.Minutes);
-        actual.TotalPlayTime.Seconds.ShouldBe(expected.totalPlayTime.Seconds);
-        actual.TotalPlayTime.Milliseconds.ShouldBe(expected.totalPlayTime.Milliseconds);
-        actual.TotalPlayTime.IsFrames.ShouldBeFalse();
-
-        foreach (var key in expected.playCounts.Keys)
-        {
-            PlayCountTests.Validate(actual.PlayCounts[key], expected.playCounts[key]);
-        }
-    }
-
     [TestMethod]
     public void PlayStatusTestChapter()
     {
@@ -85,7 +89,7 @@ public class PlayStatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var playStatus = new PlayStatus(chapter);
 
-        Validate(properties, playStatus);
+        playStatus.ShouldBe(properties);
     }
 
     [TestMethod]

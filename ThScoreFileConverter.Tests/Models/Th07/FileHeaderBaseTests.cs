@@ -2,6 +2,19 @@
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
+internal static class FileHeaderBaseExtensions
+{
+    internal static void ShouldBe(this FileHeaderBase actual, FileHeaderBaseTests.Properties expected)
+    {
+        actual.Checksum.ShouldBe(expected.checksum);
+        actual.Version.ShouldBe(expected.version);
+        actual.Size.ShouldBe(expected.size);
+        actual.DecodedAllSize.ShouldBe(expected.decodedAllSize);
+        actual.DecodedBodySize.ShouldBe(expected.decodedBodySize);
+        actual.EncodedBodySize.ShouldBe(expected.encodedBodySize);
+    }
+}
+
 [TestClass]
 public class FileHeaderBaseTests
 {
@@ -44,16 +57,6 @@ public class FileHeaderBaseTests
             properties.encodedBodySize);
     }
 
-    internal static void Validate(in Properties expected, in FileHeaderBase actual)
-    {
-        actual.Checksum.ShouldBe(expected.checksum);
-        actual.Version.ShouldBe(expected.version);
-        actual.Size.ShouldBe(expected.size);
-        actual.DecodedAllSize.ShouldBe(expected.decodedAllSize);
-        actual.DecodedBodySize.ShouldBe(expected.decodedBodySize);
-        actual.EncodedBodySize.ShouldBe(expected.encodedBodySize);
-    }
-
     [TestMethod]
     public void FileHeaderBaseTest()
     {
@@ -61,7 +64,7 @@ public class FileHeaderBaseTests
 
         var header = new FileHeaderBase();
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 
@@ -72,7 +75,7 @@ public class FileHeaderBaseTests
 
         var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 
@@ -94,7 +97,7 @@ public class FileHeaderBaseTests
 
         var header = TestUtils.Create<FileHeaderBase>(array);
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 
@@ -106,7 +109,7 @@ public class FileHeaderBaseTests
 
         var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -118,7 +121,7 @@ public class FileHeaderBaseTests
 
         var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -130,7 +133,7 @@ public class FileHeaderBaseTests
 
         var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 

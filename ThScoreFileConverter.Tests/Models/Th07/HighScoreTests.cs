@@ -9,6 +9,25 @@ using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
+internal static class HighScoreExtensions
+{
+    internal static void ShouldBe(this IHighScore actual, IHighScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.Score.ShouldBe(expected.Score);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.Chara.ShouldBe(expected.Chara);
+        actual.Level.ShouldBe(expected.Level);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.Name.ShouldBe(expected.Name);
+        actual.Date.ShouldBe(expected.Date);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+    }
+}
+
 [TestClass]
 public class HighScoreTests
 {
@@ -46,22 +65,6 @@ public class HighScoreTests
             highScore.ContinueCount);
     }
 
-    internal static void Validate(IHighScore expected, IHighScore actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.Score.ShouldBe(expected.Score);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-        actual.Chara.ShouldBe(expected.Chara);
-        actual.Level.ShouldBe(expected.Level);
-        actual.StageProgress.ShouldBe(expected.StageProgress);
-        actual.Name.ShouldBe(expected.Name);
-        actual.Date.ShouldBe(expected.Date);
-        actual.ContinueCount.ShouldBe(expected.ContinueCount);
-    }
-
     [TestMethod]
     public void HighScoreTestChapter()
     {
@@ -69,7 +72,7 @@ public class HighScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var highScore = new HighScore(chapter);
 
-        Validate(mock, highScore);
+        highScore.ShouldBe(mock);
     }
 
     [TestMethod]

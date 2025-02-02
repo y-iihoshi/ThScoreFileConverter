@@ -3,6 +3,20 @@ using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th07;
 
+internal static class VersionInfoExtensions
+{
+    internal static void ShouldBe(this VersionInfo actual, VersionInfoTests.Properties expected)
+    {
+        var data = VersionInfoTests.MakeData(expected);
+
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+        actual.Version.ShouldBe(expected.version);
+    }
+}
+
 [TestClass]
 public class VersionInfoTests
 {
@@ -33,17 +47,6 @@ public class VersionInfoTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
     }
 
-    internal static void Validate(in Properties expected, in VersionInfo actual)
-    {
-        var data = MakeData(expected);
-
-        actual.Signature.ShouldBe(expected.signature);
-        actual.Size1.ShouldBe(expected.size1);
-        actual.Size2.ShouldBe(expected.size2);
-        actual.FirstByteOfData.ShouldBe(data[0]);
-        actual.Version.ShouldBe(expected.version);
-    }
-
     [TestMethod]
     public void VersionInfoTestChapter()
     {
@@ -52,7 +55,7 @@ public class VersionInfoTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var versionInfo = new VersionInfo(chapter);
 
-        Validate(properties, versionInfo);
+        versionInfo.ShouldBe(properties);
     }
 
     [TestMethod]
