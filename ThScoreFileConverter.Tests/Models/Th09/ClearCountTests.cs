@@ -6,6 +6,14 @@ using ThScoreFileConverter.Models.Th09;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
 
+internal static class ClearCountExtensions
+{
+    internal static void ShouldBe(this IClearCount actual, IClearCount expected)
+    {
+        actual.Counts.Values.ShouldBe(expected.Counts.Values);
+    }
+}
+
 [TestClass]
 public class ClearCountTests
 {
@@ -28,11 +36,6 @@ public class ClearCountTests
         return TestUtils.MakeByteArray(clearCount.Counts.Values, 0u);
     }
 
-    internal static void Validate(IClearCount expected, IClearCount actual)
-    {
-        actual.Counts.Values.ShouldBe(expected.Counts.Values);
-    }
-
     [TestMethod]
     public void ClearCountTest()
     {
@@ -40,7 +43,7 @@ public class ClearCountTests
 
         var clearCount = new ClearCount();
 
-        Validate(mock, clearCount);
+        clearCount.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -50,7 +53,7 @@ public class ClearCountTests
 
         var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(mock));
 
-        Validate(mock, clearCount);
+        clearCount.ShouldBe(mock);
     }
 
     [TestMethod]

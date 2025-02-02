@@ -7,6 +7,36 @@ using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
 
+internal static class PlayStatusExtensions
+{
+    internal static void ShouldBe(this IPlayStatus actual, IPlayStatus expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.TotalRunningTime.Hours.ShouldBe(expected.TotalRunningTime.Hours);
+        actual.TotalRunningTime.Minutes.ShouldBe(expected.TotalRunningTime.Minutes);
+        actual.TotalRunningTime.Seconds.ShouldBe(expected.TotalRunningTime.Seconds);
+        actual.TotalRunningTime.Milliseconds.ShouldBe(expected.TotalRunningTime.Milliseconds);
+        actual.TotalRunningTime.IsFrames.ShouldBeFalse();
+        actual.TotalPlayTime.Hours.ShouldBe(expected.TotalPlayTime.Hours);
+        actual.TotalPlayTime.Minutes.ShouldBe(expected.TotalPlayTime.Minutes);
+        actual.TotalPlayTime.Seconds.ShouldBe(expected.TotalPlayTime.Seconds);
+        actual.TotalPlayTime.Milliseconds.ShouldBe(expected.TotalPlayTime.Milliseconds);
+        actual.TotalPlayTime.IsFrames.ShouldBeFalse();
+        actual.BgmFlags.ShouldBe(expected.BgmFlags);
+        actual.MatchFlags.ShouldBe(expected.MatchFlags);
+        actual.StoryFlags.ShouldBe(expected.StoryFlags);
+        actual.ExtraFlags.ShouldBe(expected.ExtraFlags);
+
+        foreach (var key in expected.ClearCounts.Keys)
+        {
+            actual.ClearCounts[key].ShouldBe(expected.ClearCounts[key]);
+        }
+    }
+}
+
 [TestClass]
 public class PlayStatusTests
 {
@@ -53,33 +83,6 @@ public class PlayStatusTests
             playStatus.ClearCounts.Select(pair => ClearCountTests.MakeByteArray(pair.Value)));
     }
 
-    internal static void Validate(IPlayStatus expected, IPlayStatus actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.TotalRunningTime.Hours.ShouldBe(expected.TotalRunningTime.Hours);
-        actual.TotalRunningTime.Minutes.ShouldBe(expected.TotalRunningTime.Minutes);
-        actual.TotalRunningTime.Seconds.ShouldBe(expected.TotalRunningTime.Seconds);
-        actual.TotalRunningTime.Milliseconds.ShouldBe(expected.TotalRunningTime.Milliseconds);
-        actual.TotalRunningTime.IsFrames.ShouldBeFalse();
-        actual.TotalPlayTime.Hours.ShouldBe(expected.TotalPlayTime.Hours);
-        actual.TotalPlayTime.Minutes.ShouldBe(expected.TotalPlayTime.Minutes);
-        actual.TotalPlayTime.Seconds.ShouldBe(expected.TotalPlayTime.Seconds);
-        actual.TotalPlayTime.Milliseconds.ShouldBe(expected.TotalPlayTime.Milliseconds);
-        actual.TotalPlayTime.IsFrames.ShouldBeFalse();
-        actual.BgmFlags.ShouldBe(expected.BgmFlags);
-        actual.MatchFlags.Values.ShouldBe(expected.MatchFlags.Values);
-        actual.StoryFlags.Values.ShouldBe(expected.StoryFlags.Values);
-        actual.ExtraFlags.Values.ShouldBe(expected.ExtraFlags.Values);
-
-        foreach (var key in expected.ClearCounts.Keys)
-        {
-            ClearCountTests.Validate(expected.ClearCounts[key], actual.ClearCounts[key]);
-        }
-    }
-
     [TestMethod]
     public void PlayStatusTestChapter()
     {
@@ -88,7 +91,7 @@ public class PlayStatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var playStatus = new PlayStatus(chapter);
 
-        Validate(mock, playStatus);
+        playStatus.ShouldBe(mock);
     }
 
     [TestMethod]

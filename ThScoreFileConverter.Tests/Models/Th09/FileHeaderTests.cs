@@ -2,6 +2,19 @@
 
 namespace ThScoreFileConverter.Tests.Models.Th09;
 
+internal static class FileHeaderExtensions
+{
+    internal static void ShouldBe(this FileHeader actual, FileHeaderTests.Properties expected)
+    {
+        actual.Checksum.ShouldBe(expected.checksum);
+        actual.Version.ShouldBe(expected.version);
+        actual.Size.ShouldBe(expected.size);
+        actual.DecodedAllSize.ShouldBe(expected.decodedAllSize);
+        actual.DecodedBodySize.ShouldBe(expected.decodedBodySize);
+        actual.EncodedBodySize.ShouldBe(expected.encodedBodySize);
+    }
+}
+
 [TestClass]
 public class FileHeaderTests
 {
@@ -38,16 +51,6 @@ public class FileHeaderTests
             properties.encodedBodySize);
     }
 
-    internal static void Validate(in FileHeader header, in Properties properties)
-    {
-        header.Checksum.ShouldBe(properties.checksum);
-        header.Version.ShouldBe(properties.version);
-        header.Size.ShouldBe(properties.size);
-        header.DecodedAllSize.ShouldBe(properties.decodedAllSize);
-        header.DecodedBodySize.ShouldBe(properties.decodedBodySize);
-        header.EncodedBodySize.ShouldBe(properties.encodedBodySize);
-    }
-
     [TestMethod]
     public void FileHeaderTest()
     {
@@ -55,7 +58,7 @@ public class FileHeaderTests
 
         var header = new FileHeader();
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -66,7 +69,7 @@ public class FileHeaderTests
 
         var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 
@@ -88,7 +91,7 @@ public class FileHeaderTests
 
         var header = TestUtils.Create<FileHeader>(array);
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 
@@ -100,7 +103,7 @@ public class FileHeaderTests
 
         var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -112,7 +115,7 @@ public class FileHeaderTests
 
         var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -124,7 +127,7 @@ public class FileHeaderTests
 
         var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -136,7 +139,7 @@ public class FileHeaderTests
 
         var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
 
-        Validate(header, properties);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
