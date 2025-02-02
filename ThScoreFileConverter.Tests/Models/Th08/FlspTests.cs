@@ -3,6 +3,19 @@ using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class FlspExtensions
+{
+    internal static void ShouldBe(this FLSP actual, FlspTests.Properties expected)
+    {
+        var data = FlspTests.MakeData(expected);
+
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(data[0]);
+    }
+}
+
 [TestClass]
 public class FlspTests
 {
@@ -31,16 +44,6 @@ public class FlspTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
     }
 
-    internal static void Validate(in Properties expected, in FLSP actual)
-    {
-        var data = MakeData(expected);
-
-        actual.Signature.ShouldBe(expected.signature);
-        actual.Size1.ShouldBe(expected.size1);
-        actual.Size2.ShouldBe(expected.size2);
-        actual.FirstByteOfData.ShouldBe(data[0]);
-    }
-
     [TestMethod]
     public void FlspTestChapter()
     {
@@ -49,7 +52,7 @@ public class FlspTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var flsp = new FLSP(chapter);
 
-        Validate(properties, flsp);
+        flsp.ShouldBe(properties);
     }
 
     [TestMethod]

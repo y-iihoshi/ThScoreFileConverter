@@ -7,6 +7,20 @@ using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.StoryFlags.Values.ShouldBe(expected.StoryFlags.Values);
+        actual.PracticeFlags.Values.ShouldBe(expected.PracticeFlags.Values);
+        actual.Chara.ShouldBe(expected.Chara);
+    }
+}
+
 [TestClass]
 public class ClearDataTests
 {
@@ -37,17 +51,6 @@ public class ClearDataTests
             (ushort)0);
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.StoryFlags.Values.ShouldBe(expected.StoryFlags.Values);
-        actual.PracticeFlags.Values.ShouldBe(expected.PracticeFlags.Values);
-        actual.Chara.ShouldBe(expected.Chara);
-    }
-
     [TestMethod]
     public void ClearDataTestChapter()
     {
@@ -56,7 +59,7 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
     }
 
     [TestMethod]

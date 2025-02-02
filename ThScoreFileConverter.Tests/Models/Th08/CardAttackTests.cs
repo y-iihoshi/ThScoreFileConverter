@@ -5,6 +5,24 @@ using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class CardAttackExtensions
+{
+    internal static void ShouldBe(this ICardAttack actual, ICardAttack expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.CardId.ShouldBe(expected.CardId);
+        actual.Level.ShouldBe(expected.Level);
+        actual.CardName.ShouldBe(expected.CardName);
+        actual.EnemyName.ShouldBe(expected.EnemyName);
+        actual.Comment.ShouldBe(expected.Comment);
+        actual.StoryCareer.ShouldBe(expected.StoryCareer);
+        actual.PracticeCareer.ShouldBe(expected.PracticeCareer);
+    }
+}
+
 [TestClass]
 public class CardAttackTests
 {
@@ -58,21 +76,6 @@ public class CardAttackTests
             0u);
     }
 
-    internal static void Validate(ICardAttack expected, ICardAttack actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.CardId.ShouldBe(expected.CardId);
-        actual.Level.ShouldBe(expected.Level);
-        actual.CardName.ShouldBe(expected.CardName);
-        actual.EnemyName.ShouldBe(expected.EnemyName);
-        actual.Comment.ShouldBe(expected.Comment);
-        CardAttackCareerTests.Validate(expected.StoryCareer, actual.StoryCareer);
-        CardAttackCareerTests.Validate(expected.PracticeCareer, actual.PracticeCareer);
-    }
-
     [TestMethod]
     public void CardAttackTestChapter()
     {
@@ -81,7 +84,7 @@ public class CardAttackTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock, cardAttack);
+        cardAttack.ShouldBe(mock);
         cardAttack.HasTried.ShouldBeTrue();
     }
 
@@ -138,7 +141,7 @@ public class CardAttackTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var cardAttack = new CardAttack(chapter);
 
-        Validate(mock, cardAttack);
+        cardAttack.ShouldBe(mock);
         cardAttack.HasTried.ShouldBeFalse();
     }
 }

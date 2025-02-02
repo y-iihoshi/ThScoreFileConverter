@@ -8,6 +8,20 @@ using Stage = ThScoreFileConverter.Core.Models.Th08.Stage;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class PracticeScoreExtensions
+{
+    internal static void ShouldBe(this IPracticeScore actual, IPracticeScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.PlayCounts.Values.ShouldBe(expected.PlayCounts.Values);
+        actual.HighScores.Values.ShouldBe(expected.HighScores.Values);
+        actual.Chara.ShouldBe(expected.Chara);
+    }
+}
+
 [TestClass]
 public class PracticeScoreTests
 {
@@ -37,17 +51,6 @@ public class PracticeScoreTests
             new byte[3]);
     }
 
-    internal static void Validate(IPracticeScore expected, IPracticeScore actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.PlayCounts.Values.ShouldBe(expected.PlayCounts.Values);
-        actual.HighScores.Values.ShouldBe(expected.HighScores.Values);
-        actual.Chara.ShouldBe(expected.Chara);
-    }
-
     [TestMethod]
     public void PracticeScoreTestChapter()
     {
@@ -56,7 +59,7 @@ public class PracticeScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new PracticeScore(chapter);
 
-        Validate(mock, score);
+        score.ShouldBe(mock);
     }
 
     [TestMethod]

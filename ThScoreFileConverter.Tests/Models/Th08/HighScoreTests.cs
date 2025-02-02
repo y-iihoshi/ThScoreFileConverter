@@ -7,6 +7,35 @@ using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class HighScoreExtensions
+{
+    internal static void ShouldBe(this IHighScore actual, IHighScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Size1.ShouldBe(expected.Size1);
+        actual.Size2.ShouldBe(expected.Size2);
+        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
+        actual.Score.ShouldBe(expected.Score);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.Chara.ShouldBe(expected.Chara);
+        actual.Level.ShouldBe(expected.Level);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.Name.ShouldBe(expected.Name);
+        actual.Date.ShouldBe(expected.Date);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+        actual.PlayerNum.ShouldBe(expected.PlayerNum);
+        actual.PlayTime.ShouldBe(expected.PlayTime);
+        actual.PointItem.ShouldBe(expected.PointItem);
+        actual.MissCount.ShouldBe(expected.MissCount);
+        actual.BombCount.ShouldBe(expected.BombCount);
+        actual.LastSpellCount.ShouldBe(expected.LastSpellCount);
+        actual.PauseCount.ShouldBe(expected.PauseCount);
+        actual.TimePoint.ShouldBe(expected.TimePoint);
+        actual.HumanRate.ShouldBe(expected.HumanRate);
+        actual.CardFlags.Values.ShouldBe(expected.CardFlags.Values);
+    }
+}
+
 [TestClass]
 public class HighScoreTests
 {
@@ -68,32 +97,6 @@ public class HighScoreTests
             new byte[2]);
     }
 
-    internal static void Validate(IHighScore expected, IHighScore actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Size1.ShouldBe(expected.Size1);
-        actual.Size2.ShouldBe(expected.Size2);
-        actual.FirstByteOfData.ShouldBe(expected.FirstByteOfData);
-        actual.Score.ShouldBe(expected.Score);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-        actual.Chara.ShouldBe(expected.Chara);
-        actual.Level.ShouldBe(expected.Level);
-        actual.StageProgress.ShouldBe(expected.StageProgress);
-        actual.Name.ShouldBe(expected.Name);
-        actual.Date.ShouldBe(expected.Date);
-        actual.ContinueCount.ShouldBe(expected.ContinueCount);
-        actual.PlayerNum.ShouldBe(expected.PlayerNum);
-        actual.PlayTime.ShouldBe(expected.PlayTime);
-        actual.PointItem.ShouldBe(expected.PointItem);
-        actual.MissCount.ShouldBe(expected.MissCount);
-        actual.BombCount.ShouldBe(expected.BombCount);
-        actual.LastSpellCount.ShouldBe(expected.LastSpellCount);
-        actual.PauseCount.ShouldBe(expected.PauseCount);
-        actual.TimePoint.ShouldBe(expected.TimePoint);
-        actual.HumanRate.ShouldBe(expected.HumanRate);
-        actual.CardFlags.Values.ShouldBe(expected.CardFlags.Values);
-    }
-
     [TestMethod]
     public void HighScoreTestChapter()
     {
@@ -102,7 +105,7 @@ public class HighScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var highScore = new HighScore(chapter);
 
-        Validate(mock, highScore);
+        highScore.ShouldBe(mock);
     }
 
     [TestMethod]

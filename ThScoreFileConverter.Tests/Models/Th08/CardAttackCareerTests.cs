@@ -6,6 +6,16 @@ using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class CardAttackCareerExtensions
+{
+    internal static void ShouldBe(this ICardAttackCareer career, ICardAttackCareer expected)
+    {
+        career.MaxBonuses.Values.ShouldBe(expected.MaxBonuses.Values);
+        career.TrialCounts.Values.ShouldBe(expected.TrialCounts.Values);
+        career.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+    }
+}
+
 [TestClass]
 public class CardAttackCareerTests
 {
@@ -34,13 +44,6 @@ public class CardAttackCareerTests
             career.MaxBonuses.Values, career.TrialCounts.Values, career.ClearCounts.Values);
     }
 
-    internal static void Validate(ICardAttackCareer expected, ICardAttackCareer actual)
-    {
-        actual.MaxBonuses.Values.ShouldBe(expected.MaxBonuses.Values);
-        actual.TrialCounts.Values.ShouldBe(expected.TrialCounts.Values);
-        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
-    }
-
     [TestMethod]
     public void CardAttackCareerTest()
     {
@@ -48,7 +51,7 @@ public class CardAttackCareerTests
 
         var career = new CardAttackCareer();
 
-        Validate(mock, career);
+        career.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -58,7 +61,7 @@ public class CardAttackCareerTests
 
         var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(mock));
 
-        Validate(mock, career);
+        career.ShouldBe(mock);
     }
 
     [TestMethod]

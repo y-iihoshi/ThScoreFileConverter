@@ -6,6 +6,18 @@ using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverter.Tests.Models.Th08;
 
+internal static class PlayCountExtensions
+{
+    internal static void ShouldBe(this IPlayCount actual, IPlayCount expected)
+    {
+        actual.TotalTrial.ShouldBe(expected.TotalTrial);
+        actual.Trials.Values.ShouldBe(expected.Trials.Values);
+        actual.TotalClear.ShouldBe(expected.TotalClear);
+        actual.TotalContinue.ShouldBe(expected.TotalContinue);
+        actual.TotalPractice.ShouldBe(expected.TotalPractice);
+    }
+}
+
 [TestClass]
 public class PlayCountTests
 {
@@ -38,15 +50,6 @@ public class PlayCountTests
             playCount.TotalPractice);
     }
 
-    internal static void Validate(IPlayCount expected, IPlayCount actual)
-    {
-        actual.TotalTrial.ShouldBe(expected.TotalTrial);
-        actual.Trials.Values.ShouldBe(expected.Trials.Values);
-        actual.TotalClear.ShouldBe(expected.TotalClear);
-        actual.TotalContinue.ShouldBe(expected.TotalContinue);
-        actual.TotalPractice.ShouldBe(expected.TotalPractice);
-    }
-
     [TestMethod]
     public void PlayCountTest()
     {
@@ -54,7 +57,7 @@ public class PlayCountTests
 
         var playCount = new PlayCount();
 
-        Validate(mock, playCount);
+        playCount.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -64,7 +67,7 @@ public class PlayCountTests
 
         var playCount = TestUtils.Create<PlayCount>(MakeByteArray(mock));
 
-        Validate(mock, playCount);
+        playCount.ShouldBe(mock);
     }
 
     [TestMethod]
