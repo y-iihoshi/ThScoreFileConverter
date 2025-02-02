@@ -1,9 +1,39 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th125;
 using ThScoreFileConverter.Models.Th125;
 
 namespace ThScoreFileConverter.Tests.Models.Th125;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader actual, IBestShotHeader expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Level.ShouldBe(expected.Level);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.Width2.ShouldBe(expected.Width2);
+        actual.Height2.ShouldBe(expected.Height2);
+        actual.HalfWidth.ShouldBe(expected.HalfWidth);
+        actual.HalfHeight.ShouldBe(expected.HalfHeight);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.Fields.ShouldBe(expected.Fields);
+        actual.ResultScore.ShouldBe(expected.ResultScore);
+        actual.BasePoint.ShouldBe(expected.BasePoint);
+        actual.RiskBonus.ShouldBe(expected.RiskBonus);
+        actual.BossShot.ShouldBe(expected.BossShot);
+        actual.NiceShot.ShouldBe(expected.NiceShot);
+        actual.AngleBonus.ShouldBe(expected.AngleBonus);
+        actual.MacroBonus.ShouldBe(expected.MacroBonus);
+        actual.FrontSideBackShot.ShouldBe(expected.FrontSideBackShot);
+        actual.ClearShot.ShouldBe(expected.ClearShot);
+        actual.Angle.ShouldBe(expected.Angle);
+        actual.ResultScore2.ShouldBe(expected.ResultScore2);
+        actual.CardName.ShouldBe(expected.CardName);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -82,43 +112,13 @@ public class BestShotHeaderTests
             header.CardName);
     }
 
-    internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
-    {
-        Guard.IsNotNull(actual);
-
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Level.ShouldBe(expected.Level);
-        actual.Scene.ShouldBe(expected.Scene);
-        actual.Width.ShouldBe(expected.Width);
-        actual.Height.ShouldBe(expected.Height);
-        actual.Width2.ShouldBe(expected.Width2);
-        actual.Height2.ShouldBe(expected.Height2);
-        actual.HalfWidth.ShouldBe(expected.HalfWidth);
-        actual.HalfHeight.ShouldBe(expected.HalfHeight);
-        actual.DateTime.ShouldBe(expected.DateTime);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-        actual.Fields.ShouldBe(expected.Fields);
-        actual.ResultScore.ShouldBe(expected.ResultScore);
-        actual.BasePoint.ShouldBe(expected.BasePoint);
-        actual.RiskBonus.ShouldBe(expected.RiskBonus);
-        actual.BossShot.ShouldBe(expected.BossShot);
-        actual.NiceShot.ShouldBe(expected.NiceShot);
-        actual.AngleBonus.ShouldBe(expected.AngleBonus);
-        actual.MacroBonus.ShouldBe(expected.MacroBonus);
-        actual.FrontSideBackShot.ShouldBe(expected.FrontSideBackShot);
-        actual.ClearShot.ShouldBe(expected.ClearShot);
-        actual.Angle.ShouldBe(expected.Angle);
-        actual.ResultScore2.ShouldBe(expected.ResultScore2);
-        actual.CardName.ShouldBe(expected.CardName);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -127,7 +127,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -195,6 +195,6 @@ public class BestShotHeaderTests
 
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(MockBestShotHeader(), header);
+        header.ShouldBe(MockBestShotHeader());
     }
 }
