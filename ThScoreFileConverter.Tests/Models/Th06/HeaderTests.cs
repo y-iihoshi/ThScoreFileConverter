@@ -2,6 +2,17 @@
 
 namespace ThScoreFileConverter.Tests.Models.Th06;
 
+internal static class HeaderExtensions
+{
+    internal static void ShouldBe(this Header actual, in HeaderTests.Properties expected)
+    {
+        actual.Signature.ShouldBe(expected.signature);
+        actual.Size1.ShouldBe(expected.size1);
+        actual.Size2.ShouldBe(expected.size2);
+        actual.FirstByteOfData.ShouldBe(expected.data[0]);
+    }
+}
+
 [TestClass]
 public class HeaderTests
 {
@@ -27,14 +38,6 @@ public class HeaderTests
             properties.signature.ToCharArray(), properties.size1, properties.size2, properties.data);
     }
 
-    internal static void Validate(in Properties expected, in Header actual)
-    {
-        actual.Signature.ShouldBe(expected.signature);
-        actual.Size1.ShouldBe(expected.size1);
-        actual.Size2.ShouldBe(expected.size2);
-        actual.FirstByteOfData.ShouldBe(expected.data[0]);
-    }
-
     [TestMethod]
     public void HeaderTest()
     {
@@ -43,7 +46,7 @@ public class HeaderTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         var header = new Header(chapter);
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
     }
 
     [TestMethod]

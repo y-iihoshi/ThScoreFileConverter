@@ -3,6 +3,23 @@ using ThScoreFileConverter.Tests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverter.Tests.Models.Th06;
 
+internal static class ChapterExtensions
+{
+    internal static void ShouldBe(this IChapter chapter, in ChapterTests.Properties expected)
+    {
+        chapter.Signature.ShouldBe(expected.signature);
+        chapter.Size1.ShouldBe(expected.size1);
+        chapter.Size2.ShouldBe(expected.size2);
+        chapter.FirstByteOfData.ShouldBe(expected.data?.Length > 0 ? expected.data[0] : default);
+    }
+
+    internal static void ShouldBe(this ChapterWrapper chapter, in ChapterTests.Properties expected)
+    {
+        (chapter as IChapter).ShouldBe(expected);
+        chapter.Data.ShouldBe(expected.data);
+    }
+}
+
 [TestClass]
 public class ChapterTests
 {
@@ -39,26 +56,12 @@ public class ChapterTests
             properties.data);
     }
 
-    internal static void Validate(in Properties expected, IChapter actual)
-    {
-        actual.Signature.ShouldBe(expected.signature);
-        actual.Size1.ShouldBe(expected.size1);
-        actual.Size2.ShouldBe(expected.size2);
-        actual.FirstByteOfData.ShouldBe(expected.data?.Length > 0 ? expected.data[0] : default);
-    }
-
-    internal static void Validate(in Properties expected, in ChapterWrapper actual)
-    {
-        Validate(expected, actual as IChapter);
-        actual.Data.ShouldBe(expected.data);
-    }
-
     [TestMethod]
     public void ChapterTest()
     {
         var chapter = new ChapterWrapper();
 
-        Validate(DefaultProperties, chapter);
+        chapter.ShouldBe(DefaultProperties);
     }
 
     [TestMethod]
@@ -67,7 +70,7 @@ public class ChapterTests
         var chapter1 = new Chapter();
         var chapter2 = new ChapterWrapper(chapter1);
 
-        Validate(DefaultProperties, chapter2);
+        chapter2.ShouldBe(DefaultProperties);
     }
 
     [TestMethod]
@@ -76,7 +79,7 @@ public class ChapterTests
         var chapter1 = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
         var chapter2 = new ChapterWrapper(chapter1, chapter1.Signature, chapter1.Size1);
 
-        Validate(ValidProperties, chapter2);
+        chapter2.ShouldBe(ValidProperties);
     }
 
     [TestMethod]
@@ -100,7 +103,7 @@ public class ChapterTests
     {
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(ValidProperties));
 
-        Validate(ValidProperties, chapter);
+        chapter.ShouldBe(ValidProperties);
     }
 
     [TestMethod]
@@ -180,7 +183,7 @@ public class ChapterTests
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-        Validate(properties, chapter as IChapter);
+        (chapter as IChapter).ShouldBe(properties);
         chapter.Data.ShouldNotBe(properties.data);
     }
 
@@ -202,7 +205,7 @@ public class ChapterTests
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-        Validate(properties, chapter);
+        chapter.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -213,7 +216,7 @@ public class ChapterTests
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-        Validate(properties, chapter);
+        chapter.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -224,7 +227,7 @@ public class ChapterTests
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-        Validate(properties, chapter);
+        chapter.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -235,7 +238,7 @@ public class ChapterTests
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-        Validate(properties, chapter);
+        chapter.ShouldBe(properties);
     }
 
     [TestMethod]
@@ -257,6 +260,6 @@ public class ChapterTests
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-        Validate(properties, chapter);
+        chapter.ShouldBe(properties);
     }
 }
