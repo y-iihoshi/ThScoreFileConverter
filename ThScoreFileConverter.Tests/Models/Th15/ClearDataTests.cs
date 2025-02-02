@@ -11,6 +11,28 @@ using StagePractice = ThScoreFileConverter.Core.Models.Th14.StagePractice;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
 
+internal static class ClearDataExtensions
+{
+    internal static void ShouldBe(this IClearData actual, IClearData expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Chara.ShouldBe(expected.Chara);
+
+        foreach (var pair in expected.GameModeData)
+        {
+            actual.GameModeData[pair.Key].ShouldBe(pair.Value);
+        }
+
+        foreach (var pair in expected.Practices)
+        {
+            actual.Practices[pair.Key].ShouldBe(pair.Value);
+        }
+    }
+}
+
 [TestClass]
 public class ClearDataTests
 {
@@ -54,25 +76,6 @@ public class ClearDataTests
             new byte[0x40]);
     }
 
-    internal static void Validate(IClearData expected, IClearData actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.Chara.ShouldBe(expected.Chara);
-
-        foreach (var pair in expected.GameModeData)
-        {
-            ClearDataPerGameModeTests.Validate(pair.Value, actual.GameModeData[pair.Key]);
-        }
-
-        foreach (var pair in expected.Practices)
-        {
-            actual.Practices[pair.Key].ShouldBe(pair.Value);
-        }
-    }
-
     [TestMethod]
     public void ClearDataTestChapter()
     {
@@ -81,7 +84,7 @@ public class ClearDataTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var clearData = new ClearData(chapter);
 
-        Validate(mock, clearData);
+        clearData.ShouldBe(mock);
         clearData.IsValid.ShouldBeFalse();
     }
 

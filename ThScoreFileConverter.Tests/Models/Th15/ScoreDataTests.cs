@@ -4,6 +4,20 @@ using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
 
+internal static class ScoreDataExtensions
+{
+    internal static void ShouldBe(this IScoreData actual, IScoreData expected)
+    {
+        actual.Score.ShouldBe(expected.Score);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+        actual.Name.ShouldBe(expected.Name);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.RetryCount.ShouldBe(expected.RetryCount);
+    }
+}
+
 [TestClass]
 public class ScoreDataTests
 {
@@ -33,24 +47,13 @@ public class ScoreDataTests
             scoreData.RetryCount);
     }
 
-    internal static void Validate(IScoreData expected, IScoreData actual)
-    {
-        actual.Score.ShouldBe(expected.Score);
-        actual.StageProgress.ShouldBe(expected.StageProgress);
-        actual.ContinueCount.ShouldBe(expected.ContinueCount);
-        actual.Name.ShouldBe(expected.Name);
-        actual.DateTime.ShouldBe(expected.DateTime);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-        actual.RetryCount.ShouldBe(expected.RetryCount);
-    }
-
     [TestMethod]
     public void ScoreDataTest()
     {
         var mock = Substitute.For<IScoreData>();
         var scoreData = new ScoreData();
 
-        Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -59,7 +62,7 @@ public class ScoreDataTests
         var mock = MockScoreData();
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
