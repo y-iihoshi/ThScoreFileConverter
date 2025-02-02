@@ -4,6 +4,20 @@ using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverter.Tests.Models.Th10;
 
+internal static class ScoreDataExtensions
+{
+    internal static void ShouldBe<TStageProgress>(this IScoreData<TStageProgress> actual, IScoreData<TStageProgress> expected)
+        where TStageProgress : struct, Enum
+    {
+        actual.Score.ShouldBe(expected.Score);
+        actual.StageProgress.ShouldBe(expected.StageProgress);
+        actual.ContinueCount.ShouldBe(expected.ContinueCount);
+        actual.Name.ShouldBe(expected.Name);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+    }
+}
+
 [TestClass]
 public class ScoreDataTests
 {
@@ -33,25 +47,13 @@ public class ScoreDataTests
             new byte[unknownSize]);
     }
 
-    internal static void Validate<TStageProgress>(
-        IScoreData<TStageProgress> expected, IScoreData<TStageProgress> actual)
-        where TStageProgress : struct, Enum
-    {
-        actual.Score.ShouldBe(expected.Score);
-        actual.StageProgress.ShouldBe(expected.StageProgress);
-        actual.ContinueCount.ShouldBe(expected.ContinueCount);
-        actual.Name.ShouldBe(expected.Name);
-        actual.DateTime.ShouldBe(expected.DateTime);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-    }
-
     internal static void ScoreDataTestHelper<TScoreData, TStageProgress>()
         where TScoreData : IScoreData<TStageProgress>, new()
         where TStageProgress : struct, Enum
     {
         var mock = Substitute.For<IScoreData<TStageProgress>>();
         var scoreData = new TScoreData();
-        Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     internal static void ReadFromTestHelper<TScoreData, TStageProgress>(int unknownSize)
@@ -60,7 +62,7 @@ public class ScoreDataTests
     {
         var mock = MockScoreData<TStageProgress>();
         var scoreData = TestUtils.Create<TScoreData>(MakeByteArray(mock, unknownSize));
-        Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     internal static void ReadFromTestShortenedNameHelper<TScoreData, TStageProgress>(int unknownSize)

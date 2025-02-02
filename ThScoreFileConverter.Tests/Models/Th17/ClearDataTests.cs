@@ -18,6 +18,8 @@ using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConver
 using LevelPracticeWithTotal = ThScoreFileConverter.Core.Models.Th14.LevelPracticeWithTotal;
 using StagePractice = ThScoreFileConverter.Core.Models.Th14.StagePractice;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
+using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
+using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th17;
 
@@ -125,7 +127,7 @@ public class ClearDataTests
         {
             for (var index = 0; index < pair.Value.Count; ++index)
             {
-                Th10.ScoreDataTests.Validate(actual.Rankings[pair.Key][index], pair.Value[index]);
+                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
             }
         }
 
@@ -136,7 +138,7 @@ public class ClearDataTests
 
         foreach (var pair in expected.Practices)
         {
-            Th10.PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
+            actual.Practices[pair.Key].ShouldBe(pair.Value);
         }
 
         foreach (var pair in expected.Cards)

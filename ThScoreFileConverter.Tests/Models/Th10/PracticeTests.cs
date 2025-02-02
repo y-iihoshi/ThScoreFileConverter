@@ -3,6 +3,16 @@ using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverter.Tests.Models.Th10;
 
+internal static class PracticeExtensions
+{
+    internal static void ShouldBe(this IPractice actual, IPractice expected)
+    {
+        actual.Score.ShouldBe(expected.Score);
+        actual.Cleared.ShouldBe(expected.Cleared);
+        actual.Unlocked.ShouldBe(expected.Unlocked);
+    }
+}
+
 [TestClass]
 public class PracticeTests
 {
@@ -20,13 +30,6 @@ public class PracticeTests
         return TestUtils.MakeByteArray(practice.Score, practice.Cleared, practice.Unlocked, (ushort)0);
     }
 
-    internal static void Validate(IPractice expected, IPractice actual)
-    {
-        actual.Score.ShouldBe(expected.Score);
-        actual.Cleared.ShouldBe(expected.Cleared);
-        actual.Unlocked.ShouldBe(expected.Unlocked);
-    }
-
     [TestMethod]
     public void PracticeTest()
     {
@@ -34,7 +37,7 @@ public class PracticeTests
 
         var practice = new Practice();
 
-        Validate(mock, practice);
+        practice.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -44,6 +47,6 @@ public class PracticeTests
 
         var practice = TestUtils.Create<Practice>(MakeByteArray(mock));
 
-        Validate(mock, practice);
+        practice.ShouldBe(mock);
     }
 }

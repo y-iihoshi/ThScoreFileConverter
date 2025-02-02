@@ -3,6 +3,19 @@ using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverter.Tests.Models.Th10;
 
+internal static class StatusExtensions
+{
+    internal static void ShouldBe(this IStatus actual, IStatus expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.LastName.ShouldBe(expected.LastName);
+        actual.BgmFlags.ShouldBe(expected.BgmFlags);
+    }
+}
+
 [TestClass]
 public class StatusTests
 {
@@ -44,16 +57,6 @@ public class StatusTests
             new byte[gap2Size]);
     }
 
-    internal static void Validate(IStatus expected, IStatus actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.LastName.ShouldBe(expected.LastName);
-        actual.BgmFlags.ShouldBe(expected.BgmFlags);
-    }
-
     [TestMethod]
     public void StatusTestChapter()
     {
@@ -62,7 +65,7 @@ public class StatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var status = new Status(chapter);
 
-        Validate(mock, status);
+        status.ShouldBe(mock);
         status.IsValid.ShouldBeFalse();
     }
 

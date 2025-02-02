@@ -2,6 +2,7 @@
 using ThScoreFileConverter.Models.Th17;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
+using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th17;
 
@@ -27,7 +28,7 @@ public class ScoreDataTests
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 
-        Th10.ScoreDataTests.Validate(mock, scoreData);
+        scoreData.ShouldBe(mock);
     }
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();

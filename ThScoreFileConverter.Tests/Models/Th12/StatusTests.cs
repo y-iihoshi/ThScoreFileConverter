@@ -2,6 +2,7 @@
 using ThScoreFileConverter.Models.Th12;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IStatus = ThScoreFileConverter.Models.Th10.IStatus;
+using static ThScoreFileConverter.Tests.Models.Th10.StatusExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th12;
 
@@ -21,7 +22,7 @@ public class StatusTests
         var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(mock));
         var status = new Status(chapter);
 
-        Th10.StatusTests.Validate(mock, status);
+        status.ShouldBe(mock);
         status.IsValid.ShouldBeFalse();
     }
 

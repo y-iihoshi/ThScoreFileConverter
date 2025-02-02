@@ -7,6 +7,7 @@ using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using GameMode = ThScoreFileConverter.Core.Models.Th15.GameMode;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using StagePractice = ThScoreFileConverter.Core.Models.Th14.StagePractice;
+using static ThScoreFileConverter.Tests.Models.Th10.PracticeExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th15;
 
@@ -68,7 +69,7 @@ public class ClearDataTests
 
         foreach (var pair in expected.Practices)
         {
-            Th10.PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
+            actual.Practices[pair.Key].ShouldBe(pair.Value);
         }
     }
 

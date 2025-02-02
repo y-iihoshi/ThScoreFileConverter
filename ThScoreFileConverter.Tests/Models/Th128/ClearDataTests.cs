@@ -5,6 +5,7 @@ using ThScoreFileConverter.Core.Models.Th128;
 using ThScoreFileConverter.Models.Th128;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
+using static ThScoreFileConverter.Tests.Models.Th10.ScoreDataExtensions;
 
 namespace ThScoreFileConverter.Tests.Models.Th128;
 
@@ -69,7 +70,7 @@ public class ClearDataTests
         {
             for (var index = 0; index < pair.Value.Count; ++index)
             {
-                Th10.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
+                actual.Rankings[pair.Key][index].ShouldBe(pair.Value[index]);
             }
         }
 
