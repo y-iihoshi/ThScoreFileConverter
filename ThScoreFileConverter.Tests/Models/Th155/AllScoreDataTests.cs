@@ -5,6 +5,30 @@ using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.Models.Th155;
 
+internal static class AllScoreDataExtensions
+{
+    internal static void ShouldBe(this AllScoreData actual, AllScoreDataTests.Properties expected)
+    {
+        actual.StoryDictionary.Count.ShouldBe(expected.storyDictionary.Count);
+
+        foreach (var pair in expected.storyDictionary)
+        {
+            var story = actual.StoryDictionary[pair.Key];
+            story.Stage.ShouldBe(pair.Value.Stage);
+            story.Ed.ShouldBe(pair.Value.Ed);
+            story.Available.ShouldBe(pair.Value.Available);
+            story.OverDrive.ShouldBe(pair.Value.OverDrive);
+            story.StageOverDrive.ShouldBe(pair.Value.StageOverDrive);
+        }
+
+        actual.CharacterDictionary.ShouldBe(expected.characterDictionary);
+        actual.BgmDictionary.ShouldBe(expected.bgmDictionary);
+        actual.EndingDictionary.ShouldBe(expected.endingDictionary);
+        actual.StageDictionary.ShouldBe(expected.stageDictionary);
+        actual.Version.ShouldBe(expected.version);
+    }
+}
+
 [TestClass]
 public class AllScoreDataTests
 {
@@ -110,27 +134,6 @@ public class AllScoreDataTests
         ];
     }
 
-    internal static void Validate(in Properties expected, in AllScoreData actual)
-    {
-        actual.StoryDictionary.Count.ShouldBe(expected.storyDictionary.Count);
-
-        foreach (var pair in expected.storyDictionary)
-        {
-            var story = actual.StoryDictionary[pair.Key];
-            story.Stage.ShouldBe(pair.Value.Stage);
-            story.Ed.ShouldBe(pair.Value.Ed);
-            story.Available.ShouldBe(pair.Value.Available);
-            story.OverDrive.ShouldBe(pair.Value.OverDrive);
-            story.StageOverDrive.ShouldBe(pair.Value.StageOverDrive);
-        }
-
-        actual.CharacterDictionary.ShouldBe(expected.characterDictionary);
-        actual.BgmDictionary.ShouldBe(expected.bgmDictionary);
-        actual.EndingDictionary.ShouldBe(expected.endingDictionary);
-        actual.StageDictionary.ShouldBe(expected.stageDictionary);
-        actual.Version.ShouldBe(expected.version);
-    }
-
     [TestMethod]
     public void AllScoreDataTest()
     {
@@ -151,7 +154,7 @@ public class AllScoreDataTests
 
         var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-        Validate(properties, allScoreData);
+        allScoreData.ShouldBe(properties);
     }
 
     [TestMethod]
