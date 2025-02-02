@@ -30,9 +30,9 @@ internal static class PlayStatusExtensions
         actual.StoryFlags.ShouldBe(expected.StoryFlags);
         actual.ExtraFlags.ShouldBe(expected.ExtraFlags);
 
-        foreach (var key in expected.ClearCounts.Keys)
+        foreach (var pair in expected.ClearCounts)
         {
-            actual.ClearCounts[key].ShouldBe(expected.ClearCounts[key]);
+            actual.ClearCounts[pair.Key].ShouldBe(pair.Value);
         }
     }
 }

@@ -26,9 +26,9 @@ internal static class PlayStatusExtensions
         actual.TotalPlayTime.Milliseconds.ShouldBe(expected.TotalPlayTime.Milliseconds);
         actual.TotalPlayTime.IsFrames.ShouldBeFalse();
 
-        foreach (var key in expected.PlayCounts.Keys)
+        foreach (var pair in expected.PlayCounts)
         {
-            actual.PlayCounts[key].ShouldBe(expected.PlayCounts[key]);
+            actual.PlayCounts[pair.Key].ShouldBe(pair.Value);
         }
 
         actual.TotalPlayCount.ShouldBe(expected.TotalPlayCount);

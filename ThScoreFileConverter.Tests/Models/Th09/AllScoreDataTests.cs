@@ -100,12 +100,7 @@ public class AllScoreDataTests
         var allScoreData = new AllScoreData();
         allScoreData.Set(score);
 
-        for (var index = 0; index < allScoreData.Rankings[(mock.Chara, mock.Level)].Count; ++index)
-        {
-#pragma warning disable MSTEST0025 // Use 'Assert.Fail' instead of an always-failing assert
-            allScoreData.Rankings[(mock.Chara, mock.Level)][index].ShouldBeNull();
-#pragma warning restore MSTEST0025 // Use 'Assert.Fail' instead of an always-failing assert
-        }
+        allScoreData.Rankings[(mock.Chara, mock.Level)].ShouldNotContain(score);
     }
 
     [TestMethod]
