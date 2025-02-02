@@ -6,6 +6,21 @@ using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
 
+internal static class ScoreExtensions
+{
+    internal static void ShouldBe(this IScore actual, IScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Number.ShouldBe(expected.Number);
+        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
+        actual.ChallengeCounts.Values.ShouldBe(expected.ChallengeCounts.Values);
+        actual.HighScore.ShouldBe(expected.HighScore);
+    }
+}
+
 [TestClass]
 public class ScoreTests
 {
@@ -38,18 +53,6 @@ public class ScoreTests
             new byte[0x2A8]);
     }
 
-    internal static void Validate(IScore expected, IScore actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.Number.ShouldBe(expected.Number);
-        actual.ClearCounts.Values.ShouldBe(expected.ClearCounts.Values);
-        actual.ChallengeCounts.Values.ShouldBe(expected.ChallengeCounts.Values);
-        actual.HighScore.ShouldBe(expected.HighScore);
-    }
-
     [TestMethod]
     public void ScoreTestChapter()
     {
@@ -58,7 +61,7 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new Score(chapter);
 
-        Validate(mock, score);
+        score.ShouldBe(mock);
         score.IsValid.ShouldBeFalse();
     }
 

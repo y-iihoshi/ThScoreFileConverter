@@ -5,6 +5,24 @@ using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
 
+internal static class ItemStatusExtensions
+{
+    internal static void ShouldBe(this IItemStatus actual, IItemStatus expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Item.ShouldBe(expected.Item);
+        actual.UseCount.ShouldBe(expected.UseCount);
+        actual.ClearedCount.ShouldBe(expected.ClearedCount);
+        actual.ClearedScenes.ShouldBe(expected.ClearedScenes);
+        actual.ItemLevel.ShouldBe(expected.ItemLevel);
+        actual.AvailableCount.ShouldBe(expected.AvailableCount);
+        actual.FramesOrRanges.ShouldBe(expected.FramesOrRanges);
+    }
+}
+
 [TestClass]
 public class ItemStatusTests
 {
@@ -43,21 +61,6 @@ public class ItemStatusTests
             new int[2]);
     }
 
-    internal static void Validate(IItemStatus expected, IItemStatus actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.Item.ShouldBe(expected.Item);
-        actual.UseCount.ShouldBe(expected.UseCount);
-        actual.ClearedCount.ShouldBe(expected.ClearedCount);
-        actual.ClearedScenes.ShouldBe(expected.ClearedScenes);
-        actual.ItemLevel.ShouldBe(expected.ItemLevel);
-        actual.AvailableCount.ShouldBe(expected.AvailableCount);
-        actual.FramesOrRanges.ShouldBe(expected.FramesOrRanges);
-    }
-
     [TestMethod]
     public void ItemStatusTestChapter()
     {
@@ -66,7 +69,7 @@ public class ItemStatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var itemStatus = new ItemStatus(chapter);
 
-        Validate(mock, itemStatus);
+        itemStatus.ShouldBe(mock);
         itemStatus.IsValid.ShouldBeFalse();
     }
 

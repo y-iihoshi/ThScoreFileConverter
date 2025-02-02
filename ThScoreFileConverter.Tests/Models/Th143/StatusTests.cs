@@ -5,6 +5,23 @@ using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
 
+internal static class StatusExtensions
+{
+    internal static void ShouldBe(this IStatus actual, IStatus expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.Size.ShouldBe(expected.Size);
+        actual.LastName.ShouldBe(expected.LastName);
+        actual.BgmFlags.ShouldBe(expected.BgmFlags);
+        actual.TotalPlayTime.ShouldBe(expected.TotalPlayTime);
+        actual.LastMainItem.ShouldBe(expected.LastMainItem);
+        actual.LastSubItem.ShouldBe(expected.LastSubItem);
+        actual.NicknameFlags.ShouldBe(expected.NicknameFlags);
+    }
+}
+
 [TestClass]
 public class StatusTests
 {
@@ -45,20 +62,6 @@ public class StatusTests
             new byte[0x12D]);
     }
 
-    internal static void Validate(IStatus expected, IStatus actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.Size.ShouldBe(expected.Size);
-        actual.LastName.ShouldBe(expected.LastName);
-        actual.BgmFlags.ShouldBe(expected.BgmFlags);
-        actual.TotalPlayTime.ShouldBe(expected.TotalPlayTime);
-        actual.LastMainItem.ShouldBe(expected.LastMainItem);
-        actual.LastSubItem.ShouldBe(expected.LastSubItem);
-        actual.NicknameFlags.ShouldBe(expected.NicknameFlags);
-    }
-
     [TestMethod]
     public void StatusTestChapter()
     {
@@ -67,7 +70,7 @@ public class StatusTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var status = new Status(chapter);
 
-        Validate(mock, status);
+        status.ShouldBe(mock);
         status.IsValid.ShouldBeFalse();
     }
 

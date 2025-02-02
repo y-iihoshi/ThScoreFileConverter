@@ -1,9 +1,22 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th143;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverter.Tests.Models.Th143;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader actual, IBestShotHeader expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Day.ShouldBe(expected.Day);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -44,26 +57,13 @@ public class BestShotHeaderTests
             TestUtils.MakeRandomArray(0x58));
     }
 
-    internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
-    {
-        Guard.IsNotNull(actual);
-
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Day.ShouldBe(expected.Day);
-        actual.Scene.ShouldBe(expected.Scene);
-        actual.Width.ShouldBe(expected.Width);
-        actual.Height.ShouldBe(expected.Height);
-        actual.DateTime.ShouldBe(expected.DateTime);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -72,7 +72,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
