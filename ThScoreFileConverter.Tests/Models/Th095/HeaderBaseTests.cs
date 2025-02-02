@@ -2,6 +2,17 @@
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
 
+internal static class HeaderBaseExtensions
+{
+    internal static void ShouldBe(this HeaderBase actual, HeaderBaseTests.Properties expected)
+    {
+        actual.Signature.ShouldBe(expected.signature);
+        actual.EncodedAllSize.ShouldBe(expected.encodedAllSize);
+        actual.EncodedBodySize.ShouldBe(expected.encodedBodySize);
+        actual.DecodedBodySize.ShouldBe(expected.decodedBodySize);
+    }
+}
+
 [TestClass]
 public class HeaderBaseTests
 {
@@ -45,20 +56,12 @@ public class HeaderBaseTests
             properties.decodedBodySize);
     }
 
-    internal static void Validate(in Properties expected, in HeaderBase actual)
-    {
-        actual.Signature.ShouldBe(expected.signature);
-        actual.EncodedAllSize.ShouldBe(expected.encodedAllSize);
-        actual.EncodedBodySize.ShouldBe(expected.encodedBodySize);
-        actual.DecodedBodySize.ShouldBe(expected.decodedBodySize);
-    }
-
     [TestMethod]
     public void HeaderTest()
     {
         var header = new HeaderBase();
 
-        Validate(DefaultProperties, header);
+        header.ShouldBe(DefaultProperties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -69,7 +72,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 
@@ -139,7 +142,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -151,7 +154,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -163,7 +166,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -185,7 +188,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -197,7 +200,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -209,7 +212,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeFalse();
     }
 
@@ -231,7 +234,7 @@ public class HeaderBaseTests
 
         var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));
 
-        Validate(properties, header);
+        header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();
     }
 

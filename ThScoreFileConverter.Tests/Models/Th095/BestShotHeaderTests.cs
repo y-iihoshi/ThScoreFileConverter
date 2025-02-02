@@ -1,9 +1,23 @@
-﻿using CommunityToolkit.Diagnostics;
-using NSubstitute;
+﻿using NSubstitute;
 using ThScoreFileConverter.Core.Models.Th095;
 using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
+
+internal static class BestShotHeaderExtensions
+{
+    internal static void ShouldBe(this IBestShotHeader<Level> actual, IBestShotHeader<Level> expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Level.ShouldBe(expected.Level);
+        actual.Scene.ShouldBe(expected.Scene);
+        actual.Width.ShouldBe(expected.Width);
+        actual.Height.ShouldBe(expected.Height);
+        actual.ResultScore.ShouldBe(expected.ResultScore);
+        actual.SlowRate.ShouldBe(expected.SlowRate);
+        actual.CardName.ShouldBe(expected.CardName);
+    }
+}
 
 [TestClass]
 public class BestShotHeaderTests
@@ -45,27 +59,13 @@ public class BestShotHeaderTests
             header.CardName);
     }
 
-    internal static void Validate(IBestShotHeader<Level> expected, in IBestShotHeader<Level> actual)
-    {
-        Guard.IsNotNull(actual);
-
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Level.ShouldBe(expected.Level);
-        actual.Scene.ShouldBe(expected.Scene);
-        actual.Width.ShouldBe(expected.Width);
-        actual.Height.ShouldBe(expected.Height);
-        actual.ResultScore.ShouldBe(expected.ResultScore);
-        actual.SlowRate.ShouldBe(expected.SlowRate);
-        actual.CardName.ShouldBe(expected.CardName);
-    }
-
     [TestMethod]
     public void BestShotHeaderTest()
     {
         var mock = MockInitialBestShotHeader();
         var header = new BestShotHeader();
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -74,7 +74,7 @@ public class BestShotHeaderTests
         var mock = MockBestShotHeader();
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(mock, header);
+        header.ShouldBe(mock);
     }
 
     [TestMethod]
@@ -142,6 +142,6 @@ public class BestShotHeaderTests
 
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 
-        Validate(MockBestShotHeader(), header);
+        header.ShouldBe(MockBestShotHeader());
     }
 }

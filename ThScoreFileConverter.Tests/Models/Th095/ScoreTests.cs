@@ -4,6 +4,24 @@ using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverter.Tests.Models.Th095;
 
+internal static class ScoreExtensions
+{
+    internal static void ShouldBe(this IScore actual, IScore expected)
+    {
+        actual.Signature.ShouldBe(expected.Signature);
+        actual.Version.ShouldBe(expected.Version);
+        actual.Size.ShouldBe(expected.Size);
+        actual.Checksum.ShouldBe(expected.Checksum);
+        actual.LevelScene.ShouldBe(expected.LevelScene);
+        actual.HighScore.ShouldBe(expected.HighScore);
+        actual.BestshotScore.ShouldBe(expected.BestshotScore);
+        actual.DateTime.ShouldBe(expected.DateTime);
+        actual.TrialCount.ShouldBe(expected.TrialCount);
+        actual.SlowRate1.ShouldBe(expected.SlowRate1);
+        actual.SlowRate2.ShouldBe(expected.SlowRate2);
+    }
+}
+
 [TestClass]
 public class ScoreTests
 {
@@ -44,21 +62,6 @@ public class ScoreTests
             new byte[0x10]);
     }
 
-    internal static void Validate(IScore expected, IScore actual)
-    {
-        actual.Signature.ShouldBe(expected.Signature);
-        actual.Version.ShouldBe(expected.Version);
-        actual.Size.ShouldBe(expected.Size);
-        actual.Checksum.ShouldBe(expected.Checksum);
-        actual.LevelScene.ShouldBe(expected.LevelScene);
-        actual.HighScore.ShouldBe(expected.HighScore);
-        actual.BestshotScore.ShouldBe(expected.BestshotScore);
-        actual.DateTime.ShouldBe(expected.DateTime);
-        actual.TrialCount.ShouldBe(expected.TrialCount);
-        actual.SlowRate1.ShouldBe(expected.SlowRate1);
-        actual.SlowRate2.ShouldBe(expected.SlowRate2);
-    }
-
     [TestMethod]
     public void ScoreTestChapter()
     {
@@ -67,7 +70,7 @@ public class ScoreTests
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(mock));
         var score = new Score(chapter);
 
-        Validate(mock, score);
+        score.ShouldBe(mock);
         score.IsValid.ShouldBeFalse();
     }
 
