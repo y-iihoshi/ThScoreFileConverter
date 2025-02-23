@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <EnableMSTestRunner>true</EnableMSTestRunner>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
     <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>

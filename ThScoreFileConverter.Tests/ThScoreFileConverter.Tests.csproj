@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Description>Unit test project for ThScoreFileConverter.</Description>
     <Copyright>Copyright © 2017 IIHOSHI Yoshinori</Copyright>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
