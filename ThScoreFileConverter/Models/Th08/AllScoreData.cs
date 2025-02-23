@@ -56,7 +56,7 @@ internal sealed class AllScoreData
     public void Set(IHighScore score)
     {
         var key = (score.Chara, score.Level);
-        _ = this.rankings.TryAdd(key, new List<IHighScore>(Definitions.InitialRanking));
+        _ = this.rankings.TryAdd(key, [.. Definitions.InitialRanking]);
         var ranking = this.rankings[key].ToList();
         ranking.Add(score);
         ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
