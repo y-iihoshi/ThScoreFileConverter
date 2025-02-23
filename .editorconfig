@@ -1,4 +1,4 @@
-# Remove the line below if you want to inherit .editorconfig settings from higher
+﻿# Remove the line below if you want to inherit .editorconfig settings from higher
 root = true
 
 
@@ -81,7 +81,7 @@ dotnet_style_parentheses_in_other_operators = never_if_unnecessary:silent
 dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:silent
 
 # Modifier preferences
-dotnet_style_require_accessibility_modifiers = always:suggestion
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
 
 # Expression-level preferences
 dotnet_prefer_system_hash_code = true

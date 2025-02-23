@@ -19,5 +19,5 @@ internal interface IDispatcherAdapter
     /// <see cref="Dispatcher"/> is associated with.
     /// </summary>
     /// <param name="callback">A delegate to invoke through the dispatcher.</param>
-    public void Invoke(Action callback);
+    void Invoke(Action callback);
 }
