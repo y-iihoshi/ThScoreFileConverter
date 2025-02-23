@@ -90,26 +90,30 @@ jobs:
 
     - name: Generate coverage report
       run: >
-        dotnet test ThScoreFileConverter.Core.Tests
+        dotnet run --project ThScoreFileConverter.Core.Tests
         --configuration ${{ inputs.dotnet-configuration }}
         --framework ${{ inputs.dotnet-target-framework }}
-        -e CollectCoverage=true
-        -e CoverletOutput="../CoverageResults/"
+        --no-build
+        --coverage
+        --coverage-output-format xml
+        --coverage-output "coverage.xml"
 
-        dotnet test ThScoreFileConverter.Tests
+        dotnet run --project ThScoreFileConverter.Tests
         --configuration ${{ inputs.dotnet-configuration }}
         --framework ${{ inputs.dotnet-target-framework }}
-        -e CollectCoverage=true
-        -e CoverletOutput="../CoverageResults/"
-        -e MergeWith="../CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.json"
-        -e CoverletOutputFormat=opencover
+        --no-build
+        --coverage
+        --coverage-output-format xml
+        --coverage-output "coverage.xml"
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5.3.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: CoverageResults/coverage.${{ inputs.dotnet-target-framework }}.opencover.xml
+        files: >
+          ThScoreFileConverter.Core.Tests/bin/${{ inputs.dotnet-configuration }}/${{ inputs.dotnet-target-framework }}/coverage.xml,
+          ThScoreFileConverter.Tests/bin/${{ inputs.dotnet-configuration }}/${{ inputs.dotnet-target-framework }}/coverage.xml
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Collect artifacts
