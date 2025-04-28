@@ -64,7 +64,7 @@ jobs:
 
     - name: Build
       run: >
-        msbuild ThScoreFileConverter.sln /m /restore /verbosity:minimal
+        msbuild ThScoreFileConverter.slnx /m /restore /verbosity:minimal
         /p:Configuration=${{ inputs.dotnet-configuration }}
         /p:TargetFrameworks=${{ inputs.dotnet-target-framework }}
 
