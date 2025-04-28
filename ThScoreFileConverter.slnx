@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".stylecop.json" />
+    <File Path="CollectArtifacts.ps1" />
+    <File Path="CustomDictionary.xml" />
+    <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="ManualGenerator/ManualGenerator.pyproj" Type="888888a0-9f3d-457c-b088-3a5042f75d52" />
+  <Project Path="TemplateGenerator/TemplateGenerator.csproj" />
+  <Project Path="ThScoreFileConverter.Benchmarks/ThScoreFileConverter.Benchmarks.csproj">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
+  <Project Path="ThScoreFileConverter.Core.Tests/ThScoreFileConverter.Core.Tests.csproj">
+    <Build Solution="Release|*" Project="false" />
+  </Project>
+  <Project Path="ThScoreFileConverter.Core/ThScoreFileConverter.Core.csproj" />
+  <Project Path="ThScoreFileConverter.Tests/ThScoreFileConverter.Tests.csproj">
+    <Build Solution="Release|*" Project="false" />
+  </Project>
+  <Project Path="ThScoreFileConverter/ThScoreFileConverter.csproj" />
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_ResXSortingComparison" Value="Ordinal" />
+    <Property Name="RESX_SortFileContentOnSave" Value="True" />
+  </Properties>
+</Solution>
