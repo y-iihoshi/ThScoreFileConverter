@@ -95,7 +95,7 @@ jobs:
         --framework ${{ inputs.dotnet-target-framework }}
         --no-build
         --coverage
-        --coverage-output-format xml
+        --coverage-output-format cobertura
         --coverage-output "coverage.xml"
 
         dotnet run --project ThScoreFileConverter.Tests
@@ -103,7 +103,7 @@ jobs:
         --framework ${{ inputs.dotnet-target-framework }}
         --no-build
         --coverage
-        --coverage-output-format xml
+        --coverage-output-format cobertura
         --coverage-output "coverage.xml"
       if: inputs.dotnet-configuration == 'Debug'
 
