@@ -111,7 +111,7 @@ jobs:
       uses: codecov/codecov-action@v5.4.2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: >
+        files: >-
           ThScoreFileConverter.Core.Tests/bin/${{ inputs.dotnet-configuration }}/${{ inputs.dotnet-target-framework }}/TestResults/coverage.xml,
           ThScoreFileConverter.Tests/bin/${{ inputs.dotnet-configuration }}/${{ inputs.dotnet-target-framework }}/TestResults/coverage.xml
       if: inputs.dotnet-configuration == 'Debug'
