@@ -9,7 +9,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
 using ThScoreFileConverter.Helpers;
 
 namespace ThScoreFileConverter.Models;
@@ -44,10 +43,10 @@ internal static class BestShotDeveloper
         using var bitmap = new Bitmap(header.Width, header.Height, pixelFormat);
         bitmap.SetResolution(96, 96);
 
+        var bitmapData = bitmap.LockBits(
+            new Rectangle(0, 0, header.Width, header.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
         try
         {
-            var bitmapData = bitmap.LockBits(
-                new Rectangle(0, 0, header.Width, header.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
             var source = decoded.ToArray();
             var destination = bitmapData.Scan0;
 
@@ -64,12 +63,10 @@ internal static class BestShotDeveloper
             {
                 Marshal.Copy(source, 0, destination, source.Length);
             }
-
-            bitmap.UnlockBits(bitmapData);
         }
-        catch (SecurityException e)
+        finally
         {
-            Console.WriteLine(e.ToString());
+            bitmap.UnlockBits(bitmapData);
         }
 
         bitmap.Save(output, ImageFormat.Png);
