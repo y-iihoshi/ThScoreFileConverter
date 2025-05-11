@@ -69,7 +69,7 @@ public class ClearDataTests
             _ = mock.Score.Returns(12345670u - ((uint)index * 1000u));
             _ = mock.StageProgress.Returns((StageProgress)index);
             _ = mock.ContinueCount.Returns((byte)index);
-            _ = mock.Name.Returns(TestUtils.MakeByteArray($"Player{index}\0\0\0").Skip(1));   // skip length
+            _ = mock.Name.Returns(TestUtils.MakeByteArray($"Player{index}\0\0\0")[1..]);  // skip length
             _ = mock.DateTime.Returns(34567890u);
             _ = mock.SlowRate.Returns(1.2f);
             return mock;

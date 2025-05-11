@@ -70,18 +70,16 @@ public class FileHeaderTests
     public void ReadFromTestShortened()
     {
         var properties = ValidProperties;
-        var array = MakeByteArray(properties)[..^1];
 
-        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<FileHeader>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<FileHeader>(MakeByteArray(properties)[..^1]));
     }
 
     [TestMethod]
     public void ReadFromTestExceeded()
     {
         var properties = ValidProperties;
-        var array = MakeByteArray(properties).Concat(new byte[] { 1 }).ToArray();
 
-        var header = TestUtils.Create<FileHeader>(array);
+        var header = TestUtils.Create<FileHeader>([.. MakeByteArray(properties), 1]);
 
         header.ShouldBe(properties);
         header.IsValid.ShouldBeTrue();

@@ -79,18 +79,15 @@ public class ClearDataTests
         where TChara : struct, Enum
     {
         var mock = MockClearData<TChara>();
-        var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearData<TChara>>(MakeByteArray(mock)[..^1]));
     }
 
     internal static void ReadFromTestExceededHelper<TChara>()
         where TChara : struct, Enum
     {
         var mock = MockClearData<TChara>();
-        var array = MakeByteArray(mock).Concat(new byte[1] { 1 }).ToArray();
-
-        var clearData = TestUtils.Create<ClearData<TChara>>(array);
+        var clearData = TestUtils.Create<ClearData<TChara>>([.. MakeByteArray(mock), 1]);
 
         clearData.ShouldBe(mock);
     }

@@ -50,18 +50,15 @@ public class CardForDeckTests
     public void ReadFromTestShortened()
     {
         var mock = MockCardForDeck(1, 2);
-        var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<CardForDeck>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<CardForDeck>(MakeByteArray(mock)[..^1]));
     }
 
     [TestMethod]
     public void ReadFromTestExceeded()
     {
         var mock = MockCardForDeck(1, 2);
-        var array = MakeByteArray(mock).Concat(new byte[1] { 1 }).ToArray();
-
-        var cardForDeck = TestUtils.Create<CardForDeck>(array);
+        var cardForDeck = TestUtils.Create<CardForDeck>([.. MakeByteArray(mock), 1]);
 
         cardForDeck.ShouldBe(mock);
     }

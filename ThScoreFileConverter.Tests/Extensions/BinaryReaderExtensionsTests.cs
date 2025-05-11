@@ -78,7 +78,7 @@ public class BinaryReaderExtensionsTests
         var readBytes = reader.ReadExactBytes(bytes.Length - 1);
 
         readBytes.ShouldNotBe(bytes);
-        readBytes.ShouldBe(bytes.Take(readBytes.Length));
+        readBytes.ShouldBe(bytes[..readBytes.Length]);
     }
 
     public static IEnumerable<object[]> ReadNullTerminatedStringTestData

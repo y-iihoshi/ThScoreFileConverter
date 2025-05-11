@@ -130,18 +130,16 @@ public class ClearDataPerGameModeTests
     public void ReadFromTestShortened()
     {
         var mock = MockClearDataPerGameMode();
-        var array = MakeByteArray(mock).SkipLast(1).ToArray();
 
-        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(array));
+        _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(mock)[..^1]));
     }
 
     [TestMethod]
     public void ReadFromTestExceeded()
     {
         var mock = MockClearDataPerGameMode();
-        var array = MakeByteArray(mock).Concat(new byte[1] { 1 }).ToArray();
 
-        var clearData = TestUtils.Create<ClearDataPerGameMode>(array);
+        var clearData = TestUtils.Create<ClearDataPerGameMode>([.. MakeByteArray(mock), 1]);
 
         clearData.ShouldBe(mock);
     }
