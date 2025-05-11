@@ -36,6 +36,7 @@ internal static class Definitions
         new() { Number = nameof(StringResources.TH18),  IsSupported = true },
         new() { Number = nameof(StringResources.TH185), IsSupported = false },
         new() { Number = nameof(StringResources.TH19),  IsSupported = false },
+        new() { Number = nameof(StringResources.TH20),  IsSupported = false },
         new() { },
         new() { Number = nameof(StringResources.TH075), IsSupported = true },
         new() { Number = nameof(StringResources.TH105), IsSupported = true },

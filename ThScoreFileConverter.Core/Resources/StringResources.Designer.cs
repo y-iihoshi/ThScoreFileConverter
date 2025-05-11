@@ -320,5 +320,14 @@ namespace ThScoreFileConverter.Core.Resources {
                 return ResourceManager.GetString("TH19", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Fossilized Wonders に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TH20 {
+            get {
+                return ResourceManager.GetString("TH20", resourceCulture);
+            }
+        }
     }
 }

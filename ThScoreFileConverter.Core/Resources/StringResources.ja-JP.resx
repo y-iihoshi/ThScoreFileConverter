@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -197,5 +197,8 @@
   </data>
   <data name="TH19" xml:space="preserve">
     <value>東方獣王園</value>
+  </data>
+  <data name="TH20" xml:space="preserve">
+    <value>東方錦上京</value>
   </data>
 </root>

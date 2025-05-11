@@ -1,4 +1,4 @@
-# ThScoreFileConverter
+﻿# ThScoreFileConverter
 
 Score file converter for Touhou games
 
@@ -51,6 +51,7 @@ format from best shot files.
 ### Will be supported
 * TH18.5 バレットフィリア達の闇市場　～ 100th Black Market.
 * TH19 東方獣王園　～ Unfinished Dream of All Living Ghost.
+* TH20 東方錦上京　～ Fossilized Wonders.
 
 ## Environments
 
