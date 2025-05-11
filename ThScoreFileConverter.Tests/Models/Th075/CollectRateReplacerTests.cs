@@ -12,9 +12,9 @@ public class CollectRateReplacerTests
     private static IClearData MockClearData()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.CardGotCount.Returns(Enumerable.Range(1, 100).Select(count => (short)(count % 5)).ToList());
-        _ = mock.CardTrialCount.Returns(Enumerable.Range(1, 100).Select(count => (short)(count % 7)).ToList());
-        _ = mock.CardTrulyGot.Returns(Enumerable.Range(1, 100).Select(count => (byte)(count % 3)).ToList());
+        _ = mock.CardGotCount.Returns([.. Enumerable.Range(1, 100).Select(count => (short)(count % 5))]);
+        _ = mock.CardTrialCount.Returns([.. Enumerable.Range(1, 100).Select(count => (short)(count % 7))]);
+        _ = mock.CardTrulyGot.Returns([.. Enumerable.Range(1, 100).Select(count => (byte)(count % 3))]);
         return mock;
     }
 

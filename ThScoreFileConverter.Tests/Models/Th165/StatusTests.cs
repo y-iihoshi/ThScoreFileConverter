@@ -33,7 +33,7 @@ public class StatusTests
         _ = mock.BgmFlags.Returns(TestUtils.MakeRandomArray(8));
         _ = mock.TotalPlayTime.Returns(12345678);
         _ = mock.NicknameFlags.Returns(
-            Enumerable.Range(0, 51).Select(num => (byte)(num % 3)).ToArray());
+            [.. Enumerable.Range(0, 51).Select(num => (byte)(num % 3))]);
         return mock;
     }
 

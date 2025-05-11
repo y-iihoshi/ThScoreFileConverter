@@ -51,12 +51,12 @@ public class ClearDataTests
         _ = mock.ClearCount.Returns(2345);
         _ = mock.MaxCombo.Returns(3456);
         _ = mock.MaxDamage.Returns(4567);
-        _ = mock.MaxBonuses.Returns(Enumerable.Range(9, 100).ToList());
-        _ = mock.CardGotCount.Returns(Enumerable.Range(8, 100).Select(count => (short)count).ToList());
-        _ = mock.CardTrialCount.Returns(Enumerable.Range(7, 100).Select(count => (short)count).ToList());
-        _ = mock.CardTrulyGot.Returns(Enumerable.Range(6, 100).Select(got => (byte)got).ToList());
+        _ = mock.MaxBonuses.Returns([.. Enumerable.Range(9, 100)]);
+        _ = mock.CardGotCount.Returns([.. Enumerable.Range(8, 100).Select(count => (short)count)]);
+        _ = mock.CardTrialCount.Returns([.. Enumerable.Range(7, 100).Select(count => (short)count)]);
+        _ = mock.CardTrulyGot.Returns([.. Enumerable.Range(6, 100).Select(got => (byte)got)]);
         _ = mock.Ranking.Returns(
-            Enumerable.Range(0, 10)
+            [.. Enumerable.Range(0, 10)
                 .Select(index => new HighScoreStub()
                 {
                     EncodedName = [15, 37, 26, 50, 30, 43, (byte)(52 + index), 103],
@@ -64,7 +64,7 @@ public class ClearDataTests
                     Month = (byte)(1 + index),
                     Day = (byte)(10 + index),
                     Score = 1234567 + index,
-                } as IHighScore).ToList());
+                } as IHighScore)]);
         return mock;
     }
 

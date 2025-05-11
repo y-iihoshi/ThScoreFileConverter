@@ -78,7 +78,7 @@ public class SpellCardTests
     {
         var mock = MockSpellCard<TLevel>();
         var name = mock.Name;
-        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
+        _ = mock.Name.Returns([.. name.SkipLast(1)]);
 
         _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock)));
@@ -89,7 +89,7 @@ public class SpellCardTests
     {
         var mock = MockSpellCard<TLevel>();
         var name = mock.Name;
-        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        _ = mock.Name.Returns([.. name, .. TestUtils.MakeRandomArray(1)]);
 
         _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(mock)));

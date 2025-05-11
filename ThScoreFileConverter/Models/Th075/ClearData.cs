@@ -50,13 +50,13 @@ internal sealed class ClearData : IBinaryReadable, IClearData  // per character,
         this.ClearCount = reader.ReadInt32();
         this.MaxCombo = reader.ReadInt32();
         this.MaxDamage = reader.ReadInt32();
-        this.MaxBonuses = numbers.Select(_ => reader.ReadInt32()).ToList();
+        this.MaxBonuses = [.. numbers.Select(_ => reader.ReadInt32())];
         _ = reader.ReadExactBytes(0xC8);
-        this.CardGotCount = numbers.Select(_ => reader.ReadInt16()).ToList();
+        this.CardGotCount = [.. numbers.Select(_ => reader.ReadInt16())];
         _ = reader.ReadExactBytes(0x64);
-        this.CardTrialCount = numbers.Select(_ => reader.ReadInt16()).ToList();
+        this.CardTrialCount = [.. numbers.Select(_ => reader.ReadInt16())];
         _ = reader.ReadExactBytes(0x64);
-        this.CardTrulyGot = numbers.Select(_ => reader.ReadByte()).ToList();
+        this.CardTrulyGot = [.. numbers.Select(_ => reader.ReadByte())];
         _ = reader.ReadExactBytes(0x32);
         _ = reader.ReadExactBytes(6);   // 07 00 00 00 00 00
         this.Ranking = Enumerable.Range(1, 10).Select(_ => BinaryReadableHelper.Create<HighScore>(reader)).ToList();

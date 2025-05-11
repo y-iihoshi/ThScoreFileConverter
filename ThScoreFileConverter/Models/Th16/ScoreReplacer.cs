@@ -47,7 +47,7 @@ internal sealed class ScoreReplacer(
         {
             case 1:     // name
                 return ranking.Name.Any()
-                    ? EncodingHelper.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
+                    ? EncodingHelper.Default.GetString([.. ranking.Name]).Split('\0')[0] : "--------";
             case 2:     // score
                 return formatter.FormatNumber((ranking.Score * 10) + ranking.ContinueCount);
             case 3:     // stage

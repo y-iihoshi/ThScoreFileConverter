@@ -180,7 +180,7 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var cardName = mock.CardName;
-        _ = mock.CardName.Returns(cardName.SkipLast(1).ToArray());
+        _ = mock.CardName.Returns([.. cardName.SkipLast(1)]);
 
         _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<BestShotHeader>(MakeByteArray(mock)));
@@ -191,7 +191,7 @@ public class BestShotHeaderTests
     {
         var mock = MockBestShotHeader();
         var cardName = mock.CardName;
-        _ = mock.CardName.Returns(cardName.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        _ = mock.CardName.Returns([.. cardName, .. TestUtils.MakeRandomArray(1)]);
 
         var header = TestUtils.Create<BestShotHeader>(MakeByteArray(mock));
 

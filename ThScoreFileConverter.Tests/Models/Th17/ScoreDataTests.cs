@@ -49,7 +49,7 @@ public class ScoreDataTests
     {
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
         var name = mock.Name;
-        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
+        _ = mock.Name.Returns([.. name.SkipLast(1)]);
 
         _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
@@ -61,7 +61,7 @@ public class ScoreDataTests
         var mock = Th10.ScoreDataTests.MockScoreData<StageProgress>();
         var name = mock.Name;
         var validNameLength = name.Count();
-        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        _ = mock.Name.Returns([.. name, .. TestUtils.MakeRandomArray(1)]);
 
         var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(mock));
 

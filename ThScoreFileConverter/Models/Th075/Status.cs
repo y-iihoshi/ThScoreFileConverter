@@ -32,7 +32,7 @@ internal sealed class Status : IBinaryReadable
     {
         var charas = EnumHelper<CharaWithReserved>.Enumerable;
 
-        this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
+        this.LastName = new string([.. reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch])]);
         this.ArcadeScores = charas.Cartesian(charas).ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
 
         // FIXME... BGM flags?

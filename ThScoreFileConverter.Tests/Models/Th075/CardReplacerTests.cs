@@ -12,7 +12,7 @@ public class CardReplacerTests
     private static IClearData MockClearData()
     {
         var mock = ClearDataTests.MockClearData();
-        _ = mock.CardTrialCount.Returns(Enumerable.Repeat(0, 100).Select(count => (short)count).ToList());
+        _ = mock.CardTrialCount.Returns([.. Enumerable.Repeat(0, 100).Select(count => (short)count)]);
         return mock;
     }
 

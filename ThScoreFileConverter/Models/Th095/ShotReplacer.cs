@@ -37,7 +37,7 @@ internal sealed class ShotReplacer(
         {
             var resultScore = formatter.FormatNumber(bestshot.Header.ResultScore);
             var slowRate = formatter.FormatPercent(bestshot.Header.SlowRate, 6);
-            var cardName = EncodingHelper.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0');
+            var cardName = EncodingHelper.Default.GetString([.. bestshot.Header.CardName]).TrimEnd('\0');
             var alternativeString = StringHelper.Create(
                 $"ClearData: {resultScore}{Environment.NewLine}Slow: {slowRate}{Environment.NewLine}SpellName: {cardName}");
             return StringHelper.Create(

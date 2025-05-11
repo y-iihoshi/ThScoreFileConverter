@@ -104,7 +104,7 @@ internal sealed class Converter : ThConverter
         var dayPattern = string.Join("|", pairs.Select(pair => pair.Item2));
         var fileNamePattern = StringHelper.Create($@"bs({dayPattern})_\d{{2}}.dat");
 
-        return files.Where(file => Regex.IsMatch(Path.GetFileName(file), fileNamePattern, RegexOptions.IgnoreCase)).ToArray();
+        return [.. files.Where(file => Regex.IsMatch(Path.GetFileName(file), fileNamePattern, RegexOptions.IgnoreCase))];
     }
 
     protected override void ConvertBestShot(Stream input, Stream output)

@@ -59,7 +59,7 @@ public class HighScoreTests
     public void ReadFromTestShortenedName()
     {
         var stub = new HighScoreStub(ValidStub);
-        stub.EncodedName = stub.EncodedName.SkipLast(1).ToArray();
+        stub.EncodedName = [.. stub.EncodedName.SkipLast(1)];
 
         _ = Should.Throw<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
     }
@@ -68,7 +68,7 @@ public class HighScoreTests
     public void ReadFromTestExceededName()
     {
         var stub = new HighScoreStub(ValidStub);
-        stub.EncodedName = stub.EncodedName.Concat([default]).ToArray();
+        stub.EncodedName = [.. stub.EncodedName, default];
 
         _ = Should.Throw<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
     }

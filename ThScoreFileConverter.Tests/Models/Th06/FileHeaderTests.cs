@@ -71,7 +71,7 @@ public class FileHeaderTests
     {
         var properties = ValidProperties;
         var array = MakeByteArray(properties);
-        array = array.Take(array.Length - 1).ToArray();
+        array = [.. array.Take(array.Length - 1)];
 
         _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<FileHeader>(array));
     }

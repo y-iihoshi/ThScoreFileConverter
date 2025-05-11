@@ -21,7 +21,7 @@ public static class EnumHelper<T>
     where T : struct, Enum
 {
     private static readonly T[] Values = Enum.GetValues<T>();
-    private static readonly Member[] MembersImpl = Enum.GetNames<T>().Select(static name => new Member(name)).ToArray();
+    private static readonly Member[] MembersImpl = [.. Enum.GetNames<T>().Select(static name => new Member(name))];
 
 #pragma warning disable CA1000 // Do not declare static members on generic types
     /// <summary>

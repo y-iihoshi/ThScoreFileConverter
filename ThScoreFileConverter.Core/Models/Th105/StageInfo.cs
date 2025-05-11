@@ -31,5 +31,5 @@ public class StageInfo<TChara>(Stage stage, TChara enemy, IEnumerable<int> cardI
     /// Gets the identifiers of cards used by <see cref="Enemy"/>.
     /// An identifier is a 0-based number.
     /// </summary>
-    public IEnumerable<int> CardIds { get; } = cardIds.ToList();
+    public IEnumerable<int> CardIds { get; } = [.. cardIds];
 }

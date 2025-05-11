@@ -129,7 +129,7 @@ public class ScoreReplacerTests
     {
         var mock = ClearDataTests.MockClearData();
         var ranking = mock.Ranking;
-        _ = mock.Ranking.Returns(ranking.Take(1).ToList());
+        _ = mock.Ranking.Returns([.. ranking.Take(1)]);
         var clearData = new[] { ((CharaWithReserved.Reimu, Level.Hard), mock) }.ToDictionary();
         var formatterMock = NumberFormatterTests.Mock;
 

@@ -63,7 +63,7 @@ public class StatusTests
     {
         var properties = ValidProperties;
         properties.encodedLastName =
-            properties.encodedLastName.Take(properties.encodedLastName.Length - 1).ToArray();
+            [.. properties.encodedLastName.Take(properties.encodedLastName.Length - 1)];
 
         _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Status>(MakeByteArray(properties)));

@@ -379,7 +379,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     [RelayCommand]
     private void AddTemplateFiles(OpenFileDialogActionResult result)
     {
-        this.TemplateFiles.Value = this.TemplateFiles.Value.Union(result.FileNames.Where(File.Exists)).ToArray();
+        this.TemplateFiles.Value = [.. this.TemplateFiles.Value.Union(result.FileNames.Where(File.Exists))];
     }
 
     /// <summary>
@@ -404,7 +404,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     private void DeleteTemplateFiles(IList? selectedItems)
     {
         if (selectedItems is not null)
-            this.TemplateFiles.Value = this.TemplateFiles.Value.Except(selectedItems.Cast<string>()).ToArray();
+            this.TemplateFiles.Value = [.. this.TemplateFiles.Value.Except(selectedItems.Cast<string>())];
     }
 
     /// <summary>
@@ -561,7 +561,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject, IDisposabl
     {
         this.OnDrop(e, droppedPaths =>
         {
-            this.TemplateFiles.Value = this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists)).ToArray();
+            this.TemplateFiles.Value = [.. this.TemplateFiles.Value.Union(droppedPaths.Where(File.Exists))];
         });
     }
 

@@ -25,7 +25,7 @@ public sealed class OpenFileDialogActionResult
         Guard.IsNotNull(fileNames);
 
         this.FileName = fileName;
-        this.FileNames = fileNames.ToArray();
+        this.FileNames = [.. fileNames];
     }
 
     /// <summary>

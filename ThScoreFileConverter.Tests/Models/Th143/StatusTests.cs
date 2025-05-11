@@ -38,7 +38,7 @@ public class StatusTests
         _ = mock.LastMainItem.Returns(ItemWithTotal.Camera);
         _ = mock.LastSubItem.Returns(ItemWithTotal.Doll);
         _ = mock.NicknameFlags.Returns(
-            Enumerable.Range(0, 71).Select(value => (byte)((value % 3 == 0) ? 0 : 1)).ToArray());
+            [.. Enumerable.Range(0, 71).Select(value => (byte)((value % 3 == 0) ? 0 : 1))]);
         return mock;
     }
 

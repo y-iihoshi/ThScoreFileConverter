@@ -37,8 +37,7 @@ internal class ClearDataBase<TCharaWithTotal, TScoreData>
 
         this.Rankings = levels.ToDictionary(
             level => level,
-            _ => (IReadOnlyList<IScoreData<StageProgress>>)Enumerable.Range(0, 10)
-                .Select(_ => BinaryReadableHelper.Create<TScoreData>(reader)).ToList());
+            _ => (IReadOnlyList<IScoreData<StageProgress>>)[.. Enumerable.Range(0, 10).Select(_ => BinaryReadableHelper.Create<TScoreData>(reader))]);
 
         this.TotalPlayCount = reader.ReadInt32();
         this.PlayTime = reader.ReadInt32();

@@ -70,7 +70,7 @@ public class CareerReplacerTests
         {
             var mock = ClearDataTests.MockClearData();
             var cardTrulyGot = mock.CardTrulyGot;
-            _ = mock.CardTrulyGot.Returns(cardTrulyGot.Select((got, index) => index == 0 ? (byte)0 : got).ToList());
+            _ = mock.CardTrulyGot.Returns([.. cardTrulyGot.Select((got, index) => index == 0 ? (byte)0 : got)]);
             return mock;
         }
 

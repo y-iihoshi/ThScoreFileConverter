@@ -32,7 +32,7 @@ internal sealed class HighScore : IBinaryReadable, IHighScore
 
     public void ReadFrom(BinaryReader reader)
     {
-        this.Name = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
+        this.Name = new string([.. reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch])]);
 
         this.Month = reader.ReadByte();
         this.Day = reader.ReadByte();

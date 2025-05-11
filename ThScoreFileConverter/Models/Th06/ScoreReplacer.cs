@@ -43,7 +43,7 @@ internal sealed class ScoreReplacer(
 
         return type switch
         {
-            1 => EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0],
+            1 => EncodingHelper.Default.GetString([.. score.Name]).Split('\0')[0],
             2 => formatter.FormatNumber(score.Score),
             3 => score.StageProgress.ToDisplayName(),
             _ => match.ToString(),  // unreachable

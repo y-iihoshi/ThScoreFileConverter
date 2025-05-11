@@ -83,7 +83,7 @@ public class ScoreDataTests
     {
         var mock = MockScoreData();
         var name = mock.Name;
-        _ = mock.Name.Returns(name.SkipLast(1).ToArray());
+        _ = mock.Name.Returns([.. name.SkipLast(1)]);
 
         _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));
@@ -94,7 +94,7 @@ public class ScoreDataTests
     {
         var mock = MockScoreData();
         var name = mock.Name;
-        _ = mock.Name.Returns(name.Concat(TestUtils.MakeRandomArray(1)).ToArray());
+        _ = mock.Name.Returns([.. name, .. TestUtils.MakeRandomArray(1)]);
 
         _ = Should.Throw<InvalidCastException>(
             () => TestUtils.Create<ScoreData>(MakeByteArray(mock)));

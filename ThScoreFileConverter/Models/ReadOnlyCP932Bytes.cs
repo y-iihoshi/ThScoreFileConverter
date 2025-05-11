@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Models;
 
 internal sealed class ReadOnlyCP932Bytes(IEnumerable<byte> bytes) : IEnumerable<byte>
 {
-    private readonly byte[] bytes = bytes.ToArray();
+    private readonly byte[] bytes = [.. bytes];
     private string? str;
 
     public static ReadOnlyCP932Bytes Empty { get; } = new ReadOnlyCP932Bytes([]);

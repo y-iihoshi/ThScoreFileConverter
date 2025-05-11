@@ -45,7 +45,7 @@ internal class ScoreReplacerBase<TChara> : IStringReplaceable
             {
                 case 1:     // name
                     return score.Name.Any()
-                        ? EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
+                        ? EncodingHelper.Default.GetString([.. score.Name]).Split('\0')[0] : "--------";
                 case 2:     // score
                     return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
                 case 3:     // stage

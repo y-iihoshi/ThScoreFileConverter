@@ -12,7 +12,7 @@ internal sealed class HighScoreStub : IHighScore
 
     public HighScoreStub(in HighScoreStub stub)
     {
-        this.EncodedName = stub.EncodedName.ToArray();
+        this.EncodedName = [.. stub.EncodedName];
         this.Day = stub.Day;
         this.Month = stub.Month;
         this.Name = stub.Name;

@@ -49,7 +49,7 @@ internal sealed class ClearReplacer(
                 var score = rankings.TryGetValue((chara, level), out var ranking) && (ranking.Count > 0)
                     ? ranking[0] : null;
                 var date = (score is not null)
-                    ? EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0') : "--/--";
+                    ? EncodingHelper.Default.GetString([.. score.Date]).TrimEnd('\0') : "--/--";
                 return (date != "--/--") ? "Not Cleared" : "-------";
             }
         }

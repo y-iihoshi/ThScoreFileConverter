@@ -40,17 +40,17 @@ internal sealed class ScoreReplacer(
         switch (type)
         {
             case "1":   // name
-                return EncodingHelper.Default.GetString(score.Name.ToArray()).Split('\0')[0];
+                return EncodingHelper.Default.GetString([.. score.Name]).Split('\0')[0];
             case "2":   // score
                 return formatter.FormatNumber((score.Score * 10) + score.ContinueCount);
             case "3":   // stage
                 if ((level == Level.Extra) &&
-                    (EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0') == "--/--"))
+                    (EncodingHelper.Default.GetString([.. score.Date]).TrimEnd('\0') == "--/--"))
                     return StageProgress.Extra.ToDisplayName();
                 else
                     return score.StageProgress.ToDisplayName();
             case "4":   // date
-                return EncodingHelper.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
+                return EncodingHelper.Default.GetString([.. score.Date]).TrimEnd('\0');
             case "5":   // slow rate
                 return formatter.FormatPercent(score.SlowRate, 3);
             case "6":   // play time
