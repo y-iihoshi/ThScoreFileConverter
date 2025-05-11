@@ -241,7 +241,7 @@ public class ChapterTests
     {
         var properties = ValidProperties;
         --properties.size;
-        properties.data = [.. properties.data.Take(properties.data.Length - 1)];
+        properties.data = properties.data[..^1];
 
         var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 

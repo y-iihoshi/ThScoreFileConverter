@@ -64,7 +64,7 @@ public class HeaderTests
     {
         var properties = ValidProperties;
         ++properties.size1;
-        properties.data = [.. properties.data, .. new byte[] { default }];
+        properties.data = [.. properties.data, default];
 
         var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
         _ = Should.Throw<InvalidDataException>(() => new Header(chapter));

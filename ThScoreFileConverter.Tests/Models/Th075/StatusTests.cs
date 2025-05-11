@@ -62,8 +62,7 @@ public class StatusTests
     public void ReadFromTestShortenedName()
     {
         var properties = ValidProperties;
-        properties.encodedLastName =
-            [.. properties.encodedLastName.Take(properties.encodedLastName.Length - 1)];
+        properties.encodedLastName = properties.encodedLastName[..^1];
 
         _ = Should.Throw<EndOfStreamException>(
             () => TestUtils.Create<Status>(MakeByteArray(properties)));
@@ -73,7 +72,7 @@ public class StatusTests
     public void ReadFromTestExceededName()
     {
         var properties = ValidProperties;
-        properties.encodedLastName = [.. properties.encodedLastName, .. new byte[] { 1 }];
+        properties.encodedLastName = [.. properties.encodedLastName, 1];
 
         var status = TestUtils.Create<Status>(MakeByteArray(properties));
 

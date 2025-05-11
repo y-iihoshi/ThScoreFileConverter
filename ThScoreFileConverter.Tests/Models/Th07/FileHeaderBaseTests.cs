@@ -83,8 +83,7 @@ public class FileHeaderBaseTests
     public void ReadFromTestShortened()
     {
         var properties = ValidProperties;
-        var array = MakeByteArray(properties);
-        array = [.. array.Take(array.Length - 1)];
+        var array = MakeByteArray(properties)[..^1];
 
         _ = Should.Throw<EndOfStreamException>(() => TestUtils.Create<FileHeaderBase>(array));
     }
