@@ -43,7 +43,9 @@ internal class SpellCardBase<TLevel> : IBinaryReadable, ISpellCard<TLevel>
 
     public void ReadFrom(BinaryReader reader)
     {
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.Name = new ReadOnlyCP932Bytes(reader.ReadExactBytes(this.nameLength));
+#pragma warning restore IDE0306 // Simplify collection initialization
         this.ClearCount = reader.ReadInt32();
         this.PracticeClearCount = reader.ReadInt32();
         this.TrialCount = reader.ReadInt32();

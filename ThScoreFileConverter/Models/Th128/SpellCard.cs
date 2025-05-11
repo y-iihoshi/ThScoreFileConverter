@@ -32,7 +32,9 @@ internal sealed class SpellCard : IBinaryReadable, ISpellCard
 
     public void ReadFrom(BinaryReader reader)
     {
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.Name = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x80));
+#pragma warning restore IDE0306 // Simplify collection initialization
         this.NoMissCount = reader.ReadInt32();
         this.NoIceCount = reader.ReadInt32();
         _ = reader.ReadUInt32();

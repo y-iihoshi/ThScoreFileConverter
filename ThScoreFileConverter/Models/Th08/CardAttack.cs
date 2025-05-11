@@ -33,7 +33,9 @@ internal sealed class CardAttack : Th06.Chapter, ICardAttack   // per card
         this.CardId = (short)(reader.ReadInt16() + 1);
         _ = reader.ReadByte();
         this.Level = EnumHelper.To<LevelPracticeWithTotal>(reader.ReadByte());  // Last Word == Normal...
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x30));
+#pragma warning restore IDE0306 // Simplify collection initialization
         this.EnemyName = reader.ReadExactBytes(0x30);
         this.Comment = reader.ReadExactBytes(0x80);
         this.storyCareer = BinaryReadableHelper.Create<CardAttackCareer>(reader);

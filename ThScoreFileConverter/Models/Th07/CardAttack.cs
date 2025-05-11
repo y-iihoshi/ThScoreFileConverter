@@ -31,7 +31,9 @@ internal sealed class CardAttack : Th06.Chapter, ICardAttack   // per card
         this.MaxBonuses = charas.ToDictionary(chara => chara, chara => reader.ReadUInt32());
         this.CardId = (short)(reader.ReadInt16() + 1);
         _ = reader.ReadByte();
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x30));
+#pragma warning restore IDE0306 // Simplify collection initialization
         _ = reader.ReadByte();      // always 0x00?
         this.TrialCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
         this.ClearCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());

@@ -104,6 +104,8 @@ internal sealed class BestShotHeader : IBinaryReadable, IBestShotHeader
         this.Angle = reader.ReadSingle();
         this.ResultScore2 = reader.ReadInt32();
         _ = reader.ReadUInt32();
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x50));
+#pragma warning restore IDE0306 // Simplify collection initialization
     }
 }

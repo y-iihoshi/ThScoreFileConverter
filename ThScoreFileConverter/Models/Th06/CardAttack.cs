@@ -26,7 +26,9 @@ internal sealed class CardAttack : Chapter, ICardAttack    // per card
         _ = reader.ReadExactBytes(8);
         this.CardId = (short)(reader.ReadInt16() + 1);
         _ = reader.ReadExactBytes(6);
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x24));
+#pragma warning restore IDE0306 // Simplify collection initialization
         this.TrialCount = reader.ReadUInt16();
         this.ClearCount = reader.ReadUInt16();
     }

@@ -51,6 +51,8 @@ internal sealed class BestShotHeader : IBinaryReadable, IBestShotHeader<Level>
         this.Height = reader.ReadInt16();
         this.ResultScore = reader.ReadInt32();
         this.SlowRate = reader.ReadSingle();
+#pragma warning disable IDE0306 // Simplify collection initialization
         this.CardName = new ReadOnlyCP932Bytes(reader.ReadExactBytes(0x50));
+#pragma warning restore IDE0306 // Simplify collection initialization
     }
 }
