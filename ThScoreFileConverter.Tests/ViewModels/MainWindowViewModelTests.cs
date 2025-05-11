@@ -489,12 +489,7 @@ public class MainWindowViewModelTests
         numChanged.ShouldBe(0);
 
         command.Execute(result);
-#if NET9_0_OR_GREATER
-        // TODO: under investigation
-        numChanged.ShouldBe(0);
-#else
         numChanged.ShouldBe(1);
-#endif
         window.TemplateFiles.Value.ShouldBe(fileNames);
     }
 
@@ -515,12 +510,7 @@ public class MainWindowViewModelTests
         numChanged.ShouldBe(0);
 
         command.Execute(result);
-#if NET9_0_OR_GREATER
-        // TODO: under investigation
-        numChanged.ShouldBe(0);
-#else
         numChanged.ShouldBe(1);
-#endif
         window.TemplateFiles.Value.ShouldBeEmpty();
     }
 
