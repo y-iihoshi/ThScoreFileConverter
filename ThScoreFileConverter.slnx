@@ -9,7 +9,7 @@
     <File Path="LICENSE.txt" />
     <File Path="README.md" />
   </Folder>
-  <Project Path="ManualGenerator/ManualGenerator.pyproj" Type="888888a0-9f3d-457c-b088-3a5042f75d52" />
+  <Project Path="ManualGenerator/ManualGenerator.pyproj" Type="888888a0-9f3d-457c-b088-3a5042f75d52" Id="3fde820f-b99d-4936-ac8e-11a36697f9d1" />
   <Project Path="TemplateGenerator/TemplateGenerator.csproj" />
   <Project Path="ThScoreFileConverter.Benchmarks/ThScoreFileConverter.Benchmarks.csproj">
     <Build Solution="Debug|*" Project="false" />
@@ -22,8 +22,4 @@
     <Build Solution="Release|*" Project="false" />
   </Project>
   <Project Path="ThScoreFileConverter/ThScoreFileConverter.csproj" />
-  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
-    <Property Name="RESX_ResXSortingComparison" Value="Ordinal" />
-    <Property Name="RESX_SortFileContentOnSave" Value="True" />
-  </Properties>
 </Solution>
