@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
-using CommunityToolkit.Diagnostics;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 
 namespace ThScoreFileConverter.Tests.UnitTesting;
@@ -32,10 +31,8 @@ public static class TestUtils
     }
 #endif
 
-    public static byte[] MakeByteArray(params object[] args)
+    public static byte[] MakeByteArray(params ReadOnlySpan<object> args)
     {
-        Guard.IsNotNull(args);
-
         static bool IsRankOneArray<T>(Array array)
         {
             return (array.Rank == 1) && (array.GetType().GetElementType() == typeof(T));

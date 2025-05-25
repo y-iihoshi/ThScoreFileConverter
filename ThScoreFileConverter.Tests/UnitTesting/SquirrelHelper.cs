@@ -1,7 +1,6 @@
 ﻿// #define DEBUG_TEST
 
 using System.Reflection;
-using CommunityToolkit.Diagnostics;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverter.Tests.UnitTesting;
@@ -30,10 +29,8 @@ public static class SquirrelHelper
     }
 #endif
 
-    public static byte[] MakeByteArray(params object?[] args)
+    public static byte[] MakeByteArray(params ReadOnlySpan<object?> args)
     {
-        Guard.IsNotNull(args);
-
         static bool IsDictionary(object arg)
         {
             var argType = arg.GetType();

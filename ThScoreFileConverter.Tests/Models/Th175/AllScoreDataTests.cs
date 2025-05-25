@@ -131,7 +131,7 @@ public class AllScoreDataTests
         SaveDataTests.ValidateAsDefault(allScoreData.SaveDataDictionary.Values.First());
     }
 
-    private static byte[] MakeByteArray(params object?[] args)
+    private static byte[] MakeByteArray(params ReadOnlySpan<object?> args)
     {
         static bool IsDictionary(object arg)
         {
