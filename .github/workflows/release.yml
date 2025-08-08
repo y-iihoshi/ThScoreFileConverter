@@ -26,12 +26,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Download artifact (net8.0)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: 'ThScoreFileConverter-${{ github.ref_name }}-net8.0-windows'
           path: 'artifacts/net8.0'
       - name: Download artifact (net9.0)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: 'ThScoreFileConverter-${{ github.ref_name }}-net9.0-windows'
           path: 'artifacts/net9.0'
