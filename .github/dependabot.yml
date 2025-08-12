@@ -1,4 +1,4 @@
-﻿version: 2
+version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -15,3 +15,5 @@ updates:
     schedule:
       interval: "weekly"
       day: "friday"
+
+# vim:set nobomb:
