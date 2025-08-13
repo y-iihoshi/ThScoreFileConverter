@@ -62,6 +62,11 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2.0.0
 
+    - name: Dump GitHub variables and contexts
+      run: |
+        echo "GITHUB_REF=${env:GITHUB_REF}"
+        echo "github.ref=${{ github.ref }}"
+
     - name: Build
       run: >
         msbuild ThScoreFileConverter.slnx /m /restore /verbosity:minimal
