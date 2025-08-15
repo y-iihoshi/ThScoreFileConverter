@@ -5,7 +5,7 @@ namespace ThScoreFileConverter.Tests.Models.Th165;
 [TestClass]
 public class HashtagFieldsTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 12345678, int.MinValue)]
     [DataRow(12345678, int.MinValue, int.MaxValue)]
     [DataRow(int.MinValue, int.MaxValue, 0)]
@@ -18,7 +18,7 @@ public class HashtagFieldsTests
         fields.Data.ElementAt(2).ShouldBe(data3);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 0, 0, 0, true)]
     [DataRow(~(1 << 0), ~0, ~0, false)]
     public void EnemyIsInFrameTest(int data1, int data2, int data3, bool expected)
@@ -27,7 +27,7 @@ public class HashtagFieldsTests
         fields.EnemyIsInFrame.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 1, 0, 0, true)]
     [DataRow(~(1 << 1), ~0, ~0, false)]
     public void EnemyIsPartlyInFrameTest(int data1, int data2, int data3, bool expected)
@@ -36,7 +36,7 @@ public class HashtagFieldsTests
         fields.EnemyIsPartlyInFrame.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 2, 0, 0, true)]
     [DataRow(~(1 << 2), ~0, ~0, false)]
     public void WholeEnemyIsInFrameTest(int data1, int data2, int data3, bool expected)
@@ -45,7 +45,7 @@ public class HashtagFieldsTests
         fields.WholeEnemyIsInFrame.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 3, 0, 0, true)]
     [DataRow(~(1 << 3), ~0, ~0, false)]
     public void EnemyIsInMiddleTest(int data1, int data2, int data3, bool expected)
@@ -54,7 +54,7 @@ public class HashtagFieldsTests
         fields.EnemyIsInMiddle.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 4, 0, 0, true)]
     [DataRow(~(1 << 4), ~0, ~0, false)]
     public void IsSelfieTest(int data1, int data2, int data3, bool expected)
@@ -63,7 +63,7 @@ public class HashtagFieldsTests
         fields.IsSelfie.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 5, 0, 0, true)]
     [DataRow(~(1 << 5), ~0, ~0, false)]
     public void IsTwoShotTest(int data1, int data2, int data3, bool expected)
@@ -72,7 +72,7 @@ public class HashtagFieldsTests
         fields.IsTwoShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 7, 0, 0, true)]
     [DataRow(~(1 << 7), ~0, ~0, false)]
     public void BitDangerousTest(int data1, int data2, int data3, bool expected)
@@ -81,7 +81,7 @@ public class HashtagFieldsTests
         fields.BitDangerous.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 8, 0, 0, true)]
     [DataRow(~(1 << 8), ~0, ~0, false)]
     public void SeriouslyDangerousTest(int data1, int data2, int data3, bool expected)
@@ -90,7 +90,7 @@ public class HashtagFieldsTests
         fields.SeriouslyDangerous.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 9, 0, 0, true)]
     [DataRow(~(1 << 9), ~0, ~0, false)]
     public void ThoughtGonnaDieTest(int data1, int data2, int data3, bool expected)
@@ -99,7 +99,7 @@ public class HashtagFieldsTests
         fields.ThoughtGonnaDie.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 10, 0, 0, true)]
     [DataRow(~(1 << 10), ~0, ~0, false)]
     public void ManyRedsTest(int data1, int data2, int data3, bool expected)
@@ -108,7 +108,7 @@ public class HashtagFieldsTests
         fields.ManyReds.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 11, 0, 0, true)]
     [DataRow(~(1 << 11), ~0, ~0, false)]
     public void ManyPurplesTest(int data1, int data2, int data3, bool expected)
@@ -117,7 +117,7 @@ public class HashtagFieldsTests
         fields.ManyPurples.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 12, 0, 0, true)]
     [DataRow(~(1 << 12), ~0, ~0, false)]
     public void ManyBluesTest(int data1, int data2, int data3, bool expected)
@@ -126,7 +126,7 @@ public class HashtagFieldsTests
         fields.ManyBlues.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 13, 0, 0, true)]
     [DataRow(~(1 << 13), ~0, ~0, false)]
     public void ManyCyansTest(int data1, int data2, int data3, bool expected)
@@ -135,7 +135,7 @@ public class HashtagFieldsTests
         fields.ManyCyans.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 14, 0, 0, true)]
     [DataRow(~(1 << 14), ~0, ~0, false)]
     public void ManyGreensTest(int data1, int data2, int data3, bool expected)
@@ -144,7 +144,7 @@ public class HashtagFieldsTests
         fields.ManyGreens.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 15, 0, 0, true)]
     [DataRow(~(1 << 15), ~0, ~0, false)]
     public void ManyYellowsTest(int data1, int data2, int data3, bool expected)
@@ -153,7 +153,7 @@ public class HashtagFieldsTests
         fields.ManyYellows.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 16, 0, 0, true)]
     [DataRow(~(1 << 16), ~0, ~0, false)]
     public void ManyOrangesTest(int data1, int data2, int data3, bool expected)
@@ -162,7 +162,7 @@ public class HashtagFieldsTests
         fields.ManyOranges.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 17, 0, 0, true)]
     [DataRow(~(1 << 17), ~0, ~0, false)]
     public void TooColorfulTest(int data1, int data2, int data3, bool expected)
@@ -171,7 +171,7 @@ public class HashtagFieldsTests
         fields.TooColorful.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 18, 0, 0, true)]
     [DataRow(~(1 << 18), ~0, ~0, false)]
     public void SevenColorsTest(int data1, int data2, int data3, bool expected)
@@ -180,7 +180,7 @@ public class HashtagFieldsTests
         fields.SevenColors.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 19, 0, 0, true)]
     [DataRow(~(1 << 19), ~0, ~0, false)]
     public void NoBulletTest(int data1, int data2, int data3, bool expected)
@@ -189,7 +189,7 @@ public class HashtagFieldsTests
         fields.NoBullet.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 21, 0, 0, true)]
     [DataRow(~(1 << 21), ~0, ~0, false)]
     public void IsLandscapePhotoTest(int data1, int data2, int data3, bool expected)
@@ -198,7 +198,7 @@ public class HashtagFieldsTests
         fields.IsLandscapePhoto.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 26, 0, 0, true)]
     [DataRow(~(1 << 26), ~0, ~0, false)]
     public void CloseupTest(int data1, int data2, int data3, bool expected)
@@ -207,7 +207,7 @@ public class HashtagFieldsTests
         fields.Closeup.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 27, 0, 0, true)]
     [DataRow(~(1 << 27), ~0, ~0, false)]
     public void QuiteCloseupTest(int data1, int data2, int data3, bool expected)
@@ -216,7 +216,7 @@ public class HashtagFieldsTests
         fields.QuiteCloseup.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1 << 28, 0, 0, true)]
     [DataRow(~(1 << 28), ~0, ~0, false)]
     public void TooCloseTest(int data1, int data2, int data3, bool expected)
@@ -225,7 +225,7 @@ public class HashtagFieldsTests
         fields.TooClose.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 1, 0, true)]
     [DataRow(~0, ~(1 << 1), ~0, false)]
     public void EnemyIsInFullViewTest(int data1, int data2, int data3, bool expected)
@@ -234,7 +234,7 @@ public class HashtagFieldsTests
         fields.EnemyIsInFullView.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 4, 0, true)]
     [DataRow(~0, ~(1 << 4), ~0, false)]
     public void TooManyBulletsTest(int data1, int data2, int data3, bool expected)
@@ -243,7 +243,7 @@ public class HashtagFieldsTests
         fields.TooManyBullets.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 5, 0, true)]
     [DataRow(~0, ~(1 << 5), ~0, false)]
     public void TooPlayfulBarrageTest(int data1, int data2, int data3, bool expected)
@@ -252,7 +252,7 @@ public class HashtagFieldsTests
         fields.TooPlayfulBarrage.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 6, 0, true)]
     [DataRow(~0, ~(1 << 6), ~0, false)]
     public void TooDenseTest(int data1, int data2, int data3, bool expected)
@@ -261,7 +261,7 @@ public class HashtagFieldsTests
         fields.TooDense.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 7, 0, true)]
     [DataRow(~0, ~(1 << 7), ~0, false)]
     public void ChasedTest(int data1, int data2, int data3, bool expected)
@@ -270,7 +270,7 @@ public class HashtagFieldsTests
         fields.Chased.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 8, 0, true)]
     [DataRow(~0, ~(1 << 8), ~0, false)]
     public void IsSuppositoryTest(int data1, int data2, int data3, bool expected)
@@ -279,7 +279,7 @@ public class HashtagFieldsTests
         fields.IsSuppository.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 9, 0, true)]
     [DataRow(~0, ~(1 << 9), ~0, false)]
     public void IsButterflyLikeMothTest(int data1, int data2, int data3, bool expected)
@@ -288,7 +288,7 @@ public class HashtagFieldsTests
         fields.IsButterflyLikeMoth.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 10, 0, true)]
     [DataRow(~0, ~(1 << 10), ~0, false)]
     public void EnemyIsUndamagedTest(int data1, int data2, int data3, bool expected)
@@ -297,7 +297,7 @@ public class HashtagFieldsTests
         fields.EnemyIsUndamaged.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 11, 0, true)]
     [DataRow(~0, ~(1 << 11), ~0, false)]
     public void EnemyCanAffordTest(int data1, int data2, int data3, bool expected)
@@ -306,7 +306,7 @@ public class HashtagFieldsTests
         fields.EnemyCanAfford.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 12, 0, true)]
     [DataRow(~0, ~(1 << 12), ~0, false)]
     public void EnemyIsWeakenedTest(int data1, int data2, int data3, bool expected)
@@ -315,7 +315,7 @@ public class HashtagFieldsTests
         fields.EnemyIsWeakened.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 13, 0, true)]
     [DataRow(~0, ~(1 << 13), ~0, false)]
     public void EnemyIsDyingTest(int data1, int data2, int data3, bool expected)
@@ -324,7 +324,7 @@ public class HashtagFieldsTests
         fields.EnemyIsDying.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 14, 0, true)]
     [DataRow(~0, ~(1 << 14), ~0, false)]
     public void FinishedTest(int data1, int data2, int data3, bool expected)
@@ -333,7 +333,7 @@ public class HashtagFieldsTests
         fields.Finished.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 15, 0, true)]
     [DataRow(~0, ~(1 << 15), ~0, false)]
     public void IsThreeShotTest(int data1, int data2, int data3, bool expected)
@@ -342,7 +342,7 @@ public class HashtagFieldsTests
         fields.IsThreeShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 16, 0, true)]
     [DataRow(~0, ~(1 << 16), ~0, false)]
     public void TwoEnemiesTogetherTest(int data1, int data2, int data3, bool expected)
@@ -351,7 +351,7 @@ public class HashtagFieldsTests
         fields.TwoEnemiesTogether.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 17, 0, true)]
     [DataRow(~0, ~(1 << 17), ~0, false)]
     public void EnemiesAreOverlappingTest(int data1, int data2, int data3, bool expected)
@@ -360,7 +360,7 @@ public class HashtagFieldsTests
         fields.EnemiesAreOverlapping.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 18, 0, true)]
     [DataRow(~0, ~(1 << 18), ~0, false)]
     public void PeaceSignAlongsideTest(int data1, int data2, int data3, bool expected)
@@ -369,7 +369,7 @@ public class HashtagFieldsTests
         fields.PeaceSignAlongside.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 19, 0, true)]
     [DataRow(~0, ~(1 << 19), ~0, false)]
     public void EnemiesAreTooCloseTest(int data1, int data2, int data3, bool expected)
@@ -378,7 +378,7 @@ public class HashtagFieldsTests
         fields.EnemiesAreTooClose.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 20, 0, true)]
     [DataRow(~0, ~(1 << 20), ~0, false)]
     public void ScorchingTest(int data1, int data2, int data3, bool expected)
@@ -387,7 +387,7 @@ public class HashtagFieldsTests
         fields.Scorching.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 21, 0, true)]
     [DataRow(~0, ~(1 << 21), ~0, false)]
     public void TooBigBulletTest(int data1, int data2, int data3, bool expected)
@@ -396,7 +396,7 @@ public class HashtagFieldsTests
         fields.TooBigBullet.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 22, 0, true)]
     [DataRow(~0, ~(1 << 22), ~0, false)]
     public void ThrowingEdgedToolsTest(int data1, int data2, int data3, bool expected)
@@ -405,7 +405,7 @@ public class HashtagFieldsTests
         fields.ThrowingEdgedTools.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 23, 0, true)]
     [DataRow(~0, ~(1 << 23), ~0, false)]
     public void SnakyTest(int data1, int data2, int data3, bool expected)
@@ -414,7 +414,7 @@ public class HashtagFieldsTests
         fields.Snaky.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 24, 0, true)]
     [DataRow(~0, ~(1 << 24), ~0, false)]
     public void LightLooksStoppedTest(int data1, int data2, int data3, bool expected)
@@ -423,7 +423,7 @@ public class HashtagFieldsTests
         fields.LightLooksStopped.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 25, 0, true)]
     [DataRow(~0, ~(1 << 25), ~0, false)]
     public void IsSuperMoonTest(int data1, int data2, int data3, bool expected)
@@ -432,7 +432,7 @@ public class HashtagFieldsTests
         fields.IsSuperMoon.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 26, 0, true)]
     [DataRow(~0, ~(1 << 26), ~0, false)]
     public void DazzlingTest(int data1, int data2, int data3, bool expected)
@@ -441,7 +441,7 @@ public class HashtagFieldsTests
         fields.Dazzling.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 27, 0, true)]
     [DataRow(~0, ~(1 << 27), ~0, false)]
     public void MoreDazzlingTest(int data1, int data2, int data3, bool expected)
@@ -450,7 +450,7 @@ public class HashtagFieldsTests
         fields.MoreDazzling.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 28, 0, true)]
     [DataRow(~0, ~(1 << 28), ~0, false)]
     public void MostDazzlingTest(int data1, int data2, int data3, bool expected)
@@ -459,7 +459,7 @@ public class HashtagFieldsTests
         fields.MostDazzling.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 29, 0, true)]
     [DataRow(~0, ~(1 << 29), ~0, false)]
     public void FinishedTogetherTest(int data1, int data2, int data3, bool expected)
@@ -468,7 +468,7 @@ public class HashtagFieldsTests
         fields.FinishedTogether.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 30, 0, true)]
     [DataRow(~0, ~(1 << 30), ~0, false)]
     public void WasDreamTest(int data1, int data2, int data3, bool expected)
@@ -477,7 +477,7 @@ public class HashtagFieldsTests
         fields.WasDream.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1 << 31, 0, true)]
     [DataRow(~0, ~(1 << 31), ~0, false)]
     public void IsRockyBarrageTest(int data1, int data2, int data3, bool expected)
@@ -486,7 +486,7 @@ public class HashtagFieldsTests
         fields.IsRockyBarrage.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 0, true)]
     [DataRow(~0, ~0, ~(1 << 0), false)]
     public void IsStickDestroyingBarrageTest(int data1, int data2, int data3, bool expected)
@@ -495,7 +495,7 @@ public class HashtagFieldsTests
         fields.IsStickDestroyingBarrage.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 1, true)]
     [DataRow(~0, ~0, ~(1 << 1), false)]
     public void FluffyTest(int data1, int data2, int data3, bool expected)
@@ -504,7 +504,7 @@ public class HashtagFieldsTests
         fields.Fluffy.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 2, true)]
     [DataRow(~0, ~0, ~(1 << 2), false)]
     public void IsDoggiePhotoTest(int data1, int data2, int data3, bool expected)
@@ -513,7 +513,7 @@ public class HashtagFieldsTests
         fields.IsDoggiePhoto.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 3, true)]
     [DataRow(~0, ~0, ~(1 << 3), false)]
     public void IsAnimalPhotoTest(int data1, int data2, int data3, bool expected)
@@ -522,7 +522,7 @@ public class HashtagFieldsTests
         fields.IsAnimalPhoto.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 4, true)]
     [DataRow(~0, ~0, ~(1 << 4), false)]
     public void IsZooTest(int data1, int data2, int data3, bool expected)
@@ -531,7 +531,7 @@ public class HashtagFieldsTests
         fields.IsZoo.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 5, true)]
     [DataRow(~0, ~0, ~(1 << 5), false)]
     public void IsLovelyHeartTest(int data1, int data2, int data3, bool expected)
@@ -540,7 +540,7 @@ public class HashtagFieldsTests
         fields.IsLovelyHeart.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 6, true)]
     [DataRow(~0, ~0, ~(1 << 6), false)]
     public void IsThunderTest(int data1, int data2, int data3, bool expected)
@@ -549,7 +549,7 @@ public class HashtagFieldsTests
         fields.IsThunder.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 7, true)]
     [DataRow(~0, ~0, ~(1 << 7), false)]
     public void IsDrumTest(int data1, int data2, int data3, bool expected)
@@ -558,7 +558,7 @@ public class HashtagFieldsTests
         fields.IsDrum.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 8, true)]
     [DataRow(~0, ~0, ~(1 << 8), false)]
     public void IsMistyTest(int data1, int data2, int data3, bool expected)
@@ -567,7 +567,7 @@ public class HashtagFieldsTests
         fields.IsMisty.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 9, true)]
     [DataRow(~0, ~0, ~(1 << 9), false)]
     public void IsBoringPhotoTest(int data1, int data2, int data3, bool expected)
@@ -576,7 +576,7 @@ public class HashtagFieldsTests
         fields.IsBoringPhoto.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 10, true)]
     [DataRow(~0, ~0, ~(1 << 10), false)]
     public void WasScoldedTest(int data1, int data2, int data3, bool expected)
@@ -585,7 +585,7 @@ public class HashtagFieldsTests
         fields.WasScolded.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0, 1 << 11, true)]
     [DataRow(~0, ~0, ~(1 << 11), false)]
     public void IsSumirekoTest(int data1, int data2, int data3, bool expected)

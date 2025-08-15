@@ -96,7 +96,7 @@ public class BinaryReaderExtensionsTests
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(ReadNullTerminatedStringTestData))]
     public void ReadNullTerminatedStringTest(string expected, Encoding encoding, Encoding? encodingToRead)
     {

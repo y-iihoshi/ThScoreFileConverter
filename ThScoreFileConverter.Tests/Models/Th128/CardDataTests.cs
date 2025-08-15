@@ -105,7 +105,7 @@ public class CardDataTests
         _ = Should.Throw<InvalidDataException>(() => new CardData(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("CD", (ushort)1, 0x947C, true)]
     [DataRow("cd", (ushort)1, 0x947C, false)]
     [DataRow("CD", (ushort)0, 0x947C, false)]

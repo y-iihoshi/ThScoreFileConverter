@@ -47,7 +47,7 @@ public class IntegerHelperTests
         _ = Should.Throw<ArgumentOutOfRangeException>(() => IntegerHelper.ToOneBased(10));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 1)]
     [DataRow(1, 1)]
     [DataRow(9, 1)]

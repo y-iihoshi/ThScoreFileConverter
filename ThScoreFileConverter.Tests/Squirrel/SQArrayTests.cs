@@ -24,7 +24,7 @@ public class SQArrayTests
         return SQArray.Create(reader);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(
         new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
         new[] { 123 },
@@ -53,7 +53,7 @@ public class SQArrayTests
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new[] { (int)SQOT.Array, 0, (int)SQOT.Null },
         DisplayName = "empty")]
     public void CreateTestEmpty(int[] array)
@@ -64,7 +64,7 @@ public class SQArrayTests
         sqarray.Value.ShouldBeEmpty();
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new[] { (int)SQOT.Array, 999, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
         DisplayName = "invalid size")]
     [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, (int)SQOT.Null },
@@ -88,7 +88,7 @@ public class SQArrayTests
         _ = Should.Throw<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new[] { (int)SQOT.Null, 2, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
         DisplayName = "invalid type")]
     [DataRow(new[] { (int)SQOT.Array, -1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
@@ -132,7 +132,7 @@ public class SQArrayTests
         _ = Should.Throw<InvalidDataException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(
         new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
         "[ 123 ]",

@@ -138,7 +138,7 @@ public class SQObjectTests
         _ = Should.Throw<EndOfStreamException>(() => CreateTestHelper(new byte[3]));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(SQOT.Class)]
     [DataRow(SQOT.FuncProto)]
     [DataRow(SQOT.Generator)]

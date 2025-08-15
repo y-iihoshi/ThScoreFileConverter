@@ -182,7 +182,7 @@ public class ClearDataTests
         _ = Should.Throw<InvalidDataException>(() => new ClearData(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("CR", (ushort)1, 0x5298, true)]
     [DataRow("cr", (ushort)1, 0x5298, false)]
     [DataRow("CR", (ushort)0, 0x5298, false)]

@@ -24,7 +24,7 @@ public class SQTableTests
         return SQTable.Create(reader);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(
         new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
         new[] { 123 },
@@ -62,7 +62,7 @@ public class SQTableTests
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new[] { (int)SQOT.Table, (int)SQOT.Null },
         DisplayName = "empty")]
     public void CreateTestEmpty(int[] array)
@@ -73,7 +73,7 @@ public class SQTableTests
         sqtable.Value.ShouldBeEmpty();
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, (int)SQOT.Null },
         DisplayName = "missing value data")]
     [DataRow(new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456 },
@@ -89,7 +89,7 @@ public class SQTableTests
         _ = Should.Throw<EndOfStreamException>(() => CreateTestHelper(TestUtils.MakeByteArray(array)));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new[] { (int)SQOT.Null, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
         DisplayName = "invalid type")]
     [DataRow(new[] { (int)SQOT.Table, 999, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
@@ -118,7 +118,7 @@ public class SQTableTests
     }
 
 #pragma warning disable JSON002 // Probable JSON string detected
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(
         new[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
         "{ 123: 456 }",

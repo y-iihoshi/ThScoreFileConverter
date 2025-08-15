@@ -85,7 +85,7 @@ public class AllScoreDataTests
         allScoreData.Rankings[(mock.Chara, mock.Level)][mock.Rank].ShouldBeSameAs(score2);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow((short)-1)]
     [DataRow((short)5)]
     public void SetHighScoreTestInvalidRank(short rank)

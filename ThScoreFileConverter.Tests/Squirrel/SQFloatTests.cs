@@ -23,7 +23,7 @@ public class SQFloatTests
         return SQFloat.Create(reader);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0f)]
     [DataRow(1f)]
     [DataRow(-1f)]

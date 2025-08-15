@@ -131,7 +131,7 @@ public class SpellCardTests
         ReadFromTestExceededNameHelper<LevelPractice>();
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevelPractices))]
     public void ReadFromTestInvalidLevel(int level)
     {

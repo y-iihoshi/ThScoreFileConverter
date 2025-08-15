@@ -33,7 +33,7 @@ public class DefinitionsTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestHelper.GetInvalidEnumerators<Chara>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void CanPracticeTestInvalidChara(int chara)
     {

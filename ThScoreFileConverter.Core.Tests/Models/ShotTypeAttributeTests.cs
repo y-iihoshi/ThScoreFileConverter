@@ -22,7 +22,7 @@ public class ShotTypeAttributeTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestHelper.GetInvalidEnumerators<Chara>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void ShotTypeAttributeTestInvalid(int chara)
     {

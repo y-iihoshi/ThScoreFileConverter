@@ -86,7 +86,7 @@ public class ClearDataTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<CharaWithTotal>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void ClearDataTestInvalidChara(int chara)
     {

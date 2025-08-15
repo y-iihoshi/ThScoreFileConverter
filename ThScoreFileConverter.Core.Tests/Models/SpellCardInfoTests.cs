@@ -42,7 +42,7 @@ public class SpellCardInfoTests
 
     public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void SpellCardInfoTestInvalidStage(int stage)
     {
@@ -52,7 +52,7 @@ public class SpellCardInfoTests
 
     public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void SpellCardInfoTestInvalidLevel(int level)
     {

@@ -105,7 +105,7 @@ public class StatusTests
         _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("ST", (ushort)2, 0x42C, true)]
     [DataRow("st", (ushort)2, 0x42C, false)]
     [DataRow("ST", (ushort)1, 0x42C, false)]

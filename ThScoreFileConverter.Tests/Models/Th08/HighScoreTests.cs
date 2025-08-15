@@ -164,7 +164,7 @@ public class HighScoreTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void HighScoreTestInvalidChara(int chara)
     {
@@ -177,7 +177,7 @@ public class HighScoreTests
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void HighScoreTestInvalidLevel(int level)
     {
@@ -190,7 +190,7 @@ public class HighScoreTests
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]
     public void HighScoreTestInvalidStageProgress(int stageProgress)
     {

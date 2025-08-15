@@ -99,7 +99,7 @@ public class ScoreTests
         _ = Should.Throw<InvalidDataException>(() => new Score(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("SN", (ushort)1, 0x234, true)]
     [DataRow("sn", (ushort)1, 0x234, false)]
     [DataRow("SN", (ushort)0, 0x234, false)]

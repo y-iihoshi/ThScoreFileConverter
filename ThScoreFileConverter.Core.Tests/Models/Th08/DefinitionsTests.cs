@@ -21,7 +21,7 @@ public class DefinitionsTests
 
     public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void CanPracticeTestInvalidStage(int stage)
     {

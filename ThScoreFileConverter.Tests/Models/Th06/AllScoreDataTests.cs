@@ -161,7 +161,7 @@ public class AllScoreDataTests
         allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)].ShouldNotBeSameAs(score2);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(Level.Easy, Stage.Six)]
     [DataRow(Level.Extra, Stage.Extra)]
     [DataRow(Level.Extra, Stage.Six)]

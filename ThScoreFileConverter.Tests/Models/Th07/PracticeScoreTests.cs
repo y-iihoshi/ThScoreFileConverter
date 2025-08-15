@@ -87,7 +87,7 @@ public class PracticeScoreTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void PracticeScoreTestInvalidChara(int chara)
     {
@@ -100,7 +100,7 @@ public class PracticeScoreTests
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void PracticeScoreTestInvalidLevel(int level)
     {
@@ -113,7 +113,7 @@ public class PracticeScoreTests
 
     public static IEnumerable<object[]> InvalidStages => TestUtils.GetInvalidEnumerators<Stage>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void PracticeScoreTestInvalidStage(int stage)
     {

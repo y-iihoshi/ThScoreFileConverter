@@ -203,7 +203,7 @@ public class BestShotHeaderTests
 
     public static IEnumerable<object[]> InvalidDays => TestUtils.GetInvalidEnumerators<Day>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidDays))]
     public void ReadFromTestInvalidDay(int day)
     {

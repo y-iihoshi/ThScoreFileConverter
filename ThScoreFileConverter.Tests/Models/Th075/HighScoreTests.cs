@@ -73,7 +73,7 @@ public class HighScoreTests
         _ = Should.Throw<InvalidDataException>(() => TestUtils.Create<HighScore>(MakeByteArray(stub)));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, 0)]
     [DataRow(1, 1)]
     [DataRow(1, 31)]
@@ -113,7 +113,7 @@ public class HighScoreTests
         highScore.ShouldBe(stub);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, -1)]
     [DataRow(0, 1)]
     [DataRow(1, 0)]

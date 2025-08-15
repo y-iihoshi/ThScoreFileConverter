@@ -33,7 +33,7 @@ public class SQBoolTests
         return SQBool.Create(reader);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow((byte)0x00, false)]
     [DataRow((byte)0x01, true)]
     [DataRow((byte)0x02, true)]

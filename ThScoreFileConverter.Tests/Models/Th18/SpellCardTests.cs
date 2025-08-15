@@ -95,7 +95,7 @@ public class SpellCardTests
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void ReadFromTestInvalidLevel(int level)
     {

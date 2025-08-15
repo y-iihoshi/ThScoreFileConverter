@@ -31,7 +31,7 @@ public class SpellCardTests
         Th13.SpellCardTests.ReadFromTestExceededNameHelper<Level>();
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void ReadFromTestInvalidLevel(int level)
     {

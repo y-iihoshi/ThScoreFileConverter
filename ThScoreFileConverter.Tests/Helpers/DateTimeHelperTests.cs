@@ -12,7 +12,7 @@ public class DateTimeHelperTests
         DateTimeHelper.InvalidFormat.Length.ShouldBe(DateTimeHelper.ValidFormat.Length);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(-1)]
     [DataRow(0)]
     [DataRow(1234567)]

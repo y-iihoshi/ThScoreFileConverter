@@ -5,7 +5,7 @@ namespace ThScoreFileConverter.Tests.Interactivity;
 [TestClass]
 public class OpenFolderDialogActionResultTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("")]
     [DataRow(@"path\to\some\folder")]
     public void OpenFolderDialogActionResultTest(string path)

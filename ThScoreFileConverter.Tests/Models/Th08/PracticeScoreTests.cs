@@ -86,7 +86,7 @@ public class PracticeScoreTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void PracticeScoreTestInvalidChara(int chara)
     {

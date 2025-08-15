@@ -107,7 +107,7 @@ public class StatusTests
         _ = Should.Throw<InvalidDataException>(() => new Status(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("ST", (ushort)1, 0x224, true)]
     [DataRow("st", (ushort)1, 0x224, false)]
     [DataRow("ST", (ushort)0, 0x224, false)]
@@ -125,7 +125,7 @@ public class StatusTests
 
     public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidItems))]
     public void StatusTestInvalidLastMainItem(int item)
     {
@@ -136,7 +136,7 @@ public class StatusTests
         _ = Should.Throw<InvalidCastException>(() => new Status(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidItems))]
     public void StatusTestInvalidLastSubItem(int item)
     {

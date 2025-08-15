@@ -39,7 +39,7 @@ public class ScoreDataTests
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]
     public void ReadFromTestInvalidStageProgress(int stageProgress)
     {

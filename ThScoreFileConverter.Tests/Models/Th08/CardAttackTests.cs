@@ -112,7 +112,7 @@ public class CardAttackTests
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<LevelPracticeWithTotal>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void CardAttackTestInvalidLevel(int level)
     {

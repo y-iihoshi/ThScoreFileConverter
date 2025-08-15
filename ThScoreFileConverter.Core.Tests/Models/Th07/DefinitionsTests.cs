@@ -18,7 +18,7 @@ public class DefinitionsTests
 
     public static IEnumerable<object[]> InvalidLevels => TestHelper.GetInvalidEnumerators<Level>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void CanPracticeTestInvalidLevel(int level)
     {
@@ -40,7 +40,7 @@ public class DefinitionsTests
 
     public static IEnumerable<object[]> InvalidStages => TestHelper.GetInvalidEnumerators<Stage>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStages))]
     public void CanPracticeTestInvalidStage(int stage)
     {

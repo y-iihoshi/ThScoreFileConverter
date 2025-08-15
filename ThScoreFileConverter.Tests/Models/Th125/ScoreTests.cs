@@ -111,7 +111,7 @@ public class ScoreTests
 
     public static IEnumerable<object[]> InvalidLevels => TestUtils.GetInvalidEnumerators<Level>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidLevels))]
     public void ScoreTestInvalidLevel(int level)
     {
@@ -125,7 +125,7 @@ public class ScoreTests
 
     public static IEnumerable<object[]> InvalidCharacters => TestUtils.GetInvalidEnumerators<Chara>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidCharacters))]
     public void ScoreTestInvalidChara(int chara)
     {
@@ -136,7 +136,7 @@ public class ScoreTests
         _ = Should.Throw<InvalidCastException>(() => new Score(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("SC", (ushort)0, 0x48, true)]
     [DataRow("sc", (ushort)0, 0x48, false)]
     [DataRow("SC", (ushort)1, 0x48, false)]

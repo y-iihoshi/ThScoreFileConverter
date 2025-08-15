@@ -23,7 +23,7 @@ public class SQStringTests
         return SQString.Create(reader);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("abc")]
     [DataRow("博麗 霊夢")]
     [DataRow("")]
@@ -38,7 +38,7 @@ public class SQStringTests
         ((string)sqstring).ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0, "")]
     [DataRow(0, "abc")]
     [DataRow(0, null)]
@@ -55,7 +55,7 @@ public class SQStringTests
         ((string)sqstring).ShouldBeEmpty();
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("abc")]
     [DataRow("博麗 霊夢")]
     public void CreateTestShortened(string value)

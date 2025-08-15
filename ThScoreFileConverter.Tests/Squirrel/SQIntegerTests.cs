@@ -23,7 +23,7 @@ public class SQIntegerTests
         return SQInteger.Create(reader);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0)]
     [DataRow(1)]
     [DataRow(-1)]

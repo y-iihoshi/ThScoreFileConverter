@@ -5,7 +5,7 @@ namespace ThScoreFileConverter.Tests.Models.Th125;
 [TestClass]
 public class BonusFieldsTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0)]
     [DataRow(12345678)]
     [DataRow(int.MinValue)]
@@ -16,7 +16,7 @@ public class BonusFieldsTests
         fields.Data.ShouldBe(data);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x4, true)]
     [DataRow(~0x4, false)]
     public void TwoShotTest(int data, bool expected)
@@ -25,7 +25,7 @@ public class BonusFieldsTests
         fields.TwoShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x8, true)]
     [DataRow(~0x8, false)]
     public void NiceShotTest(int data, bool expected)
@@ -34,7 +34,7 @@ public class BonusFieldsTests
         fields.NiceShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x10, true)]
     [DataRow(~0x10, false)]
     public void RiskBonusTest(int data, bool expected)
@@ -43,7 +43,7 @@ public class BonusFieldsTests
         fields.RiskBonus.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x40, true)]
     [DataRow(~0x40, false)]
     public void RedShotTest(int data, bool expected)
@@ -52,7 +52,7 @@ public class BonusFieldsTests
         fields.RedShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x80, true)]
     [DataRow(~0x80, false)]
     public void PurpleShotTest(int data, bool expected)
@@ -61,7 +61,7 @@ public class BonusFieldsTests
         fields.PurpleShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x100, true)]
     [DataRow(~0x100, false)]
     public void BlueShotTest(int data, bool expected)
@@ -70,7 +70,7 @@ public class BonusFieldsTests
         fields.BlueShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x200, true)]
     [DataRow(~0x200, false)]
     public void CyanShotTest(int data, bool expected)
@@ -79,7 +79,7 @@ public class BonusFieldsTests
         fields.CyanShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x400, true)]
     [DataRow(~0x400, false)]
     public void GreenShotTest(int data, bool expected)
@@ -88,7 +88,7 @@ public class BonusFieldsTests
         fields.GreenShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x800, true)]
     [DataRow(~0x800, false)]
     public void YellowShotTest(int data, bool expected)
@@ -97,7 +97,7 @@ public class BonusFieldsTests
         fields.YellowShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x1000, true)]
     [DataRow(~0x1000, false)]
     public void OrangeShotTest(int data, bool expected)
@@ -106,7 +106,7 @@ public class BonusFieldsTests
         fields.OrangeShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x2000, true)]
     [DataRow(~0x2000, false)]
     public void ColorfulShotTest(int data, bool expected)
@@ -115,7 +115,7 @@ public class BonusFieldsTests
         fields.ColorfulShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x4000, true)]
     [DataRow(~0x4000, false)]
     public void RainbowShotTest(int data, bool expected)
@@ -124,7 +124,7 @@ public class BonusFieldsTests
         fields.RainbowShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x1_0000, true)]
     [DataRow(~0x1_0000, false)]
     public void SoloShotTest(int data, bool expected)
@@ -133,7 +133,7 @@ public class BonusFieldsTests
         fields.SoloShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x40_0000, true)]
     [DataRow(~0x40_0000, false)]
     public void MacroBonusTest(int data, bool expected)
@@ -142,7 +142,7 @@ public class BonusFieldsTests
         fields.MacroBonus.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x100_0000, true)]
     [DataRow(~0x100_0000, false)]
     public void FrontShotTest(int data, bool expected)
@@ -151,7 +151,7 @@ public class BonusFieldsTests
         fields.FrontShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x200_0000, true)]
     [DataRow(~0x200_0000, false)]
     public void BackShotTest(int data, bool expected)
@@ -160,7 +160,7 @@ public class BonusFieldsTests
         fields.BackShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x400_0000, true)]
     [DataRow(~0x400_0000, false)]
     public void SideShotTest(int data, bool expected)
@@ -169,7 +169,7 @@ public class BonusFieldsTests
         fields.SideShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x800_0000, true)]
     [DataRow(~0x800_0000, false)]
     public void ClearShotTest(int data, bool expected)
@@ -178,7 +178,7 @@ public class BonusFieldsTests
         fields.ClearShot.ShouldBe(expected);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(0x1000_0000, true)]
     [DataRow(~0x1000_0000, false)]
     public void CatBonusTest(int data, bool expected)

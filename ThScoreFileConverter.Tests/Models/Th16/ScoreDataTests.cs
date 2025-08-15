@@ -67,7 +67,7 @@ public class ScoreDataTests
 
     public static IEnumerable<object[]> InvalidStageProgresses => TestUtils.GetInvalidEnumerators<StageProgress>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidStageProgresses))]
     public void ReadFromTestInvalidStageProgress(int stageProgress)
     {
@@ -102,7 +102,7 @@ public class ScoreDataTests
 
     public static IEnumerable<object[]> InvalidSeasons => TestUtils.GetInvalidEnumerators<Season>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidSeasons))]
     public void ReadFromTestInvalidSeason(int season)
     {

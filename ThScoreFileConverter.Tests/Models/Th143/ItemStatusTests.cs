@@ -108,7 +108,7 @@ public class ItemStatusTests
 
     public static IEnumerable<object[]> InvalidItems => TestUtils.GetInvalidEnumerators<ItemWithTotal>();
 
-    [DataTestMethod]
+    [TestMethod]
     [DynamicData(nameof(InvalidItems))]
     public void ItemStatusTestInvalidItems(int item)
     {
@@ -119,7 +119,7 @@ public class ItemStatusTests
         _ = Should.Throw<InvalidCastException>(() => new ItemStatus(chapter));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("TI", (ushort)1, 0x34, true)]
     [DataRow("ti", (ushort)1, 0x34, false)]
     [DataRow("TI", (ushort)0, 0x34, false)]
