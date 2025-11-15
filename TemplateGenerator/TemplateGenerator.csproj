@@ -17,7 +17,7 @@
 
   <!-- These are actually transitive packages, but explicitly added to avoid vulnerabilities -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.3" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.10" />
   </ItemGroup>
 
