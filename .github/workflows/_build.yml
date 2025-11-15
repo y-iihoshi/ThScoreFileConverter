@@ -121,7 +121,7 @@ jobs:
         echo "artifact-path=$OutputDir" >> $env:GITHUB_OUTPUT
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ steps.collect-artifacts.outputs.artifact-path }}
