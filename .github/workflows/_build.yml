@@ -43,7 +43,7 @@ jobs:
         python -m pip install -r ManualGenerator/requirements.txt
 
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v5.0.0
+      uses: actions/setup-dotnet@v5
       with:
         global-json-file: 'global.json'
 
@@ -51,7 +51,7 @@ jobs:
       run: dotnet tool restore
 
     - name: Cache NuGet packages
-      uses: actions/cache@v4.3.0
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ inputs.dotnet-target-framework }}-${{ hashFiles('**/*.csproj') }}
@@ -60,7 +60,7 @@ jobs:
           ${{ runner.os }}-nuget-
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v2.0.0
+      uses: microsoft/setup-msbuild@v2
 
     - name: Build
       run: >
@@ -108,7 +108,7 @@ jobs:
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5.5.1
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
       if: inputs.dotnet-configuration == 'Debug'
