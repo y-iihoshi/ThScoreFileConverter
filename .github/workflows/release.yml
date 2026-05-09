@@ -20,7 +20,7 @@ jobs:
     secrets: inherit
 
   release:
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     needs: build
     steps:
       - name: Checkout
