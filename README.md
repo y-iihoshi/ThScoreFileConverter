@@ -56,10 +56,10 @@ format from best shot files.
 ## Environments
 
 ### Development environment
-* Windows 11 Pro Version 24H2
+* Windows 11 Pro Version 25H2
 * .NET 8
 * .NET 9
-* Visual Studio Community 2022 17.12
+* Visual Studio Community 2026 18.6
 * Python 3.12
 
 ### Tested environment

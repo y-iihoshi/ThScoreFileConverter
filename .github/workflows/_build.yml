@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-2025-vs2026
 
     steps:
     - name: Checkout
@@ -51,7 +51,7 @@ jobs:
       run: dotnet tool restore
 
     - name: Cache NuGet packages
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ inputs.dotnet-target-framework }}-${{ hashFiles('**/*.csproj') }}
@@ -60,7 +60,7 @@ jobs:
           ${{ runner.os }}-nuget-
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
 
     - name: Build
       run: >
@@ -108,7 +108,7 @@ jobs:
       if: inputs.dotnet-configuration == 'Debug'
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v6
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
       if: inputs.dotnet-configuration == 'Debug'
@@ -121,7 +121,7 @@ jobs:
         echo "artifact-path=$OutputDir" >> $env:GITHUB_OUTPUT
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ steps.collect-artifacts.outputs.artifact-path }}
