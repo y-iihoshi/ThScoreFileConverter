@@ -11,19 +11,17 @@ namespace ThScoreFileConverter.Tests.Interactivity;
 
 internal sealed class Logger : INotifyPropertyChanged
 {
-    private string log = string.Empty;
-
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public string Log
     {
-        get => this.log;
+        get;
         set
         {
-            this.log = value;
+            field = value;
             this.RaisePropertyChanged();
         }
-    }
+    } = string.Empty;
 
     private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
     {

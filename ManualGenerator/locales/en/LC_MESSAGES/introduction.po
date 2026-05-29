@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ThScoreFileConverter 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 22:53+0900\n"
-"PO-Revision-Date: 2026-05-29 22:55+0900\n"
+"POT-Creation-Date: 2026-05-30 08:01+0900\n"
+"PO-Revision-Date: 2026-05-30 08:06+0900\n"
 "Last-Translator: IIHOSHI Yoshinori\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,8 @@ msgstr "It is under development with the aim of becoming an alternative tool for
 msgid "前提条件"
 msgstr "Prerequisites"
 
-msgid "ThSFC を利用するには、 .NET 8 または .NET 9 が必要です。"
-msgstr "To use ThSFC, one of the following runtimes is required: .NET 8 or .NET 9."
+msgid "ThSFC を利用するには、 .NET 8、 .NET 9、 または .NET 10 が必要です。"
+msgstr "To use ThSFC, one of the following runtimes is required: .NET 8, .NET 9, or .NET 10."
 
 msgid "2026 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。"
 msgstr "As of May 2026, ThSFC is developing and testing only in the following environments. I may not be able to respond even if I receive a report that it does not work in an environments other than the following:"
@@ -44,6 +44,9 @@ msgid ".NET 8"
 msgstr ""
 
 msgid ".NET 9"
+msgstr ""
+
+msgid ".NET 10"
 msgstr ""
 
 msgid "Visual Studio Community 2026 Version 18.6"
