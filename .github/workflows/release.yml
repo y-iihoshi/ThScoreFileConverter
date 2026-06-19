@@ -24,7 +24,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Download artifact (net8.0)
         uses: actions/download-artifact@v8
         with:
