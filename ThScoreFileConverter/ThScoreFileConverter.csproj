@@ -59,7 +59,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="11.0.0" />
     <PackageReference Include="MvvmDialogs" Version="9.1.2" />
     <PackageReference Include="ReactiveProperty.WPF" Version="9.10.0" />
     <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.556">
